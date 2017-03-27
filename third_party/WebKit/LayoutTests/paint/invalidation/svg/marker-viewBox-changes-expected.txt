@@ -15,11 +15,6 @@
           "object": "LayoutSVGContainer g",
           "rect": [90, 95, 98, 98],
           "reason": "bounds change"
-        },
-        {
-          "object": "LayoutSVGRect rect",
-          "rect": [0, 0, 10, 10],
-          "reason": "bounds change"
         }
       ]
     }
@@ -28,10 +23,6 @@
     {
       "object": "LayoutSVGResourceMarker marker id='markerStart'",
       "reason": "full"
-    },
-    {
-      "object": "LayoutSVGRect rect",
-      "reason": "bounds change"
     },
     {
       "object": "LayoutSVGContainer g",

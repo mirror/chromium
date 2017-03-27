@@ -248,6 +248,7 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
       return;
   }
 
+  bool mark_event_as_handled = true;
   // We need to handle the Escape key for Pepper Flash.
   if (host_view_->is_fullscreen() && event->key_code() == ui::VKEY_ESCAPE) {
     // Focus the window we were created from.
@@ -283,9 +284,10 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
     SetKeyboardFocus();
     // We don't have to communicate with an input method here.
     NativeWebKeyboardEvent webkit_event(*event);
-    delegate_->ForwardKeyboardEvent(webkit_event);
+    delegate_->ForwardKeyboardEvent(webkit_event, &mark_event_as_handled);
   }
-  event->SetHandled();
+  if (mark_event_as_handled)
+    event->SetHandled();
 }
 
 void RenderWidgetHostViewEventHandler::OnMouseEvent(ui::MouseEvent* event) {
@@ -848,6 +850,13 @@ bool RenderWidgetHostViewEventHandler::ShouldRouteEvent(
   //    in a similar manner to RenderWidgetHostViewGuest.
   bool result = host_->delegate() && host_->delegate()->GetInputEventRouter() &&
                 !disable_input_event_router_for_testing_;
+
+  // Do not route events that are currently targeted to page popups such as
+  // <select> element drop-downs, since these cannot contain cross-process
+  // frames.
+  if (host_->delegate() && !host_->delegate()->IsWidgetForMainFrame(host_))
+    return false;
+
   // ScrollEvents get transformed into MouseWheel events, and so are treated
   // the same as mouse events for routing purposes.
   if (event->IsMouseEvent() || event->type() == ui::ET_SCROLL)

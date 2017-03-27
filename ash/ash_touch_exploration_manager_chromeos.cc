@@ -6,9 +6,9 @@
 
 #include "ash/common/accessibility_delegate.h"
 #include "ash/common/system/tray/system_tray_notifier.h"
-#include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/root_window_controller.h"
+#include "ash/shared/app_types.h"
 #include "ash/shell.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
@@ -16,6 +16,7 @@
 #include "chromeos/audio/chromeos_sounds.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "chromeos/chromeos_switches.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/chromeos/touch_exploration_controller.h"
 #include "ui/wm/public/activation_client.h"
 
@@ -24,8 +25,11 @@ namespace ash {
 AshTouchExplorationManager::AshTouchExplorationManager(
     RootWindowController* root_window_controller)
     : root_window_controller_(root_window_controller),
-      audio_handler_(chromeos::CrasAudioHandler::Get()) {
-  WmShell::Get()->system_tray_notifier()->AddAccessibilityObserver(this);
+      audio_handler_(chromeos::CrasAudioHandler::Get()),
+      enable_chromevox_arc_support_(
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              chromeos::switches::kEnableChromeVoxArcSupport)) {
+  Shell::Get()->system_tray_notifier()->AddAccessibilityObserver(this);
   Shell::GetInstance()->activation_client()->AddObserver(this);
   display::Screen::GetScreen()->AddObserver(this);
   UpdateTouchExplorationState();
@@ -33,7 +37,7 @@ AshTouchExplorationManager::AshTouchExplorationManager(
 
 AshTouchExplorationManager::~AshTouchExplorationManager() {
   SystemTrayNotifier* system_tray_notifier =
-      WmShell::Get()->system_tray_notifier();
+      Shell::Get()->system_tray_notifier();
   if (system_tray_notifier)
     system_tray_notifier->RemoveAccessibilityObserver(this);
   Shell::GetInstance()->activation_client()->RemoveObserver(this);
@@ -132,13 +136,12 @@ void AshTouchExplorationManager::SetTouchAccessibilityAnchorPoint(
 }
 
 void AshTouchExplorationManager::UpdateTouchExplorationState() {
-  // Comes from components/exo/shell_surface.cc.
-  const char kExoShellSurfaceWindowName[] = "ExoShellSurface";
-
   // See crbug.com/603745 for more details.
   const bool pass_through_surface =
       wm::GetActiveWindow() &&
-      wm::GetActiveWindow()->GetName() == kExoShellSurfaceWindowName;
+      wm::GetActiveWindow()->GetProperty(aura::client::kAppType) ==
+          static_cast<int>(ash::AppType::ARC_APP) &&
+      !enable_chromevox_arc_support_;
 
   const bool spoken_feedback_enabled =
       Shell::GetInstance()->accessibility_delegate()->IsSpokenFeedbackEnabled();

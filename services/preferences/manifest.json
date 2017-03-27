@@ -5,8 +5,8 @@
     "service_manager:connector": {
       "provides": {
         "pref_client": [
-          "prefs::mojom::PrefStoreRegistry",
-          "prefs::mojom::PersistentPrefStoreConnector"
+          "prefs::mojom::PrefStoreConnector",
+          "prefs::mojom::PrefStoreRegistry"
         ],
         "pref_control": [
           "prefs::mojom::PrefServiceControl"

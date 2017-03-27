@@ -254,8 +254,6 @@ WebCachePolicy determineWebCachePolicy(RequestMethod method,
                  ? WebCachePolicy::ReturnCacheDataDontLoad
                  : WebCachePolicy::ReturnCacheDataElseLoad;
     case FrameLoadTypeReload:
-      return WebCachePolicy::ValidatingCacheData;
-    case FrameLoadTypeReloadMainResource:
       return resourceType == ResourceType::kIsMainResource
                  ? WebCachePolicy::ValidatingCacheData
                  : WebCachePolicy::UseProtocolCachePolicy;
@@ -375,7 +373,8 @@ void FrameFetchContext::addAdditionalRequestHeaders(ResourceRequest& request,
   if (!request.url().isEmpty() && !request.url().protocolIsInHTTPFamily())
     return;
 
-  if (masterDocumentLoader()->loadType() == FrameLoadTypeReload)
+  // Reload should reflect the current data saver setting.
+  if (isReloadLoadType(masterDocumentLoader()->loadType()))
     request.clearHTTPHeaderField("Save-Data");
 
   if (frame()->settings() && frame()->settings()->getDataSaverEnabled())
@@ -445,14 +444,23 @@ void FrameFetchContext::dispatchDidChangeResourcePriority(
   probe::didChangeResourcePriority(frame(), identifier, loadPriority);
 }
 
-void FrameFetchContext::prepareRequest(ResourceRequest& request) {
+void FrameFetchContext::prepareRequest(ResourceRequest& request,
+                                       RedirectType redirectType) {
   frame()->loader().applyUserAgent(request);
   localFrameClient()->dispatchWillSendRequest(request);
 
+  // ServiceWorker hook ups.
   if (masterDocumentLoader()->getServiceWorkerNetworkProvider()) {
     WrappedResourceRequest webreq(request);
     masterDocumentLoader()->getServiceWorkerNetworkProvider()->willSendRequest(
         webreq);
+  }
+
+  // If it's not for redirect, hook up ApplicationCache here too.
+  if (redirectType == FetchContext::RedirectType::kNotForRedirect &&
+      m_documentLoader && !m_documentLoader->fetcher()->archive() &&
+      request.url().isValid()) {
+    m_documentLoader->applicationCacheHost()->willStartLoading(request);
   }
 }
 
@@ -461,12 +469,9 @@ void FrameFetchContext::dispatchWillSendRequest(
     ResourceRequest& request,
     const ResourceResponse& redirectResponse,
     const FetchInitiatorInfo& initiatorInfo) {
-  // For initial requests, prepareRequest() is called in
-  // willStartLoadingResource(), before revalidation policy is determined. That
-  // call doesn't exist for redirects, so call preareRequest() here.
-  if (!redirectResponse.isNull()) {
-    prepareRequest(request);
-  } else {
+  if (redirectResponse.isNull()) {
+    // Progress doesn't care about redirects, only notify it when an
+    // initial request is sent.
     frame()->loader().progress().willStartLoading(identifier,
                                                   request.priority());
   }
@@ -579,42 +584,30 @@ loadResourceTraceData(unsigned long identifier, const KURL& url, int priority) {
   return value;
 }
 
-void FrameFetchContext::willStartLoadingResource(
+void FrameFetchContext::recordLoadingActivity(
     unsigned long identifier,
-    ResourceRequest& request,
+    const ResourceRequest& request,
     Resource::Type type,
-    const AtomicString& fetchInitiatorName,
-    V8ActivityLoggingPolicy loggingPolicy) {
+    const AtomicString& fetchInitiatorName) {
   TRACE_EVENT_ASYNC_BEGIN1(
       "blink.net", "Resource", identifier, "data",
       loadResourceTraceData(identifier, request.url(), request.priority()));
-  prepareRequest(request);
-
   if (!m_documentLoader || m_documentLoader->fetcher()->archive() ||
       !request.url().isValid())
     return;
-  if (type == Resource::MainResource) {
-    m_documentLoader->applicationCacheHost()->willStartLoadingMainResource(
-        request);
+  V8DOMActivityLogger* activityLogger = nullptr;
+  if (fetchInitiatorName == FetchInitiatorTypeNames::xmlhttprequest) {
+    activityLogger = V8DOMActivityLogger::currentActivityLogger();
   } else {
-    m_documentLoader->applicationCacheHost()->willStartLoadingResource(request);
+    activityLogger =
+        V8DOMActivityLogger::currentActivityLoggerIfIsolatedWorld();
   }
-  if (loggingPolicy == V8ActivityLoggingPolicy::Log) {
-    V8DOMActivityLogger* activityLogger = nullptr;
-    if (fetchInitiatorName == FetchInitiatorTypeNames::xmlhttprequest) {
-      activityLogger = V8DOMActivityLogger::currentActivityLogger();
-    } else {
-      activityLogger =
-          V8DOMActivityLogger::currentActivityLoggerIfIsolatedWorld();
-    }
 
-    if (activityLogger) {
-      Vector<String> argv;
-      argv.push_back(Resource::resourceTypeToString(type, fetchInitiatorName));
-      argv.push_back(request.url());
-      activityLogger->logEvent("blinkRequestResource", argv.size(),
-                               argv.data());
-    }
+  if (activityLogger) {
+    Vector<String> argv;
+    argv.push_back(Resource::resourceTypeToString(type, fetchInitiatorName));
+    argv.push_back(request.url());
+    activityLogger->logEvent("blinkRequestResource", argv.size(), argv.data());
   }
 }
 
@@ -789,8 +782,7 @@ ResourceRequestBlockedReason FrameFetchContext::canRequestInternal(
 
   // Measure the number of legacy URL schemes ('ftp://') and the number of
   // embedded-credential ('http://user:password@...') resources embedded as
-  // subresources. in the hopes that we can block them at some point in the
-  // future.
+  // subresources.
   if (resourceRequest.frameType() != WebURLRequest::FrameTypeTopLevel) {
     DCHECK(frame()->document());
     if (SchemeRegistry::shouldTreatURLSchemeAsLegacy(url.protocol()) &&
@@ -799,8 +791,8 @@ ResourceRequestBlockedReason FrameFetchContext::canRequestInternal(
       Deprecation::countDeprecation(
           frame()->document(), UseCounter::LegacyProtocolEmbeddedAsSubresource);
 
-      // TODO(mkwst): Drop the runtime-enabled check in M59:
-      // https://www.chromestatus.com/feature/5709390967472128
+      // TODO(mkwst): Enabled by default in M59. Drop the runtime-enabled check
+      // in M60: https://www.chromestatus.com/feature/5709390967472128
       if (RuntimeEnabledFeatures::blockLegacySubresourcesEnabled())
         return ResourceRequestBlockedReason::Origin;
     }
@@ -808,6 +800,10 @@ ResourceRequestBlockedReason FrameFetchContext::canRequestInternal(
       Deprecation::countDeprecation(
           frame()->document(),
           UseCounter::RequestedSubresourceWithEmbeddedCredentials);
+      // TODO(mkwst): Remove the runtime-enabled check in M59:
+      // https://www.chromestatus.com/feature/5669008342777856
+      if (RuntimeEnabledFeatures::blockCredentialedSubresourcesEnabled())
+        return ResourceRequestBlockedReason::Origin;
     }
   }
 

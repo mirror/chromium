@@ -53,6 +53,7 @@
 #include "chrome/browser/nacl_host/nacl_browser_delegate_impl.h"
 #include "chrome/browser/net_benchmarking.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
+#include "chrome/browser/page_load_metrics/experiments/delay_navigation_throttle.h"
 #include "chrome/browser/page_load_metrics/metrics_navigation_throttle.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/permissions/permission_context_base.h"
@@ -177,7 +178,6 @@
 #include "content/public/common/sandbox_type.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
-#include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
 #include "content/public/common/web_preferences.h"
 #include "device/bluetooth/adapter_factory.h"
@@ -196,7 +196,6 @@
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
 #include "printing/features/features.h"
-#include "services/image_decoder/public/interfaces/constants.mojom.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/public/cpp/interface_registry.h"
@@ -654,7 +653,7 @@ bool HandleWebUI(GURL* url, content::BrowserContext* browser_context) {
   if (user_manager::UserManager::Get()->IsLoggedInAsGuest()) {
     if (url->SchemeIs(content::kChromeUIScheme) &&
         (url->DomainIs(chrome::kChromeUIBookmarksHost) ||
-         url->DomainIs(content::kChromeUIHistoryHost))) {
+         url->DomainIs(chrome::kChromeUIHistoryHost))) {
       // Rewrite with new tab URL
       *url = GURL(chrome::kChromeUINewTabURL);
     }
@@ -1874,7 +1873,6 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kDisableBundledPpapiFlash,
       switches::kDisableCastStreamingHWEncoding,
       switches::kDisableJavaScriptHarmonyShipping,
-      switches::kDisableNewBookmarkApps,
       switches::kEnableBenchmarking,
       switches::kEnableDistillabilityService,
       switches::kEnableNaCl,
@@ -1883,7 +1881,6 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kEnableNaClNonSfiMode,
 #endif
       switches::kEnableNetBenchmarking,
-      switches::kEnableNewBookmarkApps,
 #if !defined(DISABLE_NACL)
       switches::kForcePNaClSubzero,
 #endif
@@ -3257,8 +3254,6 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
   services->insert(std::make_pair("media",
                                   base::ASCIIToUTF16("Media Service")));
 #endif
-  services->insert(std::make_pair(image_decoder::mojom::kServiceName,
-                                  base::ASCIIToUTF16("Image Decoder Service")));
 }
 
 std::unique_ptr<base::Value>
@@ -3362,17 +3357,22 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
     content::NavigationHandle* handle) {
   std::vector<std::unique_ptr<content::NavigationThrottle>> throttles;
 
+  // MetricsNavigationThrottle requires that it runs before NavigationThrottles
+  // that may delay or cancel navigations, so only NavigationThrottles that
+  // don't delay or cancel navigations (e.g. throttles that are only observing
+  // callbacks without affecting navigation behavior) should be added before
+  // MetricsNavigationThrottle.
+  if (handle->IsInMainFrame()) {
+    throttles.push_back(
+        page_load_metrics::MetricsNavigationThrottle::Create(handle));
+  }
+
 #if BUILDFLAG(ENABLE_PLUGINS)
   std::unique_ptr<content::NavigationThrottle> flash_url_throttle =
       FlashDownloadInterception::MaybeCreateThrottleFor(handle);
   if (flash_url_throttle)
     throttles.push_back(std::move(flash_url_throttle));
 #endif
-
-  if (handle->IsInMainFrame()) {
-    throttles.push_back(
-        page_load_metrics::MetricsNavigationThrottle::Create(handle));
-  }
 
 #if defined(OS_ANDROID)
   // TODO(davidben): This is insufficient to integrate with prerender properly.
@@ -3428,6 +3428,11 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
   throttles.push_back(
       base::MakeUnique<extensions::ExtensionNavigationThrottle>(handle));
 #endif
+
+  std::unique_ptr<content::NavigationThrottle> delay_navigation_throttle =
+      DelayNavigationThrottle::MaybeCreateThrottleFor(handle);
+  if (delay_navigation_throttle)
+    throttles.push_back(std::move(delay_navigation_throttle));
 
   return throttles;
 }

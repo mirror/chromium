@@ -72,6 +72,7 @@
 #include "cc/trees/damage_tracker.h"
 #include "cc/trees/debug_rect_history.h"
 #include "cc/trees/draw_property_utils.h"
+#include "cc/trees/effect_node.h"
 #include "cc/trees/frame_rate_counter.h"
 #include "cc/trees/latency_info_swap_promise_monitor.h"
 #include "cc/trees/layer_tree_host_common.h"
@@ -79,6 +80,7 @@
 #include "cc/trees/mutator_host.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/single_thread_proxy.h"
+#include "cc/trees/transform_node.h"
 #include "cc/trees/tree_synchronizer.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
@@ -2041,10 +2043,10 @@ void LayerTreeHostImpl::ActivateSyncTree() {
       else
         active_tree_->MoveChangeTrackingToLayers();
     }
+    TreeSynchronizer::PushLayerProperties(pending_tree(), active_tree());
     active_tree_->property_trees()->PushOpacityIfNeeded(
         pending_tree_->property_trees());
 
-    TreeSynchronizer::PushLayerProperties(pending_tree(), active_tree());
     pending_tree_->PushPropertiesTo(active_tree_.get());
     if (!pending_tree_->LayerListIsEmpty())
       pending_tree_->property_trees()->ResetAllChangeTracking();
@@ -2237,7 +2239,8 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     *raster_buffer_provider = base::MakeUnique<GpuRasterBufferProvider>(
         compositor_context_provider, worker_context_provider,
         resource_provider_.get(), settings_.use_distance_field_text,
-        msaa_sample_count, settings_.async_worker_context_enabled);
+        msaa_sample_count, settings_.renderer_settings.preferred_tile_format,
+        settings_.async_worker_context_enabled);
     return;
   }
 
@@ -2904,7 +2907,15 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
       MainThreadScrollingReason::kNotScrollingOnMain;
   ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
   ScrollNode* scroll_node = scroll_tree.CurrentlyScrollingNode();
+
   if (scroll_node) {
+    // Flash the overlay scrollbar even if the scroll dalta is 0.
+    ScrollbarAnimationController* animation_controller =
+        ScrollbarAnimationControllerForId(scroll_node->owning_layer_id);
+
+    if (animation_controller)
+      animation_controller->WillUpdateScroll();
+
     gfx::Vector2dF delta = scroll_delta;
     if (!scroll_node->user_scrollable_horizontal)
       delta.set_x(0);
@@ -2943,6 +2954,13 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
           viewport()->MainScrollLayer() &&
           viewport()->MainScrollLayer()->scroll_tree_index() == scroll_node->id;
       if (scrolls_main_viewport_scroll_layer) {
+        // Flash the overlay scrollbar even if the scroll dalta is 0.
+        ScrollbarAnimationController* animation_controller =
+            ScrollbarAnimationControllerForId(scroll_node->owning_layer_id);
+
+        if (animation_controller)
+          animation_controller->WillUpdateScroll();
+
         gfx::Vector2dF scrolled =
             viewport()->ScrollAnimated(pending_delta, delayed_by);
         // Viewport::ScrollAnimated returns pending_delta as long as it starts
@@ -3187,8 +3205,17 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
   DCHECK(scroll_state);
 
   TRACE_EVENT0("cc", "LayerTreeHostImpl::ScrollBy");
-  if (!CurrentlyScrollingNode())
+  ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
+  ScrollNode* scroll_node = scroll_tree.CurrentlyScrollingNode();
+
+  if (!scroll_node)
     return InputHandlerScrollResult();
+
+  ScrollbarAnimationController* animation_controller =
+      ScrollbarAnimationControllerForId(scroll_node->owning_layer_id);
+
+  if (animation_controller)
+    animation_controller->WillUpdateScroll();
 
   float initial_top_controls_offset =
       browser_controls_offset_manager_->ControlsTopOffset();
@@ -4120,13 +4147,75 @@ void LayerTreeHostImpl::ElementIsAnimatingChanged(
     ElementListType list_type,
     const PropertyAnimationState& mask,
     const PropertyAnimationState& state) {
+  // TODO(weiliangc): Most of the code is duplicated with LayerTeeHost version
+  // of function. Should try to share code.
   LayerTreeImpl* tree =
       list_type == ElementListType::ACTIVE ? active_tree() : pending_tree();
   if (!tree)
     return;
-  LayerImpl* layer = tree->LayerByElementId(element_id);
-  if (layer)
-    layer->OnIsAnimatingChanged(mask, state);
+  PropertyTrees* property_trees = tree->property_trees();
+
+  for (int property = TargetProperty::FIRST_TARGET_PROPERTY;
+       property <= TargetProperty::LAST_TARGET_PROPERTY; ++property) {
+    if (!mask.currently_running[property] &&
+        !mask.potentially_animating[property])
+      continue;
+
+    switch (property) {
+      case TargetProperty::TRANSFORM:
+        if (TransformNode* transform_node =
+                property_trees->transform_tree.FindNodeFromElementId(
+                    element_id)) {
+          if (mask.currently_running[property])
+            transform_node->is_currently_animating =
+                state.currently_running[property];
+          if (mask.potentially_animating[property]) {
+            transform_node->has_potential_animation =
+                state.potentially_animating[property];
+            transform_node->has_only_translation_animations =
+                mutator_host()->HasOnlyTranslationTransforms(element_id,
+                                                             list_type);
+            property_trees->transform_tree.set_needs_update(true);
+            tree->set_needs_update_draw_properties();
+            // TODO(crbug.com/702777):
+            // was_ever_ready_since_last_transform_animation should not live on
+            // layers.
+            if (LayerImpl* layer = tree->LayerByElementId(element_id)) {
+              layer->set_was_ever_ready_since_last_transform_animation(false);
+            }
+          }
+        }
+        break;
+      case TargetProperty::OPACITY:
+        if (EffectNode* effect_node =
+                property_trees->effect_tree.FindNodeFromElementId(element_id)) {
+          if (mask.currently_running[property])
+            effect_node->is_currently_animating_opacity =
+                state.currently_running[property];
+          if (mask.potentially_animating[property]) {
+            effect_node->has_potential_opacity_animation =
+                state.potentially_animating[property];
+            property_trees->effect_tree.set_needs_update(true);
+          }
+        }
+        break;
+      case TargetProperty::FILTER:
+        if (EffectNode* effect_node =
+                property_trees->effect_tree.FindNodeFromElementId(element_id)) {
+          if (mask.currently_running[property])
+            effect_node->is_currently_animating_filter =
+                state.currently_running[property];
+          if (mask.potentially_animating[property])
+            effect_node->has_potential_filter_animation =
+                state.potentially_animating[property];
+          // Filter animation changes only the node, and the subtree does not
+          // care. There is no need to request update on property trees here.
+        }
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 void LayerTreeHostImpl::ScrollOffsetAnimationFinished() {

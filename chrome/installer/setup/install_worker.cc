@@ -177,7 +177,10 @@ void AddDeleteUninstallEntryForMSIWorkItems(
       << "This must only be called for MSI installations!";
 
   HKEY reg_root = installer_state.root_key();
-  base::string16 uninstall_reg(product.distribution()->GetUninstallRegPath());
+  // Assert that this is only called with the one relevant distribution.
+  // TODO(grt): Remove this when BrowserDistribution goes away.
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), product.distribution());
+  base::string16 uninstall_reg = install_static::GetUninstallRegistryPath();
 
   WorkItem* delete_reg_key = work_item_list->AddDeleteRegKeyWorkItem(
       reg_root, uninstall_reg, KEY_WOW64_32KEY);
@@ -264,24 +267,6 @@ void AddChromeWorkItems(const InstallationState& original_state,
       ->AddDeleteTreeWorkItem(target_path.Append(installer::kChromeOldExe),
                               temp_path)
       ->set_best_effort(true);
-}
-
-// Adds work items to remove COM registration for |product|'s deprecated
-// DelegateExecute verb handler.
-void AddCleanupDelegateExecuteWorkItems(const InstallerState& installer_state,
-                                        const Product& product,
-                                        WorkItemList* list) {
-  VLOG(1) << "Adding unregistration items for DelegateExecute verb handler.";
-  const base::string16 handler_class_uuid =
-      product.distribution()->GetCommandExecuteImplClsid();
-  DCHECK(!handler_class_uuid.empty());
-
-  const HKEY root = installer_state.root_key();
-  base::string16 delegate_execute_path(L"Software\\Classes\\CLSID\\");
-  delegate_execute_path.append(handler_class_uuid);
-  // Delete both 64 and 32 keys to handle 32->64 or 64->32 migration.
-  list->AddDeleteRegKeyWorkItem(root, delegate_execute_path, KEY_WOW64_32KEY);
-  list->AddDeleteRegKeyWorkItem(root, delegate_execute_path, KEY_WOW64_64KEY);
 }
 
 // Add to the ACL of an object on disk. This follows the method from MSDN:
@@ -435,7 +420,10 @@ void AddUninstallShortcutWorkItems(const InstallerState& installer_state,
     DCHECK_EQ(quoted_uninstall_cmd.GetCommandLineString()[0], '"');
     quoted_uninstall_cmd.AppendArguments(uninstall_arguments, false);
 
-    base::string16 uninstall_reg = browser_dist->GetUninstallRegPath();
+    // Assert that this is only called with the one relevant distribution.
+    // TODO(grt): Remove this when BrowserDistribution goes away.
+    DCHECK_EQ(BrowserDistribution::GetDistribution(), browser_dist);
+    base::string16 uninstall_reg = install_static::GetUninstallRegistryPath();
     install_list->AddCreateRegKeyWorkItem(
         reg_root, uninstall_reg, KEY_WOW64_32KEY);
     install_list->AddSetRegValueWorkItem(reg_root,
@@ -458,9 +446,9 @@ void AddUninstallShortcutWorkItems(const InstallerState& installer_state,
                                          install_path.value(),
                                          true);
 
-    BrowserDistribution* dist = product.distribution();
-    base::string16 chrome_icon = ShellUtil::FormatIconLocation(
-        install_path.Append(dist->GetIconFilename()), dist->GetIconIndex());
+    base::string16 chrome_icon =
+        ShellUtil::FormatIconLocation(install_path.Append(kChromeExe),
+                                      install_static::GetIconResourceIndex());
     install_list->AddSetRegValueWorkItem(reg_root,
                                          uninstall_reg,
                                          KEY_WOW64_32KEY,
@@ -733,7 +721,6 @@ void AddInstallWorkItems(const InstallationState& original_state,
   AddVersionKeyWorkItems(root, dist->GetVersionKey(), dist->GetDisplayName(),
                          new_version, add_language_identifier, install_list);
 
-  AddCleanupDelegateExecuteWorkItems(installer_state, product, install_list);
   AddCleanupDeprecatedPerUserRegistrationsWorkItems(product, install_list);
 
   AddActiveSetupWorkItems(installer_state, new_version, product, install_list);

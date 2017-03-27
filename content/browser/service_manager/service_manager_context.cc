@@ -19,6 +19,7 @@
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/service_manager/merge_dictionary.h"
+#include "content/browser/wake_lock/wake_lock_context_host.h"
 #include "content/common/service_manager/service_manager_connection_impl.h"
 #include "content/grit/content_resources.h"
 #include "content/public/browser/browser_thread.h"
@@ -34,6 +35,7 @@
 #include "services/catalog/public/cpp/manifest_parsing_util.h"
 #include "services/catalog/public/interfaces/constants.mojom.h"
 #include "services/catalog/store.h"
+#include "services/data_decoder/public/interfaces/constants.mojom.h"
 #include "services/device/device_service.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/service_manager/connect_params.h"
@@ -283,10 +285,20 @@ ServiceManagerContext::ServiceManagerContext() {
 
 
   ServiceInfo device_info;
+#if defined(OS_ANDROID)
+  // See the comments on wake_lock_context_host.h for details on this
+  // callback.
+  device_info.factory =
+      base::Bind(&device::CreateDeviceService,
+                 BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
+                 BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+                 base::Bind(&WakeLockContextHost::GetNativeViewForContext));
+#else
   device_info.factory =
       base::Bind(&device::CreateDeviceService,
                  BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
                  BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+#endif
   device_info.task_runner = base::ThreadTaskRunnerHandle::Get();
   packaged_services_connection_->AddEmbeddedService(device::mojom::kServiceName,
                                                     device_info);
@@ -308,6 +320,9 @@ ServiceManagerContext::ServiceManagerContext() {
   GetContentClient()
       ->browser()
       ->RegisterOutOfProcessServices(&sandboxed_services);
+  sandboxed_services.insert(
+      std::make_pair(data_decoder::mojom::kServiceName,
+                     base::ASCIIToUTF16("Data Decoder Service")));
   for (const auto& service : sandboxed_services) {
     packaged_services_connection_->AddServiceRequestHandler(
         service.first, base::Bind(&StartServiceInUtilityProcess, service.first,

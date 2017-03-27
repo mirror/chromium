@@ -117,6 +117,9 @@ const char kCloudPrintJobTitle[]            = "cloud-print-job-title";
 // print job. Defaults to null if unspecified.
 const char kCloudPrintPrintTicket[]         = "cloud-print-print-ticket";
 
+// Causes the process to run as a cloud print service process.
+const char kCloudPrintServiceProcess[]      = "cloud-print-service";
+
 // Setup cloud print proxy for provided printers. This does not start
 // service or register proxy for autostart.
 const char kCloudPrintSetupProxy[]          = "cloud-print-setup-proxy";
@@ -232,9 +235,6 @@ const char kDisableHttp2[] = "disable-http2";
 const char kDisableMinimizeOnSecondLauncherItemClick[] =
     "disable-minimize-on-second-launcher-item-click";
 
-// Disables the new bookmark app system.
-const char kDisableNewBookmarkApps[]        = "disable-new-bookmark-apps";
-
 // Disable auto-reload of error pages if offline.
 const char kDisableOfflineAutoReload[]      = "disable-offline-auto-reload";
 
@@ -321,8 +321,8 @@ const char kEnableBookmarkUndo[]            = "enable-bookmark-undo";
 const char kEnableClearBrowsingDataCounters[] =
     "enable-clear-browsing-data-counters";
 
-// This applies only when the process type is "service". Enables the Cloud
-// Print Proxy component within the service process.
+// This applies only when the process type is "cloud-print-service". Enables the
+// Cloud Print Proxy component within the service process.
 const char kEnableCloudPrintProxy[]         = "enable-cloud-print-proxy";
 
 // Enable device discovery notifications.
@@ -367,9 +367,6 @@ const char kEnableNavigationTracing[] = "enable-navigation-tracing";
 
 // Enables the network-related benchmarking extensions.
 const char kEnableNetBenchmarking[]         = "enable-net-benchmarking";
-
-// Enables the new bookmark app system.
-const char kEnableNewBookmarkApps[]         = "enable-new-bookmark-apps";
 
 // Enable auto-reload of error pages if offline.
 const char kEnableOfflineAutoReload[]       = "enable-offline-auto-reload";
@@ -769,9 +766,6 @@ const char kRestoreLastSession[]            = "restore-last-session";
 // See http://crbug.com/120416 for how to remove this switch.
 const char kSavePageAsMHTML[]               = "save-page-as-mhtml";
 
-// Causes the process to run as a service process.
-const char kServiceProcess[]                = "service";
-
 // If true the app list will be shown.
 const char kShowAppList[]                   = "show-app-list";
 
@@ -949,6 +943,9 @@ const char kWebApkServerUrl[] = "webapk-server-url";
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
+// Enables apps on the login screen.
+const char kEnableLoginScreenApps[] = "enable-login-screen-apps";
+
 // Enables native cups integration
 const char kEnableNativeCups[] = "enable-native-cups";
 
@@ -1121,6 +1118,15 @@ const char kWindows8Search[]                = "windows8-search";
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
 // Used to enable Mus+ash.
 const char kMash[]                          = "mash";
+
+// Used to enable mus as a separate process, but chrome+ash still together.
+const char kMus[] = "mus";
+
+// This is added to child processes launched from mash or mus. The value of
+// this switch is either kMus or kMash. For example, if chrome is run with
+// '--mash' then the child process representing ash is launched with the
+// switch '--mus-config=mash'.
+const char kMusConfig[] = "mus-config";
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OFFICIAL_BUILD)

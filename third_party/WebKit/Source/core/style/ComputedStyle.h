@@ -203,46 +203,19 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // !START SYNC!: Keep this in sync with the copy constructor in
   // ComputedStyle.cpp.
 
-  // inherit
-  struct InheritedData {
-    InheritedData()
-        : m_hasSimpleUnderline(false),
-          m_insideLink(static_cast<unsigned>(EInsideLink::kNotInsideLink)) {}
-
-    bool operator==(const InheritedData& other) const {
-      // Generated properties are compared in ComputedStyleBase
-      return (m_hasSimpleUnderline == other.m_hasSimpleUnderline) &&
-             (m_insideLink == other.m_insideLink);
-    }
-
-    bool operator!=(const InheritedData& other) const {
-      return !(*this == other);
-    }
-
-    unsigned m_hasSimpleUnderline : 1;  // True if 'underline solid' is the only
-                                        // text decoration on this element.
-
-    // non CSS2 inherited
-    unsigned m_insideLink : 2;     // EInsideLink
-  } m_inheritedData;
-
   // don't inherit
   struct NonInheritedData {
     NonInheritedData()
-        : m_effectiveDisplay(static_cast<unsigned>(initialDisplay())),
-          m_originalDisplay(static_cast<unsigned>(initialDisplay())),
+        : m_originalDisplay(static_cast<unsigned>(initialDisplay())),
           m_verticalAlign(static_cast<unsigned>(initialVerticalAlign())),
           m_hasViewportUnits(false),
-          m_styleType(PseudoIdNone),
-          m_pseudoBits(0),
           m_hasRemUnits(false) {}
 
     // Compare computed styles, differences in inherited bits or other flags
     // should not cause an inequality.
     bool operator==(const NonInheritedData& other) const {
       // Generated properties are compared in ComputedStyleBase
-      return m_effectiveDisplay == other.m_effectiveDisplay &&
-             m_originalDisplay == other.m_originalDisplay &&
+      return m_originalDisplay == other.m_originalDisplay &&
              m_verticalAlign == other.m_verticalAlign;
       // Differences in the following fields do not cause inequality:
       // hasViewportUnits
@@ -263,7 +236,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
       return !(*this == other);
     }
 
-    unsigned m_effectiveDisplay : 5;  // EDisplay
     unsigned m_originalDisplay : 5;   // EDisplay
     unsigned m_verticalAlign : 4;     // EVerticalAlign
 
@@ -271,13 +243,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     // It is mutable so we can pass around const ComputedStyles to resolve
     // lengths.
     mutable unsigned m_hasViewportUnits : 1;
-
-    // 32 bits
-
-    unsigned m_styleType : 6;  // PseudoId
-    unsigned m_pseudoBits : 8;
-
-    // 64 bits
 
     mutable unsigned m_hasRemUnits : 1;
 
@@ -344,12 +309,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
                    IsAtShadowBoundary = NotAtShadowBoundary);
   void copyNonInheritedFromCached(const ComputedStyle&);
 
-  PseudoId styleType() const {
-    return static_cast<PseudoId>(m_nonInheritedData.m_styleType);
-  }
-  void setStyleType(PseudoId styleType) {
-    m_nonInheritedData.m_styleType = styleType;
-  }
+  PseudoId styleType() const { return static_cast<PseudoId>(m_styleType); }
+  void setStyleType(PseudoId styleType) { m_styleType = styleType; }
 
   ComputedStyle* getCachedPseudoStyle(PseudoId) const;
   ComputedStyle* addCachedPseudoStyle(PassRefPtr<ComputedStyle>);
@@ -839,15 +800,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   void setContent(ContentData*);
 
   // display
-  static EDisplay initialDisplay() { return EDisplay::kInline; }
-  EDisplay display() const {
-    return static_cast<EDisplay>(m_nonInheritedData.m_effectiveDisplay);
-  }
   EDisplay originalDisplay() const {
     return static_cast<EDisplay>(m_nonInheritedData.m_originalDisplay);
-  }
-  void setDisplay(EDisplay v) {
-    m_nonInheritedData.m_effectiveDisplay = static_cast<unsigned>(v);
   }
   void setOriginalDisplay(EDisplay v) {
     m_nonInheritedData.m_originalDisplay = static_cast<unsigned>(v);
@@ -2431,13 +2385,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     SET_VAR(m_rareNonInheritedData, m_hasCompositorProxy, b);
   }
 
-  EInsideLink insideLink() const {
-    return static_cast<EInsideLink>(m_inheritedData.m_insideLink);
-  }
-  void setInsideLink(EInsideLink insideLink) {
-    m_inheritedData.m_insideLink = static_cast<unsigned>(insideLink);
-  }
-
   bool requiresAcceleratedCompositingForExternalReasons(bool b) {
     return m_rareNonInheritedData
         ->m_requiresAcceleratedCompositingForExternalReasons;
@@ -3283,6 +3230,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   ETransformStyle3D usedTransformStyle3D() const {
     return hasGroupingProperty() ? TransformStyle3DFlat : transformStyle3D();
   }
+  // Returns whether the transform operations for |otherStyle| differ from the
+  // operations for this style instance. Note that callers may want to also
+  // check hasTransform(), as it is possible for two styles to have matching
+  // transform operations but differ in other transform-impacting style
+  // respects.
   bool transformDataEquivalent(const ComputedStyle& otherStyle) const {
     return m_rareNonInheritedData->m_transform ==
            otherStyle.m_rareNonInheritedData->m_transform;
@@ -3696,6 +3648,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   StyleInheritedVariables& mutableInheritedVariables();
   StyleNonInheritedVariables& mutableNonInheritedVariables();
+
+  FRIEND_TEST_ALL_PREFIXES(
+      ComputedStyleTest,
+      UpdatePropertySpecificDifferencesRespectsTransformAnimation);
 };
 
 // FIXME: Reduce/remove the dependency on zoom adjusted int values.
@@ -3768,24 +3724,23 @@ inline bool ComputedStyle::setTextOrientation(TextOrientation textOrientation) {
 }
 
 inline bool ComputedStyle::hasAnyPublicPseudoStyles() const {
-  return m_nonInheritedData.m_pseudoBits;
+  return m_pseudoBits;
 }
 
 inline bool ComputedStyle::hasPseudoStyle(PseudoId pseudo) const {
   DCHECK(pseudo >= FirstPublicPseudoId);
   DCHECK(pseudo < FirstInternalPseudoId);
-  return (1 << (pseudo - FirstPublicPseudoId)) &
-         m_nonInheritedData.m_pseudoBits;
+  return (1 << (pseudo - FirstPublicPseudoId)) & m_pseudoBits;
 }
 
 inline void ComputedStyle::setHasPseudoStyle(PseudoId pseudo) {
   DCHECK(pseudo >= FirstPublicPseudoId);
   DCHECK(pseudo < FirstInternalPseudoId);
-  m_nonInheritedData.m_pseudoBits |= 1 << (pseudo - FirstPublicPseudoId);
+  m_pseudoBits |= 1 << (pseudo - FirstPublicPseudoId);
 }
 
 inline bool ComputedStyle::hasPseudoElementStyle() const {
-  return m_nonInheritedData.m_pseudoBits & ElementPseudoIdMask;
+  return m_pseudoBits & ElementPseudoIdMask;
 }
 
 }  // namespace blink

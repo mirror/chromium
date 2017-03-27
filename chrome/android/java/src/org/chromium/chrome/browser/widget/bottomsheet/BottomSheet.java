@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.widget.bottomsheet;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Region;
@@ -68,9 +69,13 @@ public class BottomSheet
 
     /**
      * The fraction of the way to the next state the sheet must be swiped to animate there when
-     * released. A smaller value here means a smaller swipe is needed to move the sheet around.
+     * released. This is the value used when there are 3 active states. A smaller value here means
+     * a smaller swipe is needed to move the sheet around.
      */
-    private static final float THRESHOLD_TO_NEXT_STATE = 0.5f;
+    private static final float THRESHOLD_TO_NEXT_STATE_3 = 0.5f;
+
+    /** This is similar to {@link #THRESHOLD_TO_NEXT_STATE_3} but for 2 states instead of 3. */
+    private static final float THRESHOLD_TO_NEXT_STATE_2 = 0.3f;
 
     /** The minimum y/x ratio that a scroll must have to be considered vertical. */
     private static final float MIN_VERTICAL_SCROLL_SLOPE = 2.0f;
@@ -148,9 +153,6 @@ public class BottomSheet
      * its own toolbar and when the bottom sheet is closed.
      */
     private View mDefaultToolbarView;
-
-    /** The last non-default toolbar view that was attached to mToolbarHolder. */
-    private View mLastToolbarView;
 
     /** Whether the sheet is currently open. */
     private boolean mIsSheetOpen;
@@ -483,6 +485,8 @@ public class BottomSheet
         return mContainerHeight - getTranslationY();
     }
 
+    private ValueAnimator mToolbarFadeAnimator;
+
     /**
      * Show content in the bottom sheet's content area.
      * @param content The {@link BottomSheetContent} to show.
@@ -491,36 +495,78 @@ public class BottomSheet
         // If the desired content is already showing, do nothing.
         if (mSheetContent == content) return;
 
+        View newToolbar = content.getToolbarView();
+        View oldToolbar = null;
+
         if (mSheetContent != null) {
+            oldToolbar = mSheetContent.getToolbarView();
             mBottomSheetContentContainer.removeView(mSheetContent.getContentView());
             mSheetContent = null;
-        }
-
-        if (content == null) {
-            mBottomSheetContentContainer.addView(mPlaceholder);
-            return;
         }
 
         mBottomSheetContentContainer.removeView(mPlaceholder);
         mSheetContent = content;
         mBottomSheetContentContainer.addView(mSheetContent.getContentView());
 
-        if (mLastToolbarView != null) {
-            mToolbarHolder.removeView(mLastToolbarView);
-            mLastToolbarView = null;
-        }
-
-        if (mSheetContent.getToolbarView() != null) {
-            mLastToolbarView = mSheetContent.getToolbarView();
-            mToolbarHolder.addView(mSheetContent.getToolbarView());
-            mDefaultToolbarView.setVisibility(View.GONE);
-        } else {
-            mDefaultToolbarView.setVisibility(View.VISIBLE);
-        }
+        doToolbarSwap(newToolbar, oldToolbar);
 
         for (BottomSheetObserver o : mObservers) {
             o.onSheetContentChanged(mSheetContent);
         }
+    }
+
+    /**
+     * Fade between a new toolbar and the old toolbar to be shown. A null parameter can be used to
+     * refer to the default omnibox toolbar. Normally, the new toolbar is attached to the toolbar
+     * container and faded in. In the case of the default toolbar, the old toolbar is faded out.
+     * This is because the default toolbar it is always attached to the view hierarchy and sits
+     * behind the attach point for the other toolbars.
+     * @param newToolbar The toolbar that will be shown.
+     * @param oldToolbar The toolbar being replaced.
+     */
+    private void doToolbarSwap(View newToolbar, View oldToolbar) {
+        if (mToolbarFadeAnimator != null) mToolbarFadeAnimator.end();
+
+        final View targetToolbar = newToolbar != null ? newToolbar : mDefaultToolbarView;
+        final View currentToolbar = oldToolbar != null ? oldToolbar : mDefaultToolbarView;
+
+        if (targetToolbar == currentToolbar) return;
+
+        if (targetToolbar != mDefaultToolbarView) {
+            mToolbarHolder.addView(targetToolbar);
+            targetToolbar.setAlpha(0f);
+        } else {
+            targetToolbar.setVisibility(View.VISIBLE);
+            targetToolbar.setAlpha(1f);
+        }
+
+        mToolbarFadeAnimator = ObjectAnimator.ofFloat(0, 1);
+        mToolbarFadeAnimator.setDuration(BASE_ANIMATION_DURATION_MS);
+        mToolbarFadeAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                if (targetToolbar == mDefaultToolbarView) {
+                    currentToolbar.setAlpha(1f - animator.getAnimatedFraction());
+                } else {
+                    targetToolbar.setAlpha(animator.getAnimatedFraction());
+                }
+            }
+        });
+        mToolbarFadeAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                targetToolbar.setAlpha(1f);
+                currentToolbar.setAlpha(0f);
+                if (currentToolbar != mDefaultToolbarView) {
+                    mToolbarHolder.removeView(currentToolbar);
+                } else {
+                    currentToolbar.setVisibility(View.GONE);
+                }
+                mToolbarFadeAnimator = null;
+            }
+        });
+
+        mToolbarFadeAnimator.start();
     }
 
     /**
@@ -816,6 +862,9 @@ public class BottomSheet
         if (sheetHeight <= getMinOffset()) return SHEET_STATE_PEEK;
         if (sheetHeight >= getMaxOffset()) return SHEET_STATE_FULL;
 
+        // When the sheet is moving downward skip the half state.
+        boolean shouldSkipHalfState = yVelocity < 0;
+
         // First, find the two states that the sheet height is between.
         @SheetState
         int nextState = sStates[0];
@@ -823,6 +872,7 @@ public class BottomSheet
         @SheetState
         int prevState = nextState;
         for (int i = 0; i < sStates.length; i++) {
+            if (sStates[i] == SHEET_STATE_HALF && shouldSkipHalfState) continue;
             prevState = nextState;
             nextState = sStates[i];
             // The values in PanelState are ascending, they should be kept that way in order for
@@ -838,8 +888,9 @@ public class BottomSheet
         float lowerBound = getSheetHeightForState(prevState);
         float distance = getSheetHeightForState(nextState) - lowerBound;
 
-        float inverseThreshold = 1.0f - THRESHOLD_TO_NEXT_STATE;
-        float thresholdToNextState = yVelocity < 0.0f ? THRESHOLD_TO_NEXT_STATE : inverseThreshold;
+        float threshold =
+                shouldSkipHalfState ? THRESHOLD_TO_NEXT_STATE_2 : THRESHOLD_TO_NEXT_STATE_3;
+        float thresholdToNextState = yVelocity < 0.0f ? 1.0f - threshold : threshold;
 
         if ((sheetHeight - lowerBound) / distance > thresholdToNextState) {
             return nextState;

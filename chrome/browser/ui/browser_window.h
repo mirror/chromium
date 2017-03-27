@@ -42,6 +42,7 @@ class SaveCardBubbleView;
 namespace content {
 class WebContents;
 struct NativeWebKeyboardEvent;
+enum class KeyboardEventProcessingResult;
 }
 
 namespace extensions {
@@ -293,11 +294,11 @@ class BrowserWindow : public ui::BaseWindow {
   // that it's time to redraw everything.
   virtual void UserChangedTheme() = 0;
 
-  // Shows the website settings using the specified information. |virtual_url|
+  // Shows Page Info using the specified information. |virtual_url|
   // is the virtual url of the page/frame the info applies to, |ssl| is the SSL
   // information for that page/frame. If |show_history| is true, a section
   // showing how many times that URL has been visited is added to the page info.
-  virtual void ShowWebsiteSettings(
+  virtual void ShowPageInfo(
       Profile* profile,
       content::WebContents* web_contents,
       const GURL& virtual_url,
@@ -308,12 +309,8 @@ class BrowserWindow : public ui::BaseWindow {
 
   // Allows the BrowserWindow object to handle the specified keyboard event
   // before sending it to the renderer.
-  // Returns true if the |event| was handled. Otherwise, if the |event| would
-  // be handled in HandleKeyboardEvent() method as a normal keyboard shortcut,
-  // |*is_keyboard_shortcut| should be set to true.
-  virtual bool PreHandleKeyboardEvent(
-      const content::NativeWebKeyboardEvent& event,
-      bool* is_keyboard_shortcut) = 0;
+  virtual content::KeyboardEventProcessingResult PreHandleKeyboardEvent(
+      const content::NativeWebKeyboardEvent& event) = 0;
 
   // Allows the BrowserWindow object to handle the specified keyboard event,
   // if the renderer did not process it.

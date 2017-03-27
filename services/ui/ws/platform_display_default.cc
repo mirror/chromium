@@ -37,8 +37,7 @@ PlatformDisplayDefault::PlatformDisplayDefault(
       image_cursors_(new ImageCursors),
 #endif
       metrics_(metrics),
-      widget_(gfx::kNullAcceleratedWidget),
-      init_device_scale_factor_(metrics.device_scale_factor) {
+      widget_(gfx::kNullAcceleratedWidget) {
 }
 
 PlatformDisplayDefault::~PlatformDisplayDefault() {
@@ -50,6 +49,10 @@ PlatformDisplayDefault::~PlatformDisplayDefault() {
   // destruction and we want to be in a known state. But destroy the surface
   // first because it can still be using the platform window.
   platform_window_.reset();
+}
+
+EventSink* PlatformDisplayDefault::GetEventSink() {
+  return delegate_->GetEventSink();
 }
 
 void PlatformDisplayDefault::Init(PlatformDisplayDelegate* delegate) {
@@ -125,10 +128,10 @@ FrameGenerator* PlatformDisplayDefault::GetFrameGenerator() {
   return frame_generator_.get();
 }
 
-bool PlatformDisplayDefault::UpdateViewportMetrics(
+void PlatformDisplayDefault::UpdateViewportMetrics(
     const display::ViewportMetrics& metrics) {
   if (metrics_ == metrics)
-    return false;
+    return;
 
   gfx::Rect bounds = platform_window_->GetBounds();
   if (bounds.size() != metrics.bounds_in_pixels.size()) {
@@ -137,9 +140,10 @@ bool PlatformDisplayDefault::UpdateViewportMetrics(
   }
 
   metrics_ = metrics;
-  if (frame_generator_)
+  if (frame_generator_) {
     frame_generator_->SetDeviceScaleFactor(metrics_.device_scale_factor);
-  return true;
+    frame_generator_->OnWindowSizeChanged(metrics_.bounds_in_pixels.size());
+  }
 }
 
 gfx::AcceleratedWidget PlatformDisplayDefault::GetAcceleratedWidget() const {
@@ -176,14 +180,18 @@ void PlatformDisplayDefault::DispatchEvent(ui::Event* event) {
   if (event->IsScrollEvent()) {
     // TODO(moshayedi): crbug.com/602859. Dispatch scroll events as
     // they are once we have proper support for scroll events.
-    delegate_->OnEvent(
-        ui::PointerEvent(ui::MouseWheelEvent(*event->AsScrollEvent())));
+
+    ui::PointerEvent pointer_event(
+        ui::MouseWheelEvent(*event->AsScrollEvent()));
+    SendEventToSink(&pointer_event);
   } else if (event->IsMouseEvent()) {
-    delegate_->OnEvent(ui::PointerEvent(*event->AsMouseEvent()));
+    ui::PointerEvent pointer_event(*event->AsMouseEvent());
+    SendEventToSink(&pointer_event);
   } else if (event->IsTouchEvent()) {
-    delegate_->OnEvent(ui::PointerEvent(*event->AsTouchEvent()));
+    ui::PointerEvent pointer_event(*event->AsTouchEvent());
+    SendEventToSink(&pointer_event);
   } else {
-    delegate_->OnEvent(*event);
+    SendEventToSink(event);
   }
 
 #if defined(USE_X11) || defined(USE_OZONE)
@@ -208,7 +216,7 @@ void PlatformDisplayDefault::DispatchEvent(ui::Event* event) {
     // example, from 'M' to '^M'.
     DCHECK_EQ(key_press_event->key_code(), char_event.key_code());
     DCHECK_EQ(key_press_event->flags(), char_event.flags());
-    delegate_->OnEvent(char_event);
+    SendEventToSink(&char_event);
   }
 #endif
 }
@@ -257,8 +265,9 @@ void PlatformDisplayDefault::OnAcceleratedWidgetAvailable(
           std::move(display_private),
           std::move(compositor_frame_sink_client_request));
   frame_generator_ = base::MakeUnique<FrameGenerator>(
-      root_window_, std::move(display_client_compositor_frame_sink));
-  frame_generator_->SetDeviceScaleFactor(init_device_scale_factor_);
+      std::move(display_client_compositor_frame_sink));
+  frame_generator_->OnWindowSizeChanged(root_window_->bounds().size());
+  frame_generator_->SetDeviceScaleFactor(metrics_.device_scale_factor);
 }
 
 void PlatformDisplayDefault::OnAcceleratedWidgetDestroyed() {

@@ -191,7 +191,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
       const String& headerValue,
       ContentSecurityPolicyHeaderType,
       ContentSecurityPolicyHeaderSource,
-      const std::vector<WebContentSecurityPolicyPolicy>&) override;
+      const std::vector<WebContentSecurityPolicy>&) override;
   void didChangeFrameOwnerProperties(HTMLFrameElementBase*) override;
 
   void dispatchWillStartUsingPeerConnectionHandler(
@@ -224,6 +224,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   KURL overrideFlashEmbedWithHTML(const KURL&) override;
 
   void setHasReceivedUserGesture() override;
+
+  void abortClientNavigation() override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);

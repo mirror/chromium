@@ -214,7 +214,7 @@ LayoutObject* LayoutObject::createObject(Element* element,
       return new LayoutGrid(element);
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return nullptr;
 }
 
@@ -422,6 +422,15 @@ LayoutObject* LayoutObject::nextInPreOrder() const {
     return o;
 
   return nextInPreOrderAfterChildren();
+}
+
+bool LayoutObject::hasClipRelatedProperty() const {
+  if (hasClip() || hasOverflowClip() || hasClipPath() ||
+      style()->containsPaint())
+    return true;
+  if (isBox() && toLayoutBox(this)->hasControlClip())
+    return true;
+  return false;
 }
 
 LayoutObject* LayoutObject::nextInPreOrderAfterChildren() const {
@@ -652,7 +661,7 @@ LayoutBox* LayoutObject::enclosingBox() const {
     curr = curr->parent();
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return nullptr;
 }
 
@@ -664,7 +673,7 @@ LayoutBoxModelObject* LayoutObject::enclosingBoxModelObject() const {
     curr = curr->parent();
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return nullptr;
 }
 
@@ -1627,7 +1636,6 @@ void LayoutObject::markAncestorsForOverflowRecalcIfNeeded() {
 void LayoutObject::setNeedsOverflowRecalcAfterStyleChange() {
   bool neededRecalc = needsOverflowRecalcAfterStyleChange();
   setSelfNeedsOverflowRecalcAfterStyleChange();
-  setMayNeedPaintInvalidation();
   if (!neededRecalc)
     markAncestorsForOverflowRecalcIfNeeded();
 }
@@ -1959,8 +1967,7 @@ void LayoutObject::applyFirstLineChanges(const ComputedStyle& oldStyle) {
     RefPtr<ComputedStyle> oldPseudoStyle =
         oldStyle.getCachedPseudoStyle(PseudoIdFirstLine);
     if (styleRef().hasPseudoStyle(PseudoIdFirstLine) && oldPseudoStyle) {
-      RefPtr<ComputedStyle> newPseudoStyle =
-          uncachedFirstLineStyle(mutableStyle());
+      RefPtr<ComputedStyle> newPseudoStyle = uncachedFirstLineStyle();
       if (newPseudoStyle) {
         firstLineStyleDidChange(*oldPseudoStyle, *newPseudoStyle);
         return;
@@ -2194,7 +2201,7 @@ void LayoutObject::mapLocalToAncestor(const LayoutBoxModelObject* ancestor,
 const LayoutObject* LayoutObject::pushMappingToContainer(
     const LayoutBoxModelObject* ancestorToStopAt,
     LayoutGeometryMap& geometryMap) const {
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return nullptr;
 }
 
@@ -3031,8 +3038,7 @@ static PassRefPtr<ComputedStyle> firstLineStyleForCachedUncachedType(
       if (type == Cached)
         return firstLineBlock->getCachedPseudoStyle(PseudoIdFirstLine, style);
       return firstLineBlock->getUncachedPseudoStyle(
-          PseudoStyleRequest(PseudoIdFirstLine), style,
-          firstLineBlock == layoutObject ? style : 0);
+          PseudoStyleRequest(PseudoIdFirstLine), style);
     }
   } else if (!layoutObjectForFirstLineStyle->isAnonymous() &&
              layoutObjectForFirstLineStyle->isLayoutInline() &&
@@ -3050,20 +3056,19 @@ static PassRefPtr<ComputedStyle> firstLineStyleForCachedUncachedType(
             PseudoIdFirstLineInherited, parentStyle);
       }
       return layoutObjectForFirstLineStyle->getUncachedPseudoStyle(
-          PseudoStyleRequest(PseudoIdFirstLineInherited), parentStyle, style);
+          PseudoStyleRequest(PseudoIdFirstLineInherited), parentStyle);
     }
   }
   return nullptr;
 }
 
-PassRefPtr<ComputedStyle> LayoutObject::uncachedFirstLineStyle(
-    ComputedStyle* style) const {
+PassRefPtr<ComputedStyle> LayoutObject::uncachedFirstLineStyle() const {
   if (!document().styleEngine().usesFirstLineRules())
     return nullptr;
 
   ASSERT(!isText());
 
-  return firstLineStyleForCachedUncachedType(Uncached, this, style);
+  return firstLineStyleForCachedUncachedType(Uncached, this, m_style.get());
 }
 
 ComputedStyle* LayoutObject::cachedFirstLineStyle() const {
@@ -3095,16 +3100,13 @@ ComputedStyle* LayoutObject::getCachedPseudoStyle(
 
 PassRefPtr<ComputedStyle> LayoutObject::getUncachedPseudoStyle(
     const PseudoStyleRequest& pseudoStyleRequest,
-    const ComputedStyle* parentStyle,
-    const ComputedStyle* ownStyle) const {
-  if (pseudoStyleRequest.pseudoId < FirstInternalPseudoId && !ownStyle &&
+    const ComputedStyle* parentStyle) const {
+  if (pseudoStyleRequest.pseudoId < FirstInternalPseudoId &&
       !style()->hasPseudoStyle(pseudoStyleRequest.pseudoId))
     return nullptr;
 
-  if (!parentStyle) {
-    ASSERT(!ownStyle);
+  if (!parentStyle)
     parentStyle = style();
-  }
 
   if (!node())
     return nullptr;
@@ -3392,7 +3394,7 @@ AffineTransform LayoutObject::localSVGTransform() const {
 bool LayoutObject::nodeAtFloatPoint(HitTestResult&,
                                     const FloatPoint&,
                                     HitTestAction) {
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return false;
 }
 

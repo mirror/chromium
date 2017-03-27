@@ -19,17 +19,23 @@ WTF::Optional<T> OptionalMax(const WTF::Optional<T>& value1,
   return value2;
 }
 
+bool IsOutOfFlowPositioned(const EPosition& position) {
+  return position == EPosition::kAbsolute || position == EPosition::kFixed;
+}
+
 }  // namespace
 
-bool IsNewFormattingContextForInFlowBlockLevelChild(
-    const NGConstraintSpace& space,
-    const ComputedStyle& style) {
+bool IsNewFormattingContextForBlockLevelChild(const NGConstraintSpace& space,
+                                              const ComputedStyle& style) {
   // TODO(layout-dev): This doesn't capture a few cases which can't be computed
   // directly from style yet:
   //  - The child is a <fieldset>.
   //  - "column-span: all" is set on the child (requires knowledge that we are
   //    in a multi-col formatting context).
   //    (https://drafts.csswg.org/css-multicol-1/#valdef-column-span-all)
+
+  if (style.isFloating() || IsOutOfFlowPositioned(style.position()))
+    return true;
 
   if (style.specifiesColumns() || style.containsPaint() ||
       style.containsLayout())
@@ -77,6 +83,19 @@ WTF::Optional<LayoutUnit> GetClearanceOffset(
       ASSERT_NOT_REACHED();
   }
   return WTF::nullopt;
+}
+
+bool ShouldShrinkToFit(const NGConstraintSpace& parent_space,
+                       const ComputedStyle& style) {
+  NGWritingMode child_writing_mode =
+      FromPlatformWritingMode(style.getWritingMode());
+  // Whether the child and the containing block are parallel to each other.
+  // Example: vertical-rl and vertical-lr
+  bool is_in_parallel_flow =
+      IsParallelWritingMode(parent_space.WritingMode(), child_writing_mode);
+
+  return style.display() == EDisplay::kInlineBlock || style.isFloating() ||
+         !is_in_parallel_flow;
 }
 
 }  // namespace blink

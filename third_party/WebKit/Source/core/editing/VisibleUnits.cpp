@@ -2574,13 +2574,6 @@ InlineBoxPosition computeInlineBoxPosition(const VisiblePosition& position) {
                                   position.affinity());
 }
 
-InlineBoxPosition computeInlineBoxPosition(
-    const VisiblePositionInFlatTree& position) {
-  DCHECK(position.isValid()) << position;
-  return computeInlineBoxPosition(position.deepEquivalent(),
-                                  position.affinity());
-}
-
 InlineBoxPosition computeInlineBoxPosition(const Position& position,
                                            TextAffinity affinity,
                                            TextDirection primaryDirection) {
@@ -4002,6 +3995,57 @@ VisiblePositionInFlatTree previousPositionOf(
   DCHECK(visiblePosition.isValid()) << visiblePosition;
   return previousPositionOfAlgorithm<EditingInFlatTreeStrategy>(
       visiblePosition.deepEquivalent(), rule);
+}
+
+template <typename Strategy>
+static EphemeralRangeTemplate<Strategy> makeSearchRange(
+    const PositionTemplate<Strategy>& pos) {
+  Node* node = pos.computeContainerNode();
+  if (!node)
+    return EphemeralRangeTemplate<Strategy>();
+  Document& document = node->document();
+  if (!document.documentElement())
+    return EphemeralRangeTemplate<Strategy>();
+  Element* boundary = enclosingBlockFlowElement(*node);
+  if (!boundary)
+    return EphemeralRangeTemplate<Strategy>();
+
+  return EphemeralRangeTemplate<Strategy>(
+      pos, PositionTemplate<Strategy>::lastPositionInNode(boundary));
+}
+
+template <typename Strategy>
+static PositionTemplate<Strategy> skipWhitespaceAlgorithm(
+    const PositionTemplate<Strategy>& position) {
+  const EphemeralRangeTemplate<Strategy>& searchRange =
+      makeSearchRange(position);
+  if (searchRange.isNull())
+    return position;
+
+  CharacterIteratorAlgorithm<Strategy> charIt(
+      searchRange.startPosition(), searchRange.endPosition(),
+      TextIteratorBehavior::Builder()
+          .setEmitsCharactersBetweenAllVisiblePositions(true)
+          .build());
+  PositionTemplate<Strategy> runner = position;
+  // TODO(editing-dev): We should consider U+20E3, COMBINING ENCLOSING KEYCAP.
+  // When whitespace character followed by U+20E3, we should not consider
+  // it as trailing white space.
+  for (; charIt.length(); charIt.advance(1)) {
+    UChar c = charIt.characterAt(0);
+    if ((!isSpaceOrNewline(c) && c != noBreakSpaceCharacter) || c == '\n')
+      return runner;
+    runner = charIt.endPosition();
+  }
+  return runner;
+}
+
+Position skipWhitespace(const Position& position) {
+  return skipWhitespaceAlgorithm(position);
+}
+
+PositionInFlatTree skipWhitespace(const PositionInFlatTree& position) {
+  return skipWhitespaceAlgorithm(position);
 }
 
 }  // namespace blink

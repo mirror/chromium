@@ -38,9 +38,8 @@
       }
 
       paper-button {
-        height: 32px;
+        height: 36px;
         margin: 0;
-        border-radius: 2px;
       }
 
       paper-button[toggles][active] {
@@ -84,6 +83,15 @@
           font-weight: 500;
           text-align: start;
         };
+      }
+
+      .primary-toggle {
+        color: var(--paper-grey-600);
+        font-weight: 500;
+      }
+
+      .primary-toggle[checked] {
+        color: var(--google-blue-500);
       }
 
       /* See notes in .primary-button. */
@@ -293,6 +301,12 @@
       .settings-box .start {
         align-items: center;
         flex: auto;
+      }
+
+      [scrollable] .no-outline {
+        background: none;
+        outline: none;
+        cursor: initial;
       }
 
       /* The secondary-action wraps a clickable sub-area of a .settings-box.

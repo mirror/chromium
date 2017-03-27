@@ -21,15 +21,15 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
                          unsigned item_index,
                          unsigned start_offset,
                          unsigned end_offset,
-                         NGPhysicalSize size,
-                         NGPhysicalSize overflow)
-      : NGPhysicalFragment(layout_object, size, overflow, kFragmentText),
+                         NGPhysicalSize size)
+      : NGPhysicalFragment(layout_object, size, kFragmentText),
         node_(node),
         item_index_(item_index),
         start_offset_(start_offset),
         end_offset_(end_offset) {}
 
   const NGInlineNode* Node() const { return node_; }
+  StringView Text() const { return node_->Text(start_offset_, end_offset_); }
 
   // The range of NGLayoutInlineItem.
   unsigned ItemIndex() const { return item_index_; }

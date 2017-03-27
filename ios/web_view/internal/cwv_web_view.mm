@@ -54,6 +54,7 @@
 
 @implementation CWVWebView
 
+@synthesize configuration = _configuration;
 @synthesize navigationDelegate = _navigationDelegate;
 @synthesize translationDelegate = _translationDelegate;
 @synthesize estimatedProgress = _estimatedProgress;
@@ -101,10 +102,6 @@
   [self addSubview:subview];
 }
 
-- (UIView*)view {
-  return _webState->GetView();
-}
-
 - (BOOL)canGoBack {
   return _webState && _webState->GetNavigationManager()->CanGoBack();
 }
@@ -121,7 +118,7 @@
   return net::NSURLWithGURL(_webState->GetVisibleURL());
 }
 
-- (NSString*)pageTitle {
+- (NSString*)title {
   return base::SysUTF16ToNSString(_webState->GetTitle());
 }
 

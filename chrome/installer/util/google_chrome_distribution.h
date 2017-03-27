@@ -37,10 +37,6 @@ class GoogleChromeDistribution : public BrowserDistribution {
 
   base::string16 GetShortcutName() override;
 
-  base::string16 GetIconFilename() override;
-
-  int GetIconIndex() override;
-
   base::string16 GetBaseAppName() override;
 
   base::string16 GetPublisherName() override;
@@ -53,10 +49,6 @@ class GoogleChromeDistribution : public BrowserDistribution {
   // potential use in the uninstall survey. It must be called before the
   // key returned by GetVersionKey() is deleted.
   base::string16 GetDistributionData(HKEY root_key) override;
-
-  base::string16 GetUninstallRegPath() override;
-
-  base::string16 GetCommandExecuteImplClsid() override;
 
   void UpdateInstallStatus(
       bool system_install,

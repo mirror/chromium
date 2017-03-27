@@ -21,6 +21,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/output/begin_frame_args.h"
 #include "cc/output/context_provider.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/transferable_resource.h"
@@ -243,11 +244,7 @@ LaserPointerView::LaserPointerView(base::TimeDelta life_duration,
                       .device_scale_factor();
 }
 
-LaserPointerView::~LaserPointerView() {
-  // Make sure GPU memory buffer is unmapped before being destroyed.
-  if (gpu_memory_buffer_)
-    gpu_memory_buffer_->Unmap();
-}
+LaserPointerView::~LaserPointerView() {}
 
 void LaserPointerView::Stop() {
   buffer_damage_rect_.Union(GetBoundingBox());
@@ -294,7 +291,9 @@ void LaserPointerView::AddNewPoint(const gfx::PointF& new_point,
       base::TimeDelta::FromMilliseconds(kPredictionIntervalMs);
   base::TimeDelta max_point_interval =
       base::TimeDelta::FromMilliseconds(kMaxPointIntervalMs);
-  base::TimeTicks last_point_time = current_time;
+  base::TimeTicks last_point_time = new_time;
+  gfx::PointF last_point_location =
+      gfx::ScalePoint(new_point, scale.x(), scale.y());
 
   // Use the last four points for prediction.
   using PositionArray = std::array<gfx::PointF, 4>;
@@ -306,15 +305,16 @@ void LaserPointerView::AddNewPoint(const gfx::PointF& new_point,
     if ((last_point_time - point.time) > max_point_interval)
       break;
 
-    *it++ = gfx::ScalePoint(point.location, scale.x(), scale.y());
     last_point_time = point.time;
+    last_point_location = gfx::ScalePoint(point.location, scale.x(), scale.y());
+    *it++ = last_point_location;
 
     // Stop when no more positions are needed.
     if (it == position.end())
       break;
   }
   // Pad with last point if needed.
-  std::fill(it, position.end(), *(it - 1));
+  std::fill(it, position.end(), last_point_location);
 
   // Note: Currently there's no need to divide by the time delta between
   // points as we assume a constant delta between points that matches the
@@ -388,6 +388,11 @@ void LaserPointerView::SubmitCompositorFrame(
     const cc::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
   frame_sink_support_.SubmitCompositorFrame(local_surface_id, std::move(frame));
+}
+
+void LaserPointerView::BeginFrameDidNotSwap(
+    const cc::BeginFrameAck& begin_frame_ack) {
+  frame_sink_support_.BeginFrameDidNotSwap(begin_frame_ack);
 }
 
 void LaserPointerView::EvictFrame() {
@@ -470,13 +475,6 @@ void LaserPointerView::UpdateBuffer() {
       return;
     }
 
-    // Map buffer and keep it mapped until destroyed.
-    bool rv = gpu_memory_buffer_->Map();
-    if (!rv) {
-      LOG(ERROR) << "Failed to map GPU memory buffer";
-      return;
-    }
-
     // Make sure the first update rectangle covers the whole buffer.
     update_rect = gfx::Rect(screen_bounds.size());
   }
@@ -485,6 +483,12 @@ void LaserPointerView::UpdateBuffer() {
   update_rect.Intersect(gfx::Rect(screen_bounds.size()));
   if (update_rect.IsEmpty())
     return;
+
+  // Map buffer for writing.
+  if (!gpu_memory_buffer_->Map()) {
+    LOG(ERROR) << "Failed to map GPU memory buffer";
+    return;
+  }
 
   // Create a temporary canvas for update rectangle.
   gfx::Canvas canvas(update_rect.size(), scale_factor_, false);
@@ -571,6 +575,9 @@ void LaserPointerView::UpdateBuffer() {
         SkImageInfo::MakeN32Premul(pixel_rect.width(), pixel_rect.height()),
         data + pixel_rect.y() * stride + pixel_rect.x() * 4, stride, 0, 0);
   }
+
+  // Unmap to flush writes to buffer.
+  gpu_memory_buffer_->Unmap();
 
   // Update surface damage rectangle.
   surface_damage_rect_.Union(update_rect);
@@ -678,6 +685,10 @@ void LaserPointerView::UpdateSurface() {
   quad_state->opacity = 1.0f;
 
   cc::CompositorFrame frame;
+  // TODO(eseckler): LaserPointerView should use BeginFrames and set the ack
+  // accordingly.
+  frame.metadata.begin_frame_ack =
+      cc::BeginFrameAck::CreateManualAckWithDamage();
   cc::TextureDrawQuad* texture_quad =
       render_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
   float vertex_opacity[4] = {1.0, 1.0, 1.0, 1.0};

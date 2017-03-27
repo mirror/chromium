@@ -334,6 +334,15 @@
   <message name="IDS_SETTINGS_EDIT" desc="Label used on a menu item or button, used in different contexts to edit an item.">
     Edit
   </message>
+  <message name="IDS_SETTINGS_TOGGLE_ON" desc="Label used on a main settings toggle that is on.">
+    On
+  </message>
+  <message name="IDS_SETTINGS_TOGGLE_OFF" desc="Label used on a main settings toggle that is ooff.">
+    Off
+  </message>
+  <message name="IDS_SETTINGS_NOT_VALID" desc="Text indicating that an input is not valid.">
+   Not valid
+  </message>
 
   <!-- Passwords and Autofill Page -->
   <message name="IDS_SETTINGS_PASSWORDS_AND_AUTOFILL_PAGE_TITLE" desc="Name of the settings page which allows managing passwords and autofill settings.">
@@ -1651,13 +1660,13 @@
     Site Settings
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_DESCRIPTION" desc="Secondary, continued explanation of what content settings in Chrome do">
-    Control what content websites can show you and what information they can use as you browse
+    Control what information websites can use and what content they can show you
   </message>
   <message name="IDS_SETTINGS_CLEAR_DATA" desc="Text for clear browsing data button in Privacy options">
     Clear browsing data
   </message>
-  <message name="IDS_SETTINGS_CLEAR_DATA_DESCRIPTION" desc="Description for clear browsing data button in Privacy options">
-    Control your browsing data
+  <message name="IDS_SETTINGS_CLEAR_DATA_DESCRIPTION" desc="Description for clear browsing data button in Privacy options. 'History' refers to browsing history. 'Cookies' refers to the technical meaning of a cookie, i.e. data saved by a website on the user's computer, as in when a website saves your preferences.">
+    Clear history, cookies, cache, and more
   </message>
   <message name="IDS_SETTINGS_TITLE_AND_COUNT" desc="The title of a section in the settings page with a count of the total number of items in the section">
     <ph name="TITLE">$1<ex>Block</ex></ph> - <ph name="COUNT">$2<ex>42</ex></ph>
@@ -1722,9 +1731,6 @@
   </message>
   <message name="IDS_SETTINGS_SEARCH_ENGINES_EDIT_SEARCH_ENGINE" desc="Title for a dialog that allows editing an existing search engine.">
     Edit search engine
-  </message>
-  <message name="IDS_SETTINGS_SEARCH_ENGINES_NOT_VALID" desc="Text indicating that the input to a given text field in the add/edit search engine dialog is not invalid.">
-   Not valid
   </message>
   <message name="IDS_SETTINGS_SEARCH_ENGINES_DEFAULT_ENGINES" desc="Label for 'default' Search Engines section">
     Default search engines

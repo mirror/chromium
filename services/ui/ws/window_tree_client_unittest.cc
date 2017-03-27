@@ -481,6 +481,15 @@ class TestWindowTreeClient : public mojom::WindowTreeClient,
                                 bool janky) override {
     NOTIMPLEMENTED();
   }
+  void WmBuildDragImage(const gfx::Point& screen_location,
+                        const SkBitmap& drag_image,
+                        const gfx::Vector2d& drag_image_offset,
+                        ui::mojom::PointerKind source) override {}
+  void WmMoveDragImage(const gfx::Point& screen_location,
+                       const WmMoveDragImageCallback& callback) override {
+    callback.Run();
+  }
+  void WmDestroyDragImage() override {}
   void WmPerformMoveLoop(uint32_t change_id,
                          uint32_t window_id,
                          mojom::MoveLoopSource source,
@@ -2202,6 +2211,8 @@ TEST_F(WindowTreeClientTest, SurfaceIdPropagation) {
   render_pass->SetNew(1, frame_rect, frame_rect, gfx::Transform());
   compositor_frame.render_pass_list.push_back(std::move(render_pass));
   compositor_frame.metadata.device_scale_factor = 1.f;
+  compositor_frame.metadata.begin_frame_ack =
+      cc::BeginFrameAck(0, 1, 1, 0, true);
   cc::LocalSurfaceId local_surface_id(1, base::UnguessableToken::Create());
   surface_ptr->SubmitCompositorFrame(local_surface_id,
                                      std::move(compositor_frame));

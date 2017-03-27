@@ -68,9 +68,9 @@ class NetworkChangeNotifier;
 }  // namespace net
 
 #if defined(USE_OZONE)
-namespace ui {
+namespace gfx {
 class ClientNativePixmapFactory;
-}  // namespace ui
+}  // namespace gfx
 #endif
 
 namespace content {
@@ -88,8 +88,6 @@ class StartupTaskRunner;
 struct MainFunctionParams;
 
 #if defined(OS_ANDROID)
-class ScreenOrientationDelegate;
-#elif defined(OS_WIN)
 class ScreenOrientationDelegate;
 #endif
 
@@ -240,10 +238,6 @@ class CONTENT_EXPORT BrowserMainLoop {
   std::unique_ptr<aura::Env> env_;
 #endif
 
-#if defined(OS_WIN)
-  std::unique_ptr<ScreenOrientationDelegate> screen_orientation_delegate_;
-#endif
-
 #if defined(OS_ANDROID)
   // Android implementation of ScreenOrientationDelegate
   std::unique_ptr<ScreenOrientationDelegate> screen_orientation_delegate_;
@@ -312,7 +306,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   std::unique_ptr<media::DeviceMonitorMac> device_monitor_mac_;
 #endif
 #if defined(USE_OZONE)
-  std::unique_ptr<ui::ClientNativePixmapFactory> client_native_pixmap_factory_;
+  std::unique_ptr<gfx::ClientNativePixmapFactory> client_native_pixmap_factory_;
 #endif
 
   std::unique_ptr<LoaderDelegateImpl> loader_delegate_;

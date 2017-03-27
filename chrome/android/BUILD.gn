@@ -254,7 +254,7 @@ android_library("chrome_java") {
     "//chrome:signin_metrics_enum_javagen",
     "//chrome:quick_action_category_enum_javagen",
     "//chrome:page_info_connection_type_javagen",
-    "//chrome:website_settings_action_javagen",
+    "//chrome:page_info_action_javagen",
     "//components/browsing_data/core:browsing_data_utils_java",
     "//components/browsing_data/core:clear_browsing_data_tab_java",
     "//components/infobars/core:infobar_enums_java",
@@ -454,6 +454,7 @@ android_library("chrome_test_java") {
     "//third_party/WebKit/public:android_mojo_bindings_java",
     "//third_party/WebKit/public:blink_headers_java",
     "//third_party/WebKit/public:mojo_bindings_java",
+    "//third_party/android_support_test_runner:rules_java",
     "//third_party/android_support_test_runner:runner_java",
     "//third_party/android_tools:android_support_design_java",
     "//third_party/android_tools:android_support_transition_java",
@@ -463,8 +464,10 @@ android_library("chrome_test_java") {
     "//third_party/cacheinvalidation:cacheinvalidation_javalib",
     "//third_party/custom_tabs_client:custom_tabs_support_java",
     "//third_party/jsr-305:jsr_305_javalib",
+    "//third_party/junit",
     "//ui/android:ui_java",
     "//ui/android:ui_javatests",
+    "//ui/base/mojo:mojo_bindings_java",
     google_play_services_library,
   ]
 

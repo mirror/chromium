@@ -12,8 +12,8 @@
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/time/time.h"
-#include "components/reading_list/ios/reading_list_entry.h"
-#include "components/reading_list/ios/reading_list_model.h"
+#include "components/reading_list/core/reading_list_entry.h"
+#include "components/reading_list/core/reading_list_model.h"
 #import "components/reading_list/ios/reading_list_model_bridge_observer.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/url_formatter.h"
@@ -275,20 +275,6 @@ using ItemsMapByDate = std::multimap<int64_t, ReadingListCollectionViewItem*>;
 }
 
 #pragma mark - UICollectionViewDelegate
-
-- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView
-          viewForSupplementaryElementOfKind:(NSString*)kind
-                                atIndexPath:(NSIndexPath*)indexPath {
-  UICollectionReusableView* cell = [super collectionView:collectionView
-                       viewForSupplementaryElementOfKind:kind
-                                             atIndexPath:indexPath];
-  MDCCollectionViewTextCell* textCell =
-      base::mac::ObjCCast<MDCCollectionViewTextCell>(cell);
-  if (textCell) {
-    textCell.textLabel.textColor = [[MDCPalette greyPalette] tint500];
-  }
-  return cell;
-};
 
 - (void)collectionView:(UICollectionView*)collectionView
     didSelectItemAtIndexPath:(NSIndexPath*)indexPath {
@@ -1143,6 +1129,7 @@ using ItemsMapByDate = std::multimap<int64_t, ReadingListCollectionViewItem*>;
       header.text = l10n_util::GetNSString(IDS_IOS_READING_LIST_UNREAD_HEADER);
       break;
   }
+  header.textColor = [[MDCPalette greyPalette] tint500];
   return header;
 }
 

@@ -326,7 +326,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 #ifndef NDEBUG
     if (paintInvalidationStateIsDirty()) {
       showLayoutTreeForThis();
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
     }
 #endif
   }
@@ -603,7 +603,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   // FIXME: Until all SVG layoutObjects can be subclasses of
   // LayoutSVGModelObject we have to add SVG layoutObject methods to
-  // LayoutObject with an ASSERT_NOT_REACHED() default implementation.
+  // LayoutObject with an NOTREACHED() default implementation.
   bool isSVG() const { return isOfType(LayoutObjectSVG); }
   bool isSVGRoot() const { return isOfType(LayoutObjectSVGRoot); }
   bool isSVGChild() const { return isSVG() && !isSVGRoot(); }
@@ -676,10 +676,11 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   // Returns the smallest rectangle enclosing all of the painted content
   // respecting clipping, masking, filters, opacity, stroke-width and markers.
-  // The local SVG coordinate space is the space where localSVGTransform
-  // applies. For SVG objects defining viewports (e.g.
-  // LayoutSVGViewportContainer and  LayoutSVGResourceMarker), the local SVG
-  // coordinate space is the viewport space.
+  // For most SVG objects, the local SVG coordinate space is the space where
+  // localSVGTransform applies. For SVG objects defining viewports (e.g.
+  // LayoutSVGForeignObject, LayoutSVGViewportContainer,
+  // LayoutSVGResourceMarker), the local SVG coordinate space is the viewport
+  // space.
   virtual FloatRect visualRectInLocalSVGCoordinates() const;
 
   // This returns the transform applying to the local SVG coordinate space,
@@ -822,10 +823,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     return isOutOfFlowPositioned() && !style()->hasAutoClip();
   }
   bool hasOverflowClip() const { return m_bitfields.hasOverflowClip(); }
-  bool hasClipRelatedProperty() const {
-    return hasClip() || hasOverflowClip() || hasClipPath() ||
-           style()->containsPaint();
-  }
+  bool hasClipRelatedProperty() const;
 
   bool hasTransformRelatedProperty() const {
     return m_bitfields.hasTransformRelatedProperty();
@@ -860,8 +858,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
       const ComputedStyle* parentStyle = nullptr) const;
   PassRefPtr<ComputedStyle> getUncachedPseudoStyle(
       const PseudoStyleRequest&,
-      const ComputedStyle* parentStyle = nullptr,
-      const ComputedStyle* ownStyle = nullptr) const;
+      const ComputedStyle* parentStyle = nullptr) const;
 
   LayoutView* view() const { return document().layoutView(); }
   FrameView* frameView() const { return document().view(); }
@@ -1343,10 +1340,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   inline Color resolveColor(int colorProperty) const {
     return style()->visitedDependentColor(colorProperty);
   }
-
-  // Used only by Element::pseudoStyleCacheIsInvalid to get a first line style
-  // based off of a given new style, without accessing the cache.
-  PassRefPtr<ComputedStyle> uncachedFirstLineStyle(ComputedStyle*) const;
 
   virtual CursorDirective getCursor(const LayoutPoint&, Cursor&) const;
 
@@ -2072,6 +2065,10 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   }
 
  private:
+  // Used only by applyFirstLineChanges to get a first line style based off of a
+  // given new style, without accessing the cache.
+  PassRefPtr<ComputedStyle> uncachedFirstLineStyle() const;
+
   // Adjusts a visual rect in the space of |m_visualRect| to be in the
   // space of the |paintInvalidationContainer|, if needed. They can be different
   // only if |paintInvalidationContainer| is a composited scroller.

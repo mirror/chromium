@@ -784,7 +784,7 @@ Your Google account may have other forms of browsing history like searches and a
       </message>
 
       <!-- Single site settings -->
-      <message name="IDS_NO_SAVED_WEBSITE_SETTINGS" desc="Text to display when there are no saved webiste settings.">
+      <message name="IDS_NO_SAVED_WEBSITE_SETTINGS" desc="Text to display when there are no saved website settings.">
         You have no saved website settings.
       </message>
 
@@ -1525,7 +1525,7 @@ To obtain new licenses, connect to the internet and play your downloaded content
         Open in new Chrome tab
       </message>
       <message name="IDS_CONTEXTMENU_OPEN_IN_CHROME_INCOGNITO_TAB" desc="Context sensitive menu item to open the selected link in a Chrome incognito tab from Chrome Custom Tab. [CHAR-LIMIT=30]">
-        Open in Chrome incognito tab
+        Open in incognito tab
       </message>
       <!-- Swipe refresh -->
       <message name="IDS_ACCESSIBILITY_SWIPE_REFRESH" desc="Content description for the swipe refresh action.">
@@ -1604,7 +1604,7 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_MENU_OPEN_WEBAPK" desc="Menu item for opening the installed WebAPK associated with the current PWA. [CHAR-LIMIT=27]">
         Open <ph name="WEBAPK_NAME">%1$s<ex>Telegram</ex></ph>
       </message>
-      <message name="IDS_OPEN_WEBAPK_FAILED" desc="Opening of a WebAPK failed. [CHAR-LIMIT=27]">
+      <message name="IDS_OPEN_WEBAPK_FAILED" desc="Opening of a WebAPK failed.">
         Could not launch app
       </message>
       <message name="IDS_MENU_ADD_TO_HOMESCREEN_INSTALL" desc="Menu item for adding a shortcut to the Home screen. [CHAR-LIMIT=27]">
@@ -1623,7 +1623,7 @@ To obtain new licenses, connect to the internet and play your downloaded content
         Still adding previous site
       </message>
 
-      <!-- WebsiteSettingsPopup (PageInfo dialog) -->
+      <!-- PageInfoPopup (PageInfo dialog) -->
       <message name="IDS_PAGE_INFO_SITE_SETTINGS_BUTTON" desc="Text in the button that opens a website's Site Settings from the Page Info dialog.">
         Site Settings
       </message>
@@ -2222,7 +2222,7 @@ To obtain new licenses, connect to the internet and play your downloaded content
         Close dialog
       </message>
       <message name="IDS_BOOKMARK_ACTION_BAR_SEARCH" desc="Button text for bookmark search action on the bookmark action bar [CHAR-LIMIT=32]">
-        Search bookmarks
+        Search your bookmarks
       </message>
       <message name="IDS_BOOKMARK_NO_RESULT" desc="Text explaining that no bookmarks are found to match a search query">
         No bookmarks found

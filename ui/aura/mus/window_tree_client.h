@@ -275,8 +275,10 @@ class AURA_EXPORT WindowTreeClient
 
   // Called when a property needs to change as the result of a change in the
   // server, or the server failing to accept a change.
-  void SetWindowBoundsFromServer(WindowMus* window,
-                                 const gfx::Rect& revert_bounds_in_pixels);
+  void SetWindowBoundsFromServer(
+      WindowMus* window,
+      const gfx::Rect& revert_bounds_in_pixels,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id);
   void SetWindowVisibleFromServer(WindowMus* window, bool visible);
 
   // Called from OnWindowMusBoundsChanged() and SetRootWindowBounds().
@@ -423,6 +425,13 @@ class AURA_EXPORT WindowTreeClient
           transport_properties) override;
   void WmClientJankinessChanged(ClientSpecificId client_id,
                                 bool janky) override;
+  void WmBuildDragImage(const gfx::Point& screen_location,
+                        const SkBitmap& drag_image,
+                        const gfx::Vector2d& drag_image_offset,
+                        ui::mojom::PointerKind source) override;
+  void WmMoveDragImage(const gfx::Point& screen_location,
+                       const WmMoveDragImageCallback& callback) override;
+  void WmDestroyDragImage() override;
   void WmPerformMoveLoop(uint32_t change_id,
                          Id window_id,
                          ui::mojom::MoveLoopSource source,

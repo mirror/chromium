@@ -33,6 +33,7 @@
 #include "components/plugins/renderer/plugin_placeholder.h"
 #include "content/common/content_switches_internal.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/web_preferences.h"
 #include "content/public/renderer/media_stream_utils.h"
@@ -60,7 +61,7 @@
 #include "media/media_features.h"
 #include "net/base/filename_util.h"
 #include "net/base/net_errors.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_registry.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
@@ -365,6 +366,19 @@ WebURL BlinkTestRunner::RewriteLayoutTestsURL(const std::string& utf8_url,
     if (!rewritten_url.isEmpty())
       return rewritten_url;
     return WebURL(GURL(utf8_url));
+  }
+
+  const char kGenPrefix[] = "file:///gen/";
+  const int kGenPrefixLen = arraysize(kGenPrefix) - 1;
+
+  // Map "file:///gen/" to "file://<build directory>/gen/".
+  if (!utf8_url.compare(0, kGenPrefixLen, kGenPrefix, kGenPrefixLen)) {
+    base::FilePath gen_directory_path =
+        test_config_->build_directory.Append(FILE_PATH_LITERAL("gen/"));
+    std::string new_url = std::string("file://") +
+                          gen_directory_path.AsUTF8Unsafe() +
+                          utf8_url.substr(kGenPrefixLen);
+    return WebURL(GURL(new_url));
   }
 
   const char kPrefix[] = "file:///tmp/LayoutTests/";
@@ -760,6 +774,8 @@ bool BlinkTestRunner::AddMediaStreamVideoSourceAndTrack(
   DCHECK(stream);
 #if BUILDFLAG(ENABLE_WEBRTC)
   return AddVideoTrackToMediaStream(base::MakeUnique<MockVideoCapturerSource>(),
+                                    false,  // is_remote
+                                    false,  // is_readonly
                                     stream);
 #else
   return false;
@@ -774,7 +790,9 @@ bool BlinkTestRunner::AddMediaStreamAudioSourceAndTrack(
       make_scoped_refptr(new MockAudioCapturerSource()),
       48000,  // sample rate
       media::CHANNEL_LAYOUT_STEREO,
-      480,  // sample frames per buffer
+      480,    // sample frames per buffer
+      false,  // is_remote
+      false,  // is_readonly
       stream);
 #else
   return false;
@@ -943,7 +961,8 @@ void BlinkTestRunner::CaptureDumpComplete() {
 mojom::LayoutTestBluetoothFakeAdapterSetter&
 BlinkTestRunner::GetBluetoothFakeAdapterSetter() {
   if (!bluetooth_fake_adapter_setter_) {
-    RenderThread::Get()->GetRemoteInterfaces()->GetInterface(
+    RenderThread::Get()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName,
         mojo::MakeRequest(&bluetooth_fake_adapter_setter_));
   }
   return *bluetooth_fake_adapter_setter_;

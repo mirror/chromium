@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/common/chrome_icon_resources_win.h"
 #include "chrome/install_static/install_modes.h"
 
 namespace install_static {
@@ -36,10 +37,13 @@ const InstallConstants kInstallModes[] = {
         L"ChromeHTML",  // ProgID prefix.
         L"Chrome HTML Document",  // ProgID description.
         L"{8A69D345-D564-463c-AFF1-A69D9E530F96}",  // Active Setup GUID.
+        L"{5C65F4B0-3651-4514-B207-D10CB699B14B}",  // CommandExecuteImpl CLSID.
         L"",  // The empty string means "stable".
         ChannelStrategy::ADDITIONAL_PARAMETERS,
         true,  // Supports system-level installs.
+        true,  // Supports in-product set as default browser UX.
         true,  // Supported multi-install.
+        icon_resources::kApplicationIndex,
         IDR_MAINFRAME,
     },
     // A secondary install mode for Google Chrome SxS (canary).
@@ -54,10 +58,13 @@ const InstallConstants kInstallModes[] = {
         L"ChromeSSHTM",  // ProgID prefix.
         L"Chrome Canary HTML Document",  // ProgID description.
         L"{4ea16ac7-fd5a-47c3-875b-dbf4a2008c20}",  // Active Setup GUID.
+        L"{1BEAC3E3-B852-44F4-B468-8906C062422E}",  // CommandExecuteImpl CLSID.
         L"canary",
         ChannelStrategy::FIXED,
         false,  // Does not support system-level installs.
+        false,  // Does not support in-product set as default browser UX.
         false,  // Did not support multi-install.
+        icon_resources::kSxSApplicationIndex,
         IDR_SXS,
     },
     // clang-format on

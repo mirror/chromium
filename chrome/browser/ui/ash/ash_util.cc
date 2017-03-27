@@ -6,10 +6,13 @@
 
 #include "ash/common/accelerators/accelerator_controller.h"
 #include "ash/common/mojo_interface_factory.h"
+#include "ash/public/interfaces/event_properties.mojom.h"
 #include "ash/shell.h"
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/ash/ash_init.h"
+#include "chrome/common/chrome_switches.h"
 #include "content/public/common/service_names.mojom.h"
 #include "services/service_manager/public/cpp/interface_registry.h"
 #include "services/service_manager/public/cpp/service.h"
@@ -59,7 +62,17 @@ bool ShouldOpenAshOnStartup() {
 }
 
 bool IsRunningInMash() {
-  return service_manager::ServiceManagerIsRemote();
+  return GetConfig() == Config::MASH;
+}
+
+Config GetConfig() {
+  if (!service_manager::ServiceManagerIsRemote())
+    return Config::CLASSIC;
+
+  return base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+             switches::kMusConfig) == switches::kMash
+             ? Config::MASH
+             : Config::MUS;
 }
 
 bool IsAcceleratorDeprecated(const ui::Accelerator& accelerator) {
@@ -68,6 +81,12 @@ bool IsAcceleratorDeprecated(const ui::Accelerator& accelerator) {
     return false;
 
   return ash::Shell::Get()->accelerator_controller()->IsDeprecated(accelerator);
+}
+
+bool WillAshProcessAcceleratorForEvent(const ui::KeyEvent& key_event) {
+  return key_event.properties() &&
+         key_event.properties()->count(
+             ash::mojom::kWillProcessAccelerator_KeyEventProperty);
 }
 
 }  // namespace ash_util

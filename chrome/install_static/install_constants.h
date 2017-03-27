@@ -82,6 +82,10 @@ struct InstallConstants {
   // system-level installs.
   const wchar_t* active_setup_guid;
 
+  // The legacy CommandExecuteImpl CLSID, or an empty string if this install
+  // mode never included a DelegateExecute verb handler.
+  const wchar_t* legacy_command_execute_clsid;
+
   // The default name for this mode's update channel.
   const wchar_t* default_channel_name;
 
@@ -92,8 +96,16 @@ struct InstallConstants {
   // True if this mode supports system-level installs.
   bool supports_system_level;
 
+  // True if this mode supports in-product mechanisms to make the browser the
+  // user's chosen default browser. Features such as the "Make default" button
+  // in chrome://settings are hidden when this is false.
+  bool supports_set_as_default_browser;
+
   // True if this mode supported the now-deprecated multi-install.
   bool supported_multi_install;
+
+  // The index of this mode's main application icon in the main executable.
+  int app_icon_resource_index;
 
   // The resource id of this mode's main application icon.
   int16_t app_icon_resource_id;

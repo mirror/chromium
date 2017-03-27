@@ -112,8 +112,9 @@ void LocalWindowProxy::initialize() {
   TRACE_EVENT1("v8", "LocalWindowProxy::initialize", "isMainWindow",
                frame()->isMainFrame());
   SCOPED_BLINK_UMA_HISTOGRAM_TIMER(
-      frame()->isMainFrame() ? "Blink.Binding.InitializeMainWindowProxy"
-                             : "Blink.Binding.InitializeNonMainWindowProxy");
+      frame()->isMainFrame()
+          ? "Blink.Binding.InitializeMainLocalWindowProxy"
+          : "Blink.Binding.InitializeNonMainLocalWindowProxy");
 
   ScriptForbiddenScope::AllowUserAgentScript allowScript;
 
@@ -220,8 +221,9 @@ void LocalWindowProxy::setupWindowPrototypeChain() {
   // The global object, aka window wrapper object.
   v8::Local<v8::Object> windowWrapper =
       globalProxy->GetPrototype().As<v8::Object>();
-  windowWrapper = V8DOMWrapper::associateObjectWithWrapper(
-      isolate(), window, wrapperTypeInfo, windowWrapper);
+  v8::Local<v8::Object> associatedWrapper =
+      associateWithWrapper(window, wrapperTypeInfo, windowWrapper);
+  DCHECK(associatedWrapper == windowWrapper);
 
   // The prototype object of Window interface.
   v8::Local<v8::Object> windowPrototype =

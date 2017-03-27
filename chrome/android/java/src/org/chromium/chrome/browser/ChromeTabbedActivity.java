@@ -53,13 +53,9 @@ import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChange
 import org.chromium.chrome.browser.compositor.layouts.Layout;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
-import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome.OverviewLayoutFactoryDelegate;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChromePhone;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChromeTablet;
-import org.chromium.chrome.browser.compositor.layouts.LayoutRenderHost;
-import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
-import org.chromium.chrome.browser.compositor.layouts.eventfilter.EventFilter;
 import org.chromium.chrome.browser.compositor.layouts.phone.StackLayout;
 import org.chromium.chrome.browser.cookies.CookiesFetcher;
 import org.chromium.chrome.browser.device.DeviceClassManager;
@@ -447,6 +443,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     @SuppressLint("NewApi")
     private boolean shouldDestroyIncognitoProfile() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return false;
+        if (VrShellDelegate.isInVR()) return false; // VR uses an incognito profile for rendering.
 
         Context context = ContextUtils.getApplicationContext();
         ActivityManager manager =
@@ -511,9 +508,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             }
             mMergeTabsOnResume = false;
         }
-
-        // TODO(mthiesse): Move this call into ChromeActivity. crbug.com/697694
-        VrShellDelegate.maybeResumeVR(this);
 
         mLocaleManager.setSnackbarManager(getSnackbarManager());
         mLocaleManager.startObservingPhoneChanges();
@@ -622,27 +616,15 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         }
     }
 
-    private static class StackLayoutFactory implements OverviewLayoutFactoryDelegate {
-        @Override
-        public Layout createOverviewLayout(Context context, LayoutUpdateHost updateHost,
-                LayoutRenderHost renderHost, EventFilter eventFilter) {
-            return new StackLayout(context, updateHost, renderHost, eventFilter);
-        }
-    }
-
     private void initializeUI() {
         try {
             TraceEvent.begin("ChromeTabbedActivity.initializeUI");
 
             CompositorViewHolder compositorViewHolder = getCompositorViewHolder();
             if (DeviceFormFactor.isTablet(this)) {
-                boolean enableTabSwitcher =
-                        CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_TABLET_TAB_STACK);
-                mLayoutManager = new LayoutManagerChromeTablet(compositorViewHolder,
-                        enableTabSwitcher ? new StackLayoutFactory() : null);
+                mLayoutManager = new LayoutManagerChromeTablet(compositorViewHolder);
             } else {
-                mLayoutManager = new LayoutManagerChromePhone(compositorViewHolder,
-                        new StackLayoutFactory());
+                mLayoutManager = new LayoutManagerChromePhone(compositorViewHolder);
             }
             mLayoutManager.setEnableAnimations(DeviceClassManager.enableAnimations(this));
             mLayoutManager.addOverviewModeObserver(this);
@@ -760,6 +742,10 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             Log.i(TAG, "Not launching NTP due to inactivity, background time: %d, launch delay: %d",
                     backgroundDurationMinutes, ntpLaunchDelayInMins);
             return false;
+        }
+
+        if (mLayoutManager != null && mLayoutManager.overviewVisible() && !isTablet()) {
+            mLayoutManager.hideOverview(false);
         }
 
         // In cases where the tab model is initialized, attempt to reuse an existing NTP if
@@ -1904,6 +1890,12 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     public void onExitVR() {
         super.onExitVR();
         mControlContainer.setVisibility(View.VISIBLE);
+
+        // We prevent the incognito profile from being destroyed while in VR, so upon exiting VR we
+        // should destroy it if necessary.
+        if (shouldDestroyIncognitoProfile()) {
+            Profile.getLastUsedProfile().getOffTheRecordProfile().destroyWhenAppropriate();
+        }
     }
 
     /**

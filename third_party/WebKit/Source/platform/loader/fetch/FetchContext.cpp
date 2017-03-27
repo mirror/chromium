@@ -30,6 +30,8 @@
 
 #include "platform/loader/fetch/FetchContext.h"
 
+#include "platform/PlatformInstrumentationAgents.h"
+#include "platform/instrumentation/PlatformTraceEventsAgent.h"
 #include "public/platform/WebCachePolicy.h"
 
 namespace blink {
@@ -37,6 +39,16 @@ namespace blink {
 FetchContext& FetchContext::nullInstance() {
   DEFINE_STATIC_LOCAL(FetchContext, instance, (new FetchContext));
   return instance;
+}
+
+FetchContext::FetchContext()
+    : m_instrumentingAgents(new PlatformInstrumentationAgents) {
+  m_instrumentingAgents->addPlatformTraceEventsAgent(
+      new PlatformTraceEventsAgent);
+}
+
+DEFINE_TRACE(FetchContext) {
+  visitor->trace(m_instrumentingAgents);
 }
 
 void FetchContext::dispatchDidChangeResourcePriority(unsigned long,
@@ -52,6 +64,8 @@ WebCachePolicy FetchContext::resourceRequestCachePolicy(
     FetchRequest::DeferOption defer) const {
   return WebCachePolicy::UseProtocolCachePolicy;
 }
+
+void FetchContext::prepareRequest(ResourceRequest&, RedirectType) {}
 
 void FetchContext::dispatchWillSendRequest(unsigned long,
                                            ResourceRequest&,
@@ -86,12 +100,11 @@ void FetchContext::dispatchDidFail(unsigned long,
                                    int64_t,
                                    bool) {}
 
-void FetchContext::willStartLoadingResource(
+void FetchContext::recordLoadingActivity(
     unsigned long,
-    ResourceRequest&,
+    const ResourceRequest&,
     Resource::Type,
-    const AtomicString& fetchInitiatorName,
-    V8ActivityLoggingPolicy) {}
+    const AtomicString& fetchInitiatorName) {}
 
 void FetchContext::didLoadResource(Resource*) {}
 

@@ -20,8 +20,8 @@
 // Concrete instances can be created through CWV.
 @interface CWVWebView : UIView
 
-// The view used to display web content.
-@property(nonatomic, readonly) UIView* view;
+// The configuration of the web view.
+@property(nonatomic, readonly, copy) CWVWebViewConfiguration* configuration;
 
 // This web view's navigation delegate.
 @property(nonatomic, weak) id<CWVNavigationDelegate> navigationDelegate;
@@ -43,7 +43,7 @@
 @property(nonatomic, readonly) NSURL* visibleURL;
 
 // The current page title.
-@property(nonatomic, readonly) NSString* pageTitle;
+@property(nonatomic, readonly, copy) NSString* title;
 
 // Page loading progress from 0.0 to 1.0. KVO compliant.
 //

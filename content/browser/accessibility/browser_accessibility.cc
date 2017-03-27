@@ -15,7 +15,7 @@
 #include "content/common/accessibility_messages.h"
 #include "ui/accessibility/ax_role_properties.h"
 #include "ui/accessibility/ax_text_utils.h"
-#include "ui/accessibility/platform/ax_platform_node.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
 
@@ -39,7 +39,7 @@ BrowserAccessibility* BrowserAccessibility::Create() {
 BrowserAccessibility::BrowserAccessibility()
     : manager_(NULL),
       node_(NULL),
-      unique_id_(ui::AXPlatformNode::GetNextUniqueId()) {
+      unique_id_(ui::GetNextAXPlatformNodeUniqueId()) {
   g_unique_id_map.Get()[unique_id_] = this;
 }
 
@@ -99,7 +99,7 @@ uint32_t BrowserAccessibility::PlatformChildCount() const {
     BrowserAccessibilityManager* child_manager =
         BrowserAccessibilityManager::FromID(
             GetIntAttribute(ui::AX_ATTR_CHILD_TREE_ID));
-    if (child_manager && child_manager->GetRoot()->GetParent() == this)
+    if (child_manager && child_manager->GetRoot()->PlatformGetParent() == this)
       return 1;
 
     return 0;
@@ -120,8 +120,8 @@ bool BrowserAccessibility::IsDescendantOf(
   if (this == ancestor)
     return true;
 
-  if (GetParent())
-    return GetParent()->IsDescendantOf(ancestor);
+  if (PlatformGetParent())
+    return PlatformGetParent()->IsDescendantOf(ancestor);
 
   return false;
 }
@@ -134,8 +134,8 @@ bool BrowserAccessibility::IsTextOnlyObject() const {
 
 bool BrowserAccessibility::IsLineBreakObject() const {
   return GetRole() == ui::AX_ROLE_LINE_BREAK ||
-         (IsTextOnlyObject() && GetParent() &&
-          GetParent()->GetRole() == ui::AX_ROLE_LINE_BREAK);
+         (IsTextOnlyObject() && PlatformGetParent() &&
+          PlatformGetParent()->GetRole() == ui::AX_ROLE_LINE_BREAK);
 }
 
 BrowserAccessibility* BrowserAccessibility::PlatformGetChild(
@@ -146,7 +146,7 @@ BrowserAccessibility* BrowserAccessibility::PlatformGetChild(
     BrowserAccessibilityManager* child_manager =
         BrowserAccessibilityManager::FromID(
             GetIntAttribute(ui::AX_ATTR_CHILD_TREE_ID));
-    if (child_manager && child_manager->GetRoot()->GetParent() == this)
+    if (child_manager && child_manager->GetRoot()->PlatformGetParent() == this)
       result = child_manager->GetRoot();
   } else {
     result = InternalGetChild(child_index);
@@ -177,18 +177,17 @@ BrowserAccessibility* BrowserAccessibility::GetClosestPlatformObject() const {
 }
 
 BrowserAccessibility* BrowserAccessibility::GetPreviousSibling() const {
-  if (GetParent() && GetIndexInParent() > 0)
-    return GetParent()->InternalGetChild(GetIndexInParent() - 1);
+  if (PlatformGetParent() && GetIndexInParent() > 0)
+    return PlatformGetParent()->InternalGetChild(GetIndexInParent() - 1);
 
   return nullptr;
 }
 
 BrowserAccessibility* BrowserAccessibility::GetNextSibling() const {
-  if (GetParent() &&
-      GetIndexInParent() >= 0 &&
-      GetIndexInParent() < static_cast<int>(
-          GetParent()->InternalChildCount() - 1)) {
-    return GetParent()->InternalGetChild(GetIndexInParent() + 1);
+  if (PlatformGetParent() && GetIndexInParent() >= 0 &&
+      GetIndexInParent() <
+          static_cast<int>(PlatformGetParent()->InternalChildCount() - 1)) {
+    return PlatformGetParent()->InternalGetChild(GetIndexInParent() + 1);
   }
 
   return nullptr;
@@ -307,7 +306,7 @@ BrowserAccessibility* BrowserAccessibility::InternalGetChild(
   return manager_->GetFromAXNode(child_node);
 }
 
-BrowserAccessibility* BrowserAccessibility::GetParent() const {
+BrowserAccessibility* BrowserAccessibility::PlatformGetParent() const {
   if (!instance_active())
     return nullptr;
 
@@ -334,14 +333,6 @@ int32_t BrowserAccessibility::GetIndexInParent() const {
 
 int32_t BrowserAccessibility::GetId() const {
   return node_ ? node_->id() : -1;
-}
-
-const ui::AXNodeData& BrowserAccessibility::GetData() const {
-  CR_DEFINE_STATIC_LOCAL(ui::AXNodeData, empty_data, ());
-  if (node_)
-    return node_->data();
-  else
-    return empty_data;
 }
 
 gfx::RectF BrowserAccessibility::GetLocation() const {
@@ -828,7 +819,8 @@ bool BrowserAccessibility::HasInheritedStringAttribute(
 
   if (GetData().HasStringAttribute(attribute))
     return true;
-  return GetParent() && GetParent()->HasInheritedStringAttribute(attribute);
+  return PlatformGetParent() &&
+         PlatformGetParent()->HasInheritedStringAttribute(attribute);
 }
 
 const std::string& BrowserAccessibility::GetInheritedStringAttribute(
@@ -840,7 +832,7 @@ const std::string& BrowserAccessibility::GetInheritedStringAttribute(
   do {
     if (current_object->GetData().HasStringAttribute(attribute))
       return current_object->GetData().GetStringAttribute(attribute);
-    current_object = current_object->GetParent();
+    current_object = current_object->PlatformGetParent();
   } while (current_object);
   return base::EmptyString();
 }
@@ -855,8 +847,8 @@ bool BrowserAccessibility::GetInheritedStringAttribute(
 
   if (GetData().GetStringAttribute(attribute, value))
     return true;
-  return GetParent() &&
-         GetParent()->GetData().GetStringAttribute(attribute, value);
+  return PlatformGetParent() &&
+         PlatformGetParent()->GetData().GetStringAttribute(attribute, value);
 }
 
 base::string16 BrowserAccessibility::GetInheritedString16Attribute(
@@ -868,7 +860,7 @@ base::string16 BrowserAccessibility::GetInheritedString16Attribute(
   do {
     if (current_object->GetData().HasStringAttribute(attribute))
       return current_object->GetData().GetString16Attribute(attribute);
-    current_object = current_object->GetParent();
+    current_object = current_object->PlatformGetParent();
   } while (current_object);
   return base::string16();
 }
@@ -883,8 +875,8 @@ bool BrowserAccessibility::GetInheritedString16Attribute(
 
   if (GetData().GetString16Attribute(attribute, value))
     return true;
-  return GetParent() &&
-         GetParent()->GetData().GetString16Attribute(attribute, value);
+  return PlatformGetParent() &&
+         PlatformGetParent()->GetData().GetString16Attribute(attribute, value);
 }
 
 bool BrowserAccessibility::HasIntAttribute(
@@ -1018,7 +1010,7 @@ bool BrowserAccessibility::IsWebAreaForPresentationalIframe() const {
     return false;
   }
 
-  BrowserAccessibility* parent = GetParent();
+  BrowserAccessibility* parent = PlatformGetParent();
   if (!parent)
     return false;
 
@@ -1109,7 +1101,8 @@ bool BrowserAccessibility::IsSimpleTextControl() const {
 // Indicates if this object is at the root of a rich edit text control.
 bool BrowserAccessibility::IsRichTextControl() const {
   return HasState(ui::AX_STATE_RICHLY_EDITABLE) &&
-         (!GetParent() || !GetParent()->HasState(ui::AX_STATE_RICHLY_EDITABLE));
+         (!PlatformGetParent() ||
+          !PlatformGetParent()->HasState(ui::AX_STATE_RICHLY_EDITABLE));
 }
 
 std::string BrowserAccessibility::ComputeAccessibleNameFromDescendants() {
@@ -1194,7 +1187,7 @@ gfx::Rect BrowserAccessibility::RelativeToAbsoluteBounds(
         node->manager()->GetFromID(node->GetData().offset_container_id);
     if (!container) {
       if (node == node->manager()->GetRoot() && !frame_only) {
-        container = node->GetParent();
+        container = node->PlatformGetParent();
       } else {
         container = node->manager()->GetRoot();
       }
@@ -1207,7 +1200,7 @@ gfx::Rect BrowserAccessibility::RelativeToAbsoluteBounds(
     bounds.Offset(container_bounds.x(), container_bounds.y());
 
     if (container->manager()->UseRootScrollOffsetsWhenComputingBounds() ||
-        container->GetParent()) {
+        container->PlatformGetParent()) {
       int sx = 0;
       int sy = 0;
       if (container->GetIntAttribute(ui::AX_ATTR_SCROLL_X, &sx) &&
@@ -1220,6 +1213,66 @@ gfx::Rect BrowserAccessibility::RelativeToAbsoluteBounds(
   }
 
   return gfx::ToEnclosingRect(bounds);
+}
+
+// AXPlatformNodeDelegate.
+const ui::AXNodeData& BrowserAccessibility::GetData() const {
+  CR_DEFINE_STATIC_LOCAL(ui::AXNodeData, empty_data, ());
+  if (node_)
+    return node_->data();
+  else
+    return empty_data;
+}
+
+gfx::NativeWindow BrowserAccessibility::GetTopLevelWidget() {
+  NOTREACHED();
+  return nullptr;
+}
+
+gfx::NativeViewAccessible BrowserAccessibility::GetParent() {
+  NOTREACHED();
+  return nullptr;
+}
+
+int BrowserAccessibility::GetChildCount() {
+  NOTREACHED();
+  return -1;
+}
+
+gfx::NativeViewAccessible BrowserAccessibility::ChildAtIndex(int index) {
+  NOTREACHED();
+  return nullptr;
+}
+
+gfx::Vector2d BrowserAccessibility::GetGlobalCoordinateOffset() {
+  NOTREACHED();
+  return gfx::Vector2d();
+}
+
+gfx::NativeViewAccessible BrowserAccessibility::HitTestSync(int x, int y) {
+  NOTREACHED();
+  return nullptr;
+}
+
+gfx::NativeViewAccessible BrowserAccessibility::GetFocus() {
+  NOTREACHED();
+  return nullptr;
+}
+
+gfx::AcceleratedWidget
+BrowserAccessibility::GetTargetForNativeAccessibilityEvent() {
+  NOTREACHED();
+  return gfx::kNullAcceleratedWidget;
+}
+
+bool BrowserAccessibility::AccessibilityPerformAction(
+    const ui::AXActionData& data) {
+  NOTREACHED();
+  return false;
+}
+
+void BrowserAccessibility::DoDefaultAction() {
+  NOTREACHED();
 }
 
 }  // namespace content

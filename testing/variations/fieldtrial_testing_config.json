@@ -2355,6 +2355,31 @@
             ]
         }
     ],
+    "SafeBrowsingThreatDomDetailsTagAttributes": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "params": {
+                        "tag_attribute_csv": "div,id,iframe,id"
+                    },
+                    "enable_features": [
+                        "ThreatDomDetailsTagAttributes"
+                    ]
+                },
+                {
+                    "name": "Default"
+                }
+            ]
+        }
+    ],
     "SafeBrowsingUseLocalBlacklist": [
         {
             "platforms": [
@@ -2920,6 +2945,26 @@
             ]
         }
     ],
+    "VsyncAlignedInput": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enable",
+                    "enable_features": [
+                        "RequestUnbufferedDispatch",
+                        "VsyncAlignedInput"
+                    ]
+                }
+            ]
+        }
+    ],
     "WebBluetoothBlocklist": [
         {
             "platforms": [
@@ -3024,6 +3069,12 @@
                     "name": "TunedClippingLevelMin070",
                     "enable_features": [
                         "TunedClippingLevelMin70"
+                    ],
+                    "disable_features": [
+                        "TunedClippingLevelMin110",
+                        "TunedClippingLevelMin150",
+                        "TunedClippingLevelMin170",
+                        "TunedClippingLevelMin30"
                     ]
                 }
             ]

@@ -53,6 +53,10 @@ target(modules_target_type, "modules") {
   visibility = [ "//third_party/WebKit/*" ]
 
   sources = [
+    "EventModules.h",
+    "EventModulesFactory.h",
+    "EventTargetModules.h",
+    "ModulesExport.h",
     "ModulesInitializer.cpp",
     "ModulesInitializer.h",
   ]
@@ -234,6 +238,7 @@ source_set("unit_tests") {
 
   sources = [
     "accessibility/AXObjectTest.cpp",
+    "background_fetch/BackgroundFetchManagerTest.cpp",
     "cachestorage/CacheTest.cpp",
     "canvas/HTMLCanvasElementModuleTest.cpp",
     "canvas2d/CanvasRenderingContext2DAPITest.cpp",
@@ -251,6 +256,7 @@ source_set("unit_tests") {
     "fetch/BytesConsumerForDataConsumerHandleTest.cpp",
     "fetch/BytesConsumerTest.cpp",
     "fetch/BytesConsumerTestUtil.cpp",
+    "fetch/BytesConsumerTestUtil.h",
     "fetch/DataConsumerHandleTestUtil.cpp",
     "fetch/DataConsumerHandleTestUtil.h",
     "fetch/FetchDataLoaderTest.cpp",

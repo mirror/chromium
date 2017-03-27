@@ -243,26 +243,30 @@ void LayerTreeImpl::UpdateScrollbars(int scroll_layer_id, int clip_layer_id) {
   }
 
   bool scrollbar_needs_animation = false;
+  bool clip_layer_size_did_change = false;
   bool scroll_layer_size_did_change = false;
   bool y_offset_did_change = false;
   for (ScrollbarLayerImplBase* scrollbar : ScrollbarsFor(scroll_layer_id)) {
     if (scrollbar->orientation() == HORIZONTAL) {
       scrollbar_needs_animation |= scrollbar->SetCurrentPos(current_offset.x());
-      scrollbar_needs_animation |=
+      clip_layer_size_did_change |=
           scrollbar->SetClipLayerLength(clip_size.width());
-      scrollbar_needs_animation |= scroll_layer_size_did_change |=
+      scroll_layer_size_did_change |=
           scrollbar->SetScrollLayerLength(scroll_size.width());
     } else {
       scrollbar_needs_animation |= y_offset_did_change |=
           scrollbar->SetCurrentPos(current_offset.y());
-      scrollbar_needs_animation |=
+      clip_layer_size_did_change |=
           scrollbar->SetClipLayerLength(clip_size.height());
-      scrollbar_needs_animation |= scroll_layer_size_did_change |=
+      scroll_layer_size_did_change |=
           scrollbar->SetScrollLayerLength(scroll_size.height());
     }
     scrollbar_needs_animation |=
         scrollbar->SetVerticalAdjust(clip_layer->bounds_delta().y());
   }
+
+  scrollbar_needs_animation |=
+      (clip_layer_size_did_change || scroll_layer_size_did_change);
 
   if (y_offset_did_change && IsViewportLayerId(scroll_layer_id))
     TRACE_COUNTER_ID1("cc", "scroll_offset_y", scroll_layer->id(),
@@ -272,8 +276,16 @@ void LayerTreeImpl::UpdateScrollbars(int scroll_layer_id, int clip_layer_id) {
     ScrollbarAnimationController* controller =
         layer_tree_host_impl_->ScrollbarAnimationControllerForId(
             scroll_layer_id);
-    if (controller)
-      controller->DidScrollUpdate(scroll_layer_size_did_change);
+    if (!controller)
+      return;
+
+    // TODO(chaopeng) clip_layer_size_did_change should call DidResize after
+    // crbug.com/701810 got fixed.
+    if (scroll_layer_size_did_change) {
+      controller->DidResize();
+    } else {
+      controller->DidScrollUpdate();
+    }
   }
 }
 
@@ -626,17 +638,20 @@ void LayerTreeImpl::RemoveFromElementMap(LayerImpl* layer) {
 }
 
 void LayerTreeImpl::AddToOpacityAnimationsMap(int id, float opacity) {
-  opacity_animations_map_[id] = opacity;
+  if (LayerImpl* layer = LayerById(id))
+    element_id_to_opacity_animations_[layer->element_id()] = opacity;
 }
 
 void LayerTreeImpl::AddToTransformAnimationsMap(int id,
                                                 gfx::Transform transform) {
-  transform_animations_map_[id] = transform;
+  if (LayerImpl* layer = LayerById(id))
+    element_id_to_transform_animations_[layer->element_id()] = transform;
 }
 
 void LayerTreeImpl::AddToFilterAnimationsMap(int id,
                                              const FilterOperations& filters) {
-  filter_animations_map_[id] = filters;
+  if (LayerImpl* layer = LayerById(id))
+    element_id_to_filter_animations_[layer->element_id()] = filters;
 }
 
 LayerImpl* LayerTreeImpl::InnerViewportContainerLayer() const {
@@ -723,57 +738,54 @@ void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread() {
   // frame to a newly-committed property tree.
   if (layer_list_.empty())
     return;
-  std::vector<int> layer_ids_to_remove;
-  for (auto& layer_id_to_opacity : opacity_animations_map_) {
-    const int id = layer_id_to_opacity.first;
+  auto element_id_to_opacity = element_id_to_opacity_animations_.begin();
+  while (element_id_to_opacity != element_id_to_opacity_animations_.end()) {
+    const ElementId id = element_id_to_opacity->first;
     if (EffectNode* node =
-            property_trees_.effect_tree.UpdateNodeFromOwningLayerId(id)) {
+            property_trees_.effect_tree.FindNodeFromElementId(id)) {
       if (!node->is_currently_animating_opacity ||
-          node->opacity == layer_id_to_opacity.second) {
-        layer_ids_to_remove.push_back(id);
+          node->opacity == element_id_to_opacity->second) {
+        element_id_to_opacity_animations_.erase(element_id_to_opacity++);
         continue;
       }
-      node->opacity = layer_id_to_opacity.second;
+      node->opacity = element_id_to_opacity->second;
       property_trees_.effect_tree.set_needs_update(true);
     }
+    ++element_id_to_opacity;
   }
-  for (auto id : layer_ids_to_remove)
-    opacity_animations_map_.erase(id);
-  layer_ids_to_remove.clear();
 
-  for (auto& layer_id_to_transform : transform_animations_map_) {
-    const int id = layer_id_to_transform.first;
-    if (TransformNode* node =
-            property_trees_.transform_tree.UpdateNodeFromOwningLayerId(id)) {
-      if (!node->is_currently_animating ||
-          node->local == layer_id_to_transform.second) {
-        layer_ids_to_remove.push_back(id);
+  auto element_id_to_filter = element_id_to_filter_animations_.begin();
+  while (element_id_to_filter != element_id_to_filter_animations_.end()) {
+    const ElementId id = element_id_to_filter->first;
+    if (EffectNode* node =
+            property_trees_.effect_tree.FindNodeFromElementId(id)) {
+      if (!node->is_currently_animating_filter ||
+          node->filters == element_id_to_filter->second) {
+        element_id_to_filter_animations_.erase(element_id_to_filter++);
         continue;
       }
-      node->local = layer_id_to_transform.second;
+      node->filters = element_id_to_filter->second;
+      property_trees_.effect_tree.set_needs_update(true);
+    }
+    ++element_id_to_filter;
+  }
+
+  auto element_id_to_transform = element_id_to_transform_animations_.begin();
+  while (element_id_to_transform != element_id_to_transform_animations_.end()) {
+    const ElementId id = element_id_to_transform->first;
+    if (TransformNode* node =
+            property_trees_.transform_tree.FindNodeFromElementId(id)) {
+      if (!node->is_currently_animating ||
+          node->local == element_id_to_transform->second) {
+        element_id_to_transform_animations_.erase(element_id_to_transform++);
+        continue;
+      }
+      node->local = element_id_to_transform->second;
       node->needs_local_transform_update = true;
       property_trees_.transform_tree.set_needs_update(true);
     }
+    ++element_id_to_transform;
   }
-  for (auto id : layer_ids_to_remove)
-    transform_animations_map_.erase(id);
-  layer_ids_to_remove.clear();
-
-  for (auto& layer_id_to_filters : filter_animations_map_) {
-    const int id = layer_id_to_filters.first;
-    if (EffectNode* node =
-            property_trees_.effect_tree.UpdateNodeFromOwningLayerId(id)) {
-      if (!node->is_currently_animating_filter ||
-          node->filters == layer_id_to_filters.second) {
-        layer_ids_to_remove.push_back(id);
-        continue;
-      }
-      node->filters = layer_id_to_filters.second;
-      property_trees_.effect_tree.set_needs_update(true);
-    }
-  }
-  for (auto id : layer_ids_to_remove)
-    filter_animations_map_.erase(id);
 
   LayerTreeHostCommon::CallFunctionForEveryLayer(this, [](LayerImpl* layer) {
     layer->UpdatePropertyTreeForScrollingAndAnimationIfNeeded();
@@ -1008,7 +1020,8 @@ static void SetElementIdForTesting(LayerImpl* layer) {
 void LayerTreeImpl::SetElementIdsForTesting() {
   LayerListIterator<LayerImpl> it(root_layer_for_testing_);
   for (; it != LayerListIterator<LayerImpl>(nullptr); ++it) {
-    SetElementIdForTesting(*it);
+    if (!it->element_id())
+      SetElementIdForTesting(*it);
   }
 }
 
@@ -1180,6 +1193,7 @@ void LayerTreeImpl::BuildLayerListAndPropertyTreesForTesting() {
 }
 
 void LayerTreeImpl::BuildPropertyTreesForTesting() {
+  SetElementIdsForTesting();
   PropertyTreeBuilder::PreCalculateMetaInformationForTesting(layer_list_[0]);
   property_trees_.needs_rebuild = true;
   property_trees_.transform_tree.set_source_to_parent_updates_allowed(true);
@@ -1252,8 +1266,9 @@ void LayerTreeImpl::RegisterLayer(LayerImpl* layer) {
 void LayerTreeImpl::UnregisterLayer(LayerImpl* layer) {
   DCHECK(LayerById(layer->id()));
   layers_that_should_push_properties_.erase(layer);
-  transform_animations_map_.erase(layer->id());
-  opacity_animations_map_.erase(layer->id());
+  element_id_to_transform_animations_.erase(layer->element_id());
+  element_id_to_opacity_animations_.erase(layer->element_id());
+  element_id_to_filter_animations_.erase(layer->element_id());
   layer_id_map_.erase(layer->id());
 }
 

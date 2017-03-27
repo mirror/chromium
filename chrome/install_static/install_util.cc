@@ -316,6 +316,15 @@ std::wstring GetRegistryPath() {
   return result;
 }
 
+std::wstring GetUninstallRegistryPath() {
+  std::wstring result(
+      L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\");
+  if (*kCompanyPathName)
+    result.append(kCompanyPathName).append(1, L' ');
+  result.append(kProductPathName, kProductPathNameLength);
+  return result.append(InstallDetails::Get().mode().install_suffix);
+}
+
 const wchar_t* GetAppGuid() {
   return InstallDetails::Get().app_guid();
 }
@@ -336,6 +345,18 @@ std::wstring GetActiveSetupPath() {
   return std::wstring(
              L"Software\\Microsoft\\Active Setup\\Installed Components\\")
       .append(InstallDetails::Get().mode().active_setup_guid);
+}
+
+std::wstring GetLegacyCommandExecuteImplClsid() {
+  return InstallDetails::Get().mode().legacy_command_execute_clsid;
+}
+
+bool SupportsSetAsDefaultBrowser() {
+  return InstallDetails::Get().mode().supports_set_as_default_browser;
+}
+
+int GetIconResourceIndex() {
+  return InstallDetails::Get().mode().app_icon_resource_index;
 }
 
 bool GetCollectStatsConsent() {

@@ -461,7 +461,7 @@ void HTMLFormControlElement::findCustomValidationMessageTextDirection(
 
 void HTMLFormControlElement::updateVisibleValidationMessage() {
   Page* page = document().page();
-  if (!page || !page->isPageVisible())
+  if (!page || !page->isPageVisible() || document().unloadStarted())
     return;
   String message;
   if (layoutObject() && willValidate())
@@ -583,9 +583,6 @@ void HTMLFormControlElement::setNeedsValidityCheck() {
     pseudoStateChanged(CSSSelector::PseudoValid);
     pseudoStateChanged(CSSSelector::PseudoInvalid);
   }
-
-  pseudoStateChanged(CSSSelector::PseudoInRange);
-  pseudoStateChanged(CSSSelector::PseudoOutOfRange);
 
   // Updates only if this control already has a validation message.
   if (isValidationMessageVisible()) {

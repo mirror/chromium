@@ -46,6 +46,7 @@
 #include "WebGamepads.h"
 #include "WebGestureDevice.h"
 #include "WebLocalizedString.h"
+#include "WebMessagePortChannel.h"
 #include "WebPlatformEventType.h"
 #include "WebSize.h"
 #include "WebSpeechSynthesizer.h"
@@ -71,6 +72,7 @@ class Local;
 
 namespace blink {
 
+class Connector;
 class InterfaceProvider;
 class WebAudioBus;
 class WebAudioLatencyHint;
@@ -99,7 +101,6 @@ class WebMediaStream;
 class WebMediaStreamCenter;
 class WebMediaStreamCenterClient;
 class WebMediaStreamTrack;
-class WebMessagePortChannel;
 class WebNotificationManager;
 class WebPluginListBuilder;
 class WebPrescientNetworking;
@@ -316,10 +317,11 @@ class BLINK_PLATFORM_EXPORT Platform {
   // Creates a Message Port Channel pair. This can be called on any thread.
   // The returned objects should only be used on the thread they were created
   // on.
-  virtual void createMessageChannel(WebMessagePortChannel** channel1,
-                                    WebMessagePortChannel** channel2) {
-    *channel1 = 0;
-    *channel2 = 0;
+  virtual void createMessageChannel(
+      std::unique_ptr<WebMessagePortChannel>* channel1,
+      std::unique_ptr<WebMessagePortChannel>* channel2) {
+    *channel1 = nullptr;
+    *channel2 = nullptr;
   }
 
   // Network -------------------------------------------------------------
@@ -599,16 +601,9 @@ class BLINK_PLATFORM_EXPORT Platform {
 
   // Mojo ---------------------------------------------------------------
 
-  virtual InterfaceProvider* interfaceProvider();
+  virtual Connector* connector();
 
-  // Sets up a connection to the ServiceManager by binding |remoteHandle| to a
-  // remote implementation of
-  // //service_manager/public/interfaces/connector.mojom. Using this connection
-  // the caller can then request connections to other services.
-  // NOTE: This handle is not strongly typed because neither the Blink nor
-  // Chromium types generated from connector.mojom should leak across the
-  // Blink-Chromium boundary.
-  virtual void bindServiceConnector(mojo::ScopedMessagePipeHandle remoteHandle);
+  virtual InterfaceProvider* interfaceProvider();
 
   // Platform events -----------------------------------------------------
   // Device Orientation, Device Motion, Device Light, Battery, Gamepad.

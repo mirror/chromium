@@ -265,6 +265,10 @@ target(link_target_type, "renderer") {
     "media/webmediaplayer_ms_compositor.h",
     "menu_item_builder.cc",
     "menu_item_builder.h",
+    "mojo/blink_connector_impl.cc",
+    "mojo/blink_connector_impl.h",
+    "mojo/blink_connector_js_wrapper.cc",
+    "mojo/blink_connector_js_wrapper.h",
     "mojo/blink_interface_provider_impl.cc",
     "mojo/blink_interface_provider_impl.h",
     "mojo/blink_interface_registry_impl.cc",
@@ -412,7 +416,10 @@ target(link_target_type, "renderer") {
   ]
   defines = []
 
-  public_deps = []
+  public_deps = [
+    "//ipc",
+  ]
+
   deps = [
     "//base:i18n",
     "//cc",
@@ -436,15 +443,14 @@ target(link_target_type, "renderer") {
     "//content/public/common:common_sources",
     "//content/public/common:feature_h264_with_openh264_ffmpeg",
     "//content/public/common:features",
+    "//content/public/common:service_names",
     "//crypto:platform",
     "//device/base/synchronization",
-    "//device/battery:mojo_bindings",
     "//device/gamepad/public/interfaces",
     "//device/screen_orientation/public/interfaces",
     "//device/sensors/public/cpp:full",
     "//device/sensors/public/interfaces",
     "//device/usb/public/interfaces",
-    "//device/vibration:mojo_bindings",
     "//gin",
     "//gpu",
     "//gpu/command_buffer/client:gles2_interface",
@@ -467,6 +473,7 @@ target(link_target_type, "renderer") {
     "//printing/features",
     "//sandbox",
     "//services/device/public/interfaces",
+    "//services/device/public/interfaces:constants",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
     "//services/ui/public/cpp/gpu",

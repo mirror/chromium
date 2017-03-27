@@ -531,7 +531,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebString& header_value,
       blink::WebContentSecurityPolicyType type,
       blink::WebContentSecurityPolicySource source,
-      const std::vector<blink::WebContentSecurityPolicyPolicy>&) override;
+      const std::vector<blink::WebContentSecurityPolicy>&) override;
   void didChangeFrameOwnerProperties(
       blink::WebFrame* child_frame,
       const blink::WebFrameOwnerProperties& frame_owner_properties) override;
@@ -597,6 +597,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void didChangeThemeColor() override;
   void dispatchLoad() override;
   blink::WebEffectiveConnectionType getEffectiveConnectionType() override;
+  void abortClientNavigation() override;
   void didChangeSelection(bool is_empty_selection) override;
   bool handleCurrentKeyboardEvent() override;
   blink::WebColorChooser* createColorChooser(
@@ -648,7 +649,7 @@ class CONTENT_EXPORT RenderFrameImpl
                            blink::WebStorageQuotaCallbacks callbacks) override;
   blink::WebPushClient* pushClient() override;
   blink::WebPresentationClient* presentationClient() override;
-  blink::WebRelatedAppsFetcher* relatedAppsFetcher() override;
+  blink::WebRelatedAppsFetcher* getRelatedAppsFetcher() override;
   void willStartUsingPeerConnectionHandler(
       blink::WebRTCPeerConnectionHandler* handler) override;
   blink::WebUserMediaClient* userMediaClient() override;

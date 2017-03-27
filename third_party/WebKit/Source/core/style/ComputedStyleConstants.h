@@ -295,38 +295,6 @@ enum TextUnderlinePosition {
   TextUnderlinePositionUnder
 };
 
-enum class EDisplay : unsigned {
-  kInline,
-  kBlock,
-  kListItem,
-  kInlineBlock,
-  kTable,
-  kInlineTable,
-  kTableRowGroup,
-  kTableHeaderGroup,
-  kTableFooterGroup,
-  kTableRow,
-  kTableColumnGroup,
-  kTableColumn,
-  kTableCell,
-  kTableCaption,
-  kWebkitBox,
-  kWebkitInlineBox,
-  kFlex,
-  kInlineFlex,
-  kGrid,
-  kInlineGrid,
-  kContents,
-  kFlowRoot,
-  kNone
-};
-
-enum class EInsideLink : unsigned {
-  kNotInsideLink,
-  kInsideUnvisitedLink,
-  kInsideVisitedLink
-};
-
 enum ETransformStyle3D { TransformStyle3DFlat, TransformStyle3DPreserve3D };
 
 enum OffsetRotationType { OffsetRotationAuto, OffsetRotationFixed };

@@ -71,11 +71,9 @@ class CORE_EXPORT SerializedScriptValue
   // Version 8: File.lastModified in milliseconds (seconds-based in earlier
   //            versions.)
   // Version 9: Added Map and Set support.
-  static const uint32_t wireFormatVersion = 9;
-
-  // VarInt encoding constants.
-  static const int varIntShift = 7;
-  static const int varIntMask = (1 << varIntShift) - 1;
+  // [versions skipped]
+  // Version 16: Separate versioning between V8 and Blink.
+  static const uint32_t wireFormatVersion = 16;
 
   struct SerializeOptions {
     STACK_ALLOCATED();

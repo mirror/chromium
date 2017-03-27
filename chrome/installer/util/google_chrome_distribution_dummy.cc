@@ -44,10 +44,6 @@ base::string16 GoogleChromeDistribution::GetShortcutName() {
   return base::string16();
 }
 
-int GoogleChromeDistribution::GetIconIndex() {
-  return 0;
-}
-
 base::string16 GoogleChromeDistribution::GetPublisherName() {
   return base::string16();
 }
@@ -61,18 +57,6 @@ std::string GoogleChromeDistribution::GetSafeBrowsingName() {
 }
 
 base::string16 GoogleChromeDistribution::GetDistributionData(HKEY root_key) {
-  return base::string16();
-}
-
-base::string16 GoogleChromeDistribution::GetUninstallRegPath() {
-  return base::string16();
-}
-
-base::string16 GoogleChromeDistribution::GetIconFilename() {
-  return base::string16();
-}
-
-base::string16 GoogleChromeDistribution::GetCommandExecuteImplClsid() {
   return base::string16();
 }
 

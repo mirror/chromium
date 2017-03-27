@@ -26,6 +26,8 @@
 #ifndef ThemeMac_h
 #define ThemeMac_h
 
+#import <AppKit/AppKit.h>
+
 #include "platform/Theme.h"
 
 namespace blink {

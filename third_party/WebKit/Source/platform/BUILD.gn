@@ -132,6 +132,30 @@ action("character_data") {
   ]
 }
 
+action("instrumentation_probes") {
+  script = "instrumentation/InstrumentingProbesCodeGenerator.py"
+
+  input_file = "instrumentation/PlatformInstrumentation.idl"
+  inputs = [
+    input_file,
+    "instrumentation/InstrumentingProbesImpl_cpp.template",
+    "instrumentation/InstrumentingProbesImpl_h.template",
+    "instrumentation/InstrumentingAgents_h.template",
+  ]
+
+  outputs = [
+    "$blink_platform_output_dir/PlatformInstrumentationAgents.h",
+    "$blink_platform_output_dir/PlatformInstrumentationInl.h",
+    "$blink_platform_output_dir/PlatformInstrumentationImpl.cpp",
+  ]
+
+  args = [
+    rebase_path(inputs[0], root_build_dir),
+    "--output_dir",
+    rebase_path(blink_platform_output_dir, root_build_dir),
+  ]
+}
+
 executable("character_data_generator") {
   sources = [
     "text/CharacterPropertyDataGenerator.cpp",
@@ -157,6 +181,7 @@ group("make_platform_generated") {
     ":color_data",
     ":font_family_names",
     ":http_names",
+    ":instrumentation_probes",
     ":runtime_enabled_features",
   ]
 }
@@ -169,8 +194,7 @@ config("blink_platform_pch") {
       # This is a string rather than a file GN knows about. It has to match
       # exactly what's in the /FI flag below, and what might appear in the
       # source code in quotes for an #include directive.
-      precompiled_header =
-          rebase_path("win/Precompile-platform.h", root_build_dir)
+      precompiled_header = rebase_path("Precompile-platform.h", root_build_dir)
 
       # This is a file that GN will compile with the above header. It will be
       # implicitly added to the sources (potentially multiple times, with one
@@ -180,6 +204,9 @@ config("blink_platform_pch") {
 
       # Force include the header.
       cflags = [ "/FI$precompiled_header" ]
+    } else if (is_mac) {
+      precompiled_source =
+          "//third_party/WebKit/Source/platform/Precompile-platform.h"
     }
   }
 }
@@ -195,6 +222,7 @@ component("platform") {
 
   sources = [
     "AsyncFileSystemCallbacks.h",
+    "AsyncMethodRunner.h",
     "CalculationValue.h",
     "ContentDecryptionModuleResult.h",
     "ContentSettingCallbacks.cpp",
@@ -203,8 +231,10 @@ component("platform") {
     "ContextMenu.h",
     "ContextMenuItem.cpp",
     "ContextMenuItem.h",
+    "CrossOriginAttributeValue.h",
     "CrossThreadCopier.cpp",
     "CrossThreadCopier.h",
+    "CrossThreadFunctional.h",
     "Crypto.cpp",
     "Crypto.h",
     "CryptoResult.h",
@@ -263,8 +293,7 @@ component("platform") {
     "PartitionAllocMemoryDumpProvider.cpp",
     "PartitionAllocMemoryDumpProvider.h",
     "PasteMode.h",
-    "PlatformInstrumentation.cpp",
-    "PlatformInstrumentation.h",
+    "PlatformExport.h",
     "PlatformResourceLoader.cpp",
     "PlatformResourceLoader.h",
     "PluginScriptForbiddenScope.cpp",
@@ -280,7 +309,6 @@ component("platform") {
     "SecureTextInput.cpp",
     "SecureTextInput.h",
     "SerializedResource.h",
-    "ServiceConnector.h",
     "SharedBuffer.cpp",
     "SharedBuffer.h",
     "SharedBufferChunkReader.cpp",
@@ -561,6 +589,7 @@ component("platform") {
     "fonts/AlternateFontFamily.h",
     "fonts/CharacterRange.h",
     "fonts/CustomFontData.h",
+    "fonts/FallbackListCompositeKey.h",
     "fonts/Font.cpp",
     "fonts/Font.h",
     "fonts/FontBaseline.h",
@@ -588,12 +617,16 @@ component("platform") {
     "fonts/FontFallbackPriority.h",
     "fonts/FontFamily.cpp",
     "fonts/FontFamily.h",
+    "fonts/FontMetrics.h",
+    "fonts/FontOrientation.h",
     "fonts/FontPlatformData.cpp",
     "fonts/FontPlatformData.h",
+    "fonts/FontSmoothingMode.h",
+    "fonts/FontTraits.h",
     "fonts/FontVariantNumeric.h",
+    "fonts/FontWidthVariant.h",
     "fonts/GenericFontFamilySettings.cpp",
     "fonts/GenericFontFamilySettings.h",
-    "fonts/GlyphBuffer.h",
     "fonts/GlyphMetricsMap.h",
     "fonts/OrientationIterator.cpp",
     "fonts/OrientationIterator.h",
@@ -607,6 +640,8 @@ component("platform") {
     "fonts/SmallCapsIterator.h",
     "fonts/SymbolsIterator.cpp",
     "fonts/SymbolsIterator.h",
+    "fonts/TextRenderingMode.h",
+    "fonts/TypesettingFeatures.h",
     "fonts/UTF16TextIterator.cpp",
     "fonts/UTF16TextIterator.h",
     "fonts/UnicodeRangeSet.cpp",
@@ -647,6 +682,8 @@ component("platform") {
     "fonts/shaping/ShapeCache.h",
     "fonts/shaping/ShapeResult.cpp",
     "fonts/shaping/ShapeResult.h",
+    "fonts/shaping/ShapeResultBloberizer.cpp",
+    "fonts/shaping/ShapeResultBloberizer.h",
     "fonts/shaping/ShapeResultBuffer.cpp",
     "fonts/shaping/ShapeResultBuffer.h",
     "fonts/shaping/ShapeResultInlineHeaders.h",
@@ -745,10 +782,12 @@ component("platform") {
     "graphics/CompositorElementId.h",
     "graphics/CompositorFilterOperations.cpp",
     "graphics/CompositorFilterOperations.h",
+    "graphics/CompositorMutableProperties.h",
     "graphics/CompositorMutableState.cpp",
     "graphics/CompositorMutableState.h",
     "graphics/CompositorMutableStateProvider.cpp",
     "graphics/CompositorMutableStateProvider.h",
+    "graphics/CompositorMutation.h",
     "graphics/CompositorMutationsTarget.h",
     "graphics/CompositorMutator.h",
     "graphics/CompositorMutatorClient.cpp",
@@ -759,6 +798,7 @@ component("platform") {
     "graphics/ContiguousContainer.h",
     "graphics/CrossfadeGeneratedImage.cpp",
     "graphics/CrossfadeGeneratedImage.h",
+    "graphics/DashArray.h",
     "graphics/DecodingImageGenerator.cpp",
     "graphics/DecodingImageGenerator.h",
     "graphics/DeferredImageDecoder.cpp",
@@ -1051,6 +1091,10 @@ component("platform") {
     "image-encoders/RGBAtoRGB.h",
     "image-encoders/WEBPImageEncoder.cpp",
     "image-encoders/WEBPImageEncoder.h",
+    "instrumentation/PlatformInstrumentation.cpp",
+    "instrumentation/PlatformInstrumentation.h",
+    "instrumentation/PlatformTraceEventsAgent.cpp",
+    "instrumentation/PlatformTraceEventsAgent.h",
     "instrumentation/tracing/MemoryCacheDumpProvider.cpp",
     "instrumentation/tracing/MemoryCacheDumpProvider.h",
     "instrumentation/tracing/TraceEvent.h",
@@ -1093,12 +1137,15 @@ component("platform") {
     "mediastream/MediaStreamWebAudioSource.cpp",
     "mediastream/MediaStreamWebAudioSource.h",
     "mhtml/ArchiveResource.cpp",
+    "mhtml/ArchiveResource.h",
     "mhtml/MHTMLArchive.cpp",
     "mhtml/MHTMLArchive.h",
     "mhtml/MHTMLParser.cpp",
     "mhtml/MHTMLParser.h",
     "mojo/BluetoothStructTraits.cpp",
+    "mojo/BluetoothStructTraits.h",
     "mojo/CommonCustomTypesStructTraits.cpp",
+    "mojo/CommonCustomTypesStructTraits.h",
     "mojo/MojoHelper.h",
     "network/ContentSecurityPolicyParsers.cpp",
     "network/ContentSecurityPolicyParsers.h",
@@ -1270,6 +1317,7 @@ component("platform") {
     "text/Character.cpp",
     "text/Character.h",
     "text/CharacterEmoji.cpp",
+    "text/CharacterProperty.h",
     "text/DateTimeFormat.cpp",
     "text/DateTimeFormat.h",
     "text/DecodeEscapeSequences.h",
@@ -1319,6 +1367,7 @@ component("platform") {
     "text/UnicodeRange.h",
     "text/UnicodeUtilities.cpp",
     "text/UnicodeUtilities.h",
+    "text/WritingMode.h",
     "text/linux/HyphenationLinux.cpp",
     "text/mac/HyphenationMac.cpp",
     "text/win/HyphenationWin.cpp",
@@ -1384,6 +1433,7 @@ component("platform") {
              get_target_outputs(":color_data") +
              get_target_outputs(":font_family_names") +
              get_target_outputs(":http_names") +
+             get_target_outputs(":instrumentation_probes") +
              get_target_outputs(":runtime_enabled_features")
 
   configs += [
@@ -1458,7 +1508,6 @@ component("platform") {
       "text/LocaleICU.h",
     ]
 
-    configs += [ "//third_party/WebKit/Source:mac_precompiled_headers" ]
     libs = [
       "AppKit.framework",
       "Accelerate.framework",
@@ -1552,10 +1601,14 @@ static_library("test_support") {
   testonly = true
 
   sources = [
+    "graphics/gpu/DrawingBufferTestHelpers.h",
     "network/mime/MockMimeRegistry.h",
     "scheduler/base/task_queue_manager_delegate_for_test.cc",
+    "scheduler/base/test_task_time_observer.h",
     "scheduler/base/test_time_source.cc",
+    "scheduler/base/test_time_source.h",
     "scheduler/child/scheduler_tqm_delegate_for_test.cc",
+    "scheduler/child/scheduler_tqm_delegate_for_test.h",
     "scheduler/test/fake_renderer_scheduler.cc",
     "scheduler/test/fake_web_task_runner.cc",
     "scheduler/test/fake_web_task_runner.h",
@@ -1675,7 +1728,6 @@ test("blink_platform_unittests") {
     "fonts/FontPlatformDataTest.cpp",
     "fonts/FontTest.cpp",
     "fonts/GenericFontFamilySettingsTest.cpp",
-    "fonts/GlyphBufferTest.cpp",
     "fonts/OrientationIteratorTest.cpp",
     "fonts/ScriptRunIteratorTest.cpp",
     "fonts/SmallCapsIteratorTest.cpp",
@@ -1688,9 +1740,11 @@ test("blink_platform_unittests") {
     "fonts/shaping/CachingWordShaperTest.cpp",
     "fonts/shaping/HarfBuzzShaperTest.cpp",
     "fonts/shaping/RunSegmenterTest.cpp",
+    "fonts/shaping/ShapeResultBloberizerTest.cpp",
     "geometry/DoubleRectTest.cpp",
     "geometry/FloatBoxTest.cpp",
     "geometry/FloatBoxTestHelpers.cpp",
+    "geometry/FloatBoxTestHelpers.h",
     "geometry/FloatPointTest.cpp",
     "geometry/FloatPolygonTest.cpp",
     "geometry/FloatQuadTest.cpp",
@@ -1698,6 +1752,7 @@ test("blink_platform_unittests") {
     "geometry/FloatRoundedRectTest.cpp",
     "geometry/FloatSizeTest.cpp",
     "geometry/GeometryTestHelpers.cpp",
+    "geometry/GeometryTestHelpers.h",
     "geometry/IntRectTest.cpp",
     "geometry/LayoutRectOutsetsTest.cpp",
     "geometry/LayoutRectTest.cpp",
@@ -1754,6 +1809,7 @@ test("blink_platform_unittests") {
     "scheduler/base/task_queue_manager_unittest.cc",
     "scheduler/base/task_queue_selector_unittest.cc",
     "scheduler/base/test_count_uses_time_source.cc",
+    "scheduler/base/test_count_uses_time_source.h",
     "scheduler/base/thread_load_tracker_unittest.cc",
     "scheduler/base/time_domain_unittest.cc",
     "scheduler/base/work_queue_sets_unittest.cc",
@@ -1768,6 +1824,7 @@ test("blink_platform_unittests") {
     "scheduler/renderer/budget_pool_unittest.cc",
     "scheduler/renderer/deadline_task_runner_unittest.cc",
     "scheduler/renderer/idle_time_estimator_unittest.cc",
+    "scheduler/renderer/render_widget_signals_unittest.cc",
     "scheduler/renderer/renderer_scheduler_impl_unittest.cc",
     "scheduler/renderer/task_cost_estimator_unittest.cc",
     "scheduler/renderer/task_queue_throttler_unittest.cc",
@@ -1781,6 +1838,7 @@ test("blink_platform_unittests") {
     "testing/TreeTestHelpers.cpp",
     "testing/TreeTestHelpers.h",
     "text/BidiResolverTest.cpp",
+    "text/BidiTestHarness.h",
     "text/CharacterTest.cpp",
     "text/DateTimeFormatTest.cpp",
     "text/HyphenationTest.cpp",

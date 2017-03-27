@@ -48,16 +48,10 @@
 #include "chrome/common/shell_handler_win.mojom.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/install_static/install_util.h"
-#include "chrome/installer/setup/setup_util.h"
 #include "chrome/installer/util/browser_distribution.h"
-#include "chrome/installer/util/create_reg_key_work_item.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/scoped_user_protocol_entry.h"
-#include "chrome/installer/util/set_reg_value_work_item.h"
 #include "chrome/installer/util/shell_util.h"
-#include "chrome/installer/util/util_constants.h"
-#include "chrome/installer/util/work_item.h"
-#include "chrome/installer/util/work_item_list.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/utility_process_mojo_client.h"
@@ -558,9 +552,7 @@ bool SetAsDefaultProtocolClient(const std::string& protocol) {
 }
 
 DefaultWebClientSetPermission GetDefaultWebClientSetPermission() {
-  BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
-  if (distribution->GetDefaultBrowserControlPolicy() !=
-          BrowserDistribution::DEFAULT_BROWSER_FULL_CONTROL)
+  if (!install_static::SupportsSetAsDefaultBrowser())
     return SET_DEFAULT_NOT_ALLOWED;
   if (ShellUtil::CanMakeChromeDefaultUnattended())
     return SET_DEFAULT_UNATTENDED;

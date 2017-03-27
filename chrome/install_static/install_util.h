@@ -66,6 +66,13 @@ std::wstring GetChromeInstallSubDirectory();
 // their browsing data.
 std::wstring GetRegistryPath();
 
+// Returns the path
+// "Software\Microsoft\Windows\CurrentVersion\Uninstall\[kCompanyPathName ]
+// kProductPathName[install_suffix]. This is the key used for the browser's
+// "Programs and Features" control panel entry for non-MSI installs (the entry
+// for MSI installs is created and owned by Windows Installer).
+std::wstring GetUninstallRegistryPath();
+
 // Returns the app GUID with which Chrome is registered with Google Update, or
 // an empty string if this brand does not integrate with Google Update. This is
 // a simple convenience wrapper around InstallDetails.
@@ -95,6 +102,17 @@ const wchar_t* GetProgIdDescription();
 // Returns the path to the Active Setup registry entries
 // (e.g., Software\Microsoft\Active Setup\Installed Components\[guid]).
 std::wstring GetActiveSetupPath();
+
+// Returns the legacy CommandExecuteImpl CLSID, or an empty string if the
+// install mode never included a DelegateExecute verb handler.
+std::wstring GetLegacyCommandExecuteImplClsid();
+
+// Returns true if this mode supports in-product mechanisms to make the browser
+// the user's chosen default browser.
+bool SupportsSetAsDefaultBrowser();
+
+// Returns the index of the icon resource in the main executable for the mode.
+int GetIconResourceIndex();
 
 // Returns true if usage stats collecting is enabled for this user for the
 // current executable.

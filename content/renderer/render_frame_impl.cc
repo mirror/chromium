@@ -121,6 +121,8 @@
 #include "content/renderer/media/user_media_client_impl.h"
 #include "content/renderer/media/web_media_element_source_utils.h"
 #include "content/renderer/media/webmediaplayer_ms.h"
+#include "content/renderer/mojo/blink_connector_impl.h"
+#include "content/renderer/mojo/blink_connector_js_wrapper.h"
 #include "content/renderer/mojo/blink_interface_registry_impl.h"
 #include "content/renderer/mojo/interface_provider_js_wrapper.h"
 #include "content/renderer/mojo_bindings_controller.h"
@@ -134,6 +136,7 @@
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/render_view_impl.h"
 #include "content/renderer/render_widget_fullscreen_pepper.h"
+#include "content/renderer/renderer_blink_platform_impl.h"
 #include "content/renderer/renderer_webapplicationcachehost_impl.h"
 #include "content/renderer/renderer_webcolorchooser_impl.h"
 #include "content/renderer/savable_resources.h"
@@ -715,7 +718,7 @@ WebFrameLoadType ReloadFrameLoadTypeFor(
   switch (navigation_type) {
     case FrameMsg_Navigate_Type::RELOAD:
     case FrameMsg_Navigate_Type::RELOAD_ORIGINAL_REQUEST_URL:
-      return WebFrameLoadType::ReloadMainResource;
+      return WebFrameLoadType::Reload;
 
     case FrameMsg_Navigate_Type::RELOAD_BYPASSING_CACHE:
       return WebFrameLoadType::ReloadBypassingCache;
@@ -2294,7 +2297,7 @@ void RenderFrameImpl::OnPostMessageEvent(
 
 void RenderFrameImpl::OnReload(bool bypass_cache) {
   frame_->reload(bypass_cache ? WebFrameLoadType::ReloadBypassingCache
-                              : WebFrameLoadType::ReloadMainResource);
+                              : WebFrameLoadType::Reload);
 }
 
 void RenderFrameImpl::OnReloadLoFiImages() {
@@ -2648,8 +2651,14 @@ void RenderFrameImpl::EnsureMojoBuiltinsAreAvailable(
           .ToV8());
   registry->AddBuiltinModule(
       isolate, InterfaceProviderJsWrapper::kPerProcessModuleName,
-      InterfaceProviderJsWrapper::Create(
-          isolate, context, RenderThread::Get()->GetRemoteInterfaces())
+      InterfaceProviderJsWrapper::Create(isolate, context,
+                                         RenderThread::Get()->GetConnector())
+          .ToV8());
+  registry->AddBuiltinModule(
+      isolate, BlinkConnectorJsWrapper::kModuleName,
+      BlinkConnectorJsWrapper::Create(
+          isolate, context,
+          RenderThreadImpl::current()->blink_platform_impl()->connector())
           .ToV8());
 }
 
@@ -3248,7 +3257,7 @@ void RenderFrameImpl::didAddContentSecurityPolicy(
     const blink::WebString& header_value,
     blink::WebContentSecurityPolicyType type,
     blink::WebContentSecurityPolicySource source,
-    const std::vector<blink::WebContentSecurityPolicyPolicy>& policies) {
+    const std::vector<blink::WebContentSecurityPolicy>& policies) {
   ContentSecurityPolicyHeader header;
   header.header_value = header_value.utf8();
   header.type = type;
@@ -3693,15 +3702,11 @@ void RenderFrameImpl::didCommitProvisionalLoad(
       return;
   }
 
-  // For navigations that change the document, the browser process needs to be
-  // notified of the first paint of that page, so it can cancel the timer that
-  // waits for it.
-  if (is_main_frame_ && !navigation_state->WasWithinSameDocument()) {
+  // Navigations that change the document represent a new content source.  Keep
+  // track of that on the widget to help the browser process detect when stale
+  // compositor frames are being shown after a commit.
+  if (is_main_frame_ && !navigation_state->WasWithinSameDocument())
     GetRenderWidget()->IncrementContentSourceId();
-    render_view_->QueueMessage(
-        new ViewHostMsg_DidFirstPaintAfterLoad(render_view_->routing_id_),
-        MESSAGE_DELIVERY_POLICY_WITH_VISUAL_STATE);
-  }
 
   // When we perform a new navigation, we need to update the last committed
   // session history entry with state for the page we are leaving. Do this
@@ -4119,6 +4124,10 @@ void RenderFrameImpl::dispatchLoad() {
 blink::WebEffectiveConnectionType
 RenderFrameImpl::getEffectiveConnectionType() {
   return effective_connection_type_;
+}
+
+void RenderFrameImpl::abortClientNavigation() {
+  Send(new FrameHostMsg_AbortNavigation(routing_id_));
 }
 
 void RenderFrameImpl::didChangeSelection(bool is_empty_selection) {
@@ -4634,7 +4643,7 @@ blink::WebPushClient* RenderFrameImpl::pushClient() {
   return push_messaging_client_;
 }
 
-blink::WebRelatedAppsFetcher* RenderFrameImpl::relatedAppsFetcher() {
+blink::WebRelatedAppsFetcher* RenderFrameImpl::getRelatedAppsFetcher() {
   if (!related_apps_fetcher_)
     related_apps_fetcher_.reset(new RelatedAppsFetcher(manifest_manager_));
 
@@ -6443,7 +6452,6 @@ void RenderFrameImpl::LoadDataURL(
     const GURL base_url = params.base_url_for_data_url.is_empty() ?
         params.url : params.base_url_for_data_url;
     bool replace = load_type == WebFrameLoadType::ReloadBypassingCache ||
-                   load_type == WebFrameLoadType::ReloadMainResource ||
                    load_type == WebFrameLoadType::Reload;
 
     frame->loadData(

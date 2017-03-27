@@ -13,21 +13,15 @@
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
 #include "components/pref_registry/pref_registry_syncable.h"
-#include "components/reading_list/core/reading_list_switches.h"
-#include "components/reading_list/ios/reading_list_model_impl.h"
-#include "components/reading_list/ios/reading_list_pref_names.h"
-#include "components/reading_list/ios/reading_list_store.h"
+#include "components/reading_list/core/reading_list_model_impl.h"
+#include "components/reading_list/core/reading_list_pref_names.h"
+#include "components/reading_list/core/reading_list_store.h"
 #include "components/sync/base/report_unrecoverable_error.h"
 #include "ios/chrome/browser/browser_state/browser_state_otr_helper.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/common/channel_info.h"
 #include "ios/web/public/web_thread.h"
-
-// static
-bool ReadingListModelFactory::IsReadingListEnabled() {
-  return reading_list::switches::IsReadingListEnabled();
-}
 
 // static
 ReadingListModel* ReadingListModelFactory::GetForBrowserState(

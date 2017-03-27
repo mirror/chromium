@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
@@ -22,9 +23,10 @@ namespace doodle {
 
 namespace {
 
-const double kMaxTimeToLiveMS = 30.0 * 24 * 60 * 60 * 1000;  // 30 days
-
-const char kDoodleConfigPath[] = "/async/ddljson";
+// "/async/ddljson" is the base API path. "ntp:1" identifies this request as
+// being for a New Tab page. The "graybg:" param specifies whether the doodle
+// will be displayed on a gray background.
+const char kDoodleConfigPathFormat[] = "/async/ddljson?async=ntp:1,graybg:%d";
 
 std::string StripSafetyPreamble(const std::string& json) {
   // The response may start with )]}'. Ignore this.
@@ -38,15 +40,22 @@ std::string StripSafetyPreamble(const std::string& json) {
   return json_sp.as_string();
 }
 
+GURL BuildDoodleURL(const GURL& base_url, bool gray_background) {
+  return base_url.Resolve(
+      base::StringPrintf(kDoodleConfigPathFormat, gray_background ? 1 : 0));
+}
+
 }  // namespace
 
 DoodleFetcherImpl::DoodleFetcherImpl(
     scoped_refptr<net::URLRequestContextGetter> download_context,
     GoogleURLTracker* google_url_tracker,
-    const ParseJSONCallback& json_parsing_callback)
+    const ParseJSONCallback& json_parsing_callback,
+    bool gray_background)
     : download_context_(download_context),
-      json_parsing_callback_(json_parsing_callback),
       google_url_tracker_(google_url_tracker),
+      json_parsing_callback_(json_parsing_callback),
+      gray_background_(gray_background),
       weak_ptr_factory_(this) {
   DCHECK(google_url_tracker_);
 }
@@ -60,8 +69,9 @@ void DoodleFetcherImpl::FetchDoodle(FinishedCallback callback) {
   }
   DCHECK(!fetcher_.get());
   callbacks_.push_back(std::move(callback));
-  fetcher_ = URLFetcher::Create(GetGoogleBaseUrl().Resolve(kDoodleConfigPath),
-                                URLFetcher::GET, this);
+  fetcher_ =
+      URLFetcher::Create(BuildDoodleURL(GetGoogleBaseUrl(), gray_background_),
+                         URLFetcher::GET, this);
   fetcher_->SetRequestContext(download_context_.get());
   fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
                          net::LOAD_DO_NOT_SAVE_COOKIES |
@@ -136,17 +146,12 @@ base::Optional<DoodleConfig> DoodleFetcherImpl::ParseDoodleConfigAndTimeToLive(
       DoodleConfig::FromDictionary(ddljson, GetGoogleBaseUrl());
 
   // The JSON doesn't guarantee the number to fit into an int.
-  double ttl = 0;  // Expires immediately if the parameter is missing.
-  if (!ddljson.GetDouble("time_to_live_ms", &ttl) || ttl < 0) {
+  double ttl_ms = 0;  // Expires immediately if the parameter is missing.
+  if (!ddljson.GetDouble("time_to_live_ms", &ttl_ms) || ttl_ms < 0) {
     DLOG(WARNING) << "No valid Doodle TTL present in ddljson!";
-    ttl = 0;
+    ttl_ms = 0;
   }
-  // TODO(treib,fhorschig): Move this logic into the service.
-  if (ttl > kMaxTimeToLiveMS) {
-    ttl = kMaxTimeToLiveMS;
-    DLOG(WARNING) << "Clamping Doodle TTL to 30 days!";
-  }
-  *time_to_live = base::TimeDelta::FromMillisecondsD(ttl);
+  *time_to_live = base::TimeDelta::FromMillisecondsD(ttl_ms);
 
   return doodle;
 }

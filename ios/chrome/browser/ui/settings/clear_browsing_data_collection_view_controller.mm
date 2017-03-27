@@ -332,6 +332,7 @@ const int kMaxTimesHistoryNoticeShown = 1;
       initWithType:ItemTypeClearBrowsingDataButton] autorelease];
   clearButtonItem.text = l10n_util::GetNSString(IDS_IOS_CLEAR_BUTTON);
   clearButtonItem.accessibilityTraits |= UIAccessibilityTraitButton;
+  clearButtonItem.textColor = [[MDCPalette cr_redPalette] tint500];
   [model addItem:clearButtonItem
       toSectionWithIdentifier:SectionIdentifierClearBrowsingDataButton];
 
@@ -498,23 +499,6 @@ const int kMaxTimesHistoryNoticeShown = 1;
   return timeRangeItem;
 }
 
-#pragma mark UICollectionViewDataSource
-
-- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
-                 cellForItemAtIndexPath:(NSIndexPath*)indexPath {
-  UICollectionViewCell* cell =
-      [super collectionView:collectionView cellForItemAtIndexPath:indexPath];
-
-  NSInteger type = [self.collectionViewModel itemTypeForIndexPath:indexPath];
-  if (type == ItemTypeClearBrowsingDataButton) {
-    MDCCollectionViewTextCell* textCell =
-        base::mac::ObjCCastStrict<MDCCollectionViewTextCell>(cell);
-    textCell.textLabel.textColor = [[MDCPalette cr_redPalette] tint500];
-  }
-
-  return cell;
-}
-
 #pragma mark UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView*)collectionView
@@ -640,6 +624,8 @@ const int kMaxTimesHistoryNoticeShown = 1;
               handler:^(UIAlertAction* action) {
                 [weakSelf clearDataForDataTypes:dataTypeMaskToRemove];
               }];
+  clearDataAction.accessibilityLabel =
+      l10n_util::GetNSString(IDS_IOS_CONFIRM_CLEAR_BUTTON);
   UIAlertAction* cancelAction =
       [UIAlertAction actionWithTitle:l10n_util::GetNSString(IDS_CANCEL)
                                style:UIAlertActionStyleCancel

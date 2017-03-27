@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/common/chrome_icon_resources_win.h"
 #include "chrome/install_static/install_modes.h"
 
 namespace install_static {
@@ -36,10 +37,13 @@ const InstallConstants kInstallModes[] = {
         L"ChromiumHTM",  // ProgID prefix.
         L"Chromium HTML Document",  // ProgID description.
         L"{7D2B3E1D-D096-4594-9D8F-A6667F12E0AC}",  // Active Setup GUID.
+        L"{A2DF06F9-A21A-44A8-8A99-8B9C84F29160}",  // CommandExecuteImpl CLSID.
         L"",  // Empty default channel name since no update integration.
         ChannelStrategy::UNSUPPORTED,
         true,  // Supports system-level installs.
+        true,  // Supports in-product set as default browser UX.
         true,  // Supported multi-install.
+        icon_resources::kApplicationIndex,
         IDR_MAINFRAME,
     },
     // clang-format on

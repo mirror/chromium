@@ -2726,9 +2726,15 @@ void Document::open() {
       }
     }
 
-    // PlzNavigate: We should abort ongoing navigations handled by the client.
-    if (m_frame->loader().hasProvisionalNavigation())
+    if (m_frame->loader().hasProvisionalNavigation()) {
       m_frame->loader().stopAllLoaders();
+      // PlzNavigate: navigations handled by the client should also be
+      // cancelled.
+      if (m_frame->loader().client() &&
+          m_frame->settings()->getBrowserSideNavigationEnabled()) {
+        m_frame->loader().client()->abortClientNavigation();
+      }
+    }
   }
 
   removeAllEventListenersRecursively();
@@ -3072,6 +3078,8 @@ void Document::dispatchUnloadEvents() {
     return;
 
   if (m_loadEventProgress <= UnloadEventInProgress) {
+    if (page())
+      page()->willUnloadDocument(*this);
     Element* currentFocusedElement = focusedElement();
     if (isHTMLInputElement(currentFocusedElement))
       toHTMLInputElement(*currentFocusedElement).endEditing();
@@ -3297,6 +3305,13 @@ EventTarget* Document::errorEventTarget() {
 
 void Document::exceptionThrown(ErrorEvent* event) {
   MainThreadDebugger::instance()->exceptionThrown(this, event);
+}
+
+KURL Document::urlForBinding() {
+  if (!url().isNull()) {
+    return url();
+  }
+  return blankURL();
 }
 
 void Document::setURL(const KURL& url) {

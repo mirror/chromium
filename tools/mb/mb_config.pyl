@@ -14,7 +14,7 @@
   # below). MB uses this dict to look up which config to use for a given bot.
   'masters': {
     'chromeos.chrome': {
-      'amd64-generic Trusty (Informational)': 'cros_chrome_sdk',
+      'chrome-tot-chromeos-amd64-generic': 'cros_chrome_sdk',
       'Chrome4CROS Packages': 'chromeos_with_codecs_release_bot',
       'Linux ChromeOS Buildspec Tests': 'chromeos_with_codecs_release_bot',
     },
@@ -1834,7 +1834,7 @@
                   'ozone_platform="x11" '
                   'ozone_platform_x11=true ozone_platform_gbm=true '
                   'enable_package_mash_services=true use_ash=false '
-                  'use_jessie_sysroot=true use_xkbcommon=true'),
+                  'use_xkbcommon=true'),
     },
 
     'pdf_xfa': {

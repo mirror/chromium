@@ -63,7 +63,7 @@ source_set("reading_list_remover") {
   ]
   deps = [
     "//base",
-    "//components/reading_list/ios",
+    "//components/reading_list/core",
     "//ios/chrome/browser/browser_state",
   ]
 }
@@ -82,7 +82,7 @@ source_set("unit_tests") {
     "//base",
     "//base/test:test_support",
     "//components/favicon/ios",
-    "//components/reading_list/ios",
+    "//components/reading_list/core",
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state:test_support",
     "//ios/chrome/browser/dom_distiller",

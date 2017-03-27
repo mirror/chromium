@@ -426,7 +426,7 @@ bool GLRenderer::CanPartialSwap() {
 
 ResourceFormat GLRenderer::BackbufferFormat() const {
   if (current_frame()->current_render_pass->color_space.IsHDR() &&
-      resource_provider_->IsResourceFormatSupported(RGBA_F16)) {
+      resource_provider_->IsRenderBufferFormatSupported(RGBA_F16)) {
     return RGBA_F16;
   }
   return resource_provider_->best_texture_format();
@@ -2450,6 +2450,9 @@ void GLRenderer::FinishDrawingFrame() {
   if (overdraw_feedback_)
     FlushOverdrawFeedback(swap_buffer_rect_);
 
+  if (use_swap_with_bounds_)
+    swap_content_bounds_ = current_frame()->root_content_bounds;
+
   current_framebuffer_lock_ = nullptr;
 
   gl_->Disable(GL_BLEND);
@@ -2614,7 +2617,7 @@ void GLRenderer::SwapBuffers(std::vector<ui::LatencyInfo> latency_info) {
   output_frame.latency_info = std::move(latency_info);
   output_frame.size = surface_size;
   if (use_swap_with_bounds_) {
-    output_frame.content_bounds = current_frame()->root_content_bounds;
+    output_frame.content_bounds = std::move(swap_content_bounds_);
   } else if (use_partial_swap_) {
     // If supported, we can save significant bandwidth by only swapping the
     // damaged/scissored region (clamped to the viewport).
@@ -3004,11 +3007,11 @@ void GLRenderer::SetUseProgram(const ProgramKey& program_key,
   // https://crbug.com/699243
   // The source color space for non-YUV draw quads should always be full-range
   // RGB.
-  DCHECK_EQ(src_color_space, src_color_space.GetAsFullRangeRGB());
   if (settings_->enable_color_correct_rendering) {
     SetUseProgram(program_key, src_color_space,
                   current_frame()->current_render_pass->color_space);
   } else {
+    DCHECK_EQ(src_color_space, src_color_space.GetAsFullRangeRGB());
     SetUseProgram(program_key, gfx::ColorSpace(), gfx::ColorSpace());
   }
 }

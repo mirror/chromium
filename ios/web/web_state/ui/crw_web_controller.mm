@@ -1467,7 +1467,8 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   // Transfer time is registered so that further transitions within the time
   // envelope are not also registered as links.
   _lastTransferTimeInSeconds = CFAbsoluteTimeGetCurrent();
-  if (!(transition & ui::PAGE_TRANSITION_IS_REDIRECT_MASK)) {
+  bool redirect = transition & ui::PAGE_TRANSITION_IS_REDIRECT_MASK;
+  if (!redirect) {
     // Before changing phases, the delegate should be informed that any existing
     // request is being cancelled before completion.
     [self loadCancelled];
@@ -1477,7 +1478,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   _loadPhase = web::LOAD_REQUESTED;
   _lastRegisteredRequestURL = requestURL;
 
-  if (!(transition & ui::PAGE_TRANSITION_IS_REDIRECT_MASK)) {
+  if (!redirect) {
     // Record state of outgoing page.
     [self recordStateInHistory];
   }
@@ -1801,10 +1802,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   GURL navUrl = params.url;
   ui::PageTransition transition = params.transition_type;
   DCHECK(!(transition & ui::PAGE_TRANSITION_FORWARD_BACK));
-  // This method is allowed to handle reload only for transient items, which
-  // is essentially loading the same URL again.
-  DCHECK(!(transition & ui::PAGE_TRANSITION_RELOAD) ||
-         self.navigationManagerImpl->GetTransientItem());
 
   BOOL initialNavigation = NO;
   // Clear transient view before making any changes to history and navigation
@@ -2296,6 +2293,22 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
 - (void)executeUserJavaScript:(NSString*)script
             completionHandler:(web::JavaScriptResultBlock)completion {
+  // For security reasons, executing JavaScript on pages with app-specific URLs
+  // is not allowed, because those pages may have elevated privileges.
+  GURL lastCommittedURL = self.webState->GetLastCommittedURL();
+  if (web::GetWebClient()->IsAppSpecificURL(lastCommittedURL)) {
+    if (completion) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        base::scoped_nsobject<NSError> error([[NSError alloc]
+            initWithDomain:web::kJSEvaluationErrorDomain
+                      code:web::JS_EVALUATION_ERROR_CODE_NO_WEB_VIEW
+                  userInfo:nil]);
+        completion(nil, error);
+      });
+    }
+    return;
+  }
+
   [self setUserInteractionRegistered:YES];
   [self executeJavaScript:script completionHandler:completion];
 }
@@ -3006,14 +3019,14 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   BOOL isNavigationTypeLinkActivated =
       action.navigationType == WKNavigationTypeLinkActivated;
 
-  // Check if the link navigation leads to a launch of an external app.
+  // Checks if the link navigation leads to a launch of an external app.
+  // TODO(crbug.com/704417): External apps will not be launched from clicking
+  // a Bookmarked URL or a Recently Closed URL.
   // TODO(crbug.com/607780): Revise the logic of allowing external app launch
   // and move it to externalAppLauncher.
   BOOL isOpenInNewTabNavigation = !(self.navigationManagerImpl->GetItemCount());
   BOOL isPossibleLinkClick = [self isLinkNavigation:action.navigationType];
-  if (isPossibleLinkClick || isOpenInNewTabNavigation ||
-      PageTransitionCoreTypeIs(self.currentTransition,
-                               ui::PAGE_TRANSITION_AUTO_BOOKMARK)) {
+  if (isPossibleLinkClick || isOpenInNewTabNavigation) {
     web::NavigationItem* item = self.currentNavItem;
     const GURL currentNavigationURL =
         item ? item->GetVirtualURL() : GURL::EmptyGURL();
@@ -3382,6 +3395,13 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 }
 
 - (BOOL)userClickedRecently {
+  // Scrolling generates a pair of touch on/off event which causes
+  // _lastUserInteraction to register that there was user interaction.
+  // Checks for scrolling first to override time-based click heuristics.
+  BOOL scrolling = [[self webScrollView] isDragging] ||
+                   [[self webScrollView] isDecelerating];
+  if (scrolling)
+    return NO;
   if (!_lastUserInteraction)
     return NO;
   return _clickInProgress ||
@@ -4815,7 +4835,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
            if (!_webView || ![result isKindOfClass:[NSString class]]) {
              return;
            }
-           GURL JSURL([result UTF8String]);
+           GURL JSURL(base::SysNSStringToUTF8(result));
            // Check that window.location matches the new URL. If
            // it does not, this is a document-changing URL change as
            // the window location would not have changed to the new
@@ -5013,7 +5033,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
         if (shouldContinue)
           webViewNavigationBlock();
         else
-          defaultNavigationBlock();
+          [self stopLoading];
       }));
 }
 

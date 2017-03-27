@@ -5,10 +5,10 @@
 #include "modules/shapedetection/ShapeDetector.h"
 
 #include "core/dom/DOMException.h"
-#include "core/dom/DOMRect.h"
 #include "core/dom/Document.h"
 #include "core/frame/ImageBitmap.h"
 #include "core/frame/LocalFrame.h"
+#include "core/geometry/DOMRect.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
@@ -28,10 +28,13 @@ skia::mojom::blink::BitmapPtr createBitmapFromData(int width,
   skia::mojom::blink::BitmapPtr bitmap = skia::mojom::blink::Bitmap::New();
 
   bitmap->color_type = (kN32_SkColorType == kRGBA_8888_SkColorType)
-                           ? skia::mojom::ColorType::RGBA_8888
-                           : skia::mojom::ColorType::BGRA_8888;
+                           ? skia::mojom::blink::ColorType::RGBA_8888
+                           : skia::mojom::blink::ColorType::BGRA_8888;
+  bitmap->alpha_type = skia::mojom::blink::AlphaType::ALPHA_TYPE_OPAQUE;
+  bitmap->profile_type = skia::mojom::blink::ColorProfileType::LINEAR;
   bitmap->width = width;
   bitmap->height = height;
+  bitmap->row_bytes = width * 4 /* bytes per pixel */;
   bitmap->pixel_data = std::move(bitmapData);
 
   return bitmap;

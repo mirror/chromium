@@ -341,14 +341,13 @@ class BrowserView : public BrowserWindow,
       bool app_modal,
       const base::Callback<void(bool)>& callback) override;
   void UserChangedTheme() override;
-  void ShowWebsiteSettings(
-      Profile* profile,
-      content::WebContents* web_contents,
-      const GURL& virtual_url,
-      const security_state::SecurityInfo& security_info) override;
+  void ShowPageInfo(Profile* profile,
+                    content::WebContents* web_contents,
+                    const GURL& virtual_url,
+                    const security_state::SecurityInfo& security_info) override;
   void ShowAppMenu() override;
-  bool PreHandleKeyboardEvent(const content::NativeWebKeyboardEvent& event,
-                              bool* is_keyboard_shortcut) override;
+  content::KeyboardEventProcessingResult PreHandleKeyboardEvent(
+      const content::NativeWebKeyboardEvent& event) override;
   void HandleKeyboardEvent(
       const content::NativeWebKeyboardEvent& event) override;
   void CutCopyPaste(int command_id) override;

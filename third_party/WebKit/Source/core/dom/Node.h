@@ -772,8 +772,6 @@ class CORE_EXPORT Node : public EventTarget {
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-  unsigned lengthOfContents() const;
-
  private:
   enum NodeFlags {
     HasRareDataFlag = 1,
@@ -884,13 +882,6 @@ class CORE_EXPORT Node : public EventTarget {
 
   void setTreeScope(TreeScope* scope) { m_treeScope = scope; }
 
-  // isTreeScopeInitialized() can be false
-  // - in the destruction of Document or ShadowRoot where m_treeScope is set to
-  //   null or
-  // - in the Node constructor called by these two classes where m_treeScope is
-  //   set by TreeScope ctor.
-  bool isTreeScopeInitialized() const { return m_treeScope; }
-
   void markAncestorsWithChildNeedsStyleRecalc();
 
   void setIsFinishedParsingChildren(bool value) {
@@ -972,14 +963,6 @@ inline void Node::lazyReattachIfAttached() {
 inline bool Node::shouldCallRecalcStyle(StyleRecalcChange change) {
   return change >= IndependentInherit || needsStyleRecalc() ||
          childNeedsStyleRecalc();
-}
-
-inline bool isTreeScopeRoot(const Node* node) {
-  return !node || node->isDocumentNode() || node->isShadowRoot();
-}
-
-inline bool isTreeScopeRoot(const Node& node) {
-  return node.isDocumentNode() || node.isShadowRoot();
 }
 
 // See the comment at the declaration of ScriptWrappable::fromNode in

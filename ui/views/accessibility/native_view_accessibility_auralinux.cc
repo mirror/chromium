@@ -70,9 +70,7 @@ class AuraLinuxApplication
 
   // ui::AXPlatformNodeDelegate:
 
-  const ui::AXNodeData& GetData() override {
-    return data_;
-  }
+  const ui::AXNodeData& GetData() const override { return data_; }
 
   gfx::NativeWindow GetTopLevelWidget() override { return nullptr; }
 
@@ -159,14 +157,13 @@ std::unique_ptr<NativeViewAccessibility> NativeViewAccessibility::Create(
 }
 
 NativeViewAccessibilityAuraLinux::NativeViewAccessibilityAuraLinux(View* view)
-    : NativeViewAccessibility(view) {
-}
+    : NativeViewAccessibilityBase(view) {}
 
 NativeViewAccessibilityAuraLinux::~NativeViewAccessibilityAuraLinux() {
 }
 
 gfx::NativeViewAccessible NativeViewAccessibilityAuraLinux::GetParent() {
-  gfx::NativeViewAccessible parent = NativeViewAccessibility::GetParent();
+  gfx::NativeViewAccessible parent = NativeViewAccessibilityBase::GetParent();
   if (!parent)
     parent = AuraLinuxApplication::GetInstance()->GetNativeViewAccessible();
   return parent;

@@ -383,8 +383,14 @@ void FrameTreeNode::CreatedNavigationRequest(
   // There's no need to reset the state: there's still an ongoing load, and the
   // RenderFrameHostManager will take care of updates to the speculative
   // RenderFrameHost in DidCreateNavigationRequest below.
-  if (was_previously_loading)
-    ResetNavigationRequest(true);
+  if (was_previously_loading) {
+    if (navigation_request_) {
+      // Mark the old request as aborted.
+      navigation_request_->navigation_handle()->set_net_error_code(
+          net::ERR_ABORTED);
+    }
+    ResetNavigationRequest(true, true);
+  }
 
   navigation_request_ = std::move(navigation_request);
   render_manager()->DidCreateNavigationRequest(navigation_request_.get());
@@ -395,7 +401,8 @@ void FrameTreeNode::CreatedNavigationRequest(
   DidStartLoading(to_different_document, was_previously_loading);
 }
 
-void FrameTreeNode::ResetNavigationRequest(bool keep_state) {
+void FrameTreeNode::ResetNavigationRequest(bool keep_state,
+                                           bool inform_renderer) {
   CHECK(IsBrowserSideNavigationEnabled());
   if (!navigation_request_)
     return;
@@ -420,8 +427,11 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state) {
   }
 
   // If the navigation is renderer-initiated, the renderer should also be
-  // informed that the navigation stopped.
-  if (was_renderer_initiated) {
+  // informed that the navigation stopped if needed. In the case the renderer
+  // process asked for the navigation to be aborted, e.g. following a
+  // document.open, do not send an IPC to the renderer process as it already
+  // expects the navigation to stop.
+  if (was_renderer_initiated && inform_renderer) {
     current_frame_host()->Send(
         new FrameMsg_Stop(current_frame_host()->GetRoutingID()));
   }
@@ -499,8 +509,10 @@ bool FrameTreeNode::StopLoading() {
     if (navigation_request_) {
       navigation_request_->navigation_handle()->set_net_error_code(
           net::ERR_ABORTED);
+      navigator_->DiscardPendingEntryIfNeeded(
+          navigation_request_->navigation_handle());
     }
-    ResetNavigationRequest(false);
+    ResetNavigationRequest(false, true);
   }
 
   // TODO(nasko): see if child frames should send IPCs in site-per-process

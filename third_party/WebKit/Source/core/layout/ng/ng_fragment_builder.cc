@@ -80,10 +80,27 @@ NGFragmentBuilder& NGFragmentBuilder::AddChild(
   DCHECK_EQ(type_, NGPhysicalFragment::kFragmentBox)
       << "Only box fragments can have children";
 
-  // Update if we have fragmented in this flow.
-  did_break_ |= child->IsBox() && !child->BreakToken()->IsFinished();
+  switch (child->Type()) {
+    case NGPhysicalBoxFragment::kFragmentBox:
+      // Update if we have fragmented in this flow.
+      did_break_ |= !child->BreakToken()->IsFinished();
+      child_break_tokens_.push_back(child->BreakToken());
+      break;
+    case NGPhysicalBoxFragment::kFragmentLineBox:
+      // NGInlineNode produces multiple line boxes in an anonymous box. Only
+      // the last break token is needed to be reported to the parent.
+      DCHECK(child->BreakToken() && child->BreakToken()->InputNode() == node_);
+      last_inline_break_token_ =
+          child->BreakToken()->IsFinished() ? nullptr : child->BreakToken();
+      break;
+    case NGPhysicalBoxFragment::kFragmentText:
+      DCHECK(!child->BreakToken());
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
 
-  child_break_tokens_.push_back(child->BreakToken());
   children_.push_back(std::move(child));
   offsets_.push_back(child_offset);
 
@@ -161,7 +178,6 @@ NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowDescendant(
 }
 
 RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
-  // TODO(layout-ng): Support text fragments
   DCHECK_EQ(type_, NGPhysicalFragment::kFragmentBox);
   DCHECK_EQ(offsets_.size(), children_.size());
 
@@ -174,9 +190,14 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   }
 
   RefPtr<NGBreakToken> break_token;
+  if (last_inline_break_token_) {
+    DCHECK(!last_inline_break_token_->IsFinished());
+    child_break_tokens_.push_back(std::move(last_inline_break_token_));
+    did_break_ = true;
+  }
   if (did_break_) {
-    break_token = NGBlockBreakToken::create(
-        toNGBlockNode(node_.get()), used_block_size_, child_break_tokens_);
+    break_token = NGBlockBreakToken::create(node_.get(), used_block_size_,
+                                            child_break_tokens_);
   } else {
     break_token = NGBlockBreakToken::create(node_.get());
   }
@@ -196,20 +217,6 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   return adoptRef(
       new NGLayoutResult(std::move(fragment), out_of_flow_descendants_,
                          out_of_flow_positions_, unpositioned_floats_));
-}
-
-RefPtr<NGPhysicalTextFragment> NGFragmentBuilder::ToTextFragment(
-    unsigned index,
-    unsigned start_offset,
-    unsigned end_offset) {
-  DCHECK_EQ(type_, NGPhysicalFragment::kFragmentText);
-  DCHECK(children_.isEmpty());
-  DCHECK(offsets_.isEmpty());
-
-  return adoptRef(new NGPhysicalTextFragment(
-      node_->GetLayoutObject(), toNGInlineNode(node_), index, start_offset,
-      end_offset, size_.ConvertToPhysical(writing_mode_),
-      overflow_.ConvertToPhysical(writing_mode_)));
 }
 
 }  // namespace blink

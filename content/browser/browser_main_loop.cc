@@ -90,7 +90,6 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/result_codes.h"
-#include "device/battery/battery_status_service.h"
 #include "device/gamepad/gamepad_service.h"
 #include "gpu/vulkan/features.h"
 #include "media/audio/audio_system_impl.h"
@@ -154,8 +153,6 @@
 #include <shellapi.h>
 
 #include "base/memory/memory_pressure_monitor_win.h"
-#include "base/win/windows_version.h"
-#include "content/browser/screen_orientation/screen_orientation_delegate_win.h"
 #include "content/common/sandbox_win.h"
 #include "net/base/winsock_init.h"
 #include "ui/base/l10n/l10n_util_win.h"
@@ -737,11 +734,6 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
         BrowserThread::GetTaskRunnerForThread(BrowserThread::UI));
   }
 
-#if defined(OS_WIN)
-  if (base::win::GetVersion() >= base::win::VERSION_WIN8)
-    screen_orientation_delegate_.reset(new ScreenOrientationDelegateWin());
-#endif
-
   // Only use discardable_memory::DiscardableSharedMemoryManager when Chrome is
   // not running in mus+ash.
   if (!service_manager::ServiceManagerIsRemote()) {
@@ -816,7 +808,7 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
 
 #if defined(USE_OZONE)
   client_native_pixmap_factory_ = ui::CreateClientNativePixmapFactoryOzone();
-  ui::ClientNativePixmapFactory::SetInstance(
+  gfx::ClientNativePixmapFactory::SetInstance(
       client_native_pixmap_factory_.get());
 #endif
 
@@ -1383,12 +1375,6 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
     TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:GamepadService");
     device::GamepadService::GetInstance()->Terminate();
   }
-#if !defined(OS_ANDROID)
-  {
-    TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:BatteryStatusService");
-    device::BatteryStatusService::GetInstance()->Shutdown();
-  }
-#endif
   {
     TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:DeleteDataSources");
     URLDataManager::DeleteDataSources();

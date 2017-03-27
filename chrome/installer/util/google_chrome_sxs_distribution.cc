@@ -8,15 +8,12 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "chrome/common/chrome_icon_resources_win.h"
 #include "chrome/installer/util/installer_util_strings.h"
 #include "chrome/installer/util/updating_app_registration_data.h"
 
 namespace {
 
 const wchar_t kChromeSxSGuid[] = L"{4ea16ac7-fd5a-47c3-875b-dbf4a2008c20}";
-const wchar_t kCommandExecuteImplUuid[] =
-    L"{1BEAC3E3-B852-44F4-B468-8906C062422E}";
 
 }  // namespace
 
@@ -42,24 +39,6 @@ base::string16 GoogleChromeSxSDistribution::GetStartMenuShortcutSubfolder(
       DCHECK_EQ(subfolder_type, SUBFOLDER_CHROME);
       return GetShortcutName();
   }
-}
-
-base::string16 GoogleChromeSxSDistribution::GetUninstallRegPath() {
-  return GoogleChromeDistribution::GetUninstallRegPath().append(
-      installer::kSxSSuffix);
-}
-
-BrowserDistribution::DefaultBrowserControlPolicy
-    GoogleChromeSxSDistribution::GetDefaultBrowserControlPolicy() {
-  return DEFAULT_BROWSER_OS_CONTROL_ONLY;
-}
-
-int GoogleChromeSxSDistribution::GetIconIndex() {
-  return icon_resources::kSxSApplicationIndex;
-}
-
-base::string16 GoogleChromeSxSDistribution::GetCommandExecuteImplClsid() {
-  return kCommandExecuteImplUuid;
 }
 
 bool GoogleChromeSxSDistribution::ShouldSetExperimentLabels() {

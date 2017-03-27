@@ -18,7 +18,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/win/registry.h"
 #include "base/win/windows_version.h"
-#include "chrome/common/chrome_icon_resources_win.h"
 #include "chrome/common/env_vars.h"
 #include "chrome/installer/util/app_registration_data.h"
 #include "chrome/installer/util/google_chrome_distribution.h"
@@ -32,9 +31,6 @@
 using installer::MasterPreferences;
 
 namespace {
-
-const wchar_t kCommandExecuteImplUuid[] =
-    L"{A2DF06F9-A21A-44A8-8A99-8B9C84F29160}";
 
 // The BrowserDistribution objects are never freed.
 BrowserDistribution* g_browser_distribution = NULL;
@@ -118,14 +114,6 @@ base::string16 BrowserDistribution::GetShortcutName() {
   return GetBaseAppName();
 }
 
-int BrowserDistribution::GetIconIndex() {
-  return icon_resources::kApplicationIndex;
-}
-
-base::string16 BrowserDistribution::GetIconFilename() {
-  return installer::kChromeExe;
-}
-
 base::string16 BrowserDistribution::GetStartMenuShortcutSubfolder(
     Subfolder subfolder_type) {
   switch (subfolder_type) {
@@ -157,23 +145,6 @@ std::string BrowserDistribution::GetSafeBrowsingName() {
 
 base::string16 BrowserDistribution::GetDistributionData(HKEY root_key) {
   return L"";
-}
-
-base::string16 BrowserDistribution::GetUninstallRegPath() {
-  return L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Chromium";
-}
-
-BrowserDistribution::DefaultBrowserControlPolicy
-    BrowserDistribution::GetDefaultBrowserControlPolicy() {
-  return DEFAULT_BROWSER_FULL_CONTROL;
-}
-
-bool BrowserDistribution::CanCreateDesktopShortcuts() {
-  return true;
-}
-
-base::string16 BrowserDistribution::GetCommandExecuteImplClsid() {
-  return kCommandExecuteImplUuid;
 }
 
 void BrowserDistribution::UpdateInstallStatus(bool system_install,

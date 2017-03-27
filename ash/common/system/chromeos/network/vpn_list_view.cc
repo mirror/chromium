@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "ash/common/ash_view_ids.h"
-#include "ash/common/material_design/material_design_controller.h"
 #include "ash/common/system/chromeos/network/network_icon.h"
 #include "ash/common/system/chromeos/network/network_icon_animation.h"
 #include "ash/common/system/chromeos/network/network_icon_animation_observer.h"
@@ -31,7 +30,7 @@
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
-#include "chromeos/network/network_connection_handler.h"
+#include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_type_pattern.h"
@@ -47,17 +46,12 @@
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/separator.h"
-#include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/view.h"
 
 namespace ash {
 
 namespace {
-
-bool UseMd() {
-  return MaterialDesignController::IsSystemTrayMenuMaterial();
-}
 
 // Indicates whether |network| belongs to this VPN provider.
 bool VpnProviderMatchesNetwork(const VPNProvider& provider,
@@ -85,27 +79,12 @@ class VPNListEntryBase : public HoverHighlightView {
 };
 
 // A list entry that represents a VPN provider.
-class VPNListProviderEntry : public VPNListEntryBase {
+class VPNListProviderEntry : public views::ButtonListener, public views::View {
  public:
-  VPNListProviderEntry(VPNListView* parent, const std::string& name)
-      : VPNListEntryBase(parent) {
-    views::Label* const label = AddLabel(
-        base::UTF8ToUTF16(name), gfx::ALIGN_LEFT, false /* highlight */);
-    label->SetBorder(views::CreateEmptyBorder(5, 0, 5, 0));
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(VPNListProviderEntry);
-};
-
-// A list entry that represents a VPN provider with Material Design.
-class VPNListProviderEntryMd : public views::ButtonListener,
-                               public views::View {
- public:
-  VPNListProviderEntryMd(ViewClickListener* parent,
-                         bool top_item,
-                         const std::string& name,
-                         int button_accessible_name_id)
+  VPNListProviderEntry(ViewClickListener* parent,
+                       bool top_item,
+                       const std::string& name,
+                       int button_accessible_name_id)
       : parent_(parent) {
     TrayPopupUtils::ConfigureAsStickyHeader(this);
     SetLayoutManager(new views::FillLayout);
@@ -140,7 +119,7 @@ class VPNListProviderEntryMd : public views::ButtonListener,
   // Our parent to handle events.
   ViewClickListener* parent_;
 
-  DISALLOW_COPY_AND_ASSIGN(VPNListProviderEntryMd);
+  DISALLOW_COPY_AND_ASSIGN(VPNListProviderEntry);
 };
 
 // A list entry that represents a network. If the network is currently
@@ -157,12 +136,15 @@ class VPNListNetworkEntry : public VPNListEntryBase,
   // network_icon::AnimationObserver:
   void NetworkIconChanged() override;
 
+  // views::ButtonListener:
+  void ButtonPressed(Button* sender, const ui::Event& event) override;
+
  private:
   void UpdateFromNetworkState(const chromeos::NetworkState* network);
-  void SetupConnectedItemMd(const base::string16& text,
-                            const gfx::ImageSkia& image);
-  void SetupConnectingItemMd(const base::string16& text,
-                             const gfx::ImageSkia& image);
+  void SetupConnectedItem(const base::string16& text,
+                          const gfx::ImageSkia& image);
+  void SetupConnectingItem(const base::string16& text,
+                           const gfx::ImageSkia& image);
 
   const std::string guid_;
 
@@ -172,10 +154,7 @@ class VPNListNetworkEntry : public VPNListEntryBase,
 };
 
 VPNListEntryBase::VPNListEntryBase(VPNListView* parent)
-    : HoverHighlightView(parent) {
-  if (!UseMd())
-    SetBorder(views::CreateEmptyBorder(0, kTrayPopupPaddingHorizontal, 0, 0));
-}
+    : HoverHighlightView(parent) {}
 
 VPNListNetworkEntry::VPNListNetworkEntry(VPNListView* parent,
                                          const chromeos::NetworkState* network)
@@ -191,6 +170,16 @@ void VPNListNetworkEntry::NetworkIconChanged() {
   UpdateFromNetworkState(chromeos::NetworkHandler::Get()
                              ->network_state_handler()
                              ->GetNetworkStateFromGuid(guid_));
+}
+
+void VPNListNetworkEntry::ButtonPressed(Button* sender,
+                                        const ui::Event& event) {
+  if (sender != disconnect_button_) {
+    VPNListEntryBase::ButtonPressed(sender, event);
+    return;
+  }
+
+  chromeos::NetworkConnect::Get()->DisconnectFromNetworkId(guid_);
 }
 
 void VPNListNetworkEntry::UpdateFromNetworkState(
@@ -211,12 +200,11 @@ void VPNListNetworkEntry::UpdateFromNetworkState(
   gfx::ImageSkia image =
       network_icon::GetImageForNetwork(network, network_icon::ICON_TYPE_LIST);
   base::string16 label = network_icon::GetLabelForNetwork(
-      network, UseMd() ? network_icon::ICON_TYPE_MENU_LIST
-                       : network_icon::ICON_TYPE_LIST);
+      network, network_icon::ICON_TYPE_MENU_LIST);
   if (network->IsConnectedState())
-    SetupConnectedItemMd(label, image);
+    SetupConnectedItem(label, image);
   else if (network->IsConnectingState())
-    SetupConnectingItemMd(label, image);
+    SetupConnectingItem(label, image);
   else
     AddIconAndLabel(image, label, false);
 
@@ -233,8 +221,8 @@ void VPNListNetworkEntry::UpdateFromNetworkState(
 }
 
 // TODO(varkha): Consolidate with a similar method in tray_bluetooth.cc.
-void VPNListNetworkEntry::SetupConnectedItemMd(const base::string16& text,
-                                               const gfx::ImageSkia& image) {
+void VPNListNetworkEntry::SetupConnectedItem(const base::string16& text,
+                                             const gfx::ImageSkia& image) {
   AddIconAndLabels(
       image, text,
       l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTED));
@@ -244,8 +232,8 @@ void VPNListNetworkEntry::SetupConnectedItemMd(const base::string16& text,
 }
 
 // TODO(varkha): Consolidate with a similar method in tray_bluetooth.cc.
-void VPNListNetworkEntry::SetupConnectingItemMd(const base::string16& text,
-                                                const gfx::ImageSkia& image) {
+void VPNListNetworkEntry::SetupConnectingItem(const base::string16& text,
+                                              const gfx::ImageSkia& image) {
   AddIconAndLabels(
       image, text,
       l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTING));
@@ -257,11 +245,11 @@ void VPNListNetworkEntry::SetupConnectingItemMd(const base::string16& text,
 }  // namespace
 
 VPNListView::VPNListView(NetworkListDelegate* delegate) : delegate_(delegate) {
-  WmShell::Get()->vpn_list()->AddObserver(this);
+  Shell::Get()->vpn_list()->AddObserver(this);
 }
 
 VPNListView::~VPNListView() {
-  WmShell::Get()->vpn_list()->RemoveObserver(this);
+  Shell::Get()->vpn_list()->RemoveObserver(this);
 }
 
 void VPNListView::Update() {
@@ -291,10 +279,6 @@ void VPNListView::Update() {
   provider_view_map_.clear();
   network_view_guid_map_.clear();
   list_empty_ = true;
-  if (!UseMd()) {
-    container()->SetLayoutManager(
-        new views::BoxLayout(views::BoxLayout::kVertical, 0, 0, 0));
-  }
 
   // Get the list of available VPN networks, in shill's priority order.
   chromeos::NetworkStateHandler::NetworkStateList networks;
@@ -396,12 +380,8 @@ void VPNListView::AddProviderAndNetworks(
 
   // Add a list entry for the VPN provider.
   views::View* provider_view = nullptr;
-  if (UseMd()) {
-    provider_view = new VPNListProviderEntryMd(
-        this, list_empty_, vpn_name, IDS_ASH_STATUS_TRAY_ADD_CONNECTION);
-  } else {
-    provider_view = new VPNListProviderEntry(this, vpn_name);
-  }
+  provider_view = new VPNListProviderEntry(this, list_empty_, vpn_name,
+                                           IDS_ASH_STATUS_TRAY_ADD_CONNECTION);
   container()->AddChildView(provider_view);
   provider_view_map_[provider_view] = vpn_provider;
   list_empty_ = false;
@@ -417,7 +397,7 @@ void VPNListView::AddProvidersAndNetworks(
     const chromeos::NetworkStateHandler::NetworkStateList& networks) {
   // Get the list of VPN providers enabled in the primary user's profile.
   std::vector<VPNProvider> providers =
-      WmShell::Get()->vpn_list()->vpn_providers();
+      Shell::Get()->vpn_list()->vpn_providers();
 
   // Add providers with at least one configured network along with their
   // networks. Providers are added in the order of their highest priority

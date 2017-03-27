@@ -25,6 +25,9 @@ struct NetworkInfo {
   NetworkInfo(const std::string& guid);
   ~NetworkInfo();
 
+  bool operator==(const NetworkInfo& other) const;
+  bool operator!=(const NetworkInfo& other) const { return !(*this == other); }
+
   std::string guid;
   base::string16 label;
   base::string16 tooltip;

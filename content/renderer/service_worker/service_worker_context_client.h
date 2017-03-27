@@ -147,6 +147,12 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   void didHandleBackgroundFetchClickEvent(int request_id,
                                           blink::WebServiceWorkerEventResult,
                                           double dispatch_event_time) override;
+  void didHandleBackgroundFetchFailEvent(int request_id,
+                                         blink::WebServiceWorkerEventResult,
+                                         double dispatch_event_time) override;
+  void didHandleBackgroundFetchedEvent(int request_id,
+                                       blink::WebServiceWorkerEventResult,
+                                       double dispatch_event_time) override;
   void didHandleExtendableMessageEvent(
       int request_id,
       blink::WebServiceWorkerEventResult result,
@@ -226,6 +232,14 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       const std::string& tag,
       mojom::BackgroundFetchState state,
       const DispatchBackgroundFetchClickEventCallback& callback) override;
+  void DispatchBackgroundFetchFailEvent(
+      const std::string& tag,
+      const std::vector<BackgroundFetchSettledFetch>& fetches,
+      const DispatchBackgroundFetchFailEventCallback& callback) override;
+  void DispatchBackgroundFetchedEvent(
+      const std::string& tag,
+      const std::vector<BackgroundFetchSettledFetch>& fetches,
+      const DispatchBackgroundFetchedEventCallback& callback) override;
   void DispatchExtendableMessageEvent(
       mojom::ExtendableMessageEventPtr event,
       const DispatchExtendableMessageEventCallback& callback) override;
@@ -252,6 +266,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   void DispatchPaymentRequestEvent(
       payments::mojom::PaymentAppRequestPtr app_request,
       const DispatchPaymentRequestEventCallback& callback) override;
+  void Ping(const PingCallback& callback) override;
 
   void OnInstallEvent(int request_id);
   void OnNotificationClickEvent(
@@ -281,8 +296,6 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   void OnClaimClientsError(int request_id,
                            blink::WebServiceWorkerError::ErrorType error_type,
                            const base::string16& message);
-  void OnPing();
-
   // Called to resolve the FetchEvent.preloadResponse promise.
   void OnNavigationPreloadResponse(
       int fetch_event_id,

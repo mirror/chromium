@@ -84,6 +84,7 @@
 #include "content/public/common/content_paths.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/renderer_preferences.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/render_thread_observer.h"
@@ -168,6 +169,7 @@
 #include "third_party/skia/include/core/SkGraphics.h"
 #include "ui/base/layout.h"
 #include "ui/base/ui_base_switches.h"
+#include "ui/display/display_switches.h"
 #include "ui/gl/gl_switches.h"
 
 #if defined(OS_ANDROID)
@@ -628,17 +630,31 @@ void RenderThreadImpl::Init(
   // Register this object as the main thread.
   ChildProcess::current()->set_main_thread(this);
 
-  if (IsRunningInMash()) {
-    gpu_ = ui::Gpu::Create(GetServiceManagerConnection()->GetConnector(),
-                           GetIOTaskRunner());
-  } else {
-    gpu_ = ui::Gpu::Create(GetRemoteInterfaces(), GetIOTaskRunner());
-  }
+  gpu_ = ui::Gpu::Create(
+      GetConnector(),
+      IsRunningInMash() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
+      GetIOTaskRunner());
 
   channel()->GetThreadSafeRemoteAssociatedInterface(
       &thread_safe_render_message_filter_);
   shared_bitmap_manager_.reset(
       new ChildSharedBitmapManager(thread_safe_render_message_filter_));
+
+  memory_pressure_listener_.reset(new base::MemoryPressureListener(
+      base::Bind(&RenderThreadImpl::OnMemoryPressure, base::Unretained(this)),
+      base::Bind(&RenderThreadImpl::OnSyncMemoryPressure,
+                 base::Unretained(this))));
+
+  if (base::FeatureList::IsEnabled(features::kMemoryCoordinator)) {
+    // Disable MemoryPressureListener when memory coordinator is enabled.
+    base::MemoryPressureListener::SetNotificationsSuppressed(true);
+
+    mojom::MemoryCoordinatorHandlePtr parent_coordinator;
+    GetConnector()->BindInterface(mojom::kBrowserServiceName,
+                                  mojo::MakeRequest(&parent_coordinator));
+    memory_coordinator_ =
+        CreateChildMemoryCoordinator(std::move(parent_coordinator), this);
+  }
 
   InitializeWebKit(resource_task_queue);
 
@@ -825,24 +841,6 @@ void RenderThreadImpl::Init(
     media::EnableNewVp9CodecStringSupport();
   }
 
-  memory_pressure_listener_.reset(new base::MemoryPressureListener(
-      base::Bind(&RenderThreadImpl::OnMemoryPressure, base::Unretained(this)),
-      base::Bind(&RenderThreadImpl::OnSyncMemoryPressure,
-                 base::Unretained(this))));
-
-  if (base::FeatureList::IsEnabled(features::kMemoryCoordinator)) {
-    // Disable MemoryPressureListener when memory coordinator is enabled.
-    base::MemoryPressureListener::SetNotificationsSuppressed(true);
-
-    // TODO(bashi): Revisit how to manage the lifetime of
-    // ChildMemoryCoordinatorImpl.
-    // https://codereview.chromium.org/2094583002/#msg52
-    mojom::MemoryCoordinatorHandlePtr parent_coordinator;
-    GetRemoteInterfaces()->GetInterface(mojo::MakeRequest(&parent_coordinator));
-    memory_coordinator_ = CreateChildMemoryCoordinator(
-        std::move(parent_coordinator), this);
-  }
-
   int num_raster_threads = 0;
   std::string string_value =
       command_line.GetSwitchValueASCII(switches::kNumRasterThreads);
@@ -866,8 +864,8 @@ void RenderThreadImpl::Init(
     NOTREACHED();
 #endif
   } else {
-    ChildThread::Get()->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&manager_ptr));
+    ChildThread::Get()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, mojo::MakeRequest(&manager_ptr));
   }
 
   discardable_shared_memory_manager_ = base::MakeUnique<
@@ -888,8 +886,8 @@ void RenderThreadImpl::Init(
       base::Bind(&EmbeddedWorkerInstanceClientImpl::Create,
                  base::Unretained(embedded_worker_dispatcher_.get())));
 
-  GetRemoteInterfaces()->GetInterface(
-      mojo::MakeRequest(&storage_partition_service_));
+  GetConnector()->BindInterface(mojom::kBrowserServiceName,
+                                mojo::MakeRequest(&storage_partition_service_));
 
 #if defined(OS_LINUX)
   ChildProcess::current()->SetIOThreadPriority(base::ThreadPriority::DISPLAY);
@@ -1140,7 +1138,7 @@ void RenderThreadImpl::InitializeWebKit(
       ->SetRuntimeFeaturesDefaultsBeforeBlinkInitialization();
 
   blink_platform_impl_.reset(new RendererBlinkPlatformImpl(
-      renderer_scheduler_.get(), GetRemoteInterfaces()->GetWeakPtr()));
+      renderer_scheduler_.get(), GetConnector()->GetWeakPtr()));
   blink::initialize(blink_platform_impl_.get());
 
   v8::Isolate* isolate = blink::mainThreadIsolate();
@@ -2070,7 +2068,8 @@ void RenderThreadImpl::OnFieldTrialGroupFinalized(
     const std::string& trial_name,
     const std::string& group_name) {
   mojom::FieldTrialRecorderPtr field_trial_recorder;
-  GetRemoteInterfaces()->GetInterface(&field_trial_recorder);
+  GetConnector()->BindInterface(mojom::kBrowserServiceName,
+                                &field_trial_recorder);
   field_trial_recorder->FieldTrialActivated(trial_name);
 }
 

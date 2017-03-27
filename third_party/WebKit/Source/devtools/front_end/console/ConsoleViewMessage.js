@@ -395,18 +395,19 @@ Console.ConsoleViewMessage = class {
   }
 
   /**
-   * @param {!SDK.RemoteObject|!Object|string} parameter
+   * @param {!SDK.RemoteObject|!Protocol.Runtime.RemoteObject|string} parameter
    * @param {?SDK.Target} target
    * @return {!SDK.RemoteObject}
    */
   _parameterToRemoteObject(parameter, target) {
     if (parameter instanceof SDK.RemoteObject)
       return parameter;
-    if (!target)
+    var runtimeModel = target ? target.model(SDK.RuntimeModel) : null;
+    if (!runtimeModel)
       return SDK.RemoteObject.fromLocalObject(parameter);
     if (typeof parameter === 'object')
-      return target.runtimeModel.createRemoteObject(parameter);
-    return target.runtimeModel.createRemoteObjectFromPrimitiveValue(parameter);
+      return runtimeModel.createRemoteObject(parameter);
+    return runtimeModel.createRemoteObjectFromPrimitiveValue(parameter);
   }
 
   /**
@@ -474,9 +475,9 @@ Console.ConsoleViewMessage = class {
         element = this._formatParameterAsError(output);
         break;
       case 'function':
-      case 'generator':
         element = this._formatParameterAsFunction(output, includePreview);
         break;
+      case 'generator':
       case 'iterator':
       case 'map':
       case 'object':
@@ -1092,7 +1093,7 @@ Console.ConsoleViewMessage = class {
     this._searchRegex.lastIndex = 0;
     var sourceRanges = [];
     while ((match = this._searchRegex.exec(text)) && match[0])
-      sourceRanges.push(new Common.SourceRange(match.index, match[0].length));
+      sourceRanges.push(new TextUtils.SourceRange(match.index, match[0].length));
 
     if (sourceRanges.length) {
       this._searchHighlightNodes =

@@ -239,7 +239,7 @@ class BLINK_EXPORT WebFrameClient {
       const WebString& headerValue,
       WebContentSecurityPolicyType type,
       WebContentSecurityPolicySource source,
-      const std::vector<WebContentSecurityPolicyPolicy>& policies) {}
+      const std::vector<WebContentSecurityPolicy>& policies) {}
 
   // Some frame owner properties have changed for a child frame of this frame.
   // Frame owner properties currently include: scrolling, marginwidth and
@@ -449,6 +449,10 @@ class BLINK_EXPORT WebFrameClient {
     return WebEffectiveConnectionType::TypeUnknown;
   }
 
+  // PlzNavigate
+  // Called to abort a navigation that is being handled by the browser process.
+  virtual void abortClientNavigation() {}
+
   // Push API ---------------------------------------------------
 
   // Used to access the embedder for the Push API.
@@ -462,7 +466,7 @@ class BLINK_EXPORT WebFrameClient {
   // InstalledApp API ----------------------------------------------------
 
   // Used to access the embedder for the InstalledApp API.
-  virtual WebRelatedAppsFetcher* relatedAppsFetcher() { return nullptr; }
+  virtual WebRelatedAppsFetcher* getRelatedAppsFetcher() { return nullptr; }
 
   // Editing -------------------------------------------------------------
 

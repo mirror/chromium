@@ -38,6 +38,7 @@ import org.chromium.blink.mojom.MediaSessionAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
+import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
 import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.content_public.common.MediaMetadata;
 
@@ -661,9 +662,13 @@ public class MediaNotificationManager {
             return;
         }
 
-        if (mService == null && mediaNotificationInfo.isPaused) return;
-
         mMediaNotificationInfo = mediaNotificationInfo;
+
+        // If there's no pending service start request, don't try to start service. If there is a
+        // pending service start request but the service haven't started yet, only update the
+        // |mMediaNotificationInfo|. The service will update the notification later once it's
+        // started.
+        if (mService == null && mediaNotificationInfo.isPaused) return;
 
         if (mService == null) {
             updateMediaSession();
@@ -752,10 +757,10 @@ public class MediaNotificationManager {
     }
 
     private void updateNotificationBuilder() {
-        mNotificationBuilder = AppHooks.get().createChromeNotificationBuilder(
-                true /* preferCompat */, NotificationConstants.CATEGORY_ID_BROWSER,
+        mNotificationBuilder = NotificationBuilderFactory.createChromeNotificationBuilder(
+                true /* preferCompat */, NotificationConstants.CHANNEL_ID_BROWSER,
                 mContext.getString(org.chromium.chrome.R.string.notification_category_browser),
-                NotificationConstants.CATEGORY_GROUP_ID_GENERAL,
+                NotificationConstants.CHANNEL_GROUP_ID_GENERAL,
                 mContext.getString(
                         org.chromium.chrome.R.string.notification_category_group_general));
         setMediaStyleLayoutForNotificationBuilder(mNotificationBuilder);

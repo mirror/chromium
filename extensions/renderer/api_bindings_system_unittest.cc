@@ -10,6 +10,7 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
+#include "extensions/common/event_filtering_info.h"
 #include "extensions/common/extension_api.h"
 #include "extensions/renderer/api_binding.h"
 #include "extensions/renderer/api_binding_hooks.h"
@@ -158,6 +159,7 @@ void APIBindingsSystemTest::OnAPIRequest(
 void APIBindingsSystemTest::OnEventListenersChanged(
     const std::string& event_name,
     binding::EventListenersChanged changed,
+    const base::DictionaryValue* filter,
     v8::Local<v8::Context> context) {}
 
 void APIBindingsSystemTest::ValidateLastRequest(
@@ -172,7 +174,7 @@ void APIBindingsSystemTest::ValidateLastRequest(
             ValueToString(*last_request()->arguments));
 }
 
-void APIBindingsSystemTest::CallFunctionOnObject(
+v8::Local<v8::Value> APIBindingsSystemTest::CallFunctionOnObject(
     v8::Local<v8::Context> context,
     v8::Local<v8::Object> object,
     const std::string& script_source) {
@@ -181,10 +183,14 @@ void APIBindingsSystemTest::CallFunctionOnObject(
 
   v8::Local<v8::Function> func =
       FunctionFromString(context, wrapped_script_source);
-  ASSERT_FALSE(func.IsEmpty());
+  // Use ADD_FAILURE() to avoid messing up the return type with ASSERT.
+  if (func.IsEmpty()) {
+    ADD_FAILURE() << script_source;
+    return v8::Local<v8::Value>();
+  }
 
   v8::Local<v8::Value> argv[] = {object};
-  RunFunction(func, context, 1, argv);
+  return RunFunction(func, context, 1, argv);
 }
 
 // Tests API object initialization, calling a method on the supplied APIs, and
@@ -267,7 +273,7 @@ TEST_F(APIBindingsSystemTest, TestInitializationAndCallbacks) {
     std::unique_ptr<base::ListValue> expected_args =
         ListValueFromString(kResponseArgsJson);
     bindings_system()->FireEventInContext("alpha.alphaEvent", context,
-                                          *expected_args);
+                                          *expected_args, EventFilteringInfo());
 
     EXPECT_EQ(ReplaceSingleQuotes(kResponseArgsJson),
               GetStringPropertyFromObject(context->Global(), context,

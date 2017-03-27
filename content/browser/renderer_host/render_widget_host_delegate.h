@@ -40,6 +40,7 @@ class RenderWidgetHostInputEventRouter;
 class RenderViewHostDelegateView;
 class TextInputManager;
 class WebContents;
+enum class KeyboardEventProcessingResult;
 struct ScreenInfo;
 struct NativeWebKeyboardEvent;
 
@@ -77,12 +78,10 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
   virtual void GetScreenInfo(ScreenInfo* web_screen_info);
 
   // Callback to give the browser a chance to handle the specified keyboard
-  // event before sending it to the renderer.
-  // Returns true if the |event| was handled. Otherwise, if the |event| would
-  // be handled in HandleKeyboardEvent() method as a normal keyboard shortcut,
-  // |*is_keyboard_shortcut| should be set to true.
-  virtual bool PreHandleKeyboardEvent(const NativeWebKeyboardEvent& event,
-                                      bool* is_keyboard_shortcut);
+  // event before sending it to the renderer. See enum for details on return
+  // value.
+  virtual KeyboardEventProcessingResult PreHandleKeyboardEvent(
+      const NativeWebKeyboardEvent& event);
 
   // Callback to inform the browser that the renderer did not process the
   // specified events. This gives an opportunity to the browser to process the
@@ -214,6 +213,10 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
 
   // Allow the delegate to handle the cursor update. Returns true if handled.
   virtual bool OnUpdateDragCursor();
+
+  // Returns true if the provided RenderWidgetHostImpl matches the current
+  // RenderWidgetHost on the main frame, and false otherwise.
+  virtual bool IsWidgetForMainFrame(RenderWidgetHostImpl*);
 
   // Inner WebContents Helpers -------------------------------------------------
   //

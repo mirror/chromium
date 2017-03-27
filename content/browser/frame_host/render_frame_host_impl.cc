@@ -97,9 +97,9 @@
 #include "content/public/common/url_utils.h"
 #include "device/generic_sensor/sensor_provider_impl.h"
 #include "device/geolocation/geolocation_service_context.h"
-#include "device/vibration/vibration_manager_impl.h"
 #include "device/vr/features.h"
-#include "device/wake_lock/wake_lock_service_context.h"
+#include "device/wake_lock/public/interfaces/wake_lock_context.mojom.h"
+#include "device/wake_lock/public/interfaces/wake_lock_service.mojom.h"
 #include "media/base/media_switches.h"
 #include "media/media_features.h"
 #include "media/mojo/interfaces/media_service.mojom.h"
@@ -784,6 +784,7 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateEncoding, OnUpdateEncoding)
     IPC_MESSAGE_HANDLER(FrameHostMsg_BeginNavigation,
                         OnBeginNavigation)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_AbortNavigation, OnAbortNavigation)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DispatchLoad, OnDispatchLoad)
     IPC_MESSAGE_HANDLER(FrameHostMsg_TextSurroundingSelectionResponse,
                         OnTextSurroundingSelectionResponse)
@@ -1774,7 +1775,6 @@ void RenderFrameHostImpl::OnRunJavaScriptDialog(
   // While a JS message dialog is showing, tabs in the same process shouldn't
   // process input events.
   GetProcess()->SetIgnoreInputEvents(true);
-  render_view_host_->GetWidget()->StopHangMonitorTimeout();
   delegate_->RunJavaScriptDialog(this, message, default_prompt, frame_url,
                                  dialog_type, reply_msg);
 }
@@ -1786,7 +1786,6 @@ void RenderFrameHostImpl::OnRunBeforeUnloadConfirm(
   // While a JS beforeunload dialog is showing, tabs in the same process
   // shouldn't process input events.
   GetProcess()->SetIgnoreInputEvents(true);
-  render_view_host_->GetWidget()->StopHangMonitorTimeout();
 
   // The beforeunload dialog for this frame may have been triggered by a
   // browser-side request to this frame or a frame up in the frame hierarchy.
@@ -2044,6 +2043,16 @@ void RenderFrameHostImpl::OnBeginNavigation(
       frame_tree_node(), validated_params, validated_begin_params);
 }
 
+void RenderFrameHostImpl::OnAbortNavigation() {
+  if (!IsBrowserSideNavigationEnabled()) {
+    NOTREACHED();
+    return;
+  }
+  if (!is_active())
+    return;
+  frame_tree_node()->navigator()->OnAbortNavigation(frame_tree_node());
+}
+
 void RenderFrameHostImpl::OnDispatchLoad() {
   CHECK(SiteIsolationPolicy::AreCrossProcessFramesPossible());
 
@@ -2089,6 +2098,9 @@ void RenderFrameHostImpl::OnAccessibilityEvents(
   accessibility_reset_token_ = 0;
 
   RenderWidgetHostViewBase* view = GetViewForAccessibility();
+
+  if (frame_tree_node_->IsMainFrame() && view)
+    view->SetMainFrameAXTreeID(GetAXTreeID());
 
   AccessibilityMode accessibility_mode = delegate_->GetAccessibilityMode();
   if (!accessibility_mode.is_mode_off() && view && is_active()) {
@@ -2429,14 +2441,14 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
                    base::Unretained(geolocation_service_context)));
   }
 
-  device::WakeLockServiceContext* wake_lock_service_context =
+  device::mojom::WakeLockContext* wake_lock_service_context =
       delegate_ ? delegate_->GetWakeLockServiceContext() : nullptr;
   if (wake_lock_service_context) {
     // WakeLockServiceContext is owned by WebContentsImpl so it will outlive
     // this RenderFrameHostImpl, hence a raw pointer can be bound to service
     // factory callback.
     GetInterfaceRegistry()->AddInterface<device::mojom::WakeLockService>(
-        base::Bind(&device::WakeLockServiceContext::CreateService,
+        base::Bind(&device::mojom::WakeLockContext::GetWakeLock,
                    base::Unretained(wake_lock_service_context)));
   }
 
@@ -2454,16 +2466,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::Bind(&MediaSessionServiceImpl::Create, base::Unretained(this)));
 
 #if defined(OS_ANDROID)
-  GetInterfaceRegistry()->AddInterface(
-      GetGlobalJavaInterfaces()
-          ->CreateInterfaceFactory<device::mojom::VibrationManager>());
-
   // Creates a MojoRendererService, passing it a MediaPlayerRender.
   GetInterfaceRegistry()->AddInterface<media::mojom::Renderer>(base::Bind(
       &content::CreateMediaPlayerRenderer, base::Unretained(this)));
-#else
-  GetInterfaceRegistry()->AddInterface(
-      base::Bind(&device::VibrationManagerImpl::Create));
 #endif  // defined(OS_ANDROID)
 
   GetInterfaceRegistry()->AddInterface(base::Bind(
@@ -2642,7 +2647,7 @@ void RenderFrameHostImpl::DispatchBeforeUnload(bool for_navigation,
   if (IsBrowserSideNavigationEnabled() && !for_navigation) {
     // Cancel any pending navigations, to avoid their navigation commit/fail
     // event from wiping out the is_waiting_for_beforeunload_ack_ state.
-    frame_tree_node_->ResetNavigationRequest(false);
+    frame_tree_node_->ResetNavigationRequest(false, true);
   }
 
   // TODO(creis): Support beforeunload on subframes.  For now just pretend that
@@ -2853,7 +2858,7 @@ void RenderFrameHostImpl::FailedNavigation(
 
   // An error page is expected to commit, hence why is_loading_ is set to true.
   is_loading_ = true;
-  frame_tree_node_->ResetNavigationRequest(true);
+  frame_tree_node_->ResetNavigationRequest(true, true);
 }
 
 void RenderFrameHostImpl::SetUpMojoIfNeeded() {

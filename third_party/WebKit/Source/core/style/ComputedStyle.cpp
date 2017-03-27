@@ -72,16 +72,12 @@ ASSERT_SIZE(BorderValue, SameSizeAsBorderValue);
 // re-create the same structure for an accurate size comparison.
 struct SameSizeAsComputedStyle : public RefCounted<SameSizeAsComputedStyle> {
   struct ComputedStyleBase {
-    unsigned m_bitfields[3];
+    unsigned m_bitfields[4];
   } m_base;
 
   void* dataRefs[7];
   void* ownPtrs[1];
   void* dataRefSvgStyle;
-
-  struct InheritedData {
-    unsigned m_bitfields[1];
-  } m_inheritedData;
 
   struct NonInheritedData {
     unsigned m_bitfields[1];
@@ -153,7 +149,6 @@ ALWAYS_INLINE ComputedStyle::ComputedStyle(const ComputedStyle& o)
       m_rareInheritedData(o.m_rareInheritedData),
       m_styleInheritedData(o.m_styleInheritedData),
       m_svgStyle(o.m_svgStyle),
-      m_inheritedData(o.m_inheritedData),
       m_nonInheritedData(o.m_nonInheritedData) {}
 
 static StyleRecalcChange diffPseudoStyles(const ComputedStyle& oldStyle,
@@ -335,7 +330,6 @@ void ComputedStyle::inheritFrom(const ComputedStyle& inheritParent,
     m_rareInheritedData = inheritParent.m_rareInheritedData;
   }
   m_styleInheritedData = inheritParent.m_styleInheritedData;
-  m_inheritedData = inheritParent.m_inheritedData;
   if (m_svgStyle != inheritParent.m_svgStyle)
     m_svgStyle.access()->inheritFrom(inheritParent.m_svgStyle.get());
 }
@@ -351,8 +345,6 @@ void ComputedStyle::copyNonInheritedFromCached(const ComputedStyle& other) {
   // The flags are copied one-by-one because m_nonInheritedData.m_contains a
   // bunch of stuff other than real style data.
   // See comments for each skipped flag below.
-  m_nonInheritedData.m_effectiveDisplay =
-      other.m_nonInheritedData.m_effectiveDisplay;
   m_nonInheritedData.m_originalDisplay =
       other.m_nonInheritedData.m_originalDisplay;
   m_nonInheritedData.m_verticalAlign = other.m_nonInheritedData.m_verticalAlign;
@@ -477,7 +469,6 @@ bool ComputedStyle::independentInheritedEqual(
 bool ComputedStyle::nonIndependentInheritedEqual(
     const ComputedStyle& other) const {
   return ComputedStyleBase::nonIndependentInheritedEqual(other) &&
-         m_inheritedData == other.m_inheritedData &&
          m_styleInheritedData == other.m_styleInheritedData &&
          m_svgStyle->inheritedEqual(*other.m_svgStyle) &&
          m_rareInheritedData == other.m_rareInheritedData;
@@ -501,7 +492,6 @@ bool ComputedStyle::inheritedDataShared(const ComputedStyle& other) const {
   // This is a fast check that only looks if the data structures are shared.
   // TODO(sashab): Should ComputedStyleBase have an inheritedDataShared method?
   return ComputedStyleBase::inheritedEqual(other) &&
-         m_inheritedData == other.m_inheritedData &&
          m_styleInheritedData.get() == other.m_styleInheritedData.get() &&
          m_svgStyle.get() == other.m_svgStyle.get() &&
          m_rareInheritedData.get() == other.m_rareInheritedData.get();
@@ -914,7 +904,7 @@ bool ComputedStyle::diffNeedsPaintInvalidationObject(
     const ComputedStyle& other) const {
   if (visibility() != other.visibility() ||
       printColorAdjust() != other.printColorAdjust() ||
-      m_inheritedData.m_insideLink != other.m_inheritedData.m_insideLink ||
+      insideLink() != other.insideLink() ||
       !m_surround->border.visuallyEqual(other.m_surround->border) ||
       *m_background != *other.m_background)
     return true;
@@ -1027,7 +1017,11 @@ void ComputedStyle::updatePropertySpecificDifferences(
     diff.setZIndexChanged();
 
   if (m_rareNonInheritedData.get() != other.m_rareNonInheritedData.get()) {
-    if (!transformDataEquivalent(other) ||
+    // It's possible for the old and new style transform data to be equivalent
+    // while hasTransform() differs, as it checks a number of conditions aside
+    // from just the matrix, including but not limited to animation state.
+    if (hasTransform() != other.hasTransform() ||
+        !transformDataEquivalent(other) ||
         m_rareNonInheritedData->m_perspective !=
             other.m_rareNonInheritedData->m_perspective ||
         m_rareNonInheritedData->m_perspectiveOrigin !=
@@ -1066,8 +1060,7 @@ void ComputedStyle::updatePropertySpecificDifferences(
     if (m_styleInheritedData->color != other.m_styleInheritedData->color ||
         m_styleInheritedData->visitedLinkColor !=
             other.m_styleInheritedData->visitedLinkColor ||
-        m_inheritedData.m_hasSimpleUnderline !=
-            other.m_inheritedData.m_hasSimpleUnderline ||
+        m_hasSimpleUnderline != other.m_hasSimpleUnderline ||
         m_visual->textDecoration != other.m_visual->textDecoration) {
       diff.setTextDecorationOrColorChanged();
     } else if (m_rareNonInheritedData.get() !=
@@ -1512,6 +1505,7 @@ FloatRoundedRect ComputedStyle::getRoundedInnerBorderFor(
     bool includeLogicalRightEdge) const {
   LayoutRect innerRect(borderRect);
   innerRect.expand(insets);
+  innerRect.size().clampNegativeToZero();
 
   FloatRoundedRect roundedRect(pixelSnappedIntRect(innerRect));
 
@@ -1710,7 +1704,7 @@ FontStretch ComputedStyle::fontStretch() const {
 }
 
 TextDecoration ComputedStyle::textDecorationsInEffect() const {
-  if (m_inheritedData.m_hasSimpleUnderline)
+  if (m_hasSimpleUnderline)
     return TextDecorationUnderline;
   if (!m_rareInheritedData->appliedTextDecorations)
     return TextDecorationNone;
@@ -1727,7 +1721,7 @@ TextDecoration ComputedStyle::textDecorationsInEffect() const {
 
 const Vector<AppliedTextDecoration>& ComputedStyle::appliedTextDecorations()
     const {
-  if (m_inheritedData.m_hasSimpleUnderline) {
+  if (m_hasSimpleUnderline) {
     DEFINE_STATIC_LOCAL(
         Vector<AppliedTextDecoration>, underline,
         (1, AppliedTextDecoration(
@@ -2012,8 +2006,7 @@ void ComputedStyle::overrideTextDecorationColors(Color overrideColor) {
 
 void ComputedStyle::applyTextDecorations(const Color& parentTextDecorationColor,
                                          bool overrideExistingColors) {
-  if (getTextDecoration() == TextDecorationNone &&
-      !m_inheritedData.m_hasSimpleUnderline &&
+  if (getTextDecoration() == TextDecorationNone && !m_hasSimpleUnderline &&
       !m_rareInheritedData->appliedTextDecorations)
     return;
 
@@ -2021,10 +2014,10 @@ void ComputedStyle::applyTextDecorations(const Color& parentTextDecorationColor,
   // using m_hasSimpleUnderline.
   Color currentTextDecorationColor =
       visitedDependentColor(CSSPropertyTextDecorationColor);
-  if (m_inheritedData.m_hasSimpleUnderline &&
+  if (m_hasSimpleUnderline &&
       (getTextDecoration() != TextDecorationNone ||
        currentTextDecorationColor != parentTextDecorationColor)) {
-    m_inheritedData.m_hasSimpleUnderline = false;
+    m_hasSimpleUnderline = false;
     addAppliedTextDecoration(AppliedTextDecoration(TextDecorationUnderline,
                                                    TextDecorationStyleSolid,
                                                    parentTextDecorationColor));
@@ -2033,7 +2026,7 @@ void ComputedStyle::applyTextDecorations(const Color& parentTextDecorationColor,
     overrideTextDecorationColors(currentTextDecorationColor);
   if (getTextDecoration() == TextDecorationNone)
     return;
-  DCHECK(!m_inheritedData.m_hasSimpleUnderline);
+  DCHECK(!m_hasSimpleUnderline);
   // To save memory, we don't use AppliedTextDecoration objects in the common
   // case of a single simple underline of currentColor.
   TextDecoration decorationLines = getTextDecoration();
@@ -2042,7 +2035,7 @@ void ComputedStyle::applyTextDecorations(const Color& parentTextDecorationColor,
                            decorationStyle == TextDecorationStyleSolid &&
                            textDecorationColor().isCurrentColor();
   if (isSimpleUnderline && !m_rareInheritedData->appliedTextDecorations) {
-    m_inheritedData.m_hasSimpleUnderline = true;
+    m_hasSimpleUnderline = true;
     return;
   }
 
@@ -2051,7 +2044,7 @@ void ComputedStyle::applyTextDecorations(const Color& parentTextDecorationColor,
 }
 
 void ComputedStyle::clearAppliedTextDecorations() {
-  m_inheritedData.m_hasSimpleUnderline = false;
+  m_hasSimpleUnderline = false;
 
   if (m_rareInheritedData->appliedTextDecorations)
     m_rareInheritedData.access()->appliedTextDecorations = nullptr;
@@ -2059,8 +2052,7 @@ void ComputedStyle::clearAppliedTextDecorations() {
 
 void ComputedStyle::restoreParentTextDecorations(
     const ComputedStyle& parentStyle) {
-  m_inheritedData.m_hasSimpleUnderline =
-      parentStyle.m_inheritedData.m_hasSimpleUnderline;
+  m_hasSimpleUnderline = parentStyle.m_hasSimpleUnderline;
   if (m_rareInheritedData->appliedTextDecorations !=
       parentStyle.m_rareInheritedData->appliedTextDecorations)
     m_rareInheritedData.access()->appliedTextDecorations =

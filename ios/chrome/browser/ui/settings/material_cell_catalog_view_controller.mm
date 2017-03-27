@@ -39,7 +39,7 @@
 #import "ios/public/provider/chrome/browser/signin/signin_resources_provider.h"
 #import "ios/third_party/material_components_ios/src/components/CollectionCells/src/MaterialCollectionCells.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
-#import "ios/third_party/material_roboto_font_loader_ios/src/src/MaterialRobotoFontLoader.h"
+#import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 
 namespace {
 
@@ -59,6 +59,7 @@ typedef NS_ENUM(NSInteger, SectionIdentifier) {
 typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeTextCheckmark = kItemTypeEnumZero,
   ItemTypeTextDetail,
+  ItemTypeText,
   ItemTypeTextError,
   ItemTypeDetailBasic,
   ItemTypeDetailLeftMedium,
@@ -111,6 +112,8 @@ const CGFloat kHorizontalImageFixedSize = 40;
   CollectionViewTextItem* textHeader = [
       [[CollectionViewTextItem alloc] initWithType:ItemTypeHeader] autorelease];
   textHeader.text = @"MDCCollectionViewTextCell";
+  textHeader.textFont = [MDCTypography body2Font];
+  textHeader.textColor = [[MDCPalette greyPalette] tint500];
   [model setHeader:textHeader
       forSectionWithIdentifier:SectionIdentifierTextCell];
 
@@ -125,6 +128,19 @@ const CGFloat kHorizontalImageFixedSize = 40;
       @"Text cell with text that is so long it must truncate at some point";
   textCell2.accessoryType = MDCCollectionViewCellAccessoryDetailButton;
   [model addItem:textCell2 toSectionWithIdentifier:SectionIdentifierTextCell];
+  CollectionViewTextItem* textCell3 =
+      [[[CollectionViewTextItem alloc] initWithType:ItemTypeText] autorelease];
+  textCell3.text = @"Truncated text cell with three lines:";
+  textCell3.detailText = @"One title line and two detail lines, so it should "
+                         @"wrap nicely at some point.";
+  textCell3.numberOfDetailTextLines = 0;
+  [model addItem:textCell3 toSectionWithIdentifier:SectionIdentifierTextCell];
+  CollectionViewTextItem* smallTextCell =
+      [[[CollectionViewTextItem alloc] initWithType:ItemTypeText] autorelease];
+  smallTextCell.text = @"Text cell with small font but height of 48.";
+  smallTextCell.textFont = [smallTextCell.textFont fontWithSize:8];
+  [model addItem:smallTextCell
+      toSectionWithIdentifier:SectionIdentifierTextCell];
 
   // Text and Error cell.
   TextAndErrorItem* textAndErrorItem =
@@ -329,25 +345,6 @@ const CGFloat kHorizontalImageFixedSize = 40;
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 }
 
-#pragma mark UICollectionViewDataSource
-
-- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView
-          viewForSupplementaryElementOfKind:(NSString*)kind
-                                atIndexPath:(NSIndexPath*)indexPath {
-  UICollectionReusableView* cell = [super collectionView:collectionView
-                       viewForSupplementaryElementOfKind:kind
-                                             atIndexPath:indexPath];
-  MDCCollectionViewTextCell* textCell =
-      base::mac::ObjCCast<MDCCollectionViewTextCell>(cell);
-  if (textCell) {
-    textCell.textLabel.font =
-        [[MDFRobotoFontLoader sharedInstance] mediumFontOfSize:14];
-    textCell.textLabel.textColor = [[MDCPalette greyPalette] tint500];
-  }
-
-  return cell;
-};
-
 #pragma mark MDCCollectionViewStylingDelegate
 
 - (CGFloat)collectionView:(nonnull UICollectionView*)collectionView
@@ -360,6 +357,9 @@ const CGFloat kHorizontalImageFixedSize = 40;
     case ItemTypeSwitchDynamicHeight:
     case ItemTypeSwitchSync:
     case ItemTypeAccountControlDynamicHeight:
+    case ItemTypeTextCheckmark:
+    case ItemTypeTextDetail:
+    case ItemTypeText:
     case ItemTypeTextError:
     case ItemTypeAutofillCVC:
     case ItemTypeAutofillStatus:
@@ -577,16 +577,17 @@ const CGFloat kHorizontalImageFixedSize = 40;
 - (CollectionViewItem*)autofillEditItem {
   AutofillEditItem* item = [[[AutofillEditItem alloc]
       initWithType:ItemTypeAutofillDynamicHeight] autorelease];
-  item.textFieldName = @"Credit Number";
+  item.textFieldName = @"Required Card Number";
   item.textFieldValue = @"4111111111111111";
   item.textFieldEnabled = YES;
+  item.required = YES;
   return item;
 }
 
 - (CollectionViewItem*)autofillEditItemWithIcon {
   AutofillEditItem* item = [[[AutofillEditItem alloc]
       initWithType:ItemTypeAutofillDynamicHeight] autorelease];
-  item.textFieldName = @"Credit Number";
+  item.textFieldName = @"Card Number";
   item.textFieldValue = @"4111111111111111";
   item.textFieldEnabled = YES;
   int resourceID =

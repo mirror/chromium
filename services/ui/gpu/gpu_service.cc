@@ -6,7 +6,9 @@
 
 #include "base/bind.h"
 #include "base/debug/crash_logging.h"
+#include "base/lazy_instance.h"
 #include "base/memory/shared_memory.h"
+#include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "cc/output/in_process_context_provider.h"
@@ -42,6 +44,23 @@
 
 namespace ui {
 
+namespace {
+
+static base::LazyInstance<base::Callback<
+    void(int severity, size_t message_start, const std::string& message)>>::
+    Leaky g_log_callback = LAZY_INSTANCE_INITIALIZER;
+
+bool GpuLogMessageHandler(int severity,
+                          const char* file,
+                          int line,
+                          size_t message_start,
+                          const std::string& message) {
+  g_log_callback.Get().Run(severity, message_start, message);
+  return false;
+}
+
+}  // namespace
+
 GpuService::GpuService(const gpu::GPUInfo& gpu_info,
                        std::unique_ptr<gpu::GpuWatchdogThread> watchdog_thread,
                        gpu::GpuMemoryBufferFactory* gpu_memory_buffer_factory,
@@ -57,6 +76,9 @@ GpuService::GpuService(const gpu::GPUInfo& gpu_info,
       sync_point_manager_(nullptr) {}
 
 GpuService::~GpuService() {
+  logging::SetLogMessageHandler(nullptr);
+  g_log_callback.Get() =
+      base::Callback<void(int, size_t, const std::string&)>();
   bindings_.CloseAllBindings();
   media_gpu_channel_manager_.reset();
   gpu_channel_manager_.reset();
@@ -69,11 +91,8 @@ GpuService::~GpuService() {
   shutdown_event_.Signal();
 }
 
-void GpuService::InitializeWithHost(mojom::GpuHostPtr gpu_host,
-                                    const gpu::GpuPreferences& preferences,
-                                    gpu::GpuProcessActivityFlags activity_flags,
-                                    gpu::SyncPointManager* sync_point_manager,
-                                    base::WaitableEvent* shutdown_event) {
+void GpuService::UpdateGPUInfoFromPreferences(
+    const gpu::GpuPreferences& preferences) {
   DCHECK(CalledOnValidThread());
   DCHECK(!gpu_host_);
   gpu_preferences_ = preferences;
@@ -84,9 +103,28 @@ void GpuService::InitializeWithHost(mojom::GpuHostPtr gpu_host,
   gpu_info_.jpeg_decode_accelerator_supported =
       media::GpuJpegDecodeAcceleratorFactoryProvider::
           IsAcceleratedJpegDecodeSupported();
+  // Record initialization only after collecting the GPU info because that can
+  // take a significant amount of time.
+  gpu_info_.initialization_time = base::Time::Now() - start_time_;
+}
+
+void GpuService::InitializeWithHost(mojom::GpuHostPtr gpu_host,
+                                    const gpu::GpuPreferences& preferences,
+                                    gpu::GpuProcessActivityFlags activity_flags,
+                                    gpu::SyncPointManager* sync_point_manager,
+                                    base::WaitableEvent* shutdown_event) {
   gpu_host->DidInitialize(gpu_info_);
   gpu_host_ =
       mojom::ThreadSafeGpuHostPtr::Create(gpu_host.PassInterface(), io_runner_);
+  if (!in_host_process_) {
+    // The global callback is reset from the dtor. So Unretained() here is safe.
+    // Note that the callback can be called from any thread. Consequently, the
+    // callback cannot use a WeakPtr.
+    g_log_callback.Get() =
+        base::Bind(&GpuService::RecordLogMessage, base::Unretained(this));
+    logging::SetLogMessageHandler(GpuLogMessageHandler);
+  }
+
   sync_point_manager_ = sync_point_manager;
   if (!sync_point_manager_) {
     owned_sync_point_manager_ = base::MakeUnique<gpu::SyncPointManager>();
@@ -105,10 +143,20 @@ void GpuService::InitializeWithHost(mojom::GpuHostPtr gpu_host,
 
   media_gpu_channel_manager_.reset(
       new media::MediaGpuChannelManager(gpu_channel_manager_.get()));
+  if (watchdog_thread())
+    watchdog_thread()->AddPowerObserver();
 }
 
 void GpuService::Bind(mojom::GpuServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
+}
+
+void GpuService::RecordLogMessage(int severity,
+                                  size_t message_start,
+                                  const std::string& str) {
+  std::string header = str.substr(0, message_start);
+  std::string message = str.substr(message_start);
+  (*gpu_host_)->RecordLogMessage(severity, header, message);
 }
 
 void GpuService::CreateGpuMemoryBuffer(
@@ -141,6 +189,62 @@ void GpuService::GetVideoMemoryUsageStats(
   }
   callback.Run(video_memory_usage_stats);
 }
+
+void GpuService::RequestCompleteGpuInfo(
+    const RequestCompleteGpuInfoCallback& callback) {
+  UpdateGpuInfoPlatform();
+  callback.Run(gpu_info_);
+#if defined(OS_WIN)
+  if (!in_host_process_) {
+    // The unsandboxed GPU process fulfilled its duty. Rest in peace.
+    base::MessageLoop::current()->QuitWhenIdle();
+  }
+#endif
+}
+
+#if defined(OS_MACOSX)
+void GpuService::UpdateGpuInfoPlatform() {
+  // gpu::CollectContextGraphicsInfo() is already called during gpu process
+  // initialization (see GpuInit::InitializeAndStartSandbox()) on non-mac
+  // platforms, and during in-browser gpu thread initialization on all platforms
+  // (See InProcessGpuThread::Init()).
+  if (in_host_process_)
+    return;
+
+  DCHECK_EQ(gpu::kCollectInfoNone, gpu_info_.context_info_state);
+  gpu::CollectInfoResult result = gpu::CollectContextGraphicsInfo(&gpu_info_);
+  switch (result) {
+    case gpu::kCollectInfoFatalFailure:
+      LOG(ERROR) << "gpu::CollectGraphicsInfo failed (fatal).";
+      // TODO(piman): can we signal overall failure?
+      break;
+    case gpu::kCollectInfoNonFatalFailure:
+      DVLOG(1) << "gpu::CollectGraphicsInfo failed (non-fatal).";
+      break;
+    case gpu::kCollectInfoNone:
+      NOTREACHED();
+      break;
+    case gpu::kCollectInfoSuccess:
+      break;
+  }
+  gpu::SetKeysForCrashLogging(gpu_info_);
+}
+#elif defined(OS_WIN)
+void GpuService::UpdateGpuInfoPlatform() {
+  // GPU full info collection should only happen on un-sandboxed GPU process
+  // or single process/in-process gpu mode on Windows.
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  DCHECK(command_line->HasSwitch("disable-gpu-sandbox") || in_host_process_);
+
+  // This is slow, but it's the only thing the unsandboxed GPU process does,
+  // and GpuDataManager prevents us from sending multiple collecting requests,
+  // so it's OK to be blocking.
+  gpu::GetDxDiagnostics(&gpu_info_.dx_diagnostics);
+  gpu_info_.dx_diagnostics_info_state = gpu::kCollectInfoSuccess;
+}
+#else
+void GpuService::UpdateGpuInfoPlatform() {}
+#endif
 
 void GpuService::DidCreateOffscreenContext(const GURL& active_url) {
   (*gpu_host_)->DidCreateOffscreenContext(active_url);

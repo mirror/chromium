@@ -20,7 +20,7 @@ const base::Feature kAllowAutoplayUnmutedInWebappManifestScope{
 #if defined(OS_MACOSX)
 // Enables Javascript execution via AppleScript.
 const base::Feature kAppleScriptExecuteJavaScript{
-    "AppleScriptExecuteJavaScript", base::FEATURE_ENABLED_BY_DEFAULT};
+    "AppleScriptExecuteJavaScript", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Use the Toolkit-Views Task Manager window.
 const base::Feature kViewsTaskManager{"ViewsTaskManager",
@@ -68,6 +68,12 @@ const base::Feature kBackspaceGoesBackFeature {
 // after the user has explicitly dismissed them too many times.
 const base::Feature kBlockPromptsIfDismissedOften{
     "BlockPromptsIfDismissedOften", base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if defined(OS_MACOSX)
+// Enables the new bookmark app system (e.g. Add To Applications on Mac).
+const base::Feature kBookmarkApps{"BookmarkAppsMac",
+                                  base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
 
 // Fixes for browser hang bugs are deployed in a field trial in order to measure
 // their impact. See crbug.com/478209.

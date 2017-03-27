@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/memory/weak_ptr.h"
+#include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/credit_card.h"
@@ -33,6 +34,12 @@ class PaymentRequestStateTest : public testing::Test,
     credit_card_amex_.set_billing_address_id(address_.guid());
     credit_card_amex_.set_use_count(1u);
     test_personal_data_manager_.AddTestingCreditCard(&credit_card_amex_);
+    // Add an expired JCB card here.
+    credit_card_jcb_ = autofill::test::GetCreditCard();
+    credit_card_jcb_.SetNumber(base::ASCIIToUTF16("3530111333300000"));
+    credit_card_jcb_.set_billing_address_id(address_.guid());
+    credit_card_jcb_.set_use_count(1u);
+    credit_card_jcb_.SetExpirationDateFromString(base::ASCIIToUTF16("01/17"));
   }
   ~PaymentRequestStateTest() override {}
 
@@ -103,7 +110,96 @@ class PaymentRequestStateTest : public testing::Test,
   autofill::AutofillProfile address_;
   autofill::CreditCard credit_card_visa_;
   autofill::CreditCard credit_card_amex_;
+  autofill::CreditCard credit_card_jcb_;
 };
+
+TEST_F(PaymentRequestStateTest, CanMakePayment) {
+  // Default options.
+  RecreateStateWithOptions(mojom::PaymentOptions::New());
+
+  // CanMakePayment returns true because the method data requires Visa, and the
+  // user has a Visa card on file.
+  EXPECT_TRUE(state()->CanMakePayment());
+}
+
+TEST_F(PaymentRequestStateTest, CanMakePayment_CannotMakePayment) {
+  // The method data requires MasterCard.
+  std::vector<mojom::PaymentMethodDataPtr> method_data;
+  mojom::PaymentMethodDataPtr entry = mojom::PaymentMethodData::New();
+  entry->supported_methods.push_back("mastercard");
+  method_data.push_back(std::move(entry));
+  RecreateStateWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                     mojom::PaymentDetails::New(),
+                                     std::move(method_data));
+
+  // CanMakePayment returns false because the method data requires MasterCard,
+  // and the user doesn't have such an instrument.
+  EXPECT_FALSE(state()->CanMakePayment());
+}
+
+TEST_F(PaymentRequestStateTest, CanMakePayment_OnlyBasicCard) {
+  // The method data supports everything in basic-card.
+  mojom::PaymentMethodDataPtr entry = mojom::PaymentMethodData::New();
+  entry->supported_methods.push_back("basic-card");
+  std::vector<mojom::PaymentMethodDataPtr> method_data;
+  method_data.push_back(std::move(entry));
+  RecreateStateWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                     mojom::PaymentDetails::New(),
+                                     std::move(method_data));
+
+  // CanMakePayment returns true because the method data supports everything,
+  // and the user has at least one instrument.
+  EXPECT_TRUE(state()->CanMakePayment());
+}
+
+TEST_F(PaymentRequestStateTest, CanMakePayment_BasicCard_SpecificAvailable) {
+  // The method data supports visa through basic-card.
+  mojom::PaymentMethodDataPtr entry = mojom::PaymentMethodData::New();
+  entry->supported_methods.push_back("basic-card");
+  entry->supported_networks.push_back(mojom::BasicCardNetwork::VISA);
+  std::vector<mojom::PaymentMethodDataPtr> method_data;
+  method_data.push_back(std::move(entry));
+  RecreateStateWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                     mojom::PaymentDetails::New(),
+                                     std::move(method_data));
+
+  // CanMakePayment returns true because the method data supports visa, and the
+  // user has a Visa instrument.
+  EXPECT_TRUE(state()->CanMakePayment());
+}
+
+TEST_F(PaymentRequestStateTest,
+       CanMakePayment_BasicCard_SpecificAvailableButInvalid) {
+  // The method data supports jcb through basic-card.
+  mojom::PaymentMethodDataPtr entry = mojom::PaymentMethodData::New();
+  entry->supported_methods.push_back("basic-card");
+  entry->supported_networks.push_back(mojom::BasicCardNetwork::JCB);
+  std::vector<mojom::PaymentMethodDataPtr> method_data;
+  method_data.push_back(std::move(entry));
+  RecreateStateWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                     mojom::PaymentDetails::New(),
+                                     std::move(method_data));
+
+  // CanMakePayment returns false because the method data supports jcb, and the
+  // user has a JCB instrument, but it's invalid.
+  EXPECT_FALSE(state()->CanMakePayment());
+}
+
+TEST_F(PaymentRequestStateTest, CanMakePayment_BasicCard_SpecificUnavailable) {
+  // The method data supports mastercard through basic-card.
+  mojom::PaymentMethodDataPtr entry = mojom::PaymentMethodData::New();
+  entry->supported_methods.push_back("basic-card");
+  entry->supported_networks.push_back(mojom::BasicCardNetwork::MASTERCARD);
+  std::vector<mojom::PaymentMethodDataPtr> method_data;
+  method_data.push_back(std::move(entry));
+  RecreateStateWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                     mojom::PaymentDetails::New(),
+                                     std::move(method_data));
+
+  // CanMakePayment returns false because the method data supports mastercard,
+  // and the user doesn't have such an instrument.
+  EXPECT_FALSE(state()->CanMakePayment());
+}
 
 // Test that the last shipping option is selected.
 TEST_F(PaymentRequestStateTest, ShippingOptionsSelection) {
@@ -177,7 +273,7 @@ TEST_F(PaymentRequestStateTest, ReadyToPay_ContactInfo) {
 }
 
 // Test generating a PaymentResponse.
-TEST_F(PaymentRequestStateTest, GeneratePaymentResponse) {
+TEST_F(PaymentRequestStateTest, GeneratePaymentResponse_SupportedMethod) {
   // Default options (no shipping, no contact info).
   RecreateStateWithOptions(mojom::PaymentOptions::New());
   state()->SetSelectedInstrument(state()->available_instruments()[0].get());
@@ -185,8 +281,47 @@ TEST_F(PaymentRequestStateTest, GeneratePaymentResponse) {
   EXPECT_TRUE(state()->is_ready_to_pay());
 
   // TODO(mathp): Currently synchronous, when async will need a RunLoop.
+  // "visa" is specified directly in the supportedMethods so it is returned
+  // as the method name.
   state()->GeneratePaymentResponse();
   EXPECT_EQ("visa", response()->method_name);
+  EXPECT_EQ(
+      "{\"billingAddress\":"
+      "{\"addressLine\":[\"666 Erebus St.\",\"Apt 8\"],"
+      "\"city\":\"Elysium\","
+      "\"country\":\"US\","
+      "\"organization\":\"Underworld\","
+      "\"phone\":\"16502111111\","
+      "\"postalCode\":\"91111\","
+      "\"recipient\":\"John H. Doe\","
+      "\"region\":\"CA\"},"
+      "\"cardNumber\":\"4111111111111111\","
+      "\"cardSecurityCode\":\"123\","
+      "\"cardholderName\":\"Test User\","
+      "\"expiryMonth\":\"11\","
+      "\"expiryYear\":\"2017\"}",
+      response()->stringified_details);
+}
+
+// Test generating a PaymentResponse when the method is specified through
+// "basic-card".
+TEST_F(PaymentRequestStateTest, GeneratePaymentResponse_BasicCard) {
+  // The method data supports visa through basic-card.
+  mojom::PaymentMethodDataPtr entry = mojom::PaymentMethodData::New();
+  entry->supported_methods.push_back("basic-card");
+  entry->supported_networks.push_back(mojom::BasicCardNetwork::VISA);
+  std::vector<mojom::PaymentMethodDataPtr> method_data;
+  method_data.push_back(std::move(entry));
+  RecreateStateWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                     mojom::PaymentDetails::New(),
+                                     std::move(method_data));
+
+  EXPECT_TRUE(state()->is_ready_to_pay());
+
+  // TODO(mathp): Currently synchronous, when async will need a RunLoop.
+  // "basic-card" is specified so it is returned as the method name.
+  state()->GeneratePaymentResponse();
+  EXPECT_EQ("basic-card", response()->method_name);
   EXPECT_EQ(
       "{\"billingAddress\":"
       "{\"addressLine\":[\"666 Erebus St.\",\"Apt 8\"],"

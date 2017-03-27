@@ -161,11 +161,11 @@ void ConvertEventLocationToDip(int64_t display_id, ui::LocatedEvent* event) {
 }
 
 // Set the |target| to be the target window of this |event| and send it to
-// the EventProcessor.
+// the EventSink.
 void DispatchEventToTarget(ui::Event* event, WindowMus* target) {
   ui::Event::DispatcherApi dispatch_helper(event);
   dispatch_helper.set_target(target->GetWindow());
-  GetWindowTreeHostMus(target)->SendEventToProcessor(event);
+  GetWindowTreeHostMus(target)->SendEventToSink(event);
 }
 
 }  // namespace
@@ -205,7 +205,7 @@ WindowTreeClient::WindowTreeClient(
       io_task_runner = io_thread_->task_runner();
     }
 
-    gpu_ = ui::Gpu::Create(connector, io_task_runner);
+    gpu_ = ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
     compositor_context_factory_ =
         base::MakeUnique<MusContextFactory>(gpu_.get());
     initial_context_factory_ = Env::GetInstance()->context_factory();
@@ -455,7 +455,7 @@ std::unique_ptr<WindowTreeHostMus> WindowTreeClient::CreateWindowTreeHost(
                                true);
   }
   SetWindowBoundsFromServer(WindowMus::Get(window_tree_host->window()),
-                            window_data.bounds);
+                            window_data.bounds, base::nullopt);
   return window_tree_host;
 }
 
@@ -579,10 +579,12 @@ void WindowTreeClient::OnReceivedCursorLocationMemory(
 
 void WindowTreeClient::SetWindowBoundsFromServer(
     WindowMus* window,
-    const gfx::Rect& revert_bounds_in_pixels) {
+    const gfx::Rect& revert_bounds_in_pixels,
+    const base::Optional<cc::LocalSurfaceId>& local_surface_id) {
   if (IsRoot(window)) {
     // WindowTreeHost expects bounds to be in pixels.
     GetWindowTreeHostMus(window)->SetBoundsFromServer(revert_bounds_in_pixels);
+    // TODO(fsamuel): Propagate |local_surface_id| to ui::Compositor.
     return;
   }
 
@@ -610,9 +612,10 @@ void WindowTreeClient::ScheduleInFlightBoundsChange(
     WindowMus* window,
     const gfx::Rect& old_bounds,
     const gfx::Rect& new_bounds) {
-  const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<InFlightBoundsChange>(this, window, old_bounds));
   // TODO(fsamuel): Allocate a new LocalSurfaceId on size change.
+  const uint32_t change_id =
+      ScheduleInFlightChange(base::MakeUnique<InFlightBoundsChange>(
+          this, window, old_bounds, base::nullopt));
   tree_->SetWindowBounds(change_id, window->server_id(), new_bounds,
                          base::nullopt);
 }
@@ -970,14 +973,15 @@ void WindowTreeClient::OnTopLevelCreated(uint32_t change_id,
 
   const gfx::Rect bounds(data->bounds);
   {
-    InFlightBoundsChange bounds_change(this, window, bounds);
+    // TODO(fsamuel): Propagate a cc::LocalSurfaceId through here.
+    InFlightBoundsChange bounds_change(this, window, bounds, base::nullopt);
     InFlightChange* current_change =
         GetOldestInFlightChangeMatching(bounds_change);
     if (current_change)
       current_change->SetRevertValueFrom(bounds_change);
     else if (gfx::ConvertRectToPixel(ScaleFactorForDisplay(window->GetWindow()),
                                      window->GetWindow()->bounds()) != bounds)
-      SetWindowBoundsFromServer(window, bounds);
+      SetWindowBoundsFromServer(window, bounds, base::nullopt);
   }
 
   // There is currently no API to bulk set properties, so we iterate over each
@@ -1011,11 +1015,11 @@ void WindowTreeClient::OnWindowBoundsChanged(
   if (!window)
     return;
 
-  InFlightBoundsChange new_change(this, window, new_bounds);
+  InFlightBoundsChange new_change(this, window, new_bounds, local_surface_id);
   if (ApplyServerChangeToExistingInFlightChange(new_change))
     return;
 
-  SetWindowBoundsFromServer(window, new_bounds);
+  SetWindowBoundsFromServer(window, new_bounds, local_surface_id);
 }
 
 void WindowTreeClient::OnClientAreaChanged(
@@ -1493,6 +1497,36 @@ void WindowTreeClient::WmClientJankinessChanged(ClientSpecificId client_id,
     window_manager_delegate_->OnWmClientJankinessChanged(
         embedded_windows_[client_id], janky);
   }
+}
+
+void WindowTreeClient::WmBuildDragImage(const gfx::Point& screen_location,
+                                        const SkBitmap& drag_image,
+                                        const gfx::Vector2d& drag_image_offset,
+                                        ui::mojom::PointerKind source) {
+  if (!window_manager_delegate_)
+    return;
+
+  window_manager_delegate_->OnWmBuildDragImage(screen_location, drag_image,
+                                               drag_image_offset, source);
+}
+
+void WindowTreeClient::WmMoveDragImage(
+    const gfx::Point& screen_location,
+    const WmMoveDragImageCallback& callback) {
+  if (!window_manager_delegate_) {
+    callback.Run();
+    return;
+  }
+
+  window_manager_delegate_->OnWmMoveDragImage(screen_location);
+  callback.Run();
+}
+
+void WindowTreeClient::WmDestroyDragImage() {
+  if (!window_manager_delegate_)
+    return;
+
+  window_manager_delegate_->OnWmDestroyDragImage();
 }
 
 void WindowTreeClient::WmPerformMoveLoop(uint32_t change_id,

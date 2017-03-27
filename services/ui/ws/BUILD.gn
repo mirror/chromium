@@ -49,6 +49,8 @@ static_library("lib") {
     "focus_controller_observer.h",
     "frame_generator.cc",
     "frame_generator.h",
+    "gpu_client.cc",
+    "gpu_client.h",
     "gpu_host.cc",
     "gpu_host.h",
     "gpu_host_delegate.h",
@@ -151,6 +153,18 @@ static_library("lib") {
   if (use_ozone) {
     public_deps += [ "//ui/ozone:ozone" ]
   }
+  if (is_chromeos) {
+    public_deps += [ "//ui/chromeos/events" ]
+  }
+
+  # ui service should not depend on below components.
+  assert_no_deps = [
+    "//ash",
+    "//content/public/browser",
+    "//content/public/common",
+    "//ui/aura",
+    "//ui/views",
+  ]
 }
 
 static_library("test_interface") {
@@ -226,6 +240,7 @@ service_test("mus_ws_unittests") {
     "event_matcher_unittest.cc",
     "focus_controller_unittest.cc",
     "frame_generator_unittest.cc",
+    "gpu_host_unittest.cc",
     "server_window_drawn_tracker_unittest.cc",
     "test_server_window_delegate.cc",
     "test_server_window_delegate.h",
@@ -264,6 +279,7 @@ service_test("mus_ws_unittests") {
     "//services/service_manager/public/interfaces",
     "//services/ui/common:mus_common",
     "//services/ui/common:task_runner_test_base",
+    "//services/ui/gpu:gpu",
     "//services/ui/public/cpp",
     "//services/ui/public/interfaces",
     "//testing/gtest",

@@ -118,9 +118,12 @@
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
-#include "services/preferences/public/cpp/pref_store_manager_impl.h"
+#include "services/identity/identity_service.h"
+#include "services/identity/public/interfaces/constants.mojom.h"
+#include "services/preferences/public/cpp/pref_service_main.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/preferences/public/interfaces/tracked_preference_validation_delegate.mojom.h"
+#include "services/service_manager/public/cpp/service.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_CHROMEOS)
@@ -1067,14 +1070,26 @@ ProfileImpl::CreateMediaRequestContextForStoragePartition(
 void ProfileImpl::RegisterInProcessServices(StaticServiceMap* services) {
   if (base::FeatureList::IsEnabled(features::kPrefService)) {
     content::ServiceInfo info;
-    info.factory =
-        base::Bind([]() -> std::unique_ptr<service_manager::Service> {
-          return base::MakeUnique<prefs::PrefStoreManagerImpl>(
-              prefs::PrefStoreManagerImpl::PrefStoreTypes(),
-              content::BrowserThread::GetBlockingPool());
-        });
+    info.factory = base::Bind(
+        &prefs::CreatePrefService, std::set<PrefValueStore::PrefStoreType>(),
+        make_scoped_refptr(content::BrowserThread::GetBlockingPool()));
+    info.task_runner = content::BrowserThread::GetTaskRunnerForThread(
+        content::BrowserThread::IO);
     services->insert(std::make_pair(prefs::mojom::kPrefStoreServiceName, info));
   }
+
+  content::ServiceInfo identity_service_info;
+
+  // The Identity Service must run on the UI thread.
+  identity_service_info.task_runner = base::ThreadTaskRunnerHandle::Get();
+
+  // NOTE: The dependencies of the Identity Service have not yet been created,
+  // so it is not possible to bind them here. Instead, bind them at the time
+  // of the actual request to create the Identity Service.
+  identity_service_info.factory =
+      base::Bind(&ProfileImpl::CreateIdentityService, base::Unretained(this));
+  services->insert(
+      std::make_pair(identity::mojom::kServiceName, identity_service_info));
 }
 
 bool ProfileImpl::IsSameProfile(Profile* profile) {
@@ -1332,4 +1347,9 @@ ProfileImpl::CreateDomainReliabilityMonitor(PrefService* local_state) {
 
   return service->CreateMonitor(
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+}
+
+std::unique_ptr<service_manager::Service> ProfileImpl::CreateIdentityService() {
+  SigninManagerBase* signin_manager = SigninManagerFactory::GetForProfile(this);
+  return base::MakeUnique<identity::IdentityService>(signin_manager);
 }

@@ -54,6 +54,8 @@ class GpuService : public gpu::GpuChannelManagerDelegate,
 
   ~GpuService() override;
 
+  void UpdateGPUInfoFromPreferences(const gpu::GpuPreferences& preferences);
+
   void InitializeWithHost(mojom::GpuHostPtr gpu_host,
                           const gpu::GpuPreferences& preferences,
                           gpu::GpuProcessActivityFlags activity_flags,
@@ -75,8 +77,20 @@ class GpuService : public gpu::GpuChannelManagerDelegate,
     return gpu_feature_info_;
   }
 
+  void set_in_host_process(bool in_host_process) {
+    in_host_process_ = in_host_process;
+  }
+
+  void set_start_time(base::Time start_time) { start_time_ = start_time; }
+
+  const gpu::GPUInfo& gpu_info() const { return gpu_info_; }
+
  private:
   friend class GpuMain;
+
+  void RecordLogMessage(int severity,
+                        size_t message_start,
+                        const std::string& message);
 
   gpu::SyncPointManager* sync_point_manager() { return sync_point_manager_; }
 
@@ -88,7 +102,7 @@ class GpuService : public gpu::GpuChannelManagerDelegate,
     return gpu_channel_manager_->share_group();
   }
 
-  const gpu::GPUInfo& gpu_info() const { return gpu_info_; }
+  void UpdateGpuInfoPlatform();
 
   // gpu::GpuChannelManagerDelegate:
   void DidCreateOffscreenContext(const GURL& active_url) override;
@@ -127,6 +141,8 @@ class GpuService : public gpu::GpuChannelManagerDelegate,
                               const gpu::SyncToken& sync_token) override;
   void GetVideoMemoryUsageStats(
       const GetVideoMemoryUsageStatsCallback& callback) override;
+  void RequestCompleteGpuInfo(
+      const RequestCompleteGpuInfoCallback& callback) override;
   void LoadedShader(const std::string& data) override;
   void DestroyingVideoSurface(
       int32_t surface_id,
@@ -163,6 +179,10 @@ class GpuService : public gpu::GpuChannelManagerDelegate,
   // external sources.
   std::unique_ptr<gpu::SyncPointManager> owned_sync_point_manager_;
   gpu::SyncPointManager* sync_point_manager_ = nullptr;
+
+  // Whether this is running in the same process as the gpu host.
+  bool in_host_process_ = false;
+  base::Time start_time_;
 
   mojo::BindingSet<mojom::GpuService> bindings_;
 

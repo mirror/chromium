@@ -55,7 +55,6 @@
 #include "content/public/browser/overscroll_configuration.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/user_metrics.h"
-#include "content/public/common/child_process_host.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "media/base/video_frame.h"
@@ -63,6 +62,7 @@
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/web/WebCompositionUnderline.h"
+#include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/client/cursor_client_observer.h"
@@ -396,8 +396,6 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(RenderWidgetHost* host,
       has_snapped_to_boundary_(false),
       is_guest_view_hack_(is_guest_view_hack),
       device_scale_factor_(0.0f),
-      last_active_widget_process_id_(ChildProcessHost::kInvalidUniqueID),
-      last_active_widget_routing_id_(MSG_ROUTING_NONE),
       event_handler_(new RenderWidgetHostViewEventHandler(host_, this, this)),
       weak_ptr_factory_(this) {
   if (!is_guest_view_hack_)
@@ -1151,6 +1149,11 @@ RenderWidgetHostViewAura::AccessibilityGetNativeViewAccessible() {
   return NULL;
 }
 
+void RenderWidgetHostViewAura::SetMainFrameAXTreeID(
+    ui::AXTreeIDRegistry::AXTreeID id) {
+  window_->SetProperty(ui::kChildAXTreeID, id);
+}
+
 bool RenderWidgetHostViewAura::LockMouse() {
   return event_handler_->LockMouse();
 }
@@ -1230,7 +1233,8 @@ void RenderWidgetHostViewAura::InsertChar(const ui::KeyEvent& event) {
   if (host_ && (event_handler_->accept_return_character() ||
                 event.GetCharacter() != ui::VKEY_RETURN)) {
     // Send a blink::WebInputEvent::Char event to |host_|.
-    ForwardKeyboardEvent(NativeWebKeyboardEvent(event, event.GetCharacter()));
+    ForwardKeyboardEvent(NativeWebKeyboardEvent(event, event.GetCharacter()),
+                         nullptr);
   }
 }
 
@@ -2223,7 +2227,8 @@ void RenderWidgetHostViewAura::DetachFromInputMethod() {
 }
 
 void RenderWidgetHostViewAura::ForwardKeyboardEvent(
-    const NativeWebKeyboardEvent& event) {
+    const NativeWebKeyboardEvent& event,
+    bool* update_event) {
   RenderWidgetHostImpl* target_host = host_;
 
   // If there are multiple widgets on the page (such as when there are
@@ -2249,12 +2254,13 @@ void RenderWidgetHostViewAura::ForwardKeyboardEvent(
                                           it->argument()));
     }
 
-    target_host->ForwardKeyboardEventWithCommands(event, &edit_commands);
+    target_host->ForwardKeyboardEventWithCommands(event, &edit_commands,
+                                                  update_event);
     return;
   }
 #endif
 
-  target_host->ForwardKeyboardEvent(event);
+  target_host->ForwardKeyboardEventWithCommands(event, nullptr, update_event);
 }
 
 void RenderWidgetHostViewAura::CreateSelectionController() {
@@ -2300,28 +2306,13 @@ void RenderWidgetHostViewAura::OnUpdateTextInputStateCalled(
     GetInputMethod()->ShowImeIfNeeded();
   }
 
-  if (state && state->type != ui::TEXT_INPUT_TYPE_NONE) {
-    // Start monitoring the composition information if the focused node is
-    // editable.
-    RenderWidgetHostImpl* last_active_widget =
-        text_input_manager_->GetActiveWidget();
-    last_active_widget_routing_id_ = last_active_widget->GetRoutingID();
-    last_active_widget_process_id_ = last_active_widget->GetProcess()->GetID();
-    last_active_widget->Send(new InputMsg_RequestCompositionUpdate(
-        last_active_widget->GetRoutingID(), false /* immediate request */,
-        true /* monitor request */));
-  } else {
-    // Stop monitoring the composition information if the focused node is not
-    // editable.
-    RenderWidgetHostImpl* last_active_widget = RenderWidgetHostImpl::FromID(
-        last_active_widget_process_id_, last_active_widget_routing_id_);
-    if (last_active_widget) {
-      last_active_widget->Send(new InputMsg_RequestCompositionUpdate(
-          last_active_widget->GetRoutingID(), false /* immediate request */,
-          false /* monitor request */));
-    }
-    last_active_widget_routing_id_ = MSG_ROUTING_NONE;
-    last_active_widget_process_id_ = ChildProcessHost::kInvalidUniqueID;
+  if (auto* render_widget_host =
+          RenderWidgetHostImpl::From(updated_view->GetRenderWidgetHost())) {
+    // Monitor the composition information if there is a focused editable node.
+    render_widget_host->RequestCompositionUpdates(
+        false /* immediate_request */,
+        state &&
+            (state->type != ui::TEXT_INPUT_TYPE_NONE) /* monitor_updates */);
   }
 }
 

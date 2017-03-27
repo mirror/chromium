@@ -317,10 +317,10 @@ FYI_WATERFALL = {
       'swarming': False,
       'os_type': 'win',
     },
-    'Win7 Release (AMD R5 230)': {
+    'Win7 Release (AMD R7 240)': {
       'swarming_dimensions': [
         {
-          'gpu': '1002:6779',
+          'gpu': '1002:6613',
           'os': 'Windows-2008ServerR2-SP1'
         },
       ],
@@ -507,19 +507,6 @@ FYI_WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': '8086:041a',
-          'os': 'Ubuntu'
-        },
-      ],
-      'build_config': 'Release',
-      # This bot is a one-off and doesn't have similar slaves in the
-      # swarming pool.
-      'swarming': False,
-      'os_type': 'linux',
-    },
-    'Linux Release (AMD R5 230)': {
-      'swarming_dimensions': [
-        {
-          'gpu': '1002:6779',
           'os': 'Ubuntu'
         },
       ],
@@ -1255,10 +1242,6 @@ COMMON_GTESTS = {
           'Android Release (Nexus 5)',
           'Android Release (Nexus 6)',
           'Android Release (Nexus 9)',
-
-          # These tests are flaky on old AMD.
-          # TODO(jmadill): Enably flaky test retries only on this config.
-          'Win7 Release (AMD R5 230)',
         ],
       },
     ],

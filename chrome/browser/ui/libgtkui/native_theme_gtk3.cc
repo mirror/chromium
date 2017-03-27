@@ -210,26 +210,26 @@ SkColor SkColorFromColorId(ui::NativeTheme::ColorId color_id) {
     case ui::NativeTheme::kColorId_TextfieldDefaultColor:
       return GetFgColor(GtkVersionCheck(3, 20)
                             ? "GtkTextView#textview.view #text"
-                            : "GtkTextView");
+                            : "GtkTextView.view");
     case ui::NativeTheme::kColorId_TextfieldDefaultBackground:
       return GetBgColor(GtkVersionCheck(3, 20) ? "GtkTextView#textview.view"
-                                               : "GtkTextView");
+                                               : "GtkTextView.view");
     case ui::NativeTheme::kColorId_TextfieldReadOnlyColor:
       return GetFgColor(GtkVersionCheck(3, 20)
                             ? "GtkTextView#textview.view:disabled #text"
-                            : "GtkTextView:disabled");
+                            : "GtkTextView.view:disabled");
     case ui::NativeTheme::kColorId_TextfieldReadOnlyBackground:
       return GetBgColor(GtkVersionCheck(3, 20)
                             ? "GtkTextView#textview.view:disabled"
-                            : "GtkTextView:disabled");
+                            : "GtkTextView.view:disabled");
     case ui::NativeTheme::kColorId_TextfieldSelectionColor:
       return GetFgColor(GtkVersionCheck(3, 20)
                             ? "GtkTextView#textview.view #text #selection"
-                            : "GtkTextView:selected");
+                            : "GtkTextView.view:selected");
     case ui::NativeTheme::kColorId_TextfieldSelectionBackgroundFocused:
       return GetSelectionBgColor(
           GtkVersionCheck(3, 20) ? "GtkTextView#textview.view #text #selection"
-                                 : "GtkTextView:selected");
+                                 : "GtkTextView.view:selected");
 
     // Tooltips
     case ui::NativeTheme::kColorId_TooltipBackground:
@@ -354,12 +354,18 @@ SkColor SkColorFromColorId(ui::NativeTheme::ColorId color_id) {
       return GetFgColor("GtkMenu#menu GtkSpinner#spinner:disabled");
 
     // Alert icons
+    // Fallback to the same colors as Aura.
     case ui::NativeTheme::kColorId_AlertSeverityLow:
-      return GetBgColor("GtkInfoBar#infobar.info");
     case ui::NativeTheme::kColorId_AlertSeverityMedium:
-      return GetBgColor("GtkInfoBar#infobar.warning");
-    case ui::NativeTheme::kColorId_AlertSeverityHigh:
-      return GetBgColor("GtkInfoBar#infobar.error");
+    case ui::NativeTheme::kColorId_AlertSeverityHigh: {
+      // Alert icons appear on the toolbar, so use the toolbar BG
+      // color to determine if the dark Aura theme should be used.
+      ui::NativeTheme* fallback_theme =
+          color_utils::IsDark(GetBgColor("GtkToolbar#toolbar"))
+              ? ui::NativeTheme::GetInstanceForNativeUi()
+              : ui::NativeThemeDarkAura::instance();
+      return fallback_theme->GetSystemColor(color_id);
+    }
 
     case ui::NativeTheme::kColorId_NumColors:
       NOTREACHED();

@@ -7,37 +7,14 @@
 #include <utility>
 #include "modules/background_fetch/BackgroundFetchOptions.h"
 #include "modules/background_fetch/BackgroundFetchRegistration.h"
+#include "modules/background_fetch/BackgroundFetchTypeConverters.h"
 #include "modules/background_fetch/IconDefinition.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
+#include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 
 namespace blink {
-
-namespace {
-
-// Creates a new BackgroundFetchRegistration instance given a Service Worker
-// Registration and a Mojo BackgroundFetchRegistrationPtr instance.
-BackgroundFetchRegistration* CreateBackgroundFetchRegistration(
-    ServiceWorkerRegistration* serviceWorkerRegistration,
-    mojom::blink::BackgroundFetchRegistrationPtr registrationPtr) {
-  HeapVector<IconDefinition> icons;
-
-  for (const auto& iconPtr : registrationPtr->icons) {
-    IconDefinition icon;
-    icon.setSrc(iconPtr->src);
-    icon.setSizes(iconPtr->sizes);
-    icon.setType(iconPtr->type);
-
-    icons.push_back(icon);
-  }
-
-  return new BackgroundFetchRegistration(
-      serviceWorkerRegistration, registrationPtr->tag, std::move(icons),
-      registrationPtr->total_download_size, registrationPtr->title);
-}
-
-}  // namespace
 
 // static
 BackgroundFetchBridge* BackgroundFetchBridge::from(
@@ -68,10 +45,26 @@ BackgroundFetchBridge::BackgroundFetchBridge(
 
 BackgroundFetchBridge::~BackgroundFetchBridge() = default;
 
+void BackgroundFetchBridge::fetch(
+    const String& tag,
+    Vector<WebServiceWorkerRequest> requests,
+    const BackgroundFetchOptions& options,
+    std::unique_ptr<RegistrationCallback> callback) {
+  // TODO(peter): Include |requests| in the Mojo call.
+  getService()->Fetch(
+      supplementable()->webRegistration()->registrationId(),
+      getSecurityOrigin(), tag,
+      mojom::blink::BackgroundFetchOptions::From(options),
+      convertToBaseCallback(
+          WTF::bind(&BackgroundFetchBridge::didGetRegistration,
+                    wrapPersistent(this), WTF::passed(std::move(callback)))));
+}
+
 void BackgroundFetchBridge::abort(const String& tag,
                                   std::unique_ptr<AbortCallback> callback) {
   getService()->Abort(supplementable()->webRegistration()->registrationId(),
-                      tag, convertToBaseCallback(std::move(callback)));
+                      getSecurityOrigin(), tag,
+                      convertToBaseCallback(std::move(callback)));
 }
 
 void BackgroundFetchBridge::updateUI(
@@ -79,30 +72,31 @@ void BackgroundFetchBridge::updateUI(
     const String& title,
     std::unique_ptr<UpdateUICallback> callback) {
   getService()->UpdateUI(supplementable()->webRegistration()->registrationId(),
-                         tag, title,
+                         getSecurityOrigin(), tag, title,
                          convertToBaseCallback(std::move(callback)));
 }
 
 void BackgroundFetchBridge::getRegistration(
     const String& tag,
-    std::unique_ptr<GetRegistrationCallback> callback) {
+    std::unique_ptr<RegistrationCallback> callback) {
   getService()->GetRegistration(
-      supplementable()->webRegistration()->registrationId(), tag,
+      supplementable()->webRegistration()->registrationId(),
+      getSecurityOrigin(), tag,
       convertToBaseCallback(
           WTF::bind(&BackgroundFetchBridge::didGetRegistration,
                     wrapPersistent(this), WTF::passed(std::move(callback)))));
 }
 
 void BackgroundFetchBridge::didGetRegistration(
-    std::unique_ptr<GetRegistrationCallback> callback,
+    std::unique_ptr<RegistrationCallback> callback,
     mojom::blink::BackgroundFetchError error,
     mojom::blink::BackgroundFetchRegistrationPtr registrationPtr) {
-  BackgroundFetchRegistration* registration = nullptr;
+  BackgroundFetchRegistration* registration =
+      registrationPtr.To<BackgroundFetchRegistration*>();
 
-  if (registrationPtr) {
+  if (registration) {
     DCHECK_EQ(error, mojom::blink::BackgroundFetchError::NONE);
-    registration = CreateBackgroundFetchRegistration(
-        supplementable(), std::move(registrationPtr));
+    registration->setServiceWorkerRegistration(supplementable());
   }
 
   (*callback)(error, registration);
@@ -110,7 +104,12 @@ void BackgroundFetchBridge::didGetRegistration(
 
 void BackgroundFetchBridge::getTags(std::unique_ptr<GetTagsCallback> callback) {
   getService()->GetTags(supplementable()->webRegistration()->registrationId(),
+                        getSecurityOrigin(),
                         convertToBaseCallback(std::move(callback)));
+}
+
+SecurityOrigin* BackgroundFetchBridge::getSecurityOrigin() {
+  return supplementable()->getExecutionContext()->getSecurityOrigin();
 }
 
 mojom::blink::BackgroundFetchServicePtr& BackgroundFetchBridge::getService() {

@@ -24,6 +24,8 @@
 #ifndef LayoutThemeMac_h
 #define LayoutThemeMac_h
 
+#import <AppKit/AppKit.h>
+
 #import "core/layout/LayoutTheme.h"
 #import "core/paint/ThemePainterMac.h"
 #import "wtf/HashMap.h"

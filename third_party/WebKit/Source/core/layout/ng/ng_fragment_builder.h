@@ -99,9 +99,6 @@ class CORE_EXPORT NGFragmentBuilder final {
 
   // Creates the fragment. Can only be called once.
   RefPtr<NGLayoutResult> ToBoxFragment();
-  RefPtr<NGPhysicalTextFragment> ToTextFragment(unsigned index,
-                                                unsigned start_offset,
-                                                unsigned end_offset);
 
   Vector<RefPtr<NGPhysicalFragment>>& MutableChildren() { return children_; }
 
@@ -162,6 +159,7 @@ class CORE_EXPORT NGFragmentBuilder final {
   LayoutUnit used_block_size_;
 
   Vector<RefPtr<NGBreakToken>> child_break_tokens_;
+  RefPtr<NGBreakToken> last_inline_break_token_;
 
   WeakBoxList out_of_flow_descendant_candidates_;
   Vector<OutOfFlowPlacement> out_of_flow_candidate_placements_;

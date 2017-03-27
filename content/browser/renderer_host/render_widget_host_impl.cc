@@ -64,6 +64,7 @@
 #include "content/common/text_input_state.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/keyboard_event_processing_result.h"
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
@@ -82,7 +83,7 @@
 #include "storage/browser/fileapi/isolated_context.h"
 #include "third_party/WebKit/public/web/WebCompositionUnderline.h"
 #include "ui/base/clipboard/clipboard.h"
-#include "ui/base/ui_base_switches.h"
+#include "ui/display/display_switches.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
@@ -282,7 +283,6 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       has_touch_handler_(false),
       is_in_touchpad_gesture_scroll_(false),
       is_in_touchscreen_gesture_scroll_(false),
-      received_paint_after_load_(false),
       latency_tracker_(),
       next_browser_snapshot_id_(1),
       owned_by_render_frame_host_(false),
@@ -294,6 +294,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       new_content_rendering_delay_(
           base::TimeDelta::FromMilliseconds(kNewContentRenderingDelayMs)),
       current_content_source_id_(0),
+      monitoring_composition_info_(false),
       weak_factory_(this) {
   CHECK(delegate_);
   CHECK_NE(MSG_ROUTING_NONE, routing_id_);
@@ -315,6 +316,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
           RenderWidgetHostID(process->GetID(), routing_id_), this));
   CHECK(result.second) << "Inserting a duplicate item!";
   process_->AddRoute(routing_id_, this);
+  process_->AddWidget(this);
 
   // If we're initially visible, tell the process host that we're alive.
   // Otherwise we'll notify the process host when we are first shown.
@@ -567,8 +569,6 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnSelectionBoundsChanged)
     IPC_MESSAGE_HANDLER(InputHostMsg_ImeCompositionRangeChanged,
                         OnImeCompositionRangeChanged)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_DidFirstPaintAfterLoad,
-                        OnFirstPaintAfterLoad)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetNeedsBeginFrames, OnSetNeedsBeginFrames)
     IPC_MESSAGE_HANDLER(ViewHostMsg_FocusedNodeTouched, OnFocusedNodeTouched)
     IPC_MESSAGE_HANDLER(DragHostMsg_StartDragging, OnStartDragging)
@@ -957,6 +957,14 @@ bool RenderWidgetHostImpl::ScheduleComposite() {
   return true;
 }
 
+void RenderWidgetHostImpl::ProcessIgnoreInputEventsChanged(
+    bool ignore_input_events) {
+  if (ignore_input_events)
+    StopHangMonitorTimeout();
+  else
+    RestartHangMonitorTimeoutIfNecessary();
+}
+
 void RenderWidgetHostImpl::StartHangMonitorTimeout(
     base::TimeDelta delay,
     blink::WebInputEvent::Type event_type) {
@@ -992,20 +1000,10 @@ void RenderWidgetHostImpl::StartNewContentRenderingTimeout(
   // It is possible for a compositor frame to arrive before the browser is
   // notified about the page being committed, in which case no timer is
   // necessary.
-  if (received_paint_after_load_) {
-    received_paint_after_load_ = false;
+  if (last_received_content_source_id_ >= current_content_source_id_)
     return;
-  }
 
   new_content_rendering_timeout_->Start(new_content_rendering_delay_);
-}
-
-void RenderWidgetHostImpl::OnFirstPaintAfterLoad() {
-  if (new_content_rendering_timeout_->IsRunning()) {
-    new_content_rendering_timeout_->Stop();
-  } else {
-    received_paint_after_load_ = true;
-  }
 }
 
 void RenderWidgetHostImpl::ForwardMouseEvent(const WebMouseEvent& mouse_event) {
@@ -1166,12 +1164,13 @@ void RenderWidgetHostImpl::ForwardTouchEventWithLatencyInfo(
 
 void RenderWidgetHostImpl::ForwardKeyboardEvent(
     const NativeWebKeyboardEvent& key_event) {
-  ForwardKeyboardEventWithCommands(key_event, nullptr);
+  ForwardKeyboardEventWithCommands(key_event, nullptr, nullptr);
 }
 
 void RenderWidgetHostImpl::ForwardKeyboardEventWithCommands(
     const NativeWebKeyboardEvent& key_event,
-    const std::vector<EditCommand>* commands) {
+    const std::vector<EditCommand>* commands,
+    bool* update_event) {
   TRACE_EVENT0("input", "RenderWidgetHostImpl::ForwardKeyboardEvent");
   if (owner_delegate_ &&
       !owner_delegate_->MayRenderWidgetForwardKeyboardEvent(key_event)) {
@@ -1216,7 +1215,7 @@ void RenderWidgetHostImpl::ForwardKeyboardEventWithCommands(
   // Only pre-handle the key event if it's not handled by the input method.
   if (delegate_ && !key_event.skip_in_browser) {
     // We need to set |suppress_events_until_keydown_| to true if
-    // PreHandleKeyboardEvent() returns true, but |this| may already be
+    // PreHandleKeyboardEvent() handles the event, but |this| may already be
     // destroyed at that time. So set |suppress_events_until_keydown_| true
     // here, then revert it afterwards when necessary.
     if (key_event.type() == WebKeyboardEvent::RawKeyDown)
@@ -1224,8 +1223,21 @@ void RenderWidgetHostImpl::ForwardKeyboardEventWithCommands(
 
     // Tab switching/closing accelerators aren't sent to the renderer to avoid
     // a hung/malicious renderer from interfering.
-    if (delegate_->PreHandleKeyboardEvent(key_event, &is_shortcut))
-      return;
+    switch (delegate_->PreHandleKeyboardEvent(key_event)) {
+      case KeyboardEventProcessingResult::HANDLED:
+        return;
+#if defined(USE_AURA)
+      case KeyboardEventProcessingResult::HANDLED_DONT_UPDATE_EVENT:
+        if (update_event)
+          *update_event = false;
+        return;
+#endif
+      case KeyboardEventProcessingResult::NOT_HANDLED:
+        break;
+      case KeyboardEventProcessingResult::NOT_HANDLED_IS_SHORTCUT:
+        is_shortcut = true;
+        break;
+    }
 
     if (key_event.type() == WebKeyboardEvent::RawKeyDown)
       suppress_events_until_keydown_ = false;
@@ -1560,6 +1572,10 @@ void RenderWidgetHostImpl::RendererExited(base::TerminationStatus status,
   if (!renderer_initialized_)
     return;
 
+  // Clear this flag so that we can ask the next renderer for composition
+  // updates.
+  monitoring_composition_info_ = false;
+
   // Clearing this flag causes us to re-create the renderer when recovering
   // from a crashed renderer.
   renderer_initialized_ = false;
@@ -1693,6 +1709,7 @@ void RenderWidgetHostImpl::Destroy(bool also_delete) {
     view_.reset();
   }
 
+  process_->RemoveWidget(this);
   process_->RemoveRoute(routing_id_);
   g_routing_id_widget_map.Get().erase(
       RenderWidgetHostID(process_->GetID(), routing_id_));
@@ -1851,6 +1868,8 @@ bool RenderWidgetHostImpl::OnSwapCompositorFrame(
   last_frame_size_ = frame_size;
   last_device_scale_factor_ = device_scale_factor;
 
+  last_received_content_source_id_ = frame.metadata.content_source_id;
+
   if (frame.metadata.begin_frame_ack.sequence_number <
       cc::BeginFrameArgs::kStartingFrameNumber) {
     // Received an invalid ack, renderer misbehaved.
@@ -1891,6 +1910,13 @@ bool RenderWidgetHostImpl::OnSwapCompositorFrame(
     SendReclaimCompositorResources(routing_id_, compositor_frame_sink_id,
                                    process_->GetID(), true /* is_swap_ack */,
                                    resources);
+  }
+
+  // After navigation, if a frame belonging to the new page is received, stop
+  // the timer that triggers clearing the graphics of the last page.
+  if (last_received_content_source_id_ >= current_content_source_id_ &&
+      new_content_rendering_timeout_->IsRunning()) {
+    new_content_rendering_timeout_->Stop();
   }
 
   RenderProcessHost* rph = GetProcess();
@@ -2619,6 +2645,15 @@ void RenderWidgetHostImpl::GrantFileAccessFromDropData(DropData* drop_data) {
                  .append(register_name));
     file_system_file.filesystem_id = filesystem_id;
   }
+}
+
+void RenderWidgetHostImpl::RequestCompositionUpdates(bool immediate_request,
+                                                     bool monitor_updates) {
+  if (!immediate_request && monitor_updates == monitoring_composition_info_)
+    return;
+  monitoring_composition_info_ = monitor_updates;
+  Send(new InputMsg_RequestCompositionUpdates(routing_id_, immediate_request,
+                                              monitor_updates));
 }
 
 }  // namespace content

@@ -2158,7 +2158,7 @@ bool LayoutBox::isBreakBetweenControllable(EBreakBetween breakValue) const {
       return false;
     curr = curr->containingBlock();
   }
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return false;
 }
 
@@ -2231,7 +2231,7 @@ static inline int fragmentainerBreakPrecedence(EBreakBetween breakValue) {
 
   switch (breakValue) {
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
     // fall-through
     case EBreakBetween::kAuto:
       return 0;
@@ -2298,7 +2298,7 @@ bool LayoutBox::paintedOutputOfObjectHasNoEffectRegardlessOfSize() const {
   // the changed part of children when the box got resized. In SPv2 this is
   // handled by detecting paint property changes.
   if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
-    if (hasClipRelatedProperty() || hasControlClip())
+    if (hasClipRelatedProperty())
       return false;
   }
 
@@ -2687,7 +2687,7 @@ LayoutUnit LayoutBox::computeIntrinsicLogicalWidthUsing(
         std::min(maxLogicalWidth, fillAvailableMeasure(availableLogicalWidth)));
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return LayoutUnit();
 }
 
@@ -3164,7 +3164,7 @@ LayoutUnit LayoutBox::computeIntrinsicLogicalContentHeightUsing(
     return containingBlock()->availableLogicalHeight(
                ExcludeMarginBorderPadding) -
            borderAndPadding;
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return LayoutUnit();
 }
 
@@ -3384,7 +3384,7 @@ LayoutUnit LayoutBox::computeReplacedLogicalWidthUsing(
       break;
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return LayoutUnit();
 }
 

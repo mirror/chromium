@@ -106,6 +106,11 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
     // Called after successfully writing a buffer to disk.
     void OnWriteBytesToDisk(int64_t bytes_write);
 
+    // Given a data block that is already written, truncate the length of this
+    // object to avoid overwriting that block.
+    void TruncateLengthWithWrittenDataBlock(int64_t offset,
+                                            int64_t bytes_written);
+
     ByteStreamReader* stream_reader() const { return stream_reader_.get(); }
     int64_t offset() const { return offset_; }
     int64_t length() const { return length_; }
@@ -212,6 +217,17 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // If the file is a sparse file, return the total number of valid bytes.
   // Otherwise, return the current file size.
   int64_t TotalBytesReceived() const;
+
+  // Helper method to handle stream error
+  void HandleStreamError(SourceStream* source_stream,
+                         DownloadInterruptReason reason);
+
+  // Given a SourceStream object, returns its neighbor that preceds it if
+  // SourceStreams are ordered by their offsets
+  SourceStream* FindPrecedingNeighbor(SourceStream* source_stream);
+
+  // Print the internal states for debugging.
+  void DebugStates() const;
 
   net::NetLogWithSource net_log_;
 

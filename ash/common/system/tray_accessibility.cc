@@ -334,11 +334,11 @@ TrayAccessibility::TrayAccessibility(SystemTray* system_tray)
       previous_accessibility_state_(GetAccessibilityState()),
       show_a11y_menu_on_lock_screen_(true) {
   DCHECK(system_tray);
-  WmShell::Get()->system_tray_notifier()->AddAccessibilityObserver(this);
+  Shell::Get()->system_tray_notifier()->AddAccessibilityObserver(this);
 }
 
 TrayAccessibility::~TrayAccessibility() {
-  WmShell::Get()->system_tray_notifier()->RemoveAccessibilityObserver(this);
+  Shell::Get()->system_tray_notifier()->RemoveAccessibilityObserver(this);
 }
 
 void TrayAccessibility::SetTrayIconVisible(bool visible) {
@@ -434,7 +434,7 @@ void TrayAccessibility::OnAccessibilityModeChanged(
   if ((notify == A11Y_NOTIFICATION_SHOW) && being_enabled != A11Y_NONE) {
     // Shows popup if |notify| is true and the spoken feedback is being enabled.
     request_popup_view_state_ = being_enabled;
-    PopupDetailedView(kTrayPopupAutoCloseDelayForTextInSeconds, false);
+    ShowDetailedView(kTrayPopupAutoCloseDelayForTextInSeconds, false);
   } else {
     if (detailed_popup_)
       detailed_popup_->GetWidget()->Close();

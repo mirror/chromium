@@ -39,7 +39,7 @@
 #include "chrome/browser/chromeos/boot_times_recorder.h"
 #include "chrome/browser/chromeos/dbus/chrome_console_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/chrome_display_power_service_provider_delegate.h"
-#include "chrome/browser/chromeos/dbus/chrome_proxy_resolver_delegate.h"
+#include "chrome/browser/chromeos/dbus/chrome_proxy_resolution_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/kiosk_info_service_provider.h"
 #include "chrome/browser/chromeos/dbus/mus_console_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/screen_lock_service_provider.h"
@@ -107,7 +107,6 @@
 #include "chromeos/cert_loader.h"
 #include "chromeos/chromeos_paths.h"
 #include "chromeos/chromeos_switches.h"
-#include "chromeos/components/tether/initializer.h"
 #include "chromeos/cryptohome/async_method_caller.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/cryptohome/homedir_methods.h"
@@ -233,8 +232,8 @@ class DBusServices {
 
     CrosDBusService::ServiceProviderList service_providers;
     service_providers.push_back(
-        base::WrapUnique(ProxyResolutionServiceProvider::Create(
-            base::MakeUnique<ChromeProxyResolverDelegate>())));
+        base::MakeUnique<ProxyResolutionServiceProvider>(
+            base::MakeUnique<ChromeProxyResolutionServiceProviderDelegate>()));
     if (!ash_util::IsRunningInMash()) {
       // TODO(crbug.com/629707): revisit this with mustash dbus work.
       service_providers.push_back(base::MakeUnique<DisplayPowerServiceProvider>(
@@ -739,10 +738,6 @@ void ChromeBrowserMainPartsChromeos::PostProfileInit() {
   // guest profile.
   if (!user_manager::UserManager::Get()->IsLoggedInAsGuest())
     low_disk_notification_ = base::MakeUnique<LowDiskNotification>();
-
-  if (parsed_command_line().HasSwitch(chromeos::switches::kEnableTether)) {
-    chromeos::tether::Initializer::Initialize();
-  }
 
   ChromeBrowserMainPartsLinux::PostProfileInit();
 }

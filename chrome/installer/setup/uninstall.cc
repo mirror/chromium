@@ -625,12 +625,6 @@ bool DeleteChromeRegistrationKeys(const InstallerState& installer_state,
                                   const base::string16& browser_entry_suffix,
                                   InstallStatus* exit_code) {
   DCHECK(exit_code);
-  if (dist->GetDefaultBrowserControlPolicy() ==
-      BrowserDistribution::DEFAULT_BROWSER_UNSUPPORTED) {
-    // We should have never set those keys.
-    return true;
-  }
-
   base::FilePath chrome_exe(installer_state.target_path().Append(kChromeExe));
 
   // Delete Software\Classes\ChromeHTML.
@@ -897,8 +891,11 @@ InstallStatus UninstallProduct(const InstallationState& original_state,
   base::string16 distribution_data(browser_dist->GetDistributionData(reg_root));
 
   // Remove Control Panel uninstall link.
-  InstallUtil::DeleteRegistryKey(reg_root, browser_dist->GetUninstallRegPath(),
-                                 KEY_WOW64_32KEY);
+  // Assert that this is only called with the one relevant distribution.
+  // TODO(grt): Remove this when BrowserDistribution goes away.
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), browser_dist);
+  InstallUtil::DeleteRegistryKey(
+      reg_root, install_static::GetUninstallRegistryPath(), KEY_WOW64_32KEY);
 
   // Remove Omaha product key.
   InstallUtil::DeleteRegistryKey(

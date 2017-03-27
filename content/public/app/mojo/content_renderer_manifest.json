@@ -20,9 +20,12 @@
       "requires": {
         "content_browser": [ "renderer" ],
         "device": [
+          "device:battery_monitor",
           "device:power_monitor",
           "device:screen_orientation",
-          "device:time_zone_monitor"
+          "device:sensors",
+          "device:time_zone_monitor",
+          "device:vibration"
         ],
         "ui": [
           "discardable_memory",

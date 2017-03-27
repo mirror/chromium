@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
 #include "headless/public/util/managed_dispatch_url_request_job.h"
 #include "headless/public/util/url_fetcher.h"
 #include "net/base/net_errors.h"
@@ -34,11 +35,12 @@ class URLRequestDispatcher;
 // 1. The delegate can extension observe / cancel and redirect requests
 // 2. The delegate can optionally provide the results, otherwise the specifed
 //    fetcher is invoked.
-class GenericURLRequestJob : public ManagedDispatchURLRequestJob,
-                             public URLFetcher::ResultListener {
+class HEADLESS_EXPORT GenericURLRequestJob
+    : public ManagedDispatchURLRequestJob,
+      public URLFetcher::ResultListener {
  public:
   enum class RewriteResult { kAllow, kDeny, kFailure };
-  using RewriteCallback = std::function<
+  using RewriteCallback = base::Callback<
       void(RewriteResult result, const GURL& url, const std::string& method)>;
 
   struct HttpResponse {
@@ -56,7 +58,7 @@ class GenericURLRequestJob : public ManagedDispatchURLRequestJob,
     // Allows the delegate to rewrite the URL for a given request. Return true
     // to signal that the rewrite is in progress and |callback| will be called
     // with the result, or false to indicate that no rewriting is necessary.
-    // Called on an arbitrary thread.
+    // Called on an arbitrary thread. |callback| can be called on any thread.
     virtual bool BlockOrRewriteRequest(const GURL& url,
                                        const std::string& devtools_id,
                                        const std::string& method,
@@ -109,10 +111,18 @@ class GenericURLRequestJob : public ManagedDispatchURLRequestJob,
                        size_t body_size) override;
 
  private:
+  static void OnRewriteResult(
+      base::WeakPtr<GenericURLRequestJob> weak_this,
+      const scoped_refptr<base::SingleThreadTaskRunner>& origin_task_runner,
+      RewriteResult result,
+      const GURL& url,
+      const std::string& method);
+  void OnRewriteResultOnOriginThread(RewriteResult result,
+                                     const GURL& url,
+                                     const std::string& method);
   void PrepareCookies(const GURL& rewritten_url,
                       const std::string& method,
                       const url::Origin& site_for_cookies);
-
   void OnCookiesAvailable(const GURL& rewritten_url,
                           const std::string& method,
                           const net::CookieList& cookie_list);
@@ -120,6 +130,7 @@ class GenericURLRequestJob : public ManagedDispatchURLRequestJob,
   std::unique_ptr<URLFetcher> url_fetcher_;
   net::HttpRequestHeaders extra_request_headers_;
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
+  scoped_refptr<base::SingleThreadTaskRunner> origin_task_runner_;
   std::string devtools_request_id_;
   Delegate* delegate_;          // Not owned.
   const char* body_ = nullptr;  // Not owned.

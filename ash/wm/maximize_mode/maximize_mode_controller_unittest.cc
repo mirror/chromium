@@ -12,14 +12,16 @@
 #include "ash/common/system/tray/system_tray_delegate.h"
 #include "ash/common/test/test_system_tray_delegate.h"
 #include "ash/common/wm/overview/window_selector_controller.h"
-#include "ash/common/wm_shell.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "base/command_line.h"
+#include "base/run_loop.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/test/user_action_tester.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/accelerometer/accelerometer_types.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/fake_power_manager_client.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/test/display_manager_test_api.h"
 #include "ui/events/event_handler.h"
@@ -480,10 +482,10 @@ TEST_F(MaximizeModeControllerTest, DisplayDisconnectionDuringOverview) {
   ASSERT_NE(w1->GetRootWindow(), w2->GetRootWindow());
 
   maximize_mode_controller()->EnableMaximizeModeWindowManager(true);
-  EXPECT_TRUE(WmShell::Get()->window_selector_controller()->ToggleOverview());
+  EXPECT_TRUE(Shell::Get()->window_selector_controller()->ToggleOverview());
 
   UpdateDisplay("800x600");
-  EXPECT_FALSE(WmShell::Get()->window_selector_controller()->IsSelecting());
+  EXPECT_FALSE(Shell::Get()->window_selector_controller()->IsSelecting());
   EXPECT_EQ(w1->GetRootWindow(), w2->GetRootWindow());
 }
 
@@ -581,6 +583,23 @@ TEST_F(MaximizeModeControllerTest, VerticalHingeUnstableAnglesTest) {
     // one failure rather than potentially hundreds.
     ASSERT_TRUE(IsMaximizeModeStarted());
   }
+}
+
+// Tests that when a MaximizeModeController is created that cached tablet mode
+// state will trigger a mode update.
+TEST_F(MaximizeModeControllerTest, InitializedWhileTabletModeSwitchOn) {
+  base::RunLoop().RunUntilIdle();
+  // FakePowerManagerClient is always installed for tests
+  chromeos::FakePowerManagerClient* power_manager_client =
+      static_cast<chromeos::FakePowerManagerClient*>(
+          chromeos::DBusThreadManager::Get()->GetPowerManagerClient());
+  power_manager_client->set_tablet_mode(
+      chromeos::PowerManagerClient::TabletMode::ON);
+  MaximizeModeController controller;
+  EXPECT_FALSE(controller.IsMaximizeModeWindowManagerEnabled());
+  // PowerManagerClient callback is a posted task.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(controller.IsMaximizeModeWindowManagerEnabled());
 }
 
 }  // namespace ash

@@ -119,12 +119,10 @@ static inline bool isAcceleratedCanvas(const LayoutObject& layoutObject) {
   return false;
 }
 
-static inline bool isCanvasControlledByOffscreen(
-    const LayoutObject& layoutObject) {
+static inline bool isPlaceholderCanvas(const LayoutObject& layoutObject) {
   if (layoutObject.isCanvas()) {
     HTMLCanvasElement* canvas = toHTMLCanvasElement(layoutObject.node());
-    if (canvas->surfaceLayerBridge())
-      return true;
+    return canvas->surfaceLayerBridge();
   }
   return false;
 }
@@ -308,27 +306,45 @@ void CompositedLayerMapping::updateStickyConstraints(
 
   WebLayerStickyPositionConstraint webConstraint;
   if (sticky) {
+    const StickyConstraintsMap& constraintsMap =
+        ancestorOverflowLayer->getScrollableArea()->stickyConstraintsMap();
     const StickyPositionScrollingConstraints& constraints =
-        ancestorOverflowLayer->getScrollableArea()->stickyConstraintsMap().at(
-            &m_owningLayer);
+        constraintsMap.at(&m_owningLayer);
 
-    // Find the layout offset of the unshifted sticky box within its
-    // compositingContainer. If the enclosing layer is not the scroller, then
-    // the offset must be adjusted to include the scroll offset to keep it
-    // relative to compositingContainer.
+    // Find the layout offset of the unshifted sticky box within its parent
+    // composited layer. This information is used by the compositor side to
+    // compute the additional offset required to keep the element stuck under
+    // compositor scrolling.
+    //
+    // Starting from the scroll container relative location, removing the
+    // enclosing layer's offset and the content offset in the composited layer
+    // results in the parent-layer relative offset.
+    FloatPoint parentRelativeStickyBoxOffset =
+        constraints.scrollContainerRelativeStickyBoxRect().location();
+
+    // The enclosing layers offset returned from |convertToLayerCoords| must be
+    // adjusted for both scroll and ancestor sticky elements.
     LayoutPoint enclosingLayerOffset;
     compositingContainer->convertToLayerCoords(ancestorOverflowLayer,
                                                enclosingLayerOffset);
-    if (compositingContainer != ancestorOverflowLayer) {
+    DCHECK(!scrollParent() || scrollParent() == ancestorOverflowLayer);
+    if (!scrollParent() && compositingContainer != ancestorOverflowLayer) {
       enclosingLayerOffset += LayoutSize(
           ancestorOverflowLayer->getScrollableArea()->getScrollOffset());
     }
+    // TODO(smcgruer): Until http://crbug.com/702229 is fixed, the nearest
+    // sticky ancestor may be non-composited which will make this offset wrong.
+    if (const LayoutBoxModelObject* ancestor =
+            constraints.nearestStickyAncestor()) {
+      enclosingLayerOffset -=
+          roundedIntSize(constraintsMap.at(ancestor->layer())
+                             .getTotalContainingBlockStickyOffset());
+    }
 
-    FloatPoint stickyBoxOffset =
-        constraints.scrollContainerRelativeStickyBoxRect().location();
     DCHECK(!m_contentOffsetInCompositingLayerDirty);
-    stickyBoxOffset.moveBy(FloatPoint(-enclosingLayerOffset) -
-                           FloatSize(contentOffsetInCompositingLayer()));
+    parentRelativeStickyBoxOffset.moveBy(
+        FloatPoint(-enclosingLayerOffset) -
+        FloatSize(contentOffsetInCompositingLayer()));
 
     webConstraint.isSticky = true;
     webConstraint.isAnchoredLeft =
@@ -348,12 +364,36 @@ void CompositedLayerMapping::updateStickyConstraints(
     webConstraint.topOffset = constraints.topOffset();
     webConstraint.bottomOffset = constraints.bottomOffset();
     webConstraint.parentRelativeStickyBoxOffset =
-        roundedIntPoint(stickyBoxOffset);
+        roundedIntPoint(parentRelativeStickyBoxOffset);
     webConstraint.scrollContainerRelativeStickyBoxRect =
         enclosingIntRect(constraints.scrollContainerRelativeStickyBoxRect());
     webConstraint.scrollContainerRelativeContainingBlockRect = enclosingIntRect(
         constraints.scrollContainerRelativeContainingBlockRect());
-    // TODO(smcgruer): Copy fields for nested sticky in cc (crbug.com/672710)
+    // TODO(smcgruer): Until http://crbug.com/702229 is fixed, the nearest
+    // sticky layers may not be composited and we may incorrectly end up with
+    // invalid layer IDs.
+    LayoutBoxModelObject* stickyBoxShiftingAncestor =
+        constraints.nearestStickyBoxShiftingStickyBox();
+    if (stickyBoxShiftingAncestor &&
+        stickyBoxShiftingAncestor->layer()->compositedLayerMapping()) {
+      webConstraint.nearestLayerShiftingStickyBox =
+          stickyBoxShiftingAncestor->layer()
+              ->compositedLayerMapping()
+              ->mainGraphicsLayer()
+              ->platformLayer()
+              ->id();
+    }
+    LayoutBoxModelObject* containingBlockShiftingAncestor =
+        constraints.nearestStickyBoxShiftingContainingBlock();
+    if (containingBlockShiftingAncestor &&
+        containingBlockShiftingAncestor->layer()->compositedLayerMapping()) {
+      webConstraint.nearestLayerShiftingContainingBlock =
+          containingBlockShiftingAncestor->layer()
+              ->compositedLayerMapping()
+              ->mainGraphicsLayer()
+              ->platformLayer()
+              ->id();
+    }
   }
 
   m_graphicsLayer->setStickyPositionConstraint(webConstraint);
@@ -427,6 +467,10 @@ void CompositedLayerMapping::updateContentsOpaque() {
     m_graphicsLayer->setContentsOpaque(false);
     m_backgroundLayer->setContentsOpaque(
         m_owningLayer.backgroundIsKnownToBeOpaqueInRect(compositedBounds()));
+  } else if (isPlaceholderCanvas(layoutObject())) {
+    // TODO(crbug.com/705019): Contents could be opaque, but that cannot be
+    // determined from the main thread. Or can it?
+    m_graphicsLayer->setContentsOpaque(false);
   } else {
     // For non-root layers, background is painted by the scrolling contents
     // layer if all backgrounds are background attachment local, otherwise
@@ -754,7 +798,7 @@ bool CompositedLayerMapping::updateGraphicsLayerConfiguration() {
   } else if (layoutObject.isVideo()) {
     HTMLMediaElement* mediaElement = toHTMLMediaElement(layoutObject.node());
     m_graphicsLayer->setContentsToPlatformLayer(mediaElement->platformLayer());
-  } else if (isCanvasControlledByOffscreen(layoutObject)) {
+  } else if (isPlaceholderCanvas(layoutObject)) {
     HTMLCanvasElement* canvas = toHTMLCanvasElement(layoutObject.node());
     m_graphicsLayer->setContentsToPlatformLayer(
         canvas->surfaceLayerBridge()->getWebLayer());
@@ -1365,16 +1409,6 @@ void CompositedLayerMapping::updateScrollingLayerGeometry(
   LayoutBox& layoutBox = toLayoutBox(layoutObject());
   IntRect overflowClipRect =
       pixelSnappedIntRect(layoutBox.overflowClipRect(LayoutPoint()));
-
-  const TopDocumentRootScrollerController& globalRootScrollerController =
-      layoutBox.document().page()->globalRootScrollerController();
-
-  if (&m_owningLayer == globalRootScrollerController.rootScrollerPaintLayer()) {
-    LayoutRect clipRect =
-        layoutBox.document().layoutView()->overflowClipRect(LayoutPoint());
-    DCHECK(clipRect.size() == LayoutSize(pixelSnappedIntRect(clipRect).size()));
-    overflowClipRect.setSize(pixelSnappedIntRect(clipRect).size());
-  }
 
   // When a m_childTransformLayer exists, local content offsets for the
   // m_scrollingLayer have already been applied. Otherwise, we apply them here.
@@ -3498,7 +3532,7 @@ String CompositedLayerMapping::debugName(
   } else if (graphicsLayer == m_decorationOutlineLayer.get()) {
     name = "Decoration Layer";
   } else {
-    ASSERT_NOT_REACHED();
+    NOTREACHED();
   }
 
   return name;

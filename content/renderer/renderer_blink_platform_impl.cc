@@ -42,6 +42,7 @@
 #include "content/common/frame_messages.h"
 #include "content/common/render_process_messages.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_manager_connection.h"
 #include "content/public/common/webplugininfo.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/media_stream_utils.h"
@@ -78,6 +79,7 @@
 #include "media/blink/webcontentdecryptionmodule_impl.h"
 #include "media/filters/stream_parser_factory.h"
 #include "ppapi/features/features.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/database/database_identifier.h"
@@ -238,7 +240,7 @@ class RendererBlinkPlatformImpl::SandboxSupport
 
 RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     blink::scheduler::RendererScheduler* renderer_scheduler,
-    base::WeakPtr<service_manager::InterfaceProvider> remote_interfaces)
+    base::WeakPtr<service_manager::Connector> connector)
     : BlinkPlatformImpl(renderer_scheduler->DefaultTaskRunner()),
       main_thread_(renderer_scheduler->CreateMainThread()),
       clipboard_delegate_(new RendererClipboardDelegate),
@@ -249,8 +251,8 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
       loading_task_runner_(renderer_scheduler->LoadingTaskRunner()),
       web_scrollbar_behavior_(new WebScrollbarBehaviorImpl),
       renderer_scheduler_(renderer_scheduler),
-      blink_interface_provider_(
-          new BlinkInterfaceProviderImpl(remote_interfaces)) {
+      blink_connector_(new BlinkConnectorImpl(nullptr)),
+      blink_interface_provider_(new BlinkInterfaceProviderImpl(connector)) {
 #if !defined(OS_ANDROID) && !defined(OS_WIN)
   if (g_sandbox_enabled && sandboxEnabled()) {
     sandbox_support_.reset(new RendererBlinkPlatformImpl::SandboxSupport);
@@ -261,6 +263,10 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
 
   // RenderThread may not exist in some tests.
   if (RenderThreadImpl::current()) {
+    blink_connector_->SetConnector(RenderThreadImpl::current()
+                                       ->GetServiceManagerConnection()
+                                       ->GetConnector()
+                                       ->Clone());
     sync_message_filter_ = RenderThreadImpl::current()->sync_message_filter();
     thread_safe_sender_ = RenderThreadImpl::current()->thread_safe_sender();
     quota_message_filter_ = RenderThreadImpl::current()->quota_message_filter();
@@ -379,8 +385,8 @@ bool RendererBlinkPlatformImpl::isLinkVisited(unsigned long long link_hash) {
 }
 
 void RendererBlinkPlatformImpl::createMessageChannel(
-    blink::WebMessagePortChannel** channel1,
-    blink::WebMessagePortChannel** channel2) {
+    std::unique_ptr<blink::WebMessagePortChannel>* channel1,
+    std::unique_ptr<blink::WebMessagePortChannel>* channel2) {
   WebMessagePortChannelImpl::CreatePair(channel1, channel2);
 }
 
@@ -857,6 +863,8 @@ void RendererBlinkPlatformImpl::createHTMLVideoElementCapturer(
   AddVideoTrackToMediaStream(
       HtmlVideoElementCapturerSource::CreateFromWebMediaPlayerImpl(
           web_media_player, content::RenderThread::Get()->GetIOTaskRunner()),
+      false,  // is_remote
+      false,  // is_readonly
       web_media_stream);
 #endif
 }
@@ -872,8 +880,9 @@ void RendererBlinkPlatformImpl::createHTMLAudioElementCapturer(
   blink::WebMediaStreamTrack web_media_stream_track;
   const WebString track_id = WebString::fromUTF8(base::GenerateGUID());
 
-  web_media_stream_source.initialize(
-      track_id, blink::WebMediaStreamSource::TypeAudio, track_id);
+  web_media_stream_source.initialize(track_id,
+                                     blink::WebMediaStreamSource::TypeAudio,
+                                     track_id, false /* is_remote */);
   web_media_stream_track.initialize(web_media_stream_source);
 
   MediaStreamAudioSource* const media_stream_source =
@@ -1150,6 +1159,10 @@ void RendererBlinkPlatformImpl::SetPlatformEventObserverForTesting(
   if (platform_event_observers_.Lookup(type))
     platform_event_observers_.Remove(type);
   platform_event_observers_.AddWithID(std::move(observer), type);
+}
+
+BlinkConnectorImpl* RendererBlinkPlatformImpl::connector() {
+  return blink_connector_.get();
 }
 
 blink::InterfaceProvider* RendererBlinkPlatformImpl::interfaceProvider() {

@@ -8,18 +8,8 @@
       "paintInvalidations": [
         {
           "object": "LayoutSVGText text",
-          "rect": [33, 23, 624, 189],
+          "rect": [33, 23, 622, 194],
           "reason": "style change"
-        },
-        {
-          "object": "LayoutSVGRect rect",
-          "rect": [16, 25, 18, 25],
-          "reason": "layoutObject insertion"
-        },
-        {
-          "object": "LayoutSVGRect rect",
-          "rect": [8, 12, 17, 26],
-          "reason": "layoutObject insertion"
         }
       ]
     }

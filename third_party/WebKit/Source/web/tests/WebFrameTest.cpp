@@ -4159,7 +4159,7 @@ TEST_F(WebFrameTest, ReloadWithOverrideURLPreservesState) {
 
   // Reload the page and end up at the same url. State should be propagated.
   webViewHelper.webView()->mainFrame()->reloadWithOverrideURL(
-      toKURL(m_baseURL + firstURL), WebFrameLoadType::ReloadMainResource);
+      toKURL(m_baseURL + firstURL), WebFrameLoadType::Reload);
   FrameTestHelpers::pumpPendingRequestsForFrameToLoad(
       webViewHelper.webView()->mainFrame());
   EXPECT_EQ(previousOffset.width,
@@ -4170,7 +4170,7 @@ TEST_F(WebFrameTest, ReloadWithOverrideURLPreservesState) {
 
   // Reload the page using the cache. State should not be propagated.
   webViewHelper.webView()->mainFrame()->reloadWithOverrideURL(
-      toKURL(m_baseURL + secondURL), WebFrameLoadType::ReloadMainResource);
+      toKURL(m_baseURL + secondURL), WebFrameLoadType::Reload);
   FrameTestHelpers::pumpPendingRequestsForFrameToLoad(
       webViewHelper.webView()->mainFrame());
   EXPECT_EQ(0, webViewHelper.webView()->mainFrame()->getScrollOffset().width);
@@ -7172,22 +7172,19 @@ TEST_P(ParameterizedWebFrameTest, ReloadIframe) {
 class TestSameDocumentWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestSameDocumentWebFrameClient()
-      : m_frameLoadTypeReloadMainResourceSeen(false) {}
+  TestSameDocumentWebFrameClient() : m_frameLoadTypeReloadSeen(false) {}
 
   virtual void willSendRequest(WebLocalFrame* frame, WebURLRequest&) {
     FrameLoader& frameLoader = toWebLocalFrameImpl(frame)->frame()->loader();
     if (frameLoader.provisionalDocumentLoader()->loadType() ==
-        FrameLoadTypeReloadMainResource)
-      m_frameLoadTypeReloadMainResourceSeen = true;
+        FrameLoadTypeReload)
+      m_frameLoadTypeReloadSeen = true;
   }
 
-  bool frameLoadTypeReloadMainResourceSeen() const {
-    return m_frameLoadTypeReloadMainResourceSeen;
-  }
+  bool frameLoadTypeReloadSeen() const { return m_frameLoadTypeReloadSeen; }
 
  private:
-  bool m_frameLoadTypeReloadMainResourceSeen;
+  bool m_frameLoadTypeReloadSeen;
 };
 
 TEST_P(ParameterizedWebFrameTest, NavigateToSame) {
@@ -7196,7 +7193,7 @@ TEST_P(ParameterizedWebFrameTest, NavigateToSame) {
   FrameTestHelpers::WebViewHelper webViewHelper;
   webViewHelper.initializeAndLoad(m_baseURL + "navigate_to_same.html", true,
                                   &client);
-  EXPECT_FALSE(client.frameLoadTypeReloadMainResourceSeen());
+  EXPECT_FALSE(client.frameLoadTypeReloadSeen());
 
   FrameLoadRequest frameRequest(
       0,
@@ -7209,7 +7206,7 @@ TEST_P(ParameterizedWebFrameTest, NavigateToSame) {
   FrameTestHelpers::pumpPendingRequestsForFrameToLoad(
       webViewHelper.webView()->mainFrame());
 
-  EXPECT_TRUE(client.frameLoadTypeReloadMainResourceSeen());
+  EXPECT_TRUE(client.frameLoadTypeReloadSeen());
 }
 
 class TestSameDocumentWithImageWebFrameClient
@@ -8946,6 +8943,22 @@ TEST_F(WebFrameSwapTest, RemoteWindowNamedAccess) {
       mainFrame()->executeScriptAndReturnValue(
           WebScriptSource("window[2].foo"));
   EXPECT_TRUE(remoteWindowProperty.IsEmpty());
+
+  reset();
+}
+
+TEST_F(WebFrameSwapTest, RemoteWindowToString) {
+  v8::HandleScope scope(v8::Isolate::GetCurrent());
+
+  FrameTestHelpers::TestWebRemoteFrameClient remoteClient;
+  WebRemoteFrame* remoteFrame = remoteClient.frame();
+  lastChild(mainFrame())->swap(remoteFrame);
+  remoteFrame->setReplicatedOrigin(SecurityOrigin::createUnique());
+  v8::Local<v8::Value> toStringResult =
+      mainFrame()->executeScriptAndReturnValue(
+          WebScriptSource("Object.prototype.toString.call(window[2])"));
+  ASSERT_FALSE(toStringResult.IsEmpty());
+  EXPECT_STREQ("[object Object]", *v8::String::Utf8Value(toStringResult));
 
   reset();
 }

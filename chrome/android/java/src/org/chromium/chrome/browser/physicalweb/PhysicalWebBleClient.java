@@ -7,8 +7,6 @@ package org.chromium.chrome.browser.physicalweb;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.messages.Message;
 import com.google.android.gms.nearby.messages.MessageFilter;
 import com.google.android.gms.nearby.messages.MessageListener;
@@ -17,20 +15,13 @@ import org.chromium.chrome.browser.AppHooks;
 
 /**
  * The Client that harvests URLs from BLE signals.
- * This class is designed to scan URSs from Bluetooth Low Energy beacons.
+ * This class is designed to scan URLs from Bluetooth Low Energy beacons.
  * This class is currently an empty implementation and must be extended by a
  * subclass.
  */
 public class PhysicalWebBleClient {
     private static PhysicalWebBleClient sInstance;
     private static final String TAG = "PhysicalWeb";
-
-    // We don't actually listen to any of the onFound or onLost events in the foreground.
-    // The background listener will get these.
-    protected static class ForegroundMessageListener extends MessageListener {
-        @Override
-        public void onFound(Message message) {}
-    }
 
     protected static class BackgroundMessageListener extends MessageListener {
         @Override
@@ -80,29 +71,12 @@ public class PhysicalWebBleClient {
     }
 
     /**
-     * Create a MessageListener that listens during a foreground scan.
-     * @return the MessageListener.
-     */
-    MessageListener createForegroundMessageListener() {
-        return new ForegroundMessageListener();
-    }
-
-    /**
      * Get the URLs from a device within a message.
      * @param message The Nearby message.
      * @return The URL contained in the message.
      */
     String getUrlFromMessage(Message message) {
         return null;
-    }
-
-    /**
-     * Modify a GoogleApiClient.Builder as necessary for doing Physical Web scanning.
-     * @param builder The builder to be modified.
-     * @return The Builder.
-     */
-    GoogleApiClient.Builder modifyGoogleApiClientBuilder(GoogleApiClient.Builder builder) {
-        return builder.addApi(Nearby.MESSAGES_API);
     }
 
     /**

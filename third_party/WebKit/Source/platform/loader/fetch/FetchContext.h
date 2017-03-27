@@ -47,6 +47,7 @@ namespace blink {
 class ClientHintsPreferences;
 class KURL;
 class MHTMLArchive;
+class PlatformInstrumentationAgents;
 class ResourceError;
 class ResourceResponse;
 class ResourceTimingInfo;
@@ -72,7 +73,8 @@ class PLATFORM_EXPORT FetchContext
   static FetchContext& nullInstance();
 
   virtual ~FetchContext() {}
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+  DECLARE_VIRTUAL_TRACE();
 
   virtual bool isLiveContext() { return false; }
 
@@ -89,12 +91,21 @@ class PLATFORM_EXPORT FetchContext
   virtual void dispatchDidChangeResourcePriority(unsigned long identifier,
                                                  ResourceLoadPriority,
                                                  int intraPriorityValue);
+
+  // This internally dispatches WebFrameClient::willSendRequest and hooks
+  // request interceptors like ServiceWorker and ApplicationCache.
+  // This may modify the request.
+  enum class RedirectType { kForRedirect, kNotForRedirect };
+  virtual void prepareRequest(ResourceRequest&, RedirectType);
+
   // The last callback before a request is actually sent to the browser process.
+  // TODO(https://crbug.com/632580): make this take const ResourceRequest&.
   virtual void dispatchWillSendRequest(
       unsigned long identifier,
       ResourceRequest&,
       const ResourceResponse& redirectResponse,
       const FetchInitiatorInfo& = FetchInitiatorInfo());
+
   virtual void dispatchDidLoadResourceFromMemoryCache(
       unsigned long identifier,
       Resource*,
@@ -123,14 +134,14 @@ class PLATFORM_EXPORT FetchContext
                                bool isInternalRequest);
 
   virtual bool shouldLoadNewResource(Resource::Type) const { return false; }
+
   // Called when a resource load is first requested, which may not be when the
   // load actually begins.
-  enum class V8ActivityLoggingPolicy { SuppressLogging, Log };
-  virtual void willStartLoadingResource(unsigned long identifier,
-                                        ResourceRequest&,
-                                        Resource::Type,
-                                        const AtomicString& fetchInitiatorName,
-                                        V8ActivityLoggingPolicy);
+  virtual void recordLoadingActivity(unsigned long identifier,
+                                     const ResourceRequest&,
+                                     Resource::Type,
+                                     const AtomicString& fetchInitiatorName);
+
   virtual void didLoadResource(Resource*);
 
   virtual void addResourceTiming(const ResourceTimingInfo&);
@@ -187,8 +198,15 @@ class PLATFORM_EXPORT FetchContext
 
   virtual RefPtr<WebTaskRunner> loadingTaskRunner() const { return nullptr; }
 
+  PlatformInstrumentationAgents* instrumentingAgents() const {
+    return m_instrumentingAgents;
+  }
+
  protected:
-  FetchContext() {}
+  FetchContext();
+
+ private:
+  Member<PlatformInstrumentationAgents> m_instrumentingAgents;
 };
 
 }  // namespace blink

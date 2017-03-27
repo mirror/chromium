@@ -100,6 +100,7 @@
 #include "content/public/browser/guest_mode.h"
 #include "content/public/browser/invalidate_type.h"
 #include "content/public/browser/javascript_dialog_manager.h"
+#include "content/public/browser/keyboard_event_processing_result.h"
 #include "content/public/browser/load_notification_details.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/notification_details.h"
@@ -125,7 +126,6 @@
 #include "content/public/common/web_preferences.h"
 #include "device/geolocation/geolocation_service_context.h"
 #include "device/nfc/nfc.mojom.h"
-#include "device/wake_lock/wake_lock_service_context.h"
 #include "net/base/url_util.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_transaction_factory.h"
@@ -480,10 +480,9 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
 #if BUILDFLAG(ENABLE_PLUGINS)
   pepper_playback_observer_.reset(new PepperPlaybackObserver(this));
 #endif
+
+  wake_lock_context_host_.reset(new WakeLockContextHost(this));
   loader_io_thread_notifier_.reset(new LoaderIOThreadNotifier(this));
-  wake_lock_service_context_.reset(new device::WakeLockServiceContext(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
-      base::Bind(&WebContentsImpl::GetNativeView, base::Unretained(this))));
   host_zoom_map_observer_.reset(new HostZoomMapObserver(this));
 }
 
@@ -556,7 +555,7 @@ WebContentsImpl::~WebContentsImpl() {
   // PlzNavigate: clear up state specific to browser-side navigation.
   if (IsBrowserSideNavigationEnabled()) {
     // Do not update state as the WebContents is being destroyed.
-    frame_tree_.root()->ResetNavigationRequest(true);
+    frame_tree_.root()->ResetNavigationRequest(true, true);
     if (root->speculative_frame_host()) {
       root->speculative_frame_host()->SetRenderFrameCreated(false);
       root->speculative_frame_host()->SetNavigationHandle(
@@ -1768,11 +1767,10 @@ void WebContentsImpl::ScreenInfoChanged() {
     browser_plugin_embedder_->ScreenInfoChanged();
 }
 
-bool WebContentsImpl::PreHandleKeyboardEvent(
-    const NativeWebKeyboardEvent& event,
-    bool* is_keyboard_shortcut) {
-  return delegate_ &&
-      delegate_->PreHandleKeyboardEvent(this, event, is_keyboard_shortcut);
+KeyboardEventProcessingResult WebContentsImpl::PreHandleKeyboardEvent(
+    const NativeWebKeyboardEvent& event) {
+  return delegate_ ? delegate_->PreHandleKeyboardEvent(this, event)
+                   : KeyboardEventProcessingResult::NOT_HANDLED;
 }
 
 void WebContentsImpl::HandleKeyboardEvent(const NativeWebKeyboardEvent& event) {
@@ -2001,7 +1999,9 @@ bool WebContentsImpl::HasMouseLock(RenderWidgetHostImpl* render_widget_host) {
 }
 
 RenderWidgetHostImpl* WebContentsImpl::GetMouseLockWidget() {
-  if (GetTopLevelRenderWidgetHostView()->IsMouseLocked())
+  if (GetTopLevelRenderWidgetHostView()->IsMouseLocked() ||
+      (GetFullscreenRenderWidgetHostView() &&
+       GetFullscreenRenderWidgetHostView()->IsMouseLocked()))
     return mouse_lock_widget_;
 
   return nullptr;
@@ -2483,8 +2483,8 @@ WebContentsImpl::GetGeolocationServiceContext() {
   return geolocation_service_context_.get();
 }
 
-device::WakeLockServiceContext* WebContentsImpl::GetWakeLockServiceContext() {
-  return wake_lock_service_context_.get();
+device::mojom::WakeLockContext* WebContentsImpl::GetWakeLockServiceContext() {
+  return wake_lock_context_host_->GetWakeLockContext();
 }
 
 void WebContentsImpl::OnShowValidationMessage(
@@ -2543,6 +2543,11 @@ bool WebContentsImpl::OnUpdateDragCursor() {
   if (browser_plugin_embedder_)
     return browser_plugin_embedder_->OnUpdateDragCursor();
   return false;
+}
+
+bool WebContentsImpl::IsWidgetForMainFrame(
+    RenderWidgetHostImpl* render_widget_host) {
+  return render_widget_host == GetMainFrame()->GetRenderWidgetHost();
 }
 
 BrowserAccessibilityManager*

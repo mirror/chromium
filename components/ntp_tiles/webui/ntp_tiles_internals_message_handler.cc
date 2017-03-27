@@ -34,11 +34,6 @@ std::string FormatJson(const base::Value& value) {
 
 }  // namespace
 
-NTPTilesInternalsMessageHandlerClient::NTPTilesInternalsMessageHandlerClient() =
-    default;
-NTPTilesInternalsMessageHandlerClient::
-    ~NTPTilesInternalsMessageHandlerClient() = default;
-
 NTPTilesInternalsMessageHandler::NTPTilesInternalsMessageHandler()
     : client_(nullptr), site_count_(8), weak_ptr_factory_(this) {}
 
@@ -164,8 +159,8 @@ void NTPTilesInternalsMessageHandler::HandleViewPopularSitesJson(
     return;
   }
 
-  popular_sites_json_ = FormatJson(
-      *most_visited_sites_->popular_sites()->GetCachedJson());
+  popular_sites_json_ =
+      FormatJson(*most_visited_sites_->popular_sites()->GetCachedJson());
   SendSourceInfo();
 }
 

@@ -79,14 +79,11 @@ class CORE_EXPORT SelectorQuery {
     MatchesTraverseRoots
   };
   template <typename SelectorQueryTrait>
-  void executeForTraverseRoot(const CSSSelector&,
-                              ContainerNode* traverseRoot,
-                              MatchTraverseRootState,
+  void executeForTraverseRoot(ContainerNode* traverseRoot,
                               ContainerNode& rootNode,
                               typename SelectorQueryTrait::OutputType&) const;
   template <typename SelectorQueryTrait, typename SimpleElementListType>
-  void executeForTraverseRoots(const CSSSelector&,
-                               SimpleElementListType& traverseRoots,
+  void executeForTraverseRoots(SimpleElementListType& traverseRoots,
                                MatchTraverseRootState,
                                ContainerNode& rootNode,
                                typename SelectorQueryTrait::OutputType&) const;
@@ -107,6 +104,10 @@ class CORE_EXPORT SelectorQuery {
                typename SelectorQueryTrait::OutputType&) const;
 
   CSSSelectorList m_selectorList;
+  // Contains the list of CSSSelector's to match, but without ones that could
+  // never match like pseudo elements, div::before. This can be empty, while
+  // m_selectorList will never be empty as SelectorQueryCache::add would have
+  // thrown an exception.
   Vector<const CSSSelector*> m_selectors;
   bool m_usesDeepCombinatorOrShadowPseudo : 1;
   bool m_needsUpdatedDistribution : 1;

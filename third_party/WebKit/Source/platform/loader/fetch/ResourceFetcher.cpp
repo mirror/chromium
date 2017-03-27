@@ -29,6 +29,7 @@
 
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/instrumentation/PlatformInstrumentation.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/loader/fetch/FetchContext.h"
@@ -369,33 +370,31 @@ Resource* ResourceFetcher::resourceForStaticData(
     memoryCache()->remove(oldResource);
   }
 
-  AtomicString mimetype;
-  AtomicString charset;
+  ResourceResponse response;
   RefPtr<SharedBuffer> data;
   if (substituteData.isValid()) {
-    mimetype = substituteData.mimeType();
-    charset = substituteData.textEncoding();
     data = substituteData.content();
+    response.setURL(url);
+    response.setMimeType(substituteData.mimeType());
+    response.setExpectedContentLength(data->size());
+    response.setTextEncodingName(substituteData.textEncoding());
   } else if (url.protocolIsData()) {
-    data = PassRefPtr<SharedBuffer>(
-        NetworkUtils::parseDataURL(url, mimetype, charset));
+    data = NetworkUtils::parseDataURLAndPopulateResponse(url, response);
     if (!data)
       return nullptr;
+    // |response| is modified by parseDataURLAndPopulateResponse() and is
+    // ready to be used.
   } else {
     ArchiveResource* archiveResource =
         m_archive->subresourceForURL(request.url());
     // Fall back to the network if the archive doesn't contain the resource.
     if (!archiveResource)
       return nullptr;
-    mimetype = archiveResource->mimeType();
-    charset = archiveResource->textEncoding();
     data = archiveResource->data();
-  }
-
-  ResourceResponse response(url, mimetype, data->size(), charset);
-  if (!substituteData.isValid() && url.protocolIsData()) {
-    response.setHTTPStatusCode(200);
-    response.setHTTPStatusText("OK");
+    response.setURL(url);
+    response.setMimeType(archiveResource->mimeType());
+    response.setExpectedContentLength(data->size());
+    response.setTextEncodingName(archiveResource->textEncoding());
   }
 
   Resource* resource = factory.create(request.resourceRequest(),
@@ -506,12 +505,11 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::prepareRequest(
     return Block;
   }
 
-  context().willStartLoadingResource(
-      identifier, resourceRequest, factory.type(),
-      request.options().initiatorInfo.name,
-      (request.isSpeculativePreload()
-           ? FetchContext::V8ActivityLoggingPolicy::SuppressLogging
-           : FetchContext::V8ActivityLoggingPolicy::Log));
+  // For initial requests, call prepareRequest() here before revalidation
+  // policy is determined.
+  context().prepareRequest(resourceRequest,
+                           FetchContext::RedirectType::kNotForRedirect);
+
   if (!request.url().isValid())
     return Abort;
 
@@ -543,6 +541,12 @@ Resource* ResourceFetcher::requestResource(
     return nullptr;
   if (result == Block)
     return resourceForBlockedRequest(request, factory, blockedReason);
+
+  if (!request.isSpeculativePreload()) {
+    // Only log if it's not for speculative preload.
+    context().recordLoadingActivity(identifier, resourceRequest, factory.type(),
+                                    request.options().initiatorInfo.name);
+  }
 
   bool isDataUrl = resourceRequest.url().protocolIsData();
   bool isStaticData = isDataUrl || substituteData.isValid() || m_archive;
@@ -1237,8 +1241,13 @@ bool ResourceFetcher::startLoad(Resource* resource) {
   }
 
   ResourceRequest request(resource->resourceRequest());
-  context().dispatchWillSendRequest(resource->identifier(), request,
-                                    ResourceResponse(),
+  ResourceResponse response;
+
+  blink::probe::PlatformSendRequest probe(&context(), resource->identifier(),
+                                          request, response,
+                                          resource->options().initiatorInfo);
+
+  context().dispatchWillSendRequest(resource->identifier(), request, response,
                                     resource->options().initiatorInfo);
 
   // TODO(shaochuan): Saving modified ResourceRequest back to |resource|, remove

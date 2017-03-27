@@ -352,7 +352,7 @@ void GetChromeProgIdEntries(BrowserDistribution* dist,
   // Assert that this is only called with the one relevant distribution.
   // TODO(grt): Remove this when BrowserDistribution goes away.
   DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
-  int chrome_icon_index = dist->GetIconIndex();
+  int chrome_icon_index = install_static::GetIconResourceIndex();
 
   ApplicationInfo app_info;
   app_info.prog_id = GetBrowserProgId(suffix);
@@ -373,8 +373,7 @@ void GetChromeProgIdEntries(BrowserDistribution* dist,
   app_info.application_icon_index = chrome_icon_index;
   app_info.application_description = dist->GetAppDescription();
   app_info.publisher_name = dist->GetPublisherName();
-
-  app_info.delegate_clsid = dist->GetCommandExecuteImplClsid();
+  app_info.delegate_clsid = install_static::GetLegacyCommandExecuteImplClsid();
 
   GetProgIdEntries(app_info, entries);
 
@@ -413,8 +412,9 @@ void GetShellIntegrationEntries(BrowserDistribution* dist,
                                 const base::FilePath& chrome_exe,
                                 const base::string16& suffix,
                                 ScopedVector<RegistryEntry>* entries) {
-  const base::string16 icon_path(
-      ShellUtil::FormatIconLocation(chrome_exe, dist->GetIconIndex()));
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
+  const base::string16 icon_path(ShellUtil::FormatIconLocation(
+      chrome_exe, install_static::GetIconResourceIndex()));
   const base::string16 quoted_exe_path(L"\"" + chrome_exe.value() + L"\"");
 
   // Register for the Start Menu "Internet" link (pre-Win7).
@@ -592,6 +592,7 @@ void GetXPStyleDefaultBrowserUserEntries(BrowserDistribution* dist,
                                          const base::FilePath& chrome_exe,
                                          const base::string16& suffix,
                                          ScopedVector<RegistryEntry>* entries) {
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
   // File extension associations.
   base::string16 html_prog_id(GetBrowserProgId(suffix));
   for (int i = 0; ShellUtil::kDefaultFileAssociations[i] != NULL; i++) {
@@ -601,8 +602,8 @@ void GetXPStyleDefaultBrowserUserEntries(BrowserDistribution* dist,
 
   // Protocols associations.
   base::string16 chrome_open = ShellUtil::GetChromeShellOpenCmd(chrome_exe);
-  base::string16 chrome_icon =
-      ShellUtil::FormatIconLocation(chrome_exe, dist->GetIconIndex());
+  base::string16 chrome_icon = ShellUtil::FormatIconLocation(
+      chrome_exe, install_static::GetIconResourceIndex());
   for (int i = 0; ShellUtil::kBrowserProtocolAssociations[i] != NULL; i++) {
     GetXPStyleUserProtocolEntries(ShellUtil::kBrowserProtocolAssociations[i],
                                   chrome_icon, chrome_open, entries);
@@ -923,11 +924,12 @@ bool RegisterChromeAsDefaultProtocolClientXPStyle(
     BrowserDistribution* dist,
     const base::FilePath& chrome_exe,
     const base::string16& protocol) {
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
   ScopedVector<RegistryEntry> entries;
   const base::string16 chrome_open(
       ShellUtil::GetChromeShellOpenCmd(chrome_exe));
-  const base::string16 chrome_icon(
-      ShellUtil::FormatIconLocation(chrome_exe, dist->GetIconIndex()));
+  const base::string16 chrome_icon(ShellUtil::FormatIconLocation(
+      chrome_exe, install_static::GetIconResourceIndex()));
   GetXPStyleUserProtocolEntries(protocol, chrome_icon, chrome_open, &entries);
   // Change the default protocol handler for current user.
   if (!ShellUtil::AddRegistryEntries(HKEY_CURRENT_USER, entries)) {
@@ -1787,11 +1789,6 @@ ShellUtil::DefaultState ShellUtil::GetChromeDefaultState() {
 
 ShellUtil::DefaultState ShellUtil::GetChromeDefaultStateFromPath(
     const base::FilePath& chrome_exe) {
-  BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
-  if (distribution->GetDefaultBrowserControlPolicy() ==
-      BrowserDistribution::DEFAULT_BROWSER_UNSUPPORTED) {
-    return NOT_DEFAULT;
-  }
   // When we check for default browser we don't necessarily want to count file
   // type handlers and icons as having changed the default browser status,
   // since the user may have changed their shell settings to cause HTML files
@@ -1804,18 +1801,13 @@ ShellUtil::DefaultState ShellUtil::GetChromeDefaultStateFromPath(
   static const wchar_t* const kChromeProtocols[] = { L"http", L"https" };
   DefaultState default_state = ProbeProtocolHandlers(
       chrome_exe, kChromeProtocols, arraysize(kChromeProtocols));
-  UpdateDefaultBrowserBeaconWithState(distribution, default_state);
+  UpdateDefaultBrowserBeaconWithState(BrowserDistribution::GetDistribution(),
+                                      default_state);
   return default_state;
 }
 
 ShellUtil::DefaultState ShellUtil::GetChromeDefaultProtocolClientState(
     const base::string16& protocol) {
-  BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
-  if (distribution->GetDefaultBrowserControlPolicy() ==
-      BrowserDistribution::DEFAULT_BROWSER_UNSUPPORTED) {
-    return NOT_DEFAULT;
-  }
-
   if (protocol.empty())
     return UNKNOWN_DEFAULT;
 
@@ -1852,11 +1844,11 @@ bool ShellUtil::MakeChromeDefault(BrowserDistribution* dist,
                                   bool elevate_if_not_admin) {
   DCHECK(!(shell_change & SYSTEM_LEVEL) || IsUserAnAdmin());
 
-  BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
-  if (distribution->GetDefaultBrowserControlPolicy() !=
-      BrowserDistribution::DEFAULT_BROWSER_FULL_CONTROL) {
+  // Assert that this is only called with the one relevant distribution.
+  // TODO(grt): Remove this when BrowserDistribution goes away.
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
+  if (!install_static::SupportsSetAsDefaultBrowser())
     return false;
-  }
 
   // Windows 8 does not permit making a browser default just like that.
   // This process needs to be routed through the system's UI. Use
@@ -1920,10 +1912,12 @@ bool ShellUtil::ShowMakeChromeDefaultSystemUI(
     BrowserDistribution* dist,
     const base::FilePath& chrome_exe) {
   DCHECK(!CanMakeChromeDefaultUnattended());
-  if (dist->GetDefaultBrowserControlPolicy() !=
-      BrowserDistribution::DEFAULT_BROWSER_FULL_CONTROL) {
+
+  // Assert that this is only called with the one relevant distribution.
+  // TODO(grt): Remove this when BrowserDistribution goes away.
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
+  if (!install_static::SupportsSetAsDefaultBrowser())
     return false;
-  }
 
   if (!RegisterChromeBrowser(dist, chrome_exe, base::string16(), true))
       return false;
@@ -1962,10 +1956,11 @@ bool ShellUtil::MakeChromeDefaultProtocolClient(
     BrowserDistribution* dist,
     const base::FilePath& chrome_exe,
     const base::string16& protocol) {
-  if (dist->GetDefaultBrowserControlPolicy() !=
-      BrowserDistribution::DEFAULT_BROWSER_FULL_CONTROL) {
+  // Assert that this is only called with the one relevant distribution.
+  // TODO(grt): Remove this when BrowserDistribution goes away.
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
+  if (!install_static::SupportsSetAsDefaultBrowser())
     return false;
-  }
 
   if (!RegisterChromeForProtocol(
            dist, chrome_exe, base::string16(), protocol, true))
@@ -2012,10 +2007,12 @@ bool ShellUtil::ShowMakeChromeDefaultProtocolClientSystemUI(
     const base::FilePath& chrome_exe,
     const base::string16& protocol) {
   DCHECK(!CanMakeChromeDefaultUnattended());
-  if (dist->GetDefaultBrowserControlPolicy() !=
-      BrowserDistribution::DEFAULT_BROWSER_FULL_CONTROL) {
+
+  // Assert that this is only called with the one relevant distribution.
+  // TODO(grt): Remove this when BrowserDistribution goes away.
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
+  if (!install_static::SupportsSetAsDefaultBrowser())
     return false;
-  }
 
   if (!RegisterChromeForProtocol(
            dist, chrome_exe, base::string16(), protocol, true))
@@ -2056,11 +2053,6 @@ bool ShellUtil::RegisterChromeBrowser(BrowserDistribution* dist,
                                       const base::string16& unique_suffix,
                                       bool elevate_if_not_admin) {
   DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
-  if (dist->GetDefaultBrowserControlPolicy() ==
-      BrowserDistribution::DEFAULT_BROWSER_UNSUPPORTED) {
-    return false;
-  }
-
   base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
 
   base::string16 suffix;
@@ -2146,11 +2138,6 @@ bool ShellUtil::RegisterChromeForProtocol(BrowserDistribution* dist,
                                           const base::string16& unique_suffix,
                                           const base::string16& protocol,
                                           bool elevate_if_not_admin) {
-  if (dist->GetDefaultBrowserControlPolicy() ==
-      BrowserDistribution::DEFAULT_BROWSER_UNSUPPORTED) {
-    return false;
-  }
-
   base::string16 suffix;
   if (!unique_suffix.empty()) {
     suffix = unique_suffix;

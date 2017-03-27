@@ -8,11 +8,10 @@
 </head>
 <body>
   <script>
-    // Use offline context for decoding because we want a fixed known sample
-    // rate, independent of the hardware because the test file is encoded at
-    // 44.1 kHz.  If we don't, decodeAudioData() will resample the data messing
-    // up the assumptions in this test.  The length is unimportant.
-    let context = new OfflineAudioContext(1, 1, 44100);
+    // The functionality of decodeAudioData() is orthogonal to the type and the
+    // state of AudioContext. So we use the online context here and any
+    // resampling of the file is okay for this test.
+    let context = new AudioContext();
 
     // Test file URLs.
     let validAudioFileUrl = '../resources/media/24bit-44khz.wav';
@@ -31,17 +30,18 @@
     audit.define('preload-arraybuffer', (task, should) => {
       Promise
           .all([
-            Audit.loadFileFromUrl(validAudioFileUrl),
-            Audit.loadFileFromUrl(invalidAudioFileUrl)
+            should(Audit.loadFileFromUrl(validAudioFileUrl),
+              "Loading valid audio file")
+              .beResolved(),
+            should(Audit.loadFileFromUrl(invalidAudioFileUrl),
+              "loading invalid audio file")
+              .beResolved()
           ])
           .then((arrayBuffers) => {
             validArrayBuffer = arrayBuffers[0];
             invalidArrayBuffer = arrayBuffers[1];
-            context.decodeAudioData(validArrayBuffer).then((audioBuffer) => {
-              referenceDecodedAudioBuffer = audioBuffer;
-              task.done();
-            })
-          });
+          })
+          .then(() => task.done());
     });
 
     // Decode a valid encoded file and verify that the promise succeeds
@@ -51,12 +51,14 @@
       // we do not care about it in this test.
       Promise
           .all([
-            should(context.decodeAudioData(validArrayBuffer),
+            // Do not use the original arrayBuffers for decoding; decode a copy
+            // because decodeAudioData will detach the buffers.
+            should(context.decodeAudioData(validArrayBuffer.slice(0)),
                    'Decoding a valid audio file')
                 .beResolved(),
-            should(context.decodeAudioData(invalidArrayBuffer),
+            should(context.decodeAudioData(invalidArrayBuffer.slice(0)),
                    'Decoding an invalid audio file')
-                .beRejected('EncodingError'),
+                .beRejectedWith('EncodingError'),
             should(context.decodeAudioData(null), 'Decoding null AudioBuffer')
                 .beRejected()
           ])
@@ -81,7 +83,7 @@
       };
 
       // Step 1: Decode a file with callback functions.
-      let step1 = context.decodeAudioData(validArrayBuffer,
+      let step1 = context.decodeAudioData(validArrayBuffer.slice(),
                                           successOrErrorCallback,
                                           successOrErrorCallback);
 
@@ -111,8 +113,10 @@
                      'successCallback should not have invoked');
       };
 
-      let decodeAudioDataPromise = context.decodeAudioData(
-          invalidArrayBuffer, successOrErrorCallback, successOrErrorCallback);
+      let decodeAudioDataPromise =
+          context.decodeAudioData(invalidArrayBuffer.slice(),
+                                  successOrErrorCallback,
+                                  successOrErrorCallback);
 
       should(decodeAudioDataPromise, 'decodeAudioData promise')
           .beRejected('EncodingError')
@@ -121,8 +125,7 @@
 
     // decodeAudioData() should be functional even after the associated context
     // is closed.
-    // TODO(crbug.com/692650)
-    audit.define('close-context-with-pending-decode', (task, should) => {
+    audit.define('decoding-on-closed-context', (task, should) => {
       // Use one handler for resolve and reject. |promiseArg| is a parameter for
       // handlers; it is a decoded audio buffer for success case and an error
       // object for failure case.

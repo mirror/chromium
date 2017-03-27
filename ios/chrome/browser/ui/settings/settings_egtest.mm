@@ -94,6 +94,10 @@ id<GREYMatcher> ClearSavedPasswordsButton() {
 id<GREYMatcher> ClearBrowsingDataButton() {
   return ButtonWithAccessibilityLabelId(IDS_IOS_CLEAR_BUTTON);
 }
+// Matcher for the clear browsing data action sheet item.
+id<GREYMatcher> ConfirmClearBrowsingDataButton() {
+  return ButtonWithAccessibilityLabelId(IDS_IOS_CONFIRM_CLEAR_BUTTON);
+}
 // Matcher for the Settings button in the tools menu.
 id<GREYMatcher> SettingsButton() {
   return grey_accessibilityID(kToolsMenuSettingsId);
@@ -154,7 +158,7 @@ id<GREYMatcher> TranslateSettingsButton() {
   return ButtonWithAccessibilityLabelId(IDS_IOS_TRANSLATE_SETTING);
 }
 // Matcher for the save button in the save password bar.
-id<GREYMatcher> savePasswordButton() {
+id<GREYMatcher> SavePasswordButton() {
   return ButtonWithAccessibilityLabelId(IDS_IOS_PASSWORD_MANAGER_SAVE_BUTTON);
 }
 
@@ -283,15 +287,8 @@ bool IsCertificateCleared() {
 - (void)clearBrowsingData {
   [[EarlGrey selectElementWithMatcher:ClearBrowsingDataButton()]
       performAction:grey_tap()];
-
-  // There is not currently a matcher for accessibilityElementIsFocused or
-  // userInteractionEnabled which could be used here instead of checking that
-  // the button is not a MDCCollectionViewTextCell. Use when available.
-  // TODO(crbug.com/638674): Evaluate if this can move to shared code.
-  id<GREYMatcher> confirmClear = grey_allOf(
-      ClearBrowsingDataButton(),
-      grey_not(grey_kindOfClass([MDCCollectionViewTextCell class])), nil);
-  [[EarlGrey selectElementWithMatcher:confirmClear] performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:ConfirmClearBrowsingDataButton()]
+      performAction:grey_tap()];
 }
 
 // Exits Settings by clicking on the Done button.
@@ -448,7 +445,7 @@ bool IsCertificateCleared() {
   // Login to page and click to save password and check that its saved.
   [ChromeEarlGrey loadURL:URL];
   chrome_test_util::TapWebViewElementWithId("Login");
-  [[EarlGrey selectElementWithMatcher:savePasswordButton()]
+  [[EarlGrey selectElementWithMatcher:SavePasswordButton()]
       performAction:grey_tap()];
 }
 
@@ -461,6 +458,17 @@ bool IsCertificateCleared() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:PasswordsButton()]
       performAction:grey_tap()];
+}
+
+- (void)setMetricsReportingEnabled:(BOOL)reportingEnabled
+                          wifiOnly:(BOOL)wifiOnly {
+  chrome_test_util::SetBooleanLocalStatePref(
+      metrics::prefs::kMetricsReportingEnabled, reportingEnabled);
+  chrome_test_util::SetBooleanLocalStatePref(prefs::kMetricsReportingWifiOnly,
+                                             wifiOnly);
+  // Breakpad uses dispatch_async to update its state. Wait to get to a
+  // consistent state.
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
 }
 
 // Checks for a given service that it is both recording and uploading, where
@@ -558,19 +566,13 @@ bool IsCertificateCleared() {
   //  - Services record data and upload data.
 
   // kMetricsReportingEnabled OFF and kMetricsReportingWifiOnly OFF
-  chrome_test_util::SetBooleanLocalStatePref(
-      metrics::prefs::kMetricsReportingEnabled, NO);
-  chrome_test_util::SetBooleanLocalStatePref(prefs::kMetricsReportingWifiOnly,
-                                             NO);
+  [self setMetricsReportingEnabled:NO wifiOnly:NO];
   // Service should be completely disabled.
   // I.e. no recording of data, and no uploading of what's been recorded.
   [self assertMetricsServiceDisabled:serviceType];
 
   // kMetricsReportingEnabled OFF and kMetricsReportingWifiOnly ON
-  chrome_test_util::SetBooleanLocalStatePref(
-      metrics::prefs::kMetricsReportingEnabled, NO);
-  chrome_test_util::SetBooleanLocalStatePref(prefs::kMetricsReportingWifiOnly,
-                                             YES);
+  [self setMetricsReportingEnabled:NO wifiOnly:YES];
   // If kMetricsReportingEnabled is OFF, any service should remain completely
   // disabled, i.e. no uploading even if kMetricsReportingWifiOnly is ON.
   [self assertMetricsServiceDisabled:serviceType];
@@ -584,10 +586,7 @@ bool IsCertificateCleared() {
   // the services, turning on and off according to the rules laid out above.
 
   // kMetricsReportingEnabled ON and kMetricsReportingWifiOnly ON.
-  chrome_test_util::SetBooleanLocalStatePref(
-      metrics::prefs::kMetricsReportingEnabled, YES);
-  chrome_test_util::SetBooleanLocalStatePref(prefs::kMetricsReportingWifiOnly,
-                                             YES);
+  [self setMetricsReportingEnabled:YES wifiOnly:YES];
   // Service should be enabled.
   [self assertMetricsServiceEnabled:serviceType];
 
@@ -601,10 +600,7 @@ bool IsCertificateCleared() {
   [self assertMetricsServiceEnabled:serviceType];
 
   // kMetricsReportingEnabled ON and kMetricsReportingWifiOnly OFF
-  chrome_test_util::SetBooleanLocalStatePref(
-      metrics::prefs::kMetricsReportingEnabled, YES);
-  chrome_test_util::SetBooleanLocalStatePref(prefs::kMetricsReportingWifiOnly,
-                                             NO);
+  [self setMetricsReportingEnabled:YES wifiOnly:NO];
   [self assertMetricsServiceEnabled:serviceType];
 #else
   // Development build.  Do not allow any recording or uploading of data.
@@ -615,18 +611,12 @@ bool IsCertificateCleared() {
   // services remain disabled.
 
   // kMetricsReportingEnabled ON and kMetricsReportingWifiOnly ON
-  chrome_test_util::SetBooleanLocalStatePref(
-      metrics::prefs::kMetricsReportingEnabled, YES);
-  chrome_test_util::SetBooleanLocalStatePref(prefs::kMetricsReportingWifiOnly,
-                                             YES);
+  [self setMetricsReportingEnabled:YES wifiOnly:YES];
   // Service should remain disabled.
   [self assertMetricsServiceDisabled:serviceType];
 
   // kMetricsReportingEnabled ON and kMetricsReportingWifiOnly OFF
-  chrome_test_util::SetBooleanLocalStatePref(
-      metrics::prefs::kMetricsReportingEnabled, YES);
-  chrome_test_util::SetBooleanLocalStatePref(prefs::kMetricsReportingWifiOnly,
-                                             NO);
+  [self setMetricsReportingEnabled:YES wifiOnly:NO];
   // Service should remain disabled.
   [self assertMetricsServiceDisabled:serviceType];
 #endif
@@ -702,7 +692,6 @@ bool IsCertificateCleared() {
 // Verifies that logging into a form on a web page allows the user to save and
 // then clear a password.
 - (void)testClearPasswords {
-
   ios::ChromeBrowserState* browserState =
       chrome_test_util::GetOriginalBrowserState();
   PrefService* preferences = browserState->GetPrefs();

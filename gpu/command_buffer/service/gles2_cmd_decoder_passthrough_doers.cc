@@ -1015,7 +1015,24 @@ error::Error GLES2DecoderPassthroughImpl::DoGetActiveUniformBlockName(
     GLuint program,
     GLuint index,
     std::string* name) {
-  NOTIMPLEMENTED();
+  FlushErrors();
+
+  GLuint program_service_id = GetProgramServiceID(program, resources_);
+  GLint max_name_length = 0;
+  glGetProgramiv(program_service_id, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH,
+                 &max_name_length);
+
+  if (FlushErrors()) {
+    return error::kNoError;
+  }
+
+  std::vector<GLchar> buffer(max_name_length, 0);
+  GLsizei length = 0;
+  glGetActiveUniformBlockName(program_service_id, index, max_name_length,
+                              &length, buffer.data());
+  DCHECK(length <= max_name_length);
+  *name = length > 0 ? std::string(buffer.data(), length) : std::string();
+
   return error::kNoError;
 }
 
@@ -1024,10 +1041,9 @@ error::Error GLES2DecoderPassthroughImpl::DoGetActiveUniformsiv(
     GLsizei count,
     const GLuint* indices,
     GLenum pname,
-    GLsizei bufSize,
-    GLsizei* length,
     GLint* params) {
-  NOTIMPLEMENTED();
+  glGetActiveUniformsiv(GetProgramServiceID(program, resources_), count,
+                        indices, pname, params);
   return error::kNoError;
 }
 
@@ -1036,7 +1052,8 @@ error::Error GLES2DecoderPassthroughImpl::DoGetAttachedShaders(
     GLsizei maxcount,
     GLsizei* count,
     GLuint* shaders) {
-  NOTIMPLEMENTED();
+  glGetAttachedShaders(GetProgramServiceID(program, resources_), maxcount,
+                       count, shaders);
   return error::kNoError;
 }
 
@@ -1214,14 +1231,21 @@ error::Error GLES2DecoderPassthroughImpl::DoGetProgramiv(GLuint program,
 error::Error GLES2DecoderPassthroughImpl::DoGetProgramInfoLog(
     GLuint program,
     std::string* infolog) {
+  FlushErrors();
   GLint info_log_len = 0;
   glGetProgramiv(GetProgramServiceID(program, resources_), GL_INFO_LOG_LENGTH,
                  &info_log_len);
 
+  if (FlushErrors()) {
+    return error::kNoError;
+  }
+
   std::vector<char> buffer(info_log_len, 0);
+  GLsizei length = 0;
   glGetProgramInfoLog(GetProgramServiceID(program, resources_), info_log_len,
-                      nullptr, buffer.data());
-  *infolog = info_log_len > 0 ? std::string(buffer.data()) : std::string();
+                      &length, buffer.data());
+  DCHECK(length <= info_log_len);
+  *infolog = length > 0 ? std::string(buffer.data(), length) : std::string();
   return error::kNoError;
 }
 
@@ -1270,12 +1294,20 @@ error::Error GLES2DecoderPassthroughImpl::DoGetShaderiv(GLuint shader,
 error::Error GLES2DecoderPassthroughImpl::DoGetShaderInfoLog(
     GLuint shader,
     std::string* infolog) {
+  FlushErrors();
+
   GLuint service_id = GetShaderServiceID(shader, resources_);
   GLint info_log_len = 0;
   glGetShaderiv(service_id, GL_INFO_LOG_LENGTH, &info_log_len);
+  if (FlushErrors()) {
+    return error::kNoError;
+  }
+
   std::vector<char> buffer(info_log_len, 0);
-  glGetShaderInfoLog(service_id, info_log_len, nullptr, buffer.data());
-  *infolog = info_log_len > 0 ? std::string(buffer.data()) : std::string();
+  GLsizei length = 0;
+  glGetShaderInfoLog(service_id, info_log_len, &length, buffer.data());
+  DCHECK(length <= info_log_len);
+  *infolog = length > 0 ? std::string(buffer.data(), length) : std::string();
   return error::kNoError;
 }
 
@@ -1294,7 +1326,23 @@ error::Error GLES2DecoderPassthroughImpl::DoGetShaderPrecisionFormat(
 error::Error GLES2DecoderPassthroughImpl::DoGetShaderSource(
     GLuint shader,
     std::string* source) {
-  NOTIMPLEMENTED();
+  FlushErrors();
+
+  GLuint shader_service_id = GetShaderServiceID(shader, resources_);
+  GLint shader_source_length = 0;
+  glGetShaderiv(shader_service_id, GL_SHADER_SOURCE_LENGTH,
+                &shader_source_length);
+  if (FlushErrors()) {
+    return error::kNoError;
+  }
+
+  std::vector<char> buffer(shader_source_length, 0);
+  GLsizei length = 0;
+  glGetShaderSource(shader_service_id, shader_source_length, &length,
+                    buffer.data());
+  DCHECK(length <= shader_source_length);
+  *source = shader_source_length > 0 ? std::string(buffer.data(), length)
+                                     : std::string();
   return error::kNoError;
 }
 
@@ -1376,7 +1424,8 @@ error::Error GLES2DecoderPassthroughImpl::DoGetUniformBlockIndex(
     GLuint program,
     const char* name,
     GLint* index) {
-  NOTIMPLEMENTED();
+  *index =
+      glGetUniformBlockIndex(GetProgramServiceID(program, resources_), name);
   return error::kNoError;
 }
 
@@ -1421,9 +1470,9 @@ error::Error GLES2DecoderPassthroughImpl::DoGetUniformIndices(
     GLsizei count,
     const char* const* names,
     GLsizei bufSize,
-    GLsizei* length,
     GLuint* indices) {
-  NOTIMPLEMENTED();
+  glGetUniformIndices(GetProgramServiceID(program, resources_), count, names,
+                      indices);
   return error::kNoError;
 }
 
@@ -1535,7 +1584,6 @@ error::Error GLES2DecoderPassthroughImpl::DoInvalidateSubFramebuffer(
 
 error::Error GLES2DecoderPassthroughImpl::DoIsBuffer(GLuint buffer,
                                                      uint32_t* result) {
-  NOTIMPLEMENTED();
   *result = glIsBuffer(GetBufferServiceID(buffer, resources_, false));
   return error::kNoError;
 }
@@ -1561,7 +1609,6 @@ error::Error GLES2DecoderPassthroughImpl::DoIsProgram(GLuint program,
 
 error::Error GLES2DecoderPassthroughImpl::DoIsRenderbuffer(GLuint renderbuffer,
                                                            uint32_t* result) {
-  NOTIMPLEMENTED();
   *result = glIsRenderbufferEXT(
       GetRenderbufferServiceID(renderbuffer, resources_, false));
   return error::kNoError;
@@ -1722,7 +1769,11 @@ error::Error GLES2DecoderPassthroughImpl::DoShaderBinary(GLsizei n,
                                                          GLenum binaryformat,
                                                          const void* binary,
                                                          GLsizei length) {
-  NOTIMPLEMENTED();
+  std::vector<GLuint> service_shaders(n, 0);
+  for (GLsizei i = 0; i < n; i++) {
+    service_shaders[i] = GetShaderServiceID(shaders[i], resources_);
+  }
+  glShaderBinary(n, service_shaders.data(), binaryformat, binary, length);
   return error::kNoError;
 }
 
@@ -2380,7 +2431,9 @@ error::Error GLES2DecoderPassthroughImpl::DoFramebufferTexture2DMultisampleEXT(
     GLuint texture,
     GLint level,
     GLsizei samples) {
-  NOTIMPLEMENTED();
+  glFramebufferTexture2DMultisampleEXT(
+      target, attachment, textarget,
+      GetTextureServiceID(texture, resources_, false), level, samples);
   return error::kNoError;
 }
 
@@ -2973,10 +3026,12 @@ error::Error GLES2DecoderPassthroughImpl::DoGetUniformBlocksCHROMIUM(
     glGetActiveUniformBlockName(
         service_program, uniform_block_index, active_uniform_block_max_length,
         &uniform_block_name_length, uniform_block_name_buf.data());
+
+    DCHECK(uniform_block_name_length + 1 <= active_uniform_block_max_length);
     block_info.name_offset = data->size();
-    block_info.name_length = uniform_block_name_length;
+    block_info.name_length = uniform_block_name_length + 1;
     AppendStringToBuffer(data, uniform_block_name_buf.data(),
-                         uniform_block_name_length);
+                         uniform_block_name_length + 1);
 
     GLint uniform_block_active_uniforms = 0;
     glGetActiveUniformBlockiv(service_program, uniform_block_index,
@@ -3075,11 +3130,12 @@ GLES2DecoderPassthroughImpl::DoGetTransformFeedbackVaryingsCHROMIUM(
     TransformFeedbackVaryingInfo varying_info;
     varying_info.size = size;
     varying_info.type = type;
-    varying_info.name_length = data->size();
-    varying_info.name_length = length;
 
+    DCHECK(length + 1 <= max_transform_feedback_varying_length);
+    varying_info.name_length = data->size();
+    varying_info.name_length = length + 1;
     AppendStringToBuffer(data, transform_feedback_varying_name_buf.data(),
-                         length);
+                         length + 1);
 
     InsertValueIntoBuffer(
         data, varying_info,

@@ -909,7 +909,8 @@ void RenderWidgetHostViewMac::OnUpdateTextInputStateCalled(
   // |updated_view| is the last view to change its TextInputState which can be
   // used to start/stop monitoring composition info when it has a focused
   // editable text input field.
-  RenderWidgetHost* widgetHost = updated_view->GetRenderWidgetHost();
+  RenderWidgetHostImpl* widgetHost =
+      RenderWidgetHostImpl::From(updated_view->GetRenderWidgetHost());
 
   // We might end up here when |updated_view| has had active TextInputState and
   // then got destroyed. In that case, |updated_view->GetRenderWidgetHost()|
@@ -923,9 +924,8 @@ void RenderWidgetHostViewMac::OnUpdateTextInputStateCalled(
   bool need_monitor_composition =
       has_focus && state && state->type != ui::TEXT_INPUT_TYPE_NONE;
 
-  widgetHost->Send(new InputMsg_RequestCompositionUpdate(
-      widgetHost->GetRoutingID(), false /* immediate request */,
-      need_monitor_composition));
+  widgetHost->RequestCompositionUpdates(false /* immediate_request */,
+                                        need_monitor_composition);
 
   if (has_focus) {
     SetTextInputActive(true);
@@ -1445,6 +1445,11 @@ void RenderWidgetHostViewMac::OnSwapCompositorFrame(
   UpdateDisplayVSyncParameters();
 }
 
+void RenderWidgetHostViewMac::OnBeginFrameDidNotSwap(
+    const cc::BeginFrameAck& ack) {
+  browser_compositor_->OnBeginFrameDidNotSwap(ack);
+}
+
 void RenderWidgetHostViewMac::ClearCompositorFrame() {
   browser_compositor_->GetDelegatedFrameHost()->ClearDelegatedFrame();
 }
@@ -1904,11 +1909,21 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
   // Set the pointer type when we are receiving a NSMouseEntered event and the
   // following NSMouseExited event should have the same pointer type.
+  // For NSMouseExited and NSMouseEntered events, they do not have a subtype.
+  // We decide their pointer types by checking if we recevied a
+  // NSTabletProximity event.
   NSEventType type = [theEvent type];
-  if (type == NSMouseEntered) {
+  if (type == NSMouseEntered || type == NSMouseExited) {
     pointerType_ = isStylusEnteringProximity_
-                       ? blink::WebPointerProperties::PointerType::Pen
+                       ? pointerType_
                        : blink::WebPointerProperties::PointerType::Mouse;
+  } else {
+    NSEventSubtype subtype = [theEvent subtype];
+    // For other mouse events and touchpad events, the pointer type is mouse.
+    if (subtype != NSTabletPointEventSubtype &&
+        subtype != NSTabletProximityEventSubtype) {
+      pointerType_ = blink::WebPointerProperties::PointerType::Mouse;
+    }
   }
 
   if ([self shouldIgnoreMouseEvent:theEvent]) {
@@ -1981,8 +1996,14 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 }
 
 - (void)tabletEvent:(NSEvent*)theEvent {
-  if ([theEvent type] == NSTabletProximity)
+  if ([theEvent type] == NSTabletProximity) {
     isStylusEnteringProximity_ = [theEvent isEnteringProximity];
+    NSPointingDeviceType deviceType = [theEvent pointingDeviceType];
+    // For all tablet events, the pointer type will be pen or eraser.
+    pointerType_ = deviceType == NSEraserPointingDevice
+                       ? blink::WebPointerProperties::PointerType::Eraser
+                       : blink::WebPointerProperties::PointerType::Pen;
+  }
 }
 
 - (BOOL)performKeyEquivalent:(NSEvent*)theEvent {

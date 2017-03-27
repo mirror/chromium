@@ -55,9 +55,11 @@ if (is_win) {
 # Use a static library here because many test binaries depend on this but don't
 # require many files from it. This makes linking more efficient.
 split_static_library("browser") {
-  # Split into multiple static libraries on Windows official builds, where we
-  # run into a 2GB max size limit.
-  if (is_win && is_official_build) {
+  # Split into multiple static libraries on Windows builds. We have hit size
+  # limits on Windows official builds and on goma builds when symbol_level = 2
+  # is selected. Always splitting on Windows builds is simpler than trying to
+  # perfectly calculate the scenarios where it is required.
+  if (is_win) {
     split_count = 5
   } else {
     split_count = 1
@@ -778,6 +780,8 @@ split_static_library("browser") {
     "offline_items_collection/offline_content_aggregator_factory.h",
     "page_load_metrics/browser_page_track_decider.cc",
     "page_load_metrics/browser_page_track_decider.h",
+    "page_load_metrics/experiments/delay_navigation_throttle.cc",
+    "page_load_metrics/experiments/delay_navigation_throttle.h",
     "page_load_metrics/metrics_navigation_throttle.cc",
     "page_load_metrics/metrics_navigation_throttle.h",
     "page_load_metrics/metrics_web_contents_observer.cc",
@@ -1160,6 +1164,8 @@ split_static_library("browser") {
     "search_engines/ui_thread_search_terms_data.h",
     "search_engines/ui_thread_search_terms_data_android.cc",
     "search_engines/ui_thread_search_terms_data_android.h",
+    "sessions/chrome_serialized_navigation_driver.cc",
+    "sessions/chrome_serialized_navigation_driver.h",
     "sessions/chrome_tab_restore_service_client.cc",
     "sessions/chrome_tab_restore_service_client.h",
     "sessions/restore_on_startup_policy_handler.cc",
@@ -1275,8 +1281,12 @@ split_static_library("browser") {
     "sync/glue/sync_start_util.h",
     "sync/profile_sync_service_factory.cc",
     "sync/profile_sync_service_factory.h",
-    "sync/sessions/notification_service_sessions_router.cc",
-    "sync/sessions/notification_service_sessions_router.h",
+    "sync/sessions/sync_sessions_router_tab_helper.cc",
+    "sync/sessions/sync_sessions_router_tab_helper.h",
+    "sync/sessions/sync_sessions_web_contents_router.cc",
+    "sync/sessions/sync_sessions_web_contents_router.h",
+    "sync/sessions/sync_sessions_web_contents_router_factory.cc",
+    "sync/sessions/sync_sessions_web_contents_router_factory.h",
     "sync/supervised_user_signin_manager_wrapper.cc",
     "sync/supervised_user_signin_manager_wrapper.h",
     "sync/sync_startup_tracker.cc",
@@ -1362,6 +1372,8 @@ split_static_library("browser") {
     "win/jumplist.h",
     "win/jumplist_factory.cc",
     "win/jumplist_factory.h",
+    "win/jumplist_file_util.cc",
+    "win/jumplist_file_util.h",
     "win/jumplist_updater.cc",
     "win/jumplist_updater.h",
     "win/settings_app_monitor.cc",
@@ -1388,6 +1400,7 @@ split_static_library("browser") {
     "//components/payments/core",
     "//components/sync",
     "//content/public/browser",
+    "//ipc",
     "//sql",
   ]
   deps = [
@@ -1566,7 +1579,6 @@ split_static_library("browser") {
     "//gin:gin_features",
     "//google_apis",
     "//gpu/config",
-    "//ipc",
     "//media",
     "//media:media_features",
     "//media/midi",
@@ -1578,9 +1590,11 @@ split_static_library("browser") {
     "//ppapi/features",
     "//printing/features",
     "//rlz/features",
-    "//services/image_decoder/public/cpp",
-    "//services/preferences/public/cpp/",
-    "//services/preferences/public/interfaces/",
+    "//services/data_decoder/public/cpp",
+    "//services/identity:lib",
+    "//services/preferences/public/cpp",
+    "//services/preferences/public/cpp:service_main",
+    "//services/preferences/public/interfaces",
     "//services/service_manager/public/cpp",
     "//services/shape_detection/public/interfaces",
     "//skia",
@@ -1634,6 +1648,10 @@ split_static_library("browser") {
       "//chrome/browser/resources:component_extension_resources",
       "//net:net",
       "//ui/vector_icons",
+    ]
+    sources += [
+      "sync/sessions/browser_list_router_helper.cc",
+      "sync/sessions/browser_list_router_helper.h",
     ]
   }
 
@@ -2120,7 +2138,9 @@ split_static_library("browser") {
         "safe_browsing/incident_reporting/binary_integrity_analyzer.cc",
         "safe_browsing/incident_reporting/binary_integrity_analyzer.h",
         "safe_browsing/incident_reporting/binary_integrity_analyzer_mac.cc",
+        "safe_browsing/incident_reporting/binary_integrity_analyzer_mac.h",
         "safe_browsing/incident_reporting/binary_integrity_analyzer_win.cc",
+        "safe_browsing/incident_reporting/binary_integrity_analyzer_win.h",
         "safe_browsing/incident_reporting/binary_integrity_incident.cc",
         "safe_browsing/incident_reporting/binary_integrity_incident.h",
         "safe_browsing/incident_reporting/blacklist_load_analyzer.cc",
@@ -2592,6 +2612,7 @@ split_static_library("browser") {
       "android/chrome_backup_agent.cc",
       "android/chrome_backup_agent.h",
       "android/chrome_backup_watcher.cc",
+      "android/chrome_backup_watcher.h",
       "android/chrome_context_util.cc",
       "android/chrome_context_util.h",
       "android/chrome_feature_list.cc",
@@ -2686,6 +2707,7 @@ split_static_library("browser") {
       "android/devtools_server.cc",
       "android/devtools_server.h",
       "android/document/document_web_contents_delegate.cc",
+      "android/document/document_web_contents_delegate.h",
       "android/dom_distiller/distiller_ui_handle_android.cc",
       "android/dom_distiller/distiller_ui_handle_android.h",
       "android/download/android_download_manager_duplicate_infobar_delegate.cc",
@@ -2862,6 +2884,8 @@ split_static_library("browser") {
       "android/preferences/browser_prefs_android.h",
       "android/preferences/pref_service_bridge.cc",
       "android/preferences/pref_service_bridge.h",
+      "android/preferences/preferences_launcher.cc",
+      "android/preferences/preferences_launcher.h",
       "android/preferences/website_preference_bridge.cc",
       "android/preferences/website_preference_bridge.h",
       "android/profiles/profile_downloader_android.cc",
@@ -4091,7 +4115,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/page_info/CertificateChainHelper.java",
       "../android/java/src/org/chromium/chrome/browser/page_info/CertificateViewer.java",
       "../android/java/src/org/chromium/chrome/browser/page_info/ConnectionInfoPopup.java",
-      "../android/java/src/org/chromium/chrome/browser/page_info/WebsiteSettingsPopup.java",
+      "../android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
       "../android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
       "../android/java/src/org/chromium/chrome/browser/password_manager/AccountChooserDialog.java",
       "../android/java/src/org/chromium/chrome/browser/password_manager/AutoSigninFirstRunDialog.java",
@@ -4105,6 +4129,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/precache/PrecacheLauncher.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/LocationSettings.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+      "../android/java/src/org/chromium/chrome/browser/preferences/PreferencesLauncher.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileBridge.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/privacy/BrowsingDataCounterBridge.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/website/WebsitePreferenceBridge.java",
@@ -4294,8 +4319,8 @@ static_library("test_support") {
     "browsing_data/mock_browsing_data_media_license_helper.h",
     "browsing_data/mock_browsing_data_quota_helper.cc",
     "browsing_data/mock_browsing_data_quota_helper.h",
-    "browsing_data/mock_browsing_data_remover.cc",
-    "browsing_data/mock_browsing_data_remover.h",
+    "browsing_data/mock_browsing_data_remover_delegate.cc",
+    "browsing_data/mock_browsing_data_remover_delegate.h",
     "browsing_data/mock_browsing_data_service_worker_helper.cc",
     "browsing_data/mock_browsing_data_service_worker_helper.h",
     "download/download_test_file_activity_observer.cc",

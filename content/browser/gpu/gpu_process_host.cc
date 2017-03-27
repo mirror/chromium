@@ -71,7 +71,7 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/public/cpp/interface_registry.h"
 #include "services/service_manager/runner/common/client_util.h"
-#include "ui/base/ui_base_switches.h"
+#include "ui/display/display_switches.h"
 #include "ui/events/latency_info.h"
 #include "ui/gfx/switches.h"
 #include "ui/gl/gl_switches.h"
@@ -100,6 +100,10 @@
 
 #if defined(OS_MACOSX) || defined(OS_ANDROID)
 #include "gpu/ipc/common/gpu_surface_tracker.h"
+#endif
+
+#if defined(OS_MACOSX)
+#include "ui/base/ui_base_switches.h"
 #endif
 
 namespace content {
@@ -831,9 +835,8 @@ void GpuProcessHost::OnChannelEstablished(
       !GpuDataManagerImpl::GetInstance()->GpuAccessAllowed(nullptr)) {
     gpu_service_ptr_->CloseChannel(client_id);
     callback.Run(IPC::ChannelHandle(), gpu::GPUInfo());
-    RouteOnUIThread(
-        GpuHostMsg_OnLogMessage(logging::LOG_WARNING, "WARNING",
-                                "Hardware acceleration is unavailable."));
+    RecordLogMessage(logging::LOG_WARNING, "WARNING",
+                     "Hardware acceleration is unavailable.");
     return;
   }
 
@@ -1001,6 +1004,12 @@ void GpuProcessHost::StoreShaderToDisk(int32_t client_id,
   if (iter == client_id_to_shader_cache_.end())
     return;
   iter->second->Cache(GetShaderPrefixKey(shader) + ":" + key, shader);
+}
+
+void GpuProcessHost::RecordLogMessage(int32_t severity,
+                                      const std::string& header,
+                                      const std::string& message) {
+  GpuDataManagerImpl::GetInstance()->AddLogMessage(severity, header, message);
 }
 
 GpuProcessHost::GpuProcessKind GpuProcessHost::kind() {
@@ -1230,6 +1239,11 @@ void GpuProcessHost::LoadedShader(const std::string& key,
   UMA_HISTOGRAM_BOOLEAN("GPU.ShaderLoadPrefixOK", prefix_ok);
   if (prefix_ok)
     gpu_service_ptr_->LoadedShader(data);
+}
+
+ui::mojom::GpuService* GpuProcessHost::gpu_service() {
+  DCHECK(gpu_service_ptr_.is_bound());
+  return gpu_service_ptr_.get();
 }
 
 void GpuProcessHost::CreateChannelCache(int32_t client_id) {

@@ -23,6 +23,10 @@ console.assert = function(condition, object)
     InspectorTest.addResult(new Error(message).stack);
 }
 
+InspectorTest.markStep = function(title) {
+    InspectorTest.addResult('\nRunning: ' + title);
+}
+
 InspectorTest.startDumpingProtocolMessages = function()
 {
     Protocol.InspectorBackend.Connection.prototype._dumpProtocolMessage = testRunner.logToStderr.bind(testRunner);
@@ -983,7 +987,7 @@ SDK.targetManager.observeTargets({
         InspectorTest.securityOriginManager = SDK.SecurityOriginManager.fromTarget(target);
         InspectorTest.resourceTreeModel = SDK.ResourceTreeModel.fromTarget(target);
         InspectorTest.debuggerModel = target.model(SDK.DebuggerModel);
-        InspectorTest.runtimeModel = target.runtimeModel;
+        InspectorTest.runtimeModel = target.model(SDK.RuntimeModel);
         InspectorTest.domModel = SDK.DOMModel.fromTarget(target);
         InspectorTest.cssModel = target.model(SDK.CSSModel);
         InspectorTest.powerProfiler = target.powerProfiler;

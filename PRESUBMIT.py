@@ -340,6 +340,7 @@ _VALID_OS_MACROS = (
 
 _ANDROID_SPECIFIC_PYDEPS_FILES = [
     'build/android/test_runner.pydeps',
+    'build/android/test_wrapper/logdog_wrapper.pydeps',
     'net/tools/testserver/testserver.pydeps',
 ]
 
@@ -1666,10 +1667,13 @@ def _CheckAndroidCrLogUsage(input_api, output_api):
     - Are using a tag that is shorter than 20 characters (error)
   """
 
-  # Do not check format of logs in //chrome/android/webapk because
-  # //chrome/android/webapk cannot depend on //base
+  # Do not check format of logs in the given files
   cr_log_check_excluded_paths = [
+    # //chrome/android/webapk cannot depend on //base
     r"^chrome[\\\/]android[\\\/]webapk[\\\/].*",
+    # WebView license viewer code cannot depend on //base; used in stub APK.
+    r"^android_webview[\\\/]glue[\\\/]java[\\\/]src[\\\/]com[\\\/]android[\\\/]"
+    r"webview[\\\/]chromium[\\\/]License.*",
   ]
 
   cr_log_import_pattern = input_api.re.compile(

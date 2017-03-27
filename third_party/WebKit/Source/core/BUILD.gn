@@ -56,7 +56,7 @@ config("blink_core_pch") {
       # This is a string rather than a file GN knows about. It has to match
       # exactly what's in the /FI flag below, and what might appear in the
       # source code in quotes for an #include directive.
-      precompiled_header = rebase_path("win/Precompile-core.h", root_build_dir)
+      precompiled_header = rebase_path("Precompile-core.h", root_build_dir)
 
       # This is a file that GN will compile with the above header. It will be
       # implicitly added to the sources (potentially multiple times, with one
@@ -66,6 +66,8 @@ config("blink_core_pch") {
 
       # Force include the header.
       cflags = [ "/FI$precompiled_header" ]
+    } else if (is_mac) {
+      precompiled_source = "//third_party/WebKit/Source/core/Precompile-core.h"
     }
   }
 }
@@ -132,10 +134,6 @@ source_set("prerequisites") {
     "//third_party/WebKit/Source:inside_blink",
   ]
 
-  if (is_mac) {
-    public_configs += [ "//third_party/WebKit/Source:mac_precompiled_headers" ]
-  }
-
   if (use_openmax_dl_fft) {
     deps += [ "//third_party/openmax_dl/dl" ]
   }
@@ -154,6 +152,7 @@ component("core") {
   # If you create a new subdirectory, make a new BUILD file for that directory
   # and reference it in the deps below rather than adding the sources here.
   sources = [
+    "CoreExport.h",
     "CoreInitializer.cpp",
     "CoreInitializer.h",
   ]
@@ -178,6 +177,7 @@ component("core") {
     "//third_party/WebKit/Source/core/events",
     "//third_party/WebKit/Source/core/fileapi",
     "//third_party/WebKit/Source/core/frame",
+    "//third_party/WebKit/Source/core/geometry",
     "//third_party/WebKit/Source/core/html",
     "//third_party/WebKit/Source/core/imagebitmap",
     "//third_party/WebKit/Source/core/input",
@@ -1163,7 +1163,6 @@ source_set("unit_tests") {
     "dom/AttrTest.cpp",
     "dom/CSSSelectorWatchTest.cpp",
     "dom/DOMImplementationTest.cpp",
-    "dom/DOMMatrixTest.cpp",
     "dom/DocumentStatisticsCollectorTest.cpp",
     "dom/DocumentTest.cpp",
     "dom/DocumentUserGestureTokenTest.cpp",
@@ -1222,6 +1221,7 @@ source_set("unit_tests") {
     "frame/csp/ContentSecurityPolicyTest.cpp",
     "frame/csp/MediaListDirectiveTest.cpp",
     "frame/csp/SourceListDirectiveTest.cpp",
+    "geometry/DOMMatrixTest.cpp",
     "html/AutoplayUmaHelperTest.cpp",
     "html/FormDataTest.cpp",
     "html/HTMLDimensionTest.cpp",
@@ -1315,13 +1315,14 @@ source_set("unit_tests") {
     "layout/ng/ng_block_node_test.cc",
     "layout/ng/ng_constraint_space_builder_test.cc",
     "layout/ng/ng_constraint_space_test.cc",
+    "layout/ng/ng_inline_layout_algorithm_test.cc",
     "layout/ng/ng_inline_node_test.cc",
     "layout/ng/ng_layout_inline_items_builder_test.cc",
     "layout/ng/ng_length_utils_test.cc",
     "layout/ng/ng_min_max_content_size_test.cc",
     "layout/ng/ng_out_of_flow_layout_part_test.cc",
     "layout/ng/ng_relative_utils_test.cc",
-    "layout/ng/ng_text_layout_algorithm_test.cc",
+    "layout/ng/ng_space_utils_test.cc",
     "layout/shapes/BoxShapeTest.cpp",
     "layout/svg/LayoutSVGRootTest.cpp",
     "loader/DocumentLoadTimingTest.cpp",
@@ -1332,6 +1333,7 @@ source_set("unit_tests") {
     "loader/ProgressTrackerTest.cpp",
     "loader/TextResourceDecoderBuilderTest.cpp",
     "loader/ThreadableLoaderTest.cpp",
+    "loader/modulescript/ModuleScriptLoaderTest.cpp",
     "loader/resource/CSSStyleSheetResourceTest.cpp",
     "loader/resource/FontResourceTest.cpp",
     "loader/resource/ImageResourceTest.cpp",

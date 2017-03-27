@@ -114,7 +114,6 @@ bool isBackForwardLoadType(FrameLoadType type) {
 
 bool isReloadLoadType(FrameLoadType type) {
   return type == FrameLoadTypeReload ||
-         type == FrameLoadTypeReloadMainResource ||
          type == FrameLoadTypeReloadBypassingCache;
 }
 
@@ -578,7 +577,7 @@ static bool shouldSendFinishNotification(LocalFrame* frame) {
     return false;
 
   // Don't notify if the frame is being detached.
-  if (frame->isDetaching())
+  if (!frame->isAttached())
     return false;
 
   return true;
@@ -852,7 +851,7 @@ FrameLoadType FrameLoader::determineFrameLoadType(
     if (request.resourceRequest().httpMethod() == HTTPNames::POST)
       return FrameLoadTypeStandard;
     if (!request.originDocument())
-      return FrameLoadTypeReloadMainResource;
+      return FrameLoadTypeReload;
     return FrameLoadTypeReplaceCurrentItem;
   }
 

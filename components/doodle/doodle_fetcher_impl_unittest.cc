@@ -4,6 +4,7 @@
 
 #include "components/doodle/doodle_fetcher_impl.h"
 
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -12,6 +13,7 @@
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/test/mock_callback.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "components/google/core/browser/google_switches.h"
@@ -23,13 +25,17 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using testing::_;
+using testing::DoAll;
 using testing::Eq;
+using testing::SaveArg;
 
 namespace doodle {
 
 namespace {
 
-const char kDoodleConfigPath[] = "/async/ddljson";
+const char kDoodleConfigPath[] = "/async/ddljson?async=ntp:1,graybg:1";
+const char kDoodleConfigPathNoGrayBg[] = "/async/ddljson?async=ntp:1,graybg:0";
 
 // Required to instantiate a GoogleUrlTracker in UNIT_TEST_MODE.
 class GoogleURLTrackerClientStub : public GoogleURLTrackerClient {
@@ -47,12 +53,6 @@ class GoogleURLTrackerClientStub : public GoogleURLTrackerClient {
   DISALLOW_COPY_AND_ASSIGN(GoogleURLTrackerClientStub);
 };
 
-std::string Resolve(const std::string& relative_url) {
-  return GURL(GoogleURLTracker::kDefaultGoogleHomepage)
-      .Resolve(relative_url)
-      .spec();
-}
-
 void ParseJson(
     const std::string& json,
     const base::Callback<void(std::unique_ptr<base::Value> json)>& success,
@@ -68,23 +68,19 @@ void ParseJson(
 
 }  // namespace
 
-class DoodleFetcherImplTest : public testing::Test {
+class DoodleFetcherImplTestBase : public testing::Test {
  public:
-  DoodleFetcherImplTest()
-      : url_(GURL(GoogleURLTracker::kDefaultGoogleHomepage)),
-        google_url_tracker_(base::MakeUnique<GoogleURLTrackerClientStub>(),
+  DoodleFetcherImplTestBase(bool gray_background)
+      : google_url_tracker_(base::MakeUnique<GoogleURLTrackerClientStub>(),
                             GoogleURLTracker::UNIT_TEST_MODE),
         doodle_fetcher_(
             new net::TestURLRequestContextGetter(message_loop_.task_runner()),
             &google_url_tracker_,
-            base::Bind(ParseJson)) {}
+            base::Bind(ParseJson),
+            gray_background) {}
 
   void RespondWithData(const std::string& data) {
-    RespondToFetcherWithData(GetRunningFetcher(), data);
-  }
-
-  void RespondToFetcherWithData(net::TestURLFetcher* url_fetcher,
-                                const std::string& data) {
+    net::TestURLFetcher* url_fetcher = GetRunningFetcher();
     url_fetcher->set_status(net::URLRequestStatus());
     url_fetcher->set_response_code(net::HTTP_OK);
     url_fetcher->SetResponseString(data);
@@ -107,47 +103,35 @@ class DoodleFetcherImplTest : public testing::Test {
     return url_fetcher;
   }
 
-  // TODO(treib): Replace with a MockCallback plus testing::SaveArgs?
-  DoodleFetcherImpl::FinishedCallback CreateResponseSavingCallback(
-      DoodleState* state_out,
-      base::TimeDelta* time_to_live_out,
-      base::Optional<DoodleConfig>* config_out) {
-    return base::BindOnce(
-        [](DoodleState* state_out, base::TimeDelta* time_to_live_out,
-           base::Optional<DoodleConfig>* config_out, DoodleState state,
-           base::TimeDelta time_to_live,
-           const base::Optional<DoodleConfig>& config) {
-          if (state_out) {
-            *state_out = state;
-          }
-          if (time_to_live_out) {
-            *time_to_live_out = time_to_live;
-          }
-          if (config_out) {
-            *config_out = config;
-          }
-        },
-        state_out, time_to_live_out, config_out);
-  }
-
   DoodleFetcherImpl* doodle_fetcher() { return &doodle_fetcher_; }
 
   GURL GetGoogleBaseURL() { return google_url_tracker_.google_url(); }
 
+  GURL Resolve(const std::string& relative_url) {
+    return GetGoogleBaseURL().Resolve(relative_url);
+  }
+
  private:
   base::MessageLoop message_loop_;
-  GURL url_;
   net::TestURLFetcherFactory url_fetcher_factory_;
   GoogleURLTracker google_url_tracker_;
   DoodleFetcherImpl doodle_fetcher_;
 };
 
-TEST_F(DoodleFetcherImplTest, ReturnsFromFetchWithoutError) {
-  DoodleState state(DoodleState::NO_DOODLE);
-  base::Optional<DoodleConfig> response;
+class DoodleFetcherImplTest : public DoodleFetcherImplTestBase {
+ public:
+  DoodleFetcherImplTest()
+      : DoodleFetcherImplTestBase(/*gray_background=*/true) {}
+};
 
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, nullptr, &response));
+TEST_F(DoodleFetcherImplTest, ReturnsFromFetchWithoutError) {
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
+
+  DoodleState state = DoodleState::NO_DOODLE;
+  base::Optional<DoodleConfig> response;
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<2>(&response)));
   RespondWithData(R"json({"ddljson": {
         "time_to_live_ms":55000,
         "large_image": {"url":"/logos/doodles/2015/some.gif"}
@@ -158,11 +142,13 @@ TEST_F(DoodleFetcherImplTest, ReturnsFromFetchWithoutError) {
 }
 
 TEST_F(DoodleFetcherImplTest, ReturnsFrom404FetchWithError) {
-  DoodleState state(DoodleState::NO_DOODLE);
-  base::Optional<DoodleConfig> response;
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
 
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, nullptr, &response));
+  DoodleState state = DoodleState::NO_DOODLE;
+  base::Optional<DoodleConfig> response;
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<2>(&response)));
   RespondWithError(net::ERR_FILE_NOT_FOUND);
 
   EXPECT_THAT(state, Eq(DoodleState::DOWNLOAD_ERROR));
@@ -170,11 +156,13 @@ TEST_F(DoodleFetcherImplTest, ReturnsFrom404FetchWithError) {
 }
 
 TEST_F(DoodleFetcherImplTest, ReturnsErrorForInvalidJson) {
-  DoodleState state(DoodleState::NO_DOODLE);
-  base::Optional<DoodleConfig> response;
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
 
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, nullptr, &response));
+  DoodleState state = DoodleState::NO_DOODLE;
+  base::Optional<DoodleConfig> response;
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<2>(&response)));
   RespondWithData("}");
 
   EXPECT_THAT(state, Eq(DoodleState::PARSING_ERROR));
@@ -182,11 +170,13 @@ TEST_F(DoodleFetcherImplTest, ReturnsErrorForInvalidJson) {
 }
 
 TEST_F(DoodleFetcherImplTest, ReturnsErrorForIncompleteJson) {
-  DoodleState state(DoodleState::NO_DOODLE);
-  base::Optional<DoodleConfig> response;
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
 
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, nullptr, &response));
+  DoodleState state = DoodleState::NO_DOODLE;
+  base::Optional<DoodleConfig> response;
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<2>(&response)));
   RespondWithData("{}");
 
   EXPECT_THAT(state, Eq(DoodleState::PARSING_ERROR));
@@ -194,18 +184,20 @@ TEST_F(DoodleFetcherImplTest, ReturnsErrorForIncompleteJson) {
 }
 
 TEST_F(DoodleFetcherImplTest, ResponseContainsValidBaseInformation) {
-  DoodleState state(DoodleState::NO_DOODLE);
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
+
+  DoodleState state = DoodleState::NO_DOODLE;
   base::TimeDelta time_to_live;
   base::Optional<DoodleConfig> response;
-
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, &time_to_live, &response));
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<1>(&time_to_live),
+                      SaveArg<2>(&response)));
   RespondWithData(R"json()]}'{
       "ddljson": {
         "alt_text":"Mouseover Text",
         "doodle_type":"SIMPLE",
         "interactive_html":"\u003cstyle\u003e\u003c\/style\u003e",
-        "search_url":"/search?q\u003dtest",
         "target_url":"/search?q\u003dtest\u0026sa\u003dX\u0026ved\u003d0ahUKEw",
         "time_to_live_ms":55000,
         "large_image": {
@@ -217,9 +209,6 @@ TEST_F(DoodleFetcherImplTest, ResponseContainsValidBaseInformation) {
   ASSERT_TRUE(response.has_value());
   DoodleConfig config = response.value();
 
-  EXPECT_TRUE(config.search_url.is_valid());
-  EXPECT_THAT(config.search_url, Eq(Resolve("/search?q\u003dtest")));
-  EXPECT_TRUE(config.fullpage_interactive_url.is_empty());
   EXPECT_TRUE(config.target_url.is_valid());
   EXPECT_THAT(config.target_url,
               Eq(Resolve("/search?q\u003dtest\u0026sa\u003dX\u0026ved\u003d"
@@ -235,32 +224,16 @@ TEST_F(DoodleFetcherImplTest, ResponseContainsValidBaseInformation) {
   EXPECT_THAT(time_to_live, Eq(base::TimeDelta::FromMilliseconds(55000)));
 }
 
-TEST_F(DoodleFetcherImplTest, DoodleExpiresWithinThirtyDaysForTooLargeTTL) {
-  DoodleState state(DoodleState::NO_DOODLE);
-  base::TimeDelta time_to_live;
-  base::Optional<DoodleConfig> response;
-
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, &time_to_live, &response));
-  RespondWithData(R"json({"ddljson": {
-      "time_to_live_ms":5184000000,
-      "large_image": {"url":"/logos/doodles/2015/some.gif"}
-    }})json");  // 60 days
-
-  EXPECT_THAT(state, Eq(DoodleState::AVAILABLE));
-  EXPECT_TRUE(response.has_value());
-  EXPECT_THAT(time_to_live,
-              Eq(base::TimeDelta::FromMilliseconds(30ul * 24 * 60 * 60 *
-                                                   1000)));  // 30 days
-}
-
 TEST_F(DoodleFetcherImplTest, DoodleExpiresImmediatelyWithNegativeTTL) {
-  DoodleState state(DoodleState::NO_DOODLE);
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
+
+  DoodleState state = DoodleState::NO_DOODLE;
   base::TimeDelta time_to_live;
   base::Optional<DoodleConfig> response;
-
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, &time_to_live, &response));
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<1>(&time_to_live),
+                      SaveArg<2>(&response)));
   RespondWithData(R"json({"ddljson": {
       "time_to_live_ms":-1,
       "large_image": {"url":"/logos/doodles/2015/some.gif"}
@@ -272,12 +245,15 @@ TEST_F(DoodleFetcherImplTest, DoodleExpiresImmediatelyWithNegativeTTL) {
 }
 
 TEST_F(DoodleFetcherImplTest, DoodleExpiresImmediatelyWithoutValidTTL) {
-  DoodleState state(DoodleState::NO_DOODLE);
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
+
+  DoodleState state = DoodleState::NO_DOODLE;
   base::TimeDelta time_to_live;
   base::Optional<DoodleConfig> response;
-
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, &time_to_live, &response));
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<1>(&time_to_live),
+                      SaveArg<2>(&response)));
   RespondWithData(R"json({"ddljson": {
         "large_image": {"url":"/logos/doodles/2015/some.gif"}
       }})json");
@@ -288,11 +264,13 @@ TEST_F(DoodleFetcherImplTest, DoodleExpiresImmediatelyWithoutValidTTL) {
 }
 
 TEST_F(DoodleFetcherImplTest, ReturnsNoDoodleForMissingLargeImageUrl) {
-  DoodleState state(DoodleState::AVAILABLE);
-  base::Optional<DoodleConfig> response;
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
 
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, nullptr, &response));
+  DoodleState state = DoodleState::AVAILABLE;
+  base::Optional<DoodleConfig> response;
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<2>(&response)));
   RespondWithData(R"json({"ddljson": {
         "time_to_live_ms":55000,
         "large_image": {}
@@ -303,11 +281,13 @@ TEST_F(DoodleFetcherImplTest, ReturnsNoDoodleForMissingLargeImageUrl) {
 }
 
 TEST_F(DoodleFetcherImplTest, EmptyResponsesCausesNoDoodleState) {
-  DoodleState state(DoodleState::AVAILABLE);
-  base::Optional<DoodleConfig> response;
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
 
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, nullptr, &response));
+  DoodleState state = DoodleState::AVAILABLE;
+  base::Optional<DoodleConfig> response;
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<2>(&response)));
   RespondWithData("{\"ddljson\":{}}");
 
   EXPECT_THAT(state, Eq(DoodleState::NO_DOODLE));
@@ -315,11 +295,13 @@ TEST_F(DoodleFetcherImplTest, EmptyResponsesCausesNoDoodleState) {
 }
 
 TEST_F(DoodleFetcherImplTest, ResponseContainsExactlyTheSampleImages) {
-  DoodleState state(DoodleState::NO_DOODLE);
-  base::Optional<DoodleConfig> response;
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
 
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state, nullptr, &response));
+  DoodleState state = DoodleState::NO_DOODLE;
+  base::Optional<DoodleConfig> response;
+  EXPECT_CALL(callback, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state), SaveArg<2>(&response)));
   RespondWithData(R"json()]}'{
       "ddljson": {
         "time_to_live_ms":55000,
@@ -351,7 +333,7 @@ TEST_F(DoodleFetcherImplTest, ResponseContainsExactlyTheSampleImages) {
   DoodleConfig config = response.value();
 
   EXPECT_TRUE(config.large_image.url.is_valid());
-  EXPECT_THAT(config.large_image.url.spec(),
+  EXPECT_THAT(config.large_image.url,
               Eq(Resolve("/logos/doodles/2015/new-years-eve-2015-5985438795"
                          "8251-hp.gif")));
   EXPECT_THAT(config.large_image.width, Eq(489));
@@ -361,7 +343,7 @@ TEST_F(DoodleFetcherImplTest, ResponseContainsExactlyTheSampleImages) {
 
   ASSERT_TRUE(config.transparent_large_image.has_value());
   EXPECT_TRUE(config.transparent_large_image->url.is_valid());
-  EXPECT_THAT(config.transparent_large_image->url.spec(),
+  EXPECT_THAT(config.transparent_large_image->url,
               Eq(Resolve("/logos/doodles/2015/new-years-eve-2015-5985438795"
                          "8251-thp.png")));
   EXPECT_THAT(config.transparent_large_image->width, Eq(510));
@@ -371,7 +353,7 @@ TEST_F(DoodleFetcherImplTest, ResponseContainsExactlyTheSampleImages) {
 
   ASSERT_TRUE(config.large_cta_image.has_value());
   EXPECT_TRUE(config.large_cta_image->url.is_valid());
-  EXPECT_THAT(config.large_cta_image->url.spec(),
+  EXPECT_THAT(config.large_cta_image->url,
               Eq(Resolve("/logos/doodles/2015/new-years-eve-2015-5985438795"
                          "8251-cta.gif")));
   EXPECT_THAT(config.large_cta_image->width, Eq(489));
@@ -381,21 +363,27 @@ TEST_F(DoodleFetcherImplTest, ResponseContainsExactlyTheSampleImages) {
 }
 
 TEST_F(DoodleFetcherImplTest, RespondsToMultipleRequestsWithSameFetcher) {
-  DoodleState state1(DoodleState::NO_DOODLE);
-  DoodleState state2(DoodleState::NO_DOODLE);
-  base::Optional<DoodleConfig> response1;
-  base::Optional<DoodleConfig> response2;
-
   // Trigger two requests.
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state1, nullptr, &response1));
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback1;
+  doodle_fetcher()->FetchDoodle(callback1.Get());
   net::URLFetcher* first_created_fetcher = GetRunningFetcher();
-  doodle_fetcher()->FetchDoodle(
-      CreateResponseSavingCallback(&state2, nullptr, &response2));
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback2;
+  doodle_fetcher()->FetchDoodle(callback2.Get());
   net::URLFetcher* second_created_fetcher = GetRunningFetcher();
 
   // Expect that only one fetcher handles both requests.
   EXPECT_THAT(first_created_fetcher, Eq(second_created_fetcher));
+
+  // But both callbacks should get called.
+  DoodleState state1 = DoodleState::NO_DOODLE;
+  DoodleState state2 = DoodleState::NO_DOODLE;
+  base::Optional<DoodleConfig> response1;
+  base::Optional<DoodleConfig> response2;
+
+  EXPECT_CALL(callback1, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state1), SaveArg<2>(&response1)));
+  EXPECT_CALL(callback2, Run(_, _, _))
+      .WillOnce(DoAll(SaveArg<0>(&state2), SaveArg<2>(&response2)));
 
   RespondWithData(R"json({"ddljson": {
         "time_to_live_ms":55000,
@@ -410,22 +398,39 @@ TEST_F(DoodleFetcherImplTest, RespondsToMultipleRequestsWithSameFetcher) {
 }
 
 TEST_F(DoodleFetcherImplTest, ReceivesBaseUrlFromTracker) {
-  doodle_fetcher()->FetchDoodle(CreateResponseSavingCallback(
-      /*state=*/nullptr, nullptr, /*response=*/nullptr));
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
 
+  // TODO(treib,fhorschig): This doesn't really test anything useful, since the
+  // Google base URL is the default anyway. Find a way to set the base URL in
+  // the tracker.
   EXPECT_THAT(GetRunningFetcher()->GetOriginalURL(),
-              Eq(GetGoogleBaseURL().Resolve(kDoodleConfigPath)));
+              Eq(Resolve(kDoodleConfigPath)));
 }
 
 TEST_F(DoodleFetcherImplTest, OverridesBaseUrlWithCommandLineArgument) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
       switches::kGoogleBaseURL, "http://www.google.kz");
 
-  doodle_fetcher()->FetchDoodle(CreateResponseSavingCallback(
-      /*state=*/nullptr, nullptr, /*response=*/nullptr));
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
 
   EXPECT_THAT(GetRunningFetcher()->GetOriginalURL(),
               Eq(GURL("http://www.google.kz").Resolve(kDoodleConfigPath)));
+}
+
+class DoodleFetcherImplNoGrayBgTest : public DoodleFetcherImplTestBase {
+ public:
+  DoodleFetcherImplNoGrayBgTest()
+      : DoodleFetcherImplTestBase(/*gray_background=*/false) {}
+};
+
+TEST_F(DoodleFetcherImplNoGrayBgTest, PassesNoGrayBgParam) {
+  base::MockCallback<DoodleFetcherImpl::FinishedCallback> callback;
+  doodle_fetcher()->FetchDoodle(callback.Get());
+
+  EXPECT_THAT(GetRunningFetcher()->GetOriginalURL(),
+              Eq(Resolve(kDoodleConfigPathNoGrayBg)));
 }
 
 }  // namespace doodle

@@ -34,7 +34,6 @@
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/NodeRareData.h"
 #include "core/dom/NodeTraversal.h"
-#include "core/dom/NthIndexCache.h"
 #include "core/dom/SelectorQuery.h"
 #include "core/dom/StaticNodeList.h"
 #include "core/dom/StyleChangeReason.h"
@@ -229,9 +228,12 @@ void ContainerNode::insertNodeVector(const NodeVector& targets,
       notifyNodeInsertedInternal(child, postInsertionNotificationTargets);
     }
   }
-  for (const auto& targetNode : targets)
-    childrenChanged(
-        ChildrenChange::forInsertion(*targetNode, ChildrenChangeSourceAPI));
+  Node* unchangedPrevious =
+      targets.size() > 0 ? targets[0]->previousSibling() : nullptr;
+  for (const auto& targetNode : targets) {
+    childrenChanged(ChildrenChange::forInsertion(
+        *targetNode, unchangedPrevious, next, ChildrenChangeSourceAPI));
+  }
   for (const auto& descendant : postInsertionNotificationTargets) {
     if (descendant->isConnected())
       descendant->didNotifySubtreeInsertionsToDocument();
@@ -714,7 +716,8 @@ void ContainerNode::notifyNodeInserted(Node& root,
   NodeVector postInsertionNotificationTargets;
   notifyNodeInsertedInternal(root, postInsertionNotificationTargets);
 
-  childrenChanged(ChildrenChange::forInsertion(root, source));
+  childrenChanged(ChildrenChange::forInsertion(root, root.previousSibling(),
+                                               root.nextSibling(), source));
 
   for (const auto& targetNode : postInsertionNotificationTargets) {
     if (targetNode->isConnected())
@@ -1173,36 +1176,20 @@ unsigned ContainerNode::countChildren() const {
 
 Element* ContainerNode::querySelector(const AtomicString& selectors,
                                       ExceptionState& exceptionState) {
-  if (selectors.isEmpty()) {
-    exceptionState.throwDOMException(SyntaxError,
-                                     "The provided selector is empty.");
-    return nullptr;
-  }
-
   SelectorQuery* selectorQuery = document().selectorQueryCache().add(
       selectors, document(), exceptionState);
   if (!selectorQuery)
     return nullptr;
-
-  NthIndexCache nthIndexCache(document());
   return selectorQuery->queryFirst(*this);
 }
 
 StaticElementList* ContainerNode::querySelectorAll(
     const AtomicString& selectors,
     ExceptionState& exceptionState) {
-  if (selectors.isEmpty()) {
-    exceptionState.throwDOMException(SyntaxError,
-                                     "The provided selector is empty.");
-    return nullptr;
-  }
-
   SelectorQuery* selectorQuery = document().selectorQueryCache().add(
       selectors, document(), exceptionState);
   if (!selectorQuery)
     return nullptr;
-
-  NthIndexCache nthIndexCache(document());
   return selectorQuery->queryAll(*this);
 }
 

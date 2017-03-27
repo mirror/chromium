@@ -45,7 +45,6 @@
 #include "core/dom/ClientRectList.h"
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/DOMNodeIds.h"
-#include "core/dom/DOMPoint.h"
 #include "core/dom/DOMStringList.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -80,6 +79,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
+#include "core/geometry/DOMPoint.h"
 #include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLImageElement.h"
@@ -478,49 +478,6 @@ Node* Internals::parentTreeScope(Node* node) {
   DCHECK(node);
   const TreeScope* parentTreeScope = node->treeScope().parentTreeScope();
   return parentTreeScope ? &parentTreeScope->rootNode() : 0;
-}
-
-bool Internals::hasSelectorForIdInShadow(Element* host,
-                                         const AtomicString& idValue,
-                                         ExceptionState& exceptionState) {
-  DCHECK(host);
-  if (!host->shadow() || host->shadow()->isV1()) {
-    exceptionState.throwDOMException(
-        InvalidAccessError, "The host element does not have a v0 shadow.");
-    return false;
-  }
-
-  return host->shadow()->v0().ensureSelectFeatureSet().hasSelectorForId(
-      idValue);
-}
-
-bool Internals::hasSelectorForClassInShadow(Element* host,
-                                            const AtomicString& className,
-                                            ExceptionState& exceptionState) {
-  DCHECK(host);
-  if (!host->shadow() || host->shadow()->isV1()) {
-    exceptionState.throwDOMException(
-        InvalidAccessError, "The host element does not have a v0 shadow.");
-    return false;
-  }
-
-  return host->shadow()->v0().ensureSelectFeatureSet().hasSelectorForClass(
-      className);
-}
-
-bool Internals::hasSelectorForAttributeInShadow(
-    Element* host,
-    const AtomicString& attributeName,
-    ExceptionState& exceptionState) {
-  DCHECK(host);
-  if (!host->shadow() || host->shadow()->isV1()) {
-    exceptionState.throwDOMException(
-        InvalidAccessError, "The host element does not have a v0 shadow.");
-    return false;
-  }
-
-  return host->shadow()->v0().ensureSelectFeatureSet().hasSelectorForAttribute(
-      attributeName);
 }
 
 unsigned short Internals::compareTreeScopePosition(
@@ -2668,9 +2625,9 @@ void Internals::forceReload(bool bypassCache) {
   if (!frame())
     return;
 
-  frame()->reload(bypassCache ? FrameLoadTypeReloadBypassingCache
-                              : FrameLoadTypeReloadMainResource,
-                  ClientRedirectPolicy::NotClientRedirect);
+  frame()->reload(
+      bypassCache ? FrameLoadTypeReloadBypassingCache : FrameLoadTypeReload,
+      ClientRedirectPolicy::NotClientRedirect);
 }
 
 Node* Internals::visibleSelectionAnchorNode() {

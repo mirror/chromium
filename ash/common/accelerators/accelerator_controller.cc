@@ -175,7 +175,7 @@ void HandleCycleBackwardMRU(const ui::Accelerator& accelerator) {
   if (accelerator.key_code() == ui::VKEY_TAB)
     base::RecordAction(base::UserMetricsAction("Accel_PrevWindow_Tab"));
 
-  WmShell::Get()->window_cycle_controller()->HandleCycleWindow(
+  Shell::Get()->window_cycle_controller()->HandleCycleWindow(
       WindowCycleController::BACKWARD);
 }
 
@@ -183,7 +183,7 @@ void HandleCycleForwardMRU(const ui::Accelerator& accelerator) {
   if (accelerator.key_code() == ui::VKEY_TAB)
     base::RecordAction(base::UserMetricsAction("Accel_NextWindow_Tab"));
 
-  WmShell::Get()->window_cycle_controller()->HandleCycleWindow(
+  Shell::Get()->window_cycle_controller()->HandleCycleWindow(
       WindowCycleController::FORWARD);
 }
 
@@ -401,7 +401,7 @@ void HandleToggleFullscreen(const ui::Accelerator& accelerator) {
 
 void HandleToggleOverview() {
   base::RecordAction(base::UserMetricsAction("Accel_Overview_F5"));
-  WmShell::Get()->window_selector_controller()->ToggleOverview();
+  Shell::Get()->window_selector_controller()->ToggleOverview();
 }
 
 bool CanHandleWindowSnap() {
@@ -680,6 +680,13 @@ void AcceleratorController::UnregisterAll(ui::AcceleratorTarget* target) {
   accelerator_manager_->UnregisterAll(target);
 }
 
+bool AcceleratorController::IsActionForAcceleratorEnabled(
+    const ui::Accelerator& accelerator) const {
+  std::map<ui::Accelerator, AcceleratorAction>::const_iterator it =
+      accelerators_.find(accelerator);
+  return it != accelerators_.end() && CanPerformAction(it->second, accelerator);
+}
+
 bool AcceleratorController::Process(const ui::Accelerator& accelerator) {
   return accelerator_manager_->Process(accelerator);
 }
@@ -868,7 +875,7 @@ void AcceleratorController::RegisterDeprecatedAccelerators() {
 
 bool AcceleratorController::CanPerformAction(
     AcceleratorAction action,
-    const ui::Accelerator& accelerator) {
+    const ui::Accelerator& accelerator) const {
   if (accelerator.IsRepeat() && !repeatable_actions_.count(action))
     return false;
 
@@ -1181,7 +1188,7 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       HandleToggleSpokenFeedback();
       break;
     case TOGGLE_WIFI:
-      WmShell::Get()->system_tray_notifier()->NotifyRequestToggleWifi();
+      Shell::Get()->system_tray_notifier()->NotifyRequestToggleWifi();
       break;
     case VOLUME_DOWN:
       HandleVolumeDown(volume_controller_.get(), accelerator);
@@ -1218,7 +1225,7 @@ bool AcceleratorController::ShouldActionConsumeKeyEvent(
 }
 
 AcceleratorController::AcceleratorProcessingRestriction
-AcceleratorController::GetAcceleratorProcessingRestriction(int action) {
+AcceleratorController::GetAcceleratorProcessingRestriction(int action) const {
   WmShell* wm_shell = WmShell::Get();
   if (wm_shell->IsPinned() &&
       actions_allowed_in_pinned_mode_.find(action) ==

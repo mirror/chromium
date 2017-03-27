@@ -56,6 +56,7 @@ extern const char kCloudPrintFile[];
 extern const char kCloudPrintFileType[];
 extern const char kCloudPrintJobTitle[];
 extern const char kCloudPrintPrintTicket[];
+extern const char kCloudPrintServiceProcess[];
 extern const char kCloudPrintSetupProxy[];
 extern const char kCrashOnHangThreads[];
 extern const char kCreateBrowserOnStartupForTests[];
@@ -83,7 +84,6 @@ extern const char kDisableExtensionsFileAccessCheck[];
 extern const char kDisableExtensionsHttpThrottling[];
 extern const char kDisableHttp2[];
 extern const char kDisableMinimizeOnSecondLauncherItemClick[];
-extern const char kDisableNewBookmarkApps[];
 extern const char kDisableOfflineAutoReload[];
 extern const char kDisableOfflineAutoReloadVisibleOnly[];
 extern const char kDisablePermissionActionReporting[];
@@ -120,7 +120,6 @@ extern const char kEnableMaterialDesignPolicyPage[];
 extern const char kEnableNaCl[];
 extern const char kEnableNavigationTracing[];
 extern const char kEnableNetBenchmarking[];
-extern const char kEnableNewBookmarkApps[];
 extern const char kEnableOfflineAutoReload[];
 extern const char kEnableOfflineAutoReloadVisibleOnly[];
 extern const char kEnablePermissionActionReporting[];
@@ -220,7 +219,6 @@ extern const char kQuicVersion[];
 extern const char kRemoteDebuggingTargets[];
 extern const char kRestoreLastSession[];
 extern const char kSavePageAsMHTML[];
-extern const char kServiceProcess[];
 extern const char kShowAppList[];
 extern const char kSilentDebuggerExtensionAPI[];
 extern const char kSilentLaunch[];
@@ -280,6 +278,7 @@ extern const char kWebApkServerUrl[];
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
+extern const char kEnableLoginScreenApps[];
 extern const char kEnableNativeCups[];
 extern const char kCroshCommand[];
 #endif  // defined(OS_CHROMEOS)
@@ -339,6 +338,8 @@ extern const char kWindows8Search[];
 
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
 extern const char kMash[];
+extern const char kMus[];
+extern const char kMusConfig[];
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OFFICIAL_BUILD)

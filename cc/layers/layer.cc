@@ -591,6 +591,9 @@ void Layer::SetPosition(const gfx::PointF& position) {
       StickyPositionNodeData* sticky_data =
           property_trees->transform_tree.StickyPositionData(
               transform_tree_index());
+      // TODO(smcgruer): Pass main thread sticky-shifting offsets of
+      // non-promoted ancestors, or promote all ancestor sticky elements.
+      // See http://crbug.com/702229
       sticky_data->main_thread_offset =
           position.OffsetFromOrigin() -
           sticky_data->constraints.parent_relative_sticky_box_offset
@@ -1338,79 +1341,6 @@ void Layer::OnScrollOffsetAnimated(const gfx::ScrollOffset& scroll_offset) {
   // Do nothing. Scroll deltas will be sent from the compositor thread back
   // to the main thread in the same manner as during non-animated
   // compositor-driven scrolling.
-}
-
-void Layer::OnIsAnimatingChanged(const PropertyAnimationState& mask,
-                                 const PropertyAnimationState& state) {
-  DCHECK(layer_tree_host_);
-  PropertyTrees* property_trees = layer_tree_host_->property_trees();
-
-  for (int property = TargetProperty::FIRST_TARGET_PROPERTY;
-       property <= TargetProperty::LAST_TARGET_PROPERTY; ++property) {
-    if (!mask.currently_running[property] &&
-        !mask.potentially_animating[property])
-      continue;
-
-    switch (property) {
-      case TargetProperty::TRANSFORM:
-        if (TransformNode* transform_node =
-                property_trees->transform_tree.UpdateNodeFromOwningLayerId(
-                    id())) {
-          DCHECK_EQ(transform_node->id, transform_tree_index());
-          if (mask.currently_running[property])
-            transform_node->is_currently_animating =
-                state.currently_running[property];
-          if (mask.potentially_animating[property]) {
-            transform_node->has_potential_animation =
-                state.potentially_animating[property];
-            if (state.potentially_animating[property]) {
-              transform_node->has_only_translation_animations =
-                  HasOnlyTranslationTransforms();
-            } else {
-              transform_node->has_only_translation_animations = true;
-            }
-            property_trees->transform_tree.set_needs_update(true);
-          }
-        } else {
-          DCHECK(property_trees->needs_rebuild)
-              << "Attempting to animate non existent transform node";
-        }
-        break;
-      case TargetProperty::OPACITY:
-        if (EffectNode* effect_node =
-                property_trees->effect_tree.UpdateNodeFromOwningLayerId(id())) {
-          if (mask.currently_running[property])
-            effect_node->is_currently_animating_opacity =
-                state.currently_running[property];
-          if (mask.potentially_animating[property]) {
-            effect_node->has_potential_opacity_animation =
-                state.potentially_animating[property] ||
-                OpacityCanAnimateOnImplThread();
-            property_trees->effect_tree.set_needs_update(true);
-          }
-        } else {
-          DCHECK(property_trees->needs_rebuild)
-              << "Attempting to animate opacity on non existent effect node";
-        }
-        break;
-      case TargetProperty::FILTER:
-        if (EffectNode* effect_node =
-                property_trees->effect_tree.UpdateNodeFromOwningLayerId(id())) {
-          if (mask.currently_running[property])
-            effect_node->is_currently_animating_filter =
-                state.currently_running[property];
-          if (mask.potentially_animating[property])
-            effect_node->has_potential_filter_animation =
-                state.potentially_animating[property];
-        } else {
-          DCHECK(property_trees->needs_rebuild)
-              << "Attempting to animate filter on non existent effect node";
-        }
-        break;
-      default:
-        break;
-    }
-  }
 }
 
 bool Layer::HasTickingAnimationForTesting() const {

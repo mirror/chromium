@@ -44,11 +44,11 @@ TrayUser::TrayUser(SystemTray* system_tray, UserIndex index)
       layout_view_(nullptr),
       avatar_(nullptr),
       label_(nullptr) {
-  WmShell::Get()->system_tray_notifier()->AddUserObserver(this);
+  Shell::Get()->system_tray_notifier()->AddUserObserver(this);
 }
 
 TrayUser::~TrayUser() {
-  WmShell::Get()->system_tray_notifier()->RemoveUserObserver(this);
+  Shell::Get()->system_tray_notifier()->RemoveUserObserver(this);
 }
 
 TrayUser::TestState TrayUser::GetStateForTest() const {
@@ -245,8 +245,7 @@ void TrayUser::UpdateAvatarImage(LoginStatus status) {
   const mojom::UserSession* const user_session =
       session_controller->GetUserSession(user_index_);
   CHECK(user_session);
-  // TODO(xiyuan); HiDpi avatar support. http://crbug.com/702689
-  avatar_->SetImage(gfx::ImageSkia::CreateFrom1xBitmap(user_session->avatar),
+  avatar_->SetImage(user_session->avatar,
                     gfx::Size(kTrayItemSize, kTrayItemSize));
 
   // Unit tests might come here with no images for some users.

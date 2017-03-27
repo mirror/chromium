@@ -147,6 +147,15 @@ android_assets("assets") {
   ]
 }
 
+android_assets("stub_assets") {
+  sources = [
+    webview_license_path,
+  ]
+  deps = [
+    ":generate_webview_license_notice",
+  ]
+}
+
 action("generate_webview_license_notice") {
   script = "tools/webview_licenses.py"
   depfile = "$target_gen_dir/$target_name.d"
@@ -609,7 +618,6 @@ android_library("android_webview_java") {
     "java/src/org/chromium/android_webview/AwBrowserContext.java",
     "java/src/org/chromium/android_webview/AwBrowserProcess.java",
     "java/src/org/chromium/android_webview/AwContentVideoViewEmbedder.java",
-    "java/src/org/chromium/android_webview/AwContentViewClient.java",
     "java/src/org/chromium/android_webview/AwContents.java",
     "java/src/org/chromium/android_webview/AwContentsBackgroundThreadClient.java",
     "java/src/org/chromium/android_webview/AwContentsClient.java",
@@ -685,6 +693,7 @@ android_library("android_webview_java") {
     "//components/web_contents_delegate_android:web_contents_delegate_android_java",
     "//components/web_restrictions:web_restrictions_java",
     "//content/public/android:content_java",
+    "//device/gamepad:java",
     "//device/geolocation:geolocation_java",
     "//net/android:net_java",
     "//third_party/android_tools:android_support_annotations_java",

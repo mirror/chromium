@@ -17,6 +17,7 @@
 
 namespace ui {
 
+class EventSink;
 class ImageCursors;
 class LocatedEvent;
 class PlatformWindow;
@@ -32,6 +33,9 @@ class PlatformDisplayDefault : public PlatformDisplay,
                          const display::ViewportMetrics& metrics);
   ~PlatformDisplayDefault() override;
 
+  // EventSource::
+  EventSink* GetEventSink() override;
+
   // PlatformDisplay:
   void Init(PlatformDisplayDelegate* delegate) override;
   void SetViewportSize(const gfx::Size& size) override;
@@ -41,7 +45,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
   void SetCursorById(mojom::Cursor cursor) override;
   void UpdateTextInputState(const ui::TextInputState& state) override;
   void SetImeVisibility(bool visible) override;
-  bool UpdateViewportMetrics(const display::ViewportMetrics& metrics) override;
+  void UpdateViewportMetrics(const display::ViewportMetrics& metrics) override;
   gfx::AcceleratedWidget GetAcceleratedWidget() const override;
   FrameGenerator* GetFrameGenerator() override;
 
@@ -78,7 +82,6 @@ class PlatformDisplayDefault : public PlatformDisplay,
   display::ViewportMetrics metrics_;
   std::unique_ptr<ui::PlatformWindow> platform_window_;
   gfx::AcceleratedWidget widget_;
-  float init_device_scale_factor_;
 
   DISALLOW_COPY_AND_ASSIGN(PlatformDisplayDefault);
 };

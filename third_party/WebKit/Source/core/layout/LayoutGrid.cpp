@@ -437,7 +437,7 @@ LayoutUnit LayoutGrid::computeIntrinsicLogicalContentHeightUsing(
     return containingBlock()->availableLogicalHeight(
                ExcludeMarginBorderPadding) -
            borderAndPadding;
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return LayoutUnit();
 }
 
@@ -1376,7 +1376,7 @@ static LayoutUnit computeOverflowAlignmentOffset(OverflowAlignment overflow,
       return offset;
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return LayoutUnit();
 }
 
@@ -1739,7 +1739,7 @@ GridAxisPosition LayoutGrid::columnAxisPositionForChild(
       break;
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return GridAxisStart;
 }
 
@@ -1818,7 +1818,7 @@ GridAxisPosition LayoutGrid::rowAxisPositionForChild(
       break;
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return GridAxisStart;
 }
 
@@ -1860,7 +1860,7 @@ LayoutUnit LayoutGrid::columnAxisOffsetForChild(const LayoutBox& child) const {
     }
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return LayoutUnit();
 }
 
@@ -1902,7 +1902,7 @@ LayoutUnit LayoutGrid::rowAxisOffsetForChild(const LayoutBox& child) const {
     }
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return LayoutUnit();
 }
 
@@ -1921,7 +1921,7 @@ ContentPosition static resolveContentDistributionFallback(
       return ContentPositionNormal;
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return ContentPositionNormal;
 }
 
@@ -1956,7 +1956,7 @@ static ContentAlignmentData contentDistributionOffset(
       return {};
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return {};
 }
 
@@ -2032,7 +2032,7 @@ ContentAlignmentData LayoutGrid::computeContentPositionAndDistributionOffset(
       break;
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return {LayoutUnit(), LayoutUnit()};
 }
 

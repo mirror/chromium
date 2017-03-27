@@ -146,6 +146,11 @@ class EGLSyncControlVSyncProvider : public SyncControlVSyncProvider {
 
   ~EGLSyncControlVSyncProvider() override {}
 
+  static bool IsSupported() {
+    return SyncControlVSyncProvider::IsSupported() &&
+           g_egl_sync_control_supported;
+  }
+
  protected:
   bool GetSyncValues(int64_t* system_time,
                      int64_t* media_stream_counter,
@@ -271,7 +276,7 @@ bool ValidateEglConfig(EGLDisplay display,
   return true;
 }
 
-EGLConfig ChooseConfig(GLSurfaceFormat format) {
+EGLConfig ChooseConfig(GLSurfaceFormat format, bool surfaceless) {
   // Choose an EGL configuration.
   // On X this is only used for PBuffer surfaces.
 
@@ -299,9 +304,8 @@ EGLConfig ChooseConfig(GLSurfaceFormat format) {
   }
 #endif
 
-  EGLint surface_type = (format.IsSurfaceless()
-                            ? EGL_DONT_CARE
-                            : EGL_WINDOW_BIT | EGL_PBUFFER_BIT);
+  EGLint surface_type =
+      (surfaceless ? EGL_DONT_CARE : EGL_WINDOW_BIT | EGL_PBUFFER_BIT);
 
   for (auto renderable_type : renderable_types) {
     EGLint config_attribs_8888[] = {EGL_BUFFER_SIZE,
@@ -495,7 +499,7 @@ EGLDisplay GLSurfaceEGL::GetDisplay() {
 
 EGLConfig GLSurfaceEGL::GetConfig() {
   if (!config_) {
-    config_ = ChooseConfig(format_);
+    config_ = ChooseConfig(format_, IsSurfaceless());
   }
   return config_;
 }
@@ -808,7 +812,7 @@ bool NativeViewGLSurfaceEGL::Initialize(
 
   if (sync_provider)
     vsync_provider_ = std::move(sync_provider);
-  else if (g_egl_sync_control_supported)
+  else if (EGLSyncControlVSyncProvider::IsSupported())
     vsync_provider_.reset(new EGLSyncControlVSyncProvider(surface_));
   return true;
 }
@@ -1201,14 +1205,9 @@ PbufferGLSurfaceEGL::~PbufferGLSurfaceEGL() {
   Destroy();
 }
 
-SurfacelessEGL::SurfacelessEGL(const gfx::Size& size)
-    : size_(size) {
-  format_ = GLSurfaceFormat();
-  format_.SetIsSurfaceless();
-}
+SurfacelessEGL::SurfacelessEGL(const gfx::Size& size) : size_(size) {}
 
 bool SurfacelessEGL::Initialize(GLSurfaceFormat format) {
-  format.SetIsSurfaceless();
   format_ = format;
   return true;
 }

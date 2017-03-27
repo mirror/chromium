@@ -21,6 +21,7 @@
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
+#include "content/common/background_fetch/background_fetch_types.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/embedded_worker_start_params.h"
 #include "content/common/service_worker/service_worker_messages.h"
@@ -174,6 +175,24 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
     helper_->OnBackgroundFetchClickEventStub(tag, state, callback);
   }
 
+  void DispatchBackgroundFetchFailEvent(
+      const std::string& tag,
+      const std::vector<BackgroundFetchSettledFetch>& fetches,
+      const DispatchBackgroundFetchFailEventCallback& callback) override {
+    if (!helper_)
+      return;
+    helper_->OnBackgroundFetchFailEventStub(tag, fetches, callback);
+  }
+
+  void DispatchBackgroundFetchedEvent(
+      const std::string& tag,
+      const std::vector<BackgroundFetchSettledFetch>& fetches,
+      const DispatchBackgroundFetchedEventCallback& callback) override {
+    if (!helper_)
+      return;
+    helper_->OnBackgroundFetchedEventStub(tag, fetches, callback);
+  }
+
   void DispatchFetchEvent(int fetch_event_id,
                           const ServiceWorkerFetchRequest& request,
                           mojom::FetchEventPreloadHandlePtr preload_handle,
@@ -235,6 +254,8 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
       return;
     helper_->OnExtendableMessageEventStub(std::move(event), callback);
   }
+
+  void Ping(const PingCallback& callback) override { callback.Run(); }
 
  private:
   base::WeakPtr<EmbeddedWorkerTestHelper> helper_;
@@ -407,6 +428,22 @@ void EmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent(
     mojom::BackgroundFetchState state,
     const mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchClickEventCallback& callback) {
+  callback.Run(SERVICE_WORKER_OK, base::Time::Now());
+}
+
+void EmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
+    const std::string& tag,
+    const std::vector<BackgroundFetchSettledFetch>& fetches,
+    const mojom::ServiceWorkerEventDispatcher::
+        DispatchBackgroundFetchFailEventCallback& callback) {
+  callback.Run(SERVICE_WORKER_OK, base::Time::Now());
+}
+
+void EmbeddedWorkerTestHelper::OnBackgroundFetchedEvent(
+    const std::string& tag,
+    const std::vector<BackgroundFetchSettledFetch>& fetches,
+    const mojom::ServiceWorkerEventDispatcher::
+        DispatchBackgroundFetchedEventCallback& callback) {
   callback.Run(SERVICE_WORKER_OK, base::Time::Now());
 }
 
@@ -624,6 +661,27 @@ void EmbeddedWorkerTestHelper::OnBackgroundFetchClickEventStub(
       FROM_HERE,
       base::Bind(&EmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent,
                  AsWeakPtr(), tag, state, callback));
+}
+
+void EmbeddedWorkerTestHelper::OnBackgroundFetchFailEventStub(
+    const std::string& tag,
+    const std::vector<BackgroundFetchSettledFetch>& fetches,
+    const mojom::ServiceWorkerEventDispatcher::
+        DispatchBackgroundFetchFailEventCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::Bind(&EmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent,
+                 AsWeakPtr(), tag, fetches, callback));
+}
+
+void EmbeddedWorkerTestHelper::OnBackgroundFetchedEventStub(
+    const std::string& tag,
+    const std::vector<BackgroundFetchSettledFetch>& fetches,
+    const mojom::ServiceWorkerEventDispatcher::
+        DispatchBackgroundFetchedEventCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&EmbeddedWorkerTestHelper::OnBackgroundFetchedEvent,
+                            AsWeakPtr(), tag, fetches, callback));
 }
 
 void EmbeddedWorkerTestHelper::OnExtendableMessageEventStub(

@@ -130,7 +130,10 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
-  void UpdateController(const gvr::Vec3f& forward_vector);
+  void UpdateController();
+  void HandleControllerInput(const gvr::Vec3f& forward_vector);
+  void HandleControllerAppButtonActivity(
+      const gvr::Vec3f& controller_direction);
   void SendEventsToTarget(InputTarget input_target, int pixel_x, int pixel_y);
   void SendGesture(InputTarget input_target,
                    std::unique_ptr<blink::WebInputEvent> event);

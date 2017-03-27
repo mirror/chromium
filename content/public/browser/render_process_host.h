@@ -40,6 +40,7 @@ namespace content {
 class BrowserContext;
 class BrowserMessageFilter;
 class RenderProcessHostObserver;
+class RenderWidgetHost;
 class StoragePartition;
 struct GlobalRequestID;
 
@@ -197,12 +198,10 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // Adds a message filter to the IPC channel.
   virtual void AddFilter(BrowserMessageFilter* filter) = 0;
 
-  // Try to shutdown the associated render process as fast as possible
+  // Try to shutdown the associated render process as fast as possible.
   virtual bool FastShutdownForPageCount(size_t count) = 0;
 
-  // TODO(ananta)
-  // Revisit whether the virtual functions declared from here on need to be
-  // part of the interface.
+  // Sets whether input events should be ignored for this process.
   virtual void SetIgnoreInputEvents(bool ignore_input_events) = 0;
   virtual bool IgnoreInputEvents() const = 0;
 
@@ -214,6 +213,10 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // process from exiting.
   virtual void AddPendingView() = 0;
   virtual void RemovePendingView() = 0;
+
+  // Adds and removes the widgets owned by this process.
+  virtual void AddWidget(RenderWidgetHost* widget) = 0;
+  virtual void RemoveWidget(RenderWidgetHost* widget) = 0;
 
   // Sets a flag indicating that the process can be abnormally terminated.
   virtual void SetSuddenTerminationAllowed(bool allowed) = 0;

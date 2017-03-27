@@ -166,9 +166,7 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
-#include "device/battery/battery_monitor_impl.h"
 #include "device/gamepad/gamepad_monitor.h"
-#include "device/sensors/device_sensor_host.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gpu_switches.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
@@ -1210,9 +1208,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&IndexedDBDispatcherHost::AddBinding, indexed_db_factory_));
 
 #if defined(OS_ANDROID)
-  AddUIThreadInterface(registry.get(),
-                       GetGlobalJavaInterfaces()
-                           ->CreateInterfaceFactory<device::BatteryMonitor>());
   AddUIThreadInterface(
       registry.get(), GetGlobalJavaInterfaces()
                           ->CreateInterfaceFactory<
@@ -1226,8 +1221,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       GetGlobalJavaInterfaces()
           ->CreateInterfaceFactory<shape_detection::mojom::TextDetection>());
 #else
-  AddUIThreadInterface(
-      registry.get(), base::Bind(&device::BatteryMonitorImpl::Create));
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&ForwardShapeDetectionRequest<
@@ -1295,28 +1288,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(base::Bind(&hyphenation::HyphenationImpl::Create),
                          file_task_runner);
 #endif
-
-#if defined(OS_ANDROID)
-  // On Android the device sensors implementations need to run on the UI thread
-  // to communicate to Java.
-  AddUIThreadInterface(registry.get(),
-                       base::Bind(&device::DeviceLightHost::Create));
-  AddUIThreadInterface(registry.get(),
-                       base::Bind(&device::DeviceMotionHost::Create));
-  AddUIThreadInterface(registry.get(),
-                       base::Bind(&device::DeviceOrientationHost::Create));
-  AddUIThreadInterface(
-      registry.get(),
-      base::Bind(&device::DeviceOrientationAbsoluteHost::Create));
-#else
-  // On platforms other than Android the device sensors implementations run on
-  // the IO thread.
-  registry->AddInterface(base::Bind(&device::DeviceLightHost::Create));
-  registry->AddInterface(base::Bind(&device::DeviceMotionHost::Create));
-  registry->AddInterface(base::Bind(&device::DeviceOrientationHost::Create));
-  registry->AddInterface(
-      base::Bind(&device::DeviceOrientationAbsoluteHost::Create));
-#endif  // defined(OS_ANDROID)
 
   registry->AddInterface(base::Bind(&device::GamepadMonitor::Create));
 
@@ -1885,6 +1856,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
 #if BUILDFLAG(ENABLE_WEBRTC)
     switches::kDisableWebRtcHWDecoding,
     switches::kDisableWebRtcHWEncoding,
+    switches::kEnableWebRtcSrtpAesGcm,
     switches::kEnableWebRtcStunOrigin,
     switches::kEnforceWebRtcIPPermissionCheck,
     switches::kForceWebRtcIPHandlingPolicy,
@@ -2185,7 +2157,13 @@ bool RenderProcessHostImpl::HasConnection() const {
 }
 
 void RenderProcessHostImpl::SetIgnoreInputEvents(bool ignore_input_events) {
+  if (ignore_input_events == ignore_input_events_)
+    return;
+
   ignore_input_events_ = ignore_input_events;
+  for (auto* widget : widgets_) {
+    widget->ProcessIgnoreInputEventsChanged(ignore_input_events);
+  }
 }
 
 bool RenderProcessHostImpl::IgnoreInputEvents() const {
@@ -2296,6 +2274,14 @@ void RenderProcessHostImpl::AddPendingView() {
 void RenderProcessHostImpl::RemovePendingView() {
   DCHECK(pending_views_);
   pending_views_--;
+}
+
+void RenderProcessHostImpl::AddWidget(RenderWidgetHost* widget) {
+  widgets_.insert(static_cast<RenderWidgetHostImpl*>(widget));
+}
+
+void RenderProcessHostImpl::RemoveWidget(RenderWidgetHost* widget) {
+  widgets_.erase(static_cast<RenderWidgetHostImpl*>(widget));
 }
 
 void RenderProcessHostImpl::SetSuddenTerminationAllowed(bool enabled) {
@@ -3070,15 +3056,9 @@ void RenderProcessHostImpl::GetAudioOutputControllers(
 
 void RenderProcessHostImpl::RecomputeAndUpdateWebKitPreferences() {
   // We are updating all widgets including swapped out ones.
-  std::unique_ptr<RenderWidgetHostIterator> widgets(
-      RenderWidgetHostImpl::GetAllRenderWidgetHosts());
-  while (RenderWidgetHost* widget = widgets->GetNextHost()) {
+  for (auto* widget : widgets_) {
     RenderViewHost* rvh = RenderViewHost::From(widget);
     if (!rvh)
-      continue;
-
-    // Skip widgets in other processes.
-    if (rvh->GetProcess()->GetID() != GetID())
       continue;
 
     rvh->OnWebkitPreferencesChanged();

@@ -457,7 +457,7 @@ bool LayoutBlock::updateLogicalWidthAndColumnWidth() {
 }
 
 void LayoutBlock::layoutBlock(bool) {
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   clearNeedsLayout();
 }
 
@@ -876,32 +876,6 @@ void LayoutBlock::paintChildren(const PaintInfo& paintInfo,
 void LayoutBlock::paintObject(const PaintInfo& paintInfo,
                               const LayoutPoint& paintOffset) const {
   BlockPainter(*this).paintObject(paintInfo, paintOffset);
-}
-
-bool LayoutBlock::isSelectionRoot() const {
-  if (isPseudoElement())
-    return false;
-  ASSERT(node() || isAnonymous());
-
-  // FIXME: Eventually tables should have to learn how to fill gaps between
-  // cells, at least in simple non-spanning cases.
-  if (isTable())
-    return false;
-
-  if (isBody() || isDocumentElement() || hasOverflowClip() || isPositioned() ||
-      isFloating() || isTableCell() || isInlineBlockOrInlineTable() ||
-      hasTransformRelatedProperty() || hasReflection() || hasMask() ||
-      isWritingModeRoot() || isLayoutFlowThread() ||
-      isFlexItemIncludingDeprecated())
-    return true;
-
-  if (view() && view()->selectionStart()) {
-    Node* startElement = view()->selectionStart()->node();
-    if (startElement && rootEditableElement(*startElement) == node())
-      return true;
-  }
-
-  return false;
 }
 
 LayoutUnit LayoutBlock::blockDirectionOffset(
@@ -1961,7 +1935,7 @@ bool LayoutBlock::hasMarginAfterQuirk(const LayoutBox* child) const {
 }
 
 const char* LayoutBlock::name() const {
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return "LayoutBlock";
 }
 

@@ -29,7 +29,6 @@ using ntp_snippets::ContentSuggestion;
 using ntp_snippets::ContentSuggestionsNotificationHelper;
 using ntp_snippets::ContentSuggestionsService;
 using ntp_snippets::KnownCategories;
-using params::ntp_snippets::kNotificationsAlwaysNotifyParam;
 using params::ntp_snippets::kNotificationsDailyLimit;
 using params::ntp_snippets::kNotificationsDefaultDailyLimit;
 using params::ntp_snippets::kNotificationsDefaultPriority;
@@ -105,8 +104,7 @@ void ConsumeQuota(PrefService* prefs) {
 class ContentSuggestionsNotifierService::NotifyingObserver
     : public ContentSuggestionsService::Observer {
  public:
-  NotifyingObserver(ContentSuggestionsService* service,
-                    Profile* profile)
+  NotifyingObserver(ContentSuggestionsService* service, Profile* profile)
       : service_(service),
         profile_(profile),
         app_status_listener_(base::Bind(&NotifyingObserver::AppStatusChanged,
@@ -177,16 +175,6 @@ class ContentSuggestionsNotifierService::NotifyingObserver
  private:
   const ContentSuggestion* GetSuggestionToNotifyAbout(Category category) {
     const auto& suggestions = service_->GetSuggestionsForCategory(category);
-    // TODO(sfiera): replace with AlwaysNotifyAboutContentSuggestions().
-    if (variations::GetVariationParamByFeatureAsBool(
-            kNotificationsFeature, kNotificationsAlwaysNotifyParam, false)) {
-      if (category.IsKnownCategory(KnownCategories::ARTICLES) &&
-          !suggestions.empty()) {
-        return &suggestions[0];
-      }
-      return nullptr;
-    }
-
     for (const ContentSuggestion& suggestion : suggestions) {
       if (suggestion.notification_extra()) {
         return &suggestion;

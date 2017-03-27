@@ -47,12 +47,12 @@ struct EditorField {
   enum class ControlType : int { TEXTFIELD, COMBOBOX };
 
   EditorField(autofill::ServerFieldType type,
-              const base::string16& label,
+              base::string16 label,
               LengthHint length_hint,
               bool required,
               ControlType control_type = ControlType::TEXTFIELD)
       : type(type),
-        label(label),
+        label(std::move(label)),
         length_hint(length_hint),
         required(required),
         control_type(control_type) {}
@@ -64,9 +64,9 @@ struct EditorField {
   };
 
   // Data type in the field.
-  const autofill::ServerFieldType type;
+  autofill::ServerFieldType type;
   // Label to be shown alongside the field.
-  const base::string16 label;
+  base::string16 label;
   // Hint about the length of this field's contents.
   LengthHint length_hint;
   // Whether the field is required.
@@ -94,9 +94,6 @@ class EditorViewController : public PaymentRequestSheetController,
                        PaymentRequestDialogView* dialog);
   ~EditorViewController() override;
 
-  // PaymentRequestSheetController:
-  std::unique_ptr<views::View> CreateView() override;
-
   // Will display |error_message| alongside the input field represented by
   // |field|.
   void DisplayErrorMessageForField(const EditorField& field,
@@ -107,8 +104,6 @@ class EditorViewController : public PaymentRequestSheetController,
 
  protected:
   virtual std::unique_ptr<views::View> CreateHeaderView() = 0;
-  // Returns the resource id of the view header title.
-  virtual int GetViewHeaderTitleId() const = 0;
   // Returns the field definitions used to build the UI.
   virtual std::vector<EditorField> GetFieldDefinitions() = 0;
   // Validates the data entered and attempts to save; returns true on success.
@@ -122,7 +117,17 @@ class EditorViewController : public PaymentRequestSheetController,
 
   // PaymentRequestSheetController;
   std::unique_ptr<views::Button> CreatePrimaryButton() override;
+  void FillContentView(views::View* content_view) override;
   std::unique_ptr<views::View> CreateExtraFooterView() override;
+
+  // views::ComboboxListener:
+  void OnPerformAction(views::Combobox* combobox) override;
+
+  // Update the editor view by removing all it's child views and recreating
+  // the input fields returned by GetFieldDefinitions. Note that
+  // CreateEditorView MUST have been called at least once before calling
+  // UpdateEditorView.
+  virtual void UpdateEditorView();
 
  private:
   // PaymentRequestSheetController:
@@ -131,9 +136,6 @@ class EditorViewController : public PaymentRequestSheetController,
   // views::TextfieldController:
   void ContentsChanged(views::Textfield* sender,
                        const base::string16& new_contents) override;
-
-  // views::ComboboxListener:
-  void OnPerformAction(views::Combobox* combobox) override;
 
   // Creates the whole editor view to go within the editor dialog. It
   // encompasses all the input fields created by CreateInputField().

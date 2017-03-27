@@ -17,6 +17,7 @@
 #include "base/sys_info.h"
 #include "gpu/config/gpu_blacklist.h"
 #include "gpu/config/gpu_control_list_jsons.h"
+#include "gpu/config/gpu_crash_keys.h"
 #include "gpu/config/gpu_driver_bug_list.h"
 #include "gpu/config/gpu_feature_type.h"
 #include "gpu/config/gpu_finch_features.h"
@@ -77,10 +78,10 @@ GpuFeatureStatus GetGpuRasterizationFeatureStatus(
     return kGpuFeatureStatusBlacklisted;
 
 #if defined(OS_ANDROID)
-  // We can't use GPU rasterization on low-end devices, because the Ganesh
-  // cache would consume too much memory.
-  if (base::SysInfo::IsLowEndDevice())
-    return kGpuFeatureStatusBlacklisted;
+  // GPU Raster is always enabled on non-low-end Android. On low-end, it is
+  // controlled by a Finch experiment.
+  if (!base::SysInfo::IsLowEndDevice())
+    return kGpuFeatureStatusEnabled;
 #endif  // defined(OS_ANDROID)
 
   // Gpu Rasterization on platforms that are not fully enabled is controlled by
@@ -92,24 +93,6 @@ GpuFeatureStatus GetGpuRasterizationFeatureStatus(
 }
 
 }  // namespace anonymous
-
-namespace crash_keys {
-
-#if !defined(OS_ANDROID)
-const char kGPUVendorID[] = "gpu-venid";
-const char kGPUDeviceID[] = "gpu-devid";
-#endif
-const char kGPUDriverVersion[] = "gpu-driver";
-const char kGPUPixelShaderVersion[] = "gpu-psver";
-const char kGPUVertexShaderVersion[] = "gpu-vsver";
-#if defined(OS_MACOSX)
-const char kGPUGLVersion[] = "gpu-glver";
-#elif defined(OS_POSIX)
-const char kGPUVendor[] = "gpu-gl-vendor";
-const char kGPURenderer[] = "gpu-gl-renderer";
-#endif
-
-}  // namespace crash_keys
 
 void ApplyGpuDriverBugWorkarounds(const GPUInfo& gpu_info,
                                   base::CommandLine* command_line) {

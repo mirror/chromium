@@ -871,8 +871,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
 
 // This test makes sure browser correctly tracks focused editable element inside
 // each RenderFrameHost.
+// Test is flaky. crbug.com/705203
 IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
-                       TrackingFocusedElementForAllFrames) {
+                       DISABLED_TrackingFocusedElementForAllFrames) {
   CreateIframePage("a(a, b(a))");
   std::vector<content::RenderFrameHost*> frames{
       GetFrame(IndexVector{}), GetFrame(IndexVector{0}),
@@ -912,8 +913,15 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
 // focused. Then the <input> inside frame is both focused and blurred and  and
 // in both cases the test verifies that WebContents is aware whether or not a
 // focused editable element exists on the page.
+// Test is flaky on ChromeOS. crbug.com/705289
+#if defined(OS_CHROMEOS)
+#define MAYBE_TrackPageFocusEditableElement \
+  DISABLED_TrackPageFocusEditableElement
+#else
+#define MAYBE_TrackPageFocusEditableElement TrackPageFocusEditableElement
+#endif
 IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
-                       TrackPageFocusEditableElement) {
+                       MAYBE_TrackPageFocusEditableElement) {
   CreateIframePage("a(a, b(a))");
   std::vector<content::RenderFrameHost*> frames{
       GetFrame(IndexVector{}), GetFrame(IndexVector{0}),
@@ -947,8 +955,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
 // WebContents knows about the focused editable element. Then it asks the
 // WebContents to clear focused element and verifies that there is no longer
 // a focused editable element on the page.
+// Test is flaky. crbug.com/705203
 IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
-                       ClearFocusedElementOnPage) {
+                       DISABLED_ClearFocusedElementOnPage) {
   CreateIframePage("a(a, b(a))");
   std::vector<content::RenderFrameHost*> frames{
       GetFrame(IndexVector{}), GetFrame(IndexVector{0}),

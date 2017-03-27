@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/debug/crash_logging.h"
-#include "base/debug/dump_without_crashing.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -1017,14 +1016,15 @@ void ServiceWorkerDispatcherHost::OnProviderCreated(
     if (navigation_handle_core != nullptr)
       provider_host = navigation_handle_core->RetrievePreCreatedHost();
 
-    // If no host is found, the navigation has been cancelled in the meantime.
-    // Just return as the navigation will be stopped in the renderer as well.
+    // If no host is found, create one.
     if (provider_host == nullptr) {
-      // TODO(clamy): remove this Dump when the root cause for crbug.com/703972
-      // has been found.
-      base::debug::DumpWithoutCrashing();
+      GetContext()->AddProviderHost(
+          ServiceWorkerProviderHost::Create(render_process_id_, std::move(info),
+                                            GetContext()->AsWeakPtr(), this));
       return;
     }
+
+    // Otherwise, completed the initialization of the pre-created host.
     DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_WINDOW, info.type);
     provider_host->CompleteNavigationInitialized(render_process_id_,
                                                  info.route_id, this);

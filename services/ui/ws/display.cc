@@ -260,19 +260,13 @@ ServerWindow* Display::GetRootWindow() {
   return root_.get();
 }
 
+EventSink* Display::GetEventSink() {
+  return this;
+}
+
 void Display::OnAcceleratedWidgetAvailable() {
   display_manager()->OnDisplayAcceleratedWidgetAvailable(this);
   InitWindowManagerDisplayRoots();
-}
-
-void Display::OnEvent(const ui::Event& event) {
-  WindowManagerDisplayRoot* display_root = GetActiveWindowManagerDisplayRoot();
-  if (display_root)
-    display_root->window_manager_state()->ProcessEvent(event, GetId());
-  window_server_
-      ->GetUserActivityMonitorForUser(
-          window_server_->user_id_tracker()->active_id())
-      ->OnUserActivity();
 }
 
 void Display::OnNativeCaptureLost() {
@@ -283,6 +277,8 @@ void Display::OnNativeCaptureLost() {
 
 void Display::OnViewportMetricsChanged(
     const display::ViewportMetrics& metrics) {
+  platform_display_->UpdateViewportMetrics(metrics);
+
   if (root_->bounds().size() == metrics.bounds_in_pixels.size())
     return;
 
@@ -380,6 +376,20 @@ void Display::OnWindowManagerWindowTreeFactoryReady(
     WindowManagerWindowTreeFactory* factory) {
   if (!binding_)
     CreateWindowManagerDisplayRootFromFactory(factory);
+}
+
+EventDispatchDetails Display::OnEventFromSource(Event* event) {
+  WindowManagerDisplayRoot* display_root = GetActiveWindowManagerDisplayRoot();
+  if (display_root) {
+    WindowManagerState* wm_state = display_root->window_manager_state();
+    wm_state->ProcessEvent(*event, GetId());
+  }
+
+  UserActivityMonitor* activity_monitor =
+      window_server_->GetUserActivityMonitorForUser(
+          window_server_->user_id_tracker()->active_id());
+  activity_monitor->OnUserActivity();
+  return EventDispatchDetails();
 }
 
 }  // namespace ws

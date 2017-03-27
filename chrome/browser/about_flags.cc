@@ -27,6 +27,7 @@
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "chrome/browser/ntp_snippets/ntp_snippets_features.h"
+#include "chrome/browser/page_load_metrics/experiments/delay_navigation_throttle.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
 #include "chrome/common/channel_info.h"
@@ -159,64 +160,54 @@ const FeatureEntry::Choice kTouchEventFeatureDetectionChoices[] = {
 
 #if defined(USE_AURA)
 const FeatureEntry::Choice kOverscrollHistoryNavigationChoices[] = {
-  { IDS_GENERIC_EXPERIMENT_CHOICE_ENABLED, "", "" },
-  { IDS_GENERIC_EXPERIMENT_CHOICE_DISABLED,
-    switches::kOverscrollHistoryNavigation,
-    "0" },
-  { IDS_OVERSCROLL_HISTORY_NAVIGATION_SIMPLE_UI,
-    switches::kOverscrollHistoryNavigation,
-    "2" }
-};
+    {IDS_GENERIC_EXPERIMENT_CHOICE_ENABLED, "", ""},
+    {IDS_GENERIC_EXPERIMENT_CHOICE_DISABLED,
+     switches::kOverscrollHistoryNavigation, "0"},
+    {IDS_FLAGS_OVERSCROLL_HISTORY_NAVIGATION_SIMPLE_UI,
+     switches::kOverscrollHistoryNavigation, "2"}};
 
 const FeatureEntry::Choice kOverscrollStartThresholdChoices[] = {
-  { IDS_GENERIC_EXPERIMENT_CHOICE_DEFAULT, "", "" },
-  { IDS_OVERSCROLL_START_THRESHOLD_133_PERCENT,
-    switches::kOverscrollStartThreshold,
-    "133" },
-  { IDS_OVERSCROLL_START_THRESHOLD_166_PERCENT,
-    switches::kOverscrollStartThreshold,
-    "166" },
-  { IDS_OVERSCROLL_START_THRESHOLD_200_PERCENT,
-    switches::kOverscrollStartThreshold,
-    "200" }
-};
+    {IDS_GENERIC_EXPERIMENT_CHOICE_DEFAULT, "", ""},
+    {IDS_FLAGS_OVERSCROLL_START_THRESHOLD_133_PERCENT,
+     switches::kOverscrollStartThreshold, "133"},
+    {IDS_FLAGS_OVERSCROLL_START_THRESHOLD_166_PERCENT,
+     switches::kOverscrollStartThreshold, "166"},
+    {IDS_FLAGS_OVERSCROLL_START_THRESHOLD_200_PERCENT,
+     switches::kOverscrollStartThreshold, "200"}};
 #endif  // USE_AURA
 
 const FeatureEntry::Choice kTouchTextSelectionStrategyChoices[] = {
-  { IDS_GENERIC_EXPERIMENT_CHOICE_DEFAULT, "", "" },
-  { IDS_TOUCH_SELECTION_STRATEGY_CHARACTER,
-    switches::kTouchTextSelectionStrategy,
-    "character" },
-  { IDS_TOUCH_SELECTION_STRATEGY_DIRECTION,
-    switches::kTouchTextSelectionStrategy,
-    "direction" }
-};
+    {IDS_GENERIC_EXPERIMENT_CHOICE_DEFAULT, "", ""},
+    {IDS_FLAGS_TOUCH_SELECTION_STRATEGY_CHARACTER,
+     switches::kTouchTextSelectionStrategy, "character"},
+    {IDS_FLAGS_TOUCH_SELECTION_STRATEGY_DIRECTION,
+     switches::kTouchTextSelectionStrategy, "direction"}};
 
 const FeatureEntry::Choice kTraceUploadURL[] = {
-  { IDS_GENERIC_EXPERIMENT_CHOICE_DISABLED, "", "" },
-  { IDS_TRACE_UPLOAD_URL_CHOICE_OTHER, switches::kTraceUploadURL,
-    "https://performance-insights.appspot.com/upload?tags=flags,Other"},
-  { IDS_TRACE_UPLOAD_URL_CHOICE_EMLOADING, switches::kTraceUploadURL,
-    "https://performance-insights.appspot.com/upload?tags=flags,emloading" },
-  { IDS_TRACE_UPLOAD_URL_CHOICE_QA, switches::kTraceUploadURL,
-    "https://performance-insights.appspot.com/upload?tags=flags,QA" },
-  { IDS_TRACE_UPLOAD_URL_CHOICE_TESTING, switches::kTraceUploadURL,
-    "https://performance-insights.appspot.com/upload?tags=flags,TestingTeam" }
-};
+    {IDS_GENERIC_EXPERIMENT_CHOICE_DISABLED, "", ""},
+    {IDS_FLAGS_TRACE_UPLOAD_URL_CHOICE_OTHER, switches::kTraceUploadURL,
+     "https://performance-insights.appspot.com/upload?tags=flags,Other"},
+    {IDS_FLAGS_TRACE_UPLOAD_URL_CHOICE_EMLOADING, switches::kTraceUploadURL,
+     "https://performance-insights.appspot.com/upload?tags=flags,emloading"},
+    {IDS_FLAGS_TRACE_UPLOAD_URL_CHOICE_QA, switches::kTraceUploadURL,
+     "https://performance-insights.appspot.com/upload?tags=flags,QA"},
+    {IDS_FLAGS_TRACE_UPLOAD_URL_CHOICE_TESTING, switches::kTraceUploadURL,
+     "https://performance-insights.appspot.com/upload?tags=flags,TestingTeam"}};
 
 #if !defined(DISABLE_NACL)
 const FeatureEntry::Choice kNaClDebugMaskChoices[] = {
-  // Secure shell can be used on ChromeOS for forwarding the TCP port opened by
-  // debug stub to a remote machine. Since secure shell uses NaCl, we usually
-  // want to avoid debugging that. The PNaCl translator is also a NaCl module,
-  // so by default we want to avoid debugging that.
-  // NOTE: As the default value must be the empty string, the mask excluding
-  // the PNaCl translator and secure shell is substituted elsewhere.
-  { IDS_NACL_DEBUG_MASK_CHOICE_EXCLUDE_UTILS_PNACL, "", "" },
-  { IDS_NACL_DEBUG_MASK_CHOICE_DEBUG_ALL, switches::kNaClDebugMask, "*://*" },
-  { IDS_NACL_DEBUG_MASK_CHOICE_INCLUDE_DEBUG,
-      switches::kNaClDebugMask, "*://*/*debug.nmf" }
-};
+    // Secure shell can be used on ChromeOS for forwarding the TCP port opened
+    // by
+    // debug stub to a remote machine. Since secure shell uses NaCl, we usually
+    // want to avoid debugging that. The PNaCl translator is also a NaCl module,
+    // so by default we want to avoid debugging that.
+    // NOTE: As the default value must be the empty string, the mask excluding
+    // the PNaCl translator and secure shell is substituted elsewhere.
+    {IDS_FLAGS_NACL_DEBUG_MASK_CHOICE_EXCLUDE_UTILS_PNACL, "", ""},
+    {IDS_FLAGS_NACL_DEBUG_MASK_CHOICE_DEBUG_ALL, switches::kNaClDebugMask,
+     "*://*"},
+    {IDS_FLAGS_NACL_DEBUG_MASK_CHOICE_INCLUDE_DEBUG, switches::kNaClDebugMask,
+     "*://*/*debug.nmf"}};
 #endif  // DISABLE_NACL
 
 const FeatureEntry::Choice kPassiveListenersChoices[] = {
@@ -229,7 +220,7 @@ const FeatureEntry::Choice kPassiveListenersChoices[] = {
 
 const FeatureEntry::Choice kMarkHttpAsChoices[] = {
     {IDS_GENERIC_EXPERIMENT_CHOICE_DEFAULT, "", ""},
-    {IDS_MARK_HTTP_AS_DANGEROUS, security_state::switches::kMarkHttpAs,
+    {IDS_FLAGS_MARK_HTTP_AS_DANGEROUS, security_state::switches::kMarkHttpAs,
      security_state::switches::kMarkHttpAsDangerous}};
 
 const FeatureEntry::Choice kDataReductionProxyLoFiChoices[] = {
@@ -578,16 +569,9 @@ const FeatureEntry::FeatureVariation
 #endif  // OS_ANDROID
 
 #if defined(OS_ANDROID)
-const FeatureEntry::FeatureParam
-    kContentSuggestionsNotificationsFeatureVariationAlways[] = {
-        {params::ntp_snippets::kNotificationsAlwaysNotifyParam, "true"}};
-
 const FeatureEntry::FeatureVariation
     kContentSuggestionsNotificationsFeatureVariations[] = {
-        {"(notify always)",
-         kContentSuggestionsNotificationsFeatureVariationAlways,
-         arraysize(kContentSuggestionsNotificationsFeatureVariationAlways),
-         nullptr}};
+        {"(notify always)", nullptr, 0, "3313312"}};
 #endif  // OS_ANDROID
 
 #if defined(OS_ANDROID)
@@ -763,6 +747,27 @@ const FeatureEntry::FeatureVariation
          arraysize(kAutofillCreditCardLastUsedDateFeatureVariationExpDate),
          nullptr}};
 
+const FeatureEntry::FeatureParam kDelayNavigation5SecondDelay[] = {
+    {DelayNavigationThrottle::kParamDelayNavigationDurationMillis, "5000"},
+    {DelayNavigationThrottle::kParamDelayNavigationProbability, "1"}};
+
+const FeatureEntry::FeatureParam kDelayNavigation5SecondDelay25Percent[] = {
+    {DelayNavigationThrottle::kParamDelayNavigationDurationMillis, "5000"},
+    {DelayNavigationThrottle::kParamDelayNavigationProbability, "0.25"}};
+
+const FeatureEntry::FeatureParam kDelayNavigation5SecondDelayRandomize[] = {
+    {DelayNavigationThrottle::kParamDelayNavigationDurationMillis, "5000"},
+    {DelayNavigationThrottle::kParamDelayNavigationProbability, "1"},
+    {DelayNavigationThrottle::kParamDelayNavigationRandomize, "true"}};
+
+const FeatureEntry::FeatureVariation kDelayNavigationFeatureVariations[] = {
+    {"(5 second delay, 100% probability)", kDelayNavigation5SecondDelay,
+     arraysize(kDelayNavigation5SecondDelay), nullptr},
+    {"(5 second delay, 25% probability)", kDelayNavigation5SecondDelay25Percent,
+     arraysize(kDelayNavigation5SecondDelay25Percent), nullptr},
+    {"(0-5 second randomized delay)", kDelayNavigation5SecondDelayRandomize,
+     arraysize(kDelayNavigation5SecondDelayRandomize), nullptr}};
+
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.
@@ -829,6 +834,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-webrtc-hw-h264-encoding", IDS_FLAGS_WEBRTC_HW_H264_ENCODING_NAME,
      IDS_FLAGS_WEBRTC_HW_H264_ENCODING_DESCRIPTION, kOsAndroid | kOsCrOS,
      FEATURE_VALUE_TYPE(features::kWebRtcHWH264Encoding)},
+    {"enable-webrtc-srtp-aes-gcm", IDS_FLAGS_WEBRTC_SRTP_AES_GCM_NAME,
+     IDS_FLAGS_WEBRTC_SRTP_AES_GCM_DESCRIPTION, kOsAll,
+     SINGLE_VALUE_TYPE(switches::kEnableWebRtcSrtpAesGcm)},
     {"enable-webrtc-stun-origin", IDS_FLAGS_WEBRTC_STUN_ORIGIN_NAME,
      IDS_FLAGS_WEBRTC_STUN_ORIGIN_DESCRIPTION, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebRtcStunOrigin)},
@@ -979,8 +987,8 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_SILENT_DEBUGGER_EXTENSION_API_DESCRIPTION, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kSilentDebuggerExtensionAPI)},
 #if BUILDFLAG(ENABLE_SPELLCHECK) && defined(OS_ANDROID)
-    {"enable-android-spellchecker", IDS_OPTIONS_ENABLE_SPELLCHECK,
-     IDS_OPTIONS_ENABLE_ANDROID_SPELLCHECKER_DESCRIPTION, kOsAndroid,
+    {"enable-android-spellchecker", IDS_FLAGS_ENABLE_ANDROID_SPELLCHECKER_NAME,
+     IDS_FLAGS_ENABLE_ANDROID_SPELLCHECKER_DESCRIPTION, kOsAndroid,
      FEATURE_VALUE_TYPE(spellcheck::kAndroidSpellCheckerNonLowEnd)},
 #endif  // ENABLE_SPELLCHECK && OS_ANDROID
     {"enable-scroll-prediction", IDS_FLAGS_SCROLL_PREDICTION_NAME,
@@ -1374,12 +1382,10 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_FIRST_RUN_UI_TRANSITIONS_DESCRIPTION, kOsCrOS,
      SINGLE_VALUE_TYPE(chromeos::switches::kEnableFirstRunUITransitions)},
 #endif  // OS_CHROMEOS
-    {"disable-new-bookmark-apps", IDS_FLAGS_NEW_BOOKMARK_APPS_NAME,
-     IDS_FLAGS_NEW_BOOKMARK_APPS_DESCRIPTION,
-     kOsWin | kOsCrOS | kOsLinux | kOsMac,
-     ENABLE_DISABLE_VALUE_TYPE(switches::kEnableNewBookmarkApps,
-                               switches::kDisableNewBookmarkApps)},
 #if defined(OS_MACOSX)
+    {"bookmark-apps", IDS_FLAGS_NEW_BOOKMARK_APPS_NAME,
+     IDS_FLAGS_NEW_BOOKMARK_APPS_DESCRIPTION, kOsMac,
+     FEATURE_VALUE_TYPE(features::kBookmarkApps)},
     {"disable-hosted-apps-in-windows", IDS_FLAGS_HOSTED_APPS_IN_WINDOWS_NAME,
      IDS_FLAGS_HOSTED_APPS_IN_WINDOWS_DESCRIPTION, kOsMac,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableHostedAppsInWindows,
@@ -1413,8 +1419,8 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_TRANSLATE_LANGUAGE_BY_ULP_DESCRIPTION, kOsAll,
      FEATURE_VALUE_TYPE(translate::kTranslateLanguageByULP)},
 #if defined(OS_MACOSX)
-    {"enable-native-notifications", IDS_NOTIFICATIONS_NATIVE_FLAG,
-     IDS_NOTIFICATIONS_NATIVE_FLAG_DESCRIPTION, kOsMac,
+    {"enable-native-notifications", IDS_FLAGS_NOTIFICATIONS_NATIVE_FLAG,
+     IDS_FLAGS_NOTIFICATIONS_NATIVE_FLAG_DESCRIPTION, kOsMac,
      FEATURE_VALUE_TYPE(features::kNativeNotifications)},
 #endif  // OS_MACOSX
 #if defined(TOOLKIT_VIEWS)
@@ -1563,10 +1569,11 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_EXPERIMENTAL_SECURITY_FEATURES_DESCRIPTION, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnablePotentiallyAnnoyingSecurityFeatures)},
 #endif  // OS_CHROMEOS
-    {"mark-non-secure-as", IDS_MARK_HTTP_AS_NAME, IDS_MARK_HTTP_AS_DESCRIPTION,
-     kOsAll, MULTI_VALUE_TYPE(kMarkHttpAsChoices)},
-    {"enable-http-form-warning", IDS_ENABLE_HTTP_FORM_WARNING_NAME,
-     IDS_ENABLE_HTTP_FORM_WARNING_DESCRIPTION, kOsAll,
+    {"mark-non-secure-as", IDS_FLAGS_MARK_HTTP_AS_NAME,
+     IDS_FLAGS_MARK_HTTP_AS_DESCRIPTION, kOsAll,
+     MULTI_VALUE_TYPE(kMarkHttpAsChoices)},
+    {"enable-http-form-warning", IDS_FLAGS_ENABLE_HTTP_FORM_WARNING_NAME,
+     IDS_FLAGS_ENABLE_HTTP_FORM_WARNING_DESCRIPTION, kOsAll,
      FEATURE_VALUE_TYPE(security_state::kHttpFormWarningFeature)},
     {"enable-site-per-process", IDS_FLAGS_SITE_PER_PROCESS_NAME,
      IDS_FLAGS_SITE_PER_PROCESS_DESCRIPTION, kOsAll,
@@ -1598,8 +1605,8 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(data_reduction_proxy::switches::
                            kEnableDataReductionProxySavingsPromo)},
 #endif  // OS_ANDROID
-    {"allow-insecure-localhost", IDS_ALLOW_INSECURE_LOCALHOST,
-     IDS_ALLOW_INSECURE_LOCALHOST_DESCRIPTION, kOsAll,
+    {"allow-insecure-localhost", IDS_FLAGS_ALLOW_INSECURE_LOCALHOST,
+     IDS_FLAGS_ALLOW_INSECURE_LOCALHOST_DESCRIPTION, kOsAll,
      SINGLE_VALUE_TYPE(switches::kAllowInsecureLocalhost)},
     {"enable-add-to-shelf", IDS_FLAGS_ADD_TO_SHELF_NAME,
      IDS_FLAGS_ADD_TO_SHELF_DESCRIPTION, kOsDesktop,
@@ -1899,12 +1906,12 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_ENABLE_SCROLL_ANCHORING_DESCRIPTION, kOsAll,
      FEATURE_VALUE_TYPE(features::kScrollAnchoring)},
     {"disable-audio-support-for-desktop-share",
-     IDS_FLAG_DISABLE_AUDIO_FOR_DESKTOP_SHARE,
-     IDS_FLAG_DISABLE_AUDIO_FOR_DESKTOP_SHARE_DESCRIPTION, kOsAll,
+     IDS_FLAGS_DISABLE_AUDIO_FOR_DESKTOP_SHARE,
+     IDS_FLAGS_DISABLE_AUDIO_FOR_DESKTOP_SHARE_DESCRIPTION, kOsAll,
      SINGLE_VALUE_TYPE(switches::kDisableAudioSupportForDesktopShare)},
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-    {"tab-for-desktop-share", IDS_FLAG_DISABLE_TAB_FOR_DESKTOP_SHARE,
-     IDS_FLAG_DISABLE_TAB_FOR_DESKTOP_SHARE_DESCRIPTION, kOsAll,
+    {"tab-for-desktop-share", IDS_FLAGS_DISABLE_TAB_FOR_DESKTOP_SHARE,
+     IDS_FLAGS_DISABLE_TAB_FOR_DESKTOP_SHARE_DESCRIPTION, kOsAll,
      SINGLE_VALUE_TYPE(extensions::switches::kDisableTabForDesktopShare)},
 #endif  // ENABLE_EXTENSIONS
 #if defined(OS_ANDROID)
@@ -2105,17 +2112,17 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_EOL_NOTIFICATION_DESCRIPTION, kOsCrOS,
      SINGLE_DISABLE_VALUE_TYPE(chromeos::switches::kDisableEolNotification)},
 #endif  // OS_CHROMEOS
-    {"fill-on-account-select", IDS_FILL_ON_ACCOUNT_SELECT_NAME,
-     IDS_FILL_ON_ACCOUNT_SELECT_DESCRIPTION, kOsAll,
+    {"fill-on-account-select", IDS_FLAGS_FILL_ON_ACCOUNT_SELECT_NAME,
+     IDS_FLAGS_FILL_ON_ACCOUNT_SELECT_DESCRIPTION, kOsAll,
      FEATURE_VALUE_TYPE(password_manager::features::kFillOnAccountSelect)},
     {"new-audio-rendering-mixing-strategy",
-     IDS_NEW_AUDIO_RENDERING_MIXING_STRATEGY_NAME,
-     IDS_NEW_AUDIO_RENDERING_MIXING_STRATEGY_DESCRIPTION,
+     IDS_FLAGS_NEW_AUDIO_RENDERING_MIXING_STRATEGY_NAME,
+     IDS_FLAGS_NEW_AUDIO_RENDERING_MIXING_STRATEGY_DESCRIPTION,
      kOsWin | kOsMac | kOsLinux | kOsAndroid,
      FEATURE_VALUE_TYPE(media::kNewAudioRenderingMixingStrategy)},
     {"disable-background-video-track",
-     IDS_BACKGROUND_VIDEO_TRACK_OPTIMIZATION_NAME,
-     IDS_BACKGROUND_VIDEO_TRACK_OPTIMIZATION_DESCRIPTION, kOsAll,
+     IDS_FLAGS_BACKGROUND_VIDEO_TRACK_OPTIMIZATION_NAME,
+     IDS_FLAGS_BACKGROUND_VIDEO_TRACK_OPTIMIZATION_DESCRIPTION, kOsAll,
      FEATURE_VALUE_TYPE(media::kBackgroundVideoTrackOptimization)},
 #if defined(OS_CHROMEOS)
     {"quick-unlock-pin", IDS_FLAGS_QUICK_UNLOCK_PIN,
@@ -2261,8 +2268,8 @@ const FeatureEntry kFeatureEntries[] = {
          autofill::kAutofillCreditCardPopupLayout,
          kAutofillCreditCardPopupLayoutFeatureVariations,
          "AutofillCreditCardPopupLayout")},
-    {"native-android-history-manager", IDS_NATIVE_ANDROID_HISTORY_MANAGER,
-     IDS_NATIVE_ANDROID_HISTORY_MANAGER_DESCRIPTION, kOsAndroid,
+    {"native-android-history-manager", IDS_FLAGS_NATIVE_ANDROID_HISTORY_MANAGER,
+     IDS_FLAGS_NATIVE_ANDROID_HISTORY_MANAGER_DESCRIPTION, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kNativeAndroidHistoryManager)},
 #endif  // OS_ANDROID
     {"enable-autofill-credit-card-last-used-date-display",
@@ -2402,6 +2409,12 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_USE_NEW_DOODLE_API_DESCRIPTION, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kUseNewDoodleApi)},
 #endif  // OS_ANDROID
+
+    {"delay-navigation", IDS_FLAGS_DELAY_NAVIGATION_NAME,
+     IDS_FLAGS_DELAY_NAVIGATION_DESCRIPTION, kOsAll,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(kDelayNavigationFeature,
+                                    kDelayNavigationFeatureVariations,
+                                    "DelayNavigation")},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms.xml. See note in

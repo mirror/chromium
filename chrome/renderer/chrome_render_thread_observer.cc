@@ -41,6 +41,7 @@
 #include "content/public/child/resource_dispatcher_delegate.h"
 #include "content/public/common/associated_interface_registry.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/render_view.h"
 #include "content/public/renderer/render_view_visitor.h"
@@ -49,7 +50,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/net_errors.h"
 #include "net/base/net_module.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_registry.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -250,13 +251,13 @@ ChromeRenderThreadObserver::ChromeRenderThreadObserver()
 
   // chrome-native: is a scheme used for placeholder navigations that allow
   // UIs to be drawn with platform native widgets instead of HTML.  These pages
-  // should not be accessible, and should also be treated as empty documents
-  // that can commit synchronously.  No code should be runnable in these pages,
+  // should not be accessible.  No code should be runnable in these pages,
   // so it should not need to access anything nor should it allow javascript
   // URLs since it should never be visible to the user.
+  // See also ChromeContentClient::AddAdditionalSchemes that adds it as an
+  // empty document scheme.
   WebString native_scheme(WebString::fromASCII(chrome::kChromeNativeScheme));
   WebSecurityPolicy::registerURLSchemeAsDisplayIsolated(native_scheme);
-  WebSecurityPolicy::registerURLSchemeAsEmptyDocument(native_scheme);
   WebSecurityPolicy::registerURLSchemeAsNotAllowingJavascriptURLs(
       native_scheme);
 

@@ -2,17 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// ======                        New Architecture                         =====
-// =         This code is only used in the new iOS Chrome architecture.       =
-// ============================================================================
-
 #import "ios/clean/chrome/app/steps/tab_grid_coordinator+application_step.h"
 
 #import "base/supports_user_data.h"
 #import "ios/clean/chrome/app/application_state.h"
-#import "ios/clean/chrome/browser/browser_coordinator+internal.h"
-#import "ios/clean/chrome/browser/model/browser.h"
-#import "ios/clean/chrome/browser/model/browser_list.h"
+#import "ios/shared/chrome/browser/ui/browser_list/browser.h"
+#import "ios/shared/chrome/browser/ui/browser_list/browser_list.h"
+#import "ios/shared/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."

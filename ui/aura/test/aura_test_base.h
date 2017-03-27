@@ -78,7 +78,7 @@ class AuraTestBase : public testing::Test,
 
   Window* root_window() { return helper_->root_window(); }
   WindowTreeHost* host() { return helper_->host(); }
-  ui::EventProcessor* event_processor() { return helper_->event_processor(); }
+  ui::EventSink* event_sink() { return helper_->event_sink(); }
   TestScreen* test_screen() { return helper_->test_screen(); }
 
   TestWindowTree* window_tree() { return helper_->window_tree(); }
@@ -109,6 +109,12 @@ class AuraTestBase : public testing::Test,
       std::map<std::string, std::vector<uint8_t>>* properties) override;
   void OnWmClientJankinessChanged(const std::set<Window*>& client_windows,
                                   bool janky) override;
+  void OnWmBuildDragImage(const gfx::Point& cursor_location,
+                          const SkBitmap& drag_image,
+                          const gfx::Vector2d& drag_image_offset,
+                          ui::mojom::PointerKind source) override {}
+  void OnWmMoveDragImage(const gfx::Point& cursor_location) override {}
+  void OnWmDestroyDragImage() override {}
   void OnWmWillCreateDisplay(const display::Display& display) override;
   void OnWmNewDisplay(std::unique_ptr<WindowTreeHostMus> window_tree_host,
                       const display::Display& display) override;

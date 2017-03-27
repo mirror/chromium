@@ -40,7 +40,7 @@ typedef WTF::HashMap<const LayoutBlock*,
                      std::unique_ptr<TrackedLayoutBoxListHashSet>>
     TrackedDescendantsMap;
 typedef WTF::HashMap<const LayoutBox*, LayoutBlock*> TrackedContainerMap;
-typedef Vector<WordMeasurement, 64> WordMeasurements;
+typedef Vector<WordMeasurement> WordMeasurements;
 
 enum ContainingBlockState { NewContainingBlock, SameContainingBlock };
 
@@ -480,8 +480,6 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
 
   void computeBlockPreferredLogicalWidths(LayoutUnit& minLogicalWidth,
                                           LayoutUnit& maxLogicalWidth) const;
-
-  bool isSelectionRoot() const;
 
  public:
   bool shouldPaintCursorCaret() const;

@@ -5,6 +5,9 @@ On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE
 
 
 [INTERFACES]
+interface AbsoluteOrientationSensor : OrientationSensor
+    attribute @@toStringTag
+    method constructor
 interface Accelerometer : Sensor
     attribute @@toStringTag
     getter includesGravity
@@ -3742,7 +3745,7 @@ interface ImageBitmapRenderingContext
     method transferFromImageBitmap
 interface ImageCapture
     attribute @@toStringTag
-    getter videoStreamTrack
+    getter track
     method constructor
     method getPhotoCapabilities
     method grabFrame
@@ -4112,6 +4115,7 @@ interface MediaStreamTrack : EventTarget
     getter onmute
     getter onunmute
     getter readyState
+    getter remote
     method applyConstraints
     method clone
     method constructor
@@ -4581,6 +4585,11 @@ interface Option
     setter selected
     setter text
     setter value
+interface OrientationSensor : Sensor
+    attribute @@toStringTag
+    getter quaternion
+    method constructor
+    method populateMatrix
 interface OscillatorNode : AudioScheduledSourceNode
     attribute @@toStringTag
     getter detune
@@ -4832,21 +4841,10 @@ interface Permissions
     method revoke
 interface PhotoCapabilities
     attribute @@toStringTag
-    getter brightness
-    getter colorTemperature
-    getter contrast
-    getter exposureCompensation
-    getter exposureMode
     getter fillLightMode
-    getter focusMode
     getter imageHeight
     getter imageWidth
-    getter iso
     getter redEyeReduction
-    getter saturation
-    getter sharpness
-    getter whiteBalanceMode
-    getter zoom
     method constructor
 interface Plugin
     attribute @@toStringTag

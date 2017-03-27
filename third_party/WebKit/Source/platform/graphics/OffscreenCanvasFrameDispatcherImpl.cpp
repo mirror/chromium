@@ -210,12 +210,20 @@ void OffscreenCanvasFrameDispatcherImpl::dispatchFrame(
   cc::CompositorFrame frame;
   // TODO(crbug.com/652931): update the device_scale_factor
   frame.metadata.device_scale_factor = 1.0f;
+  if (m_currentBeginFrameAck.sequence_number ==
+      cc::BeginFrameArgs::kInvalidFrameNumber) {
+    // TODO(eseckler): This shouldn't be necessary when OffscreenCanvas no
+    // longer submits CompositorFrames without prior BeginFrame.
+    m_currentBeginFrameAck = cc::BeginFrameAck::CreateManualAckWithDamage();
+  } else {
+    m_currentBeginFrameAck.has_damage = true;
+  }
+  frame.metadata.begin_frame_ack = m_currentBeginFrameAck;
 
   const gfx::Rect bounds(m_width, m_height);
   const int renderPassId = 1;
   std::unique_ptr<cc::RenderPass> pass = cc::RenderPass::Create();
   pass->SetNew(renderPassId, bounds, bounds, gfx::Transform());
-  pass->has_transparent_background = false;
 
   cc::SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
   sqs->SetAll(gfx::Transform(), bounds.size(), bounds, bounds, false, 1.f,
@@ -272,7 +280,10 @@ void OffscreenCanvasFrameDispatcherImpl::dispatchFrame(
       pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
   gfx::Size rectSize(m_width, m_height);
 
+  // TODO(crbug.com/705019): optimize for contexts that have {alpha: false}
   const bool needsBlending = true;
+  gfx::Rect opaqueRect(0, 0);
+
   // TOOD(crbug.com/645993): this should be inherited from WebGL context's
   // creation settings.
   const bool premultipliedAlpha = true;
@@ -284,7 +295,7 @@ void OffscreenCanvasFrameDispatcherImpl::dispatchFrame(
   // TODO(crbug.com/645590): filter should respect the image-rendering CSS
   // property of associated canvas element.
   const bool nearestNeighbor = false;
-  quad->SetAll(sqs, bounds, bounds, bounds, needsBlending, resource.id,
+  quad->SetAll(sqs, bounds, opaqueRect, bounds, needsBlending, resource.id,
                gfx::Size(), premultipliedAlpha, uvTopLeft, uvBottomRight,
                SK_ColorTRANSPARENT, vertexOpacity, yflipped, nearestNeighbor,
                false);
@@ -393,7 +404,14 @@ void OffscreenCanvasFrameDispatcherImpl::setNeedsBeginFrame(
 void OffscreenCanvasFrameDispatcherImpl::OnBeginFrame(
     const cc::BeginFrameArgs& beginFrameArgs) {
   DCHECK(client());
+  // TODO(eseckler): Set correct |latest_confirmed_sequence_number|.
+  m_currentBeginFrameAck = cc::BeginFrameAck(
+      beginFrameArgs.source_id, beginFrameArgs.sequence_number,
+      beginFrameArgs.sequence_number, 0, false);
   client()->beginFrame();
+  // TODO(eseckler): Tell |m_sink| if we did not draw during the BeginFrame.
+  m_currentBeginFrameAck.sequence_number =
+      cc::BeginFrameArgs::kInvalidFrameNumber;
 }
 
 void OffscreenCanvasFrameDispatcherImpl::ReclaimResources(

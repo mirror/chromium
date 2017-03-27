@@ -365,15 +365,16 @@ void NavigationRequest::BeginNavigation() {
       !navigation_handle_->IsSameDocument()) {
     // It's safe to use base::Unretained because this NavigationRequest owns
     // the NavigationHandle where the callback will be stored.
-    // TODO(clamy): pass the real value for |is_external_protocol| if needed.
     // TODO(clamy): pass the method to the NavigationHandle instead of a
     // boolean.
+    bool is_external_protocol =
+        !GetContentClient()->browser()->IsHandledURL(common_params_.url);
     navigation_handle_->WillStartRequest(
         common_params_.method, common_params_.post_data,
         Referrer::SanitizeForRequest(common_params_.url,
                                      common_params_.referrer),
-        begin_params_.has_user_gesture, common_params_.transition, false,
-        begin_params_.request_context_type,
+        begin_params_.has_user_gesture, common_params_.transition,
+        is_external_protocol, begin_params_.request_context_type,
         begin_params_.mixed_content_context_type,
         base::Bind(&NavigationRequest::OnStartChecksComplete,
                    base::Unretained(this)));
@@ -480,17 +481,19 @@ void NavigationRequest::OnRequestRedirected(
     // FilterURL sets the URL to about:blank if the CSP checks prevent the
     // renderer from accessing it.
     if ((url == url::kAboutBlankURL) && (url != common_params_.url)) {
-      frame_tree_node_->ResetNavigationRequest(false);
+      frame_tree_node_->ResetNavigationRequest(false, true);
       return;
     }
   }
 
   // It's safe to use base::Unretained because this NavigationRequest owns the
   // NavigationHandle where the callback will be stored.
-  // TODO(clamy): pass the real value for |is_external_protocol| if needed.
+  bool is_external_protocol =
+      !GetContentClient()->browser()->IsHandledURL(common_params_.url);
   navigation_handle_->WillRedirectRequest(
       common_params_.url, common_params_.method, common_params_.referrer.url,
-      false, response->head.headers, response->head.connection_info,
+      is_external_protocol, response->head.headers,
+      response->head.connection_info,
       base::Bind(&NavigationRequest::OnRedirectChecksComplete,
                  base::Unretained(this)));
 }
@@ -559,7 +562,7 @@ void NavigationRequest::OnResponseStarted(
     // TODO(clamy): Rename ShouldTransferNavigation once PlzNavigate ships.
     if (!frame_tree_node_->navigator()->GetDelegate()->ShouldTransferNavigation(
             frame_tree_node_->IsMainFrame())) {
-      frame_tree_node_->ResetNavigationRequest(false);
+      frame_tree_node_->ResetNavigationRequest(false, true);
       return;
     }
   }
@@ -598,7 +601,7 @@ void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
 
   // If the request was canceled by the user do not show an error page.
   if (net_error == net::ERR_ABORTED) {
-    frame_tree_node_->ResetNavigationRequest(false);
+    frame_tree_node_->ResetNavigationRequest(false, true);
     return;
   }
 
@@ -833,7 +836,7 @@ void NavigationRequest::CommitNavigation() {
                                       common_params_, request_params_,
                                       is_view_source_);
 
-  frame_tree_node_->ResetNavigationRequest(true);
+  frame_tree_node_->ResetNavigationRequest(true, true);
 }
 
 }  // namespace content

@@ -80,7 +80,7 @@
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/browser/ui/views/new_back_shortcut_bubble.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_view_views.h"
-#include "chrome/browser/ui/views/page_info/website_settings_popup_view.h"
+#include "chrome/browser/ui/views/page_info/page_info_popup_view.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/status_bubble_views.h"
 #include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
@@ -113,6 +113,7 @@
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/translate/core/browser/language_state.h"
 #include "content/public/browser/download_manager.h"
+#include "content/public/browser/keyboard_event_processing_result.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
@@ -1284,12 +1285,12 @@ void BrowserView::UserChangedTheme() {
   frame_->FrameTypeChanged();
 }
 
-void BrowserView::ShowWebsiteSettings(
+void BrowserView::ShowPageInfo(
     Profile* profile,
     content::WebContents* web_contents,
     const GURL& virtual_url,
     const security_state::SecurityInfo& security_info) {
-  WebsiteSettingsPopupView::ShowPopup(
+  PageInfoPopupView::ShowPopup(
       GetLocationBarView()->GetSecurityBubbleAnchorView(), gfx::Rect(), profile,
       web_contents, virtual_url, security_info);
 }
@@ -1306,20 +1307,18 @@ void BrowserView::ShowAppMenu() {
   toolbar_->app_menu_button()->Activate(nullptr);
 }
 
-bool BrowserView::PreHandleKeyboardEvent(const NativeWebKeyboardEvent& event,
-                                         bool* is_keyboard_shortcut) {
-  *is_keyboard_shortcut = false;
-
+content::KeyboardEventProcessingResult BrowserView::PreHandleKeyboardEvent(
+    const NativeWebKeyboardEvent& event) {
   if ((event.type() != blink::WebInputEvent::RawKeyDown) &&
       (event.type() != blink::WebInputEvent::KeyUp)) {
-    return false;
+    return content::KeyboardEventProcessingResult::NOT_HANDLED;
   }
 
   views::FocusManager* focus_manager = GetFocusManager();
   DCHECK(focus_manager);
 
   if (focus_manager->shortcut_handling_suspended())
-    return false;
+    return content::KeyboardEventProcessingResult::NOT_HANDLED;
 
   ui::Accelerator accelerator =
       ui::GetAcceleratorFromNativeWebKeyboardEvent(event);
@@ -1337,22 +1336,30 @@ bool BrowserView::PreHandleKeyboardEvent(const NativeWebKeyboardEvent& event,
 
   if (browser_->is_app()) {
     // Let all keys fall through to a v1 app's web content, even accelerators.
-    // We don't have to flip |is_keyboard_shortcut| here. If we do that, the app
+    // We don't use NOT_HANDLED_IS_SHORTCUT here. If we do that, the app
     // might not be able to see a subsequent Char event. See OnHandleInputEvent
     // in content/renderer/render_widget.cc for details.
-    return false;
+    return content::KeyboardEventProcessingResult::NOT_HANDLED;
   }
 
 #if defined(OS_CHROMEOS)
   if (ash_util::IsAcceleratorDeprecated(accelerator)) {
-    if (event.type() == blink::WebInputEvent::RawKeyDown)
-      *is_keyboard_shortcut = true;
-    return false;
+    return (event.type() == blink::WebInputEvent::RawKeyDown)
+               ? content::KeyboardEventProcessingResult::NOT_HANDLED_IS_SHORTCUT
+               : content::KeyboardEventProcessingResult::NOT_HANDLED;
   }
 #endif  // defined(OS_CHROMEOS)
 
   if (frame_->PreHandleKeyboardEvent(event))
-    return true;
+    return content::KeyboardEventProcessingResult::HANDLED;
+
+#if defined(OS_CHROMEOS)
+  if (event.os_event && event.os_event->IsKeyEvent() &&
+      ash_util::WillAshProcessAcceleratorForEvent(
+          *event.os_event->AsKeyEvent())) {
+    return content::KeyboardEventProcessingResult::HANDLED_DONT_UPDATE_EVENT;
+  }
+#endif
 
   chrome::BrowserCommandController* controller = browser_->command_controller();
 
@@ -1374,20 +1381,25 @@ bool BrowserView::PreHandleKeyboardEvent(const NativeWebKeyboardEvent& event,
   // Executing the command may cause |this| object to be destroyed.
   if (controller->IsReservedCommandOrKey(id, event)) {
     UpdateAcceleratorMetrics(accelerator, id);
-    return chrome::ExecuteCommand(browser_.get(), id);
+    return chrome::ExecuteCommand(browser_.get(), id)
+               ? content::KeyboardEventProcessingResult::HANDLED
+               : content::KeyboardEventProcessingResult::NOT_HANDLED;
   }
 
   if (id != -1) {
     // |accelerator| is a non-reserved browser shortcut (e.g. Ctrl+f).
-    if (event.type() == blink::WebInputEvent::RawKeyDown)
-      *is_keyboard_shortcut = true;
-  } else if (processed) {
-    // |accelerator| is a non-browser shortcut (e.g. F4-F10 on Ash). Report
-    // that we handled it.
-    return true;
+    return (event.type() == blink::WebInputEvent::RawKeyDown)
+               ? content::KeyboardEventProcessingResult::NOT_HANDLED_IS_SHORTCUT
+               : content::KeyboardEventProcessingResult::NOT_HANDLED;
   }
 
-  return false;
+  if (processed) {
+    // |accelerator| is a non-browser shortcut (e.g. F4-F10 on Ash). Report
+    // that we handled it.
+    return content::KeyboardEventProcessingResult::HANDLED;
+  }
+
+  return content::KeyboardEventProcessingResult::NOT_HANDLED;
 }
 
 void BrowserView::HandleKeyboardEvent(const NativeWebKeyboardEvent& event) {

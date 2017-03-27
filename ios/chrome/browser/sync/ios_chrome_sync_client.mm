@@ -27,8 +27,7 @@
 #include "components/keyed_service/core/service_access_type.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/sync/browser/password_model_worker.h"
-#include "components/reading_list/core/reading_list_switches.h"
-#include "components/reading_list/ios/reading_list_model.h"
+#include "components/reading_list/core/reading_list_model.h"
 #include "components/search_engines/search_engine_data_type_controller.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/sync/base/report_unrecoverable_error.h"
@@ -80,7 +79,13 @@ class SyncSessionsClientImpl : public sync_sessions::SyncSessionsClient {
   explicit SyncSessionsClientImpl(ios::ChromeBrowserState* browser_state)
       : browser_state_(browser_state),
         window_delegates_getter_(
-            base::MakeUnique<TabModelSyncedWindowDelegatesGetter>()) {}
+            base::MakeUnique<TabModelSyncedWindowDelegatesGetter>()),
+        local_session_event_router_(
+            base::MakeUnique<IOSChromeLocalSessionEventRouter>(
+                browser_state_,
+                this,
+                ios::sync_start_util::GetFlareForSyncableService(
+                    browser_state_->GetStatePath()))) {}
 
   ~SyncSessionsClientImpl() override {}
 
@@ -117,19 +122,17 @@ class SyncSessionsClientImpl : public sync_sessions::SyncSessionsClient {
     return window_delegates_getter_.get();
   }
 
-  std::unique_ptr<sync_sessions::LocalSessionEventRouter>
-  GetLocalSessionEventRouter() override {
-    syncer::SyncableService::StartSyncFlare flare(
-        ios::sync_start_util::GetFlareForSyncableService(
-            browser_state_->GetStatePath()));
-    return base::MakeUnique<IOSChromeLocalSessionEventRouter>(browser_state_,
-                                                              this, flare);
+  sync_sessions::LocalSessionEventRouter* GetLocalSessionEventRouter()
+      override {
+    return local_session_event_router_.get();
   }
 
  private:
   ios::ChromeBrowserState* const browser_state_;
   const std::unique_ptr<sync_sessions::SyncedWindowDelegatesGetter>
       window_delegates_getter_;
+  const std::unique_ptr<IOSChromeLocalSessionEventRouter>
+      local_session_event_router_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncSessionsClientImpl);
 };
@@ -352,7 +355,6 @@ IOSChromeSyncClient::GetSyncBridgeForModelType(syncer::ModelType type) {
           ->GetDeviceInfoSyncBridge()
           ->AsWeakPtr();
     case syncer::READING_LIST: {
-      DCHECK(reading_list::switches::IsReadingListEnabled());
       ReadingListModel* reading_list_model =
           ReadingListModelFactory::GetForBrowserState(browser_state_);
       return reading_list_model->GetModelTypeSyncBridge()->AsWeakPtr();

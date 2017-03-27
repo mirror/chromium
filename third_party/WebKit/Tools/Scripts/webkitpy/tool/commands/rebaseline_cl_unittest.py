@@ -272,11 +272,25 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         self.assertEqual(
             self.tool.executive.calls,
             [
-                [['python', 'echo', 'copy-existing-baselines-internal', '--suffixes', 'txt',
-                  '--builder', 'MOCK Try Win', '--test', 'fast/dom/prototype-taco.html']],
-                [['python', 'echo', 'rebaseline-test-internal', '--suffixes', 'txt',
-                  '--builder', 'MOCK Try Win', '--test', 'fast/dom/prototype-taco.html', '--build-number', '5000']],
-                [['python', 'echo', 'optimize-baselines', '--suffixes', 'txt', 'fast/dom/prototype-taco.html']]
+                [[
+                    'python', 'echo', 'copy-existing-baselines-internal',
+                    '--test', 'fast/dom/prototype-taco.html',
+                    '--suffixes', 'txt',
+                    '--port-name', 'test-win-win7',
+                ]],
+                [[
+                    'python', 'echo', 'rebaseline-test-internal',
+                    '--test', 'fast/dom/prototype-taco.html',
+                    '--suffixes', 'txt',
+                    '--port-name', 'test-win-win7',
+                    '--builder', 'MOCK Try Win',
+                    '--build-number', '5000',
+                ]],
+                [[
+                    'python', 'echo', 'optimize-baselines',
+                    '--suffixes', 'txt',
+                    'fast/dom/prototype-taco.html',
+                ]]
             ])
 
     def test_trigger_builds(self):
@@ -296,6 +310,13 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         self.assertEqual(
             self.command.builders_with_pending_builds([Build('MOCK Try Linux', None), Build('MOCK Try Win', 123)]),
             {'MOCK Try Linux'})
+
+    def test_builders_with_no_results(self):
+        # In this example, Linux has a pending build, and Mac has no build.
+        # MOCK Try Mac is listed because it's listed in the BuilderList in setUp.
+        self.assertEqual(
+            self.command.builders_with_no_results([Build('MOCK Try Linux', None), Build('MOCK Try Win', 123)]),
+            {'MOCK Try Mac', 'MOCK Try Linux'})
 
     def test_bails_when_one_build_is_missing_results(self):
         self.tool.buildbot.set_results(Build('MOCK Try Win', 5000), None)

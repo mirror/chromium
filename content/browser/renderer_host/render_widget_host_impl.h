@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -323,15 +324,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   // if a composite has already been requested and not acked yet.
   bool ScheduleComposite();
 
-  // Starts a hang monitor timeout. If there's already a hang monitor timeout
-  // the new one will only fire if it has a shorter delay than the time
-  // left on the existing timeouts.
-  void StartHangMonitorTimeout(base::TimeDelta delay,
-                               blink::WebInputEvent::Type event_type);
-
-  // Stops all existing hang monitor timeouts and assumes the renderer is
-  // responsive.
-  void StopHangMonitorTimeout();
+  // Called by the RenderProcessHost to handle the case when the process
+  // changed its state of ignoring input events.
+  void ProcessIgnoreInputEventsChanged(bool ignore_input_events);
 
   // Starts the rendering timeout, which will clear displayed graphics if
   // a new compositor frame is not received before it expires. This also causes
@@ -339,17 +334,15 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   // |next_source_id| to be discarded.
   void StartNewContentRenderingTimeout(uint32_t next_source_id);
 
-  // Notification that a new compositor frame has been generated following
-  // a page load. This stops |new_content_rendering_timeout_|, or prevents
-  // the timer from running if the load commit message hasn't been received
-  // yet.
-  void OnFirstPaintAfterLoad();
-
   // Forwards the keyboard event with optional commands to the renderer. If
   // |key_event| is not forwarded for any reason, then |commands| are ignored.
+  // |update_event| (if non-null) is set to indicate whether the underlying
+  // event in |key_event| should be updated. |update_event| is only used on
+  // aura.
   void ForwardKeyboardEventWithCommands(
       const NativeWebKeyboardEvent& key_event,
-      const std::vector<EditCommand>* commands);
+      const std::vector<EditCommand>* commands,
+      bool* update_event = nullptr);
 
   // Forwards the given message to the renderer. These are called by the view
   // when it has received a message.
@@ -573,6 +566,17 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
     return weak_factory_.GetWeakPtr();
   }
 
+  // Request composition updates from RenderWidget. If |immediate_request| is
+  // true, RenderWidget will respond immediately. If |monitor_updates| is true,
+  // then RenderWidget sends updates for each compositor frame when there are
+  // changes, or when the text selection changes inside a frame. If both fields
+  // are false, RenderWidget will not send any updates. To avoid sending
+  // unnecessary IPCs to RenderWidget (e.g., asking for monitor updates while
+  // we are already receiving updates), when
+  // |monitoring_composition_info_| == |monitor_updates| no IPC is sent to the
+  // renderer unless it is for an immediate request.
+  void RequestCompositionUpdates(bool immediate_request, bool monitor_updates);
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to
@@ -594,6 +598,14 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   base::WeakPtr<RenderWidgetHostViewBase> view_;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest,
+                           DontPostponeHangMonitorTimeout);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest,
+                           StopAndStartHangMonitorTimeout);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest,
+                           ShorterDelayHangMonitorTimeout);
+  FRIEND_TEST_ALL_PREFIXES(DevToolsManagerTest,
+                           NoUnresponsiveDialogInInspectedContents);
   friend class MockRenderWidgetHost;
   friend class TestRenderViewHost;
 
@@ -709,6 +721,16 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   // 3. Grants permissions to file system files.
   // 4. Register the files with the IsolatedContext.
   void GrantFileAccessFromDropData(DropData* drop_data);
+
+  // Starts a hang monitor timeout. If there's already a hang monitor timeout
+  // the new one will only fire if it has a shorter delay than the time
+  // left on the existing timeouts.
+  void StartHangMonitorTimeout(base::TimeDelta delay,
+                               blink::WebInputEvent::Type event_type);
+
+  // Stops all existing hang monitor timeouts and assumes the renderer is
+  // responsive.
+  void StopHangMonitorTimeout();
 
   // true if a renderer has once been valid. We use this flag to display a sad
   // tab only when we lose our renderer and not if a paint occurs during
@@ -848,18 +870,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
 
   std::unique_ptr<TimeoutMonitor> new_content_rendering_timeout_;
 
-  // This boolean is true if RenderWidgetHostImpl receives a compositor frame
-  // from a newly loaded page before StartNewContentRenderingTimeout() is
-  // called. This means that a paint for the new load has completed before
-  // the browser received a DidCommitProvisionalLoad message. In that case
-  // |new_content_rendering_timeout_| is not needed. The renderer will send
-  // both the FirstPaintAfterLoad and DidCommitProvisionalLoad messages after
-  // any new page navigation, it doesn't matter which is received first, and
-  // it should not be possible to interleave other navigations in between
-  // receipt of those messages (unless FirstPaintAfterLoad is prevented from
-  // being sent, in which case the timer should fire).
-  bool received_paint_after_load_;
-
   RenderWidgetHostLatencyTracker latency_tracker_;
 
   int next_browser_snapshot_id_;
@@ -902,6 +912,18 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   // TODO(kenrb, fsamuel): We should use SurfaceIDs for this purpose when they
   // are available in the renderer process. See https://crbug.com/695579.
   uint32_t current_content_source_id_;
+
+  // When true, the RenderWidget is regularly sending updates regarding
+  // composition info. It should only be true when there is a focused editable
+  // node.
+  bool monitoring_composition_info_;
+
+  // This is the content_source_id of the latest frame received. This value is
+  // compared against current_content_source_id_ to determine whether the
+  // received frame belongs to the current page. If a frame for the current page
+  // does not arrive in time after nagivation, we clear the graphics of the old
+  // page. See RenderWidget::current_content_source_id_ for more information.
+  uint32_t last_received_content_source_id_ = 0;
 
 #if defined(OS_MACOSX)
   std::unique_ptr<device::PowerSaveBlocker> power_save_blocker_;

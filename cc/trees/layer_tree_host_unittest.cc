@@ -19,6 +19,7 @@
 #include "cc/animation/timing_function.h"
 #include "cc/input/scroll_elasticity_helper.h"
 #include "cc/layers/content_layer_client.h"
+#include "cc/layers/heads_up_display_layer.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/painted_scrollbar_layer.h"
 #include "cc/layers/picture_layer.h"
@@ -902,7 +903,6 @@ class LayerTreeHostTestPushElementIdToNodeIdMap : public LayerTreeHostTest {
   void SetupTree() override {
     root_ = Layer::Create();
     child_ = Layer::Create();
-    child_->SetElementId(kTestElementId);
     root_->AddChild(child_);
     layer_tree_host()->SetRootLayer(root_);
     LayerTreeHostTest::SetupTree();
@@ -940,13 +940,13 @@ class LayerTreeHostTestPushElementIdToNodeIdMap : public LayerTreeHostTest {
                           ->property_trees()
                           ->scroll_tree.size());
         EXPECT_TRUE(property_trees->element_id_to_transform_node_index.find(
-                        kTestElementId) ==
+                        child_->element_id()) ==
                     property_trees->element_id_to_transform_node_index.end());
         EXPECT_TRUE(property_trees->element_id_to_effect_node_index.find(
-                        kTestElementId) ==
+                        child_->element_id()) ==
                     property_trees->element_id_to_effect_node_index.end());
         EXPECT_TRUE(property_trees->element_id_to_scroll_node_index.find(
-                        kTestElementId) ==
+                        child_->element_id()) ==
                     property_trees->element_id_to_scroll_node_index.end());
         break;
       case 1:
@@ -960,12 +960,14 @@ class LayerTreeHostTestPushElementIdToNodeIdMap : public LayerTreeHostTest {
                           ->property_trees()
                           ->scroll_tree.size());
         EXPECT_EQ(
-            2,
-            property_trees->element_id_to_transform_node_index[kTestElementId]);
-        EXPECT_EQ(
-            2, property_trees->element_id_to_effect_node_index[kTestElementId]);
-        EXPECT_EQ(
-            2, property_trees->element_id_to_scroll_node_index[kTestElementId]);
+            2, property_trees
+                   ->element_id_to_transform_node_index[child_->element_id()]);
+        EXPECT_EQ(2,
+                  property_trees
+                      ->element_id_to_effect_node_index[child_->element_id()]);
+        EXPECT_EQ(2,
+                  property_trees
+                      ->element_id_to_scroll_node_index[child_->element_id()]);
         break;
       case 2:
         EXPECT_EQ(2U, child_impl_->layer_tree_impl()
@@ -975,13 +977,13 @@ class LayerTreeHostTestPushElementIdToNodeIdMap : public LayerTreeHostTest {
                           ->property_trees()
                           ->effect_tree.size());
         EXPECT_TRUE(property_trees->element_id_to_transform_node_index.find(
-                        kTestElementId) ==
+                        child_->element_id()) ==
                     property_trees->element_id_to_transform_node_index.end());
         EXPECT_TRUE(property_trees->element_id_to_effect_node_index.find(
-                        kTestElementId) ==
+                        child_->element_id()) ==
                     property_trees->element_id_to_effect_node_index.end());
         EXPECT_TRUE(property_trees->element_id_to_scroll_node_index.find(
-                        kTestElementId) ==
+                        child_->element_id()) ==
                     property_trees->element_id_to_scroll_node_index.end());
         break;
     }
@@ -991,8 +993,6 @@ class LayerTreeHostTestPushElementIdToNodeIdMap : public LayerTreeHostTest {
   void AfterTest() override {}
 
  private:
-  const ElementId kTestElementId = ElementId(42, 8118);
-
   scoped_refptr<Layer> root_;
   scoped_refptr<Layer> child_;
 };
@@ -2694,17 +2694,20 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestContinuousInvalidate);
 
 class LayerTreeHostTestDeferCommits : public LayerTreeHostTest {
  public:
-  LayerTreeHostTestDeferCommits()
-      : num_will_begin_impl_frame_(0), num_send_begin_main_frame_(0) {}
+  LayerTreeHostTestDeferCommits() = default;
 
-  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+  void BeginTest() override {
+    // Start with commits deferred.
+    PostSetDeferCommitsToMainThread(true);
+    PostSetNeedsCommitToMainThread();
+  }
 
   void WillBeginImplFrameOnThread(LayerTreeHostImpl* host_impl,
                                   const BeginFrameArgs& args) override {
+    // Impl frames happen while commits are deferred.
     num_will_begin_impl_frame_++;
     switch (num_will_begin_impl_frame_) {
       case 1:
-        break;
       case 2:
       case 3:
       case 4:
@@ -2714,7 +2717,12 @@ class LayerTreeHostTestDeferCommits : public LayerTreeHostTest {
         PostSetNeedsRedrawToMainThread();
         break;
       case 5:
-        PostSetDeferCommitsToMainThread(false);
+        MainThreadTaskRunner()->PostTask(
+            FROM_HERE,
+            // Unretained because the test should not end before allowing
+            // commits via this running.
+            base::Bind(&LayerTreeHostTestDeferCommits::AllowCommits,
+                       base::Unretained(this)));
         break;
       default:
         // Sometimes |num_will_begin_impl_frame_| will be greater than 5 if the
@@ -2724,31 +2732,127 @@ class LayerTreeHostTestDeferCommits : public LayerTreeHostTest {
   }
 
   void WillBeginMainFrame() override {
+    EXPECT_TRUE(allow_commits_);
     num_send_begin_main_frame_++;
-    switch (num_send_begin_main_frame_) {
-      case 1:
-        layer_tree_host()->SetDeferCommits(true);
-        break;
-      case 2:
-        EndTest();
-        break;
-      default:
-        NOTREACHED();
-        break;
-    }
+    EndTest();
+  }
+
+  void AllowCommits() {
+    allow_commits_ = true;
+    layer_tree_host()->SetDeferCommits(false);
   }
 
   void AfterTest() override {
     EXPECT_GE(num_will_begin_impl_frame_, 5);
-    EXPECT_EQ(2, num_send_begin_main_frame_);
+    EXPECT_EQ(1, num_send_begin_main_frame_);
   }
 
  private:
-  int num_will_begin_impl_frame_;
-  int num_send_begin_main_frame_;
+  bool allow_commits_ = false;
+  int num_will_begin_impl_frame_ = 0;
+  int num_send_begin_main_frame_ = 0;
 };
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestDeferCommits);
+
+// This verifies that we can abort a commit inside the main frame, and
+// we don't leave any weird states around if we never allow the commit
+// to happen.
+class LayerTreeHostTestDeferCommitsInsideBeginMainFrame
+    : public LayerTreeHostTest {
+ public:
+  LayerTreeHostTestDeferCommitsInsideBeginMainFrame() = default;
+
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  void WillBeginMainFrame() override {
+    ++begin_main_frame_count_;
+    if (allow_commits_)
+      return;
+
+    // This should prevent the commit from happening.
+    layer_tree_host()->SetDeferCommits(true);
+    // Wait to see if the commit happens. It's possible the deferred
+    // commit happens when it shouldn't but takes long enough that
+    // this passes. But it won't fail when it shouldn't.
+    MainThreadTaskRunner()->PostDelayedTask(
+        FROM_HERE,
+        // Unretained because the test doesn't end before this runs.
+        base::Bind(&LayerTreeTest::EndTest, base::Unretained(this)),
+        base::TimeDelta::FromMilliseconds(100));
+  }
+
+  void DidCommit() override { ++commit_count_; }
+
+  void AfterTest() override {
+    EXPECT_EQ(0, commit_count_);
+    EXPECT_EQ(1, begin_main_frame_count_);
+  }
+
+ private:
+  bool allow_commits_ = false;
+  int commit_count_ = 0;
+  int begin_main_frame_count_ = 0;
+};
+
+SINGLE_AND_MULTI_THREAD_TEST_F(
+    LayerTreeHostTestDeferCommitsInsideBeginMainFrame);
+
+// This verifies that we can abort a commit inside the main frame, and
+// we will finish the commit once it is allowed.
+class LayerTreeHostTestDeferCommitsInsideBeginMainFrameWithCommitAfter
+    : public LayerTreeHostTest {
+ public:
+  LayerTreeHostTestDeferCommitsInsideBeginMainFrameWithCommitAfter() = default;
+
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  void WillBeginMainFrame() override {
+    ++begin_main_frame_count_;
+    if (allow_commits_)
+      return;
+
+    // This should prevent the commit from happening.
+    layer_tree_host()->SetDeferCommits(true);
+    // Wait to see if the commit happens. It's possible the deferred
+    // commit happens when it shouldn't but takes long enough that
+    // this passes. But it won't fail when it shouldn't.
+    MainThreadTaskRunner()->PostDelayedTask(
+        FROM_HERE,
+        // Unretained because the test doesn't end before this runs.
+        base::Bind(
+            &LayerTreeHostTestDeferCommitsInsideBeginMainFrameWithCommitAfter::
+                AllowCommits,
+            base::Unretained(this)),
+        base::TimeDelta::FromMilliseconds(100));
+  }
+
+  void AllowCommits() {
+    // Once we've waited and seen that commit did not happen, we
+    // allow commits and should see this one go through.
+    allow_commits_ = true;
+    layer_tree_host()->SetDeferCommits(false);
+  }
+
+  void DidCommit() override {
+    ++commit_count_;
+    EXPECT_TRUE(allow_commits_);
+    EndTest();
+  }
+
+  void AfterTest() override {
+    EXPECT_EQ(1, commit_count_);
+    EXPECT_EQ(2, begin_main_frame_count_);
+  }
+
+ private:
+  bool allow_commits_ = false;
+  int commit_count_ = 0;
+  int begin_main_frame_count_ = 0;
+};
+
+SINGLE_AND_MULTI_THREAD_TEST_F(
+    LayerTreeHostTestDeferCommitsInsideBeginMainFrameWithCommitAfter);
 
 class LayerTreeHostTestCompositeImmediatelyStateTransitions
     : public LayerTreeHostTest {
@@ -7197,6 +7301,42 @@ class LayerTreeHostTestQueueImageDecodeNonLazy : public LayerTreeHostTest {
 };
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestQueueImageDecodeNonLazy);
+
+class LayerTreeHostTestHudLayerWithLayerLists : public LayerTreeHostTest {
+ public:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->initial_debug_state.show_paint_rects = true;
+    settings->use_layer_lists = true;
+  }
+
+  void SetupTree() override {
+    LayerTreeHostTest::SetupTree();
+
+    // Build the property trees for the root layer.
+    layer_tree_host()->BuildPropertyTreesForTesting();
+
+    // The HUD layer should not have been setup by the property tree building.
+    DCHECK_EQ(layer_tree_host()->hud_layer(), nullptr);
+  }
+
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  void DrawLayersOnThread(LayerTreeHostImpl* host_impl) override { EndTest(); }
+
+  void DidCommit() override {
+    auto* hud = layer_tree_host()->hud_layer();
+    DCHECK(hud);
+    auto* root_layer = layer_tree_host()->root_layer();
+    DCHECK_EQ(hud->transform_tree_index(), root_layer->transform_tree_index());
+    DCHECK_EQ(hud->clip_tree_index(), root_layer->clip_tree_index());
+    DCHECK_EQ(hud->effect_tree_index(), root_layer->effect_tree_index());
+    DCHECK_EQ(hud->scroll_tree_index(), root_layer->scroll_tree_index());
+  }
+
+  void AfterTest() override {}
+};
+
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestHudLayerWithLayerLists);
 
 }  // namespace
 }  // namespace cc

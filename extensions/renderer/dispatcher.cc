@@ -139,7 +139,7 @@ static const char kOnSuspendCanceledEvent[] = "runtime.onSuspendCanceled";
 
 void CrashOnException(const v8::TryCatch& trycatch) {
   NOTREACHED();
-};
+}
 
 // Calls a method |method_name| in a module |module_name| belonging to the
 // module system from |context|. Intended as a callback target from
@@ -206,14 +206,34 @@ void SendRequestIPC(ScriptContext* context,
 // background pages.
 void SendEventListenersIPC(binding::EventListenersChanged changed,
                            ScriptContext* context,
-                           const std::string& event_name) {
-  if (changed == binding::EventListenersChanged::HAS_LISTENERS) {
-    content::RenderThread::Get()->Send(new ExtensionHostMsg_AddListener(
-        context->GetExtensionID(), context->url(), event_name));
+                           const std::string& event_name,
+                           const base::DictionaryValue* filter) {
+  // TODO(devlin): Fix this. We need to account for lazy listeners, but it
+  // also depends on if the listener is removed due to the context being torn
+  // down or the extension unregistering.
+  bool lazy = false;
+  std::string extension_id = context->GetExtensionID();
+
+  if (filter) {
+    if (changed == binding::EventListenersChanged::HAS_LISTENERS) {
+      content::RenderThread::Get()->Send(
+          new ExtensionHostMsg_AddFilteredListener(extension_id, event_name,
+                                                   *filter, lazy));
+    } else {
+      DCHECK_EQ(binding::EventListenersChanged::NO_LISTENERS, changed);
+      content::RenderThread::Get()->Send(
+          new ExtensionHostMsg_RemoveFilteredListener(extension_id, event_name,
+                                                      *filter, lazy));
+    }
   } else {
-    DCHECK_EQ(binding::EventListenersChanged::NO_LISTENERS, changed);
-    content::RenderThread::Get()->Send(new ExtensionHostMsg_RemoveListener(
-        context->GetExtensionID(), context->url(), event_name));
+    if (changed == binding::EventListenersChanged::HAS_LISTENERS) {
+      content::RenderThread::Get()->Send(new ExtensionHostMsg_AddListener(
+          context->GetExtensionID(), context->url(), event_name));
+    } else {
+      DCHECK_EQ(binding::EventListenersChanged::NO_LISTENERS, changed);
+      content::RenderThread::Get()->Send(new ExtensionHostMsg_RemoveListener(
+          context->GetExtensionID(), context->url(), event_name));
+    }
   }
 }
 
@@ -751,8 +771,12 @@ std::vector<std::pair<const char*, int>> Dispatcher::GetJsResources() {
     {"platformApp", IDR_PLATFORM_APP_JS},
 
 #if defined(ENABLE_MEDIA_ROUTER)
+    {"chrome/browser/media/router/mojo/media_controller.mojom",
+     IDR_MEDIA_CONTROLLER_MOJOM_JS},
     {"chrome/browser/media/router/mojo/media_router.mojom",
      IDR_MEDIA_ROUTER_MOJOM_JS},
+    {"chrome/browser/media/router/mojo/media_status.mojom",
+     IDR_MEDIA_STATUS_MOJOM_JS},
     {"media_router_bindings", IDR_MEDIA_ROUTER_BINDINGS_JS},
     {"mojo/common/time.mojom", IDR_MOJO_TIME_MOJOM_JS},
     {"net/interfaces/ip_address.mojom", IDR_MOJO_IP_ADDRESS_MOJOM_JS},

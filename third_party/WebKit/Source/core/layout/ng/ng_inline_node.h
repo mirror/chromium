@@ -29,7 +29,6 @@ class NGLayoutInlineItem;
 class NGLayoutInlineItemRange;
 class NGLayoutInlineItemsBuilder;
 class NGLayoutResult;
-class NGLineBuilder;
 
 // Represents an anonymous block box to be laid out, that contains consecutive
 // inline nodes and their descendants.
@@ -39,7 +38,7 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   ~NGInlineNode() override;
 
   LayoutBlockFlow* GetLayoutBlockFlow() const { return block_; }
-  const ComputedStyle* BlockStyle() const { return block_->style(); }
+  const ComputedStyle& Style() const override { return block_->styleRef(); }
   NGLayoutInputNode* NextSibling() override;
 
   RefPtr<NGLayoutResult> Layout(NGConstraintSpace*, NGBreakToken*) override;
@@ -48,14 +47,14 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   // Computes the value of min-content and max-content for this anonymous block
   // box. min-content is the inline size when lines wrap at every break
   // opportunity, and max-content is when lines do not wrap at all.
-  MinMaxContentSize ComputeMinMaxContentSize();
+  MinMaxContentSize ComputeMinMaxContentSize() override;
 
   // Instruct to re-compute |PrepareLayout| on the next layout.
   void InvalidatePrepareLayout();
 
   const String& Text() const { return text_content_; }
-  String Text(unsigned start_offset, unsigned end_offset) const {
-    return text_content_.substring(start_offset, end_offset);
+  StringView Text(unsigned start_offset, unsigned end_offset) const {
+    return StringView(text_content_, start_offset, end_offset - start_offset);
   }
 
   Vector<NGLayoutInlineItem>& Items() { return items_; }
@@ -84,8 +83,6 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
                                NGLayoutInlineItemsBuilder*);
   void SegmentText();
   void ShapeText();
-
-  void Layout(NGLineBuilder*);
 
   LayoutObject* start_inline_;
   LayoutBlockFlow* block_;

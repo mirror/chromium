@@ -45,16 +45,14 @@ class TestPlatformDisplay : public PlatformDisplay {
   }
   void UpdateTextInputState(const ui::TextInputState& state) override {}
   void SetImeVisibility(bool visible) override {}
-  bool UpdateViewportMetrics(const display::ViewportMetrics& metrics) override {
-    if (metrics_ == metrics)
-      return false;
+  void UpdateViewportMetrics(const display::ViewportMetrics& metrics) override {
     metrics_ = metrics;
-    return true;
   }
   gfx::AcceleratedWidget GetAcceleratedWidget() const override {
     return gfx::kNullAcceleratedWidget;
   }
   FrameGenerator* GetFrameGenerator() override { return nullptr; }
+  EventSink* GetEventSink() override { return nullptr; }
 
  private:
   display::ViewportMetrics metrics_;
@@ -230,6 +228,19 @@ void TestWindowManager::WmCreateTopLevelWindow(
 
 void TestWindowManager::WmClientJankinessChanged(ClientSpecificId client_id,
                                                  bool janky) {}
+
+void TestWindowManager::WmBuildDragImage(const gfx::Point& screen_location,
+                                         const SkBitmap& drag_image,
+                                         const gfx::Vector2d& drag_image_offset,
+                                         ui::mojom::PointerKind source) {}
+
+void TestWindowManager::WmMoveDragImage(
+    const gfx::Point& screen_location,
+    const WmMoveDragImageCallback& callback) {
+  callback.Run();
+}
+
+void TestWindowManager::WmDestroyDragImage() {}
 
 void TestWindowManager::WmPerformMoveLoop(uint32_t change_id,
                                           uint32_t window_id,

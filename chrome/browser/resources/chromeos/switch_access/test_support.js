@@ -7,7 +7,3 @@
  * SwitchAccessUnitTest can load.
  */
 chrome.automation = {};
-
-chrome.automation.getDesktop = function() {};
-
-window = {};

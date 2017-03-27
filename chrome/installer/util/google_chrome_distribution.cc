@@ -21,7 +21,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/win/registry.h"
 #include "base/win/windows_version.h"
-#include "chrome/common/chrome_icon_resources_win.h"
 #include "chrome/common/chrome_paths_internal.h"
 #include "chrome/install_static/install_util.h"
 #include "chrome/installer/util/app_registration_data.h"
@@ -41,8 +40,6 @@
 namespace {
 
 const wchar_t kChromeGuid[] = L"{8A69D345-D564-463c-AFF1-A69D9E530F96}";
-const wchar_t kCommandExecuteImplUuid[] =
-    L"{5C65F4B0-3651-4514-B207-D10CB699B14B}";
 
 // Substitute the locale parameter in uninstall URL with whatever
 // Google Update tells us is the locale. In case we fail to find
@@ -155,10 +152,6 @@ base::string16 GoogleChromeDistribution::GetShortcutName() {
   return installer::GetLocalizedString(IDS_PRODUCT_NAME_BASE);
 }
 
-int GoogleChromeDistribution::GetIconIndex() {
-  return icon_resources::kApplicationIndex;
-}
-
 base::string16 GoogleChromeDistribution::GetPublisherName() {
   const base::string16& publisher_name =
       installer::GetLocalizedString(IDS_ABOUT_VERSION_COMPANY_NAME_BASE);
@@ -229,19 +222,6 @@ base::string16 GoogleChromeDistribution::GetDistributionData(HKEY root_key) {
   }
 
   return result;
-}
-
-base::string16 GoogleChromeDistribution::GetUninstallRegPath() {
-  return L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\"
-         L"Google Chrome";
-}
-
-base::string16 GoogleChromeDistribution::GetIconFilename() {
-  return installer::kChromeExe;
-}
-
-base::string16 GoogleChromeDistribution::GetCommandExecuteImplClsid() {
-  return kCommandExecuteImplUuid;
 }
 
 // This method checks if we need to change "ap" key in Google Update to try

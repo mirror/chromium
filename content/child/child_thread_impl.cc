@@ -454,13 +454,10 @@ void ChildThreadImpl::Init(const Options& options) {
     // When connect_to_browser is true, we obtain interfaces from the browser
     // process by connecting to it, rather than from the incoming interface
     // provider. Exposed interfaces are subject to manifest capability spec.
-    service_manager::InterfaceProvider* remote_interfaces = nullptr;
     if (options.connect_to_browser) {
       browser_connection_ =
           service_manager_connection_->GetConnector()->Connect(
               mojom::kBrowserServiceName);
-    } else {
-      remote_interfaces = GetRemoteInterfaces();
     }
 
     // TODO(rockot): Remove this once all child-to-browser interface connections
@@ -468,7 +465,7 @@ void ChildThreadImpl::Init(const Options& options) {
     // InterfaceProvider, and all exposed interfaces are exposed via a
     // ConnectionFilter.
     service_manager_connection_->SetupInterfaceRequestProxies(
-        GetInterfaceRegistry(), remote_interfaces);
+        GetInterfaceRegistry(), nullptr);
   }
 
   sync_message_filter_ = channel_->CreateSyncMessageFilter();
@@ -506,13 +503,14 @@ void ChildThreadImpl::Init(const Options& options) {
         ChildProcess::current()->io_task_runner()));
     channel_->AddFilter(new ChildMemoryMessageFilter());
 
-    memory_instrumentation::MemoryDumpManagerDelegateImpl::Config config(
-        GetRemoteInterfaces());
-    auto delegate =
-        base::MakeUnique<memory_instrumentation::MemoryDumpManagerDelegateImpl>(
-            config);
-    base::trace_event::MemoryDumpManager::GetInstance()->Initialize(
-        std::move(delegate));
+    if (service_manager_connection_) {
+      memory_instrumentation::MemoryDumpManagerDelegateImpl::Config config(
+          GetConnector(), mojom::kBrowserServiceName);
+      auto delegate = base::MakeUnique<
+          memory_instrumentation::MemoryDumpManagerDelegateImpl>(config);
+      base::trace_event::MemoryDumpManager::GetInstance()->Initialize(
+          std::move(delegate));
+    }
   }
 
   // In single process mode we may already have a power monitor,
@@ -652,13 +650,8 @@ service_manager::InterfaceRegistry* ChildThreadImpl::GetInterfaceRegistry() {
   return interface_registry_.get();
 }
 
-service_manager::InterfaceProvider* ChildThreadImpl::GetRemoteInterfaces() {
-  if (browser_connection_)
-    return browser_connection_->GetRemoteInterfaces();
-
-  if (!remote_interfaces_.get())
-    remote_interfaces_.reset(new service_manager::InterfaceProvider);
-  return remote_interfaces_.get();
+service_manager::Connector* ChildThreadImpl::GetConnector() {
+  return service_manager_connection_->GetConnector();
 }
 
 const service_manager::ServiceInfo&

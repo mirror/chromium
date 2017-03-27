@@ -33,7 +33,7 @@
 #include <memory>
 
 #include "bindings/core/v8/ScriptController.h"
-#include "core/InstrumentingAgents.h"
+#include "core/InspectorInstrumentationAgents.h"
 #include "core/dom/ChildFrameDisconnector.h"
 #include "core/dom/DocumentType.h"
 #include "core/dom/StyleChangeReason.h"
@@ -385,15 +385,15 @@ void LocalFrame::reload(FrameLoadType loadType,
     request.setClientRedirect(clientRedirectPolicy);
     m_loader.load(request, loadType);
   } else {
-    DCHECK_EQ(FrameLoadTypeReloadMainResource, loadType);
+    DCHECK_EQ(FrameLoadTypeReload, loadType);
     m_navigationScheduler->scheduleReload();
   }
 }
 
 void LocalFrame::detach(FrameDetachType type) {
   // Note that detach() can be re-entered, so it's not possible to
-  // DCHECK(!m_isDetaching) here.
-  m_isDetaching = true;
+  // DCHECK(isAttached()) here.
+  m_lifecycle.advanceTo(FrameLifecycle::Detaching);
 
   if (isLocalRoot())
     m_performanceMonitor->shutdown();
@@ -452,6 +452,7 @@ void LocalFrame::detach(FrameDetachType type) {
   m_supplements.clear();
   m_frameScheduler.reset();
   WeakIdentifierMap<LocalFrame>::notifyObjectDestroyed(this);
+  m_lifecycle.advanceTo(FrameLifecycle::Detached);
 }
 
 bool LocalFrame::prepareForCommit() {
@@ -869,7 +870,7 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       m_interfaceProvider(interfaceProvider),
       m_interfaceRegistry(interfaceRegistry) {
   if (isLocalRoot()) {
-    m_instrumentingAgents = new InstrumentingAgents();
+    m_instrumentingAgents = new InspectorInstrumentationAgents();
     m_performanceMonitor = new PerformanceMonitor(this);
   } else {
     m_instrumentingAgents = localFrameRoot()->m_instrumentingAgents;

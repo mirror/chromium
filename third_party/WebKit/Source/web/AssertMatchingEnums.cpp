@@ -842,8 +842,6 @@ STATIC_ASSERT_ENUM(LocalFrameClient::UnloadHandler,
 STATIC_ASSERT_ENUM(WebFrameLoadType::Standard, FrameLoadTypeStandard);
 STATIC_ASSERT_ENUM(WebFrameLoadType::BackForward, FrameLoadTypeBackForward);
 STATIC_ASSERT_ENUM(WebFrameLoadType::Reload, FrameLoadTypeReload);
-STATIC_ASSERT_ENUM(WebFrameLoadType::ReloadMainResource,
-                   FrameLoadTypeReloadMainResource);
 STATIC_ASSERT_ENUM(WebFrameLoadType::ReplaceCurrentItem,
                    FrameLoadTypeReplaceCurrentItem);
 STATIC_ASSERT_ENUM(WebFrameLoadType::InitialInChildFrame,
@@ -870,8 +868,12 @@ STATIC_ASSERT_ENUM(
     WebSettings::ProgressBarCompletion::ResourcesBeforeDCLAndSameOriginIFrames,
     ProgressBarCompletion::ResourcesBeforeDCLAndSameOriginIFrames);
 
+// This ensures that the version number published in
+// WebSerializedScriptValueVersion.h matches the serializer's understanding.
+// TODO(jbroman): Fix this to also account for the V8-side version. See
+// https://crbug.com/704293.
 static_assert(kSerializedScriptValueVersion ==
                   SerializedScriptValue::wireFormatVersion,
-              "");
+              "Update WebSerializedScriptValueVersion.h.");
 
 }  // namespace blink

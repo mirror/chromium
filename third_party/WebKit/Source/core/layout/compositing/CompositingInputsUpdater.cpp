@@ -5,7 +5,6 @@
 #include "core/layout/compositing/CompositingInputsUpdater.h"
 
 #include "core/dom/Document.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutView.h"
@@ -48,12 +47,14 @@ static const PaintLayer* findParentLayerOnClippingContainerChain(
     if (current->hasLayer())
       return static_cast<const LayoutBoxModelObject*>(current)->layer();
     // Having clip or overflow clip forces the LayoutObject to become a layer,
-    // except for contains: paint, which may apply to SVG.
+    // except for contains: paint, which may apply to SVG, and
+    // control clip, which may apply to LayoutBox subtypes.
     // SVG (other than LayoutSVGRoot) cannot have PaintLayers.
     DCHECK(!current->hasClipRelatedProperty() ||
-           current->styleRef().containsPaint());
+           current->styleRef().containsPaint() ||
+           (current->isBox() && toLayoutBox(current)->hasControlClip()));
   }
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return nullptr;
 }
 
@@ -64,7 +65,7 @@ static const PaintLayer* findParentLayerOnContainingBlockChain(
     if (current->hasLayer())
       return static_cast<const LayoutBoxModelObject*>(current)->layer();
   }
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return nullptr;
 }
 

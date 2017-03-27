@@ -168,7 +168,7 @@ var ExceptionPairEntryEvent;
 Polymer({
   is: 'passwords-section',
 
-  behaviors: [settings.GlobalScrollTargetBehavior],
+  behaviors: [settings.GlobalScrollTargetBehavior, I18nBehavior],
 
   properties: {
     /** Preferences state. */
@@ -234,7 +234,7 @@ Polymer({
   setPasswordExceptionsListener_: null,
 
   /** @override */
-  ready: function() {
+  attached: function() {
     // Create listener functions.
     var setSavedPasswordsListener = function(list) {
       this.savedPasswords = list;
@@ -351,7 +351,9 @@ Polymer({
    * @return {string} password
    * @private
    */
-  getEmptyPassword_: function(length) { return ' '.repeat(length); },
+  getEmptyPassword_: function(length) {
+    return ' '.repeat(length);
+  },
 
   /**
    * Opens the password action menu.
@@ -390,5 +392,14 @@ Polymer({
           this.setPassword(item.loginPair, item.plaintextPassword);
         }.bind(this));
   },
+
+  /**
+   * @private
+   * @param {boolean} toggleValue
+   * @return {string}
+   */
+  getOnOffLabel_: function(toggleValue) {
+    return toggleValue ? this.i18n('toggleOn') : this.i18n('toggleOff');
+  }
 });
 })();

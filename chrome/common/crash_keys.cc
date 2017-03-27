@@ -16,7 +16,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "components/flags_ui/flags_ui_switches.h"
 #include "content/public/common/content_switches.h"
-#include "gpu/config/gpu_util.h"
+#include "gpu/config/gpu_crash_keys.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/common/chrome_switches.h"
