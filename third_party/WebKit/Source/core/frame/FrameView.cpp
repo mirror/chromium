@@ -1296,6 +1296,10 @@ void FrameView::layout() {
     updateScrollbars();
     updateParentScrollableAreaSet();
 
+    if (document->textAutosizer() && document->textAutosizer()->pageInfoDidChange()) {
+      document->textAutosizer()->clearPageInfoDidChange();
+      setNeedsLayout();
+    }
     IntSize newSize(size());
     if (oldSize != newSize) {
       m_needsScrollbarsUpdate = true;

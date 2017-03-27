@@ -236,7 +236,8 @@ TextAutosizer::TextAutosizer(const Document* document)
       m_clusterStack(),
       m_fingerprintMapper(),
       m_pageInfo(),
-      m_updatePageInfoDeferred(false) {
+      m_updatePageInfoDeferred(false),
+      m_pageInfoDidChange(false) {
 }
 
 TextAutosizer::~TextAutosizer() {}
@@ -610,8 +611,11 @@ void TextAutosizer::updatePageInfo() {
             previousPageInfo.m_accessibilityFontScaleFactor ||
         m_pageInfo.m_deviceScaleAdjustment !=
             previousPageInfo.m_deviceScaleAdjustment ||
-        m_pageInfo.m_settingEnabled != previousPageInfo.m_settingEnabled)
+        m_pageInfo.m_settingEnabled != previousPageInfo.m_settingEnabled) {
       setAllTextNeedsLayout();
+      m_pageInfoDidChange = true;
+    }
+    m_pageInfoDidChange |= !previousPageInfo.m_pageNeedsAutosizing;
   } else if (previousPageInfo.m_hasAutosized) {
     // If we are no longer autosizing the page, we won't do anything during the
     // next layout. Set all the multipliers back to 1 now.
