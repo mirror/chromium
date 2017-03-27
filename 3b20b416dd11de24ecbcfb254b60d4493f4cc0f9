@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b10f2b6b_693dd911",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-03-27T14:26:03Z",
+      "side": 1,
+      "message": "The presubmit should\u0027ve informed you to run `git cl format`. Did that not happen? Or was the output too hard to see? Now my unrelated change https://codereview.chromium.org/2770693003/ reformats these lines, and I\u0027m trying to understand how that happened.",
+      "range": {
+        "startLine": 305,
+        "startChar": 8,
+        "endLine": 305,
+        "endChar": 15
+      },
+      "revId": "3b20b416dd11de24ecbcfb254b60d4493f4cc0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
