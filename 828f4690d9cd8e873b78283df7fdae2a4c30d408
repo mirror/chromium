@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a3b08af_fdc71637",
+        "filename": "tools/directory_component_mapping/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-28T00:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56bc34ce_15e45082",
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd5e69ad_5b411897",
         "filename": "tools/directory_component_mapping/README.md",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e233fe_250bc83d",
+        "filename": "tools/directory_component_mapping/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-28T00:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd5e69ad_5b411897",
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "04962ad5_1127a611",
+        "filename": "tools/directory_component_mapping/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-28T00:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df8798b6_10344b21",
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70aef6fc_9417db0c",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-03-21T16:40:30Z",
       "side": 1,
       "message": "Incidentally, you might want to look at go/pytotw/014. I\u0027m not too worried about it in this instance, and Chromium might not have the same official aversion as Google (e.g. it\u0027s used a lot in buildbot), but in general, some of the other options, like json or protobufs, would be better, and I think more typical, even in Chromium code.",
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362aa52f_57ddcca1",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-28T00:11:00Z",
+      "side": 1,
+      "message": "Thanks for pointing out and sharing the link. Great to learn this! JSON is possible here. The current model pipelines have some special python objects that cannot be serialized in JSON. The biggest hurdle is due to numpy. I\u0027ll add a TODO here.",
+      "parentUuid": "70aef6fc_9417db0c",
       "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
