@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51d13c7a_a6103134",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-28T21:44:34Z",
+      "side": 1,
+      "message": "To clarify this: It looks like this doesn\u0027t include HEAD~n?\n\ne.g. passing number\u003d1 would mean we just look at the current commit, not the previous commit. Right?",
+      "range": {
+        "startLine": 60,
+        "startChar": 48,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979ca2ab_3d838774",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-28T21:44:34Z",
+      "side": 1,
+      "message": "\"each commit in the most recent n commits\".\n\nSeems like the constants here could be globals, e.g.\n\nNUM_PULL_REQUESTS\nNUM_CHROMIUM_COMMITS",
+      "range": {
+        "startLine": 26,
+        "startChar": 57,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9416089d_f5a61f1f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-28T21:44:34Z",
+      "side": 1,
+      "message": "For any TODOs that you want to leave in the code, it\u0027s a good idea to make it TODO(jeffcarp) so that people know who to contact later.",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8762636_c51b5e22",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-28T21:44:34Z",
+      "side": 1,
+      "message": "This comment is a bit unclear as-is.",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4015e3_065cdc78",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-28T21:44:34Z",
+      "side": 1,
+      "message": "Will probably want to uncomment this?",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553998c1_0b94b4e0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-28T21:44:34Z",
+      "side": 1,
+      "message": "In general, docstrings use triple-double-quotes (\"\"\"), and there\u0027s a blank line between the first line (summary) and the rest (details). Since this is for a test method, I would just change this to line comments (with #).",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78079816_6ff59f78",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-28T21:44:34Z",
+      "side": 1,
+      "message": "As-is, this test sets up a canned return values to simulate a situation where we have 4 exportable commits, and 3 of those have PRs, right?\n\nIn this example, is PR 2345 un-mergeable, and below we assert that we try to merge two PRs (1234 and 3456) and we try to create one PR (Chromium ##458476)?\n\nIf this is correct, do you think it would be helpful to readers to explain more specifics about this test method?",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
