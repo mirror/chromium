@@ -11,10 +11,10 @@ test suite where all browser engines are collaborating. There's also a
 that will [soon be merged into
 web-platform-tests](https://github.com/w3c/csswg-test/issues/1102).
 
-Chromium has 2-way import/export process with the upstream web-platform-tests
-repository, where tests are imported into
+Chromium has a [2-way import/export process](./wpt_sync.md) with the upstream
+web-platform-tests repository, where tests are [imported](./wpt_sync.md#WPT%20Importer) into
 [LayoutTests/external/wpt](../../third_party/WebKit/LayoutTests/external/wpt)
-and any changes to the imported tests are also exported to web-platform-tests.
+and any changes to the imported tests are also [exported](./wpt_sync.md#WPT%20Exporter) to web-platform-tests.
 
 See http://web-platform-tests.org/ for general documentation on
 web-platform-tests, including tips for writing and reviewing tests.
@@ -48,6 +48,24 @@ The easiest way to check the status of recent imports is to look at:
     [blink-w3c-test-autoroller@chromium.org](https://codereview.chromium.org/search?owner=blink-w3c-test-autoroller%40chromium.org).
 
 Automatic imports are intended to run at least once every 24 hours.
+
+### Automatic export process
+
+The source for the exporter lives in [third_party/WebKit/Tools/Scripts/wpt-exporter]().
+
+View [recently exported PRs on GitHub](https://github.com/w3c/web-platform-tests/pulls?utf8=%E2%9C%93&q=is%3Apr%20label%3Achromium-export).
+
+The exporter runs continuously under the chromium.infra.cron master. See [all recent builds](https://build.chromium.org/p/chromium.infra.cron/builders/wpt-exporter).
+
+It uses the GitHub account [@chromium-wpt-export-bot](https://github.com/chromium-wpt-export-bot).
+
+this synchronization. The team that maintains these tools is Blink
+Infra. Please reach out to
+[blink-infra@chromium.org](mailto:blink-infra@chromium.org) with any
+
+If the exporter is misbehaving
+
+In the unlikely event that the exporter starts misbehaving -- for example, creating the same PR over and over again -- **all you need to do to disable the exporter is [land this CL]()**, which will put it in "dry run" mode.  (TODO: create the CL and CC me and qy) 
 
 ### Skipped tests
 
