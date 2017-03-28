@@ -139,6 +139,52 @@
       "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e7cf8a_62851952",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-28T18:21:08Z",
+      "side": 1,
+      "message": "Check enumerate - https://docs.python.org/2/library/functions.html#enumerate\n\nIt\u0027s better than range()",
+      "range": {
+        "startLine": 245,
+        "startChar": 22,
+        "endLine": 245,
+        "endChar": 27
+      },
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4b9828_ce34f202",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-28T18:21:08Z",
+      "side": 1,
+      "message": "nit: Adding empty lines and comments can improve readability.",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 263,
+        "endChar": 17
+      },
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
