@@ -2597,8 +2597,6 @@ crbug.com/705490 external/wpt/fetch/api/redirect/redirect-location-worker.html [
 crbug.com/705490 external/wpt/fetch/api/redirect/redirect-location.html [ Timeout Pass ]
 crbug.com/705490 external/wpt/fetch/api/redirect/redirect-origin-worker.html [ Timeout Pass ]
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-default-conditional.html [ Timeout Pass ]
-crbug.com/705490 external/wpt/fetch/api/cors/cors-redirect-preflight-worker.html [ Timeout Pass ]
-crbug.com/705490 external/wpt/fetch/api/cors/cors-redirect-preflight.html [ Timeout Pass ]
 
 # Non-deterministic output, as the failing subtests dump timestamps.
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
