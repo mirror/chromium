@@ -12,6 +12,7 @@ test type, options, URLs to use, and reference file paths if applicable.
 import json
 import logging
 
+from webkitpy.common.memoized import memoized
 from webkitpy.common.webkit_finder import WebKitFinder
 
 _log = logging.getLogger(__file__)
@@ -44,20 +45,33 @@ class WPTManifest(object):
             return items['testharness'][path_in_wpt]
         return None
 
+    @memoized
+    def _urls(self):
+        """Returns a set of the urls for all items in the manifest."""
+        urls = set()
+        if 'items' in self.raw_dict:
+            items = self.raw_dict['items']
+            for category in ('manual', 'reftest', 'testharness'):
+                if category in items:
+                    for records in items[category].values():
+                        urls.update([item[0] for item in records])
+        return urls
+
     def is_test_file(self, path_in_wpt):
         return self._items_for_path(path_in_wpt) is not None
+
+    def is_test_url(self, url):
+        """Check if the passed 'url' is associated with a test
+        in the manifest. The url must be just the pathname,
+        with a leading slash (/)."""
+        if url[0] != '/':
+            raise Exception('Test url missing leading /: %s' % url)
+        return url in self._urls()
 
     def file_path_to_url_paths(self, path_in_wpt):
         manifest_items = self._items_for_path(path_in_wpt)
         assert manifest_items is not None
-        if len(manifest_items) != 1:
-            return []
-        url = manifest_items[0][0]
-        if url[1:] != path_in_wpt:
-            # TODO(tkent): foo.any.js and bar.worker.js should be accessed
-            # as foo.any.html, foo.any.worker, and bar.worker with WPTServe.
-            return []
-        return [path_in_wpt]
+        return [item[0][1:] for item in manifest_items]
 
     @staticmethod
     def _get_extras_from_item(item):
