@@ -2662,3 +2662,5 @@ crbug.com/706091 [ Linux ] virtual/wheelscrolllatching/fast/events/wheel/wheel-s
 
 crbug.com/v8/5808 inspector/coverage/gutter-js.html  [ NeedsManualRebaseline ]
 crbug.com/v8/5808 inspector/coverage/multiple-instances-merge.html [ NeedsManualRebaseline ]
+
+crbug.com/31666 external/wpt/workers/nested_worker.worker.html [ Skip ]
