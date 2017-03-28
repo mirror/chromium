@@ -751,6 +751,12 @@ class Port(object):
             return WPTManifest('{}')
         return WPTManifest(self._filesystem.read_text_file(manifest_path))
 
+    def is_wpt_test(self, test_entry):
+        match = re.match(r'external/wpt(/.*)', test_entry)
+        if not match:
+            return False
+        return self._wpt_manifest().is_test_url(match.group(1))
+
     def is_slow_wpt_test(self, test_file):
         match = re.match(r'external/wpt/(.*)', test_file)
         if not match:
@@ -836,7 +842,7 @@ class Port(object):
         """Returns True if the test name refers to an existing test or baseline."""
         # Used by test_expectations.py to determine if an entry refers to a
         # valid test and by printing.py to determine if baselines exist.
-        return self.test_isfile(test_name) or self.test_isdir(test_name)
+        return self.is_wpt_test(test_name) or self.test_isfile(test_name) or self.test_isdir(test_name)
 
     def split_test(self, test_name):
         """Splits a test name into the 'directory' part and the 'basename' part."""
