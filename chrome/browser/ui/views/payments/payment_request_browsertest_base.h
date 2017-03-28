@@ -79,6 +79,7 @@ class PaymentRequestBrowserTestBase
   void OnBackNavigation() override;
   void OnContactInfoOpened() override;
   void OnEditorViewUpdated() override;
+  void OnErrorMessageShown() override;
 
   // views::WidgetObserver
   // Effective way to be warned of all dialog closures.

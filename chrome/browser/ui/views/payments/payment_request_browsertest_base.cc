@@ -130,6 +130,11 @@ void PaymentRequestBrowserTestBase::OnEditorViewUpdated() {
     event_observer_->Observe(DialogEvent::EDITOR_VIEW_UPDATED);
 }
 
+void PaymentRequestBrowserTestBase::OnErrorMessageShown() {
+  if (event_observer_)
+    event_observer_->Observe(DialogEvent::ERROR_MESSAGE_SHOWN);
+}
+
 void PaymentRequestBrowserTestBase::OnWidgetDestroyed(views::Widget* widget) {
   if (event_observer_)
     event_observer_->Observe(DialogEvent::DIALOG_CLOSED);
