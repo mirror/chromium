@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "967f26d6_48cf805d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-29T21:08:53Z",
+      "side": 1,
+      "message": "Yes thank you for catching this! Maybe we should change it to HEAD~n+1 to make the behavior more intuitive? I\u0027ll update it to that in the next patch. lmk what you think.",
+      "parentUuid": "51d13c7a_a6103134",
+      "range": {
+        "startLine": 60,
+        "startChar": 48,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "979ca2ab_3d838774",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "57f19790_97c6de17",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-29T21:08:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "979ca2ab_3d838774",
+      "range": {
+        "startLine": 26,
+        "startChar": 57,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9416089d_f5a61f1f",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 6
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "676fbb51_373634a4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-29T21:08:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9416089d_f5a61f1f",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8762636_c51b5e22",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 6
@@ -76,6 +142,24 @@
       "writtenOn": "2017-03-28T21:44:34Z",
       "side": 1,
       "message": "This comment is a bit unclear as-is.",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001fa352_8c75b597",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-29T21:08:53Z",
+      "side": 1,
+      "message": "Sorry, it was an idea I wanted to write down that the exporter should not continue if the number of in-flight PRs \u003e number of PRs we fetch from GitHub. Given the current volume I don\u0027t imagine this ever becoming a problem, so I\u0027m removing this comment.",
+      "parentUuid": "f8762636_c51b5e22",
       "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "95d6939e_59d68179",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-29T21:08:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "553998c1_0b94b4e0",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78079816_6ff59f78",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
         "patchSetId": 6
@@ -127,6 +229,24 @@
       "writtenOn": "2017-03-28T21:44:34Z",
       "side": 1,
       "message": "As-is, this test sets up a canned return values to simulate a situation where we have 4 exportable commits, and 3 of those have PRs, right?\n\nIn this example, is PR 2345 un-mergeable, and below we assert that we try to merge two PRs (1234 and 3456) and we try to create one PR (Chromium ##458476)?\n\nIf this is correct, do you think it would be helpful to readers to explain more specifics about this test method?",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e640cc95_519ac44b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-29T21:08:53Z",
+      "side": 1,
+      "message": "Adding more explanation",
+      "parentUuid": "78079816_6ff59f78",
       "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
