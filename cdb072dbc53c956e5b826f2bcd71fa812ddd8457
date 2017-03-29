@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "509f25a3_1cc4e2f4",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-29T22:29:16Z",
+      "side": 1,
+      "message": "Depending on the situation, someone might need to create a copy of that CL and land it, but anyway that doesn\u0027t need to be detailed in the docs.\n\nFormatting nit: Could add line breaks to keep this within 80 columns, or whatever it is now.",
+      "range": {
+        "startLine": 56,
+        "startChar": 119,
+        "endLine": 56,
+        "endChar": 236
+      },
+      "revId": "cdb072dbc53c956e5b826f2bcd71fa812ddd8457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
