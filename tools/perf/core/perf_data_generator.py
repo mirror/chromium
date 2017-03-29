@@ -480,7 +480,8 @@ def get_waterfall_config():
 
 
 def generate_isolate_script_entry(swarming_dimensions, test_args,
-    isolate_name, step_name, override_compile_targets=None,
+    isolate_name, step_name, ignore_swarming_task_failure,
+    override_compile_targets=None,
     swarming_timeout=None):
   result = {
     'args': test_args,
@@ -496,6 +497,7 @@ def generate_isolate_script_entry(swarming_dimensions, test_args,
       'can_use_on_swarming_builders': True,
       'expiration': 10 * 60 * 60, # 10 hour timeout for now (crbug.com/699312)
       'hard_timeout': swarming_timeout if swarming_timeout else 7200,
+      'ignore_swarming_task_failure': ignore_swarming_task_failure,
       'io_timeout': 3600,
       'dimension_sets': swarming_dimensions,
     }
@@ -518,15 +520,20 @@ def generate_telemetry_test(swarming_dimensions, benchmark_name, browser):
   # When this is enabled on more than just windows machines we will need
   # --device=android
 
+  ignore_swarming_task_failure = False
   step_name = benchmark_name
   if browser == 'reference':
     test_args.append('--output-trace-tag=_ref')
     step_name += '.reference'
+    # We ignore the failures on reference builds since there is little we can do
+    # to fix them except waiting for the reference build to update.
+    ignore_swarming_task_failure = True
 
   return generate_isolate_script_entry(
-    swarming_dimensions, test_args, 'telemetry_perf_tests',
-    step_name, ['telemetry_perf_tests'],
-    swarming_timeout=BENCHMARK_SWARMING_TIMEOUTS.get(benchmark_name))
+      swarming_dimensions, test_args, 'telemetry_perf_tests',
+      step_name, ignore_swarming_task_failure=ignore_swarming_task_failure,
+      override_compile_targets=['telemetry_perf_tests'],
+      swarming_timeout=BENCHMARK_SWARMING_TIMEOUTS.get(benchmark_name))
 
 
 def script_test_enabled_on_tester(master, test, tester_name, shard):
@@ -566,7 +573,8 @@ def get_swarming_dimension(dimension, device_affinity):
 def generate_cplusplus_isolate_script_test(dimension):
   return [
     generate_isolate_script_entry(
-        [get_swarming_dimension(dimension, shard)], [], name, name)
+        [get_swarming_dimension(dimension, shard)], [], name, name,
+        ignore_swarming_task_failure=False)
     for name, shard in dimension['perf_tests']
   ]
 
