@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f2456d76_01d552c0",
+        "filename": "chrome/browser/payments/chrome_payment_request_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-03-29T00:01:58Z",
+      "side": 1,
+      "message": "if there\u0027s no dialog you are going to be passive aggressive? Cool!",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "a97d1cb4008a0b337d00cf79dd724174991a5aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d9d09e_b4575a3d",
+        "filename": "chrome/browser/payments/chrome_payment_request_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-03-29T00:01:58Z",
+      "side": 1,
+      "message": "why show error? Just hide and passive aggressively ignore it.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "a97d1cb4008a0b337d00cf79dd724174991a5aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ddfdb32_f4163024",
         "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
         "patchSetId": 1
