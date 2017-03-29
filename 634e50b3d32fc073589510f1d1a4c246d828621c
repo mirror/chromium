@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65d9eeb4_e3ef9907",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-29T17:05:07Z",
+      "side": 1,
+      "message": "The test listing logic (Port.tests()) depends on this function, which now I think may need to change.\n\nSpecifically, I think we want Port.tests to find wpt tests that aren\u0027t files.",
+      "range": {
+        "startLine": 720,
+        "startChar": 0,
+        "endLine": 731,
+        "endChar": 100
+      },
+      "revId": "634e50b3d32fc073589510f1d1a4c246d828621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158afb85_1b34bda0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-29T17:05:07Z",
+      "side": 1,
+      "message": "Maybe this is a little cautious -- normally for MANIFEST.json we\u0027re expecting that there will always be \"items\", with \"manual\", \"reftest\" and \"testharness\". If those aren\u0027t present, then that means MANIFEST.json isn\u0027t fully generated, or the format has changed, I think?",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "634e50b3d32fc073589510f1d1a4c246d828621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1962df_8a89b7e0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-29T17:05:07Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes a difference here, but you could also use a set comprehension by using curly braces, e.g. {r[0] for r in records}",
+      "range": {
+        "startLine": 57,
+        "startChar": 36,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "634e50b3d32fc073589510f1d1a4c246d828621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060a63bb_69eba68e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-29T17:05:07Z",
+      "side": 1,
+      "message": "Style convention nits:\n - Usually there\u0027s a one-line summary followed by an optional detail paragraph.\n - Verbs are usually in third-person singular form (\"Checks\")\n - Variable names are sometimes marked off with bars (|) or backticks (`), but this isn\u0027t very consistent and it\u0027s not necessary to mark it with any quotes.\n\nIn general, most of the docstrings follow the examples in the Google Python Style Guide (https://google.github.io/styleguide/pyguide.html?showone\u003dComments#Comments).",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "634e50b3d32fc073589510f1d1a4c246d828621c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
