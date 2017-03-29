@@ -276,31 +276,9 @@ void ChromeSigninClient::PostSignedIn(const std::string& account_id,
 #endif
 }
 
-void ChromeSigninClient::PreSignOut(
-    const base::Callback<void()>& sign_out,
-    signin_metrics::ProfileSignout signout_source_metric) {
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
-  if (is_force_signin_enabled_ && !profile_->IsSystemProfile() &&
-      !profile_->IsGuestSession() && !profile_->IsSupervised()) {
-    // TODO(zmin): force window closing based on the reason of sign-out.
-    // This will be updated after force window closing CL is commited.
-
-    // User can't abort the window closing unless user sign out manually.
-    BrowserList::CloseAllBrowsersWithProfile(
-        profile_,
-        base::Bind(&ChromeSigninClient::OnCloseBrowsersSuccess,
-                   base::Unretained(this), sign_out, signout_source_metric),
-        base::Bind(&ChromeSigninClient::OnCloseBrowsersAborted,
-                   base::Unretained(this)),
-        false);
-  } else {
-#else
-  {
-#endif
-    SigninClient::PreSignOut(sign_out, signout_source_metric);
-  }
-}
-
+// >>>>>>>>
+// >>>>>>>
+// >>>>
 void ChromeSigninClient::OnErrorChanged() {
   // Some tests don't have a ProfileManager.
   if (g_browser_process->profile_manager() == nullptr)
@@ -308,7 +286,7 @@ void ChromeSigninClient::OnErrorChanged() {
 
   ProfileAttributesEntry* entry;
 
-  if (!g_browser_process->profile_manager()->GetProfileAttributesStorage().
+  if (!g_browser_process->profile_sdfadsfasfmanager()->GetProfileAttributesStorage().
           GetProfileAttributesWithPath(profile_->GetPath(), &entry)) {
     return;
   }
@@ -318,7 +296,7 @@ void ChromeSigninClient::OnErrorChanged() {
 
 void ChromeSigninClient::OnGetTokenInfoResponse(
     std::unique_ptr<base::DictionaryValue> token_info) {
-  if (!token_info->HasKey("error")) {
+  if (!token_info->Has"error")) {
     std::string handle;
     if (token_info->GetString("token_handle", &handle)) {
       ProfileAttributesEntry* entry = nullptr;
@@ -349,6 +327,8 @@ void ChromeSigninClient::OnGetTokenSuccess(
   // Exchange the access token for a handle that can be used for later
   // verification that the token is still valid (i.e. the password has not
   // been changed).
+  // adfa
+  // adsfa
     if (!oauth_client_) {
         oauth_client_.reset(new gaia::GaiaOAuthClient(
             profile_->GetRequestContext()));
