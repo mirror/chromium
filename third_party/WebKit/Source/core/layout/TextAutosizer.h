@@ -68,8 +68,6 @@ class CORE_EXPORT TextAutosizer final
 
   void updatePageInfoInAllFrames();
   void updatePageInfo();
-  bool pageInfoDidChange() const { return m_pageInfoDidChange; }
-  void clearPageInfoDidChange() { m_pageInfoDidChange = false; }
   void record(LayoutBlock*);
   void record(LayoutText*);
   void destroy(LayoutBlock*);
@@ -359,7 +357,6 @@ class CORE_EXPORT TextAutosizer final
   // FIXME: All frames should share the same m_pageInfo instance.
   PageInfo m_pageInfo;
   bool m_updatePageInfoDeferred;
-  bool m_pageInfoDidChange;
 };
 
 }  // namespace blink
