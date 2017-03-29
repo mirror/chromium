@@ -3553,6 +3553,8 @@ void FrameView::forceLayoutForPagination(const FloatSize& pageSize,
     }
   }
 
+  if (TextAutosizer* textAutosizer = m_frame->document()->textAutosizer())
+    textAutosizer->updatePageInfoInAllFrames();
   adjustViewSizeAndLayout();
 }
 
