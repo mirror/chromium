@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73ecc6b7_963ef7b3",
+        "filename": "chrome/browser/signin/chrome_signin_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1137562
+      },
+      "writtenOn": "2017-03-29T18:04:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e171485b_5af0633b",
+      "revId": "ed7b0f554bcccbd81d7dc38f333c6ab5d6e47dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2af02c7c_a7a16f16",
         "filename": "chrome/browser/signin/chrome_signin_client.cc",
         "patchSetId": 2
