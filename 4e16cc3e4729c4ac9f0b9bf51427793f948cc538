@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2c1c8c3_0f9ce5ac",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1615,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-03-29T17:33:58Z",
+      "side": 1,
+      "message": "What about updating this?",
+      "range": {
+        "startLine": 1615,
+        "startChar": 17,
+        "endLine": 1615,
+        "endChar": 23
+      },
+      "revId": "4e16cc3e4729c4ac9f0b9bf51427793f948cc538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33fbd12_da16769e",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-03-29T17:33:58Z",
+      "side": 1,
+      "message": "Shinium?",
+      "range": {
+        "startLine": 1617,
+        "startChar": 14,
+        "endLine": 1617,
+        "endChar": 22
+      },
+      "revId": "4e16cc3e4729c4ac9f0b9bf51427793f948cc538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
