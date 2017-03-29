@@ -680,9 +680,13 @@ class Port(object):
         """Returns the list of tests found matching paths."""
         tests = self.real_tests(paths)
 
+        # todo prevent real tests from searching external/wpt
+        # add a new method on wptmanifest to search within external/wpt
+
         suites = self.virtual_test_suites()
         if paths:
             tests.extend(self._virtual_tests_matching_paths(paths, suites))
+            tests.extend(self._wpt_test_urls_matching_paths(paths))
         else:
             tests.extend(self._all_virtual_tests(suites))
         return tests
@@ -750,6 +754,12 @@ class Port(object):
             _log.error('Manifest not found at %s. See http://crbug.com/698294', manifest_path)
             return WPTManifest('{}')
         return WPTManifest(self._filesystem.read_text_file(manifest_path))
+
+    def is_wpt_test(self, test_entry):
+        match = re.match(r'external/wpt(/.*)', test_entry)
+        if not match:
+            return False
+        return self._wpt_manifest().is_test_url(match.group(1))
 
     def is_slow_wpt_test(self, test_file):
         match = re.match(r'external/wpt/(.*)', test_file)
@@ -836,7 +846,7 @@ class Port(object):
         """Returns True if the test name refers to an existing test or baseline."""
         # Used by test_expectations.py to determine if an entry refers to a
         # valid test and by printing.py to determine if baselines exist.
-        return self.test_isfile(test_name) or self.test_isdir(test_name)
+        return self.is_wpt_test(test_name) or self.test_isfile(test_name) or self.test_isdir(test_name)
 
     def split_test(self, test_name):
         """Splits a test name into the 'directory' part and the 'basename' part."""
@@ -1512,6 +1522,15 @@ class Port(object):
                 if any(test.startswith(p) for p in paths):
                     tests.append(test)
         return tests
+
+    def _wpt_test_urls_matching_paths(self, paths):
+        test_files = []
+        for path in paths:
+            match = re.match(r'external/wpt(/.+)', path)
+            path_in_wpt = match.group(1)
+            if match and self._wpt_manifest().is_test_url(path_in_wpt):
+                test_files.append(path)
+        return test_files
 
     def _populate_virtual_suite(self, suite):
         if not suite.tests:
