@@ -16,6 +16,24 @@
       "revId": "9722153309fd8fe779482edc19817ce5c4e4f336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c5b855_0e325089",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-29T18:29:36Z",
+      "side": 1,
+      "message": "Changed this to \"Our mirror of the web-platform-tests repo.\", does this sound OK?",
+      "parentUuid": "304c08b8_8cff13c9",
+      "revId": "9722153309fd8fe779482edc19817ce5c4e4f336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
