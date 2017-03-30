@@ -2,6 +2,59 @@
   "comments": [
     {
       "key": {
+        "uuid": "ca336116_f888f023",
+        "filename": "chrome/browser/signin/chrome_signin_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1137562
+      },
+      "writtenOn": "2017-03-30T21:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac1f390_720f4ee1",
+      "revId": "8fb9ef0c604fd54abf34153311abc7f56c75497b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17cef9a9_62cae20a",
+        "filename": "chrome/browser/signin/chrome_signin_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1137562
+      },
+      "writtenOn": "2017-03-30T21:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac1f390_720f4ee1",
+      "revId": "8fb9ef0c604fd54abf34153311abc7f56c75497b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3481844_70cf4414",
+        "filename": "chrome/browser/signin/chrome_signin_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1137562
+      },
+      "writtenOn": "2017-03-30T21:26:07Z",
+      "side": 1,
+      "message": "Here is some other human comments.",
+      "revId": "8fb9ef0c604fd54abf34153311abc7f56c75497b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "599943bc_2e0b1c23",
         "filename": "chrome/browser/signin/force_signin_verifier.cc",
         "patchSetId": 3
