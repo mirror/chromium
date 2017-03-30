@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "robotId": "chromium-codebots/innovation-week",
+      "robotRunId": "chromium-codebots:1490908249.14",
+      "fixSuggestions": [
+        {
+          "fixId": "6cf680e5_dae8c5ff",
+          "description": "Fix",
+          "replacements": [
+            {
+              "path": "components/payments/core/payment_address.cc",
+              "range": {
+                "startLine": 33,
+                "startChar": 13,
+                "endLine": 33,
+                "endChar": 21
+              },
+              "replacement": "-\u003e"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ada7f448_5b46e449",
+        "filename": "components/payments/core/payment_address.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1192539
+      },
+      "writtenOn": "2017-03-30T21:10:54Z",
+      "side": 1,
+      "message": "nit: for smart pointers, use -\u003e instead of .get()-\u003e",
+      "revId": "ba275f734c50562c0072af8dfe273406bbb194fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "robotId": "chromium-codebots/innovation-week",
+      "robotRunId": "chromium-codebots:1490908249.14",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "860abda3_c6fdb3ed",
+        "filename": "components/payments/core/payment_address.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1192539
+      },
+      "writtenOn": "2017-03-30T21:10:54Z",
+      "side": 1,
+      "message": "cpplint:Weird number of spaces at line-start.  Are you using a 2-space indent?  [whitespace/indent] [3]",
+      "revId": "ba275f734c50562c0072af8dfe273406bbb194fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "robotId": "chromium-codebots/innovation-week",
+      "robotRunId": "chromium-codebots:1490908249.14",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2550817f_8400ac98",
+        "filename": "components/payments/core/payment_address.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1192539
+      },
+      "writtenOn": "2017-03-30T21:10:54Z",
+      "side": 1,
+      "message": "cpplint:Weird number of spaces at line-start.  Are you using a 2-space indent?  [whitespace/indent] [3]",
+      "revId": "ba275f734c50562c0072af8dfe273406bbb194fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "robotId": "chromium-codebots/innovation-week",
+      "robotRunId": "chromium-codebots:1490908249.14",
+      "fixSuggestions": [
+        {
+          "fixId": "68e0c750_2f531cd3",
+          "description": "Fix",
+          "replacements": [
+            {
+              "path": "components/payments/core/payment_address.cc",
+              "range": {
+                "startLine": 36,
+                "startChar": 3,
+                "endLine": 36,
+                "endChar": 17
+              },
+              "replacement": "NOTREACHED()"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "d9b9eb1e_116515bc",
+        "filename": "components/payments/core/payment_address.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1192539
+      },
+      "writtenOn": "2017-03-30T21:10:54Z",
+      "side": 1,
+      "message": "nit: Use NOTREACHED() instead",
+      "revId": "ba275f734c50562c0072af8dfe273406bbb194fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
