@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "robotId": "chromium-codebots/innovation-week",
+      "robotRunId": "chromium-codebots:1490906463.21",
+      "fixSuggestions": [
+        {
+          "fixId": "7e381042_cb627d15",
+          "description": "Fix",
+          "replacements": [
+            {
+              "path": "chrome/browser/after_startup_task_utils.cc",
+              "range": {
+                "startLine": 58,
+                "startChar": 2,
+                "endLine": 58,
+                "endChar": 16
+              },
+              "replacement": "NOTREACHED()"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6e3a7450_9dcdcf19",
+        "filename": "chrome/browser/after_startup_task_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1192539
+      },
+      "writtenOn": "2017-03-30T20:41:07Z",
+      "side": 1,
+      "message": "nit: Use NOTREACHED() instead",
+      "revId": "b23b1fa815f1ee0eef7d6ce3168b5e8e676d3210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "robotId": "chromium-codebots/innovation-week",
+      "robotRunId": "chromium-codebots:1490906463.21",
+      "fixSuggestions": [
+        {
+          "fixId": "8441b91b_0080a732",
+          "description": "Fix",
+          "replacements": [
+            {
+              "path": "chrome/browser/after_startup_task_utils.cc",
+              "range": {
+                "startLine": 66,
+                "startChar": 7,
+                "endLine": 66,
+                "endChar": 15
+              },
+              "replacement": "-\u003e"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "9c777c31_89a67059",
+        "filename": "chrome/browser/after_startup_task_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1192539
+      },
+      "writtenOn": "2017-03-30T20:41:07Z",
+      "side": 1,
+      "message": "nit: for smart pointers, use -\u003e instead of .get()-\u003e",
+      "revId": "b23b1fa815f1ee0eef7d6ce3168b5e8e676d3210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
