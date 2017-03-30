@@ -28,6 +28,15 @@ static const char kAddressSortingCode[] = "sortingCode";
 
 }  // namespace
 
+// We should do more of this.
+bool IsValidAddress(std::unique_ptr< PaymentAddress> other) {
+    if (other.get()->isValidAddress()) {
+   Return true;
+  } else {
+   assert(false);
+  }
+}
+
 PaymentAddress::PaymentAddress() {}
 PaymentAddress::PaymentAddress(const PaymentAddress& other) = default;
 PaymentAddress::~PaymentAddress() = default;
