@@ -2622,7 +2622,6 @@ crbug.com/659139 [ Mac ] shapedetection/detection-options.html [ Skip ]
 crbug.com/685951 css2.1/t040304-c64-uri-00-a-g.html [ Failure Pass ]
 
 # Importing 'fetch' tests from WPT.
-crbug.com/705490 external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
 crbug.com/705490 external/wpt/fetch/api/redirect/redirect-location-worker.html [ Timeout Pass ]
 crbug.com/705490 external/wpt/fetch/api/redirect/redirect-location.html [ Timeout Pass ]
 crbug.com/705490 external/wpt/fetch/api/redirect/redirect-origin-worker.html [ Timeout Pass ]
@@ -2683,3 +2682,4 @@ crbug.com/706119 fast/forms/focus-selection-textarea.html [ Failure ]
 
 # Tests to be run only under virtual/experimental-canvas-features/
 crbug.com/682753 fast/canvas-experimental [ Skip ]
+crbug.com/31666 external/wpt/workers/nested_worker.worker.html [ Skip ]
