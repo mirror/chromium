@@ -1610,7 +1610,7 @@ if (enable_resource_whitelist_generation) {
 if (is_linux) {
   action("manpage") {
     if (is_chrome_branded) {
-      name = "Google Chrome"
+      name = "Google Shine"
       filename = "google-chrome"
       confdir = "google-chrome"
     } else {
