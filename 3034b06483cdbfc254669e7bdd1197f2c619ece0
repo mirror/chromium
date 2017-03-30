@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82d55bbd_60d7e7f2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-30T23:33:05Z",
+      "side": 1,
+      "message": "Personal opinion: This might be clearer if rephrased a little, e.g.\n\n    \"\"\"Creates PRs from Chromium commits and merges open PRs.\n\n    The exporter has two stages:\n     (1) Create pull requests for exportable changes in Chromium in the last COMMIT_HISTORY_WINDOW commits.\n     (2) Merge pull requests that are ready to merge within the last PR_HISTORY_WINDOW pull requests.\n    \"\"\"\n\nDon\u0027t have to use this phrasing, and the current phrasing is also OK.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 82
+      },
+      "revId": "3034b06483cdbfc254669e7bdd1197f2c619ece0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6dd66c_79bad1c2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-30T23:33:05Z",
+      "side": 1,
+      "message": "Nit: Period at at end of sentence.\n\nAlso, for patches with conflicts, will they need manual intervention before a PR is created, or can we create a PR for an arbitrary patch, even one that won\u0027t apply?",
+      "revId": "3034b06483cdbfc254669e7bdd1197f2c619ece0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66cc1284_b1c86537",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-30T23:33:05Z",
+      "side": 1,
+      "message": "A few notes about this function:\n - It\u0027s probably a good idea to add a unit test.\n - The piece of the function that extracts the commit position from the body could be extracted to a little helper function.\n - If you add an explicit \"return None\" at the end, that will make it more explicit what will happen if no PRs match.\n - Probably unimportant, but it\u0027s worth noting that this is quite strict about the format (if there\u0027s not exactly one space after the colon, it won\u0027t match). If you wanted to make it less strict, you could also use regex.",
+      "revId": "3034b06483cdbfc254669e7bdd1197f2c619ece0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
