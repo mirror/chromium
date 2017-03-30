@@ -1,0 +1,41 @@
+{
+  "comments": [
+    {
+      "robotId": "chromium-codebots/innovation-week",
+      "robotRunId": "chromium-codebots:1490899345.87",
+      "fixSuggestions": [
+        {
+          "fixId": "fd2c32a7_037aa15a",
+          "description": "Fix",
+          "replacements": [
+            {
+              "path": "chrome/browser/after_startup_task_utils.cc",
+              "range": {
+                "startLine": 65,
+                "startChar": 7,
+                "endLine": 65,
+                "endChar": 15
+              },
+              "replacement": "-\u003e"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "e0b959a2_877ad707",
+        "filename": "chrome/browser/after_startup_task_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1192539
+      },
+      "writtenOn": "2017-03-30T18:42:29Z",
+      "side": 1,
+      "message": "nit: for smart pointers, use -\u003e instead of .get()-\u003e",
+      "revId": "f0241ce30888254fe0d2276dadc3978cf2225dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
