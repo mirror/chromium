@@ -61,6 +61,8 @@ void RunTask(std::unique_ptr<AfterStartupTask> queued_task) {
   // We're careful to delete the caller's |task| on the target runner's thread.
   DCHECK(queued_task->task_runner->RunsTasksOnCurrentThread());
   queued_task->task.Run();
+  // we are doing something here
+  myptr.get()->dosomething();
 }
 
 void ScheduleTask(std::unique_ptr<AfterStartupTask> queued_task) {
