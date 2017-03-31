@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+FAIL mutation exception test assert_throws: function "function () {
+				window.screen.width = 0
+			}" did not throw
+Harness: the test ran to completion.
+
