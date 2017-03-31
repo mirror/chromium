@@ -5,12 +5,19 @@
 #ifndef COMPONENTS_FEATURE_ENGAGEMENT_TRACKER_INTERNAL_ANDROID_FEATURE_ENGAGEMENT_TRACKER_IMPL_ANDROID_H_
 #define COMPONENTS_FEATURE_ENGAGEMENT_TRACKER_INTERNAL_ANDROID_FEATURE_ENGAGEMENT_TRACKER_IMPL_ANDROID_H_
 
+#include <string>
+#include <unordered_map>
+
 #include "base/android/callback_android.h"
 #include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "base/supports_user_data.h"
 #include "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.h"
+
+namespace base {
+struct Feature;
+}  // namespace base
 
 namespace feature_engagement_tracker {
 
@@ -53,6 +60,15 @@ class FeatureEngagementTrackerImplAndroid
       const base::android::JavaParamRef<jobject>& j_callback_obj);
 
  private:
+  // Uses GetAllFeatures() to set up the |features_| map. This is always called
+  // from the constructor.
+  void SetUpFeatureMapping();
+
+  // A map from the base::Feature name to the feature, to ensure that the Java
+  // version of the API can use the string name. If base::Feature becomes a Java
+  // class as well, we should remove this mapping.
+  std::unordered_map<std::string, const base::Feature*> features_;
+
   // The FeatureEngagementTrackerImpl this is a JNI bridge for.
   FeatureEngagementTrackerImpl* feature_engagement_tracker_impl_;
 
