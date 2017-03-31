@@ -487,3 +487,120 @@ class PinterestDesktopStory(_MediaBrowsingStory):
                           '".Button.borderless.close.visible")')
     action_runner.ClickElement(element_function=x_element_function)
     action_runner.Wait(1)  # Wait to make navigation realistic.
+
+
+##############################################################################
+# Maps browsing stories.
+##############################################################################
+
+
+class GoogleMapsStory(_NewsBrowsingStory):
+  """
+  Google maps story:
+    _ Start at https://www.maps.google.com/maps
+    _ Search for "restaurents near me" and wait for 4 sec.
+    _ Click ZoomIn two times, waiting for 3 sec in between.
+    _ Scroll the map horizontally and vertically.
+    _ Pick a restaurant and ask for directions.
+  """
+  # When recording this story:
+  # Force tactile using this: http://google.com/maps?force=tt
+  # Force webgl using this: http://google.com/maps?force=webgl
+  # Reduce the speed as mentioned in the comment below for
+  # RepeatableBrowserDrivenScroll
+  NAME = 'browse:tools:maps'
+  URL = 'https://www.maps.google.com/maps'
+  _MAPS_SEARCH_BOX_SELECTOR = 'input[aria-label="Search Google Maps"]'
+  _MAPS_ZOOM_IN_SELECTOR = '[aria-label="Zoom in"]'
+  _RESTAURANTS_LINK = '[data-result-index="1"]'
+  _DIRECTIONS_LINK = '[class="section-hero-header-directions-icon"]'
+  _DIRECTIONS_FROM_BOX = '[class="tactile-searchbox-input"]'
+  SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
+  TAGS = [story_tags.JAVASCRIPT_HEAVY]
+
+  def _DidLoadDocument(self, action_runner):
+    # Click on the search box.
+    action_runner.WaitForElement(selector=self._MAPS_SEARCH_BOX_SELECTOR)
+    action_runner.ClickElement(selector=self._MAPS_SEARCH_BOX_SELECTOR)
+
+    # Submit search query.
+    action_runner.EnterText('restaurants near me')
+    action_runner.Wait(0.5)
+    action_runner.PressKey('Return')
+    action_runner.Wait(2)
+
+    # ZoomIn two times.
+    action_runner.ClickElement(selector=self._MAPS_ZOOM_IN_SELECTOR)
+    action_runner.Wait(2)
+    action_runner.ClickElement(selector=self._MAPS_ZOOM_IN_SELECTOR)
+    action_runner.Wait(2)
+
+    # Reduce the speed (the current wpr is recorded with speed set to 50)  when
+    # recording the wpr. If we scroll too fast, the data will not be recorded
+    # well. After recording reset it back to the original value to have a more
+    # realistic scroll.
+    action_runner.RepeatableBrowserDrivenScroll(
+        x_scroll_distance_ratio = 0.0, y_scroll_distance_ratio = 0.5,
+        repeat_count=2, speed=500, timeout=120, repeat_delay_ms=2000)
+    action_runner.Wait(2)
+    action_runner.RepeatableBrowserDrivenScroll(
+        x_scroll_distance_ratio = 0.5, y_scroll_distance_ratio = 0,
+        repeat_count=2, speed=500, timeout=120, repeat_delay_ms=2000)
+
+    action_runner.Wait(2)
+    action_runner.ClickElement(selector=self._RESTAURANTS_LINK)
+    action_runner.Wait(3)
+    action_runner.ClickElement(selector=self._DIRECTIONS_LINK)
+    action_runner.Wait(0.5)
+    action_runner.ClickElement(selector=self._DIRECTIONS_FROM_BOX)
+    action_runner.EnterText('6 Pancras Road London')
+    action_runner.Wait(0.4)
+    action_runner.PressKey('Return')
+    action_runner.Wait(2)
+
+
+class GoogleEarthStory(_NewsBrowsingStory):
+  """
+  Google Earth story:
+    _ Start at https://www.maps.google.com/maps
+    _ Click on the Earth link
+    _ Click ZoomIn three times, waiting for 3 sec in between.
+
+  """
+  # When recording this story:
+  # Force tactile using this: http://google.com/maps?force=tt
+  # Force webgl using this: http://google.com/maps?force=webgl
+  # Change the speed as mentioned in the comment below for
+  # RepeatableBrowserDrivenScroll
+  NAME = 'browse:tools:earth'
+  # Randomly picked location.
+  URL = 'https://www.google.co.uk/maps/@51.4655936,-0.0985949,3329a,35y,40.58t/data=!3m1!1e3'
+  _EARTH_BUTTON_SELECTOR = '[aria-labelledby="widget-minimap-caption"]'
+  _EARTH_ZOOM_IN_SELECTOR = '[aria-label="Zoom in"]'
+  _MAPS_SEARCH_BOX_SELECTOR = 'input[aria-label="Search Google Maps"]'
+  SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
+  TAGS = [story_tags.JAVASCRIPT_HEAVY]
+
+  def _DidLoadDocument(self, action_runner):
+    # Zommin three times.
+    action_runner.WaitForElement(selector=self._EARTH_ZOOM_IN_SELECTOR)
+    action_runner.ClickElement(selector=self._EARTH_ZOOM_IN_SELECTOR)
+    action_runner.Wait(1)
+    action_runner.ClickElement(selector=self._EARTH_ZOOM_IN_SELECTOR)
+    action_runner.Wait(1)
+    action_runner.ClickElement(selector=self._EARTH_ZOOM_IN_SELECTOR)
+    action_runner.Wait(1)
+    action_runner.ClickElement(selector=self._EARTH_ZOOM_IN_SELECTOR)
+    action_runner.Wait(4)
+
+    # Reduce the speed (the current wpr is recorded with speed set to 50)  when
+    # recording the wpr. If we scroll too fast, the data will not be recorded
+    # well. After recording reset it back to the original value to have a more
+    # realistic scroll.
+    action_runner.RepeatableBrowserDrivenScroll(
+        x_scroll_distance_ratio = 0.0, y_scroll_distance_ratio = 1,
+        repeat_count=3, speed=400, timeout=120)
+    action_runner.RepeatableBrowserDrivenScroll(
+        x_scroll_distance_ratio = 1, y_scroll_distance_ratio = 0,
+        repeat_count=3, speed=500, timeout=120)
+    action_runner.Wait(1)
