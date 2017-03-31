@@ -328,7 +328,6 @@ void DownloadItemImpl::ValidateDangerousDownload() {
   UpdateObservers();  // TODO(asanka): This is potentially unsafe. The download
                       // may not be in a consistent state or around at all after
                       // invoking observers. http://crbug.com/586610
-
   MaybeCompleteDownload();
 }
 
@@ -622,11 +621,11 @@ std::string DownloadItemImpl::GetRemoteAddress() const {
 
 bool DownloadItemImpl::HasUserGesture() const {
   return has_user_gesture_;
-};
+}
 
 ui::PageTransition DownloadItemImpl::GetTransitionType() const {
   return transition_type_;
-};
+}
 
 const std::string& DownloadItemImpl::GetLastModifiedTime() const {
   return last_modified_time_;
@@ -925,7 +924,7 @@ DownloadItemImpl::ResumeMode DownloadItemImpl::GetResumeMode() const {
   bool user_action_required =
       (auto_resume_count_ >= kMaxAutoResumeAttempts || IsPaused());
 
-  switch(last_reason_) {
+  switch (last_reason_) {
     case DOWNLOAD_INTERRUPT_REASON_FILE_TRANSIENT_ERROR:
     case DOWNLOAD_INTERRUPT_REASON_NETWORK_TIMEOUT:
       break;
@@ -986,7 +985,6 @@ DownloadItemImpl::ResumeMode DownloadItemImpl::GetResumeMode() const {
     case DOWNLOAD_INTERRUPT_REASON_SERVER_UNAUTHORIZED:
     case DOWNLOAD_INTERRUPT_REASON_SERVER_CERT_PROBLEM:
     case DOWNLOAD_INTERRUPT_REASON_SERVER_FORBIDDEN:
-      // Unhandled.
       return RESUME_MODE_INVALID;
   }
 
