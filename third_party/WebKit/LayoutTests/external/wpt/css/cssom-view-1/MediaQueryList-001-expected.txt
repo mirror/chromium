@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL matchMedia assert_equals: Expected value for device-aspect-ratio is 1280/800 expected true but got false
+Harness: the test ran to completion.
+
