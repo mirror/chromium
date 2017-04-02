@@ -1,0 +1,12 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x166
+  LayoutBlockFlow {HTML} at (0,0) size 800x166
+    LayoutBlockFlow {BODY} at (8,16) size 784x142
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 765x36
+          text run at (0,0) width 765: "Test passes if, when the upper element is unfocused and the lower element is focused, the upper element is blue and the"
+          text run at (0,18) width 436: "lower one is green, and they are surrounded by a thick green border."
+      LayoutBlockFlow {DIV} at (0,52) size 784x90 [border: (15px solid #0000FF)]
+        LayoutBlockFlow {DIV} at (15,15) size 754x30 [border: (15px solid #0000FF)]
+        LayoutBlockFlow {DIV} at (15,45) size 754x30 [border: (15px solid #0000FF)]

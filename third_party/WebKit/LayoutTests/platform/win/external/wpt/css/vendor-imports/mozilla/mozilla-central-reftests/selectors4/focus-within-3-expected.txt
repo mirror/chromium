@@ -1,0 +1,27 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x365
+  LayoutBlockFlow {HTML} at (0,0) size 800x365
+    LayoutBlockFlow {BODY} at (8,16) size 784x341
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 572x19
+          text run at (0,0) width 572: "Test passes if, when the element inside the iframe is focused, there is no red border surrounded."
+      LayoutBlockFlow {DIV} at (0,36) size 784x305
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,52) size 300x300
+  LayoutIFrame {IFRAME} at (0,0) size 300x300
+    layer at (0,0) size 300x300
+      LayoutView at (0,0) size 300x300
+    layer at (0,0) size 300x230
+      LayoutBlockFlow {HTML} at (0,0) size 300x230
+        LayoutBlockFlow {BODY} at (8,16) size 284x206
+          LayoutBlockFlow {P} at (0,0) size 284x100
+            LayoutText {#text} at (0,0) size 274x99
+              text run at (0,0) width 244: "Test passes if, when the upper element is"
+              text run at (0,20) width 265: "unfocused and the lower element is focused,"
+              text run at (0,40) width 274: "the upper element is blue and the lower one is"
+              text run at (0,60) width 250: "green, and they are surrounded by a thick"
+              text run at (0,80) width 82: "green border."
+          LayoutBlockFlow {DIV} at (0,116) size 284x90 [border: (15px solid #0000FF)]
+            LayoutBlockFlow {DIV} at (15,15) size 254x30 [border: (15px solid #0000FF)]
+            LayoutBlockFlow {DIV} at (15,45) size 254x30 [border: (15px solid #0000FF)]
