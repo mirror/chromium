@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "098efe18_b75c773b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-03T17:37:34Z",
+      "side": 1,
+      "message": "Thanks I\u0027ll include this - one thing though, wouldn\u0027t it be \"starting from the commit before HEAD~n\"?",
+      "parentUuid": "4ea543bb_cf710c4e",
+      "range": {
+        "startLine": 60,
+        "startChar": 48,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "979ca2ab_3d838774",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 6
@@ -222,6 +246,24 @@
       "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780cce51_97a2c5c1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-03T17:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4015e3_065cdc78",
+      "revId": "66d5840346a4a8c205cbabebd2630b75f8bbd2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
