@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fec73852_6b19ae0c",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-03T18:41:02Z",
+      "side": 1,
+      "message": "machines -\u003e machine?",
+      "range": {
+        "startLine": 1430,
+        "startChar": 71,
+        "endLine": 1430,
+        "endChar": 79
+      },
+      "revId": "ee006a4db59a27079edee3b728628a86d349e2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
