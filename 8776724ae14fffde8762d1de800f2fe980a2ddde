@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93d64f3b_ca0e0107",
+        "filename": "components/feature_engagement_tracker/internal/android/feature_engagement_tracker_impl_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-03T18:55:30Z",
+      "side": 1,
+      "message": "Should the results of this just be passed into the constructor?",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 21
+      },
+      "revId": "8776724ae14fffde8762d1de800f2fe980a2ddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1d0bad_c21982c0",
+        "filename": "components/feature_engagement_tracker/internal/android/feature_engagement_tracker_impl_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-03T18:55:30Z",
+      "side": 1,
+      "message": "Should these be DCHECK failures?",
+      "revId": "8776724ae14fffde8762d1de800f2fe980a2ddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b605e41a_401e0daf",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-03T18:55:30Z",
+      "side": 1,
+      "message": "Should this just be pulled out to a FeatureVector using declaration?",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 39
+      },
+      "revId": "8776724ae14fffde8762d1de800f2fe980a2ddde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
