@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89b33cf_4153da49",
+        "filename": "tools/component_mapper/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-04-03T19:31:30Z",
+      "side": 1,
+      "message": "Nit: trailing space.",
+      "revId": "2bcbb6d14aa668c268d0ccb2a0aba9b413c9dc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353c8bfa_04dd7ad2",
+        "filename": "tools/component_mapper/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-04-03T19:31:30Z",
+      "side": 1,
+      "message": "Nit: trailing space.",
+      "revId": "2bcbb6d14aa668c268d0ccb2a0aba9b413c9dc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade5fac8_7ad2e794",
+        "filename": "tools/component_mapper/component_tree.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-04-03T19:31:30Z",
+      "side": 1,
+      "message": "This should be a command-line option to component_mapper.py, and then passed into ComponentTree(). The MONORAIL_* values probably actually are constants, although if it\u0027s possible to use different values (e.g. with a staging instance), you might want to make those optional command-line args too (with these values as the defaults).",
+      "revId": "2bcbb6d14aa668c268d0ccb2a0aba9b413c9dc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9ee407_f432690b",
+        "filename": "tools/component_mapper/gt_mapping.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-04-03T19:31:30Z",
+      "side": 1,
+      "message": "These should also be command-line options, and then passed into GroundTruthMapping().",
+      "revId": "2bcbb6d14aa668c268d0ccb2a0aba9b413c9dc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
