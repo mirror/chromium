@@ -92,33 +92,15 @@ void FeatureEngagementTrackerImplAndroid::SetUpFeatureMapping() {
   }
 }
 
-void FeatureEngagementTrackerImplAndroid::Event(
+void FeatureEngagementTrackerImplAndroid::NotifyEvent(
     JNIEnv* env,
     const base::android::JavaRef<jobject>& jobj,
-    const base::android::JavaParamRef<jstring>& jfeature,
-    const base::android::JavaParamRef<jstring>& jprecondition) {
-  std::string feature = ConvertJavaStringToUTF8(env, jfeature);
-  std::string precondition = ConvertJavaStringToUTF8(env, jprecondition);
-  if (features_.find(feature) == features_.end()) {
-    DVLOG(1) << "Unable to find feature mapping: " << feature;
-    return;
-  }
-  feature_engagement_tracker_impl_->Event(*features_[feature], precondition);
+    const base::android::JavaParamRef<jstring>& jevent) {
+  std::string event = ConvertJavaStringToUTF8(env, jevent);
+  feature_engagement_tracker_impl_->NotifyEvent(event);
 }
 
-void FeatureEngagementTrackerImplAndroid::Used(
-    JNIEnv* env,
-    const base::android::JavaRef<jobject>& jobj,
-    const base::android::JavaParamRef<jstring>& jfeature) {
-  std::string feature = ConvertJavaStringToUTF8(env, jfeature);
-  if (features_.find(feature) == features_.end()) {
-    DVLOG(1) << "Unable to find feature mapping: " << feature;
-    return;
-  }
-  feature_engagement_tracker_impl_->Used(*features_[feature]);
-}
-
-bool FeatureEngagementTrackerImplAndroid::Trigger(
+bool FeatureEngagementTrackerImplAndroid::ShouldTriggerHelpUI(
     JNIEnv* env,
     const base::android::JavaRef<jobject>& jobj,
     const base::android::JavaParamRef<jstring>& jfeature) {
@@ -127,7 +109,8 @@ bool FeatureEngagementTrackerImplAndroid::Trigger(
     DVLOG(1) << "Unable to find feature mapping: " << feature;
     return false;
   }
-  return feature_engagement_tracker_impl_->Trigger(*features_[feature]);
+  return feature_engagement_tracker_impl_->ShouldTriggerHelpUI(
+      *features_[feature]);
 }
 
 void FeatureEngagementTrackerImplAndroid::Dismissed(
