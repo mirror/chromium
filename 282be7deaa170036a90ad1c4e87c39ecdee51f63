@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b91b464d_2201ebe2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-04-03T17:29:40Z",
+      "side": 1,
+      "message": "BUG\u003d",
+      "revId": "282be7deaa170036a90ad1c4e87c39ecdee51f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45fd8a2c_4f5ab0dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/ChannelsInitializer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-04-03T17:29:40Z",
+      "side": 1,
+      "message": "Why not use ContextUtils? Because we have to hold on to the NotificationManager regardless?",
+      "revId": "282be7deaa170036a90ad1c4e87c39ecdee51f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7bc97c_3a8b51a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationBuilderForO.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-04-03T17:29:40Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate to create a new channel initializer for each notification. Since we\u0027ll need to do it on start-up too, have you considered:\n\n  (a) just make the methods in the initializer static?\n  (b) having ChromiumApplication.getChannelInitializer() that initializes it lazily?",
+      "revId": "282be7deaa170036a90ad1c4e87c39ecdee51f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
