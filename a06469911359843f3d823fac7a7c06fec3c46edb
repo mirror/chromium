@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de3940f4_bd72e3a9",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 2410,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-04-03T04:26:52Z",
+      "side": 0,
+      "message": "I\u0027ll keep these marked as Failure and don\u0027t generate any expected file.",
+      "revId": "a06469911359843f3d823fac7a7c06fec3c46edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
