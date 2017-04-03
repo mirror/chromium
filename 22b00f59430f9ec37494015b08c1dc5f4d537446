@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db35dc9f_cf833ea7",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-04-03T11:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa175696_91b1311a",
+      "range": {
+        "startLine": 497,
+        "startChar": 42,
+        "endLine": 497,
+        "endChar": 0
+      },
+      "revId": "22b00f59430f9ec37494015b08c1dc5f4d537446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78c26b27_df06db64",
         "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "944fe922_d19f0b02",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-04-03T11:35:45Z",
+      "side": 1,
+      "message": "Yes, the flags are public.",
+      "parentUuid": "78c26b27_df06db64",
+      "revId": "22b00f59430f9ec37494015b08c1dc5f4d537446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbff78eb_5531901e",
         "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-03-31T11:48:39Z",
       "side": 1,
       "message": "These arbitrary wait time usually create flaky test. Can you change them to wait for certain event to happen in the page instead?",
+      "range": {
+        "startLine": 528,
+        "startChar": 27,
+        "endLine": 528,
+        "endChar": 0
+      },
+      "revId": "22b00f59430f9ec37494015b08c1dc5f4d537446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1df88a_a1851277",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-04-03T11:35:45Z",
+      "side": 1,
+      "message": "I have removed most of the waits and added event to wait for the restaurants pane to be updated. I still retained a couple of waits after zooming. Without those waits, not all tiles are rendered properly. I couldn\u0027t find any event to see if the tiles are rendered correctly.  There are also couple of more waits, to make the navigation more realistic,  otherwise the events happen too fast.",
+      "parentUuid": "fbff78eb_5531901e",
       "range": {
         "startLine": 528,
         "startChar": 27,
