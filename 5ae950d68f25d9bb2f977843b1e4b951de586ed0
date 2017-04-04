@@ -34,6 +34,24 @@
       "revId": "5ae950d68f25d9bb2f977843b1e4b951de586ed0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1021f40_e82d95f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/ChannelsInitializer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-04-04T16:25:29Z",
+      "side": 1,
+      "message": "changed my mind, we\u0027ll defer this decision till adding sites. Gone with ChannelId as simplest now.",
+      "parentUuid": "3cd5e507_fb352457",
+      "revId": "5ae950d68f25d9bb2f977843b1e4b951de586ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
