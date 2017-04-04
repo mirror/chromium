@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "704880ed_de35b41a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/ChannelsInitializer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-04-04T14:06:04Z",
+      "side": 1,
+      "message": "micro nit: maybe ChannelId to match the enumeration prefixes?",
+      "revId": "5ae950d68f25d9bb2f977843b1e4b951de586ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
