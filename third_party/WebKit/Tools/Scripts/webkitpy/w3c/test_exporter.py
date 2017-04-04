@@ -5,20 +5,28 @@
 import logging
 
 from webkitpy.w3c.local_wpt import LocalWPT
+from webkitpy.w3c.chromium_finder import absolute_chromium_dir
+from webkitpy.w3c.chromium_commit import ChromiumCommit
 from webkitpy.w3c.common import exportable_commits_over_last_n_commits
+from webkitpy.w3c.gerrit import Gerrit
 from webkitpy.w3c.wpt_github import WPTGitHub, MergeError
 
 _log = logging.getLogger(__name__)
 
 PR_HISTORY_WINDOW = 100
 COMMIT_HISTORY_WINDOW = 5000
+WPT_URL = 'https://github.com/w3c/web-platform-tests/'
 
 
 class TestExporter(object):
 
-    def __init__(self, host, gh_user, gh_token, dry_run=False):
+    # TODO Make Gerrit credentials optional
+    def __init__(self, host, gh_user, gh_token, gerrit_user, gerrit_token, dry_run=False):
         self.host = host
         self.wpt_github = WPTGitHub(host, gh_user, gh_token)
+
+        self.gerrit = Gerrit(self.host, gerrit_user, gerrit_token)
+
         self.dry_run = dry_run
         self.local_wpt = LocalWPT(self.host, gh_token)
         self.local_wpt.fetch()
@@ -29,13 +37,78 @@ class TestExporter(object):
         The exporter will look in chronological order at every commit in Chromium.
         """
         pull_requests = self.wpt_github.all_pull_requests(limit=PR_HISTORY_WINDOW)
-        exportable_commits = self.get_exportable_commits(limit=COMMIT_HISTORY_WINDOW)
 
+        cls = self.gerrit.query_open_cls()
+
+        # For each in-flight CL, if no PR exists, create one
+        for cl in cls:
+            cl_url = 'https://chromium-review.googlesource.com/c/%s' % cl['_number']
+            _log.info('Found Gerrit in-flight CL: "%s" %s', cl['subject'], cl_url)
+
+            # Search if CL already has a corresponding PR
+            pull_request = self.pr_with_change_id(cl['change_id'], pull_requests)
+
+            if pull_request:
+                pr_url = '{}pull/{}'.format(WPT_URL, pull_request.number)
+                _log.info('In-flight PR found: %s', pr_url)
+                # TODO(jeffcarp): Check if CL has new patches, if so, update PR patch
+                break
+
+            if self.dry_run:
+                _log.info('[dry_run] Would have attempted to create a PR for Gerrit CL')
+                break
+
+            # Apply patch onto new local branch
+            branch_name = 'chromium-export-cl-{}'.format(cl['_number'])
+            self.host.executive.run_command(['git', 'cl', 'patch', cl['_number'], '-b', branch_name, '--gerrit'])
+
+            # TODO(jeffcarp): Make sure there is a non-empty diff between HEAD..origin/master before proceeding
+
+            # TODO(jeffcarp): Implement dry_run for the following
+
+            sha = self.host.executive.run_command([
+                'git', 'show', '--format=%H', '--no-patch'
+            ], cwd=absolute_chromium_dir(self.host)).strip()
+            exportable_commit = ChromiumCommit(host=self.host, sha=sha)
+            pull_request_response = self.create_pull_request(exportable_commit)
+
+            # Clean up
+            self.host.executive.run_command([
+                'git', 'checkout', '-'
+            ], cwd=absolute_chromium_dir(self.host))
+            self.host.executive.run_command([
+                'git', 'branch', '-D', branch_name
+            ], cwd=absolute_chromium_dir(self.host))
+
+            pr_url = 'https://github.com/w3c/web-platform-tests/pull/{}'.format(pull_request_response['number'])
+            message = ('Upstreamable changes to web-platform-tests were detected in this CL '
+                'and a PR has been made! {}\n\nNew patches to this CL will automatically update the PR. '
+                'If Travis CI fails, we will let you know here and you\'ll need to update your CL accordingly '
+                'in order for it to be exported. If Travis CI is green when this CL lands, the WPT PR will be '
+                'merged automatically. Contact blink-infra@chromium.org.'.format(pr_url))
+
+            # TODO(jeffcarp): this comment should be on the newest revision
+            revision_id = cl['revisions'].items()[0][0]
+
+            comment_reponse = self.gerrit.post_comment(cl['_number'], revision_id, message)
+            print comment_reponse.geturl()
+            print comment_reponse.info()
+            print comment_reponse.getcode()
+            _log.info('Commented on CL')
+
+        return # FIXME: remove before flight
+
+        # Look at Chromium master and export all unexported commits
+        exportable_commits = self.get_exportable_commits(limit=COMMIT_HISTORY_WINDOW)
         for exportable_commit in exportable_commits:
+
+            # TODO(jeffcarp): Investigate looking at the Change-Id header to handle handoff between Gerrit->Git
+
             pull_request = self.pr_with_position(exportable_commit.position, pull_requests)
             if pull_request:
                 if pull_request.state == 'open':
                     self.merge_pull_request(pull_request)
+                    # TODO(jeffcarp): if this was from Gerrit, comment back on the Gerrit CL that the PR was merged
                 else:
                     _log.info('Pull request is not open: #%d %s', pull_request.number, pull_request.title)
             else:
@@ -48,6 +121,14 @@ class TestExporter(object):
                 if line.startswith('Cr-Commit-Position:'):
                     pr_commit_position = line[len('Cr-Commit-Position: '):]
                     if position == pr_commit_position:
+                        return pull_request
+
+    def pr_with_change_id(self, change_id, pull_requests):
+        for pull_request in pull_requests:
+            for line in pull_request.body.splitlines():
+                if line.startswith('Change-Id: '):
+                    pr_change_id = line[len('Change-Id: '):]
+                    if change_id == pr_change_id:
                         return pull_request
 
     def get_exportable_commits(self, limit):
