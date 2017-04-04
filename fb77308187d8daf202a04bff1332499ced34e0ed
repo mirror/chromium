@@ -16,6 +16,41 @@
       "revId": "fb77308187d8daf202a04bff1332499ced34e0ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5390dd69_63eefb89",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-04-04T03:41:38Z",
+      "side": 1,
+      "message": "Can you add \"# This wait ...\" to the code documentation?",
+      "parentUuid": "5305fc73_bd0f6da8",
+      "revId": "fb77308187d8daf202a04bff1332499ced34e0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff2b2a1_f8e0914c",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-04-04T03:41:38Z",
+      "side": 1,
+      "message": "For consistency, please move the comment to the line above.",
+      "revId": "fb77308187d8daf202a04bff1332499ced34e0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
