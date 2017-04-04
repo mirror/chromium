@@ -797,10 +797,6 @@ crbug.com/518987 http/tests/xmlhttprequest/navigation-abort-detaches-frame.html 
 
 # These performance-sensitive user-timing tests are flaky in debug on all platforms, and flaky on all configurations of windows.
 # See: crbug.com/567965, crbug.com/518992, and crbug.com/518993
-crbug.com/567965 [ Debug ] external/wpt/user-timing/test_user_timing_measure.html [ Skip ]
-crbug.com/518992 [ Win Release ] external/wpt/user-timing/test_user_timing_measure.html [ Skip ]
-crbug.com/567965 [ Debug ] external/wpt/user-timing/test_user_timing_mark.html [ Skip ]
-crbug.com/518993 external/wpt/user-timing/test_user_timing_measure_navigation_timing.html [ Skip ]
 
 crbug.com/636053 [ Mac Win ] printing/thead-repeats-at-top-of-each-page-multiple-tables.html [ NeedsManualRebaseline ]
 crbug.com/636053 [ Mac Win ] virtual/threaded/printing/thead-repeats-at-top-of-each-page-multiple-tables.html [ NeedsManualRebaseline ]
@@ -2201,7 +2197,6 @@ crbug.com/626703 external/wpt/web-animations/animation-model/animation-types/int
 crbug.com/626703 external/wpt/web-animations/interfaces/KeyframeEffectReadOnly/copy-contructor.html [ Failure ]
 crbug.com/626703 external/wpt/web-animations/animation-model/animation-types/spacing-keyframes-shapes.html [ Failure ]
 crbug.com/626703 external/wpt/web-animations/animation-model/animation-types/addition-per-property.html [ Timeout ]
-crbug.com/626703 external/wpt/user-timing/test_user_timing_mark_and_measure_exception_when_invoke_with_timing_attributes.html [ Failure ]
 crbug.com/626703 external/wpt/web-animations/interfaces/KeyframeEffect/composite.html [ Failure ]
 crbug.com/626703 external/wpt/web-animations/animation-model/combining-effects/effect-composition.html [ Failure ]
 crbug.com/626703 external/wpt/web-animations/interfaces/KeyframeEffect/copy-contructor.html [ Failure ]
