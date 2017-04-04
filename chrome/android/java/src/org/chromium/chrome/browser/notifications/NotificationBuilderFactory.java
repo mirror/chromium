@@ -20,24 +20,17 @@ public class NotificationBuilderFactory {
      *
      * TODO(crbug.com/704152) Remove this once we've updated to revision 26 of the support library.
      * Then we can use NotificationCompat.Builder and set the channel directly everywhere.
-     *
      * @param preferCompat true if a NotificationCompat.Builder is preferred.
      *                     A Notification.Builder will be used regardless on Android O.
-     * @param channelId The ID of the channel the notification should be posted to.
-     * @param channelName The name of the channel the notification should be posted to.
-     *                    Used to create the channel if a channel with channelId does not exist.
-     * @param channelGroupId The ID of the channel group the channel belongs to. Used when creating
-     *                       the channel if a channel with channelId does not exist.
-     * @param channelGroupName The name of the channel group the channel belongs to.
-     *                         Used to create the channel group if a channel group with
-     *                         channelGroupId does not already exist.
+     * @param channelId The ID of the channel the notification should be posted to. This channel
+     *                  will be created if it did not already exist. Must be a known channel within
+     *                  {@link ChannelsInitializer#ensureInitialized(String)}.
      */
-    public static ChromeNotificationBuilder createChromeNotificationBuilder(boolean preferCompat,
-            String channelId, String channelName, String channelGroupId, String channelGroupName) {
+    public static ChromeNotificationBuilder createChromeNotificationBuilder(
+            boolean preferCompat, String channelId) {
         Context context = ContextUtils.getApplicationContext();
         if (BuildInfo.isAtLeastO()) {
-            return new NotificationBuilderForO(ContextUtils.getApplicationContext(), channelId,
-                    channelName, channelGroupId, channelGroupName);
+            return new NotificationBuilderForO(ContextUtils.getApplicationContext(), channelId);
         }
         return preferCompat ? new NotificationCompatBuilder(context)
                             : new NotificationBuilder(context);
