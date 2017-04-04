@@ -16,6 +16,24 @@
       "revId": "5ae950d68f25d9bb2f977843b1e4b951de586ed0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd5e507_fb352457",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/ChannelsInitializer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-04-04T14:38:32Z",
+      "side": 1,
+      "message": "Renamed to ChromeChannelId - in future we\u0027ll have site channels which won\u0027t appear in this StringDef - so I want it to be clear these are the chrome channels as opposed to site channels.",
+      "parentUuid": "704880ed_de35b41a",
+      "revId": "5ae950d68f25d9bb2f977843b1e4b951de586ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
