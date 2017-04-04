@@ -36,9 +36,7 @@ class WPTManifest(object):
         to look like this:: [["/some/test/path.html", {}]]
         """
         items = self.raw_dict['items']
-        if path_in_wpt in items['manual']:
-            return items['manual'][path_in_wpt]
-        elif path_in_wpt in items['reftest']:
+        if path_in_wpt in items['reftest']:
             return items['reftest'][path_in_wpt]
         elif path_in_wpt in items['testharness']:
             return items['testharness'][path_in_wpt]

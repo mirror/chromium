@@ -468,9 +468,6 @@ class SourceFile(object):
         elif self.name_is_stub:
             rv = Stub.item_type, [Stub(self, self.url)]
 
-        elif self.name_is_manual:
-            rv = ManualTest.item_type, [ManualTest(self, self.url)]
-
         elif self.name_is_conformance:
             rv = ConformanceCheckerTest.item_type, [ConformanceCheckerTest(self, self.url)]
 
@@ -494,9 +491,6 @@ class SourceFile(object):
         elif self.name_is_webdriver:
             rv = WebdriverSpecTest.item_type, [WebdriverSpecTest(self, self.url)]
 
-        elif self.content_is_css_manual and not self.name_is_reference:
-            rv = ManualTest.item_type, [ManualTest(self, self.url)]
-
         elif self.content_is_testharness:
             rv = TestharnessTest.item_type, []
             for variant in self.test_variants:
@@ -508,8 +502,17 @@ class SourceFile(object):
                   [RefTestNode(self, self.url, self.references, timeout=self.timeout,
                                viewport_size=self.viewport_size, dpi=self.dpi)])
 
+        elif self.content_is_css_manual and not self.name_is_reference:
+            rv = ManualTest.item_type, [ManualTest(self, self.url)]
+
         elif self.content_is_css_visual and not self.name_is_reference:
             rv = VisualTest.item_type, [VisualTest(self, self.url)]
+
+        elif self.name_is_manual:
+            rv = ManualTest.item_type, [ManualTest(self, self.url)]
+
+        elif self.content_is_css_manual and not self.name_is_reference:
+            rv = ManualTest.item_type, [ManualTest(self, self.url)]
 
         else:
             rv = "support", [SupportFile(self)]
