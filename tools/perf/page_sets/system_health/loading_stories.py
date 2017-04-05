@@ -331,10 +331,6 @@ class LoadGmailMobileStory(_LoadGmailBaseStory):
     action_runner.WaitForJavaScriptCondition(
         'document.getElementById("apploadingdiv").style.height === "0px"')
 
-class LoadMapsStory(_LoadingStory):
-  NAME = 'load:tools:maps'
-  URL = 'https://www.google.com/maps/place/London,+UK/'
-
 
 class LoadStackOverflowStory(_LoadingStory):
   NAME = 'load:tools:stackoverflow'
