@@ -39,15 +39,9 @@ class PLATFORM_EXPORT GraphicsContextCanvas {
   PaintCanvas* m_canvas;
 
   CGContextRef m_cgContext;
-  // m_offscreen is only valid if m_useDeviceBits is false
   SkBitmap m_offscreen;
   SkIPoint m_bitmapOffset;
   SkScalar m_bitmapScaleFactor;
-
-  // True if we are drawing to |m_canvas|'s backing store directly.
-  // Otherwise, the bits in |bitmap_| are our allocation and need to
-  // be copied over to |m_canvas|.
-  bool m_useDeviceBits;
 
   // True if |bitmap_| is a dummy 1x1 bitmap allocated for the sake of creating
   // a non-null CGContext (it is invalid to use a null CGContext), and will not
