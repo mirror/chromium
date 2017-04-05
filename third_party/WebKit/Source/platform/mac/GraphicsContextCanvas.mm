@@ -18,7 +18,6 @@ GraphicsContextCanvas::GraphicsContextCanvas(PaintCanvas* canvas,
     : m_canvas(canvas),
       m_cgContext(0),
       m_bitmapScaleFactor(bitmapScaleFactor),
-      m_useDeviceBits(false),
       m_bitmapIsDummy(false) {
   m_canvas->save();
   m_canvas->clipRect(SkRect::MakeFromIRect(userClipRect));
@@ -39,7 +38,7 @@ SkIRect GraphicsContextCanvas::computeDirtyRect() {
 void GraphicsContextCanvas::releaseIfNeeded() {
   if (!m_cgContext)
     return;
-  if (!m_useDeviceBits && !m_bitmapIsDummy) {
+  if (!m_bitmapIsDummy) {
     // Find the bits that were drawn to.
     SkIRect bounds = computeDirtyRect();
     SkBitmap subset;
@@ -57,7 +56,6 @@ void GraphicsContextCanvas::releaseIfNeeded() {
   }
   CGContextRelease(m_cgContext);
   m_cgContext = 0;
-  m_useDeviceBits = false;
   m_bitmapIsDummy = false;
 }
 
@@ -77,46 +75,25 @@ CGContextRef GraphicsContextCanvas::cgContext() {
   m_bitmapOffset.set(clip_bounds.x(), clip_bounds.y());
 
   // Now make clip_bounds be relative to the current layer/device
-  if (!m_bitmapIsDummy) {
+  if (!m_bitmapIsDummy)
     m_canvas->temporary_internal_describeTopLayer(nullptr, &clip_bounds);
-  }
 
-  SkPixmap devicePixels;
-  ToPixmap(m_canvas, &devicePixels);
-
-  // Only draw directly if we have pixels, and we're only rect-clipped.
-  // If not, we allocate an offscreen and draw into that, relying on the
+  // Allocate an offscreen and draw into that, relying on t he
   // compositing step to apply skia's clip.
-  m_useDeviceBits =
-      devicePixels.addr() && m_canvas->isClipRect() && !m_bitmapIsDummy;
   WTF::RetainPtr<CGColorSpace> colorSpace(CGColorSpaceCreateDeviceRGB());
 
-  int displayHeight;
-  if (m_useDeviceBits) {
-    SkPixmap subset;
-    bool result = devicePixels.extractSubset(&subset, clip_bounds);
-    DCHECK(result);
-    if (!result)
-      return 0;
-    displayHeight = subset.height();
-    m_cgContext = CGBitmapContextCreate(
-        subset.writable_addr(), subset.width(), subset.height(), 8,
-        subset.rowBytes(), colorSpace.get(),
-        kCGBitmapByteOrder32Host | kCGImageAlphaPremultipliedFirst);
-  } else {
-    bool result = m_offscreen.tryAllocN32Pixels(
-        SkScalarCeilToInt(m_bitmapScaleFactor * clip_bounds.width()),
-        SkScalarCeilToInt(m_bitmapScaleFactor * clip_bounds.height()));
-    DCHECK(result);
-    if (!result)
-      return 0;
-    m_offscreen.eraseColor(0);
-    displayHeight = m_offscreen.height();
-    m_cgContext = CGBitmapContextCreate(
-        m_offscreen.getPixels(), m_offscreen.width(), m_offscreen.height(), 8,
-        m_offscreen.rowBytes(), colorSpace.get(),
-        kCGBitmapByteOrder32Host | kCGImageAlphaPremultipliedFirst);
-  }
+  bool result = m_offscreen.tryAllocN32Pixels(
+      SkScalarCeilToInt(m_bitmapScaleFactor * clip_bounds.width()),
+      SkScalarCeilToInt(m_bitmapScaleFactor * clip_bounds.height()));
+  DCHECK(result);
+  if (!result)
+    return 0;
+  m_offscreen.eraseColor(0);
+  int displayHeight = m_offscreen.height();
+  m_cgContext = CGBitmapContextCreate(
+      m_offscreen.getPixels(), m_offscreen.width(), m_offscreen.height(), 8,
+      m_offscreen.rowBytes(), colorSpace.get(),
+      kCGBitmapByteOrder32Host | kCGImageAlphaPremultipliedFirst);
   DCHECK(m_cgContext);
 
   SkMatrix matrix = m_canvas->getTotalMatrix();
