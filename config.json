@@ -12,6 +12,7 @@
     "chrome/browser/policy/proto",
     "chrome/test/data/dromaeo",
     "chrome/test/data/reliability",
+    "components/chrome_cleaner",
     "components/feedback",
     "components/metrics",
     "components/policy",
