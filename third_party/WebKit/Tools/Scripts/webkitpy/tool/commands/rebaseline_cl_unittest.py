@@ -157,6 +157,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         return_code = self.command.execute(self.command_options(), [], self.tool)
         self.assertEqual(return_code, 0)
         self.assertLog([
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining fast/dom/prototype-inheritance.html\n',
             'INFO: Rebaselining fast/dom/prototype-newtest.html\n',
             'INFO: Rebaselining fast/dom/prototype-slowtest.html\n',
@@ -179,6 +180,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         # is in the list of failed tests, but not in the list of files modified
         # in the given CL; it should be included because all_tests is set to True.
         self.assertLog([
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining fast/dom/prototype-inheritance.html\n',
             'INFO: Rebaselining fast/dom/prototype-taco.html\n',
         ])
@@ -204,6 +206,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         return_code = self.command.execute(self.command_options(), [], self.tool)
         self.assertEqual(return_code, 0)
         self.assertLog([
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining fast/dom/prototype-inheritance.html\n',
             'INFO: Rebaselining fast/dom/prototype-taco.html\n',
         ])
@@ -218,6 +221,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         self.assertEqual(return_code, 0)
         self.assertLog([
             'WARNING: No retry summary available for build Build(builder_name=\'MOCK Try Win\', build_number=5000).\n',
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining fast/dom/prototype-inheritance.html\n',
             'INFO: Rebaselining fast/dom/prototype-newtest.html\n',
             'INFO: Rebaselining fast/dom/prototype-slowtest.html\n',
