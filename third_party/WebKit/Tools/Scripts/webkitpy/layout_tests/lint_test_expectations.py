@@ -35,6 +35,7 @@ import traceback
 from webkitpy.common.host import Host
 from webkitpy.layout_tests.models import test_expectations
 from webkitpy.layout_tests.port.factory import platform_options
+from webkitpy.w3c.wpt_manifest import WPTManifest
 
 
 # This mirrors what the shell normally does.
@@ -138,6 +139,9 @@ def main(argv, _, stderr):
         host = MockHost()
     else:
         host = Host()
+
+    _log.info('Generating MANIFEST.json for web-platform-tests ...')
+    WPTManifest.ensure_manifest(host)
 
     try:
         exit_status = run_checks(host, options, stderr)
