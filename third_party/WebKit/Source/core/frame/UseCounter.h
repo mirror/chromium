@@ -1527,6 +1527,7 @@ class CORE_EXPORT UseCounter {
     MenuItemElementIconAttribute = 1911,
     WebkitCSSMatrixSetMatrixValue = 1912,
     WebkitCSSMatrixConstructFromString = 1913,
+    DocumentURI = 1914,
 
     // Add new features immediately above this line. Don't change assigned
     // numbers of any item, and don't reuse removed slots.
