@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd4f2c77_b51cb7c0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-04-07T17:05:42Z",
+      "side": 1,
+      "message": "We should pull out the list of [\u0027manual\u0027, \u0027reftest\u0027, \u0027testharness\u0027] since it\u0027s used implicitly here and explicitly twice below.",
+      "revId": "43757544d45f60ce267c9bfffa492f21b94960c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
