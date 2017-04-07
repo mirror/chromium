@@ -330,7 +330,7 @@
                   'ui/chromeos/network/',
     },
     'chromeos_power': {
-      'filepath': 'ash/system/chromeos/power/|'\
+      'filepath': 'ash/system/power/|'\
                   'chromeos/dbus/power_.*|'\
                   'chrome/browser/chromeos/power/',
     },
