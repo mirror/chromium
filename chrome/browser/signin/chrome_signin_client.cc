@@ -20,9 +20,11 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profile_metrics.h"
 #include "chrome/browser/profiles/profile_window.h"
+#include "chrome/browser/signin/force_signin_verifier.h"
 #include "chrome/browser/signin/local_auth.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/user_manager.h"
 #include "chrome/browser/web_data_service_factory.h"
@@ -72,8 +74,7 @@ ChromeSigninClient::ChromeSigninClient(
     SigninErrorController* signin_error_controller)
     : OAuth2TokenService::Consumer("chrome_signin_client"),
       profile_(profile),
-      signin_error_controller_(signin_error_controller),
-      is_force_signin_enabled_(IsForceSigninEnabled()) {
+      signin_error_controller_(signin_error_controller) {
   signin_error_controller_->AddObserver(this);
 #if !defined(OS_CHROMEOS)
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
@@ -118,6 +119,7 @@ void ChromeSigninClient::Shutdown() {
 
 void ChromeSigninClient::DoFinalInit() {
   MaybeFetchSigninTokenHandle();
+  VerifySyncToken();
 }
 
 // static
@@ -280,7 +282,7 @@ void ChromeSigninClient::PreSignOut(
     const base::Callback<void()>& sign_out,
     signin_metrics::ProfileSignout signout_source_metric) {
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
-  if (is_force_signin_enabled_ && !profile_->IsSystemProfile() &&
+  if (signin_util::IsForceSigninEnabled() && !profile_->IsSystemProfile() &&
       !profile_->IsGuestSession() && !profile_->IsSupervised()) {
     // TODO(zmin): force window closing based on the reason of sign-out.
     // This will be updated after force window closing CL is commited.
@@ -399,6 +401,13 @@ std::unique_ptr<GaiaAuthFetcher> ChromeSigninClient::CreateGaiaAuthFetcher(
   return base::MakeUnique<GaiaAuthFetcher>(consumer, source, getter);
 }
 
+void ChromeSigninClient::VerifySyncToken() {
+#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
+  if (signin_util::IsForceSigninEnabled())
+    force_signin_verifier_ = base::MakeUnique<ForceSigninVerifier>(profile_);
+#endif
+}
+
 void ChromeSigninClient::MaybeFetchSigninTokenHandle() {
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
   // We get a "handle" that can be used to reference the signin token on the
@@ -428,7 +437,7 @@ void ChromeSigninClient::MaybeFetchSigninTokenHandle() {
 }
 
 void ChromeSigninClient::AfterCredentialsCopied() {
-  if (is_force_signin_enabled_) {
+  if (signin_util::IsForceSigninEnabled()) {
     // The signout after credential copy won't open UserManager after all
     // browser window are closed. Because the browser window will be opened for
     // the new profile soon.
@@ -440,6 +449,7 @@ void ChromeSigninClient::OnCloseBrowsersSuccess(
     const base::Callback<void()>& sign_out,
     const signin_metrics::ProfileSignout signout_source_metric,
     const base::FilePath& profile_path) {
+  force_signin_verifier_->Cancel();
   SigninClient::PreSignOut(sign_out, signout_source_metric);
 
   LockForceSigninProfile(profile_path);
