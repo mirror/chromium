@@ -4,6 +4,9 @@
 
 package org.chromium.chrome.browser.notifications;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -29,6 +32,7 @@ import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.widget.RoundedIconGenerator;
+import org.chromium.chrome.test.util.browser.notifications.MockNotificationManagerProxy;
 import org.chromium.content.browser.test.NativeLibraryTestRule;
 
 /**
@@ -48,6 +52,18 @@ public class StandardNotificationBuilderTest {
         // Not initializing the browser process is safe because GetDomainAndRegistry() is
         // stand-alone.
         mActivityTestRule.loadNativeLibraryNoBrowserProcess();
+    }
+
+    @Test
+    @SmallTest
+    public void testEnsureInitialized() throws Exception {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        MockNotificationManagerProxy mockNotificationManager = new MockNotificationManagerProxy();
+        ChannelsInitializer channelsInitializer = new ChannelsInitializer(mockNotificationManager);
+
+        channelsInitializer.ensureInitialized(ChannelsInitializer.CHANNEL_ID_BROWSER);
+
+        assertThat(mockNotificationManager.getNotificationChannels().size(), is(1));
     }
 
     private NotificationBuilderBase createAllOptionsBuilder(
