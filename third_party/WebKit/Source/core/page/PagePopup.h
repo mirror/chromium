@@ -42,9 +42,9 @@ class IntRect;
 // by ChromeClient::closePagePopup().
 class PagePopup {
  public:
-  virtual AXObject* rootAXObject() = 0;
-  virtual void setWindowRect(const IntRect&) = 0;
-  virtual void postMessage(const String& message) = 0;
+  virtual AXObject* RootAXObject() = 0;
+  virtual void SetWindowRect(const IntRect&) = 0;
+  virtual void PostMessage(const String& message) = 0;
 
  protected:
   virtual ~PagePopup() {}

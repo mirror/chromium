@@ -28,7 +28,7 @@ void DeadlineTaskRunner::SetDeadline(const tracked_objects::Location& from_here,
     deadline_ = deadline;
     cancelable_run_internal_.Cancel();
     task_runner_->PostDelayedTask(from_here,
-                                  cancelable_run_internal_.callback(), delay);
+                                  cancelable_run_internal_.GetCallback(), delay);
   }
 }
 

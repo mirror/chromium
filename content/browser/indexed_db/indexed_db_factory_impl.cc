@@ -185,7 +185,7 @@ void IndexedDBFactoryImpl::GetDatabaseNames(
                        &data_loss_info, &disk_full, &s);
   if (!backing_store.get()) {
     callbacks->OnError(
-        IndexedDBDatabaseError(blink::WebIDBDatabaseExceptionUnknownError,
+        IndexedDBDatabaseError(blink::kWebIDBDatabaseExceptionUnknownError,
                                "Internal error opening backing store for "
                                "indexedDB.webkitGetDatabaseNames."));
     return;
@@ -194,7 +194,7 @@ void IndexedDBFactoryImpl::GetDatabaseNames(
   std::vector<base::string16> names = backing_store->GetDatabaseNames(&s);
   if (!s.ok()) {
     DLOG(ERROR) << "Internal error getting database names";
-    IndexedDBDatabaseError error(blink::WebIDBDatabaseExceptionUnknownError,
+    IndexedDBDatabaseError error(blink::kWebIDBDatabaseExceptionUnknownError,
                                  "Internal error opening backing store for "
                                  "indexedDB.webkitGetDatabaseNames.");
     callbacks->OnError(error);
@@ -233,7 +233,7 @@ void IndexedDBFactoryImpl::DeleteDatabase(
       OpenBackingStore(origin, data_directory, request_context_getter,
                        &data_loss_info, &disk_full, &s);
   if (!backing_store.get()) {
-    IndexedDBDatabaseError error(blink::WebIDBDatabaseExceptionUnknownError,
+    IndexedDBDatabaseError error(blink::kWebIDBDatabaseExceptionUnknownError,
                                  ASCIIToUTF16(
                                      "Internal error opening backing store "
                                      "for indexedDB.deleteDatabase."));
@@ -247,7 +247,7 @@ void IndexedDBFactoryImpl::DeleteDatabase(
   std::vector<base::string16> names = backing_store->GetDatabaseNames(&s);
   if (!s.ok()) {
     DLOG(ERROR) << "Internal error getting database names";
-    IndexedDBDatabaseError error(blink::WebIDBDatabaseExceptionUnknownError,
+    IndexedDBDatabaseError error(blink::kWebIDBDatabaseExceptionUnknownError,
                                  "Internal error opening backing store for "
                                  "indexedDB.deleteDatabase.");
     callbacks->OnError(error);
@@ -269,7 +269,7 @@ void IndexedDBFactoryImpl::DeleteDatabase(
                                                     this, unique_identifier);
   if (!database.get()) {
     IndexedDBDatabaseError error(
-        blink::WebIDBDatabaseExceptionUnknownError,
+        blink::kWebIDBDatabaseExceptionUnknownError,
         ASCIIToUTF16(
             "Internal error creating database backend for "
             "indexedDB.deleteDatabase."));
@@ -429,12 +429,12 @@ void IndexedDBFactoryImpl::Open(
     if (!backing_store.get()) {
       if (disk_full) {
         connection->callbacks->OnError(IndexedDBDatabaseError(
-            blink::WebIDBDatabaseExceptionQuotaError,
+            blink::kWebIDBDatabaseExceptionQuotaError,
             ASCIIToUTF16("Encountered full disk while opening "
                          "backing store for indexedDB.open.")));
         return;
       }
-      IndexedDBDatabaseError error(blink::WebIDBDatabaseExceptionUnknownError,
+      IndexedDBDatabaseError error(blink::kWebIDBDatabaseExceptionUnknownError,
                                    ASCIIToUTF16(
                                        "Internal error opening backing store"
                                        " for indexedDB.open."));
@@ -449,7 +449,7 @@ void IndexedDBFactoryImpl::Open(
                                                       this, unique_identifier);
     if (!database.get()) {
       DLOG(ERROR) << "Unable to create the database";
-      IndexedDBDatabaseError error(blink::WebIDBDatabaseExceptionUnknownError,
+      IndexedDBDatabaseError error(blink::kWebIDBDatabaseExceptionUnknownError,
                                    ASCIIToUTF16(
                                        "Internal error creating "
                                        "database backend for "
