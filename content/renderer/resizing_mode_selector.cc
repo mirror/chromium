@@ -23,7 +23,7 @@ bool ResizingModeSelector::ShouldAbortOnResize(RenderWidget* widget,
       params.is_fullscreen_granted == widget->is_fullscreen_granted() &&
       params.display_mode == widget->display_mode() &&
       params.screen_info.device_scale_factor ==
-        widget->screenInfo().deviceScaleFactor;
+        widget->GetScreenInfo().device_scale_factor;
 }
 
 void ResizingModeSelector::set_is_synchronous_mode(bool mode) {

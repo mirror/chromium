@@ -25,7 +25,7 @@ class AesKwImplementation : public AesAlgorithm {
  public:
   AesKwImplementation()
       : AesAlgorithm(
-            blink::WebCryptoKeyUsageWrapKey | blink::WebCryptoKeyUsageUnwrapKey,
+            blink::kWebCryptoKeyUsageWrapKey | blink::kWebCryptoKeyUsageUnwrapKey,
             "KW") {}
 
   Status Encrypt(const blink::WebCryptoAlgorithm& algorithm,

@@ -598,19 +598,19 @@ bool RenderViewContextMenu::ExtensionContextAndPatternMatch(
     return true;
 
   switch (params.media_type) {
-    case WebContextMenuData::MediaTypeImage:
+    case WebContextMenuData::kMediaTypeImage:
       if (contexts.Contains(MenuItem::IMAGE) &&
           ExtensionPatternMatch(target_url_patterns, params.src_url))
         return true;
       break;
 
-    case WebContextMenuData::MediaTypeVideo:
+    case WebContextMenuData::kMediaTypeVideo:
       if (contexts.Contains(MenuItem::VIDEO) &&
           ExtensionPatternMatch(target_url_patterns, params.src_url))
         return true;
       break;
 
-    case WebContextMenuData::MediaTypeAudio:
+    case WebContextMenuData::kMediaTypeAudio:
       if (contexts.Contains(MenuItem::AUDIO) &&
           ExtensionPatternMatch(target_url_patterns, params.src_url))
         return true;
@@ -624,7 +624,7 @@ bool RenderViewContextMenu::ExtensionContextAndPatternMatch(
   // other contexts apply (except for FRAME, which is included in PAGE for
   // backwards compatibility).
   if (!has_link && !has_selection && !params.is_editable &&
-      params.media_type == WebContextMenuData::MediaTypeNone &&
+      params.media_type == WebContextMenuData::kMediaTypeNone &&
       contexts.Contains(MenuItem::PAGE))
     return true;
 
@@ -740,7 +740,7 @@ void RenderViewContextMenu::InitMenu() {
 
   if (content_type_->SupportsGroup(ContextMenuContentType::ITEM_GROUP_LINK)) {
     AppendLinkItems();
-    if (params_.media_type != WebContextMenuData::MediaTypeNone)
+    if (params_.media_type != WebContextMenuData::kMediaTypeNone)
       menu_model_.AddSeparator(ui::NORMAL_SEPARATOR);
   }
 
@@ -1085,7 +1085,7 @@ void RenderViewContextMenu::AppendLinkItems() {
           IDS_CONTENT_CONTEXT_COPYLINKLOCATION);
 
   if (params_.source_type == ui::MENU_SOURCE_TOUCH &&
-      params_.media_type != WebContextMenuData::MediaTypeImage &&
+      params_.media_type != WebContextMenuData::kMediaTypeImage &&
       !params_.link_text.empty()) {
     menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_COPYLINKTEXT,
                                     IDS_CONTENT_CONTEXT_COPYLINKTEXT);
@@ -1282,8 +1282,8 @@ void RenderViewContextMenu::AppendCopyItem() {
 
 void RenderViewContextMenu::AppendPrintItem() {
   if (GetPrefs(browser_context_)->GetBoolean(prefs::kPrintingEnabled) &&
-      (params_.media_type == WebContextMenuData::MediaTypeNone ||
-       params_.media_flags & WebContextMenuData::MediaCanPrint) &&
+      (params_.media_type == WebContextMenuData::kMediaTypeNone ||
+       params_.media_flags & WebContextMenuData::kMediaCanPrint) &&
       params_.misspelled_word.empty()) {
     menu_model_.AddItemWithStringId(IDC_PRINT, IDS_CONTENT_CONTEXT_PRINT);
   }
@@ -1299,7 +1299,7 @@ void RenderViewContextMenu::AppendMediaRouterItem() {
 }
 
 void RenderViewContextMenu::AppendRotationItems() {
-  if (params_.media_flags & WebContextMenuData::MediaCanRotate) {
+  if (params_.media_flags & WebContextMenuData::kMediaCanRotate) {
     menu_model_.AddSeparator(ui::NORMAL_SEPARATOR);
     menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_ROTATECW,
                                     IDS_CONTENT_CONTEXT_ROTATECW);
@@ -1576,23 +1576,23 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
     case IDC_CONTENT_CONTEXT_PLAYPAUSE:
     case IDC_CONTENT_CONTEXT_LOOP:
       return (params_.media_flags &
-              WebContextMenuData::MediaInError) == 0;
+              WebContextMenuData::kMediaInError) == 0;
 
     // Mute and unmute should also be disabled if the player has no audio.
     case IDC_CONTENT_CONTEXT_MUTE:
       return (params_.media_flags &
-              WebContextMenuData::MediaHasAudio) != 0 &&
+              WebContextMenuData::kMediaHasAudio) != 0 &&
              (params_.media_flags &
-              WebContextMenuData::MediaInError) == 0;
+              WebContextMenuData::kMediaInError) == 0;
 
     case IDC_CONTENT_CONTEXT_CONTROLS:
       return (params_.media_flags &
-              WebContextMenuData::MediaCanToggleControls) != 0;
+              WebContextMenuData::kMediaCanToggleControls) != 0;
 
     case IDC_CONTENT_CONTEXT_ROTATECW:
     case IDC_CONTENT_CONTEXT_ROTATECCW:
       return
-          (params_.media_flags & WebContextMenuData::MediaCanRotate) != 0;
+          (params_.media_flags & WebContextMenuData::kMediaCanRotate) != 0;
 
     case IDC_CONTENT_CONTEXT_COPYAVLOCATION:
     case IDC_CONTENT_CONTEXT_COPYIMAGELOCATION:
@@ -1605,7 +1605,7 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
       // Currently, a media element can be opened in a new tab iff it can
       // be saved. So rather than duplicating the MediaCanSave flag, we rely
       // on that here.
-      return !!(params_.media_flags & WebContextMenuData::MediaCanSave);
+      return !!(params_.media_flags & WebContextMenuData::kMediaCanSave);
 
     case IDC_SAVE_PAGE:
       return IsSavePageEnabled();
@@ -1615,16 +1615,16 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
              params_.frame_url.GetOrigin() != chrome::kChromeUIPrintURL;
 
     case IDC_CONTENT_CONTEXT_UNDO:
-      return !!(params_.edit_flags & WebContextMenuData::CanUndo);
+      return !!(params_.edit_flags & WebContextMenuData::kCanUndo);
 
     case IDC_CONTENT_CONTEXT_REDO:
-      return !!(params_.edit_flags & WebContextMenuData::CanRedo);
+      return !!(params_.edit_flags & WebContextMenuData::kCanRedo);
 
     case IDC_CONTENT_CONTEXT_CUT:
-      return !!(params_.edit_flags & WebContextMenuData::CanCut);
+      return !!(params_.edit_flags & WebContextMenuData::kCanCut);
 
     case IDC_CONTENT_CONTEXT_COPY:
-      return !!(params_.edit_flags & WebContextMenuData::CanCopy);
+      return !!(params_.edit_flags & WebContextMenuData::kCanCopy);
 
     case IDC_CONTENT_CONTEXT_PASTE:
       return IsPasteEnabled();
@@ -1633,10 +1633,10 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
       return IsPasteAndMatchStyleEnabled();
 
     case IDC_CONTENT_CONTEXT_DELETE:
-      return !!(params_.edit_flags & WebContextMenuData::CanDelete);
+      return !!(params_.edit_flags & WebContextMenuData::kCanDelete);
 
     case IDC_CONTENT_CONTEXT_SELECTALL:
-      return !!(params_.edit_flags & WebContextMenuData::CanSelectAll);
+      return !!(params_.edit_flags & WebContextMenuData::kCanSelectAll);
 
     case IDC_CONTENT_CONTEXT_OPENLINKOFFTHERECORD:
       return IsOpenLinkOTREnabled();
@@ -1683,10 +1683,10 @@ bool RenderViewContextMenu::IsCommandIdChecked(int id) const {
 
   // See if the video is set to looping.
   if (id == IDC_CONTENT_CONTEXT_LOOP)
-    return (params_.media_flags & WebContextMenuData::MediaLoop) != 0;
+    return (params_.media_flags & WebContextMenuData::kMediaLoop) != 0;
 
   if (id == IDC_CONTENT_CONTEXT_CONTROLS)
-    return (params_.media_flags & WebContextMenuData::MediaControls) != 0;
+    return (params_.media_flags & WebContextMenuData::kMediaControls) != 0;
 
   // Extension items.
   if (ContextMenuMatcher::IsExtensionsCustomCommandId(id))
@@ -1989,7 +1989,7 @@ bool RenderViewContextMenu::IsViewSourceEnabled() const {
           source_web_contents_)) {
     return false;
   }
-  return (params_.media_type != WebContextMenuData::MediaTypePlugin) &&
+  return (params_.media_type != WebContextMenuData::kMediaTypePlugin) &&
          embedder_web_contents_->GetController().CanViewSource();
 }
 
@@ -2030,7 +2030,7 @@ bool RenderViewContextMenu::IsTranslateEnabled() const {
   // target languages are identical.  This is to give a way to user to
   // translate a page that might contains text fragments in a different
   // language.
-  return ((params_.edit_flags & WebContextMenuData::CanTranslate) != 0) &&
+  return ((params_.edit_flags & WebContextMenuData::kCanTranslate) != 0) &&
          !original_lang.empty() &&  // Did we receive the page language yet?
          !chrome_translate_client->GetLanguageState().IsPageTranslated() &&
          !embedder_web_contents_->GetInterstitialPage() &&
@@ -2072,7 +2072,7 @@ bool RenderViewContextMenu::IsSaveAsEnabled() const {
 
   const GURL& url = params_.src_url;
   bool can_save =
-      (params_.media_flags & WebContextMenuData::MediaCanSave) &&
+      (params_.media_flags & WebContextMenuData::kMediaCanSave) &&
       url.is_valid() && ProfileIOData::IsHandledProtocol(url.scheme());
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
       // Do not save the preview PDF on the print preview page.
@@ -2107,7 +2107,7 @@ bool RenderViewContextMenu::IsSavePageEnabled() const {
 }
 
 bool RenderViewContextMenu::IsPasteEnabled() const {
-  if (!(params_.edit_flags & WebContextMenuData::CanPaste))
+  if (!(params_.edit_flags & WebContextMenuData::kCanPaste))
     return false;
 
   std::vector<base::string16> types;
@@ -2118,7 +2118,7 @@ bool RenderViewContextMenu::IsPasteEnabled() const {
 }
 
 bool RenderViewContextMenu::IsPasteAndMatchStyleEnabled() const {
-  if (!(params_.edit_flags & WebContextMenuData::CanPaste))
+  if (!(params_.edit_flags & WebContextMenuData::kCanPaste))
     return false;
 
   return ui::Clipboard::GetForCurrentThread()->IsFormatAvailable(
@@ -2127,8 +2127,8 @@ bool RenderViewContextMenu::IsPasteAndMatchStyleEnabled() const {
 }
 
 bool RenderViewContextMenu::IsPrintPreviewEnabled() const {
-  if (params_.media_type != WebContextMenuData::MediaTypeNone &&
-      !(params_.media_flags & WebContextMenuData::MediaCanPrint)) {
+  if (params_.media_type != WebContextMenuData::kMediaTypeNone &&
+      !(params_.media_flags & WebContextMenuData::kMediaCanPrint)) {
     return false;
   }
 
@@ -2272,8 +2272,8 @@ void RenderViewContextMenu::ExecSaveLinkAs() {
 void RenderViewContextMenu::ExecSaveAs() {
   bool is_large_data_url = params_.has_image_contents &&
       params_.src_url.is_empty();
-  if (params_.media_type == WebContextMenuData::MediaTypeCanvas ||
-      (params_.media_type == WebContextMenuData::MediaTypeImage &&
+  if (params_.media_type == WebContextMenuData::kMediaTypeCanvas ||
+      (params_.media_type == WebContextMenuData::kMediaTypeImage &&
           is_large_data_url)) {
     RenderFrameHost* frame_host = GetRenderFrameHost();
     if (frame_host)
@@ -2287,7 +2287,7 @@ void RenderViewContextMenu::ExecSaveAs() {
     DataReductionProxyChromeSettings* settings =
         DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
             browser_context_);
-    if (params_.media_type == WebContextMenuData::MediaTypeImage &&
+    if (params_.media_type == WebContextMenuData::kMediaTypeImage &&
         settings && settings->CanUseDataReductionProxy(params_.src_url)) {
       headers = data_reduction_proxy::kDataReductionPassThroughHeader;
     }
@@ -2338,7 +2338,7 @@ void RenderViewContextMenu::ExecLoadOriginalImage() {
 }
 
 void RenderViewContextMenu::ExecPlayPause() {
-  bool play = !!(params_.media_flags & WebContextMenuData::MediaPaused);
+  bool play = !!(params_.media_flags & WebContextMenuData::kMediaPaused);
   if (play)
     base::RecordAction(UserMetricsAction("MediaContextMenu_Play"));
   else
@@ -2346,11 +2346,11 @@ void RenderViewContextMenu::ExecPlayPause() {
 
   MediaPlayerActionAt(gfx::Point(params_.x, params_.y),
                       WebMediaPlayerAction(
-                          WebMediaPlayerAction::Play, play));
+                          WebMediaPlayerAction::kPlay, play));
 }
 
 void RenderViewContextMenu::ExecMute() {
-  bool mute = !(params_.media_flags & WebContextMenuData::MediaMuted);
+  bool mute = !(params_.media_flags & WebContextMenuData::kMediaMuted);
   if (mute)
     base::RecordAction(UserMetricsAction("MediaContextMenu_Mute"));
   else
@@ -2358,14 +2358,14 @@ void RenderViewContextMenu::ExecMute() {
 
   MediaPlayerActionAt(gfx::Point(params_.x, params_.y),
                       WebMediaPlayerAction(
-                          WebMediaPlayerAction::Mute, mute));
+                          WebMediaPlayerAction::kMute, mute));
 }
 
 void RenderViewContextMenu::ExecLoop() {
   base::RecordAction(UserMetricsAction("MediaContextMenu_Loop"));
   MediaPlayerActionAt(gfx::Point(params_.x, params_.y),
                       WebMediaPlayerAction(
-                          WebMediaPlayerAction::Loop,
+                          WebMediaPlayerAction::kLoop,
                           !IsCommandIdChecked(IDC_CONTENT_CONTEXT_LOOP)));
 }
 
@@ -2373,21 +2373,21 @@ void RenderViewContextMenu::ExecControls() {
   base::RecordAction(UserMetricsAction("MediaContextMenu_Controls"));
   MediaPlayerActionAt(gfx::Point(params_.x, params_.y),
                       WebMediaPlayerAction(
-                          WebMediaPlayerAction::Controls,
+                          WebMediaPlayerAction::kControls,
                           !IsCommandIdChecked(IDC_CONTENT_CONTEXT_CONTROLS)));
 }
 
 void RenderViewContextMenu::ExecRotateCW() {
   base::RecordAction(UserMetricsAction("PluginContextMenu_RotateClockwise"));
   PluginActionAt(gfx::Point(params_.x, params_.y),
-                 WebPluginAction(WebPluginAction::Rotate90Clockwise, true));
+                 WebPluginAction(WebPluginAction::kRotate90Clockwise, true));
 }
 
 void RenderViewContextMenu::ExecRotateCCW() {
   base::RecordAction(
       UserMetricsAction("PluginContextMenu_RotateCounterclockwise"));
   PluginActionAt(gfx::Point(params_.x, params_.y),
-                 WebPluginAction(WebPluginAction::Rotate90Counterclockwise,
+                 WebPluginAction(WebPluginAction::kRotate90Counterclockwise,
                                  true));
 }
 
@@ -2412,7 +2412,7 @@ void RenderViewContextMenu::ExecRestartPackagedApp() {
 
 void RenderViewContextMenu::ExecPrint() {
 #if BUILDFLAG(ENABLE_PRINTING)
-  if (params_.media_type != WebContextMenuData::MediaTypeNone) {
+  if (params_.media_type != WebContextMenuData::kMediaTypeNone) {
     RenderFrameHost* render_frame_host = GetRenderFrameHost();
     if (render_frame_host) {
       render_frame_host->Send(new PrintMsg_PrintNodeUnderContextMenu(

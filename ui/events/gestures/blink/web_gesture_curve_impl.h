@@ -34,7 +34,7 @@ class WebGestureCurveImpl : public NON_EXPORTED_BASE(blink::WebGestureCurve) {
   ~WebGestureCurveImpl() override;
 
   // WebGestureCurve implementation.
-  bool apply(double time,
+  bool Apply(double time,
              blink::WebGestureCurveTarget* target) override;
 
  private:
