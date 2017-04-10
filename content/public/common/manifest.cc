@@ -33,8 +33,8 @@ Manifest::RelatedApplication::RelatedApplication() = default;
 Manifest::RelatedApplication::~RelatedApplication() = default;
 
 Manifest::Manifest()
-    : display(blink::WebDisplayModeUndefined),
-      orientation(blink::WebScreenOrientationLockDefault),
+    : display(blink::kWebDisplayModeUndefined),
+      orientation(blink::kWebScreenOrientationLockDefault),
       prefer_related_applications(false),
       theme_color(Manifest::kInvalidOrMissingColor),
       background_color(Manifest::kInvalidOrMissingColor) {
@@ -49,8 +49,8 @@ bool Manifest::IsEmpty() const {
   return name.is_null() &&
          short_name.is_null() &&
          start_url.is_empty() &&
-         display == blink::WebDisplayModeUndefined &&
-         orientation == blink::WebScreenOrientationLockDefault &&
+         display == blink::kWebDisplayModeUndefined &&
+         orientation == blink::kWebScreenOrientationLockDefault &&
          icons.empty() &&
          !share_target.has_value() &&
          related_applications.empty() &&

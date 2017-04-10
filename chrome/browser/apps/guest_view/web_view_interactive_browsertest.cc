@@ -297,16 +297,16 @@ class WebViewInteractiveTestBase : public extensions::PlatformAppBrowserTest {
                              blink::WebMouseEvent::Button button,
                              int x,
                              int y) {
-    blink::WebMouseEvent mouse_event(blink::WebInputEvent::MouseDown,
-                                     blink::WebInputEvent::NoModifiers,
-                                     blink::WebInputEvent::TimeStampForTesting);
+    blink::WebMouseEvent mouse_event(blink::WebInputEvent::kMouseDown,
+                                     blink::WebInputEvent::kNoModifiers,
+                                     blink::WebInputEvent::kTimeStampForTesting);
     mouse_event.button = button;
-    mouse_event.setPositionInWidget(x, y);
+    mouse_event.SetPositionInWidget(x, y);
     // Needed for the WebViewTest.ContextMenuPositionAfterCSSTransforms
     gfx::Rect rect = rwh->GetView()->GetViewBounds();
-    mouse_event.setPositionInScreen(x + rect.x(), y + rect.y());
+    mouse_event.SetPositionInScreen(x + rect.x(), y + rect.y());
     rwh->ForwardMouseEvent(mouse_event);
-    mouse_event.setType(blink::WebInputEvent::MouseUp);
+    mouse_event.SetType(blink::WebInputEvent::kMouseUp);
     rwh->ForwardMouseEvent(mouse_event);
   }
 
@@ -477,7 +477,7 @@ class WebViewInteractiveTestBase : public extensions::PlatformAppBrowserTest {
     passed_listener.set_failure_message("TEST_FAILED");
     content::SimulateMouseClickAt(guest_web_contents(),
                                   0,
-                                  blink::WebMouseEvent::Button::Left,
+                                  blink::WebMouseEvent::Button::kLeft,
                                   gfx::Point(20, 20));
     ASSERT_TRUE(passed_listener.WaitUntilSatisfied());
   }
@@ -726,7 +726,7 @@ IN_PROC_BROWSER_TEST_P(WebViewFocusInteractiveTest, Focus_AdvanceFocus) {
     SimulateRWHMouseClick((guest ? guest : embedder_web_contents)
                               ->GetRenderViewHost()
                               ->GetWidget(),
-                          blink::WebMouseEvent::Button::Left, 200, 20);
+                          blink::WebMouseEvent::Button::kLeft, 200, 20);
     content::SimulateKeyPress(embedder_web_contents, ui::DomKey::TAB,
                               ui::DomCode::TAB, ui::VKEY_TAB, false, false,
                               false, false);
@@ -965,7 +965,7 @@ IN_PROC_BROWSER_TEST_F(WebViewContextMenuInteractiveTest,
 
   ContextMenuWaiter menu_observer(content::NotificationService::AllSources());
   SimulateRWHMouseClick(guest_web_contents()->GetRenderViewHost()->GetWidget(),
-                        blink::WebMouseEvent::Button::Right, 10, 20);
+                        blink::WebMouseEvent::Button::kRight, 10, 20);
   // Wait until the context menu is opened and closed.
   menu_observer.WaitForMenuOpenAndClose();
   ASSERT_EQ(10, menu_observer.params().x);
@@ -1019,7 +1019,7 @@ IN_PROC_BROWSER_TEST_F(WebViewContextMenuInteractiveTest,
     embedder_window_point -= embedder_view_bounds.OffsetFromOrigin();
     SimulateRWHMouseClick(
         embedder_web_contents()->GetRenderViewHost()->GetWidget(),
-        blink::WebMouseEvent::Button::Right,
+        blink::WebMouseEvent::Button::kRight,
         /* Using window coordinates for the embedder */
         embedder_window_point.x(), embedder_window_point.y());
 
@@ -1215,7 +1215,7 @@ IN_PROC_BROWSER_TEST_P(WebViewFocusInteractiveTest, MAYBE_Focus_FocusRestored) {
   {
     content::SimulateMouseClickAt(guest_web_contents(),
                                   0,
-                                  blink::WebMouseEvent::Button::Left,
+                                  blink::WebMouseEvent::Button::kLeft,
                                   gfx::Point(10, 10));
     EXPECT_TRUE(content::ExecuteScript(
                     embedder_web_contents,
@@ -1230,7 +1230,7 @@ IN_PROC_BROWSER_TEST_P(WebViewFocusInteractiveTest, MAYBE_Focus_FocusRestored) {
   {
     content::SimulateMouseClickAt(embedder_web_contents,
                                   0,
-                                  blink::WebMouseEvent::Button::Left,
+                                  blink::WebMouseEvent::Button::kLeft,
                                   gfx::Point(200, 20));
     EXPECT_TRUE(content::ExecuteScript(
                     embedder_web_contents,
@@ -1245,7 +1245,7 @@ IN_PROC_BROWSER_TEST_P(WebViewFocusInteractiveTest, MAYBE_Focus_FocusRestored) {
   {
     content::SimulateMouseClickAt(guest_web_contents(),
                                   0,
-                                  blink::WebMouseEvent::Button::Left,
+                                  blink::WebMouseEvent::Button::kLeft,
                                   gfx::Point(10, 10));
     EXPECT_TRUE(content::ExecuteScript(
                     embedder_web_contents,
@@ -1355,7 +1355,7 @@ IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, TextSelection) {
   ExtensionTestMessageListener ctx_listener("MSG_CONTEXTMENU", false);
   ContextMenuNotificationObserver menu_observer(IDC_CONTENT_CONTEXT_COPY);
   SimulateRWHMouseClick(guest_web_contents()->GetRenderViewHost()->GetWidget(),
-                        blink::WebMouseEvent::Button::Right, 20, 20);
+                        blink::WebMouseEvent::Button::kRight, 20, 20);
   ASSERT_TRUE(ctx_listener.WaitUntilSatisfied());
 
   // Now verify that the selection text propagates properly to RWHV.
@@ -1565,7 +1565,7 @@ IN_PROC_BROWSER_TEST_P(WebViewImeInteractiveTest,
           : guest_view::GuestViewBase::FromWebContents(guest_web_contents)
                 ->embedder_web_contents();
   content::SimulateMouseClickAt(target_web_contents, 0,
-                                blink::WebMouseEvent::Button::Left,
+                                blink::WebMouseEvent::Button::kLeft,
                                 gfx::Point(50, 50));
   focus_listener.WaitUntilSatisfied();
 

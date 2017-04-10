@@ -377,7 +377,7 @@ TEST_F(ThreatDetailsTest, ThreatSubResource) {
           web_contents()->GetMainFrame(), 0 /* nav_entry_id */,
           true /* did_create_new_entry */, GURL(kLandingURL),
           content::Referrer(GURL(kReferrerURL),
-                            blink::WebReferrerPolicyDefault),
+                            blink::kWebReferrerPolicyDefault),
           ui::PAGE_TRANSITION_TYPED);
 
   UnsafeResource resource;
@@ -916,13 +916,13 @@ TEST_F(ThreatDetailsTest, ThreatOnMainPageLoadBlocked) {
           web_contents()->GetMainFrame(), 0 /* nav_entry_id */,
           true /* did_create_new_entry */, GURL(kUnrelatedURL),
           content::Referrer(GURL(kUnrelatedReferrerURL),
-                            blink::WebReferrerPolicyDefault),
+                            blink::kWebReferrerPolicyDefault),
           ui::PAGE_TRANSITION_TYPED);
 
   // Start a pending load with a referrer.
   controller().LoadURL(GURL(kLandingURL),
                        content::Referrer(GURL(kReferrerURL),
-                                         blink::WebReferrerPolicyDefault),
+                                         blink::kWebReferrerPolicyDefault),
                        ui::PAGE_TRANSITION_TYPED, std::string());
 
   // Create UnsafeResource for the pending main page load.
@@ -977,7 +977,7 @@ TEST_F(ThreatDetailsTest, ThreatWithPendingLoad) {
           web_contents()->GetMainFrame(), 0 /* nav_entry_id */,
           true /* did_create_new_entry */, GURL(kLandingURL),
           content::Referrer(GURL(kReferrerURL),
-                            blink::WebReferrerPolicyDefault),
+                            blink::kWebReferrerPolicyDefault),
           ui::PAGE_TRANSITION_TYPED);
 
   // Create UnsafeResource for fake sub-resource of landing page.
@@ -988,7 +988,7 @@ TEST_F(ThreatDetailsTest, ThreatWithPendingLoad) {
   // Start a pending load before creating ThreatDetails.
   controller().LoadURL(GURL(kPendingURL),
                        content::Referrer(GURL(kPendingReferrerURL),
-                                         blink::WebReferrerPolicyDefault),
+                                         blink::kWebReferrerPolicyDefault),
                        ui::PAGE_TRANSITION_TYPED, std::string());
 
   // Do ThreatDetails collection.

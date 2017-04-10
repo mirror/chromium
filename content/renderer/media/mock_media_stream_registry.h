@@ -41,7 +41,7 @@ class MockMediaStreamRegistry final : public MediaStreamRegistryInterface {
   const blink::WebMediaStream test_stream() const { return test_stream_; }
 
   void reset() {
-    test_stream_.reset();
+    test_stream_.Reset();
   }
 
  private:

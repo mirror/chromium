@@ -155,12 +155,12 @@ void PhishingClassifierDelegate::DidCommitProvisionalLoad(
   // to swap out the page text while the term feature extractor is still
   // running.
   DocumentState* document_state = DocumentState::FromDataSource(
-      frame->dataSource());
+      frame->DataSource());
   NavigationState* navigation_state = document_state->navigation_state();
   CancelPendingClassification(navigation_state->WasWithinSameDocument()
                                   ? NAVIGATE_WITHIN_PAGE
                                   : NAVIGATE_AWAY);
-  if (frame->parent())
+  if (frame->Parent())
     return;
 
   last_main_frame_transition_ = navigation_state->GetTransitionType();
@@ -177,7 +177,7 @@ void PhishingClassifierDelegate::PageCaptured(base::string16* page_text,
   // Note: Currently, if the url hasn't changed, we won't restart
   // classification in this case.  We may want to adjust this.
   CancelPendingClassification(PAGE_RECAPTURED);
-  last_finished_load_url_ = render_frame()->GetWebFrame()->document().url();
+  last_finished_load_url_ = render_frame()->GetWebFrame()->GetDocument().Url();
   classifier_page_text_.swap(*page_text);
   have_page_text_ = true;
   MaybeStartClassification();

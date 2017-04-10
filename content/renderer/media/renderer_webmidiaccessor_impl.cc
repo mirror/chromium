@@ -21,12 +21,12 @@ RendererWebMIDIAccessorImpl::~RendererWebMIDIAccessorImpl() {
     midi_message_filter()->RemoveClient(client_);
 }
 
-void RendererWebMIDIAccessorImpl::startSession() {
+void RendererWebMIDIAccessorImpl::StartSession() {
   midi_message_filter()->AddClient(client_);
   is_client_added_ = true;
 }
 
-void RendererWebMIDIAccessorImpl::sendMIDIData(
+void RendererWebMIDIAccessorImpl::SendMIDIData(
     unsigned port_index,
     const unsigned char* data,
     size_t length,
