@@ -83,12 +83,12 @@ class BLINK_PLATFORM_EXPORT WebData {
 #else
   template <class C>
   WebData(const C& c) {
-    Assign(c.Data(), c.size());
+    Assign(c.data(), c.size());
   }
 
   template <class C>
   WebData& operator=(const C& c) {
-    Assign(c.Data(), c.size());
+    Assign(c.data(), c.size());
     return *this;
   }
 #endif

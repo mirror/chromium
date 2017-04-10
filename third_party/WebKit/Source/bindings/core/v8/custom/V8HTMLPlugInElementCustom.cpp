@@ -46,7 +46,7 @@ template <typename ElementType>
 void GetScriptableObjectProperty(
     const AtomicString& name,
     const v8::PropertyCallbackInfo<v8::Value>& info) {
-  HTMLPlugInElement* impl = ElementType::ToImpl(info.Holder());
+  HTMLPlugInElement* impl = ElementType::toImpl(info.Holder());
   RefPtr<SharedPersistent<v8::Object>> wrapper = impl->PluginWrapper();
   if (!wrapper)
     return;
@@ -75,7 +75,7 @@ void SetScriptableObjectProperty(
     const v8::PropertyCallbackInfo<v8::Value>& info) {
   ASSERT(!value.IsEmpty());
 
-  HTMLPlugInElement* impl = ElementType::ToImpl(info.Holder());
+  HTMLPlugInElement* impl = ElementType::toImpl(info.Holder());
   RefPtr<SharedPersistent<v8::Object>> wrapper = impl->PluginWrapper();
   if (!wrapper)
     return;

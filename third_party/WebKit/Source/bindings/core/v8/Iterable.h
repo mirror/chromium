@@ -17,7 +17,7 @@ namespace blink {
 template <typename KeyType, typename ValueType>
 class Iterable {
  public:
-  Iterator* KeysForBinding(ScriptState* script_state,
+  Iterator* keysForBinding(ScriptState* script_state,
                            ExceptionState& exception_state) {
     IterationSource* source = this->StartIteration(script_state, exception_state);
     if (!source)
@@ -25,7 +25,7 @@ class Iterable {
     return new IterableIterator<KeySelector>(source);
   }
 
-  Iterator* ValuesForBinding(ScriptState* script_state,
+  Iterator* valuesForBinding(ScriptState* script_state,
                              ExceptionState& exception_state) {
     IterationSource* source = this->StartIteration(script_state, exception_state);
     if (!source)
@@ -33,7 +33,7 @@ class Iterable {
     return new IterableIterator<ValueSelector>(source);
   }
 
-  Iterator* EntriesForBinding(ScriptState* script_state,
+  Iterator* entriesForBinding(ScriptState* script_state,
                               ExceptionState& exception_state) {
     IterationSource* source = this->StartIteration(script_state, exception_state);
     if (!source)
@@ -41,7 +41,7 @@ class Iterable {
     return new IterableIterator<EntrySelector>(source);
   }
 
-  void ForEachForBinding(ScriptState* script_state,
+  void forEachForBinding(ScriptState* script_state,
                          const ScriptValue& this_value,
                          const ScriptValue& callback,
                          const ScriptValue& this_arg,
@@ -172,7 +172,7 @@ template <typename KeyType, typename ValueType>
 class PairIterable : public Iterable<KeyType, ValueType> {
  public:
   Iterator* GetIterator(ScriptState* script_state, ExceptionState& exception_state) {
-    return this->EntriesForBinding(script_state, exception_state);
+    return this->entriesForBinding(script_state, exception_state);
   }
 };
 

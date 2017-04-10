@@ -75,8 +75,8 @@ class CORE_EXPORT BasicShape : public RefCounted<BasicShape> {
 
 #define DEFINE_BASICSHAPE_TYPE_CASTS(thisType)                   \
   DEFINE_TYPE_CASTS(thisType, BasicShape, value,                 \
-                    value->GetType() == BasicShape::thisType##Type, \
-                    value.GetType() == BasicShape::thisType##Type)
+                    value->GetType() == BasicShape::k##thisType##Type, \
+                    value.GetType() == BasicShape::k##thisType##Type)
 
 class BasicShapeCenterCoordinate {
   DISALLOW_NEW();

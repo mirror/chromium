@@ -132,35 +132,35 @@ static const int kCompleteTimeoutSeconds = 60;
 template <typename T>
 void ValidateShippingOptionOrPaymentItem(const T& item,
                                          ExceptionState& exception_state) {
-  if (!item.HasLabel() || item.Label().IsEmpty()) {
+  if (!item.hasLabel() || item.label().IsEmpty()) {
     exception_state.ThrowTypeError("Item label required");
     return;
   }
 
-  if (!item.HasAmount()) {
+  if (!item.hasAmount()) {
     exception_state.ThrowTypeError("Currency amount required");
     return;
   }
 
-  if (!item.Amount().hasCurrency()) {
+  if (!item.amount().hasCurrency()) {
     exception_state.ThrowTypeError("Currency code required");
     return;
   }
 
-  if (!item.Amount().hasValue()) {
+  if (!item.amount().hasValue()) {
     exception_state.ThrowTypeError("Currency value required");
     return;
   }
 
   String error_message;
   if (!PaymentsValidators::IsValidCurrencyCodeFormat(
-          item.Amount().currency(), item.Amount().currencySystem(),
+          item.amount().currency(), item.amount().currencySystem(),
           &error_message)) {
     exception_state.ThrowTypeError(error_message);
     return;
   }
 
-  if (!PaymentsValidators::IsValidAmountFormat(item.Amount().value(),
+  if (!PaymentsValidators::IsValidAmountFormat(item.amount().value(),
                                                &error_message)) {
     exception_state.ThrowTypeError(error_message);
     return;

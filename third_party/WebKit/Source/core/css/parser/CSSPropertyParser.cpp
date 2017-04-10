@@ -1834,7 +1834,7 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
   // other properties, those properties will be taken out of the switch
   // statement.
   const CSSPropertyDescriptor& css_property_desc =
-      CSSPropertyDescriptor::get(property);
+      CSSPropertyDescriptor::Get(property);
   if (css_property_desc.parseSingleValue) {
     DCHECK(context_);
     return css_property_desc.parseSingleValue(range_, *context_);
@@ -3366,7 +3366,7 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
   // other properties, those properties will be taken out of the switch
   // statement.
   const CSSPropertyDescriptor& css_property_desc =
-      CSSPropertyDescriptor::get(property);
+      CSSPropertyDescriptor::Get(property);
   if (css_property_desc.parseShorthand)
     return css_property_desc.parseShorthand(important, range_, context_);
 

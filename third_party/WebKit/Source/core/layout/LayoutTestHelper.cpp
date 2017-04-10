@@ -88,7 +88,7 @@ void RenderingTest::LoadAhem() {
   ScriptState* script_state = ToScriptStateForMainWorld(&page_holder_->GetFrame());
   DummyExceptionStateForTesting exception_state;
   FontFaceSet::From(GetDocument())
-      ->AddForBinding(script_state, ahem, exception_state);
+      ->addForBinding(script_state, ahem, exception_state);
 }
 
 }  // namespace blink

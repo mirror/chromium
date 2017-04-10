@@ -66,15 +66,15 @@ class SVGViewSpec final : public GarbageCollectedFinalized<SVGViewSpec>,
 template <typename T>
 void SVGViewSpec::InheritViewAttributesFromElement(T& inherit_from_element) {
   if (inherit_from_element.HasValidViewBox())
-    SetViewBox(inherit_from_element.ViewBox()->CurrentValue()->Value());
+    SetViewBox(inherit_from_element.viewBox()->CurrentValue()->Value());
 
-  if (inherit_from_element.PreserveAspectRatio()->IsSpecified()) {
+  if (inherit_from_element.preserveAspectRatio()->IsSpecified()) {
     SetPreserveAspectRatio(
-        *inherit_from_element.PreserveAspectRatio()->CurrentValue());
+        *inherit_from_element.preserveAspectRatio()->CurrentValue());
   }
 
-  if (inherit_from_element.HasAttribute(SVGNames::zoomAndPanAttr))
-    setZoomAndPan(inherit_from_element.ZoomAndPan());
+  if (inherit_from_element.hasAttribute(SVGNames::zoomAndPanAttr))
+    setZoomAndPan(inherit_from_element.zoomAndPan());
 }
 
 }  // namespace blink

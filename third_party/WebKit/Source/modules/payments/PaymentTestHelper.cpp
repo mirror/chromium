@@ -45,13 +45,13 @@ void SetValues(PaymentItemOrPaymentShippingOption& original,
   }
 
   if (data != kPaymentTestDataAmount || modification_type != kPaymentTestRemoveKey)
-    original.SetAmount(item_amount);
+    original.setAmount(item_amount);
 
   if (data == kPaymentTestDataLabel) {
     if (modification_type == kPaymentTestOverwriteValue)
-      original.SetLabel(value_to_use);
+      original.setLabel(value_to_use);
   } else {
-    original.SetLabel("Label");
+    original.setLabel("Label");
   }
 }
 

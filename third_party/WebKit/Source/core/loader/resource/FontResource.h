@@ -110,7 +110,7 @@ class CORE_EXPORT FontResource final : public Resource {
   FRIEND_TEST_ALL_PREFIXES(FontResourceTest, CacheAwareFontLoading);
 };
 
-DEFINE_RESOURCE_TYPE_CASTS(kFont);
+DEFINE_RESOURCE_TYPE_CASTS(Font);
 
 class FontResourceClient : public ResourceClient {
  public:

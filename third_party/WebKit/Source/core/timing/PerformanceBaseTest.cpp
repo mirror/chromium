@@ -46,7 +46,7 @@ class PerformanceBaseTest : public ::testing::Test {
     v8::Local<v8::Function> callback =
         v8::Function::New(script_state->GetContext(), nullptr).ToLocalChecked();
     base_ = new TestPerformanceBase(script_state);
-    cb_ = PerformanceObserverCallback::create(script_state, callback);
+    cb_ = PerformanceObserverCallback::Create(script_state, callback);
     observer_ = PerformanceObserver::Create(script_state->GetExecutionContext(),
                                              base_, cb_);
   }

@@ -21,7 +21,7 @@
 #include "wtf/Threading.h"
 
 #define NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, type_name, value, max) \
-  case NotificationImageLoader::Type::type_name: {                            \
+  case NotificationImageLoader::Type::k##type_name: {                         \
     DEFINE_THREAD_SAFE_STATIC_LOCAL(                                          \
         CustomCountHistogram, metric##type_name##Histogram,                   \
         new CustomCountHistogram("Notifications." #metric "." #type_name,     \
@@ -32,10 +32,10 @@
 
 #define NOTIFICATION_HISTOGRAM_COUNTS(metric, type, value, max)            \
   switch (type) {                                                          \
-    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, kImage, value, max)      \
-    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, kIcon, value, max)       \
-    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, kBadge, value, max)      \
-    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, kActionIcon, value, max) \
+    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, Image, value, max)      \
+    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, Icon, value, max)       \
+    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, Badge, value, max)      \
+    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, ActionIcon, value, max) \
   }
 
 namespace {

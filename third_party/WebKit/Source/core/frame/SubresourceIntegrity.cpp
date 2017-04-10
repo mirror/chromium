@@ -338,9 +338,9 @@ SubresourceIntegrity::ParseIntegrityAttribute(
     WTF::String digest;
     HashAlgorithm algorithm;
 
-    skipWhile<UChar, isASCIISpace>(position, end);
+    skipWhile<UChar, IsASCIISpace>(position, end);
     current_integrity_end = position;
-    skipUntil<UChar, isASCIISpace>(current_integrity_end, end);
+    skipUntil<UChar, IsASCIISpace>(current_integrity_end, end);
 
     // Algorithm parsing errors are non-fatal (the subresource should
     // still be loaded) because strong hash algorithms should be used
@@ -351,7 +351,7 @@ SubresourceIntegrity::ParseIntegrityAttribute(
     if (parse_result == kAlgorithmUnknown) {
       // Unknown hash algorithms are treated as if they're not present,
       // and thus are not marked as an error, they're just skipped.
-      skipUntil<UChar, isASCIISpace>(position, end);
+      skipUntil<UChar, IsASCIISpace>(position, end);
       if (execution_context) {
         LogErrorToConsole("Error parsing 'integrity' attribute ('" + attribute +
                               "'). The specified hash algorithm must be one of "
@@ -366,7 +366,7 @@ SubresourceIntegrity::ParseIntegrityAttribute(
 
     if (parse_result == kAlgorithmUnparsable) {
       error = true;
-      skipUntil<UChar, isASCIISpace>(position, end);
+      skipUntil<UChar, IsASCIISpace>(position, end);
       if (execution_context) {
         LogErrorToConsole("Error parsing 'integrity' attribute ('" + attribute +
                               "'). The hash algorithm must be one of 'sha256', "
@@ -384,7 +384,7 @@ SubresourceIntegrity::ParseIntegrityAttribute(
 
     if (!ParseDigest(position, current_integrity_end, digest)) {
       error = true;
-      skipUntil<UChar, isASCIISpace>(position, end);
+      skipUntil<UChar, IsASCIISpace>(position, end);
       if (execution_context) {
         LogErrorToConsole(
             "Error parsing 'integrity' attribute ('" + attribute +

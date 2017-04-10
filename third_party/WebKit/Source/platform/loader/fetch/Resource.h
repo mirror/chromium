@@ -499,10 +499,10 @@ class ResourceFactory {
   Resource::Type type_;
 };
 
-#define DEFINE_RESOURCE_TYPE_CASTS(typeName)                   \
-  DEFINE_TYPE_CASTS(typeName##Resource, Resource, resource,    \
-                    resource->GetType() == Resource::typeName, \
-                    resource.GetType() == Resource::typeName);
+#define DEFINE_RESOURCE_TYPE_CASTS(typeName)                      \
+  DEFINE_TYPE_CASTS(typeName##Resource, Resource, resource,       \
+                    resource->GetType() == Resource::k##typeName, \
+                    resource.GetType() == Resource::k##typeName);
 
 }  // namespace blink
 

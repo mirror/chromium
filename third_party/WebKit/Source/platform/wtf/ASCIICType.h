@@ -87,7 +87,7 @@ inline bool IsASCIIPrintable(CharType c) {
 }
 
 /*
- Statistics from a run of Apple's page load test for callers of isASCIISpace:
+ Statistics from a run of Apple's page load test for callers of IsASCIISpace:
 
  character          count
  ---------          -----

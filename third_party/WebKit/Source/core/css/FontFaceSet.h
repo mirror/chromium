@@ -74,10 +74,10 @@ class CORE_EXPORT FontFaceSet final : public EventTargetWithInlineData,
   ScriptPromise load(ScriptState*, const String& font, const String& text);
   ScriptPromise ready(ScriptState*);
 
-  FontFaceSet* AddForBinding(ScriptState*, FontFace*, ExceptionState&);
-  void ClearForBinding(ScriptState*, ExceptionState&);
-  bool DeleteForBinding(ScriptState*, FontFace*, ExceptionState&);
-  bool HasForBinding(ScriptState*, FontFace*, ExceptionState&) const;
+  FontFaceSet* addForBinding(ScriptState*, FontFace*, ExceptionState&);
+  void clearForBinding(ScriptState*, ExceptionState&);
+  bool deleteForBinding(ScriptState*, FontFace*, ExceptionState&);
+  bool hasForBinding(ScriptState*, FontFace*, ExceptionState&) const;
 
   size_t size() const;
   AtomicString status() const;

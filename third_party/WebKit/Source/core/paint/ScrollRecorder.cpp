@@ -34,7 +34,7 @@ ScrollRecorder::~ScrollRecorder() {
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
     return;
   context_.GetPaintController().EndItem<EndScrollDisplayItem>(
-      client_, DisplayItem::scrollTypeToEndScrollType(begin_item_type_));
+      client_, DisplayItem::ScrollTypeToEndScrollType(begin_item_type_));
 }
 
 }  // namespace blink

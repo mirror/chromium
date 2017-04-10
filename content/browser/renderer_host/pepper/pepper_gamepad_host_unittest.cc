@@ -82,7 +82,7 @@ TEST_F(PepperGamepadHostTest, ValidateGamepadsMatch) {
   size_t ppapi_items_length_cap = ppapi::WebKitGamepads::kItemsLengthCap;
   EXPECT_EQ(webkit_items_length_cap, ppapi_items_length_cap);
 
-  for (size_t i = 0; i < web_gamepads.itemsLengthCap; i++) {
+  for (size_t i = 0; i < webkit_items_length_cap; i++) {
     EXPECT_EQ(AddressDiff(&web_gamepads.items[0], &web_gamepads),
               AddressDiff(&ppapi_gamepads.items[0], &ppapi_gamepads));
   }

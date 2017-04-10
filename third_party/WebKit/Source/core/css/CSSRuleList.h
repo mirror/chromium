@@ -89,7 +89,7 @@ class LiveCSSRuleList final : public CSSRuleList {
   unsigned length() const override { return rule_->length(); }
   CSSRule* item(unsigned index) const override { return rule_->Item(index); }
   CSSStyleSheet* GetStyleSheet() const override {
-    return rule_->ParentStyleSheet();
+    return rule_->parentStyleSheet();
   }
 
   Member<Rule> rule_;

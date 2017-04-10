@@ -28,8 +28,8 @@ namespace blink {
 
 static WebBlendMode ToWebBlendMode(SVGFEBlendElement::Mode mode) {
 #define MAP_BLEND_MODE(MODENAME)          \
-  case SVGFEBlendElement::Mode##MODENAME: \
-    return WebBlendMode##MODENAME
+  case SVGFEBlendElement::kMode##MODENAME: \
+    return kWebBlendMode##MODENAME
 
   switch (mode) {
     MAP_BLEND_MODE(Normal);

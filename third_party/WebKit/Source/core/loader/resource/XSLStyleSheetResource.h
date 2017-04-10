@@ -63,7 +63,7 @@ class XSLStyleSheetResource final : public StyleSheetResource {
   String sheet_;
 };
 
-DEFINE_RESOURCE_TYPE_CASTS(kXSLStyleSheet);
+DEFINE_RESOURCE_TYPE_CASTS(XSLStyleSheet);
 
 }  // namespace blink
 

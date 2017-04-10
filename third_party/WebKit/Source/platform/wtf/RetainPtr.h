@@ -293,14 +293,6 @@ inline RetainPtr<T> AdoptNS(T o) {
   return RetainPtr<T>(kAdoptNS, o);
 }
 
-// Helper function for creating a RetainPtr using template argument deduction.
-template <typename T>
-WARN_UNUSED_RESULT inline RetainPtr<T> RetainPtr(T);
-template <typename T>
-inline RetainPtr<T> RetainPtr(T o) {
-  return RetainPtr<T>(o);
-}
-
 template <typename T>
 struct HashTraits<RetainPtr<T>> : SimpleClassHashTraits<RetainPtr<T>> {};
 
@@ -335,7 +327,6 @@ using WTF::kAdoptCF;
 using WTF::kAdoptNS;
 using WTF::AdoptCF;
 using WTF::AdoptNS;
-using WTF::RetainPtr;
 using WTF::RetainPtr;
 
 #endif  // WTF_RetainPtr_h

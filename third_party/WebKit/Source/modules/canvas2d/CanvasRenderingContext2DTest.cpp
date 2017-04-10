@@ -290,7 +290,7 @@ class MockImageBufferSurfaceForOverwriteTesting
   MockImageBufferSurfaceForOverwriteTesting* surface_ptr = mock_surface.get(); \
   CanvasElement().CreateImageBufferUsingSurfaceForTesting(                   \
       std::move(mock_surface));                                               \
-  EXPECT_CALL(*surface_ptr, willOverwriteCanvas()).Times(EXPECTED_OVERDRAWS); \
+  EXPECT_CALL(*surface_ptr, WillOverwriteCanvas()).Times(EXPECTED_OVERDRAWS); \
   Context2d()->save();
 
 #define TEST_OVERDRAW_FINALIZE \

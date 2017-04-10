@@ -82,7 +82,7 @@ class CORE_EXPORT CSSTokenizer {
   CSSParserToken Solidus(UChar);
   CSSParserToken Colon(UChar);
   CSSParserToken SemiColon(UChar);
-  CSSParserToken GetHash(UChar);
+  CSSParserToken Hash(UChar);
   CSSParserToken CircumflexAccent(UChar);
   CSSParserToken DollarSign(UChar);
   CSSParserToken VerticalLine(UChar);

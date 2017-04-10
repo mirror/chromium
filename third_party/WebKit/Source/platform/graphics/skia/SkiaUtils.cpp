@@ -363,11 +363,11 @@ void DrawPlatformFocusRing(const PrimitiveType& primitive,
 #endif
 }
 
-template void PLATFORM_EXPORT drawPlatformFocusRing<SkRect>(const SkRect&,
+template void PLATFORM_EXPORT DrawPlatformFocusRing<SkRect>(const SkRect&,
                                                             PaintCanvas*,
                                                             SkColor,
                                                             float width);
-template void PLATFORM_EXPORT drawPlatformFocusRing<SkPath>(const SkPath&,
+template void PLATFORM_EXPORT DrawPlatformFocusRing<SkPath>(const SkPath&,
                                                             PaintCanvas*,
                                                             SkColor,
                                                             float width);

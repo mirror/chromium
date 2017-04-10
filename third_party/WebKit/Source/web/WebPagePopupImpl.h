@@ -36,6 +36,9 @@
 #include "public/web/WebPagePopup.h"
 #include "web/PageWidgetDelegate.h"
 
+// To avoid conflicts with the CreateWindow macro from the Windows SDK...
+#undef PostMessage
+
 namespace blink {
 
 class CompositorAnimationHost;

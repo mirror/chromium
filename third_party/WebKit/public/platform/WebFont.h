@@ -10,6 +10,9 @@
 #include "WebCommon.h"
 #include <memory>
 
+// To avoid conflicts with the CreateWindow macro from the Windows SDK...
+#undef DrawText
+
 namespace blink {
 
 struct WebFloatPoint;

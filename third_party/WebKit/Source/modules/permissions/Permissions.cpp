@@ -47,7 +47,7 @@ PermissionDescriptorPtr ParsePermission(ScriptState* script_state,
                                         const Dictionary raw_permission,
                                         ExceptionState& exception_state) {
   PermissionDescriptor permission =
-      NativeValueTraits<PermissionDescriptor>::nativeValue(
+      NativeValueTraits<PermissionDescriptor>::NativeValue(
           script_state->GetIsolate(), raw_permission.V8Value(), exception_state);
 
   if (exception_state.HadException()) {
@@ -62,7 +62,7 @@ PermissionDescriptorPtr ParsePermission(ScriptState* script_state,
     return CreatePermissionDescriptor(PermissionName::NOTIFICATIONS);
   if (name == "push") {
     PushPermissionDescriptor push_permission =
-        NativeValueTraits<PushPermissionDescriptor>::nativeValue(
+        NativeValueTraits<PushPermissionDescriptor>::NativeValue(
             script_state->GetIsolate(), raw_permission.V8Value(), exception_state);
     if (exception_state.HadException()) {
       exception_state.ThrowTypeError(exception_state.Message());
@@ -81,7 +81,7 @@ PermissionDescriptorPtr ParsePermission(ScriptState* script_state,
   }
   if (name == "midi") {
     MidiPermissionDescriptor midi_permission =
-        NativeValueTraits<MidiPermissionDescriptor>::nativeValue(
+        NativeValueTraits<MidiPermissionDescriptor>::NativeValue(
             script_state->GetIsolate(), raw_permission.V8Value(), exception_state);
     return CreateMidiPermissionDescriptor(midi_permission.sysex());
   }

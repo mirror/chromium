@@ -37,14 +37,14 @@ SourceListDirective::SourceListDirective(const String& name,
 }
 
 static bool IsSourceListNone(const UChar* begin, const UChar* end) {
-  skipWhile<UChar, isASCIISpace>(begin, end);
+  skipWhile<UChar, IsASCIISpace>(begin, end);
 
   const UChar* position = begin;
   skipWhile<UChar, IsSourceCharacter>(position, end);
   if (!EqualIgnoringCase("'none'", StringView(begin, position - begin)))
     return false;
 
-  skipWhile<UChar, isASCIISpace>(position, end);
+  skipWhile<UChar, IsASCIISpace>(position, end);
   if (position != end)
     return false;
 
@@ -128,7 +128,7 @@ void SourceListDirective::Parse(const UChar* begin, const UChar* end) {
 
   const UChar* position = begin;
   while (position < end) {
-    skipWhile<UChar, isASCIISpace>(position, end);
+    skipWhile<UChar, IsASCIISpace>(position, end);
     if (position == end)
       return;
 
@@ -422,7 +422,7 @@ bool SourceListDirective::ParseScheme(const UChar* begin,
 
   const UChar* position = begin;
 
-  if (!skipExactly<UChar, isASCIIAlpha>(position, end))
+  if (!skipExactly<UChar, IsASCIIAlpha>(position, end))
     return false;
 
   skipWhile<UChar, IsSchemeContinuationCharacter>(position, end);
@@ -531,7 +531,7 @@ bool SourceListDirective::ParsePort(
   }
 
   const UChar* position = begin;
-  skipWhile<UChar, isASCIIDigit>(position, end);
+  skipWhile<UChar, IsASCIIDigit>(position, end);
 
   if (position != end)
     return false;
