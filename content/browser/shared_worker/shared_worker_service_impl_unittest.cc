@@ -221,11 +221,11 @@ void PostCreateWorker(MockRendererProcessHost* renderer,
   params.url = GURL(url);
   params.name = base::ASCIIToUTF16(name);
   params.content_security_policy = base::string16();
-  params.security_policy_type = blink::WebContentSecurityPolicyTypeReport;
+  params.security_policy_type = blink::kWebContentSecurityPolicyTypeReport;
   params.document_id = document_id;
   params.render_frame_route_id = render_frame_route_id;
   params.creation_context_type =
-      blink::WebSharedWorkerCreationContextTypeSecure;
+      blink::kWebSharedWorkerCreationContextTypeSecure;
   EXPECT_TRUE(
       renderer->OnMessageReceived(new ViewHostMsg_CreateWorker(params, reply)));
 }
@@ -345,7 +345,7 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   CheckWorkerProcessMsgCreateWorker(renderer_host.get(),
                                     "http://example.com/w.js",
                                     "name",
-                                    blink::WebContentSecurityPolicyTypeReport,
+                                    blink::kWebContentSecurityPolicyTypeReport,
                                     &worker_route_id);
   // ViewMsg_WorkerCreated(1) should be sent back to SharedWorkerConnector side.
   CheckViewMsgWorkerCreated(renderer_host.get(), connector.get());
@@ -438,7 +438,7 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
                                     "http://example.com/w.js",
                                     "name",
-                                    blink::WebContentSecurityPolicyTypeReport,
+                                    blink::kWebContentSecurityPolicyTypeReport,
                                     &worker_route_id);
   // ViewMsg_WorkerCreated(1) should be sent back to SharedWorkerConnector side.
   CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
@@ -615,7 +615,7 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
     CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
                                       "http://example.com/w1.js",
                                       "name1",
-                                      blink::WebContentSecurityPolicyTypeReport,
+                                      blink::kWebContentSecurityPolicyTypeReport,
                                       &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
     connector1->Create("http://example.com/w1.js",
@@ -646,7 +646,7 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
     CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
                                       "http://example.com/w2.js",
                                       "name2",
-                                      blink::WebContentSecurityPolicyTypeReport,
+                                      blink::kWebContentSecurityPolicyTypeReport,
                                       &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
     connector1->Create("http://example.com/w2x.js",
@@ -654,13 +654,13 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
                        kDocumentIDs[1],
                        kRenderFrameRouteIDs[1]);
     EXPECT_NE(MSG_ROUTING_NONE, connector1->route_id());
-    EXPECT_EQ(blink::WebWorkerCreationErrorNone, connector1->creation_error());
+    EXPECT_EQ(blink::kWebWorkerCreationErrorNone, connector1->creation_error());
     EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
     RunAllPendingInMessageLoop();
     EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
     CheckWorkerProcessMsgCreateWorker(
         renderer_host1.get(), "http://example.com/w2x.js", "name2",
-        blink::WebContentSecurityPolicyTypeReport, &worker_route_id);
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
   }
 
@@ -680,18 +680,18 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
     EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
     CheckWorkerProcessMsgCreateWorker(
         renderer_host0.get(), "http://example.com/w3.js", "name3",
-        blink::WebContentSecurityPolicyTypeReport, &worker_route_id);
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
     connector1->Create("http://example.com/w3.js", "name3x", kDocumentIDs[1],
                        kRenderFrameRouteIDs[1]);
     EXPECT_NE(MSG_ROUTING_NONE, connector1->route_id());
-    EXPECT_EQ(blink::WebWorkerCreationErrorNone, connector1->creation_error());
+    EXPECT_EQ(blink::kWebWorkerCreationErrorNone, connector1->creation_error());
     EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
     RunAllPendingInMessageLoop();
     EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
     CheckWorkerProcessMsgCreateWorker(
         renderer_host1.get(), "http://example.com/w3.js", "name3x",
-        blink::WebContentSecurityPolicyTypeReport, &worker_route_id);
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
   }
 
@@ -716,7 +716,7 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
     CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
                                       "http://example.com/w4.js",
                                       "name4",
-                                      blink::WebContentSecurityPolicyTypeReport,
+                                      blink::kWebContentSecurityPolicyTypeReport,
                                       &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
     EXPECT_EQ(1U, renderer_host1->QueuedMessageCount());
@@ -741,12 +741,12 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
     EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
     CheckWorkerProcessMsgCreateWorker(
         renderer_host0.get(), "http://example.com/w5.js", "name5",
-        blink::WebContentSecurityPolicyTypeReport, &worker_route_id);
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
     EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
     CheckWorkerProcessMsgCreateWorker(
         renderer_host1.get(), "http://example.com/w5x.js", "name5",
-        blink::WebContentSecurityPolicyTypeReport, &worker_route_id);
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
   }
 
@@ -768,12 +768,12 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
     EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
     CheckWorkerProcessMsgCreateWorker(
         renderer_host0.get(), "http://example.com/w6.js", "name6",
-        blink::WebContentSecurityPolicyTypeReport, &worker_route_id);
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
     EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
     CheckWorkerProcessMsgCreateWorker(
         renderer_host1.get(), "http://example.com/w6.js", "name6x",
-        blink::WebContentSecurityPolicyTypeReport, &worker_route_id);
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
   }
 }
@@ -811,7 +811,7 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
   CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
                                     "http://example.com/w1.js",
                                     "name1",
-                                    blink::WebContentSecurityPolicyTypeReport,
+                                    blink::kWebContentSecurityPolicyTypeReport,
                                     &worker_route_id);
   CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
   renderer_host0->FastShutdownIfPossible();
@@ -827,7 +827,7 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
   CheckWorkerProcessMsgCreateWorker(renderer_host1.get(),
                                     "http://example.com/w1.js",
                                     "name1",
-                                    blink::WebContentSecurityPolicyTypeReport,
+                                    blink::kWebContentSecurityPolicyTypeReport,
                                     &worker_route_id);
   CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
 
@@ -883,7 +883,7 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest2) {
   CheckWorkerProcessMsgCreateWorker(renderer_host1.get(),
                                     "http://example.com/w1.js",
                                     "name1",
-                                    blink::WebContentSecurityPolicyTypeReport,
+                                    blink::kWebContentSecurityPolicyTypeReport,
                                     &worker_route_id);
   CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
 

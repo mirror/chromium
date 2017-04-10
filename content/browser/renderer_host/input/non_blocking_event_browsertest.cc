@@ -129,7 +129,7 @@ class NonBlockingEventBrowserTest : public ContentBrowserTest {
 
     FrameWatcher frame_watcher(shell()->web_contents());
     scoped_refptr<InputMsgWatcher> input_msg_watcher(
-        new InputMsgWatcher(GetWidgetHost(), blink::WebInputEvent::MouseWheel));
+        new InputMsgWatcher(GetWidgetHost(), blink::WebInputEvent::kMouseWheel));
 
     GetWidgetHost()->ForwardWheelEvent(
         SyntheticWebMouseWheelEventBuilder::Build(10, 10, 0, -53, 0, true));

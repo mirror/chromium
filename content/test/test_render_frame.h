@@ -46,7 +46,7 @@ class TestRenderFrame : public RenderFrameImpl {
       int end,
       const std::vector<blink::WebCompositionUnderline>& underlines);
 
-  blink::WebNavigationPolicy decidePolicyForNavigation(
+  blink::WebNavigationPolicy DecidePolicyForNavigation(
     const blink::WebFrameClient::NavigationPolicyInfo& info) override;
 
  private:

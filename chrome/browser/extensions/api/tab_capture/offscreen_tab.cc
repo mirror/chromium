@@ -281,7 +281,7 @@ blink::WebDisplayMode OffscreenTab::GetDisplayMode(
     const WebContents* contents) const {
   DCHECK_EQ(offscreen_tab_web_contents_.get(), contents);
   return in_fullscreen_mode() ?
-      blink::WebDisplayModeFullscreen : blink::WebDisplayModeBrowser;
+      blink::kWebDisplayModeFullscreen : blink::kWebDisplayModeBrowser;
 }
 
 void OffscreenTab::RequestMediaAccessPermission(

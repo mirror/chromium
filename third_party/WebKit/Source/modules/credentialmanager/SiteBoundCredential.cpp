@@ -6,7 +6,7 @@
 
 namespace blink {
 
-SiteBoundCredential::SiteBoundCredential(PlatformCredential* platformCredential)
-    : Credential(platformCredential) {}
+SiteBoundCredential::SiteBoundCredential(PlatformCredential* platform_credential)
+    : Credential(platform_credential) {}
 
 }  // namespace blink

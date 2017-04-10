@@ -16,7 +16,7 @@ static const int kMaxCursorDimension = 1024;
 namespace content {
 
 WebCursor::WebCursor()
-    : type_(WebCursorInfo::TypePointer),
+    : type_(WebCursorInfo::kTypePointer),
       custom_scale_(1) {
   InitPlatformData();
 }
@@ -86,7 +86,7 @@ bool WebCursor::Deserialize(base::PickleIterator* iter) {
 
   type_ = type;
 
-  if (type == WebCursorInfo::TypeCustom) {
+  if (type == WebCursorInfo::kTypeCustom) {
     if (size_x > 0 && size_y > 0) {
       // The * 4 is because the expected format is an array of RGBA pixel
       // values.
@@ -133,7 +133,7 @@ bool WebCursor::Serialize(base::Pickle* pickle) const {
 }
 
 bool WebCursor::IsCustom() const {
-  return type_ == WebCursorInfo::TypeCustom;
+  return type_ == WebCursorInfo::kTypeCustom;
 }
 
 bool WebCursor::IsEqual(const WebCursor& other) const {
@@ -150,7 +150,7 @@ bool WebCursor::IsEqual(const WebCursor& other) const {
 }
 
 void WebCursor::Clear() {
-  type_ = WebCursorInfo::TypePointer;
+  type_ = WebCursorInfo::kTypePointer;
   hotspot_.set_x(0);
   hotspot_.set_y(0);
   custom_size_.set_width(0);

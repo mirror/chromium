@@ -19,9 +19,9 @@ GinJavaBridgeObject* GinJavaBridgeObject::InjectNamed(
     const base::WeakPtr<GinJavaBridgeDispatcher>& dispatcher,
     const std::string& object_name,
     GinJavaBridgeDispatcher::ObjectID object_id) {
-  v8::Isolate* isolate = blink::mainThreadIsolate();
+  v8::Isolate* isolate = blink::MainThreadIsolate();
   v8::HandleScope handle_scope(isolate);
-  v8::Local<v8::Context> context = frame->mainWorldScriptContext();
+  v8::Local<v8::Context> context = frame->MainWorldScriptContext();
   if (context.IsEmpty())
     return NULL;
 
@@ -46,7 +46,7 @@ GinJavaBridgeObject* GinJavaBridgeObject::InjectAnonymous(
     const base::WeakPtr<GinJavaBridgeDispatcher>& dispatcher,
     GinJavaBridgeDispatcher::ObjectID object_id) {
   return new GinJavaBridgeObject(
-      blink::mainThreadIsolate(), dispatcher, object_id);
+      blink::MainThreadIsolate(), dispatcher, object_id);
 }
 
 GinJavaBridgeObject::GinJavaBridgeObject(
