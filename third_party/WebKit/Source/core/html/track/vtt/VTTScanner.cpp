@@ -110,7 +110,7 @@ String VTTScanner::RestOfInputAsString() {
 }
 
 unsigned VTTScanner::ScanDigits(int& number) {
-  Run run_of_digits = CollectWhile<isASCIIDigit>();
+  Run run_of_digits = CollectWhile<IsASCIIDigit>();
   if (run_of_digits.IsEmpty()) {
     number = 0;
     return 0;
@@ -134,11 +134,11 @@ unsigned VTTScanner::ScanDigits(int& number) {
 }
 
 bool VTTScanner::ScanFloat(float& number) {
-  Run integer_run = CollectWhile<isASCIIDigit>();
+  Run integer_run = CollectWhile<IsASCIIDigit>();
   SeekTo(integer_run.end());
   Run decimal_run(GetPosition(), GetPosition(), is8_bit_);
   if (Scan('.')) {
-    decimal_run = CollectWhile<isASCIIDigit>();
+    decimal_run = CollectWhile<IsASCIIDigit>();
     SeekTo(decimal_run.end());
   }
 

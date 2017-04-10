@@ -798,8 +798,9 @@ static bool ColorGamutMediaFeatureEval(const MediaQueryExpValue& value,
 void MediaQueryEvaluator::Init() {
   // Create the table.
   g_function_map = new FunctionMap;
-#define ADD_TO_FUNCTIONMAP(name) \
-  g_function_map->Set(name##MediaFeature.Impl(), name##MediaFeatureEval);
+#define ADD_TO_FUNCTIONMAP(constantPrefix, methodPrefix)   \
+  g_function_map->Set(constantPrefix##MediaFeature.Impl(), \
+                      methodPrefix##MediaFeatureEval);
   CSS_MEDIAQUERY_NAMES_FOR_EACH_MEDIAFEATURE(ADD_TO_FUNCTIONMAP);
 #undef ADD_TO_FUNCTIONMAP
 }

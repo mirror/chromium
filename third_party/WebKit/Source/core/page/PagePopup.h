@@ -33,6 +33,9 @@
 
 #include "wtf/Forward.h"
 
+// To avoid conflicts with the CreateWindow macro from the Windows SDK...
+#undef PostMessage
+
 namespace blink {
 
 class AXObject;

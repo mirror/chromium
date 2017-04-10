@@ -58,8 +58,8 @@ void V8ServiceWorkerMessageEventInternal::ConstructorCustom(
 
   // TODO(bashi): Workaround for http://crbug.com/529941. We need to store
   // |data| as a private value to avoid cyclic references.
-  if (event_init_dict.HasData()) {
-    v8::Local<v8::Value> v8_data = event_init_dict.Data().V8Value();
+  if (event_init_dict.hasData()) {
+    v8::Local<v8::Value> v8_data = event_init_dict.data().V8Value();
     V8PrivateProperty::GetMessageEventCachedData(isolate).Set(wrapper, v8_data);
     if (DOMWrapperWorld::Current(isolate).IsIsolatedWorld()) {
       impl->SetSerializedData(
@@ -85,7 +85,7 @@ void V8ServiceWorkerMessageEventInternal::DataAttributeGetterCustom(
 
   v8::Local<v8::Value> data;
   if (SerializedScriptValue* serialized_value = event->SerializedData()) {
-    MessagePortArray ports = event->Ports();
+    MessagePortArray ports = event->ports();
     SerializedScriptValue::DeserializeOptions options;
     options.message_ports = &ports;
     data = serialized_value->Deserialize(isolate, options);

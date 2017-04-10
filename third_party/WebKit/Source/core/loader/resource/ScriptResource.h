@@ -97,7 +97,7 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   AtomicString script_;
 };
 
-DEFINE_RESOURCE_TYPE_CASTS(kScript);
+DEFINE_RESOURCE_TYPE_CASTS(Script);
 
 }  // namespace blink
 

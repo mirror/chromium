@@ -1017,7 +1017,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
 
   template <typename T>
   IntRect GetTextureSourceSize(T* texture_source) {
-    return IntRect(0, 0, texture_source->Width(), texture_source->Height());
+    return IntRect(0, 0, texture_source->width(), texture_source->height());
   }
 
   template <typename T>
@@ -1031,8 +1031,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
     DCHECK(function_name);
     DCHECK(selecting_sub_rectangle);
     DCHECK(image);
-    int image_width = static_cast<int>(image->Width());
-    int image_height = static_cast<int>(image->Height());
+    int image_width = static_cast<int>(image->width());
+    int image_height = static_cast<int>(image->height());
     *selecting_sub_rectangle =
         !(sub_rect.X() == 0 && sub_rect.Y() == 0 &&
           sub_rect.Width() == image_width && sub_rect.Height() == image_height);

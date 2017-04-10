@@ -196,12 +196,12 @@ class SVGAnimatedProperty : public SVGAnimatedPropertyCommon<Property> {
     base_value_updated_ = true;
 
     DCHECK(this->AttributeName() != QualifiedName::Null());
-    this->ContextElement()->InvalidateSVGAttributes();
-    this->ContextElement()->SvgAttributeBaseValChanged(this->AttributeName());
+    this->contextElement()->InvalidateSVGAttributes();
+    this->contextElement()->SvgAttributeBaseValChanged(this->AttributeName());
   }
 
   PrimitiveType animVal() {
-    this->ContextElement()->EnsureAttributeAnimValUpdated();
+    this->contextElement()->EnsureAttributeAnimValUpdated();
     return this->CurrentValue()->Value();
   }
 
@@ -260,7 +260,7 @@ class SVGAnimatedProperty<Property, TearOffType, void>
   virtual TearOffType* baseVal() {
     if (!base_val_tear_off_) {
       base_val_tear_off_ =
-          TearOffType::Create(this->BaseValue(), this->ContextElement(),
+          TearOffType::Create(this->BaseValue(), this->contextElement(),
                               kPropertyIsNotAnimVal, this->AttributeName());
     }
     return base_val_tear_off_;
@@ -269,7 +269,7 @@ class SVGAnimatedProperty<Property, TearOffType, void>
   TearOffType* animVal() {
     if (!anim_val_tear_off_) {
       anim_val_tear_off_ =
-          TearOffType::Create(this->CurrentValue(), this->ContextElement(),
+          TearOffType::Create(this->CurrentValue(), this->contextElement(),
                               kPropertyIsAnimVal, this->AttributeName());
     }
     return anim_val_tear_off_;

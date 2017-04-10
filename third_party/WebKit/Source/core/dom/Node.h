@@ -167,7 +167,7 @@ class CORE_EXPORT Node : public EventTarget {
     const char* type_name = "blink::Node";
     return ThreadHeap::AllocateOnArenaIndex(
         state, size,
-        is_eager ? BlinkGC::kEagerSweepArenaIndex : BlinkGC::NodeArenaIndex,
+        is_eager ? BlinkGC::kEagerSweepArenaIndex : BlinkGC::kNodeArenaIndex,
         GCInfoTrait<EventTarget>::Index(), type_name);
   }
 

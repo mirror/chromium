@@ -370,7 +370,7 @@ void InternalSettings::setDefaultVideoPosterURL(
 }
 
 DEFINE_TRACE(InternalSettings) {
-  InternalSettingsGenerated::trace(visitor);
+  InternalSettingsGenerated::Trace(visitor);
   Supplement<Page>::Trace(visitor);
 }
 

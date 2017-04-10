@@ -41,6 +41,9 @@
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/text/CharacterNames.h"
 
+// To avoid conflicts with the CreateWindow macro from the Windows SDK...
+#undef DrawText
+
 namespace blink {
 
 struct CharacterRange;

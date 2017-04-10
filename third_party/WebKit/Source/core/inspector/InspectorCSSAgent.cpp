@@ -997,7 +997,7 @@ static CSSKeyframesRule* FindKeyframesRule(CSSRuleCollection* css_rules,
                                            StyleRuleKeyframes* keyframes_rule) {
   CSSKeyframesRule* result = 0;
   for (unsigned j = 0; css_rules && j < css_rules->length() && !result; ++j) {
-    CSSRule* css_rule = css_rules->Item(j);
+    CSSRule* css_rule = css_rules->item(j);
     if (css_rule->type() == CSSRule::kKeyframesRule) {
       CSSKeyframesRule* css_style_rule = ToCSSKeyframesRule(css_rule);
       if (css_style_rule->Keyframes() == keyframes_rule)

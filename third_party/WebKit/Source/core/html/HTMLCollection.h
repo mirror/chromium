@@ -42,7 +42,7 @@ class HTMLCollectionIterator {
  public:
   explicit HTMLCollectionIterator(const CollectionType* collection)
       : collection_(collection) {}
-  NodeType* operator*() { return collection_->Item(index_); }
+  NodeType* operator*() { return collection_->item(index_); }
 
   void operator++() {
     if (index_ < collection_->length())

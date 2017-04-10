@@ -45,6 +45,9 @@
 #include "wtf/Vector.h"
 #include <memory>
 
+// To avoid conflicts with the CreateWindow macro from the Windows SDK...
+#undef CreateWindow
+
 namespace blink {
 
 class AXObject;

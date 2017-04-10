@@ -202,7 +202,7 @@ String SerializeNodes(MarkupAccumulator& accumulator,
   return accumulator.ToString();
 }
 
-template String serializeNodes<EditingStrategy>(MarkupAccumulator&,
+template String SerializeNodes<EditingStrategy>(MarkupAccumulator&,
                                                 Node&,
                                                 EChildrenOnly);
 

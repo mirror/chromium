@@ -167,7 +167,7 @@ const UChar* ParseSuboriginName(const UChar* begin,
 
   const UChar* position = begin;
 
-  if (!skipExactly<UChar, isASCIILower>(position, end)) {
+  if (!skipExactly<UChar, IsASCIILower>(position, end)) {
     messages.push_back("Invalid character \'" + String(position, 1) +
                        "\' in suborigin. First character must be a lower case "
                        "alphabetic character.");
@@ -769,7 +769,7 @@ bool ParseSuboriginHeader(const String& header,
   const UChar* position = characters.Data();
   const UChar* end = position + characters.size();
 
-  skipWhile<UChar, isASCIISpace>(position, end);
+  skipWhile<UChar, IsASCIISpace>(position, end);
 
   String name;
   position = ParseSuboriginName(position, end, name, messages);
@@ -782,7 +782,7 @@ bool ParseSuboriginHeader(const String& header,
   suborigin->SetName(name);
 
   while (position < end) {
-    skipWhile<UChar, isASCIISpace>(position, end);
+    skipWhile<UChar, IsASCIISpace>(position, end);
     if (position == end)
       return true;
 

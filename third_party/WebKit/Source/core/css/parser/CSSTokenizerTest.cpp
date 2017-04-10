@@ -141,22 +141,22 @@ DEFINE_TOKEN(Whitespace, (kWhitespaceToken))
 DEFINE_TOKEN(Colon, (kColonToken));
 DEFINE_TOKEN(Semicolon, (kSemicolonToken));
 DEFINE_TOKEN(Comma, (kCommaToken));
-DEFINE_TOKEN(Include_match, (kIncludeMatchToken));
-DEFINE_TOKEN(Dash_match, (kDashMatchToken));
-DEFINE_TOKEN(Prefix_match, (kPrefixMatchToken));
-DEFINE_TOKEN(Suffix_match, (kSuffixMatchToken));
-DEFINE_TOKEN(Substring_match, (kSubstringMatchToken));
+DEFINE_TOKEN(IncludeMatch, (kIncludeMatchToken));
+DEFINE_TOKEN(DashMatch, (kDashMatchToken));
+DEFINE_TOKEN(PrefixMatch, (kPrefixMatchToken));
+DEFINE_TOKEN(SuffixMatch, (kSuffixMatchToken));
+DEFINE_TOKEN(SubstringMatch, (kSubstringMatchToken));
 DEFINE_TOKEN(Column, (kColumnToken));
 DEFINE_TOKEN(Cdo, (kCDOToken));
 DEFINE_TOKEN(Cdc, (kCDCToken));
-DEFINE_TOKEN(Left_parenthesis, (kLeftParenthesisToken));
-DEFINE_TOKEN(Right_parenthesis, (kRightParenthesisToken));
-DEFINE_TOKEN(Left_bracket, (kLeftBracketToken));
-DEFINE_TOKEN(Right_bracket, (kRightBracketToken));
-DEFINE_TOKEN(Left_brace, (kLeftBraceToken));
-DEFINE_TOKEN(Right_brace, (kRightBraceToken));
-DEFINE_TOKEN(Bad_string, (kBadStringToken));
-DEFINE_TOKEN(Bad_url, (kBadUrlToken));
+DEFINE_TOKEN(LeftParenthesis, (kLeftParenthesisToken));
+DEFINE_TOKEN(RightParenthesis, (kRightParenthesisToken));
+DEFINE_TOKEN(LeftBracket, (kLeftBracketToken));
+DEFINE_TOKEN(RightBracket, (kRightBracketToken));
+DEFINE_TOKEN(LeftBrace, (kLeftBraceToken));
+DEFINE_TOKEN(RightBrace, (kRightBraceToken));
+DEFINE_TOKEN(BadString, (kBadStringToken));
+DEFINE_TOKEN(BadUrl, (kBadUrlToken));
 
 String FromUChar32(UChar32 c) {
   StringBuilder input;

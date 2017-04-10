@@ -514,7 +514,7 @@ void CollectFlatRules(RuleList rule_list, CSSRuleVector* result) {
     return;
 
   for (unsigned i = 0, size = rule_list->length(); i < size; ++i) {
-    CSSRule* rule = rule_list->Item(i);
+    CSSRule* rule = rule_list->item(i);
 
     // The result->append()'ed types should be exactly the same as in
     // flattenSourceData().

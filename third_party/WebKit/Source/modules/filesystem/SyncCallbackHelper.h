@@ -83,9 +83,9 @@ class SyncCallbackHelper final
       return new SuccessCallbackImpl(helper);
     }
 
-    virtual void HandleEvent() { helper_->SetError(FileError::kOK); }
+    virtual void handleEvent() { helper_->SetError(FileError::kOK); }
 
-    virtual void HandleEvent(CallbackArg arg) { helper_->SetResult(arg); }
+    virtual void handleEvent(CallbackArg arg) { helper_->SetResult(arg); }
 
     DEFINE_INLINE_TRACE() {
       visitor->Trace(helper_);

@@ -92,7 +92,7 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
   bool did_notify_first_data_;
 };
 
-DEFINE_RESOURCE_TYPE_CASTS(kCSSStyleSheet);
+DEFINE_RESOURCE_TYPE_CASTS(CSSStyleSheet);
 
 }  // namespace blink
 

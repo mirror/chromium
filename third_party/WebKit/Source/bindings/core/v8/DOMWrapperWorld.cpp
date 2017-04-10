@@ -278,7 +278,7 @@ void DOMWrapperWorld::RegisterDOMObjectHolder(v8::Isolate* isolate,
       DOMObjectHolder<T>::Create(isolate, object, wrapper));
 }
 
-template void DOMWrapperWorld::registerDOMObjectHolder(v8::Isolate*,
+template void DOMWrapperWorld::RegisterDOMObjectHolder(v8::Isolate*,
                                                        ScriptFunction*,
                                                        v8::Local<v8::Value>);
 

@@ -243,10 +243,10 @@ class GC_PLUGIN_IGNORE("513199") CORE_EXPORT EventTargetWithInlineData
 // FIXME: These macros should be split into separate DEFINE and DECLARE
 // macros to avoid causing so many header includes.
 #define DEFINE_ATTRIBUTE_EVENT_LISTENER(attribute)                        \
-  EventListener* On##attribute() {                                        \
+  EventListener* on##attribute() {                                        \
     return this->GetAttributeEventListener(EventTypeNames::attribute);    \
   }                                                                       \
-  void SetOn##attribute(EventListener* listener) {                        \
+  void setOn##attribute(EventListener* listener) {                        \
     this->SetAttributeEventListener(EventTypeNames::attribute, listener); \
   }
 

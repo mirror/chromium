@@ -83,7 +83,7 @@ class MarkupAccumulator {
 template <typename Strategy>
 String SerializeNodes(MarkupAccumulator&, Node&, EChildrenOnly);
 
-extern template String serializeNodes<EditingStrategy>(MarkupAccumulator&,
+extern template String SerializeNodes<EditingStrategy>(MarkupAccumulator&,
                                                        Node&,
                                                        EChildrenOnly);
 

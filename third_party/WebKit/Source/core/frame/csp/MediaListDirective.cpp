@@ -39,7 +39,7 @@ void MediaListDirective::Parse(const UChar* begin, const UChar* end) {
   while (position < end) {
     // _____ OR _____mime1/mime1
     // ^        ^
-    skipWhile<UChar, isASCIISpace>(position, end);
+    skipWhile<UChar, IsASCIISpace>(position, end);
     if (position == end)
       return;
 

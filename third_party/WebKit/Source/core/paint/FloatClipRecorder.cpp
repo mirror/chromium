@@ -27,7 +27,7 @@ FloatClipRecorder::~FloatClipRecorder() {
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
     return;
   DisplayItem::Type end_type =
-      DisplayItem::floatClipTypeToEndFloatClipType(clip_type_);
+      DisplayItem::FloatClipTypeToEndFloatClipType(clip_type_);
   context_.GetPaintController().EndItem<EndFloatClipDisplayItem>(client_,
                                                                   end_type);
 }

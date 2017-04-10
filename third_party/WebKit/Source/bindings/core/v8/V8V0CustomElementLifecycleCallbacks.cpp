@@ -113,9 +113,9 @@ V8V0CustomElementLifecycleCallbacks::V8V0CustomElementLifecycleCallbacks(
       attribute_changed_(script_state->GetIsolate(), attribute_changed) {
   prototype_.SetPhantom();
 
-#define MAKE_WEAK(Var, _) \
-  if (!m_##Var.IsEmpty()) \
-    m_##Var.SetPhantom();
+#define MAKE_WEAK(Var, Ignored) \
+  if (!Var##_.IsEmpty()) \
+    Var##_.SetPhantom();
 
   CALLBACK_LIST(MAKE_WEAK)
 #undef MAKE_WEAK

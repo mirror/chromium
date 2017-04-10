@@ -35,10 +35,11 @@ TEST_F(RGBAtoRGBTest, testOpaqueCaseEven8pixels) {
 
   unsigned char expected[] = {255, 0, 0, 255, 0, 0, 255, 0, 0, 255, 0, 0, 0,
                               255, 0, 0, 255, 0, 0, 255, 0, 0, 255, 0};
+  // TODO(dcheng): Make this all constexpr.
 #if OS(WIN)
   // Windows release bot can't be reasoned with (compiler error C2131).
-  static const constexpr size_t kPixels = sizeof(canvas) / kChannelsRGBA;
-  static const constexpr size_t kRgbSize = kPixels * kChannelsRGB;
+  static const constexpr size_t pixels = sizeof(canvas) / kChannelsRGBA;
+  static const constexpr size_t rgb_size = pixels * kChannelsRGB;
 #else
   const size_t pixels = CalculateRGBAPixels(sizeof(canvas));
   const size_t rgb_size = CalculateRGBOutputSize(sizeof(canvas));
@@ -47,7 +48,7 @@ TEST_F(RGBAtoRGBTest, testOpaqueCaseEven8pixels) {
   unsigned char output[rgb_size];
   memset(output, 0, rgb_size);
 
-  blink::RGBAtoRGB(canvas, static_cast<unsigned>(kPixels), output);
+  blink::RGBAtoRGB(canvas, static_cast<unsigned>(pixels), output);
 
   EXPECT_EQ(memcmp(expected, output, rgb_size), 0);
 }

@@ -14,14 +14,14 @@ namespace blink {
 template <typename KeyType, typename ValueType>
 class Maplike : public PairIterable<KeyType, ValueType> {
  public:
-  bool HasForBinding(ScriptState* script_state,
+  bool hasForBinding(ScriptState* script_state,
                      const KeyType& key,
                      ExceptionState& exception_state) {
     ValueType value;
     return GetMapEntry(script_state, key, value, exception_state);
   }
 
-  ScriptValue GetForBinding(ScriptState* script_state,
+  ScriptValue getForBinding(ScriptState* script_state,
                             const KeyType& key,
                             ExceptionState& exception_state) {
     ValueType value;
