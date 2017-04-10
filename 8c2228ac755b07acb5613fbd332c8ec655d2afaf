@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a885ce7d_01f2d386",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "I think that --symbolic-full-name might make this a bit more reliable.\n--symbolic-full-name will return the full qualified name, like refs/heads/foo  instead of foo, which might be more robust if the branch name clashses with some remote branch name (but also, I am not fully sure wherever else you depend on this return value and what the expectation is)",
+      "range": {
+        "startLine": 78,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4106a09_3c5c92a4",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "Just \u0027HEAD@{upstream}\u0027 without passing the current_branch.\nShould reduce likelinkess of failing of the branch name is something weird",
+      "range": {
+        "startLine": 85,
+        "startChar": 9,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ac1a6c_370e6588",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "I might be wrong, but my expectation is that the majority of developers don\u0027t bother having a tracking branch, because they have been mis-educated by depot_tools heuristics that (in git cl upload) default to origin/master in lieu of a real tracking branch.\nHere I\u0027d probably just assume that the tracking branch is origin/master, to match the depot tools heustic.\nMaybe, regardless of the fact that you found a tracking branch or not, you can do:\n\nCOUNT :\u003d git rev-list --count HEAD..tracking_branch\n\"you are about to rebase $COUNT commits from $tracking_branch. continue? Y/n\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7485165f_f0ef7460",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "Move this into raw_input argument, i.e. choice\u003draw_input(\u0027%s %s? \u0027 % (question, prompt)).lower()\nIf you the separate write, AFAIK there is no guarantee that the write will be flushed.\nIIRC by default it won\u0027t be flushed unless it has a \\n, so in this case you\u0027d be relying on raw_input doing the flush for you.\nSo, unless I\u0027m missing something, I\u0027d just rely on raw_input to do the right thing.",
+      "range": {
+        "startLine": 126,
+        "startChar": 21,
+        "endLine": 126,
+        "endChar": 51
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a6ab7b_12922399",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "Do you really want to append here? You\u0027ll end up with the attributes growing at each invocation.\nAlso I\u0027d probably clean up this file when the process here is completed.",
+      "range": {
+        "startLine": 147,
+        "startChar": 56,
+        "endLine": 147,
+        "endChar": 59
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43f8928_029fda52",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "just checking: this seems the same rev-list --count tracking_branch..current_branch (with two dots)? In other words commits in current but not in tracking. Or are you intending to do something more sophisticated here?",
+      "range": {
+        "startLine": 200,
+        "startChar": 23,
+        "endLine": 200,
+        "endChar": 57
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2098ba83_0772432d",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "I would give up trying to deal separately with rebase and merge and just do a forced rebase which takes the current state of the world (read: the current tree) and creates a commit that reparented to the tracking branch.\nI\u0027d also avoid running git rebase --interactive, which, in a batch script, IMHO is a bit asking for troubles.\n\nI would *just* do the following. It looks scary but IMHO it\u0027s a bit more reliable as it\u0027s based all on plumbing commands and does not require git to generate and reapply any diff.\n\n1. Generate the commit message:\ngit log --format\u003d%B --reverse $TRACKING_BRANCH..$CUR_BRANCH \u003e tmp_file_for_commit_message\n\n2. Get the tree-ish for the current commit:\nCUR_TREE :\u003d git log --pretty\u003dformat:\u0027%T\u0027 -n1 $CUR_BRANCH\n\n3. Create the one commit:\nNEW_COMMIT_SHA1 :\u003d git commit-tree $CUR_TREE -p $tracking_branch -F tmp_file_for_commit_message\n\nthis will return the SHA1 of the new commit object, which has the same tree of the old one, but is reparented directly to origin/master (or whatever tracking branch).\n\n4. At this point, update the branch:\n\ngit update-ref refs/heads/$CUR_BRANCH $NEW_COMMIT_SHA1\nNote: if you used --symbolic-full-name  above this $CUR_BRANCH_NAME will already have the \"refs/heads/\" prefix\n\n5. Sanity check that git rev-list --count $TRACKING_BRANCH..$CUR_BRANCH \u003d\u003d 1\n\n\nOn top of this, you could probably do this in a separate temporary branch and rename it at the end, so that if something goes wrong, you won\u0027t live the user with a screwed up branch.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 31
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75f9ca3_0d8f3ccc",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "If I am reading this correctly, this looks a bit fragile as, in turn depends on the CWD when the script is executed. In other words the result of this operation will be different whehter you run\nsrc:  ./tools/blink_rename_merge_helper/driver.py\nsrc/stools: ./blink_rename_merge_helper/driver.py\netc\n\nunless the thing that executes this thing in turn does a chdir itself? If it does, doesn\u0027t it have some further assumptions on that dir? \nI honestly find just saner passing the right cwd argument to subprocess commands, but whatever, if this is the way the driver works just make sure you don\u0027t break assumptions of the other pieces.",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 36
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c045abc_624ba49c",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/merge.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-10T11:12:22Z",
+      "side": 1,
+      "message": "what is this for? If I read this correctly this is now pretending that the common ancestor \u003d\u003d others, not sure what is the intended outcome of this.",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
