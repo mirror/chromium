@@ -34,7 +34,7 @@ const int kFlushInputRateInUs = 16666;
 
 RenderWidgetHostViewBase::RenderWidgetHostViewBase()
     : is_fullscreen_(false),
-      popup_type_(blink::WebPopupTypeNone),
+      popup_type_(blink::kWebPopupTypeNone),
       mouse_locked_(false),
       showing_context_menu_(false),
       current_device_scale_factor_(0),

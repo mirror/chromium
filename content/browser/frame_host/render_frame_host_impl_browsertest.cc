@@ -28,7 +28,7 @@ class PrerenderTestContentBrowserClient : public TestContentBrowserClient {
  public:
   PrerenderTestContentBrowserClient()
     : override_enabled_(false),
-      visibility_override_(blink::WebPageVisibilityStateVisible)
+      visibility_override_(blink::kWebPageVisibilityStateVisible)
   {}
   ~PrerenderTestContentBrowserClient() override {}
 
@@ -131,11 +131,11 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
   WebContents* web_contents = shell()->web_contents();
 
   web_contents->WasShown();
-  EXPECT_EQ(blink::WebPageVisibilityStateVisible,
+  EXPECT_EQ(blink::kWebPageVisibilityStateVisible,
             web_contents->GetMainFrame()->GetVisibilityState());
 
   web_contents->WasHidden();
-  EXPECT_EQ(blink::WebPageVisibilityStateHidden,
+  EXPECT_EQ(blink::kWebPageVisibilityStateHidden,
             web_contents->GetMainFrame()->GetVisibilityState());
 }
 
@@ -149,11 +149,11 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
   ContentBrowserClient* old_client = SetBrowserClientForTesting(&new_client);
 
   web_contents->WasShown();
-  EXPECT_EQ(blink::WebPageVisibilityStateVisible,
+  EXPECT_EQ(blink::kWebPageVisibilityStateVisible,
             web_contents->GetMainFrame()->GetVisibilityState());
 
-  new_client.EnableVisibilityOverride(blink::WebPageVisibilityStatePrerender);
-  EXPECT_EQ(blink::WebPageVisibilityStatePrerender,
+  new_client.EnableVisibilityOverride(blink::kWebPageVisibilityStatePrerender);
+  EXPECT_EQ(blink::kWebPageVisibilityStatePrerender,
             web_contents->GetMainFrame()->GetVisibilityState());
 
   SetBrowserClientForTesting(old_client);

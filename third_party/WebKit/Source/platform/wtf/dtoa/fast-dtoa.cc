@@ -387,9 +387,9 @@ namespace double_conversion {
                          Vector<char> buffer,
                          int* length,
                          int* kappa) {
-        ASSERT(low.e() == w.e() && w.e() == high.e());
-        ASSERT(low.f() + 1 <= high.f() - 1);
-        ASSERT(kMinimalTargetExponent <= w.e() && w.e() <= kMaximalTargetExponent);
+        ASSERT(low.E() == w.E() && w.E() == high.E());
+        ASSERT(low.F() + 1 <= high.F() - 1);
+        ASSERT(kMinimalTargetExponent <= w.E() && w.E() <= kMaximalTargetExponent);
         // low, w and high are imprecise, but by less than one ulp (unit in the last
         // place).
         // If we remove (resp. add) 1 ulp from low (resp. high) we are certain that
@@ -402,8 +402,8 @@ namespace double_conversion {
         // interval. Later we will weed out representations that lie outside the safe
         // interval and thus _might_ lie outside the correct interval.
         uint64_t unit = 1;
-        DiyFp too_low = DiyFp(low.f() - unit, low.e());
-        DiyFp too_high = DiyFp(high.f() + unit, high.e());
+        DiyFp too_low = DiyFp(low.F() - unit, low.E());
+        DiyFp too_high = DiyFp(high.F() + unit, high.E());
         // too_low and too_high are guaranteed to lie outside the interval we want the
         // generated number in.
         DiyFp unsafe_interval = DiyFp::Minus(too_high, too_low);
@@ -414,14 +414,14 @@ namespace double_conversion {
         // such that:   too_low < buffer * 10^kappa < too_high
         // We use too_high for the digit_generation and stop as soon as possible.
         // If we stop early we effectively round down.
-        DiyFp one = DiyFp(static_cast<uint64_t>(1) << -w.e(), w.e());
+        DiyFp one = DiyFp(static_cast<uint64_t>(1) << -w.E(), w.E());
         // Division by one is a shift.
-        uint32_t integrals = static_cast<uint32_t>(too_high.f() >> -one.e());
+        uint32_t integrals = static_cast<uint32_t>(too_high.F() >> -one.E());
         // Modulo by one is an and.
-        uint64_t fractionals = too_high.f() & (one.f() - 1);
+        uint64_t fractionals = too_high.F() & (one.F() - 1);
         uint32_t divisor;
         int divisor_exponent;
-        BiggestPowerTen(integrals, DiyFp::kSignificandSize - (-one.e()),
+        BiggestPowerTen(integrals, DiyFp::kSignificandSize - (-one.E()),
                         &divisor, &divisor_exponent);
         *kappa = divisor_exponent + 1;
         *length = 0;
@@ -438,15 +438,15 @@ namespace double_conversion {
             // Note that kappa now equals the exponent of the divisor and that the
             // invariant thus holds again.
             uint64_t rest =
-            (static_cast<uint64_t>(integrals) << -one.e()) + fractionals;
+            (static_cast<uint64_t>(integrals) << -one.E()) + fractionals;
             // Invariant: too_high = buffer * 10^kappa + DiyFp(rest, one.e())
             // Reminder: unsafe_interval.e() == one.e()
-            if (rest < unsafe_interval.f()) {
+            if (rest < unsafe_interval.F()) {
                 // Rounding down (by not emitting the remaining digits) yields a number
                 // that lies within the unsafe interval.
-                return RoundWeed(buffer, *length, DiyFp::Minus(too_high, w).f(),
-                                 unsafe_interval.f(), rest,
-                                 static_cast<uint64_t>(divisor) << -one.e(), unit);
+                return RoundWeed(buffer, *length, DiyFp::Minus(too_high, w).F(),
+                                 unsafe_interval.F(), rest,
+                                 static_cast<uint64_t>(divisor) << -one.E(), unit);
             }
             divisor /= 10;
         }
@@ -457,22 +457,22 @@ namespace double_conversion {
         // data (like the interval or 'unit'), too.
         // Note that the multiplication by 10 does not overflow, because w.e >= -60
         // and thus one.e >= -60.
-        ASSERT(one.e() >= -60);
-        ASSERT(fractionals < one.f());
-        ASSERT(UINT64_2PART_C(0xFFFFFFFF, FFFFFFFF) / 10 >= one.f());
+        ASSERT(one.E() >= -60);
+        ASSERT(fractionals < one.F());
+        ASSERT(UINT64_2PART_C(0xFFFFFFFF, FFFFFFFF) / 10 >= one.F());
         while (true) {
             fractionals *= 10;
             unit *= 10;
-            unsafe_interval.set_f(unsafe_interval.f() * 10);
+            unsafe_interval.set_f(unsafe_interval.F() * 10);
             // Integer division by one.
-            char digit = static_cast<char>(fractionals >> -one.e());
+            char digit = static_cast<char>(fractionals >> -one.E());
             buffer[*length] = '0' + digit;
             (*length)++;
-            fractionals &= one.f() - 1;  // Modulo by one.
+            fractionals &= one.F() - 1;  // Modulo by one.
             (*kappa)--;
-            if (fractionals < unsafe_interval.f()) {
-                return RoundWeed(buffer, *length, DiyFp::Minus(too_high, w).f() * unit,
-                                 unsafe_interval.f(), fractionals, one.f(), unit);
+            if (fractionals < unsafe_interval.F()) {
+                return RoundWeed(buffer, *length, DiyFp::Minus(too_high, w).F() * unit,
+                                 unsafe_interval.F(), fractionals, one.F(), unit);
             }
         }
     }
@@ -512,7 +512,7 @@ namespace double_conversion {
                                 Vector<char> buffer,
                                 int* length,
                                 int* kappa) {
-        ASSERT(kMinimalTargetExponent <= w.e() && w.e() <= kMaximalTargetExponent);
+        ASSERT(kMinimalTargetExponent <= w.E() && w.E() <= kMaximalTargetExponent);
         ASSERT(kMinimalTargetExponent >= -60);
         ASSERT(kMaximalTargetExponent <= -32);
         // w is assumed to have an error less than 1 unit. Whenever w is scaled we
@@ -522,14 +522,14 @@ namespace double_conversion {
         // fractional digits. We don't emit any decimal separator, but adapt kappa
         // instead. Example: instead of writing "1.2" we put "12" into the buffer and
         // increase kappa by 1.
-        DiyFp one = DiyFp(static_cast<uint64_t>(1) << -w.e(), w.e());
+        DiyFp one = DiyFp(static_cast<uint64_t>(1) << -w.E(), w.E());
         // Division by one is a shift.
-        uint32_t integrals = static_cast<uint32_t>(w.f() >> -one.e());
+        uint32_t integrals = static_cast<uint32_t>(w.F() >> -one.E());
         // Modulo by one is an and.
-        uint64_t fractionals = w.f() & (one.f() - 1);
+        uint64_t fractionals = w.F() & (one.F() - 1);
         uint32_t divisor;
         int divisor_exponent;
-        BiggestPowerTen(integrals, DiyFp::kSignificandSize - (-one.e()),
+        BiggestPowerTen(integrals, DiyFp::kSignificandSize - (-one.E()),
                         &divisor, &divisor_exponent);
         *kappa = divisor_exponent + 1;
         *length = 0;
@@ -553,9 +553,9 @@ namespace double_conversion {
 
         if (requested_digits == 0) {
             uint64_t rest =
-            (static_cast<uint64_t>(integrals) << -one.e()) + fractionals;
+            (static_cast<uint64_t>(integrals) << -one.E()) + fractionals;
             return RoundWeedCounted(buffer, *length, rest,
-                                    static_cast<uint64_t>(divisor) << -one.e(), w_error,
+                                    static_cast<uint64_t>(divisor) << -one.E(), w_error,
                                     kappa);
         }
 
@@ -565,22 +565,22 @@ namespace double_conversion {
         // data (the 'unit'), too.
         // Note that the multiplication by 10 does not overflow, because w.e >= -60
         // and thus one.e >= -60.
-        ASSERT(one.e() >= -60);
-        ASSERT(fractionals < one.f());
-        ASSERT(UINT64_2PART_C(0xFFFFFFFF, FFFFFFFF) / 10 >= one.f());
+        ASSERT(one.E() >= -60);
+        ASSERT(fractionals < one.F());
+        ASSERT(UINT64_2PART_C(0xFFFFFFFF, FFFFFFFF) / 10 >= one.F());
         while (requested_digits > 0 && fractionals > w_error) {
             fractionals *= 10;
             w_error *= 10;
             // Integer division by one.
-            char digit = static_cast<char>(fractionals >> -one.e());
+            char digit = static_cast<char>(fractionals >> -one.E());
             buffer[*length] = '0' + digit;
             (*length)++;
             requested_digits--;
-            fractionals &= one.f() - 1;  // Modulo by one.
+            fractionals &= one.F() - 1;  // Modulo by one.
             (*kappa)--;
         }
         if (requested_digits != 0) return false;
-        return RoundWeedCounted(buffer, *length, fractionals, one.f(), w_error,
+        return RoundWeedCounted(buffer, *length, fractionals, one.F(), w_error,
                                 kappa);
     }
 
@@ -607,20 +607,20 @@ namespace double_conversion {
         // Grisu3 will never output representations that lie exactly on a boundary.
         DiyFp boundary_minus, boundary_plus;
         Double(v).NormalizedBoundaries(&boundary_minus, &boundary_plus);
-        ASSERT(boundary_plus.e() == w.e());
+        ASSERT(boundary_plus.E() == w.E());
         DiyFp ten_mk;  // Cached power of ten: 10^-k
         int mk;        // -k
         int ten_mk_minimal_binary_exponent =
-        kMinimalTargetExponent - (w.e() + DiyFp::kSignificandSize);
+        kMinimalTargetExponent - (w.E() + DiyFp::kSignificandSize);
         int ten_mk_maximal_binary_exponent =
-        kMaximalTargetExponent - (w.e() + DiyFp::kSignificandSize);
+        kMaximalTargetExponent - (w.E() + DiyFp::kSignificandSize);
         PowersOfTenCache::GetCachedPowerForBinaryExponentRange(
                                                                ten_mk_minimal_binary_exponent,
                                                                ten_mk_maximal_binary_exponent,
                                                                &ten_mk, &mk);
-        ASSERT((kMinimalTargetExponent <= w.e() + ten_mk.e() +
+        ASSERT((kMinimalTargetExponent <= w.E() + ten_mk.E() +
                 DiyFp::kSignificandSize) &&
-               (kMaximalTargetExponent >= w.e() + ten_mk.e() +
+               (kMaximalTargetExponent >= w.E() + ten_mk.E() +
                 DiyFp::kSignificandSize));
         // Note that ten_mk is only an approximation of 10^-k. A DiyFp only contains a
         // 64 bit significand and ten_mk is thus only precise up to 64 bits.
@@ -632,8 +632,8 @@ namespace double_conversion {
         // In other words: let f = scaled_w.f() and e = scaled_w.e(), then
         //           (f-1) * 2^e < w*10^k < (f+1) * 2^e
         DiyFp scaled_w = DiyFp::Times(w, ten_mk);
-        ASSERT(scaled_w.e() ==
-               boundary_plus.e() + ten_mk.e() + DiyFp::kSignificandSize);
+        ASSERT(scaled_w.E() ==
+               boundary_plus.E() + ten_mk.E() + DiyFp::kSignificandSize);
         // In theory it would be possible to avoid some recomputations by computing
         // the difference between w and boundary_minus/plus (a power of 2) and to
         // compute scaled_boundary_minus/plus by subtracting/adding from
@@ -670,16 +670,16 @@ namespace double_conversion {
         DiyFp ten_mk;  // Cached power of ten: 10^-k
         int mk;        // -k
         int ten_mk_minimal_binary_exponent =
-        kMinimalTargetExponent - (w.e() + DiyFp::kSignificandSize);
+        kMinimalTargetExponent - (w.E() + DiyFp::kSignificandSize);
         int ten_mk_maximal_binary_exponent =
-        kMaximalTargetExponent - (w.e() + DiyFp::kSignificandSize);
+        kMaximalTargetExponent - (w.E() + DiyFp::kSignificandSize);
         PowersOfTenCache::GetCachedPowerForBinaryExponentRange(
                                                                ten_mk_minimal_binary_exponent,
                                                                ten_mk_maximal_binary_exponent,
                                                                &ten_mk, &mk);
-        ASSERT((kMinimalTargetExponent <= w.e() + ten_mk.e() +
+        ASSERT((kMinimalTargetExponent <= w.E() + ten_mk.E() +
                 DiyFp::kSignificandSize) &&
-               (kMaximalTargetExponent >= w.e() + ten_mk.e() +
+               (kMaximalTargetExponent >= w.E() + ten_mk.E() +
                 DiyFp::kSignificandSize));
         // Note that ten_mk is only an approximation of 10^-k. A DiyFp only contains a
         // 64 bit significand and ten_mk is thus only precise up to 64 bits.

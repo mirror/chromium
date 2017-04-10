@@ -51,7 +51,7 @@ class CONTENT_EXPORT WebCursor {
     }
 
     CursorInfo()
-        : type(blink::WebCursorInfo::TypePointer),
+        : type(blink::WebCursorInfo::kTypePointer),
           image_scale_factor(1) {
     }
 

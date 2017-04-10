@@ -19,11 +19,11 @@ MHTMLGenerationParams::MHTMLGenerationParams(const base::FilePath& file_path)
   if (mhtmlGeneratorOptionFlag == switches::kMHTMLSkipNostoreMain) {
     cache_control_policy =
         blink::WebFrameSerializerCacheControlPolicy::
-        FailForNoStoreMainFrame;
+        kFailForNoStoreMainFrame;
   } else if (mhtmlGeneratorOptionFlag == switches::kMHTMLSkipNostoreAll) {
     cache_control_policy =
         blink::WebFrameSerializerCacheControlPolicy::
-        SkipAnyFrameOrResourceMarkedNoStore;
+        kSkipAnyFrameOrResourceMarkedNoStore;
   }
 }
 

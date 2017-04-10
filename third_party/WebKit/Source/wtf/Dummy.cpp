@@ -15,7 +15,7 @@
 
 namespace WTF {
 
-__declspec(dllexport) int dummyExportedValueToForceMSVCToGenerateLibFile;
+__declspec(dllexport) int g_dummy_exported_value_to_force_msvc_to_generate_lib_file;
 
 }
 
