@@ -172,7 +172,7 @@ class CORE_EXPORT ImageResource final
   double last_flush_time_ = 0.;
 };
 
-DEFINE_RESOURCE_TYPE_CASTS(kImage);
+DEFINE_RESOURCE_TYPE_CASTS(Image);
 
 }  // namespace blink
 

@@ -42,7 +42,7 @@ String GetSha256String(const String& content) {
 
 template <typename CharType>
 inline bool IsASCIIAlphanumericOrHyphen(CharType c) {
-  return isASCIIAlphanumeric(c) || c == '-';
+  return IsASCIIAlphanumeric(c) || c == '-';
 }
 
 ContentSecurityPolicyHashAlgorithm ConvertHashAlgorithmToCSPHashAlgorithm(
@@ -981,7 +981,7 @@ bool CSPDirectiveList::ParseDirective(const UChar* begin,
   ASSERT(value.IsEmpty());
 
   const UChar* position = begin;
-  skipWhile<UChar, isASCIISpace>(position, end);
+  skipWhile<UChar, IsASCIISpace>(position, end);
 
   // Empty directive (e.g. ";;;"). Exit early.
   if (position == end)
@@ -1003,14 +1003,14 @@ bool CSPDirectiveList::ParseDirective(const UChar* begin,
   if (position == end)
     return true;
 
-  if (!skipExactly<UChar, isASCIISpace>(position, end)) {
+  if (!skipExactly<UChar, IsASCIISpace>(position, end)) {
     skipWhile<UChar, IsNotASCIISpace>(position, end);
     policy_->ReportUnsupportedDirective(
         String(name_begin, position - name_begin));
     return false;
   }
 
-  skipWhile<UChar, isASCIISpace>(position, end);
+  skipWhile<UChar, IsASCIISpace>(position, end);
 
   const UChar* value_begin = position;
   skipWhile<UChar, IsCSPDirectiveValueCharacter>(position, end);
@@ -1044,7 +1044,7 @@ void CSPDirectiveList::ParseRequireSRIFor(const String& name,
   const UChar* end = position + characters.size();
 
   while (position < end) {
-    skipWhile<UChar, isASCIISpace>(position, end);
+    skipWhile<UChar, IsASCIISpace>(position, end);
 
     const UChar* token_begin = position;
     skipWhile<UChar, IsNotASCIISpace>(position, end);
@@ -1103,7 +1103,7 @@ void CSPDirectiveList::ParseReportURI(const String& name, const String& value) {
   const UChar* end = position + characters.size();
 
   while (position < end) {
-    skipWhile<UChar, isASCIISpace>(position, end);
+    skipWhile<UChar, IsASCIISpace>(position, end);
 
     const UChar* url_begin = position;
     skipWhile<UChar, IsNotASCIISpace>(position, end);

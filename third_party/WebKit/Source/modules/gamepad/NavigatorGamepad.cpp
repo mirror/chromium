@@ -60,7 +60,7 @@ static void SampleGamepads(ListType* into) {
   for (unsigned i = 0; i < WebGamepads::kItemsLengthCap; ++i) {
     WebGamepad& web_gamepad = gamepads.items[i];
     if (web_gamepad.connected) {
-      GamepadType* gamepad = into->Item(i);
+      GamepadType* gamepad = into->item(i);
       if (!gamepad)
         gamepad = GamepadType::Create();
       SampleGamepad(i, *gamepad, web_gamepad);

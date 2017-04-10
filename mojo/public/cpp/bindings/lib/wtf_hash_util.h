@@ -59,10 +59,10 @@ size_t WTFHash(size_t seed, const T& value) {
 
 template <typename T>
 struct StructPtrHashFn {
-  static unsigned hash(const StructPtr<T>& value) {
+  static unsigned GetHash(const StructPtr<T>& value) {
     return value.Hash(kHashSeed);
   }
-  static bool equal(const StructPtr<T>& left, const StructPtr<T>& right) {
+  static bool Equal(const StructPtr<T>& left, const StructPtr<T>& right) {
     return left.Equals(right);
   }
   static const bool safe_to_compare_to_empty_or_deleted = false;
@@ -70,10 +70,10 @@ struct StructPtrHashFn {
 
 template <typename T>
 struct InlinedStructPtrHashFn {
-  static unsigned hash(const InlinedStructPtr<T>& value) {
+  static unsigned GetHash(const InlinedStructPtr<T>& value) {
     return value.Hash(kHashSeed);
   }
-  static bool equal(const InlinedStructPtr<T>& left,
+  static bool Equal(const InlinedStructPtr<T>& left,
                     const InlinedStructPtr<T>& right) {
     return left.Equals(right);
   }

@@ -254,7 +254,7 @@ ScriptPromise FontFaceSet::ready(ScriptState* script_state) {
   return ready_->Promise(script_state->World());
 }
 
-FontFaceSet* FontFaceSet::AddForBinding(ScriptState*,
+FontFaceSet* FontFaceSet::addForBinding(ScriptState*,
                                         FontFace* font_face,
                                         ExceptionState&) {
   DCHECK(font_face);
@@ -273,7 +273,7 @@ FontFaceSet* FontFaceSet::AddForBinding(ScriptState*,
   return this;
 }
 
-void FontFaceSet::ClearForBinding(ScriptState*, ExceptionState&) {
+void FontFaceSet::clearForBinding(ScriptState*, ExceptionState&) {
   if (!InActiveDocumentContext() || non_css_connected_faces_.IsEmpty())
     return;
   CSSFontSelector* font_selector = GetDocument()->GetStyleEngine().FontSelector();
@@ -287,7 +287,7 @@ void FontFaceSet::ClearForBinding(ScriptState*, ExceptionState&) {
   font_selector->FontFaceInvalidated();
 }
 
-bool FontFaceSet::DeleteForBinding(ScriptState*,
+bool FontFaceSet::deleteForBinding(ScriptState*,
                                    FontFace* font_face,
                                    ExceptionState&) {
   DCHECK(font_face);
@@ -307,7 +307,7 @@ bool FontFaceSet::DeleteForBinding(ScriptState*,
   return false;
 }
 
-bool FontFaceSet::HasForBinding(ScriptState*,
+bool FontFaceSet::hasForBinding(ScriptState*,
                                 FontFace* font_face,
                                 ExceptionState&) const {
   DCHECK(font_face);

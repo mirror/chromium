@@ -108,23 +108,23 @@ const static float kTestEpsilon = 1e-6;
 #define CHECK_MAPPINGS(inputRect, expectedVisualRect, expectedTransformedRect, \
                        expectedTransformToAncestor,                            \
                        expectedClipInAncestorSpace, localPropertyTreeState,    \
-                       ancestorPropertyTreeState, hasRadius)                   \
+                       ancestorPropertyTreeState)                              \
   do {                                                                         \
     FloatClipRect float_rect(inputRect);                                        \
     GeometryMapper::LocalToAncestorVisualRect(                                 \
         localPropertyTreeState, ancestorPropertyTreeState, float_rect);         \
     EXPECT_RECT_EQ(expectedVisualRect, float_rect.Rect());                      \
-    EXPECT_EQ(hasRadius, float_rect.hasRadius());                               \
+    EXPECT_EQ(has_radius, float_rect.HasRadius());                               \
     FloatClipRect float_clip_rect;                                               \
     float_clip_rect = GeometryMapper::LocalToAncestorClipRect(                   \
         localPropertyTreeState, ancestorPropertyTreeState);                    \
-    EXPECT_EQ(hasRadius, float_clip_rect.hasRadius());                           \
+    EXPECT_EQ(has_radius, float_clip_rect.HasRadius());                           \
     EXPECT_CLIP_RECT_EQ(expectedClipInAncestorSpace, float_clip_rect);           \
     float_rect.SetRect(inputRect);                                              \
     GeometryMapper::SourceToDestinationVisualRect(                             \
         localPropertyTreeState, ancestorPropertyTreeState, float_rect);         \
     EXPECT_RECT_EQ(expectedVisualRect, float_rect.Rect());                      \
-    EXPECT_EQ(hasRadius, float_rect.hasRadius());                               \
+    EXPECT_EQ(has_radius, float_rect.HasRadius());                               \
     FloatRect test_mapped_rect = inputRect;                                      \
     GeometryMapper::LocalToAncestorRect(localPropertyTreeState.Transform(),    \
                                         ancestorPropertyTreeState.Transform(), \
@@ -149,10 +149,10 @@ const static float kTestEpsilon = 1e-6;
       DCHECK(output_clip_for_testing);                                            \
       EXPECT_EQ(expectedClipInAncestorSpace, *output_clip_for_testing)            \
           << "expected: " << expectedClipInAncestorSpace.Rect().ToString()     \
-          << " (hasRadius: " << expectedClipInAncestorSpace.hasRadius()        \
+          << " (hasRadius: " << expectedClipInAncestorSpace.HasRadius()        \
           << ") "                                                              \
           << "actual: " << output_clip_for_testing->Rect().ToString()             \
-          << " (hasRadius: " << output_clip_for_testing->hasRadius() << ")";      \
+          << " (hasRadius: " << output_clip_for_testing->HasRadius() << ")";      \
     }                                                                          \
   } while (false)
 
@@ -162,8 +162,7 @@ TEST_F(GeometryMapperTest, Root) {
   bool has_radius = false;
   CHECK_MAPPINGS(input, input, input,
                  TransformPaintPropertyNode::Root()->Matrix(), FloatClipRect(),
-                 PropertyTreeState::Root(), PropertyTreeState::Root(),
-                 Has_radius);
+                 PropertyTreeState::Root(), PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, IdentityTransform) {
@@ -178,7 +177,7 @@ TEST_F(GeometryMapperTest, IdentityTransform) {
 
   bool has_radius = false;
   CHECK_MAPPINGS(input, input, input, transform->Matrix(), FloatClipRect(),
-                 local_state, PropertyTreeState::Root(), Has_radius);
+                 local_state, PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, TranslationTransform) {
@@ -195,7 +194,7 @@ TEST_F(GeometryMapperTest, TranslationTransform) {
 
   bool has_radius = false;
   CHECK_MAPPINGS(input, output, output, transform->Matrix(), FloatClipRect(),
-                 local_state, PropertyTreeState::Root(), Has_radius);
+                 local_state, PropertyTreeState::Root());
 
   GeometryMapper::AncestorToLocalRect(TransformPaintPropertyNode::Root(),
                                       local_state.Transform(), output);
@@ -218,7 +217,7 @@ TEST_F(GeometryMapperTest, RotationAndScaleTransform) {
 
   bool has_radius = false;
   CHECK_MAPPINGS(input, output, output, transform_matrix, FloatClipRect(),
-                 local_state, PropertyTreeState::Root(), Has_radius);
+                 local_state, PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, RotationAndScaleTransformWithTransformOrigin) {
@@ -238,7 +237,7 @@ TEST_F(GeometryMapperTest, RotationAndScaleTransformWithTransformOrigin) {
 
   bool has_radius = false;
   CHECK_MAPPINGS(input, output, output, transform_matrix, FloatClipRect(),
-                 local_state, PropertyTreeState::Root(), Has_radius);
+                 local_state, PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, NestedTransforms) {
@@ -263,7 +262,7 @@ TEST_F(GeometryMapperTest, NestedTransforms) {
 
   bool has_radius = false;
   CHECK_MAPPINGS(input, output, output, final, FloatClipRect(), local_state,
-                 PropertyTreeState::Root(), Has_radius);
+                 PropertyTreeState::Root());
 
   // Check the cached matrix for the intermediate transform.
   EXPECT_EQ(rotate_transform, *GetTransform(transform1.Get(),
@@ -293,7 +292,7 @@ TEST_F(GeometryMapperTest, NestedTransformsFlattening) {
   FloatRect output = final.MapRect(input);
   bool has_radius = false;
   CHECK_MAPPINGS(input, output, output, final, FloatClipRect(), local_state,
-                 PropertyTreeState::Root(), Has_radius);
+                 PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, NestedTransformsScaleAndTranslation) {
@@ -320,7 +319,7 @@ TEST_F(GeometryMapperTest, NestedTransformsScaleAndTranslation) {
 
   bool has_radius = false;
   CHECK_MAPPINGS(input, output, output, final, FloatClipRect(), local_state,
-                 PropertyTreeState::Root(), Has_radius);
+                 PropertyTreeState::Root());
 
   // Check the cached matrix for the intermediate transform.
   EXPECT_EQ(scale_transform, *GetTransform(transform1.Get(),
@@ -351,7 +350,7 @@ TEST_F(GeometryMapperTest, NestedTransformsIntermediateDestination) {
 
   bool has_radius = false;
   CHECK_MAPPINGS(input, output, output, scale_transform, FloatClipRect(),
-                 local_state, intermediate_state, Has_radius);
+                 local_state, intermediate_state);
 }
 
 TEST_F(GeometryMapperTest, SimpleClip) {
@@ -373,7 +372,7 @@ TEST_F(GeometryMapperTest, SimpleClip) {
                      ->Matrix(),  // Transform matrix to ancestor space
                  FloatClipRect(clip->ClipRect().Rect()),  // Clip rect in
                                                           // ancestor space
-                 local_state, PropertyTreeState::Root(), Has_radius);
+                 local_state, PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, RoundedClip) {
@@ -399,7 +398,7 @@ TEST_F(GeometryMapperTest, RoundedClip) {
                  TransformPaintPropertyNode::Root()
                      ->Matrix(),  // Transform matrix to ancestor space
                  expected_clip,    // Clip rect in ancestor space
-                 local_state, PropertyTreeState::Root(), Has_radius);
+                 local_state, PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, TwoClips) {
@@ -434,7 +433,7 @@ TEST_F(GeometryMapperTest, TwoClips) {
                      ->Matrix(),  // Transform matrix to ancestor space
                  clip_rect,        // Clip rect in ancestor space
                  local_state,
-                 ancestor_state, Has_radius);
+                 ancestor_state);
 
   ancestor_state.SetClip(clip1.Get());
   FloatRect output2(10, 10, 50, 50);
@@ -449,7 +448,7 @@ TEST_F(GeometryMapperTest, TwoClips) {
                  TransformPaintPropertyNode::Root()
                      ->Matrix(),  // Transform matrix to ancestor space
                  clip_rect2,       // Clip rect in ancestor space
-                 local_state, ancestor_state, Has_radius);
+                 local_state, ancestor_state);
 }
 
 TEST_F(GeometryMapperTest, TwoClipsTransformAbove) {
@@ -487,7 +486,7 @@ TEST_F(GeometryMapperTest, TwoClipsTransformAbove) {
                      ->Matrix(),  // Transform matrix to ancestor space
                  expected_clip,    // Clip rect in ancestor space
                  local_state,
-                 ancestor_state, Has_radius);
+                 ancestor_state);
 
   expected_clip.SetRect(clip1->ClipRect().Rect());
   local_state.SetClip(clip1.Get());
@@ -499,7 +498,7 @@ TEST_F(GeometryMapperTest, TwoClipsTransformAbove) {
                      ->Matrix(),  // Transform matrix to ancestor space
                  expected_clip,    // Clip rect in ancestor space
                  local_state,
-                 ancestor_state, Has_radius);
+                 ancestor_state);
 }
 
 TEST_F(GeometryMapperTest, ClipBeforeTransform) {
@@ -530,7 +529,7 @@ TEST_F(GeometryMapperTest, ClipBeforeTransform) {
       rotate_transform,                 // Transform matrix to ancestor space
       FloatClipRect(rotate_transform.MapRect(
           clip->ClipRect().Rect())),  // Clip rect in ancestor space
-      local_state, PropertyTreeState::Root(), Has_radius);
+      local_state, PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, ClipAfterTransform) {
@@ -560,7 +559,7 @@ TEST_F(GeometryMapperTest, ClipAfterTransform) {
       rotate_transform.MapRect(input),  // Transformed rect (not clipped)
       rotate_transform,                 // Transform matrix to ancestor space
       FloatClipRect(clip->ClipRect().Rect()),  // Clip rect in ancestor space
-      local_state, PropertyTreeState::Root(), Has_radius);
+      local_state, PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, TwoClipsWithTransformBetween) {
@@ -595,7 +594,7 @@ TEST_F(GeometryMapperTest, TwoClipsWithTransformBetween) {
         rotate_transform.MapRect(input),  // Transformed rect (not clipped)
         rotate_transform,                 // Transform matrix to ancestor space
         FloatClipRect(clip1->ClipRect().Rect()),  // Clip rect in ancestor space
-        local_state, PropertyTreeState::Root(), Has_radius);
+        local_state, PropertyTreeState::Root());
   }
 
   {
@@ -621,7 +620,7 @@ TEST_F(GeometryMapperTest, TwoClipsWithTransformBetween) {
         rotate_transform.MapRect(input),  // Transformed rect (not clipped)
         rotate_transform,                 // Transform matrix to ancestor space
         FloatClipRect(mapped_clip),       // Clip rect in ancestor space
-        local_state, PropertyTreeState::Root(), Has_radius);
+        local_state, PropertyTreeState::Root());
   }
 }
 
@@ -844,7 +843,7 @@ TEST_F(GeometryMapperTest, FilterWithClipsAndTransforms) {
       transform_above_effect->Matrix() * transform_below_effect->Matrix();
   CHECK_MAPPINGS(input, output, FloatRect(0, 0, 300, 300), combined_transform,
                  FloatClipRect(FloatRect(30, 30, 270, 270)), local_state,
-                 PropertyTreeState::Root(), Has_radius);
+                 PropertyTreeState::Root());
 }
 
 TEST_F(GeometryMapperTest, ReflectionWithPaintOffset) {
@@ -866,7 +865,7 @@ TEST_F(GeometryMapperTest, ReflectionWithPaintOffset) {
 
   bool has_radius = false;
   CHECK_MAPPINGS(input, output, input, TransformationMatrix(), FloatClipRect(),
-                 local_state, PropertyTreeState::Root(), Has_radius);
+                 local_state, PropertyTreeState::Root());
 }
 
 }  // namespace blink

@@ -69,7 +69,7 @@ enum SriResourceIntegrityMismatchEvent {
 };
 
 #define DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, name)                        \
-  case Resource::name: {                                                      \
+  case Resource::k##name: {                                                      \
     DEFINE_THREAD_SAFE_STATIC_LOCAL(                                          \
         EnumerationHistogram, resource_histogram,                              \
         new EnumerationHistogram(                                             \
@@ -79,21 +79,21 @@ enum SriResourceIntegrityMismatchEvent {
   }
 
 #define DEFINE_RESOURCE_HISTOGRAM(prefix)                    \
-  switch (factory.GetType()) {                                  \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kCSSStyleSheet)  \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kFont)           \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kImage)          \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kImportResource) \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kLinkPrefetch)   \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kMainResource)   \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kManifest)       \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kMedia)          \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kMock)           \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kRaw)            \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kScript)         \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kSVGDocument)    \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kTextTrack)      \
-    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, kXSLStyleSheet)  \
+  switch (factory.GetType()) {                               \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, CSSStyleSheet)  \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Font)           \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Image)          \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, ImportResource) \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, LinkPrefetch)   \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, MainResource)   \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Manifest)       \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Media)          \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Mock)           \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Raw)            \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, Script)         \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, SVGDocument)    \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, TextTrack)      \
+    DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, XSLStyleSheet)  \
   }
 
 void AddRedirectsToTimingInfo(Resource* resource, ResourceTimingInfo* info) {

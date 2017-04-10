@@ -85,7 +85,7 @@ OriginAccessEntry::OriginAccessEntry(const String& protocol,
   ASSERT(subdomain_setting >= kAllowSubdomains ||
          subdomain_setting <= kDisallowSubdomains);
 
-  host_is_ip_address_ = HostIsIPAddress(host);
+  host_is_ip_address_ = blink::HostIsIPAddress(host);
 
   // Look for top-level domains, either with or without an additional dot.
   if (!host_is_ip_address_) {

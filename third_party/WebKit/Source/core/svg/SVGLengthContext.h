@@ -45,9 +45,9 @@ class SVGLengthContext {
                                     SVGUnitTypes::SVGUnitType type,
                                     const FloatRect& viewport) {
     return ResolveRectangle(
-        context, type, viewport, *context->X()->CurrentValue(),
-        *context->Y()->CurrentValue(), *context->Width()->CurrentValue(),
-        *context->Height()->CurrentValue());
+        context, type, viewport, *context->x()->CurrentValue(),
+        *context->y()->CurrentValue(), *context->width()->CurrentValue(),
+        *context->height()->CurrentValue());
   }
 
   static FloatRect ResolveRectangle(const SVGElement*,

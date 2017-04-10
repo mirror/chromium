@@ -88,7 +88,7 @@ struct CommandNameEntry {
 };
 
 const CommandNameEntry kCommandNameEntries[] = {
-#define V(name) {#name, WebEditingCommandType::name},
+#define V(name) {#name, WebEditingCommandType::k##name},
     FOR_EACH_BLINK_EDITING_COMMAND_NAME(V)
 #undef V
 };

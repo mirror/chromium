@@ -27,7 +27,7 @@ TEST(NativeValueTraitsImplTest, IDLInterface) {
   V8TestingScope scope;
   {
     DummyExceptionStateForTesting exception_state;
-    Internals* internals = NativeValueTraits<Internals>::nativeValue(
+    Internals* internals = NativeValueTraits<Internals>::NativeValue(
         scope.GetIsolate(), v8::Number::New(scope.GetIsolate(), 42), exception_state);
     EXPECT_TRUE(exception_state.HadException());
     EXPECT_EQ("Unable to convert value to Internals.",
@@ -37,7 +37,7 @@ TEST(NativeValueTraitsImplTest, IDLInterface) {
   {
     DummyExceptionStateForTesting exception_state;
     TestSequenceCallback* callback_function =
-        NativeValueTraits<TestSequenceCallback>::nativeValue(
+        NativeValueTraits<TestSequenceCallback>::NativeValue(
             scope.GetIsolate(), v8::Undefined(scope.GetIsolate()), exception_state);
     EXPECT_TRUE(exception_state.HadException());
     EXPECT_EQ("Unable to convert value to TestSequenceCallback.",

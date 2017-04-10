@@ -461,16 +461,16 @@ const NodeType* GeometryMapper::LowestCommonAncestor(const NodeType* a,
 // Explicitly instantiate the template for all supported types. This allows
 // placing the template implementation in this .cpp file. See
 // http://stackoverflow.com/a/488989 for more.
-template const EffectPaintPropertyNode* GeometryMapper::lowestCommonAncestor(
+template const EffectPaintPropertyNode* GeometryMapper::LowestCommonAncestor(
     const EffectPaintPropertyNode*,
     const EffectPaintPropertyNode*);
-template const TransformPaintPropertyNode* GeometryMapper::lowestCommonAncestor(
+template const TransformPaintPropertyNode* GeometryMapper::LowestCommonAncestor(
     const TransformPaintPropertyNode*,
     const TransformPaintPropertyNode*);
-template const ClipPaintPropertyNode* GeometryMapper::lowestCommonAncestor(
+template const ClipPaintPropertyNode* GeometryMapper::LowestCommonAncestor(
     const ClipPaintPropertyNode*,
     const ClipPaintPropertyNode*);
-template const ScrollPaintPropertyNode* GeometryMapper::lowestCommonAncestor(
+template const ScrollPaintPropertyNode* GeometryMapper::LowestCommonAncestor(
     const ScrollPaintPropertyNode*,
     const ScrollPaintPropertyNode*);
 

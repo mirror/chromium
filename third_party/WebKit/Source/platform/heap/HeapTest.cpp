@@ -722,7 +722,7 @@ class IntNode : public GarbageCollected<IntNode> {
     ThreadState* state = ThreadState::Current();
     const char* type_name = WTF_HEAP_PROFILER_TYPE_NAME(IntNode);
     return ThreadHeap::AllocateOnArenaIndex(
-        state, size, BlinkGC::NodeArenaIndex, GCInfoTrait<IntNode>::Index(),
+        state, size, BlinkGC::kNodeArenaIndex, GCInfoTrait<IntNode>::Index(),
         type_name);
   }
 

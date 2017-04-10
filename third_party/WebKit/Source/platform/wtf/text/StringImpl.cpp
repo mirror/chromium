@@ -104,7 +104,7 @@ static void fillWithSnippet(const StringImpl* string, Vector<char>& snippet) {
   size_t i;
   for (i = 0; i < string->length() && i < kMaxSnippetLength; ++i) {
     UChar c = (*string)[i];
-    if (isASCIIPrintable(c))
+    if (IsASCIIPrintable(c))
       snippet.append(c);
     else
       snippet.append('?');

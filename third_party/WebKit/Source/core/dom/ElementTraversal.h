@@ -281,7 +281,7 @@ template <class ElementType>
 template <class NodeType>
 inline ElementType* Traversal<ElementType>::FirstChildTemplate(
     NodeType& current) {
-  Node* node = current.FirstChild();
+  Node* node = current.firstChild();
   while (node && !IsElementOfType<const ElementType>(*node))
     node = node->nextSibling();
   return ToElement<ElementType>(node);
@@ -319,7 +319,7 @@ template <class ElementType>
 template <class NodeType>
 inline ElementType* Traversal<ElementType>::LastChildTemplate(
     NodeType& current) {
-  Node* node = current.LastChild();
+  Node* node = current.lastChild();
   while (node && !IsElementOfType<const ElementType>(*node))
     node = node->previousSibling();
   return ToElement<ElementType>(node);
@@ -340,7 +340,7 @@ template <class ElementType>
 template <class NodeType>
 inline ElementType* Traversal<ElementType>::FirstWithinTemplate(
     NodeType& current) {
-  Node* node = current.FirstChild();
+  Node* node = current.firstChild();
   while (node && !IsElementOfType<const ElementType>(*node))
     node = NodeTraversal::Next(*node, &current);
   return ToElement<ElementType>(node);

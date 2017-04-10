@@ -310,43 +310,43 @@ class WebInputEvent {
 
   static const char* GetName(WebInputEvent::Type type) {
 #define CASE_TYPE(t)     \
-  case WebInputEvent::t: \
+  case WebInputEvent::k##t: \
     return #t
     switch (type) {
-      CASE_TYPE(kUndefined);
-      CASE_TYPE(kMouseDown);
-      CASE_TYPE(kMouseUp);
-      CASE_TYPE(kMouseMove);
-      CASE_TYPE(kMouseEnter);
-      CASE_TYPE(kMouseLeave);
-      CASE_TYPE(kContextMenu);
-      CASE_TYPE(kMouseWheel);
-      CASE_TYPE(kRawKeyDown);
-      CASE_TYPE(kKeyDown);
-      CASE_TYPE(kKeyUp);
-      CASE_TYPE(kChar);
-      CASE_TYPE(kGestureScrollBegin);
-      CASE_TYPE(kGestureScrollEnd);
-      CASE_TYPE(kGestureScrollUpdate);
-      CASE_TYPE(kGestureFlingStart);
-      CASE_TYPE(kGestureFlingCancel);
-      CASE_TYPE(kGestureShowPress);
-      CASE_TYPE(kGestureTap);
-      CASE_TYPE(kGestureTapUnconfirmed);
-      CASE_TYPE(kGestureTapDown);
-      CASE_TYPE(kGestureTapCancel);
-      CASE_TYPE(kGestureDoubleTap);
-      CASE_TYPE(kGestureTwoFingerTap);
-      CASE_TYPE(kGestureLongPress);
-      CASE_TYPE(kGestureLongTap);
-      CASE_TYPE(kGesturePinchBegin);
-      CASE_TYPE(kGesturePinchEnd);
-      CASE_TYPE(kGesturePinchUpdate);
-      CASE_TYPE(kTouchStart);
-      CASE_TYPE(kTouchMove);
-      CASE_TYPE(kTouchEnd);
-      CASE_TYPE(kTouchCancel);
-      CASE_TYPE(kTouchScrollStarted);
+      CASE_TYPE(Undefined);
+      CASE_TYPE(MouseDown);
+      CASE_TYPE(MouseUp);
+      CASE_TYPE(MouseMove);
+      CASE_TYPE(MouseEnter);
+      CASE_TYPE(MouseLeave);
+      CASE_TYPE(ContextMenu);
+      CASE_TYPE(MouseWheel);
+      CASE_TYPE(RawKeyDown);
+      CASE_TYPE(KeyDown);
+      CASE_TYPE(KeyUp);
+      CASE_TYPE(Char);
+      CASE_TYPE(GestureScrollBegin);
+      CASE_TYPE(GestureScrollEnd);
+      CASE_TYPE(GestureScrollUpdate);
+      CASE_TYPE(GestureFlingStart);
+      CASE_TYPE(GestureFlingCancel);
+      CASE_TYPE(GestureShowPress);
+      CASE_TYPE(GestureTap);
+      CASE_TYPE(GestureTapUnconfirmed);
+      CASE_TYPE(GestureTapDown);
+      CASE_TYPE(GestureTapCancel);
+      CASE_TYPE(GestureDoubleTap);
+      CASE_TYPE(GestureTwoFingerTap);
+      CASE_TYPE(GestureLongPress);
+      CASE_TYPE(GestureLongTap);
+      CASE_TYPE(GesturePinchBegin);
+      CASE_TYPE(GesturePinchEnd);
+      CASE_TYPE(GesturePinchUpdate);
+      CASE_TYPE(TouchStart);
+      CASE_TYPE(TouchMove);
+      CASE_TYPE(TouchEnd);
+      CASE_TYPE(TouchCancel);
+      CASE_TYPE(TouchScrollStarted);
       default:
         NOTREACHED();
         return "";

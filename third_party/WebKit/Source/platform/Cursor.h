@@ -32,6 +32,9 @@
 #include "wtf/Assertions.h"
 #include "wtf/RefPtr.h"
 
+// To avoid conflicts with the CreateWindow macro from the Windows SDK...
+#undef CopyCursor
+
 namespace blink {
 
 class PLATFORM_EXPORT Cursor {

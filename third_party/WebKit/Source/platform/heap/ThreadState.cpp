@@ -1031,7 +1031,7 @@ void ThreadState::PostSweep() {
     time_for_sweep_histogram.Count(accumulated_sweeping_time_);
 
 #define COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(GCReason)              \
-  case BlinkGC::GCReason: {                                                 \
+  case BlinkGC::k##GCReason: {                                                 \
     DEFINE_STATIC_LOCAL(CustomCountHistogram, histogram,                    \
                         ("BlinkGC.CollectionRate_" #GCReason, 1, 100, 20)); \
     histogram.Count(static_cast<int>(100 * collection_rate));                \
@@ -1039,12 +1039,12 @@ void ThreadState::PostSweep() {
   }
 
     switch (heap_->LastGCReason()) {
-      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(kIdleGC)
-      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(kPreciseGC)
-      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(kConservativeGC)
-      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(kForcedGC)
-      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(kMemoryPressureGC)
-      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(kPageNavigationGC)
+      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(IdleGC)
+      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(PreciseGC)
+      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(ConservativeGC)
+      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(ForcedGC)
+      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(MemoryPressureGC)
+      COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(PageNavigationGC)
       default:
         break;
     }
@@ -1357,11 +1357,11 @@ void ThreadState::TakeSnapshot(SnapshotType type) {
     number_of_heaps_reported++;                                            \
     switch (type) {                                                     \
       case SnapshotType::kHeapSnapshot:                                  \
-        arenas_[BlinkGC::ArenaType##ArenaIndex]->TakeSnapshot(         \
+        arenas_[BlinkGC::k##ArenaType##ArenaIndex]->TakeSnapshot(         \
             heaps_dump_name + "/" #ArenaType, info);                      \
         break;                                                          \
       case SnapshotType::kFreelistSnapshot:                              \
-        arenas_[BlinkGC::ArenaType##ArenaIndex]->TakeFreelistSnapshot( \
+        arenas_[BlinkGC::k##ArenaType##ArenaIndex]->TakeFreelistSnapshot( \
             heaps_dump_name + "/" #ArenaType);                            \
         break;                                                          \
       default:                                                          \
@@ -1369,6 +1369,8 @@ void ThreadState::TakeSnapshot(SnapshotType type) {
     }                                                                   \
   }
 
+  /* DO NOT SUBMIT - Conflict resolution helper:
+   * Important to use NormalPage instead of kNormalPage1 below */
   SNAPSHOT_HEAP(NormalPage1);
   SNAPSHOT_HEAP(NormalPage2);
   SNAPSHOT_HEAP(NormalPage3);
@@ -1381,6 +1383,8 @@ void ThreadState::TakeSnapshot(SnapshotType type) {
   SNAPSHOT_HEAP(InlineVector);
   SNAPSHOT_HEAP(HashTable);
   SNAPSHOT_HEAP(LargeObject);
+  /* DO NOT SUBMIT - Conflict resolution helper:
+   * Important to use LargeObject instead of kLargeObject above */
   FOR_EACH_TYPED_ARENA(SNAPSHOT_HEAP);
 
   ASSERT(number_of_heaps_reported == BlinkGC::kNumberOfArenas);

@@ -53,7 +53,7 @@ void V8PerformanceObserver::constructorCustom(
   ScriptState* script_state = ScriptState::ForReceiverObject(info);
   v8::Local<v8::Function> v8_callback = v8::Local<v8::Function>::Cast(info[0]);
   PerformanceObserverCallback* callback =
-      PerformanceObserverCallback::create(script_state, v8_callback);
+      PerformanceObserverCallback::Create(script_state, v8_callback);
 
   PerformanceObserver* observer = PerformanceObserver::Create(
       CurrentExecutionContext(isolate), performance, callback);

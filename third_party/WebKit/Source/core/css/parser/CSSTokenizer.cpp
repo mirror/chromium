@@ -210,7 +210,7 @@ CSSParserToken CSSTokenizer::SemiColon(UChar cc) {
   return CSSParserToken(kSemicolonToken);
 }
 
-CSSParserToken CSSTokenizer::GetHash(UChar cc) {
+CSSParserToken CSSTokenizer::Hash(UChar cc) {
   UChar next_char = input_.PeekWithoutReplacement(0);
   if (IsNameCodePoint(next_char) ||
       TwoCharsAreValidEscape(next_char, input_.PeekWithoutReplacement(1))) {
@@ -338,12 +338,12 @@ CSSParserToken CSSTokenizer::ConsumeNumber() {
     sign = kMinusSign;
   }
 
-  number_length = input_.SkipWhilePredicate<isASCIIDigit>(number_length);
+  number_length = input_.SkipWhilePredicate<IsASCIIDigit>(number_length);
   next = input_.PeekWithoutReplacement(number_length);
   if (next == '.' &&
       IsASCIIDigit(input_.PeekWithoutReplacement(number_length + 1))) {
     type = kNumberValueType;
-    number_length = input_.SkipWhilePredicate<isASCIIDigit>(number_length + 2);
+    number_length = input_.SkipWhilePredicate<IsASCIIDigit>(number_length + 2);
     next = input_.PeekWithoutReplacement(number_length);
   }
 
@@ -351,11 +351,11 @@ CSSParserToken CSSTokenizer::ConsumeNumber() {
     next = input_.PeekWithoutReplacement(number_length + 1);
     if (IsASCIIDigit(next)) {
       type = kNumberValueType;
-      number_length = input_.SkipWhilePredicate<isASCIIDigit>(number_length + 1);
+      number_length = input_.SkipWhilePredicate<IsASCIIDigit>(number_length + 1);
     } else if ((next == '+' || next == '-') &&
                IsASCIIDigit(input_.PeekWithoutReplacement(number_length + 2))) {
       type = kNumberValueType;
-      number_length = input_.SkipWhilePredicate<isASCIIDigit>(number_length + 3);
+      number_length = input_.SkipWhilePredicate<IsASCIIDigit>(number_length + 3);
     }
   }
 

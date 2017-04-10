@@ -54,8 +54,8 @@ static void GenerateUTrieSerialized(FILE* fp, int32_t size, uint8_t* array) {
   fprintf(fp,
           "#include <cstdint>\n\n"
           "namespace blink {\n\n"
-          "extern const int32_t serializedCharacterDataSize = %d;\n"
-          "extern const uint8_t serializedCharacterData[] = {",
+          "extern const int32_t kSerializedCharacterDataSize = %d;\n"
+          "extern const uint8_t kSerializedCharacterData[] = {",
           size);
   for (int32_t i = 0; i < size;) {
     fprintf(fp, "\n   ");

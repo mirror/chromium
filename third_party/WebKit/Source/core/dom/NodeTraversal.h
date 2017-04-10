@@ -349,22 +349,22 @@ NodeTraversal::StartsAfter(const Node& start) {
 
 template <class NodeType>
 inline Node* NodeTraversal::TraverseNextTemplate(NodeType& current) {
-  if (current.HasChildren())
-    return current.FirstChild();
-  if (current.NextSibling())
-    return current.NextSibling();
+  if (current.hasChildren())
+    return current.firstChild();
+  if (current.nextSibling())
+    return current.nextSibling();
   return NextAncestorSibling(current);
 }
 
 template <class NodeType>
 inline Node* NodeTraversal::TraverseNextTemplate(NodeType& current,
                                                  const Node* stay_within) {
-  if (current.HasChildren())
-    return current.FirstChild();
+  if (current.hasChildren())
+    return current.firstChild();
   if (current == stay_within)
     return 0;
-  if (current.NextSibling())
-    return current.NextSibling();
+  if (current.nextSibling())
+    return current.nextSibling();
   return NextAncestorSibling(current, stay_within);
 }
 
@@ -392,7 +392,7 @@ inline Node& NodeTraversal::HighestAncestorOrSelf(Node& current) {
 
 template <class NodeType>
 inline Node* NodeTraversal::ChildAtTemplate(NodeType& parent, unsigned index) {
-  Node* child = parent.FirstChild();
+  Node* child = parent.firstChild();
   while (child && index--)
     child = child->nextSibling();
   return child;

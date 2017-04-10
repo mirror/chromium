@@ -825,7 +825,7 @@ static inline int CodePointCompare(const StringImpl* string1,
 }
 
 static inline bool IsSpaceOrNewline(UChar c) {
-  // Use isASCIISpace() for basic Latin-1.
+  // Use IsASCIISpace() for basic Latin-1.
   // This will include newlines, which aren't included in Unicode DirWS.
   return c <= 0x7F
              ? WTF::IsASCIISpace(c)

@@ -35,7 +35,7 @@ Transform3DRecorder::~Transform3DRecorder() {
     return;
 
   context_.GetPaintController().EndItem<EndTransform3DDisplayItem>(
-      client_, DisplayItem::transform3DTypeToEndTransform3DType(type_));
+      client_, DisplayItem::Transform3DTypeToEndTransform3DType(type_));
 }
 
 }  // namespace blink

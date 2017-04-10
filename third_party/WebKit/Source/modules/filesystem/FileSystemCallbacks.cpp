@@ -110,7 +110,7 @@ void FileSystemCallbacksBase::HandleEventOrScheduleCallback(CB* callback,
           WTF::Bind(&CB::handleEvent, WrapPersistent(callback),
                     WrapPersistent(arg)));
     } else {
-      callback->HandleEvent(arg);
+      callback->handleEvent(arg);
     }
   }
   execution_context_.Clear();
@@ -125,7 +125,7 @@ void FileSystemCallbacksBase::HandleEventOrScheduleCallback(CB* callback) {
           execution_context_.Get(),
           WTF::Bind(&CB::handleEvent, WrapPersistent(callback)));
     } else {
-      callback->HandleEvent();
+      callback->handleEvent();
     }
   }
   execution_context_.Clear();

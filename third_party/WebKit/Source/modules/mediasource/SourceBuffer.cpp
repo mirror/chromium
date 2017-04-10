@@ -691,7 +691,7 @@ T* FindExistingTrackById(const TrackListBase<T>& track_list, const String& id) {
   // one that we had in previous init segments.
   if (track_list.length() == 1)
     return track_list.AnonymousIndexedGetter(0);
-  return track_list.GetTrackById(id);
+  return track_list.getTrackById(id);
 }
 
 const TrackDefault* SourceBuffer::GetTrackDefault(

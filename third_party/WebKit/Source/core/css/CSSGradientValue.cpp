@@ -112,7 +112,7 @@ PassRefPtr<Image> CSSGradientValue::GetImage(const LayoutObject& layout_object,
 
     // Need to look up our size.  Create a string of width*height to use as a
     // hash key.
-    Image* result = GetImage(&layout_object, size);
+    Image* result = this->CSSImageGeneratorValue::GetImage(&layout_object, size);
     if (result)
       return result;
   }

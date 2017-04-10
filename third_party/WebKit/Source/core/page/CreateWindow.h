@@ -32,6 +32,9 @@
 #include "core/loader/NavigationPolicy.h"
 #include "wtf/text/WTFString.h"
 
+// To avoid conflicts with the CreateWindow macro from the Windows SDK...
+#undef CreateWindow
+
 namespace blink {
 class LocalFrame;
 struct FrameLoadRequest;

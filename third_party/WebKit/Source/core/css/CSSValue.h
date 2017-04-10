@@ -43,7 +43,7 @@ class CORE_EXPORT CSSValue : public GarbageCollectedFinalized<CSSValue> {
     const char* type_name = "blink::CSSValue";
     return ThreadHeap::AllocateOnArenaIndex(
         state, size,
-        is_eager ? BlinkGC::kEagerSweepArenaIndex : BlinkGC::CSSValueArenaIndex,
+        is_eager ? BlinkGC::kEagerSweepArenaIndex : BlinkGC::kCSSValueArenaIndex,
         GCInfoTrait<CSSValue>::Index(), type_name);
   }
 

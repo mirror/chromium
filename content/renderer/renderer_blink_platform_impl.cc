@@ -568,7 +568,8 @@ void RendererBlinkPlatformImpl::SandboxSupport::GetFallbackFontForCharacter(
     return;
   }
 
-  GetFallbackFontForCharacter(character, preferred_locale, fallbackFont);
+  content::GetFallbackFontForCharacter(character, preferred_locale,
+                                       fallbackFont);
   unicode_font_families_.insert(std::make_pair(character, *fallbackFont));
 }
 

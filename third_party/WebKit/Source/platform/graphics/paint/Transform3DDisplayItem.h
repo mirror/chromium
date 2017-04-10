@@ -65,7 +65,7 @@ class PLATFORM_EXPORT EndTransform3DDisplayItem final
  private:
 #if DCHECK_IS_ON()
   bool IsEndAndPairedWith(DisplayItem::Type other_type) const final {
-    return DisplayItem::transform3DTypeToEndTransform3DType(other_type) ==
+    return DisplayItem::Transform3DTypeToEndTransform3DType(other_type) ==
            GetType();
   }
 #endif
