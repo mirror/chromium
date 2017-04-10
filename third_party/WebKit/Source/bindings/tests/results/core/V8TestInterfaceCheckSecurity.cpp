@@ -438,7 +438,8 @@ void V8TestInterfaceCheckSecurity::crossOriginNamedGetter(v8::Local<v8::Name> na
 
   BindingSecurity::failedAccessCheckFor(
       info.GetIsolate(),
-      V8TestInterfaceCheckSecurity::toImpl(info.Holder())->frame());
+      &V8TestInterfaceCheckSecurity::wrapperTypeInfo,
+      info.Holder());
 }
 
 void V8TestInterfaceCheckSecurity::crossOriginNamedSetter(v8::Local<v8::Name> name, v8::Local<v8::Value> value, const v8::PropertyCallbackInfo<v8::Value>& info) {
@@ -455,7 +456,8 @@ void V8TestInterfaceCheckSecurity::crossOriginNamedSetter(v8::Local<v8::Name> na
 
   BindingSecurity::failedAccessCheckFor(
       info.GetIsolate(),
-      V8TestInterfaceCheckSecurity::toImpl(info.Holder())->frame());
+      &V8TestInterfaceCheckSecurity::wrapperTypeInfo,
+      info.Holder());
 }
 
 void V8TestInterfaceCheckSecurity::crossOriginNamedEnumerator(const v8::PropertyCallbackInfo<v8::Array>& info) {

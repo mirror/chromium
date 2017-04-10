@@ -119,9 +119,10 @@ void V8WrapperInstantiationScope::securityCheck(
     // reach this code path. Should be generalized.
     ExceptionState exceptionState(isolate, ExceptionState::ConstructionContext,
                                   "Location");
-    if (BindingSecurity::shouldAllowAccessToDetachedWindow(
-            callingWindow, targetWindow, exceptionState))
+    if (BindingSecurity::shouldAllowAccessTo(callingWindow, targetWindow,
+                                             exceptionState)) {
       return;
+    }
 
     CHECK_EQ(SecurityError, exceptionState.code());
     return;

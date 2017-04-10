@@ -38,12 +38,12 @@
 namespace blink {
 
 class DOMWindow;
-class EventTarget;
 class ExceptionState;
 class Frame;
 class LocalDOMWindow;
 class Location;
 class Node;
+struct WrapperTypeInfo;
 
 class CORE_EXPORT BindingSecurity {
   STATIC_ONLY(BindingSecurity);
@@ -58,10 +58,8 @@ class CORE_EXPORT BindingSecurity {
   // receiver object (|target|), where the receiver object is the JS object
   // for which the DOM attribute or DOM operation is being invoked (in the
   // form of receiver.domAttr or receiver.domOp()).
-  // Note that only Window and Location objects are cross-origin accessible
-  // and that EventTarget interface is the parent interface of Window
-  // interface.  So the receiver object must be of type DOMWindow,
-  // EventTarget, or Location.
+  // Note that only Window and Location objects are cross-origin accessible, so
+  // the receiver object must be of type DOMWindow or Location.
   //
   // DOMWindow
   static bool shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
@@ -70,11 +68,7 @@ class CORE_EXPORT BindingSecurity {
   static bool shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
                                   const DOMWindow* target,
                                   ErrorReportOption);
-  // EventTarget (as the parent of DOMWindow)
-  static bool shouldAllowAccessTo(
-      const LocalDOMWindow* accessingWindow,
-      const EventTarget* target,
-      ExceptionState&);  // NOLINT(readability/parameter_name)
+
   // Location
   static bool shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
                                   const Location* target,
@@ -110,13 +104,10 @@ class CORE_EXPORT BindingSecurity {
   static bool shouldAllowAccessToFrame(const LocalDOMWindow* accessingWindow,
                                        const Frame* target,
                                        ErrorReportOption);
-  // This overload must be used only for detached windows.
-  static bool shouldAllowAccessToDetachedWindow(
-      const LocalDOMWindow* accessingWindow,
-      const DOMWindow* target,
-      ExceptionState&);
 
-  static void failedAccessCheckFor(v8::Isolate*, const Frame* target);
+  static void failedAccessCheckFor(v8::Isolate*,
+                                   const WrapperTypeInfo*,
+                                   v8::Local<v8::Object> holder);
 
  private:
   // Returns true if |accessingWindow| is allowed named access to |targetWindow|

@@ -32,7 +32,10 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8Location.h"
+#include "bindings/core/v8/V8Window.h"
 #include "core/dom/Document.h"
+#include "core/frame/DOMWindow.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Location.h"
@@ -45,9 +48,8 @@ namespace blink {
 
 namespace {
 
-bool canAccessFrameInternal(const LocalDOMWindow* accessingWindow,
-                            const SecurityOrigin* targetFrameOrigin,
-                            const DOMWindow* targetWindow) {
+bool canAccessWindowInternal(const LocalDOMWindow* accessingWindow,
+                             const DOMWindow* targetWindow) {
   SECURITY_CHECK(!(targetWindow && targetWindow->frame()) ||
                  targetWindow == targetWindow->frame()->domWindow());
 
@@ -60,11 +62,14 @@ bool canAccessFrameInternal(const LocalDOMWindow* accessingWindow,
 
   const SecurityOrigin* accessingOrigin =
       accessingWindow->document()->getSecurityOrigin();
-  if (!accessingOrigin->canAccessCheckSuborigins(targetFrameOrigin))
+  const LocalDOMWindow* localTargetWindow = toLocalDOMWindow(targetWindow);
+  if (!accessingOrigin->canAccessCheckSuborigins(
+          localTargetWindow->document()->getSecurityOrigin())) {
     return false;
+  }
 
   // Notify the loader's client if the initial document has been accessed.
-  LocalFrame* targetFrame = toLocalDOMWindow(targetWindow)->frame();
+  LocalFrame* targetFrame = localTargetWindow->frame();
   if (targetFrame &&
       targetFrame->loader().stateMachine()->isDisplayingInitialEmptyDocument())
     targetFrame->loader().didAccessInitialDocument();
@@ -72,11 +77,10 @@ bool canAccessFrameInternal(const LocalDOMWindow* accessingWindow,
   return true;
 }
 
-bool canAccessFrame(const LocalDOMWindow* accessingWindow,
-                    const SecurityOrigin* targetFrameOrigin,
-                    const DOMWindow* targetWindow,
-                    ExceptionState& exceptionState) {
-  if (canAccessFrameInternal(accessingWindow, targetFrameOrigin, targetWindow))
+bool canAccessWindow(const LocalDOMWindow* accessingWindow,
+                     const DOMWindow* targetWindow,
+                     ExceptionState& exceptionState) {
+  if (canAccessWindowInternal(accessingWindow, targetWindow))
     return true;
 
   if (targetWindow)
@@ -86,11 +90,10 @@ bool canAccessFrame(const LocalDOMWindow* accessingWindow,
   return false;
 }
 
-bool canAccessFrame(const LocalDOMWindow* accessingWindow,
-                    SecurityOrigin* targetFrameOrigin,
-                    const DOMWindow* targetWindow,
-                    BindingSecurity::ErrorReportOption reportingOption) {
-  if (canAccessFrameInternal(accessingWindow, targetFrameOrigin, targetWindow))
+bool canAccessWindow(const LocalDOMWindow* accessingWindow,
+                     const DOMWindow* targetWindow,
+                     BindingSecurity::ErrorReportOption reportingOption) {
+  if (canAccessWindowInternal(accessingWindow, targetWindow))
     return true;
 
   if (accessingWindow && targetWindow &&
@@ -100,73 +103,48 @@ bool canAccessFrame(const LocalDOMWindow* accessingWindow,
   return false;
 }
 
+DOMWindow* findWindow(v8::Isolate* isolate,
+                      const WrapperTypeInfo* type,
+                      v8::Local<v8::Object> holder) {
+  if (V8Window::wrapperTypeInfo.equals(type))
+    return V8Window::toImpl(holder);
+
+  if (V8Location::wrapperTypeInfo.equals(type))
+    return V8Location::toImpl(holder)->domWindow();
+
+  // This function can handle only those types listed above.
+  NOTREACHED();
+  return nullptr;
+}
+
 }  // namespace
 
 bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
                                           const DOMWindow* target,
                                           ExceptionState& exceptionState) {
   DCHECK(target);
-  const Frame* frame = target->frame();
-  if (!frame || !frame->securityContext())
-    return false;
-  return canAccessFrame(accessingWindow,
-                        frame->securityContext()->getSecurityOrigin(), target,
-                        exceptionState);
+  return canAccessWindow(accessingWindow, target, exceptionState);
 }
 
 bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
                                           const DOMWindow* target,
                                           ErrorReportOption reportingOption) {
   DCHECK(target);
-  const Frame* frame = target->frame();
-  if (!frame || !frame->securityContext())
-    return false;
-  return canAccessFrame(accessingWindow,
-                        frame->securityContext()->getSecurityOrigin(), target,
-                        reportingOption);
-}
-
-bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
-                                          const EventTarget* target,
-                                          ExceptionState& exceptionState) {
-  DCHECK(target);
-  const DOMWindow* window = target->toDOMWindow();
-  if (!window) {
-    // We only need to check the access to Window objects which are
-    // cross-origin accessible.  If it's not a Window, the object's
-    // origin must always be the same origin (or it already leaked).
-    return true;
-  }
-  const Frame* frame = window->frame();
-  if (!frame || !frame->securityContext())
-    return false;
-  return canAccessFrame(accessingWindow,
-                        frame->securityContext()->getSecurityOrigin(), window,
-                        exceptionState);
+  return canAccessWindow(accessingWindow, target, reportingOption);
 }
 
 bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
                                           const Location* target,
                                           ExceptionState& exceptionState) {
   DCHECK(target);
-  const Frame* frame = target->frame();
-  if (!frame || !frame->securityContext())
-    return false;
-  return canAccessFrame(accessingWindow,
-                        frame->securityContext()->getSecurityOrigin(),
-                        frame->domWindow(), exceptionState);
+  return canAccessWindow(accessingWindow, target->domWindow(), exceptionState);
 }
 
 bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
                                           const Location* target,
                                           ErrorReportOption reportingOption) {
   DCHECK(target);
-  const Frame* frame = target->frame();
-  if (!frame || !frame->securityContext())
-    return false;
-  return canAccessFrame(accessingWindow,
-                        frame->securityContext()->getSecurityOrigin(),
-                        frame->domWindow(), reportingOption);
+  return canAccessWindow(accessingWindow, target->domWindow(), reportingOption);
 }
 
 bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
@@ -174,8 +152,8 @@ bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
                                           ExceptionState& exceptionState) {
   if (!target)
     return false;
-  return canAccessFrame(accessingWindow, target->document().getSecurityOrigin(),
-                        target->document().domWindow(), exceptionState);
+  return canAccessWindow(accessingWindow, target->document().domWindow(),
+                         exceptionState);
 }
 
 bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
@@ -183,8 +161,8 @@ bool BindingSecurity::shouldAllowAccessTo(const LocalDOMWindow* accessingWindow,
                                           ErrorReportOption reportingOption) {
   if (!target)
     return false;
-  return canAccessFrame(accessingWindow, target->document().getSecurityOrigin(),
-                        target->document().domWindow(), reportingOption);
+  return canAccessWindow(accessingWindow, target->document().domWindow(),
+                         reportingOption);
 }
 
 bool BindingSecurity::shouldAllowAccessToFrame(
@@ -193,9 +171,7 @@ bool BindingSecurity::shouldAllowAccessToFrame(
     ExceptionState& exceptionState) {
   if (!target || !target->securityContext())
     return false;
-  return canAccessFrame(accessingWindow,
-                        target->securityContext()->getSecurityOrigin(),
-                        target->domWindow(), exceptionState);
+  return canAccessWindow(accessingWindow, target->domWindow(), exceptionState);
 }
 
 bool BindingSecurity::shouldAllowAccessToFrame(
@@ -204,25 +180,7 @@ bool BindingSecurity::shouldAllowAccessToFrame(
     ErrorReportOption reportingOption) {
   if (!target || !target->securityContext())
     return false;
-  return canAccessFrame(accessingWindow,
-                        target->securityContext()->getSecurityOrigin(),
-                        target->domWindow(), reportingOption);
-}
-
-bool BindingSecurity::shouldAllowAccessToDetachedWindow(
-    const LocalDOMWindow* accessingWindow,
-    const DOMWindow* target,
-    ExceptionState& exceptionState) {
-  CHECK(target && !target->frame())
-      << "This version of shouldAllowAccessToFrame() must be used only for "
-      << "detached windows.";
-  if (!target->isLocalDOMWindow())
-    return false;
-  Document* document = toLocalDOMWindow(target)->document();
-  if (!document)
-    return false;
-  return canAccessFrame(accessingWindow, document->getSecurityOrigin(), target,
-                        exceptionState);
+  return canAccessWindow(accessingWindow, target->domWindow(), reportingOption);
 }
 
 bool BindingSecurity::shouldAllowNamedAccessTo(const DOMWindow* accessingWindow,
@@ -253,22 +211,20 @@ bool BindingSecurity::shouldAllowNamedAccessTo(const DOMWindow* accessingWindow,
 }
 
 void BindingSecurity::failedAccessCheckFor(v8::Isolate* isolate,
-                                           const Frame* target) {
-  // TODO(dcheng): See if this null check can be removed or hoisted to a
-  // different location.
-  if (!target)
-    return;
-
-  DOMWindow* targetWindow = target->domWindow();
+                                           const WrapperTypeInfo* type,
+                                           v8::Local<v8::Object> holder) {
+  DOMWindow* target = findWindow(isolate, type, holder);
+  // Failing to find a target means something is wrong. Failing to throw an
+  // exception could be a security issue, so just crash.
+  CHECK(target);
 
   // TODO(dcheng): Add ContextType, interface name, and property name as
   // arguments, so the generated exception can be more descriptive.
   ExceptionState exceptionState(isolate, ExceptionState::UnknownContext,
                                 nullptr, nullptr);
   exceptionState.throwSecurityError(
-      targetWindow->sanitizedCrossDomainAccessErrorMessage(
-          currentDOMWindow(isolate)),
-      targetWindow->crossDomainAccessErrorMessage(currentDOMWindow(isolate)));
+      target->sanitizedCrossDomainAccessErrorMessage(currentDOMWindow(isolate)),
+      target->crossDomainAccessErrorMessage(currentDOMWindow(isolate)));
 }
 
 }  // namespace blink

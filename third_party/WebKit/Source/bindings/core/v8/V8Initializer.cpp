@@ -41,14 +41,11 @@
 #include "bindings/core/v8/V8ErrorHandler.h"
 #include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/V8IdleTaskRunner.h"
-#include "bindings/core/v8/V8Location.h"
 #include "bindings/core/v8/V8PerContextData.h"
 #include "bindings/core/v8/V8PrivateProperty.h"
-#include "bindings/core/v8/V8Window.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalDOMWindow.h"
-#include "core/frame/LocalFrame.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/MainThreadDebugger.h"
@@ -71,27 +68,6 @@
 #include "v8/include/v8-profiler.h"
 
 namespace blink {
-
-static Frame* findFrame(v8::Isolate* isolate,
-                        v8::Local<v8::Object> host,
-                        v8::Local<v8::Value> data) {
-  const WrapperTypeInfo* type = WrapperTypeInfo::unwrap(data);
-
-  if (V8Window::wrapperTypeInfo.equals(type)) {
-    v8::Local<v8::Object> windowWrapper =
-        V8Window::findInstanceInPrototypeChain(host, isolate);
-    if (windowWrapper.IsEmpty())
-      return 0;
-    return V8Window::toImpl(windowWrapper)->frame();
-  }
-
-  if (V8Location::wrapperTypeInfo.equals(type))
-    return V8Location::toImpl(host)->frame();
-
-  // This function can handle only those types listed above.
-  ASSERT_NOT_REACHED();
-  return 0;
-}
 
 static void reportFatalErrorInMainThread(const char* location,
                                          const char* message) {
@@ -306,14 +282,13 @@ static void promiseRejectHandlerInWorker(v8::PromiseRejectMessage data) {
                        scriptState);
 }
 
-static void failedAccessCheckCallbackInMainThread(v8::Local<v8::Object> host,
+static void failedAccessCheckCallbackInMainThread(v8::Local<v8::Object> holder,
                                                   v8::AccessType type,
                                                   v8::Local<v8::Value> data) {
-  v8::Isolate* isolate = v8::Isolate::GetCurrent();
-  Frame* target = findFrame(isolate, host, data);
   // FIXME: We should modify V8 to pass in more contextual information (context,
   // property, and object).
-  BindingSecurity::failedAccessCheckFor(isolate, target);
+  BindingSecurity::failedAccessCheckFor(v8::Isolate::GetCurrent(),
+                                        WrapperTypeInfo::unwrap(data), holder);
 }
 
 static bool codeGenerationCheckCallbackInMainThread(
