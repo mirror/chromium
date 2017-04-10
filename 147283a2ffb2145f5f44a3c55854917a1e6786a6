@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4377d29_40990eef",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 6625,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T18:59:39Z",
+      "side": 1,
+      "message": "This isn\u0027t very nice, but meh.",
+      "range": {
+        "startLine": 6625,
+        "startChar": 15,
+        "endLine": 6625,
+        "endChar": 31
+      },
+      "revId": "147283a2ffb2145f5f44a3c55854917a1e6786a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32db8e32_5be948b8",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5014,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T18:59:39Z",
+      "side": 1,
+      "message": "This is even less nice. Maybe there should be a helper for converting the would load reason to screens away (and converting back).\n\nI didn\u0027t feel comfortable touching this logic in this CL though, so I just did the most straightforward change.",
+      "range": {
+        "startLine": 5013,
+        "startChar": 26,
+        "endLine": 5014,
+        "endChar": 61
+      },
+      "revId": "147283a2ffb2145f5f44a3c55854917a1e6786a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01297b2_088fe031",
+        "filename": "third_party/WebKit/Source/web/tests/DeferredLoadingTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T18:59:39Z",
+      "side": 1,
+      "message": "Note: the clang tool didn\u0027t previously consider this a constant, because it was missing a \u0027const\u0027 after const char*.\n\nWriting const char kFoo[] is a bit preferred (since it prevents the problem of the missing const)",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "147283a2ffb2145f5f44a3c55854917a1e6786a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
