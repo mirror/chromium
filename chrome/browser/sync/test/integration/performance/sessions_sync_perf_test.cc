@@ -69,7 +69,7 @@ void SessionsSyncPerfTest::UpdateTabs(int profile) {
     url = NextURL();
     browser->OpenURL(OpenURLParams(
         url, content::Referrer(GURL("http://localhost"),
-                               blink::WebReferrerPolicyDefault),
+                               blink::kWebReferrerPolicyDefault),
         WindowOpenDisposition::CURRENT_TAB, ui::PAGE_TRANSITION_LINK, false));
     urls.push_back(url);
   }

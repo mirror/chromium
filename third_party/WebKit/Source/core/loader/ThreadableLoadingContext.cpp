@@ -13,62 +13,62 @@ namespace blink {
 class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
  public:
   explicit DocumentThreadableLoadingContext(Document& document)
-      : m_document(&document) {}
+      : document_(&document) {}
 
   ~DocumentThreadableLoadingContext() override = default;
 
-  bool isContextThread() const override {
-    return m_document->isContextThread();
+  bool IsContextThread() const override {
+    return document_->IsContextThread();
   }
 
-  ResourceFetcher* getResourceFetcher() override {
-    DCHECK(isContextThread());
-    return m_document->fetcher();
+  ResourceFetcher* GetResourceFetcher() override {
+    DCHECK(IsContextThread());
+    return document_->Fetcher();
   }
 
-  SecurityOrigin* getSecurityOrigin() override {
-    DCHECK(isContextThread());
-    return m_document->getSecurityOrigin();
+  SecurityOrigin* GetSecurityOrigin() override {
+    DCHECK(IsContextThread());
+    return document_->GetSecurityOrigin();
   }
 
-  bool isSecureContext() const override {
-    DCHECK(isContextThread());
-    return m_document->isSecureContext();
+  bool IsSecureContext() const override {
+    DCHECK(IsContextThread());
+    return document_->IsSecureContext();
   }
 
-  KURL firstPartyForCookies() const override {
-    DCHECK(isContextThread());
-    return m_document->firstPartyForCookies();
+  KURL FirstPartyForCookies() const override {
+    DCHECK(IsContextThread());
+    return document_->FirstPartyForCookies();
   }
 
-  String userAgent() const override {
-    DCHECK(isContextThread());
-    return m_document->userAgent();
+  String UserAgent() const override {
+    DCHECK(IsContextThread());
+    return document_->UserAgent();
   }
 
-  Document* getLoadingDocument() override {
-    DCHECK(isContextThread());
-    return m_document.get();
+  Document* GetLoadingDocument() override {
+    DCHECK(IsContextThread());
+    return document_.Get();
   }
 
-  RefPtr<WebTaskRunner> getTaskRunner(TaskType type) override {
-    return TaskRunnerHelper::get(type, m_document.get());
+  RefPtr<WebTaskRunner> GetTaskRunner(TaskType type) override {
+    return TaskRunnerHelper::Get(type, document_.Get());
   }
 
-  void recordUseCount(UseCounter::Feature feature) override {
-    UseCounter::count(m_document.get(), feature);
+  void RecordUseCount(UseCounter::Feature feature) override {
+    UseCounter::Count(document_.Get(), feature);
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
-    visitor->trace(m_document);
-    ThreadableLoadingContext::trace(visitor);
+    visitor->Trace(document_);
+    ThreadableLoadingContext::Trace(visitor);
   }
 
  private:
-  Member<Document> m_document;
+  Member<Document> document_;
 };
 
-ThreadableLoadingContext* ThreadableLoadingContext::create(Document& document) {
+ThreadableLoadingContext* ThreadableLoadingContext::Create(Document& document) {
   // For now this is the only default implementation.
   return new DocumentThreadableLoadingContext(document);
 }

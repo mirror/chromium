@@ -81,8 +81,8 @@ void ResourceRequestInfo::AllocateForTesting(net::URLRequest* request,
       false,                                 // enable load timing
       request->has_upload(),                 // enable upload progress
       false,                                 // do_not_prompt_for_login
-      blink::WebReferrerPolicyDefault,       // referrer_policy
-      blink::WebPageVisibilityStateVisible,  // visibility_state
+      blink::kWebReferrerPolicyDefault,       // referrer_policy
+      blink::kWebPageVisibilityStateVisible,  // visibility_state
       context,                               // context
       false,                                 // report_raw_headers
       is_async,                              // is_async

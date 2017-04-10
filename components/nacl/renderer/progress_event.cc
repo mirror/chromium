@@ -52,12 +52,12 @@ void DispatchProgressEventOnMainThread(PP_Instance instance,
   if (!container)
     return;
 
-  container->dispatchProgressEvent(
-      WebString::fromUTF8(EventTypeToName(event.event_type)),
+  container->DispatchProgressEvent(
+      WebString::FromUTF8(EventTypeToName(event.event_type)),
       event.length_is_computable,
       event.loaded_bytes,
       event.total_bytes,
-      WebString::fromUTF8(event.resource_url));
+      WebString::FromUTF8(event.resource_url));
 }
 
 }  // namespace

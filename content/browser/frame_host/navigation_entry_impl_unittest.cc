@@ -28,7 +28,7 @@ class NavigationEntryTest : public testing::Test {
     entry2_.reset(new NavigationEntryImpl(
           instance_,
           GURL("test:url"),
-          Referrer(GURL("from"), blink::WebReferrerPolicyDefault),
+          Referrer(GURL("from"), blink::kWebReferrerPolicyDefault),
           ASCIIToUTF16("title"),
           ui::PAGE_TRANSITION_TYPED,
           false));
@@ -165,7 +165,7 @@ TEST_F(NavigationEntryTest, NavigationEntryAccessors) {
   EXPECT_EQ(GURL(), entry1_->GetReferrer().url);
   EXPECT_EQ(GURL("from"), entry2_->GetReferrer().url);
   entry2_->SetReferrer(
-      Referrer(GURL("from2"), blink::WebReferrerPolicyDefault));
+      Referrer(GURL("from2"), blink::kWebReferrerPolicyDefault));
   EXPECT_EQ(GURL("from2"), entry2_->GetReferrer().url);
 
   // Title

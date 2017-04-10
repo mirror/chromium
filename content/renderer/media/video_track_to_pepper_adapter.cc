@@ -80,7 +80,7 @@ bool VideoTrackToPepperAdapter::Open(const std::string& url,
                               FrameReaderInterface* reader) {
   DCHECK(thread_checker_.CalledOnValidThread());
   const blink::WebMediaStreamTrack& track = GetFirstVideoTrack(url);
-  if (track.isNull())
+  if (track.IsNull())
     return false;
   reader_to_receiver_[reader] = new SourceInfo(track, reader);
   return true;
@@ -101,17 +101,17 @@ blink::WebMediaStreamTrack VideoTrackToPepperAdapter::GetFirstVideoTrack(
   DCHECK(thread_checker_.CalledOnValidThread());
   const blink::WebMediaStream stream = registry_
       ? registry_->GetMediaStream(url)
-      : blink::WebMediaStreamRegistry::lookupMediaStreamDescriptor(GURL(url));
+      : blink::WebMediaStreamRegistry::LookupMediaStreamDescriptor(GURL(url));
 
-  if (stream.isNull()) {
+  if (stream.IsNull()) {
     LOG(ERROR) << "GetFirstVideoSource - invalid url: " << url;
     return blink::WebMediaStreamTrack();
   }
 
   // Get the first video track from the stream.
   blink::WebVector<blink::WebMediaStreamTrack> video_tracks;
-  stream.videoTracks(video_tracks);
-  if (video_tracks.isEmpty()) {
+  stream.VideoTracks(video_tracks);
+  if (video_tracks.IsEmpty()) {
     LOG(ERROR) << "GetFirstVideoSource - no video tracks. url: " << url;
     return blink::WebMediaStreamTrack();
   }
