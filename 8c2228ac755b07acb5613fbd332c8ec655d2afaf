@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "45fcc985_c18d0cba",
+        "filename": "tools/blink_rename_merge_helper/data/idl_blocklist.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-04-10T15:15:09Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a885ce7d_01f2d386",
         "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
         "patchSetId": 9
