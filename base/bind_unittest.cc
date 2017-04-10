@@ -463,6 +463,7 @@ TEST_F(BindTest, IgnoreResultForRepeating) {
       BindRepeating(IgnoreResult(&NoRef::IntMethod0),
                     weak_factory.GetWeakPtr());
   non_void_weak_method_cb.Run();
+  // Test Change.
 
   RepeatingClosure non_void_weak_const_method_cb =
       BindRepeating(IgnoreResult(&NoRef::IntConstMethod0),
