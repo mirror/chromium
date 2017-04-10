@@ -2268,7 +2268,7 @@ crbug.com/666993 external/wpt/html/webappapis/idle-callbacks/callback-timeout-wi
 crbug.com/626703 external/wpt/html/browsers/the-window-object/window-open-noopener.html [ Timeout ]
 #crbug.com/626703 external/wpt/css/css-writing-modes-3/wm-propagation-body-008.xht [ Failure ]
 crbug.com/626703 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-align-self-baseline-vert-001.html [ Failure Pass ]
-crbug.com/626703 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-multi-item-vert-001.html [ Failure Pass ]
+crbug.com/626703 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-multi-item-vert-001a.html [ Failure Pass ]
 crbug.com/626703 external/wpt/svg/linking/reftests/href-filter-element.html [ Failure ]
 
 # Crashes with DCHECK enabled, but not on normal Release builds.
