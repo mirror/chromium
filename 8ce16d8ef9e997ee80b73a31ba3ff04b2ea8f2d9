@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6504d39_8a504f0b",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T07:56:08Z",
+      "side": 1,
+      "message": "One possibility is to tweak this to only \u0027touch\u0027 if the response file is missing (see below). But this is more complex.",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 12
+      },
+      "revId": "8ce16d8ef9e997ee80b73a31ba3ff04b2ea8f2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

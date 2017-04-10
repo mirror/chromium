@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb2d693_c8d7c063",
+        "filename": "tools/blink_rename_merge_helper/COMPONENTS",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T07:56:08Z",
+      "side": 1,
+      "message": "These are to pick up the updated pylib, as well as the manual patch that was applied on top of the automatically generated one.",
+      "range": {
+        "startLine": 3,
+        "startChar": 11,
+        "endLine": 3,
+        "endChar": 51
+      },
+      "revId": "891a0aff7f4db2a7949acecb7e83b06b8dab0a4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

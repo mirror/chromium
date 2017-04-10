@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf968233_1409bf5c",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T07:56:08Z",
+      "side": 1,
+      "message": "It\u0027s a bit ugly to do this. The alternative is to just try to inject this every time during the --update phase. WDYT?",
+      "revId": "1ccb4f593d04963af1fd58d2e6480fac2b17d7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b93cc08_8175419f",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T07:56:08Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure if these are the best args to be using. The diffs from the clang tool won\u0027t be cached, but this potentially will be (if everything applies cleanly). Is there a better way to do this?",
+      "range": {
+        "startLine": 297,
+        "startChar": 2,
+        "endLine": 297,
+        "endChar": 25
+      },
+      "revId": "1ccb4f593d04963af1fd58d2e6480fac2b17d7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1346b2_7995688c",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/merge.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T07:56:08Z",
+      "side": 1,
+      "message": "Since this is unconditionally installed at the moment, I\u0027m hoping that falling back to merge-file with the original input is Good Enough for normal merge resolution.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "1ccb4f593d04963af1fd58d2e6480fac2b17d7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f85a078_4e3350a5",
+        "filename": "tools/blink_rename_merge_helper/run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T07:56:08Z",
+      "side": 1,
+      "message": "Just some stuff to make local testing easier.",
+      "revId": "1ccb4f593d04963af1fd58d2e6480fac2b17d7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0a2eed_5d63a17a",
+        "filename": "tools/clang/scripts/apply_edits.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T07:56:08Z",
+      "side": 1,
+      "message": "Not strictly necessary as part of this change, but meh.",
+      "revId": "1ccb4f593d04963af1fd58d2e6480fac2b17d7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c708bcce_49deede2",
+        "filename": "tools/clang/scripts/extract_edits.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-10T07:56:08Z",
+      "side": 1,
+      "message": "Breadcrumb for myself to fix this in the future.",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "1ccb4f593d04963af1fd58d2e6480fac2b17d7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
