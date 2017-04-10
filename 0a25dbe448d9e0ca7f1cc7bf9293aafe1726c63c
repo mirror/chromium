@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "409d4aec_bed396d6",
+        "filename": "components/feature_engagement_tracker/internal/condition_validator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "Would it make sense to just make this a const ref if it can never be null?",
+      "range": {
+        "startLine": 24,
+        "startChar": 43,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee5ab6a_2af244cf",
+        "filename": "components/feature_engagement_tracker/internal/configuration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "std::string default constructor should set this, so remove feature_used_event(\"\").  But I think you have to initialize valid to something.",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 38
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b4a709_a21bc379",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "Remove space",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 15
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa9bd27_67fc6e18",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b27482_30e2c29d",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "Can you make this an argument and just call it GetFeatureConfig(const std::string\u0026 feature_used_event, bool valid)?",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035e78e6_011b0798",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "Should we just implement operator\u003d\u003d in the FeatureConfig class?  Maybe then make EXPECT_EQ?  If we end up not needing it later we can remove it.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6a2da5_3b175904",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "Passing these in feels better.  It\u0027ll make more sense to not have \"SetConfiguration\" on a non-editable config.",
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076b30c6_236d93fd",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "Do we need kTestFeatureQux in here?",
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecdb19b_f93ce661",
+        "filename": "components/feature_engagement_tracker/internal/in_memory_store_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "Remove line?",
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f0a66b_5fe0ac2b",
+        "filename": "components/feature_engagement_tracker/internal/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-10T20:58:15Z",
+      "side": 1,
+      "message": "Do we ever expect feature to be null?  If not make the caller deal with it and pass a const \u0026?",
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
