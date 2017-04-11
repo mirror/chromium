@@ -46,6 +46,29 @@
       "revId": "209c601efb6399cec132bc2c8533b7af3dfac3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11861b7e_b50a4f74",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-04-11T22:57:31Z",
+      "side": 1,
+      "message": "nit: I might be wrong, but do we ever set the confirmation_reason_ to UNEXPECTED?  We might never hit the code inside this block.  \n\nCompared with the original code, when there is no WebContents, we still run the callback with an empty FilePath. If we fall through and skip the UNEXPECTED block, we probably miss the callback.",
+      "range": {
+        "startLine": 673,
+        "startChar": 4,
+        "endLine": 673,
+        "endChar": 47
+      },
+      "revId": "209c601efb6399cec132bc2c8533b7af3dfac3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
