@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6af9c3_8fc7ba35",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 0,
+      "message": "lukasza@, do you know why the manual patch had to remove this?",
+      "range": {
+        "startLine": 212,
+        "startChar": 60,
+        "endLine": 212,
+        "endChar": 82
+      },
+      "revId": "ef018ea6d17c323f2adea66809bdd07631e2f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3abfc99_ceffa25b",
+        "filename": "third_party/WebKit/Source/platform/wtf/RetainPtr.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 0,
+      "message": "Wasn\u0027t used at all, and the identical name causes issues.",
+      "range": {
+        "startLine": 298,
+        "startChar": 39,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "ef018ea6d17c323f2adea66809bdd07631e2f45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

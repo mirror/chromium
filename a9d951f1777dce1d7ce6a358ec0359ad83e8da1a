@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c901e9b3_06516569",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Iterable.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "This was manually undone since the IDL extractor didn\u0027t understand special methods like this, so didn\u0027t emit the right methods to skip.\n\n(It would have been extra tricky to handle this correctly, because it is a template type too)",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8588adc5_5449de3c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/Maplike.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "Same issue here.",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 8
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24daff3b_ef46f9bc",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8HTMLPlugInElementCustom.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "This is something the tool incorrectly rewrites: when the template is instantiated, the tool correctly understands to skip this (since it is from generated code). But on the uninstantiated template, the tool does not have enough context to know that ElementType will always be a auto-generated type, and rewrites it.",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fc1f15_5c60d3a3",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "lukasza@, mind commenting why the original check by itself doesn\u0027t suffice here?",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 65
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfa5ee5_fc7109c6",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyMetadata.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "We didn\u0027t catch this initially (as the build doesn\u0027t break), but it was causing DCHECKS in https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/StylePropertySerializer.cpp?rcl\u003d722783997be0338cf14613eca3e58e34a43ef24d\u0026l\u003d231.\n\nI fixed these and diffed a few generated CSS files to make sure the only diffs were from renaming, but there\u0027s no guarantee that we caught everything.",
+      "range": {
+        "startLine": 20,
+        "startChar": 29,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7196be13_5bf8bb23",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "This is important so that the actual editing command verb remains unchanged, so we can still execCommand(\"copy\") rather than execCommand(\"kcopy\").",
+      "range": {
+        "startLine": 91,
+        "startChar": 47,
+        "endLine": 91,
+        "endChar": 48
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cf3e60_6218abc6",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommandNames.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "There are several of these comments that accidentally slipped through and were landed. They\u0027ve already been removed.",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6286413_5ff3b630",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "Similar issue here as well.",
+      "range": {
+        "startLine": 222,
+        "startChar": 20,
+        "endLine": 222,
+        "endChar": 21
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce298a4b_cabe518c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "This is tricky and I\u0027m not sure how we should handle this yet. I think these fields are referenced using a macro, but it\u0027s difficult for the macro to convert from upper camel case to hacker_case style naming. Maybe we should change the macro so that the caller just passes both names?",
+      "range": {
+        "startLine": 2232,
+        "startChar": 12,
+        "endLine": 2232,
+        "endChar": 13
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25998ed1_8e0e36e2",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineBox.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "This is also a similar issue with macros.",
+      "range": {
+        "startLine": 410,
+        "startChar": 12,
+        "endLine": 410,
+        "endChar": 13
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375e7147_e1016d53",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/JPEGImageEncoderTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T05:14:10Z",
+      "side": 1,
+      "message": "Not sure why, but this was causing the build to randomly break when I was trying to land the rename CL. I\u0027ll come back and revisit this in a folllowup -- it doesn\u0027t make sense, since the code itself didn\u0027t change...",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 43
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
