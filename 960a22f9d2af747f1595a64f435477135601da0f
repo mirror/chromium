@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afed43d6_d33c9679",
+        "filename": "components/feature_engagement_tracker/internal/feature_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-11T18:39:01Z",
+      "side": 1,
+      "message": "Nit: Add empty line after this.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "960a22f9d2af747f1595a64f435477135601da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725bc6bf_2a2d2ed1",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-11T18:39:01Z",
+      "side": 1,
+      "message": "Nit: Add empty line after this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "960a22f9d2af747f1595a64f435477135601da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edae735_841e9bf3",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-11T18:39:01Z",
+      "side": 1,
+      "message": "Should return a std::unique_ptr",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "960a22f9d2af747f1595a64f435477135601da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803f3ff2_6af7ef50",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-11T18:39:01Z",
+      "side": 1,
+      "message": "Nit: You can just inline these into the return at the end except for configuration.",
+      "range": {
+        "startLine": 27,
+        "startChar": 47,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "960a22f9d2af747f1595a64f435477135601da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6046678_5339772a",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-11T18:39:01Z",
+      "side": 1,
+      "message": "Nit: it -\u003e feature",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "960a22f9d2af747f1595a64f435477135601da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f596c8b1_ea6f15be",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-11T18:39:01Z",
+      "side": 1,
+      "message": "Nit: No {}s",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 34
+      },
+      "revId": "960a22f9d2af747f1595a64f435477135601da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5936db_c74cb1c7",
+        "filename": "components/feature_engagement_tracker/internal/never_condition_validator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-11T18:39:01Z",
+      "side": 1,
+      "message": "Nit: Add empty line above",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "960a22f9d2af747f1595a64f435477135601da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d71ed54_c48cb83e",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-11T18:39:01Z",
+      "side": 1,
+      "message": "Nit: Add an empty line below",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "960a22f9d2af747f1595a64f435477135601da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
