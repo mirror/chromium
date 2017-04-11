@@ -661,6 +661,30 @@
       "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e1483c_8d0f4f88",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/merge.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-11T10:14:10Z",
+      "side": 1,
+      "message": "Ahh so are you saying that  you are always rebase  on top of RENAME_COMMIT not on top of origin/master? Sorry didn\u0027t realize that. In that case I agree, this was just a huge brainfart then.",
+      "parentUuid": "dd4bcdcb_69a8be00",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
