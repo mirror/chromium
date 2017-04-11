@@ -46,6 +46,30 @@
       "revId": "cd81626138da7e7021b81a1415a06088302e958f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91515372_299b6caf",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1158570
+      },
+      "writtenOn": "2017-04-11T19:53:18Z",
+      "side": 0,
+      "message": "Thanks for the description, sgtm.",
+      "parentUuid": "a49230ec_05607746",
+      "range": {
+        "startLine": 805,
+        "startChar": 1,
+        "endLine": 805,
+        "endChar": 23
+      },
+      "revId": "cd81626138da7e7021b81a1415a06088302e958f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
