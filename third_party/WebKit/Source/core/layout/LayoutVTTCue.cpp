@@ -359,8 +359,8 @@ IntRect LayoutVTTCue::ComputeControlsRect() const {
       ToLayoutBox(*controls->ContainerLayoutObject()));
 }
 
-void LayoutVTTCue::GetLayout() {
-  LayoutBlockFlow::GetLayout();
+void LayoutVTTCue::UpdateLayout() {
+  LayoutBlockFlow::UpdateLayout();
 
   DCHECK(FirstChild());
 

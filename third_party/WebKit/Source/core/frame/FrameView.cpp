@@ -1046,7 +1046,7 @@ bool FrameView::ShouldPerformScrollAnchoring() const {
 
 static inline void LayoutFromRootObject(LayoutObject& root) {
   LayoutState layout_state(root);
-  root.GetLayout();
+  root.UpdateLayout();
 }
 
 void FrameView::PrepareLayoutAnalyzer() {
@@ -1135,7 +1135,7 @@ void FrameView::PerformLayout(bool in_subtree_layout) {
     if (HasOrthogonalWritingModeRoots() &&
         !RuntimeEnabledFeatures::layoutNGEnabled())
       LayoutOrthogonalWritingModeRoots();
-    GetLayoutView()->GetLayout();
+    GetLayoutView()->UpdateLayout();
   }
 
   frame_->GetDocument()->Fetcher()->UpdateAllImageResourcePriorities();
