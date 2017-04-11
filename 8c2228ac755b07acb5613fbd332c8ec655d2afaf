@@ -613,6 +613,30 @@
       "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35faa30_d88c20b6",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/merge.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T10:09:01Z",
+      "side": 1,
+      "message": "I think this actually isn\u0027t a problem (or is very very unlikely): the workflow forces the developer to RENAME_COMMIT~1. By definition, RENAME_COMMIT itself should not be introducing any new fields and is purely a renaming + reformatting.",
+      "parentUuid": "ebe9f287_0fe8a507",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
