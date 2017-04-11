@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "2d77703d_be98c988",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-04-11T17:14:26Z",
+      "side": 1,
+      "message": "The original check doesn\u0027t suffice for cases like: type\u003d|EPosition|, getter\u003d|GetPosition|.\n\nCSSProperties.json5 allows overriding of |getter|, |setter|, |initial| method names.  This ability is used in make_style_builder.py which has code like:\n    set_if_none(property, \u0027getter\u0027, name if simple_type_name !\u003d name else \u0027Get\u0027 + name)\n\nWe needed to use the ability to override the |getter| also in here (I remember \"Position\" being problematic, but the manual patch also had other changes in CSSProperites.json5 - unfortunately they\u0027ve accumulated over time and I don\u0027t remember why some of them were needed...).  The problem was that make_computed_style_base.py ignored |getter| override - the change here tries to enable using the overrides (and haphazardly adds |not self.is_inherited_flag| to avoid trouble with |...IsInherited| method names).\n\nI think going forward we need to find a clean way to consistently process |getter|, |setter|, |initial| method name overrides in all consumers of CSSProperties.json5.  I\u0027ve opened https://crbug.com/710496 to track this.",
+      "parentUuid": "361bd3af_e8f22641",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 65
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dfa5ee5_fc7109c6",
         "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyMetadata.cpp.tmpl",
         "patchSetId": 3
