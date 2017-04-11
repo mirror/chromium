@@ -22,6 +22,30 @@
       "revId": "cd81626138da7e7021b81a1415a06088302e958f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49230ec_05607746",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-04-11T14:12:19Z",
+      "side": 0,
+      "message": "The objective is that it wouldn\u0027t change behavior. In the prior model, DownloadTargetDeterminer disables prompting on Android for reasons like the path not being writeable, or there not being enough space. DTD, and in turn, Chrome DownloadManagerDelegate prompts the user when there\u0027s a target collision wherein it shows the duplicate download infobar. Since no specific reason was communicated from DTD to CDMD, *any* request for a prompt was considered to be one for a duplicate download. The only way to make this model correct is to silence all other reasons for requesting a prompt, which is what this block was doing.\n\nIn the new model, DownloadTargetDeterminer can notify the caller of the specific reason why a confirmation is needed. This means that CDMD can now make a decision on how to prompt based on the confirmation reason. You can see the logic for that in the CDMD changes.\n\nMoving the logic for prompting into a single location makes it easier to reason about the prompting behavior. Part of the complexity in this patch comes from the fact that it\u0027s picking out logic that\u0027s scattered in a number of places and bringing it to a single location. It should be much clearer after the logic is moved.",
+      "parentUuid": "d584a14d_fc6a6ed1",
+      "range": {
+        "startLine": 805,
+        "startChar": 1,
+        "endLine": 805,
+        "endChar": 23
+      },
+      "revId": "cd81626138da7e7021b81a1415a06088302e958f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
