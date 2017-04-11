@@ -7,6 +7,8 @@
 #include "base/feature_list.h"
 
 namespace feature_engagement_tracker {
+const base::Feature kIPHDemoMode{"IPH_DemoMode",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kIPHDummyFeature{"IPH_DummyFeature",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
