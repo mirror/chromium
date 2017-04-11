@@ -637,6 +637,30 @@
       "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4bcdcb_69a8be00",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/merge.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-11T10:10:09Z",
+      "side": 1,
+      "message": "Oops, missing some words.\n\n...forces the developer to rebase to RENAME_COMMIT~1 first. By definition, the diff RENAME_COMMIT~1..RENAME_COMMIT should not be introducing...",
+      "parentUuid": "f35faa30_d88c20b6",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
