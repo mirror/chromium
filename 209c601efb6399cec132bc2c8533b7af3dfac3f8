@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4272fe87_93a61d72",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1158570
+      },
+      "writtenOn": "2017-04-11T03:09:45Z",
+      "side": 1,
+      "message": "Optional nit: This bug is marked as fixed,  maybe we can remove the TODO?",
+      "range": {
+        "startLine": 611,
+        "startChar": 19,
+        "endLine": 611,
+        "endChar": 42
+      },
+      "revId": "209c601efb6399cec132bc2c8533b7af3dfac3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
