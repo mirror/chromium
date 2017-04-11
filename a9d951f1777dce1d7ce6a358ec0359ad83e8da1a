@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "361bd3af_e8f22641",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-04-11T05:52:15Z",
+      "side": 1,
+      "message": "Just to add, the original check is only for when the getter name clashed with the return type name. For example, the \u0027position\u0027 property would not have been affected by the original check because the return type is EPosition, so it would\u0027ve generated \"EPosition Position() const\". I don\u0027t know if that\u0027s bad but I\u0027m guessing the new check was added to make it \"GetPosition()\" instead?\n\nOn a side note, the new check is slightly wrong because \"if \u0027getter\u0027 in properties\" is always true. The parent class of this class makes sure that properties[\u0027getter\u0027] is always filled with some value. So the else statement here will never trigger.",
+      "parentUuid": "f2fc1f15_5c60d3a3",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 65
+      },
+      "revId": "a9d951f1777dce1d7ce6a358ec0359ad83e8da1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dfa5ee5_fc7109c6",
         "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyMetadata.cpp.tmpl",
         "patchSetId": 3
