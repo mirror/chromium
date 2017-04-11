@@ -428,6 +428,10 @@ CONSOLE WARNING: Resource requests whose URLs contain raw newline characters are
     {
       "object": "LayoutHTMLCanvas CANVAS id='xorvideo'",
       "reason": "invalidate paint rectangle"
+    },
+    {
+      "object": "LayoutVideo VIDEO id='video'",
+      "reason": "style change"
     }
   ]
 }
