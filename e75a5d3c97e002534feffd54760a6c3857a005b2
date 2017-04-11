@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66b6a111_870b91dd",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-04-11T19:51:04Z",
+      "side": 1,
+      "message": "nit: does this period need to be outside of \")\"?",
+      "range": {
+        "startLine": 55,
+        "startChar": 84,
+        "endLine": 55,
+        "endChar": 85
+      },
+      "revId": "e75a5d3c97e002534feffd54760a6c3857a005b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
