@@ -271,7 +271,7 @@ void LayoutPart::StyleDidChange(StyleDifference diff,
   }
 }
 
-void LayoutPart::GetLayout() {
+void LayoutPart::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
   ClearNeedsLayout();
