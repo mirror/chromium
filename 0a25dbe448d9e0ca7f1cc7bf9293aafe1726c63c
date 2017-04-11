@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9059ee26_9dc76bd7",
+        "filename": "components/feature_engagement_tracker/internal/condition_validator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409d4aec_bed396d6",
+      "range": {
+        "startLine": 24,
+        "startChar": 43,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ee5ab6a_2af244cf",
         "filename": "components/feature_engagement_tracker/internal/configuration.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de518d1d_126e96fd",
+        "filename": "components/feature_engagement_tracker/internal/configuration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ee5ab6a_2af244cf",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 38
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "73b66653_0f2ec91e",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b4a709_a21bc379",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 15
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fa9bd27_67fc6e18",
         "filename": "components/feature_engagement_tracker/internal/editable_configuration_unittest.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a096f0bf_3e41dacf",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa9bd27_67fc6e18",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5ac90384_91e58b6c",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b27482_30e2c29d",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "035e78e6_011b0798",
         "filename": "components/feature_engagement_tracker/internal/editable_configuration_unittest.cc",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "dd66df43_d55592ac",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "035e78e6_011b0798",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a6a2da5_3b175904",
         "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
         "patchSetId": 2
@@ -151,6 +295,24 @@
       "writtenOn": "2017-04-10T20:58:15Z",
       "side": 1,
       "message": "Passing these in feels better.  It\u0027ll make more sense to not have \"SetConfiguration\" on a non-editable config.",
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7486e3f6_ec26c9c7",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Like we discussed offline, the base class Configuration does not have SetConfiguration, but only the getter. The extension of that though, the EditableConfiguration makes it simple for testing, etc.\nThe Finch-based configuration will use a different way of retrieving the configuration though.\n\nSo... All in all, we agreed offline that the current way is OK :-)",
+      "parentUuid": "5a6a2da5_3b175904",
       "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "5b91d494_a3b9fd7f",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076b30c6_236d93fd",
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fecdb19b_f93ce661",
         "filename": "components/feature_engagement_tracker/internal/in_memory_store_unittest.cc",
         "patchSetId": 2
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "7e2cc497_dcb1fbae",
+        "filename": "components/feature_engagement_tracker/internal/in_memory_store_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fecdb19b_f93ce661",
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2f0a66b_5fe0ac2b",
         "filename": "components/feature_engagement_tracker/internal/model.h",
         "patchSetId": 2
@@ -205,6 +403,24 @@
       "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53317b6_480876c6",
+        "filename": "components/feature_engagement_tracker/internal/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-11T05:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2f0a66b_5fe0ac2b",
+      "revId": "0a25dbe448d9e0ca7f1cc7bf9293aafe1726c63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
