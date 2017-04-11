@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d9f1e0c2_624e7b99",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-11T10:02:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6873c35b_db00e218",
+      "range": {
+        "startLine": 78,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4106a09_3c5c92a4",
         "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
         "patchSetId": 9
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I provided instructions on setting a tracking branch instead \u003d)",
       "parentUuid": "70ac1a6c_370e6588",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b905480_f84b9220",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-11T10:02:02Z",
+      "side": 1,
+      "message": "SG",
+      "parentUuid": "8ed3eb8c_7df63d1e",
       "range": {
         "startLine": 91,
         "startChar": 4,
@@ -284,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "877ab87f_336706c1",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-11T10:02:02Z",
+      "side": 1,
+      "message": "Ah I was not suggesting to parse it, just to clobber it all the times (maybe create a copy the first time without even bothering restoring it). I wouldn\u0027t really expect anybody to use this. But really whatever, this doesn\u0027t worry me in any case. I only suggested the clobbering because I have no idea how git reacts to duplicate keys. If it works it\u0027s fine as it is.",
+      "parentUuid": "9e7f3192_8a6b44b9",
+      "range": {
+        "startLine": 147,
+        "startChar": 56,
+        "endLine": 147,
+        "endChar": 59
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43f8928_029fda52",
         "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
         "patchSetId": 9
@@ -378,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "989af9bb_f6a23741",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-11T10:02:02Z",
+      "side": 1,
+      "message": "\u003e The reason I didn\u0027t opt for this route is I didn\u0027t want to try to handle the case where the temporary branch name ends up colliding.\nOh, don\u0027t  :) just always clobber the tmp branch  (which is the default behavior of update-ref)\n\n\u003e If I don\u0027t use a temp branch, then I think you have to use git reflog to recover either way, right?\nAh also that would be an option (add \u0027use git reflog --date\u003drelative\u0027 to the instructions maybe).\n\n\u003e One thing I don\u0027t understand: what is tree-ish for the current commit? \nI\u0027ll tell you in a language you are more familiar with :)\n\nusing Blob \u003d std::vector\u003cuint8_t\u003e;  // This is the content of a file.\n\n// Like in a dirent, the tree gives names to subtrees and its files.\nclass Tree {\n  std::map\u003cstring, std::shared_ptr\u003cTree\u003e subtrees;\n  std::map\u003cstring, std::shared_ptr\u003cBlob\u003e files;\n};\n\nclass Commit {\n  string author;\n  std::time_t author_date;\n  string committer;\n  std::time_t committer_date;\n\n  std::vector\u003cstd::shared_ptr\u003cCommit\u003e\u003e parents;\n  std::shared_ptr\u003cTree\u003e tree;\n}\n\n// Refs (branches) are essentially the gc-roots\nunion Ref {\n  string refname\n  shared_ptr\u003cCommit\u003e commit;\n  std::string symbolic_name_of_another_ref;  \n}\n\nThis is pretty much git. All the rest is command line boilerplate :)\n\nIn this metaphore those the addresses of those shared_ptr\u003c\u003e are the SHA1 (commit-ish, tree-ish, blob-ish)\n\nGoing back to your question, a tree is essentially the object that defines the content in term of files and subdirectories.\n\n\u003e I tried running this locally, and it spit out a SHA1. But if I try to git log it, nothing shows up?\nA tree itself has no history, that\u0027s why git log cannot tell anything. Usually several commits point to the same tree (or subtree).\n\nSo if you:\n$ git cat-file commit HEAD\ntree c82828d136e7a0459327079ab15afd0c555de2f5\nparent 83f447ccc94dc3a0998f62569933f909ec7b069f\nauthor Primiano Tucci \u003cprimiano@chromium.org\u003e 1487875575 +0000\ncommitter Primiano Tucci \u003cprimiano@chromium.org\u003e 1491853859 +0100\n... commit message\n\nand then you can \n$ git ls-tree c82828d136e7a0459327079ab15afd0c555de2f5\n100644 blob d35d1d1b121364d6216a032404864b50114045ca\t.eslintignore\n100644 blob 5b1122e8b7debbf33bbc7ffc80f334591524a722\tWATCHLISTS\n040000 tree f85972d0a80dbc0c7c770a7ee31df09661995b01\tbin\n\nSo git commit-tree is essentially a way to build up a commit object form a given tree, a given parent and a given commit message. The object you get returned from  commit-tree is a commit object. By itself is a loose object, as in, nothing refers to that (but you can git log on that one). update-ref is a way to gc-root it into a branch.",
+      "parentUuid": "c0b9ad53_b55c370a",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 31
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b75f9ca3_0d8f3ccc",
         "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
         "patchSetId": 9
@@ -425,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "8b2e1418_68e71699",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/driver.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-11T10:02:02Z",
+      "side": 1,
+      "message": "Ah right. sg",
+      "parentUuid": "af45b2b5_52cb3882",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 36
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c045abc_624ba49c",
         "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/merge.py",
         "patchSetId": 9
@@ -460,6 +580,30 @@
       "side": 1,
       "message": "I\u0027m not really sure: I was emulating the logic from the clang format merge driver (which effectively does this by clang-formatting the common ancestor and the others file--which is already formatted, AFAIK).",
       "parentUuid": "4c045abc_624ba49c",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "8c2228ac755b07acb5613fbd332c8ec655d2afaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe9f287_0fe8a507",
+        "filename": "tools/blink_rename_merge_helper/pylib/blink_rename_merge_helper/merge.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-04-11T10:02:02Z",
+      "side": 1,
+      "message": "right so the old logic was formatting all three sides, the rationale was:\nwe will pretend that both the common ancestor, the developer own changes and the upstream changes were formatted, so the developer is left with resolving conflicts (if any left) that arise from upstream changes unrelated with the format (adding a new arugment etc)\n\nNow, let me try to think loud, let\u0027s consider firs the case when there are no other conflicts other than the ones introduced by the rename:\n\nSay that the original file was like:\n-----\n...\nbool isValid;\nint x;\nint y;\n...\n-----\n\nand the change the developer made locally is:\n-----\n...\nbool isValid;\nint x;\nint y;\n...\n+++ int newField;\n-----\nand assume that newField is far away enough so that it doesn\u0027t conflict because not close enough to other hunks.\n\nUpstream code, after your mega refactor looks like:\n-----\n...\nbool valid;  // dropped the \"is\"\nint x;\nint y;\n...\n-----\n\nThe 3way merge driver should kick in at this point because there are changes on both sides.\nyour new \"current\" now looks like:\n-----\n...\nbool valid;  \u003c--\nint x;\nint y;\n...\nint new_field;  \u003c--\n-----\n\nand now you are saying that base\u003dupstream, so both of them would be:\n-----\n...\nbool valid;  // dropped the \"is\"\nint x;\nint y;\n...\n-----\n\nSo, now you are asking 3way merge to resolve just:\n+++ int new_field;\n\nOkay, I see, this works in this case.\n\n\n-----------------\n PROBLEM\n-----------------\nThe problem I see is that as new code lands, upstream will have changes on the same lines and the merge driver will silently eat upstream changes.\n\nw.r.t. the example above, say that in the meantime upstream becomes:\n-----\n...\nbool valid;  // dropped the \"is\"\nint x;\nint y;\n...\nbool new_upstream_field;  // Say that this is where the developer added its |new_field| in their branch\n-----\n\nnow when you invoke the 3way merge the situation will look like:\nbase (which you made \u003d\u003d upstream):\n-----\n...\nbool valid;  // dropped the \"is\"\nint x;\nint y;\n...\nbool new_upstream_field;\n-----\n\ncurrent:\n-----\n...\nbool valid;  // dropped the \"is\"\nint x;\nint y;\n...\nint new_field;  // this was added by the developer in their local branch being updated\n-----\n\nAt this point merge-file will just silently eat \"new_upstream_field\" because you remove the information that makes it understand that was newly introduced upstream, and will silently replace it with |new_field| without prompting the user for a conflict. :/",
+      "parentUuid": "780f8eed_1353fb28",
       "range": {
         "startLine": 30,
         "startChar": 6,
