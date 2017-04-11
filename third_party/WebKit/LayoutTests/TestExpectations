@@ -2674,3 +2674,8 @@ crbug.com/707689 shapedetection/detection-HTMLCanvasElement.html [ Skip ]
 crbug.com/682753 fast/canvas-experimental [ Skip ]
 
 crbug.com/708934 fast/backgrounds/background-image-relative-url-in-iframe.html [ Failure Pass ]
+crbug.com/31666 external/wpt/workers/nested_worker.worker.html [ Skip ]
+
+# From enabling .any.js tests
+crbug.com/709227 external/wpt/background-fetch/interfaces.worker.html [ Skip ]
+crbug.com/709227 external/wpt/user-timing/invoke_with_timing_attributes.worker.html [ Skip ]
