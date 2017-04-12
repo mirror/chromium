@@ -26,6 +26,8 @@
 
 #include "core/layout/LayoutBox.h"
 
+#include <math.h>
+#include <algorithm>
 #include "core/dom/Document.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/frame/FrameView.h"
@@ -66,9 +68,7 @@
 #include "platform/geometry/DoubleRect.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/FloatRoundedRect.h"
-#include "wtf/PtrUtil.h"
-#include <algorithm>
-#include <math.h>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -485,7 +485,7 @@ void LayoutBox::UpdateFromStyle() {
   SetHasReflection(style_to_use.BoxReflect());
 }
 
-void LayoutBox::GetLayout() {
+void LayoutBox::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
 
@@ -726,7 +726,7 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
 
 void LayoutBox::AbsoluteRects(Vector<IntRect>& rects,
                               const LayoutPoint& accumulated_offset) const {
-  rects.push_back(PixelSnappedIntRect(accumulated_offset, size()));
+  rects.push_back(PixelSnappedIntRect(accumulated_offset, Size()));
 }
 
 void LayoutBox::AbsoluteQuads(Vector<FloatQuad>& quads,
@@ -837,9 +837,9 @@ void LayoutBox::SetLocationAndUpdateOverflowControlsIfNeeded(
     const LayoutPoint& location) {
   if (HasOverflowClip()) {
     IntSize old_pixel_snapped_border_rect_size =
-        PixelSnappedBorderBoxRect().size();
+        PixelSnappedBorderBoxRect().Size();
     SetLocation(location);
-    if (PixelSnappedBorderBoxRect().size() !=
+    if (PixelSnappedBorderBoxRect().Size() !=
         old_pixel_snapped_border_rect_size) {
       Layer()->UpdateSizeAndScrollingAfterLayout();
     }
@@ -937,7 +937,7 @@ LayoutRect LayoutBox::BackgroundRect(BackgroundRectType rect_type) const {
 void LayoutBox::AddOutlineRects(Vector<LayoutRect>& rects,
                                 const LayoutPoint& additional_offset,
                                 IncludeBlockVisualOverflowOrNot) const {
-  rects.push_back(LayoutRect(additional_offset, size()));
+  rects.push_back(LayoutRect(additional_offset, Size()));
 }
 
 bool LayoutBox::CanResize() const {
@@ -959,8 +959,8 @@ void LayoutBox::AddLayerHitTestRects(LayerHitTestRects& layer_rects,
 
 void LayoutBox::ComputeSelfHitTestRects(Vector<LayoutRect>& rects,
                                         const LayoutPoint& layer_offset) const {
-  if (!size().IsEmpty())
-    rects.push_back(LayoutRect(layer_offset, size()));
+  if (!Size().IsEmpty())
+    rects.push_back(LayoutRect(layer_offset, Size()));
 }
 
 int LayoutBox::VerticalScrollbarWidth() const {
@@ -1540,7 +1540,7 @@ bool LayoutBox::NodeAtPoint(HitTestResult& result,
             adjusted_location, kExcludeOverlayScrollbarSizeForHitTesting))) {
       skip_children = true;
     } else if (Style()->HasBorderRadius()) {
-      LayoutRect bounds_rect(adjusted_location, size());
+      LayoutRect bounds_rect(adjusted_location, Size());
       skip_children = !location_in_container.Intersects(
           Style()->GetRoundedInnerBorderFor(bounds_rect));
     }
@@ -1560,7 +1560,7 @@ bool LayoutBox::NodeAtPoint(HitTestResult& result,
   // Now hit test ourselves.
   if (should_hit_test_self &&
       VisibleToHitTestRequest(result.GetHitTestRequest())) {
-    LayoutRect bounds_rect(adjusted_location, size());
+    LayoutRect bounds_rect(adjusted_location, Size());
     if (location_in_container.Intersects(bounds_rect)) {
       UpdateHitTestResult(result,
                           FlipForWritingMode(location_in_container.Point() -
@@ -1675,7 +1675,7 @@ static bool IsCandidateForOpaquenessTest(const LayoutBox& child_box) {
   if (child_style.Visibility() != EVisibility::kVisible ||
       child_style.ShapeOutside())
     return false;
-  if (child_box.size().IsZero())
+  if (child_box.Size().IsZero())
     return false;
   if (PaintLayer* child_layer = child_box.Layer()) {
     // FIXME: perhaps this could be less conservative?
@@ -1718,8 +1718,8 @@ bool LayoutBox::ForegroundIsKnownToBeOpaqueInRect(
         return false;
       continue;
     }
-    if (child_local_rect.MaxY() > child_box->size().Height() ||
-        child_local_rect.MaxX() > child_box->size().Width())
+    if (child_local_rect.MaxY() > child_box->Size().Height() ||
+        child_local_rect.MaxX() > child_box->Size().Width())
       continue;
     if (child_box->BackgroundIsKnownToBeOpaqueInRect(child_local_rect))
       return true;
@@ -1916,7 +1916,7 @@ LayoutRect LayoutBox::OverflowClipRect(
   clip_rect.SetLocation(location + clip_rect.Location() +
                         LayoutSize(BorderLeft(), BorderTop()));
   clip_rect.SetSize(
-      clip_rect.size() -
+      clip_rect.Size() -
       LayoutSize(BorderLeft() + BorderRight(), BorderTop() + BorderBottom()));
 
   if (HasOverflowClip())
@@ -1947,7 +1947,7 @@ void LayoutBox::ExcludeScrollbars(
 LayoutRect LayoutBox::ClipRect(const LayoutPoint& location) const {
   LayoutRect border_box_rect = this->BorderBoxRect();
   LayoutRect clip_rect =
-      LayoutRect(border_box_rect.Location() + location, border_box_rect.size());
+      LayoutRect(border_box_rect.Location() + location, border_box_rect.Size());
 
   if (!Style()->ClipLeft().IsAuto()) {
     LayoutUnit c = ValueForLength(Style()->ClipLeft(), border_box_rect.Width());
@@ -1957,7 +1957,7 @@ LayoutRect LayoutBox::ClipRect(const LayoutPoint& location) const {
 
   if (!Style()->ClipRight().IsAuto())
     clip_rect.Contract(
-        size().Width() - ValueForLength(Style()->ClipRight(), size().Width()),
+        Size().Width() - ValueForLength(Style()->ClipRight(), Size().Width()),
         LayoutUnit());
 
   if (!Style()->ClipTop().IsAuto()) {
@@ -1966,10 +1966,11 @@ LayoutRect LayoutBox::ClipRect(const LayoutPoint& location) const {
     clip_rect.Contract(LayoutUnit(), c);
   }
 
-  if (!Style()->ClipBottom().IsAuto())
+  if (!Style()->ClipBottom().IsAuto()) {
     clip_rect.Contract(LayoutUnit(),
-                       size().Height() - ValueForLength(Style()->ClipBottom(),
-                                                        size().Height()));
+                       Size().Height() - ValueForLength(Style()->ClipBottom(),
+                                                        Size().Height()));
+  }
 
   return clip_rect;
 }
@@ -2611,7 +2612,7 @@ static float GetMaxWidthListMarker(const LayoutBox* layout_object) {
       LayoutBox* item_marker = ToLayoutBox(item_child);
       // Make sure to compute the autosized width.
       if (item_marker->NeedsLayout())
-        item_marker->GetLayout();
+        item_marker->UpdateLayout();
       max_width = std::max<float>(
           max_width, ToLayoutListMarker(item_marker)->LogicalWidth().ToFloat());
       break;
@@ -3768,7 +3769,7 @@ LayoutUnit LayoutBox::ContainingBlockLogicalWidthForPositioned(
       // set yet.
       LayoutSize viewport_size(
           frame_view->LayoutViewportScrollableArea()->ExcludeScrollbars(
-              frame_view->FrameRect().size()));
+              frame_view->FrameRect().Size()));
       return LayoutUnit(containing_block->IsHorizontalWritingMode()
                             ? viewport_size.Width()
                             : viewport_size.Height());
@@ -3830,7 +3831,7 @@ LayoutUnit LayoutBox::ContainingBlockLogicalHeightForPositioned(
       // set yet.
       LayoutSize viewport_size(
           frame_view->LayoutViewportScrollableArea()->ExcludeScrollbars(
-              frame_view->FrameRect().size()));
+              frame_view->FrameRect().Size()));
       return containing_block->IsHorizontalWritingMode()
                  ? viewport_size.Height()
                  : viewport_size.Width();
@@ -4722,12 +4723,12 @@ LayoutRect LayoutBox::LocalCaretRect(InlineBox* box,
   // FIXME: Paint the carets inside empty blocks differently than the carets
   // before/after elements.
   LayoutUnit caret_width = GetFrameView()->CaretWidth();
-  LayoutRect rect(Location(), LayoutSize(caret_width, size().Height()));
+  LayoutRect rect(Location(), LayoutSize(caret_width, Size().Height()));
   bool ltr =
       box ? box->IsLeftToRightDirection() : Style()->IsLeftToRightDirection();
 
   if ((!caret_offset) ^ ltr)
-    rect.Move(LayoutSize(size().Width() - caret_width, LayoutUnit()));
+    rect.Move(LayoutSize(Size().Width() - caret_width, LayoutUnit()));
 
   if (box) {
     RootInlineBox& root_box = box->Root();
@@ -4752,7 +4753,7 @@ LayoutRect LayoutBox::LocalCaretRect(InlineBox* box,
     rect.SetHeight(font_height);
 
   if (extra_width_to_end_of_line)
-    *extra_width_to_end_of_line = Location().X() + size().Width() - rect.MaxX();
+    *extra_width_to_end_of_line = Location().X() + Size().Width() - rect.MaxX();
 
   // Move to local coords
   rect.MoveBy(-Location());
@@ -4782,8 +4783,8 @@ PositionWithAffinity LayoutBox::PositionForPoint(const LayoutPoint& point) {
                         : Position());
 
   if (IsTable() && NonPseudoNode()) {
-    LayoutUnit right = size().Width() - VerticalScrollbarWidth();
-    LayoutUnit bottom = size().Height() - HorizontalScrollbarHeight();
+    LayoutUnit right = Size().Width() - VerticalScrollbarWidth();
+    LayoutUnit bottom = Size().Height() - HorizontalScrollbarHeight();
 
     if (point.X() < 0 || point.X() > right || point.Y() < 0 ||
         point.Y() > bottom) {
@@ -5039,12 +5040,12 @@ LayoutRectOutsets LayoutBox::ComputeVisualEffectOverflowOutsets() {
     AddOutlineRects(outline_rects, LayoutPoint(),
                     OutlineRectsShouldIncludeBlockVisualOverflow());
     LayoutRect rect = UnionRectEvenIfEmpty(outline_rects);
-    SetOutlineMayBeAffectedByDescendants(rect.size() != size());
+    SetOutlineMayBeAffectedByDescendants(rect.Size() != Size());
 
     int outline_outset = Style()->OutlineOutsetExtent();
     top = std::max(top, -rect.Y() + outline_outset);
-    right = std::max(right, rect.MaxX() - size().Width() + outline_outset);
-    bottom = std::max(bottom, rect.MaxY() - size().Height() + outline_outset);
+    right = std::max(right, rect.MaxX() - Size().Width() + outline_outset);
+    bottom = std::max(bottom, rect.MaxY() - Size().Height() + outline_outset);
     left = std::max(left, -rect.X() + outline_outset);
   }
 
@@ -5236,9 +5237,10 @@ LayoutBox::PaginationBreakability LayoutBox::GetPaginationBreakability() const {
 LayoutUnit LayoutBox::LineHeight(bool /*firstLine*/,
                                  LineDirectionMode direction,
                                  LinePositionMode /*linePositionMode*/) const {
-  if (IsAtomicInlineLevel())
-    return direction == kHorizontalLine ? MarginHeight() + size().Height()
-                                        : MarginWidth() + size().Width();
+  if (IsAtomicInlineLevel()) {
+    return direction == kHorizontalLine ? MarginHeight() + Size().Height()
+                                        : MarginWidth() + Size().Width();
+  }
   return LayoutUnit();
 }
 
@@ -5250,8 +5252,8 @@ int LayoutBox::BaselinePosition(FontBaseline baseline_type,
   DCHECK_EQ(line_position_mode, kPositionOnContainingLine);
   if (IsAtomicInlineLevel()) {
     int result = direction == kHorizontalLine
-                     ? RoundToInt(MarginHeight() + size().Height())
-                     : RoundToInt(MarginWidth() + size().Width());
+                     ? RoundToInt(MarginHeight() + Size().Height())
+                     : RoundToInt(MarginWidth() + Size().Width());
     if (baseline_type == kAlphabeticBaseline)
       return result;
     return result - result / 2;
@@ -5293,7 +5295,7 @@ LayoutRect LayoutBox::VisualOverflowRectForPropagation(
   // along that axis.
   if (IsFlippedBlocksWritingMode(Style()->GetWritingMode()) ||
       IsFlippedBlocksWritingMode(parent_style.GetWritingMode()))
-    rect.SetX(size().Width() - rect.MaxX());
+    rect.SetX(Size().Width() - rect.MaxX());
 
   return rect;
 }
@@ -5349,7 +5351,7 @@ LayoutRect LayoutBox::LayoutOverflowRectForPropagation(
   // along that axis.
   if (IsFlippedBlocksWritingMode(Style()->GetWritingMode()) ||
       IsFlippedBlocksWritingMode(parent_style.GetWritingMode()))
-    rect.SetX(size().Width() - rect.MaxX());
+    rect.SetX(Size().Width() - rect.MaxX());
 
   return rect;
 }
@@ -5373,8 +5375,8 @@ LayoutRect LayoutBox::NoOverflowRect() const {
   LayoutUnit top(BorderTop());
   LayoutUnit right(BorderRight());
   LayoutUnit bottom(BorderBottom());
-  LayoutRect rect(left, top, size().Width() - left - right,
-                  size().Height() - top - bottom);
+  LayoutRect rect(left, top, Size().Width() - left - right,
+                  Size().Height() - top - bottom);
   FlipForWritingMode(rect);
   // Subtract space occupied by scrollbars. Order is important here: first flip,
   // then subtract scrollbars. This may seem backwards and weird, since one
@@ -5418,7 +5420,7 @@ LayoutPoint LayoutBox::FlipForWritingModeForChild(
 
   // The child is going to add in its x(), so we have to make sure it ends up in
   // the right place.
-  return LayoutPoint(point.X() + size().Width() - child->size().Width() -
+  return LayoutPoint(point.X() + Size().Width() - child->Size().Width() -
                          (2 * child->Location().X()),
                      point.Y());
 }
@@ -5900,7 +5902,7 @@ void LayoutBox::MutableForPainting::
     SavePreviousContentBoxSizeAndLayoutOverflowRect() {
   auto& rare_data = GetLayoutBox().EnsureRareData();
   rare_data.has_previous_content_box_size_and_layout_overflow_rect_ = true;
-  rare_data.previous_content_box_size_ = GetLayoutBox().ContentBoxRect().size();
+  rare_data.previous_content_box_size_ = GetLayoutBox().ContentBoxRect().Size();
   rare_data.previous_layout_overflow_rect_ =
       GetLayoutBox().LayoutOverflowRect();
 }

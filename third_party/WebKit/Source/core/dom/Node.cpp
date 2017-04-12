@@ -102,11 +102,11 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
-#include "wtf/HashSet.h"
-#include "wtf/Vector.h"
-#include "wtf/allocator/Partitions.h"
-#include "wtf/text/CString.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/allocator/Partitions.h"
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
@@ -1288,7 +1288,7 @@ const AtomicString& Node::lookupNamespaceURI(
   }
 }
 
-String Node::textContent(bool convert_b_rs_to_newlines) const {
+String Node::textContent(bool convert_brs_to_newlines) const {
   // This covers ProcessingInstruction and Comment that should return their
   // value when .textContent is accessed on them, but should be ignored when
   // iterated over as a descendant of a ContainerNode.
@@ -1306,7 +1306,7 @@ String Node::textContent(bool convert_b_rs_to_newlines) const {
 
   StringBuilder content;
   for (const Node& node : NodeTraversal::InclusiveDescendantsOf(*this)) {
-    if (isHTMLBRElement(node) && convert_b_rs_to_newlines) {
+    if (isHTMLBRElement(node) && convert_brs_to_newlines) {
       content.Append('\n');
     } else if (node.IsTextNode()) {
       content.Append(ToText(node).data());
@@ -2347,8 +2347,12 @@ HTMLSlotElement* Node::assignedSlotForBinding() {
   return nullptr;
 }
 
-void Node::SetFocused(bool flag) {
+void Node::SetFocused(bool flag, WebFocusType focus_type) {
   GetDocument().UserActionElements().SetFocused(this, flag);
+}
+
+void Node::SetHasFocusWithin(bool flag) {
+  GetDocument().UserActionElements().SetHasFocusWithin(this, flag);
 }
 
 void Node::SetActive(bool flag) {
@@ -2386,6 +2390,11 @@ bool Node::IsUserActionElementHovered() const {
 bool Node::IsUserActionElementFocused() const {
   DCHECK(IsUserActionElement());
   return GetDocument().UserActionElements().IsFocused(this);
+}
+
+bool Node::IsUserActionElementHasFocusWithin() const {
+  DCHECK(IsUserActionElement());
+  return GetDocument().UserActionElements().HasFocusWithin(this);
 }
 
 void Node::SetCustomElementState(CustomElementState new_state) {

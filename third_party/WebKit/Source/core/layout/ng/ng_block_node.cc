@@ -53,7 +53,7 @@ void FragmentPositionUpdated(const NGPhysicalFragment& fragment) {
   // NGLayout flips X location for LegacyLayout compatibility.
   LayoutBlock* containing_block = layout_box->ContainingBlock();
   if (containing_block->StyleRef().IsFlippedBlocksWritingMode()) {
-    LayoutUnit container_width = containing_block->size().Width();
+    LayoutUnit container_width = containing_block->Size().Width();
     layout_box->SetX(container_width - fragment.LeftOffset() -
                      fragment.Width());
   } else {
@@ -350,7 +350,7 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
   }
 
   if (layout_box_->IsLayoutNGBlockFlow() && layout_box_->NeedsLayout()) {
-    ToLayoutNGBlockFlow(layout_box_)->LayoutBlockFlow::GetLayoutBlock(true);
+    ToLayoutNGBlockFlow(layout_box_)->LayoutBlockFlow::UpdateBlockLayout(true);
   } else {
     layout_box_->ForceLayout();
   }

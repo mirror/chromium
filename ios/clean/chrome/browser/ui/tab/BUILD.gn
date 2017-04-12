@@ -17,6 +17,7 @@ source_set("tab") {
     "//ios/clean/chrome/browser/ui/actions",
     "//ios/clean/chrome/browser/ui/animators",
     "//ios/clean/chrome/browser/ui/commands",
+    "//ios/clean/chrome/browser/ui/find_in_page",
     "//ios/clean/chrome/browser/ui/ntp",
     "//ios/clean/chrome/browser/ui/tab_strip",
     "//ios/clean/chrome/browser/ui/toolbar",

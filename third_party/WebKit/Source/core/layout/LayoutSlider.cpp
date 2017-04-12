@@ -25,7 +25,7 @@
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/html/shadow/SliderThumbElement.h"
 #include "core/layout/LayoutSliderThumb.h"
-#include "wtf/MathExtras.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
@@ -45,7 +45,7 @@ int LayoutSlider::BaselinePosition(FontBaseline,
                                    LinePositionMode line_position_mode) const {
   DCHECK_EQ(line_position_mode, kPositionOnContainingLine);
   // FIXME: Patch this function for writing-mode.
-  return (size().Height() + MarginTop()).ToInt();
+  return (Size().Height() + MarginTop()).ToInt();
 }
 
 void LayoutSlider::ComputeIntrinsicLogicalWidths(
@@ -63,14 +63,14 @@ inline SliderThumbElement* LayoutSlider::GetSliderThumbElement() const {
           ShadowElementNames::SliderThumb()));
 }
 
-void LayoutSlider::GetLayout() {
+void LayoutSlider::UpdateLayout() {
   // FIXME: Find a way to cascade appearance.
   // http://webkit.org/b/62535
   LayoutBox* thumb_box = GetSliderThumbElement()->GetLayoutBox();
   if (thumb_box && thumb_box->IsSliderThumb())
     ToLayoutSliderThumb(thumb_box)->UpdateAppearance(StyleRef());
 
-  LayoutFlexibleBox::GetLayout();
+  LayoutFlexibleBox::UpdateLayout();
 }
 
 bool LayoutSlider::InDragMode() const {

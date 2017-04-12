@@ -28,8 +28,8 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/TextRunConstructor.h"
 #include "platform/LengthFunctions.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -261,7 +261,7 @@ class CORE_EXPORT LayoutText : public LayoutObject {
 
   // See the class comment as to why we shouldn't call this function directly.
   void Paint(const PaintInfo&, const LayoutPoint&) const final { NOTREACHED(); }
-  void GetLayout() final { NOTREACHED(); }
+  void UpdateLayout() final { NOTREACHED(); }
   bool NodeAtPoint(HitTestResult&,
                    const HitTestLocation&,
                    const LayoutPoint&,

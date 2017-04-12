@@ -28,9 +28,9 @@
 #include "core/html/HTMLOListElement.h"
 #include "core/layout/LayoutListMarker.h"
 #include "core/paint/ListItemPainter.h"
-#include "wtf/SaturatedArithmetic.h"
-#include "wtf/StdLibExtras.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/SaturatedArithmetic.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
@@ -437,7 +437,7 @@ void LayoutListItem::PositionListMarker() {
     if (adjust_overflow) {
       LayoutRect marker_rect(
           LayoutPoint(marker_logical_left + line_offset, block_offset),
-          marker_->size());
+          marker_->Size());
       if (!Style()->IsHorizontalWritingMode())
         marker_rect = marker_rect.TransposedRect();
       LayoutBox* o = marker_;

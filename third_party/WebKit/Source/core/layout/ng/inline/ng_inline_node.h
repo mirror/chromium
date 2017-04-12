@@ -12,7 +12,7 @@
 #include "platform/fonts/shaping/ShapeResult.h"
 #include "platform/heap/Handle.h"
 #include "platform/text/TextDirection.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 #include <unicode/ubidi.h>
 #include <unicode/uscript.h>
@@ -48,6 +48,9 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   // box. min-content is the inline size when lines wrap at every break
   // opportunity, and max-content is when lines do not wrap at all.
   MinMaxContentSize ComputeMinMaxContentSize() override;
+
+  // Copy fragment data of all lines to LayoutBlockFlow.
+  void CopyFragmentDataToLayoutBox(const NGConstraintSpace&, NGLayoutResult*);
 
   // Instruct to re-compute |PrepareLayout| on the next layout.
   void InvalidatePrepareLayout();
@@ -145,7 +148,7 @@ class NGLayoutInlineItem {
     return bidi_level_ & 1 ? TextDirection::kRtl : TextDirection::kLtr;
   }
   UBiDiLevel BidiLevel() const { return bidi_level_; }
-  UScriptCode Script() const { return script_; }
+  UScriptCode GetScript() const { return script_; }
   const ComputedStyle* Style() const { return style_; }
   LayoutObject* GetLayoutObject() const { return layout_object_; }
 

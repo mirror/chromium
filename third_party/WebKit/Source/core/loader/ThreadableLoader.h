@@ -31,13 +31,13 @@
 #ifndef ThreadableLoader_h
 #define ThreadableLoader_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "platform/CrossThreadCopier.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -124,7 +124,7 @@ struct CrossThreadCopier<ThreadableLoaderOptions> {
 // - ThreadableLoaderOptions argument configures this ThreadableLoader's
 //   behavior.
 //
-// - ResourceLoaderOptions argument will be passed to the FetchRequest
+// - ResourceLoaderOptions argument will be passed to the FetchParameters
 //   that this ThreadableLoader creates. It can be altered e.g. when
 //   redirect happens.
 class CORE_EXPORT ThreadableLoader

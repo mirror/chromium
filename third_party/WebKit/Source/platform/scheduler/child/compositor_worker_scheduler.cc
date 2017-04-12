@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "public/platform/scheduler/child/compositor_worker_scheduler.h"
+#include "platform/scheduler/child/compositor_worker_scheduler.h"
 
 #include <utility>
 
@@ -116,6 +116,8 @@ class CompositorWorkerTaskRunnerWrapper : public TaskQueue {
   void SetBlameContext(base::trace_event::BlameContext*) override {
     NOTREACHED();
   }
+
+  void SetObserver(Observer* observer) override { NOTREACHED(); }
 
  private:
   ~CompositorWorkerTaskRunnerWrapper() override {}

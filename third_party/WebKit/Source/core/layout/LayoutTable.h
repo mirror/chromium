@@ -26,12 +26,12 @@
 #ifndef LayoutTable_h
 #define LayoutTable_h
 
+#include <memory>
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBlock.h"
 #include "core/style/CollapsedBorderValue.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -481,7 +481,7 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   }
 
   void PaintObject(const PaintInfo&, const LayoutPoint&) const override;
-  void GetLayout() override;
+  void UpdateLayout() override;
   void ComputeIntrinsicLogicalWidths(LayoutUnit& min_width,
                                      LayoutUnit& max_width) const override;
   void ComputePreferredLogicalWidths() override;

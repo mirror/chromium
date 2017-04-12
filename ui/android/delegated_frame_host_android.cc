@@ -160,7 +160,9 @@ void DelegatedFrameHostAndroid::DetachFromCompositor() {
   registered_parent_compositor_ = nullptr;
 }
 
-void DelegatedFrameHostAndroid::DidReceiveCompositorFrameAck() {
+void DelegatedFrameHostAndroid::DidReceiveCompositorFrameAck(
+    const cc::ReturnedResourceArray& resources) {
+  client_->ReclaimResources(resources);
   client_->DidReceiveCompositorFrameAck();
 }
 
@@ -188,11 +190,13 @@ void DelegatedFrameHostAndroid::OnDidFinishFrame(const cc::BeginFrameAck& ack) {
 }
 
 void DelegatedFrameHostAndroid::CreateNewCompositorFrameSinkSupport() {
+  constexpr bool is_root = false;
+  constexpr bool handles_frame_sink_id_invalidation = false;
+  constexpr bool needs_sync_points = true;
   support_.reset();
-  support_ = base::MakeUnique<cc::CompositorFrameSinkSupport>(
-      this, surface_manager_, frame_sink_id_, false /* is_root */,
-      false /* handles_frame_sink_id_invalidation */,
-      true /* needs_sync_points */);
+  support_ = cc::CompositorFrameSinkSupport::Create(
+      this, surface_manager_, frame_sink_id_, is_root,
+      handles_frame_sink_id_invalidation, needs_sync_points);
 }
 
 cc::SurfaceId DelegatedFrameHostAndroid::SurfaceId() const {

@@ -35,21 +35,21 @@ FetchRequestData* CreateCopyOfFetchRequestDataForFetch(
   request->SetUnsafeRequestFlag(true);
   // FIXME: Set client.
   DOMWrapperWorld& world = script_state->World();
-  if (world.IsIsolatedWorld())
+  if (world.IsIsolatedWorld()) {
     request->SetOrigin(world.IsolatedWorldSecurityOrigin());
-  else
+  } else {
     request->SetOrigin(
-        script_state->GetExecutionContext()->GetSecurityOrigin());
+        ExecutionContext::From(script_state)->GetSecurityOrigin());
+  }
   // FIXME: Set ForceOriginHeaderFlag.
   request->SetSameOriginDataURLFlag(true);
   request->SetReferrer(original->GetReferrer());
   request->SetMode(original->Mode());
   request->SetCredentials(original->Credentials());
+  request->SetCacheMode(original->CacheMode());
   request->SetAttachedCredential(original->AttachedCredential());
   request->SetRedirect(original->Redirect());
   request->SetIntegrity(original->Integrity());
-  // FIXME: Set cache mode.
-  // TODO(yhirano): Set redirect mode.
   return request;
 }
 
@@ -76,7 +76,7 @@ Request* Request::CreateRequestWithRequestOrString(
   // and a new request otherwise."
 
   RefPtr<SecurityOrigin> origin =
-      script_state->GetExecutionContext()->GetSecurityOrigin();
+      ExecutionContext::From(script_state)->GetSecurityOrigin();
 
   // TODO(yhirano): Implement the following steps:
   // - "Let |window| be client."
@@ -110,7 +110,7 @@ Request* Request::CreateRequestWithRequestOrString(
   if (!input_request) {
     // "Let |parsedURL| be the result of parsing |input| with |baseURL|."
     KURL parsed_url =
-        script_state->GetExecutionContext()->CompleteURL(input_string);
+        ExecutionContext::From(script_state)->CompleteURL(input_string);
     // "If |parsedURL| is failure, throw a TypeError."
     if (!parsed_url.IsValid()) {
       exception_state.ThrowTypeError("Failed to parse URL from " +
@@ -179,8 +179,8 @@ Request* Request::CreateRequestWithRequestOrString(
     } else {
       // "Let |parsedReferrer| be the result of parsing |referrer| with
       // |baseURL|."
-      KURL parsed_referrer = script_state->GetExecutionContext()->CompleteURL(
-          init.referrer.referrer);
+      KURL parsed_referrer = ExecutionContext::From(script_state)
+                                 ->CompleteURL(init.referrer.referrer);
       if (!parsed_referrer.IsValid()) {
         // "If |parsedReferrer| is failure, throw a TypeError."
         exception_state.ThrowTypeError("Referrer '" + init.referrer.referrer +
@@ -260,9 +260,20 @@ Request* Request::CreateRequestWithRequestOrString(
       request->SetCredentials(WebURLRequest::kFetchCredentialsModeOmit);
   }
 
-  // TODO(yhirano): Implement the following step:
-  //   "If |init|'s cache member is present, set |request|'s cache mode to
-  //   it."
+  // "If |init|'s cache member is present, set |request|'s cache mode to it."
+  if (init.cache == "default") {
+    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeDefault);
+  } else if (init.cache == "no-store") {
+    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeNoStore);
+  } else if (init.cache == "reload") {
+    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeReload);
+  } else if (init.cache == "no-cache") {
+    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeNoCache);
+  } else if (init.cache == "force-cache") {
+    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeForceCache);
+  } else if (init.cache == "only-if-cached") {
+    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeOnlyIfCached);
+  }
 
   // "If |init|'s redirect member is present, set |request|'s redirect mode
   // to it."
@@ -442,7 +453,7 @@ Request* Request::Create(ScriptState* script_state,
                          const String& input,
                          const Dictionary& init,
                          ExceptionState& exception_state) {
-  RequestInit request_init(script_state->GetExecutionContext(), init,
+  RequestInit request_init(ExecutionContext::From(script_state), init,
                            exception_state);
   return CreateRequestWithRequestOrString(script_state, nullptr, input,
                                           request_init, exception_state);
@@ -458,7 +469,7 @@ Request* Request::Create(ScriptState* script_state,
                          Request* input,
                          const Dictionary& init,
                          ExceptionState& exception_state) {
-  RequestInit request_init(script_state->GetExecutionContext(), init,
+  RequestInit request_init(ExecutionContext::From(script_state), init,
                            exception_state);
   return CreateRequestWithRequestOrString(script_state, input, String(),
                                           request_init, exception_state);
@@ -478,7 +489,7 @@ Request* Request::Create(ScriptState* script_state,
 Request::Request(ScriptState* script_state,
                  FetchRequestData* request,
                  Headers* headers)
-    : Body(script_state->GetExecutionContext()),
+    : Body(ExecutionContext::From(script_state)),
       request_(request),
       headers_(headers) {
   RefreshBody(script_state);
@@ -639,6 +650,26 @@ String Request::credentials() const {
       return "password";
   }
   ASSERT_NOT_REACHED();
+  return "";
+}
+
+String Request::cache() const {
+  // "The cache attribute's getter must return request's cache mode."
+  switch (request_->CacheMode()) {
+    case WebURLRequest::kFetchRequestCacheModeDefault:
+      return "default";
+    case WebURLRequest::kFetchRequestCacheModeNoStore:
+      return "no-store";
+    case WebURLRequest::kFetchRequestCacheModeReload:
+      return "reload";
+    case WebURLRequest::kFetchRequestCacheModeNoCache:
+      return "no-cache";
+    case WebURLRequest::kFetchRequestCacheModeForceCache:
+      return "force-cache";
+    case WebURLRequest::kFetchRequestCacheModeOnlyIfCached:
+      return "only-if-cached";
+  }
+  NOTREACHED();
   return "";
 }
 

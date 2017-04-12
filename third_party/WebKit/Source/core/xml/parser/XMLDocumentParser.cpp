@@ -36,6 +36,7 @@
 #include "core/HTMLNames.h"
 #include "core/XMLNSNames.h"
 #include "core/dom/CDATASection.h"
+#include "core/dom/ClassicScript.h"
 #include "core/dom/Comment.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentFragment.h"
@@ -70,12 +71,12 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "wtf/AutoReset.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/StringExtras.h"
-#include "wtf/Threading.h"
-#include "wtf/Vector.h"
-#include "wtf/text/UTF8.h"
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/StringExtras.h"
+#include "platform/wtf/Threading.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/UTF8.h"
 
 namespace blink {
 
@@ -462,7 +463,7 @@ void XMLDocumentParser::NotifyFinished(Resource* unused_resource) {
               script_loader->WasCreatedDuringDocumentWrite());
     }
 
-    if (!script_loader->ExecuteScript(source_code))
+    if (!script_loader->ExecuteScript(ClassicScript::Create(source_code)))
       script_loader->DispatchErrorEvent();
     else
       script_loader->DispatchLoadEvent();
@@ -646,10 +647,10 @@ static void* OpenFunc(const char* uri) {
     Document* document = XMLDocumentParserScope::current_document_;
     XMLDocumentParserScope scope(0);
     // FIXME: We should restore the original global error handler as well.
-    FetchRequest request(ResourceRequest(url), FetchInitiatorTypeNames::xml,
-                         ResourceFetcher::DefaultResourceOptions());
+    FetchParameters params(ResourceRequest(url), FetchInitiatorTypeNames::xml,
+                           ResourceFetcher::DefaultResourceOptions());
     Resource* resource =
-        RawResource::FetchSynchronously(request, document->Fetcher());
+        RawResource::FetchSynchronously(params, document->Fetcher());
     if (resource && !resource->ErrorOccurred()) {
       data = resource->ResourceBuffer();
       final_url = resource->GetResponse().Url();
@@ -1118,9 +1119,9 @@ void XMLDocumentParser::EndElementNs() {
     // the libxml2 and Qt XMLDocumentParser implementations.
 
     if (script_loader->ReadyToBeParserExecuted()) {
-      if (!script_loader->ExecuteScript(
-              ScriptSourceCode(script_loader->ScriptContent(),
-                               GetDocument()->Url(), script_start_position_))) {
+      if (!script_loader->ExecuteScript(ClassicScript::Create(ScriptSourceCode(
+              script_loader->ScriptContent(), GetDocument()->Url(),
+              script_start_position_)))) {
         script_loader->DispatchErrorEvent();
         return;
       }

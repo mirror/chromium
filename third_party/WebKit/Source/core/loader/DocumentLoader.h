@@ -50,9 +50,9 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/SubstituteData.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
-#include "wtf/HashSet.h"
-#include "wtf/RefPtr.h"
 
 #include <memory>
 
@@ -196,7 +196,7 @@ class CORE_EXPORT DocumentLoader
   void DispatchLinkHeaderPreloads(ViewportDescriptionWrapper*,
                                   LinkLoader::MediaPreloadPolicy);
 
-  Resource* StartPreload(Resource::Type, FetchRequest&);
+  Resource* StartPreload(Resource::Type, FetchParameters&);
 
   void SetServiceWorkerNetworkProvider(
       std::unique_ptr<WebServiceWorkerNetworkProvider>);

@@ -298,7 +298,7 @@ void InitializeScriptFontMap(ScriptToFontMap& script_font_map) {
   }
 
   // Initialize the locale-dependent mapping from system locale.
-  UScriptCode han_script = LayoutLocale::GetSystem().ScriptForHan();
+  UScriptCode han_script = LayoutLocale::GetSystem().GetScriptForHan();
   DCHECK(han_script != USCRIPT_HAN);
   if (script_font_map[han_script].candidate_family_names) {
     script_font_map[USCRIPT_HAN].candidate_family_names =
@@ -451,7 +451,7 @@ const UChar* GetFontFamilyForScript(UScriptCode script,
 
   if (script == USCRIPT_INVALID_CODE)
     return 0;
-  ASSERT(script < USCRIPT_CODE_LIMIT);
+  DCHECK_LT(script, USCRIPT_CODE_LIMIT);
   if (generic == FontDescription::kMonospaceFamily) {
     const UChar* monospace_family = FindMonospaceFontForScript(script);
     if (monospace_family)
@@ -476,8 +476,8 @@ const UChar* GetFallbackFamily(UChar32 character,
                                UScriptCode* script_checked,
                                FontFallbackPriority fallback_priority,
                                SkFontMgr* font_manager) {
-  ASSERT(character);
-  ASSERT(font_manager);
+  DCHECK(character);
+  DCHECK(font_manager);
   UBlockCode block = fallback_priority == FontFallbackPriority::kEmojiEmoji
                          ? UBLOCK_EMOTICONS
                          : ublock_getCode(character);
@@ -505,7 +505,7 @@ const UChar* GetFallbackFamily(UChar32 character,
   if (script == USCRIPT_HAN) {
     if (const LayoutLocale* locale_for_han =
             LayoutLocale::LocaleForHan(content_locale))
-      script = locale_for_han->ScriptForHan();
+      script = locale_for_han->GetScriptForHan();
     // If still unknown, USCRIPT_HAN uses UI locale.
     // See initializeScriptFontMap().
   }

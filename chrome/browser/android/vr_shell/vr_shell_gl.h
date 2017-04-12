@@ -17,14 +17,11 @@
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/android/vr_shell/vr_controller_model.h"
 #include "device/vr/vr_service.mojom.h"
+#include "device/vr/vr_types.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"
 #include "ui/gfx/native_widget_types.h"
-
-namespace base {
-class ListValue;
-}
 
 namespace blink {
 class WebInputEvent;
@@ -43,19 +40,22 @@ struct MailboxHolder;
 
 namespace vr_shell {
 
+class FPSMeter;
 class MailboxToSurfaceBridge;
 class UiScene;
 class VrController;
 class VrShell;
 class VrShellRenderer;
-struct ContentRectangle;
+struct UiElement;
 
 struct WebVrBounds {
-  WebVrBounds(gvr::Rectf left, gvr::Rectf right, gvr::Sizei size)
+  WebVrBounds(const gfx::RectF& left,
+              const gfx::RectF& right,
+              const gfx::Size& size)
       : left_bounds(left), right_bounds(right), source_size(size) {}
-  gvr::Rectf left_bounds;
-  gvr::Rectf right_bounds;
-  gvr::Sizei source_size;
+  gfx::RectF left_bounds;
+  gfx::RectF right_bounds;
+  gfx::Size source_size;
 };
 
 // This class manages all GLThread owned objects and GL rendering for VrShell.
@@ -72,7 +72,8 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
             scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
             gvr_context* gvr_api,
             bool initially_web_vr,
-            bool reprojected_rendering);
+            bool reprojected_rendering,
+            UiScene* scene);
   ~VrShellGl() override;
 
   void Initialize();
@@ -83,7 +84,7 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void OnResume();
 
   void SetWebVrMode(bool enabled);
-  void CreateOrResizeWebVRSurface(const gvr::Sizei& size);
+  void CreateOrResizeWebVRSurface(const gfx::Size& size);
   void CreateContentSurface();
   void ContentBoundsChanged(int width, int height);
   void ContentPhysicalBoundsChanged(int width, int height);
@@ -94,11 +95,9 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void SetControllerModel(std::unique_ptr<VrControllerModel> model);
 
   void UpdateWebVRTextureBounds(int16_t frame_index,
-                                const gvr::Rectf& left_bounds,
-                                const gvr::Rectf& right_bounds,
-                                const gvr::Sizei& source_size);
-
-  void UpdateScene(std::unique_ptr<base::ListValue> commands);
+                                const gfx::RectF& left_bounds,
+                                const gfx::RectF& right_bounds,
+                                const gfx::Size& source_size);
 
   void UpdateVSyncInterval(int64_t timebase_nanos, double interval_seconds);
 
@@ -114,28 +113,28 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
   void DrawFrame(int16_t frame_index);
-  void DrawWorldElements(const gvr::Mat4f& head_pose);
+  void DrawWorldElements(const vr::Mat4f& head_pose);
   void DrawHeadLockedElements();
-  void DrawUiView(const gvr::Mat4f& head_pose,
-                  const std::vector<const ContentRectangle*>& elements,
-                  const gvr::Sizei& render_size,
+  void DrawUiView(const vr::Mat4f& head_pose,
+                  const std::vector<const UiElement*>& elements,
+                  const gfx::Size& render_size,
                   int viewport_offset,
                   bool draw_cursor);
-  void DrawElements(const gvr::Mat4f& view_proj_matrix,
-                    const std::vector<const ContentRectangle*>& elements);
-  std::vector<const ContentRectangle*> GetElementsInDrawOrder(
-      const gvr::Mat4f& view_matrix,
-      const std::vector<const ContentRectangle*>& elements);
-  void DrawCursor(const gvr::Mat4f& render_matrix);
-  void DrawController(const gvr::Mat4f& view_proj_matrix);
+  void DrawElements(const vr::Mat4f& view_proj_matrix,
+                    const std::vector<const UiElement*>& elements);
+  std::vector<const UiElement*> GetElementsInDrawOrder(
+      const vr::Mat4f& view_matrix,
+      const std::vector<const UiElement*>& elements);
+  void DrawCursor(const vr::Mat4f& render_matrix);
+  void DrawController(const vr::Mat4f& view_proj_matrix);
   bool ShouldDrawWebVr();
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
   void UpdateController();
-  void HandleControllerInput(const gvr::Vec3f& forward_vector);
+  void HandleControllerInput(const gfx::Vector3dF& forward_vector);
   void HandleControllerAppButtonActivity(
-      const gvr::Vec3f& controller_direction);
+      const gfx::Vector3dF& controller_direction);
   void SendEventsToTarget(InputTarget input_target, int pixel_x, int pixel_y);
   void SendGesture(InputTarget input_target,
                    std::unique_ptr<blink::WebInputEvent> event);
@@ -161,7 +160,7 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   // samplerExternalOES texture data for WebVR content image.
   int webvr_texture_id_ = 0;
 
-  std::unique_ptr<UiScene> scene_;
+  UiScene* scene_;
 
   scoped_refptr<gl::GLSurface> surface_;
   scoped_refptr<gl::GLContext> context_;
@@ -186,31 +185,31 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   std::unique_ptr<MailboxToSurfaceBridge> mailbox_bridge_;
 
   // Current sizes for the render buffers.
-  gvr::Sizei render_size_primary_;
-  gvr::Sizei render_size_headlocked_;
+  gfx::Size render_size_primary_;
+  gfx::Size render_size_headlocked_;
 
   // Intended render_size_primary_ for use by VrShell, so that it
   // can be restored after exiting WebVR mode.
-  gvr::Sizei render_size_vrshell_;
+  gfx::Size render_size_vrshell_;
 
   std::unique_ptr<VrShellRenderer> vr_shell_renderer_;
 
   bool touch_pending_ = false;
-  gvr::Quatf controller_quat_;
+  vr::Quatf controller_quat_;
 
-  gvr::Vec3f target_point_;
-  const ContentRectangle* target_element_ = nullptr;
+  gfx::Point3F target_point_;
+  const UiElement* target_element_ = nullptr;
   InputTarget current_input_target_ = InputTarget::NONE;
   InputTarget current_scroll_target = InputTarget::NONE;
   int ui_tex_css_width_ = 0;
   int ui_tex_css_height_ = 0;
   int content_tex_css_width_ = 0;
   int content_tex_css_height_ = 0;
-  gvr::Sizei content_tex_physical_size_ = {0, 0};
-  gvr::Sizei webvr_surface_size_ = {0, 0};
-  gvr::Sizei ui_tex_physical_size_ = {0, 0};
+  gfx::Size content_tex_physical_size_ = {0, 0};
+  gfx::Size webvr_surface_size_ = {0, 0};
+  gfx::Size ui_tex_physical_size_ = {0, 0};
 
-  std::vector<gvr::Mat4f> webvr_head_pose_;
+  std::vector<vr::Mat4f> webvr_head_pose_;
   bool web_vr_mode_;
   bool ready_to_draw_ = false;
   bool surfaceless_rendering_;
@@ -237,7 +236,9 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   uint16_t last_frame_index_ = -1;
 
   // Attributes for gesture detection while holding app button.
-  gvr::Vec3f controller_start_direction_;
+  gfx::Vector3dF controller_start_direction_;
+
+  std::unique_ptr<FPSMeter> fps_meter_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 

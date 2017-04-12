@@ -306,6 +306,8 @@
     'chromium.memory': {
       'Linux ASan LSan Builder': 'asan_lsan_release_trybot',
       'Linux Chromium OS ASan LSan Builder': 'asan_lsan_chromeos_release_trybot',
+      'Linux ChromiumOS MSan Builder': 'chromeos_msan_release_bot',
+      'Linux MSan Builder': 'msan_release_bot',
       'Linux TSan Builder': 'tsan_disable_nacl_release_bot',
       'Mac ASan 64 Builder': 'asan_full_symbols_disable_nacl_release_bot_dcheck_always_on',
     },
@@ -433,6 +435,7 @@
     'official.desktop': {
       'linux64': 'official',
       'mac64': 'official',
+      'mac64-recipes': 'official',
       'precise64': 'official_six_concurrent_links',
 
       # Currently the official bots set mini_installer_official_deps=1
@@ -568,6 +571,7 @@
       'linux_chromium_headless_rel': 'headless_linux_release_trybot',
       'linux_chromium_ozone_compile_only_ng': 'ozone_linux_release_trybot',
       'linux_chromium_ozone_ng': 'ozone_linux_release_trybot',
+      'linux_layout_tests_slimming_paint_v2': 'release_trybot',
 
       # This is intentionally a release_bot and not a release_trybot;
       # enabling DCHECKs seems to cause flaky failures that don't show up
@@ -582,7 +586,6 @@
       # 'release_trybot' includes 'dcheck_always_on', which might cause
       # some layout test results to be different than for normal release
       # builds (and we only store baselines for release builds).
-      'linux_layout_tests_slimming_paint_v2': 'release_bot',
       'linux_layout_tests_layout_ng': 'release_bot',
 
       'linux_nacl_sdk_build': 'release_bot',

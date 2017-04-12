@@ -121,7 +121,7 @@
   {
     "prefix": "origin-trials-runtimeflags-disabled",
     "base": "http/tests/origin_trials/webexposed",
-    "args": ["--disable-blink-features=ForeignFetch,ImageCapture,InstalledApp,LinkServiceWorker,LongTaskObserver,ServiceWorkerNavigationPreload,SetRootScroller,WebUSB,WebVR,WebShare"]
+    "args": ["--disable-blink-features=ForeignFetch,InstalledApp,LinkServiceWorker,LongTaskObserver,ServiceWorkerNavigationPreload,SetRootScroller,WebUSB,WebVR,WebShare"]
   },
   {
     "prefix": "android",
@@ -216,7 +216,97 @@
   },
   {
     "prefix": "sharedarraybuffer",
+    "base": "fast/beacon",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "fast/canvas",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "fast/css",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "fast/dom",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "fast/encoding/api",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "fast/events/constructors",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "fast/files",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "fast/peerconnection",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
     "base": "fast/workers",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "crypto",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "http/tests/media/media-source",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "http/tests/push_messaging",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "http/tests/websocket",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "sensor",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "webaudio",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
+    "prefix": "sharedarraybuffer",
+    "base": "webmidi",
     "args": ["--js-flags=--harmony-sharedarraybuffer",
              "--enable-blink-features=SharedArrayBuffer"]
   },

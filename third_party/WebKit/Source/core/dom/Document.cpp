@@ -242,6 +242,16 @@
 #include "platform/weborigin/OriginAccessEntry.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/DateMath.h"
+#include "platform/wtf/Functional.h"
+#include "platform/wtf/HashFunctions.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/text/CharacterNames.h"
+#include "platform/wtf/text/StringBuffer.h"
+#include "platform/wtf/text/TextEncodingRegistry.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebAddressSpace.h"
@@ -249,16 +259,6 @@
 #include "public/platform/WebScheduler.h"
 #include "public/platform/modules/sensitive_input_visibility/sensitive_input_visibility_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
-#include "wtf/AutoReset.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/DateMath.h"
-#include "wtf/Functional.h"
-#include "wtf/HashFunctions.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/StdLibExtras.h"
-#include "wtf/text/CharacterNames.h"
-#include "wtf/text/StringBuffer.h"
-#include "wtf/text/TextEncodingRegistry.h"
 
 #include <memory>
 
@@ -2228,7 +2228,7 @@ void Document::UpdateStyleAndLayout() {
     return;
 
   if (frame_view->NeedsLayout())
-    frame_view->Layout();
+    frame_view->UpdateLayout();
 
   if (Lifecycle().GetState() < DocumentLifecycle::kLayoutClean)
     Lifecycle().AdvanceTo(DocumentLifecycle::kLayoutClean);
@@ -3038,7 +3038,7 @@ void Document::ImplicitClose() {
     if (View() && !GetLayoutViewItem().IsNull() &&
         (!GetLayoutViewItem().FirstChild() ||
          GetLayoutViewItem().NeedsLayout()))
-      View()->Layout();
+      View()->UpdateLayout();
   }
 
   load_event_progress_ = kLoadEventCompleted;
@@ -4056,7 +4056,7 @@ bool Document::SetFocusedElement(Element* prp_new_focused_element,
 
   // Remove focus from the existing focus node (if any)
   if (old_focused_element) {
-    old_focused_element->SetFocused(false);
+    old_focused_element->SetFocused(false, params.type);
 
     // Dispatch the blur event and let the node do any other blur related
     // activities (important for text fields)
@@ -4088,12 +4088,6 @@ bool Document::SetFocusedElement(Element* prp_new_focused_element,
         new_focused_element = nullptr;
       }
     }
-
-    if (IsHTMLPlugInElement(old_focused_element)) {
-      if (PluginView* plugin =
-              ToHTMLPlugInElement(old_focused_element)->Plugin())
-        plugin->SetFocused(false, params.type);
-    }
   }
 
   if (new_focused_element)
@@ -4109,7 +4103,7 @@ bool Document::SetFocusedElement(Element* prp_new_focused_element,
     focused_element_ = new_focused_element;
     SetSequentialFocusNavigationStartingPoint(focused_element_.Get());
 
-    focused_element_->SetFocused(true);
+    focused_element_->SetFocused(true, params.type);
     // Element::setFocused for frames can dispatch events.
     if (focused_element_ != new_focused_element) {
       focus_change_blocked = true;
@@ -4158,11 +4152,6 @@ bool Document::SetFocusedElement(Element* prp_new_focused_element,
 
     if (IsRootEditableElement(*focused_element_))
       GetFrame()->GetSpellChecker().DidBeginEditing(focused_element_.Get());
-
-    if (IsHTMLPlugInElement(focused_element_)) {
-      if (PluginView* plugin = ToHTMLPlugInElement(focused_element_)->Plugin())
-        plugin->SetFocused(true, params.type);
-    }
   }
 
   if (!focus_change_blocked && focused_element_) {
@@ -6630,21 +6619,13 @@ void Document::RecordDeferredLoadReason(WouldLoadReason reason) {
 }
 
 DEFINE_TRACE_WRAPPERS(Document) {
+  // node_lists_ are traced in their corresponding NodeListsNodeData, keeping
+  // them only alive for live nodes. Otherwise we would keep lists of dead
+  // nodes alive that have not yet been invalidated.
   visitor->TraceWrappers(imports_controller_);
   visitor->TraceWrappers(implementation_);
   visitor->TraceWrappers(style_sheet_list_);
   visitor->TraceWrappers(style_engine_);
-  for (int i = 0; i < kNumNodeListInvalidationTypes; ++i) {
-    for (auto list : node_lists_[i]) {
-      if (IsHTMLCollectionType(list->GetType())) {
-        visitor->TraceWrappersWithManualWriteBarrier(
-            static_cast<const HTMLCollection*>(list.Get()));
-      } else {
-        visitor->TraceWrappersWithManualWriteBarrier(
-            static_cast<const LiveNodeList*>(list.Get()));
-      }
-    }
-  }
   // Cannot trace in Supplementable<Document> as it is part of platform/ and
   // thus cannot refer to ScriptWrappableVisitor.
   visitor->TraceWrappers(

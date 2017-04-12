@@ -8974,7 +8974,7 @@ I don't think this site should be blocked!
         Google may use your browsing history to personalize Search and other Google services
       </message>
       <message name="IDS_SYNC_CONFIRMATION_SYNC_SETTINGS_LABEL" desc="Label of the checkbox that allows users to configure their sync settings on the settings page before signing in to Chrome.">
-        Control how this works in Settings
+        Manage Chrome Sync and personalization in Settings
       </message>
       <message name="IDS_SYNC_CONFIRMATION_CONFIRM_BUTTON_LABEL" desc="Label of the confirmation button in the sync confirmation dialog of the tab modal signin flow">
         Ok, got it
@@ -12069,6 +12069,15 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@gmail.com</ex
         </message>
         <message name="IDS_INTENT_PICKER_BUBBLE_VIEW_OPEN_WITH" desc="Message contained in a label used as a header for a list of applications from which the user will pick one.">
           Open with
+        </message>
+        <message name="IDS_INTENT_PICKER_BUBBLE_VIEW_REMEMBER_SELECTION" desc="Message contained in a checkbox that must be marked in order for the intent picker to not be shown again for a similar URL.">
+          Remember my choice
+        </message>
+        <message name="IDS_INTENT_PICKER_BUBBLE_VIEW_USE_APP" desc="Message contained in a button to continue the navigation in an ARC app selected by the user.">
+          Use app
+        </message>
+        <message name="IDS_INTENT_PICKER_BUBBLE_VIEW_STAY_IN_CHROME" desc="Message contained in a button to continue the navigation within Chrome.">
+          Stay in Chrome
         </message>
       </if>
 

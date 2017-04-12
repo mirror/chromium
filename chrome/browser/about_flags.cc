@@ -26,6 +26,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
+#include "chrome/browser/experiments/memory_ablation_experiment.h"
 #include "chrome/browser/flag_descriptions.h"
 #include "chrome/browser/ntp_snippets/ntp_snippets_features.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
@@ -35,6 +36,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
+#include "chrome/common/pause_tabs_field_trial.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/common/autofill_switches.h"
@@ -86,6 +88,7 @@
 #include "net/cert/cert_verify_proc_android.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
+#include "services/device/public/cpp/device_features.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/display/display_switches.h"
@@ -99,6 +102,7 @@
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/chrome_feature_list.h"
+#include "components/feature_engagement_tracker/public/feature_constants.h"
 #else  // OS_ANDROID
 #include "ui/message_center/message_center_switches.h"
 #endif  // OS_ANDROID
@@ -713,6 +717,36 @@ const FeatureEntry::FeatureVariation
         {"Learning", kSpeculativeResourcePrefetchingLearning,
          arraysize(kSpeculativeResourcePrefetchingLearning), nullptr}};
 
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
+    defined(OS_WIN)
+const FeatureEntry::FeatureParam kPauseBackgroundTabsMinimalEngagment[] = {
+    {pausetabs::kFeatureName, pausetabs::kModeParamMinimal}};
+
+const FeatureEntry::FeatureParam kPauseBackgroundTabsLowEngagment[] = {
+    {pausetabs::kFeatureName, pausetabs::kModeParamLow}};
+
+const FeatureEntry::FeatureParam kPauseBackgroundTabsMediumEngagment[] = {
+    {pausetabs::kFeatureName, pausetabs::kModeParamMedium}};
+
+const FeatureEntry::FeatureParam kPauseBackgroundTabsHighEngagment[] = {
+    {pausetabs::kFeatureName, pausetabs::kModeParamHigh}};
+
+const FeatureEntry::FeatureParam kPauseBackgroundTabsMaxEngagment[] = {
+    {pausetabs::kFeatureName, pausetabs::kModeParamMax}};
+
+const FeatureEntry::FeatureVariation kPauseBackgroundTabsVariations[] = {
+    {"minimal engagement", kPauseBackgroundTabsMinimalEngagment,
+     arraysize(kPauseBackgroundTabsMinimalEngagment), nullptr},
+    {"low engagement", kPauseBackgroundTabsLowEngagment,
+     arraysize(kPauseBackgroundTabsLowEngagment), nullptr},
+    {"medium engagement", kPauseBackgroundTabsMediumEngagment,
+     arraysize(kPauseBackgroundTabsMediumEngagment), nullptr},
+    {"high engagement", kPauseBackgroundTabsHighEngagment,
+     arraysize(kPauseBackgroundTabsHighEngagment), nullptr},
+    {"max engagement", kPauseBackgroundTabsMaxEngagment,
+     arraysize(kPauseBackgroundTabsMaxEngagment), nullptr}};
+#endif
+
 #if defined(OS_ANDROID)
 const FeatureEntry::FeatureParam
 kAutofillCreditCardPopupLayoutFeatureVariationIconAtStart[] = {
@@ -805,6 +839,21 @@ const FeatureEntry::FeatureVariation kUseNewDoodleApiVariations[] = {
     {"(force test doodle 8)", kUseNewDoodleApiTest8,
      arraysize(kUseNewDoodleApiTest8), nullptr}};
 #endif  // OS_ANDROID
+
+const FeatureEntry::FeatureParam kMemoryAblation1MiB[] = {
+    {kMemoryAblationFeatureSizeParam, "1048576"}};
+const FeatureEntry::FeatureParam kMemoryAblation5MiB[] = {
+    {kMemoryAblationFeatureSizeParam, "5242880"}};
+const FeatureEntry::FeatureParam kMemoryAblation10MiB[] = {
+    {kMemoryAblationFeatureSizeParam, "10485760"}};
+const FeatureEntry::FeatureParam kMemoryAblation50MiB[] = {
+    {kMemoryAblationFeatureSizeParam, "52428800"}};
+
+const FeatureEntry::FeatureVariation kMemoryAblationFeatureVariations[] = {
+    {"1 MiB", kMemoryAblation1MiB, arraysize(kMemoryAblation1MiB), nullptr},
+    {"5 MiB", kMemoryAblation5MiB, arraysize(kMemoryAblation5MiB), nullptr},
+    {"10 MiB", kMemoryAblation10MiB, arraysize(kMemoryAblation10MiB), nullptr},
+    {"50 MiB", kMemoryAblation50MiB, arraysize(kMemoryAblation50MiB), nullptr}};
 
 #if defined(OS_ANDROID)
 const FeatureEntry::FeatureParam kPersistentMenuItemEnabled[] = {
@@ -1528,6 +1577,11 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-chrome-home", flag_descriptions::kChromeHomeName,
      flag_descriptions::kChromeHomeDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeFeature)},
+#endif  // OS_ANDROID
+#if defined(OS_ANDROID)
+    {"enable-iph-demo-mode", flag_descriptions::kEnableIphDemoMode,
+     flag_descriptions::kEnableIphDemoModeDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(feature_engagement_tracker::kIPHDemoMode)},
 #endif  // OS_ANDROID
     {"num-raster-threads", flag_descriptions::kNumRasterThreadsName,
      flag_descriptions::kNumRasterThreadsDescription, kOsAll,
@@ -2569,12 +2623,27 @@ const FeatureEntry kFeatureEntries[] = {
                                     chrome::android::kUseNewDoodleApi.name)},
 #endif  // OS_ANDROID
 
+    {"memory-ablation", flag_descriptions::kMemoryAblationName,
+     flag_descriptions::kMemoryAblationDescription, kOsAll,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(kMemoryAblationFeature,
+                                    kMemoryAblationFeatureVariations,
+                                    "MemoryAblation")},
+
 #if defined(OS_ANDROID)
     {"enable-custom-context-menu",
      flag_descriptions::kEnableCustomContextMenuName,
      flag_descriptions::kEnableCustomContextMenuDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kCustomContextMenu)},
 #endif  // OS_ANDROID
+
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
+    defined(OS_WIN)
+    {pausetabs::kFeatureName, flag_descriptions::kPauseBackgroundTabsName,
+     flag_descriptions::kPauseBackgroundTabsDescription, kOsDesktop,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(pausetabs::kFeature,
+                                    kPauseBackgroundTabsVariations,
+                                    "PauseBackgroundTabs")},
+#endif
 
 #if defined(USE_ASH)
     {"ash-enable-smooth-screen-rotation",

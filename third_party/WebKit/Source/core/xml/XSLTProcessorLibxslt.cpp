@@ -46,11 +46,11 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "wtf/Assertions.h"
-#include "wtf/allocator/Partitions.h"
-#include "wtf/text/CString.h"
-#include "wtf/text/StringBuffer.h"
-#include "wtf/text/UTF8.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/allocator/Partitions.h"
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/StringBuffer.h"
+#include "platform/wtf/text/UTF8.h"
 
 namespace blink {
 
@@ -106,11 +106,11 @@ static xmlDocPtr DocLoaderFunc(const xmlChar* uri,
 
       ResourceLoaderOptions fetch_options(
           ResourceFetcher::DefaultResourceOptions());
-      FetchRequest request(ResourceRequest(url), FetchInitiatorTypeNames::xml,
-                           fetch_options);
-      request.SetOriginRestriction(FetchRequest::kRestrictToSameOrigin);
+      FetchParameters params(ResourceRequest(url), FetchInitiatorTypeNames::xml,
+                             fetch_options);
+      params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
       Resource* resource =
-          RawResource::FetchSynchronously(request, g_global_resource_fetcher);
+          RawResource::FetchSynchronously(params, g_global_resource_fetcher);
       if (!resource || !g_global_processor)
         return nullptr;
 

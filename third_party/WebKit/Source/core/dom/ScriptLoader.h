@@ -25,16 +25,15 @@
 #include "core/dom/PendingScript.h"
 #include "core/dom/ScriptRunner.h"
 #include "core/loader/resource/ScriptResource.h"
-#include "platform/loader/fetch/FetchRequest.h"
+#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceClient.h"
-#include "wtf/text/TextPosition.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/TextPosition.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class LocalFrame;
 class ScriptElementBase;
-class ScriptSourceCode;
+class Script;
 
 class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
                                  public PendingScriptClient {
@@ -73,7 +72,7 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   PendingScript* CreatePendingScript();
 
   // Returns false if and only if execution was blocked.
-  bool ExecuteScript(const ScriptSourceCode&);
+  bool ExecuteScript(const Script*);
   virtual void Execute();
 
   // XML parser calls these
@@ -128,12 +127,11 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
  private:
   bool IgnoresLoadRequest() const;
   bool IsScriptForEventSupported() const;
-  void LogScriptMIMEType(LocalFrame*, ScriptResource*, const String&);
 
   bool FetchScript(const String& source_url,
                    const String& encoding,
-                   FetchRequest::DeferOption);
-  bool DoExecuteScript(const ScriptSourceCode&);
+                   FetchParameters::DeferOption);
+  bool DoExecuteScript(const Script*);
 
   // Clears the connection to the PendingScript.
   void DetachPendingScript();

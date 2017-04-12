@@ -1156,6 +1156,9 @@
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_WPAD" desc="Settings > Internet > Network details: Web Proxy Auto Discovery (WPAD) section label.">
       Web Proxy Auto Discovery URL:
     </message>
+    <message name="IDS_SETTINGS_SETTINGS_NETWORK_ALLOW_DATA_ROAMING" desc="Settings > Internet > Network details: Toggle label to allow mobile data roaming.">
+      Allow mobile data roaming
+    </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SHARED" desc="Settings > Internet > Network details: Text to show when a network is shared.">
       This network is shared with other users
     </message>
@@ -2485,10 +2488,7 @@
     Open Tabs
   </message>
   <message name="IDS_SETTINGS_MANAGE_SYNCED_DATA_TITLE" desc="Title for the link to manage Chrome Sync data via Google Dashboard.">
-    Manage synced data
-  </message>
-  <message name="IDS_SETTINGS_MANAGE_SYNCED_DATA_DESCRIPTION" desc="Subtitle for the link to manage Chrome Sync data via Google Dashboard.">
-    Opens Google Dashboard
+    Manage synced data on Google Dashboard
   </message>
   <message name="IDS_SETTINGS_ENCRYPTION_OPTIONS" desc="Title for the section which includes options for encrypting sync settings.">
     Encryption options
@@ -2836,6 +2836,9 @@
     <message name="IDS_SETTINGS_DISPLAY_MIRROR" desc="In Device Settings > Displays, the label for the control for mirroring.">
       Mirroring
     </message>
+    <message name="IDS_SETTINGS_DISPLAY_UNIFIED_DESKTOP" desc="In Device Settings > Displays, the label for the control for the unified desktop feature.">
+      Allow windows to span displays
+    </message>
     <message name="IDS_SETTINGS_DISPLAY_SCREEN" desc="In Device Settings > Displays, the label for the dropdown menu for changing the dispay type.">
       Screen
     </message>
@@ -2883,12 +2886,6 @@
     </message>
     <message name="IDS_SETTINGS_DISPLAY_OVERSCAN_RESET" desc="Label for resetting overscan calibration.">
       Reset
-    </message>
-    <message name="IDS_SETTINGS_DISPLAY_MIRRORING_ON" desc="Label indicating that the displays are currently mirrored">
-      On
-    </message>
-    <message name="IDS_SETTINGS_DISPLAY_MIRRORING_OFF" desc="Label indicating that the displays are currently not mirrored">
-      Off
     </message>
     <message name="IDS_SETTINGS_DISPLAY_TOUCH_CALIBRATION_TITLE" desc="In Device Settings > Displays, the label for initiating touch calibration.">
       Calibrate touchscreen

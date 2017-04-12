@@ -1860,12 +1860,12 @@ const char kWebMidiDescription[] = "Enable Web MIDI API experimental support.";
 
 //  Site per process mode
 
-const char kSitePerProcessName[] = "Out of process iframes";
+const char kSitePerProcessName[] = "Strict site isolation";
 
 const char kSitePerProcessDescription[] =
-    "Highly experimental support for rendering cross-site iframes in "
-    "separate processes. In this mode, documents will share a renderer "
-    "process only if they are from the same web site.";
+    "Highly experimental security mode that ensures each renderer process "
+    "contains pages from at most one site. In this mode, out-of-process "
+    "iframes will be used whenever an iframe is cross-site.";
 
 //  Top document isolation mode
 
@@ -1948,6 +1948,17 @@ const char kReaderModeHeuristicsAlwaysOn[] = "Always";
 const char kChromeHomeName[] = "Chrome Home";
 
 const char kChromeHomeDescription[] = "Enables Chrome Home on Android.";
+
+#endif  // defined(OS_ANDROID)
+
+//  In-Product Help flags
+
+#if defined(OS_ANDROID)
+
+const char kEnableIphDemoMode[] = "In-Product Help Demo Mode";
+
+const char kEnableIphDemoModeDescription[] =
+    "Enables In-Product Help demo mode on Android.";
 
 #endif  // defined(OS_ANDROID)
 
@@ -2759,6 +2770,10 @@ const char kOmniboxEntitySuggestionsName[] = "Omnibox entity suggestions";
 const char kOmniboxEntitySuggestionsDescription[] =
     "Enable receiving entity suggestions in Omnibox.";
 
+const char kPauseBackgroundTabsName[] = "Pause background tabs";
+const char kPauseBackgroundTabsDescription[] =
+    "Pause timers in background tabs after 5 minutes on desktop.";
+
 #endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
         // defined(OS_WIN)
 
@@ -2788,6 +2803,10 @@ const char kUseNewDoodleApiDescription[] =
 const char kDebugShortcutsDescription[] =
     "Enables additional keyboard shortcuts that are useful for debugging "
     "Ash.";
+
+const char kMemoryAblationName[] = "Memory ablation experiment";
+const char kMemoryAblationDescription[] =
+    "Allocates extra memory in the browser process.";
 
 #if defined(OS_ANDROID)
 

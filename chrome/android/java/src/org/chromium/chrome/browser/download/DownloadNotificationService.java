@@ -368,7 +368,7 @@ public class DownloadNotificationService extends Service {
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
                         .createChromeNotificationBuilder(
-                                true /* preferCompat */, ChannelsInitializer.CHANNEL_ID_BROWSER)
+                                true /* preferCompat */, ChannelsInitializer.CHANNEL_ID_DOWNLOADS)
                         .setContentTitle(
                                 context.getString(R.string.download_notification_summary_title))
                         .setSubText(context.getString(R.string.menu_downloads))
@@ -1079,7 +1079,7 @@ public class DownloadNotificationService extends Service {
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
                         .createChromeNotificationBuilder(
-                                true /* preferCompat */, ChannelsInitializer.CHANNEL_ID_BROWSER)
+                                true /* preferCompat */, ChannelsInitializer.CHANNEL_ID_DOWNLOADS)
                         .setContentTitle(
                                 DownloadUtils.getAbbreviatedFileName(title, MAX_FILE_NAME_LENGTH))
                         .setSmallIcon(iconId)
@@ -1214,7 +1214,12 @@ public class DownloadNotificationService extends Service {
                         assert entry == null;
                         resumeAllPendingDownloads();
                 } else if (ACTION_DOWNLOAD_OPEN.equals(intent.getAction())) {
-                    OfflinePageDownloadBridge.openDownloadedPage(getContentIdFromIntent(intent));
+                    ContentId id = getContentIdFromIntent(intent);
+                    if (LegacyHelpers.isLegacyOfflinePage(id)) {
+                        OfflinePageDownloadBridge.openDownloadedPage(id);
+                    } else if (id != null) {
+                        OfflineContentAggregatorNotificationBridgeUiFactory.instance().openItem(id);
+                    }
                 } else {
                         Log.e(TAG, "Unrecognized intent action.", intent);
                 }

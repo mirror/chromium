@@ -111,8 +111,14 @@ struct ResourcePrefetchPredictorConfig {
 
   // The maximum number of resources to store per entry.
   size_t max_resources_per_entry;
-  // The number of consecutive misses after we stop tracking a resource URL.
+  // The maximum number of origins to store per entry.
+  size_t max_origins_per_entry;
+  // The number of consecutive misses after which we stop tracking a resource
+  // URL.
   size_t max_consecutive_misses;
+  // The number of consecutive misses after which we stop tracking a redirect
+  // endpoint.
+  size_t max_redirect_consecutive_misses;
 
   // The minimum confidence (accuracy of hits) required for a resource to be
   // prefetched.
@@ -129,6 +135,8 @@ struct ResourcePrefetchPredictorConfig {
   bool is_url_learning_enabled;
   // True iff the predictor could use manifests.
   bool is_manifests_enabled;
+  // True iff the origin-based prediction is enabled.
+  bool is_origin_prediction_enabled;
 };
 
 }  // namespace predictors

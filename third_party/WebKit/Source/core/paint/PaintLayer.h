@@ -45,6 +45,7 @@
 #ifndef PaintLayer_h
 #define PaintLayer_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBox.h"
 #include "core/paint/ClipRectsCache.h"
@@ -57,10 +58,9 @@
 #include "core/paint/PaintResult.h"
 #include "platform/graphics/CompositingReasons.h"
 #include "platform/graphics/SquashingDisallowedReasons.h"
-#include "wtf/Allocator.h"
-#include "wtf/AutoReset.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -572,6 +572,10 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
            ((global_paint_flags & kGlobalPaintFlattenCompositingLayers) ||
             GetCompositingState() != kPaintsIntoOwnBacking);
   }
+
+  // Returns the ScrollingCoordinator associated with this layer, if
+  // any. Otherwise nullptr.
+  ScrollingCoordinator* GetScrollingCoordinator();
 
   // Returns true if the element or any ancestor is transformed.
   bool CompositesWithTransform() const;

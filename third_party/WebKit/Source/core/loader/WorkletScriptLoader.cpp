@@ -7,7 +7,7 @@
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "core/loader/FrameFetchContext.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
-#include "wtf/WTF.h"
+#include "platform/wtf/WTF.h"
 
 namespace blink {
 
@@ -22,8 +22,8 @@ void WorkletScriptLoader::FetchScript(const String& script_url) {
 
   ResourceRequest resource_request(script_url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
-  FetchRequest request(resource_request, FetchInitiatorTypeNames::internal);
-  ScriptResource* resource = ScriptResource::Fetch(request, fetcher_);
+  FetchParameters params(resource_request, FetchInitiatorTypeNames::internal);
+  ScriptResource* resource = ScriptResource::Fetch(params, fetcher_);
   if (!resource) {
     NotifyFinished(nullptr);
     return;

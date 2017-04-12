@@ -46,7 +46,7 @@
 #include "core/paint/TablePaintInvalidator.h"
 #include "core/paint/TablePainter.h"
 #include "core/style/StyleInheritedData.h"
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -461,7 +461,7 @@ void LayoutTable::LayoutSection(
     MarkChildForPaginationRelayoutIfNeeded(section, layouter);
   bool needed_layout = section.NeedsLayout();
   if (needed_layout)
-    section.GetLayout();
+    section.UpdateLayout();
   if (needed_layout || table_height_changing == kTableHeightChanging)
     section.SetLogicalHeight(LayoutUnit(section.CalcRowLogicalHeight()));
 
@@ -559,7 +559,7 @@ bool LayoutTable::RecalcChildOverflowAfterStyleChange() {
          children_overflow_changed;
 }
 
-void LayoutTable::GetLayout() {
+void LayoutTable::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
 
@@ -597,7 +597,7 @@ void LayoutTable::GetLayout() {
     // layout that tells us if something has changed in the min max
     // calculations to do it correctly.
     // if ( oldWidth != width() || columns.size() + 1 != columnPos.size() )
-    table_layout_->GetLayout();
+    table_layout_->UpdateLayout();
 
     // Lay out top captions.
     // FIXME: Collapse caption margin.
@@ -813,10 +813,10 @@ void LayoutTable::AddOverflowFromChildren() {
   // works out fine.
   if (CollapseBorders()) {
     LayoutUnit right_border_overflow =
-        size().Width() + OuterBorderRight() - BorderRight();
+        Size().Width() + OuterBorderRight() - BorderRight();
     LayoutUnit left_border_overflow = BorderLeft() - OuterBorderLeft();
     LayoutUnit bottom_border_overflow =
-        size().Height() + OuterBorderBottom() - BorderBottom();
+        Size().Height() + OuterBorderBottom() - BorderBottom();
     LayoutUnit top_border_overflow = BorderTop() - OuterBorderTop();
     IntRect border_overflow_rect(
         left_border_overflow.ToInt(), top_border_overflow.ToInt(),
@@ -1606,10 +1606,10 @@ LayoutRect LayoutTable::OverflowClipRect(
   // (depending on what order we do these bug fixes in).
   if (!captions_.IsEmpty()) {
     if (Style()->IsHorizontalWritingMode()) {
-      rect.SetHeight(size().Height());
+      rect.SetHeight(Size().Height());
       rect.SetY(location.Y());
     } else {
-      rect.SetWidth(size().Width());
+      rect.SetWidth(Size().Width());
       rect.SetX(location.X());
     }
   }
@@ -1644,7 +1644,7 @@ bool LayoutTable::NodeAtPoint(HitTestResult& result,
   }
 
   // Check our bounds next.
-  LayoutRect bounds_rect(adjusted_location, size());
+  LayoutRect bounds_rect(adjusted_location, Size());
   if (VisibleToHitTestRequest(result.GetHitTestRequest()) &&
       (action == kHitTestBlockBackground ||
        action == kHitTestChildBlockBackground) &&

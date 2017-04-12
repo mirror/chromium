@@ -107,7 +107,9 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   bool HasAcceleratedSurface(const gfx::Size& desired_size) override;
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
-  void DidCreateNewRendererCompositorFrameSink() override;
+  void DidCreateNewRendererCompositorFrameSink(
+      cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink)
+      override;
   void SubmitCompositorFrame(const cc::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
   void OnBeginFrameDidNotSwap(const cc::BeginFrameAck& ack) override;
@@ -158,7 +160,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
       BrowserAccessibilityDelegate* delegate, bool for_root_frame) override;
 
   // cc::CompositorFrameSinkSupportClient implementation.
-  void DidReceiveCompositorFrameAck() override;
+  void DidReceiveCompositorFrameAck(
+      const cc::ReturnedResourceArray& resources) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
   void WillDrawSurface(const cc::LocalSurfaceId& id,
@@ -256,6 +259,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   cc::FrameSinkId parent_frame_sink_id_;
 
   bool has_frame_ = false;
+  cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink_ =
+      nullptr;
 
   // The background color of the widget.
   SkColor background_color_;

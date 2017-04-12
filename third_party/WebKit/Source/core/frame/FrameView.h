@@ -135,7 +135,7 @@ class CORE_EXPORT FrameView final
 
   void SetContentsSize(const IntSize&);
 
-  void Layout();
+  void UpdateLayout();
   bool DidFirstLayout() const;
   void ScheduleRelayout();
   void ScheduleRelayoutOfSubtree(LayoutObject*);
@@ -438,6 +438,7 @@ class CORE_EXPORT FrameView final
   GraphicsLayer* LayerForScrollCorner() const override;
   int ScrollSize(ScrollbarOrientation) const override;
   bool IsScrollCornerVisible() const override;
+  bool UpdateAfterCompositingChange() override;
   bool UserInputScrollable(ScrollbarOrientation) const override;
   bool ShouldPlaceVerticalScrollbarOnLeft() const override;
   FrameViewBase* GetFrameViewBase() override;
@@ -804,9 +805,6 @@ class CORE_EXPORT FrameView final
   // Main thread scrolling reasons for this object only. For all reasons,
   // see: mainThreadScrollingReasons().
   MainThreadScrollingReasons MainThreadScrollingReasonsPerFrame() const;
-  void AdjustStyleRelatedMainThreadScrollingReasons(const uint32_t reason,
-                                                    bool increase);
-  MainThreadScrollingReasons GetStyleRelatedMainThreadScrollingReasons() const;
 
   bool HasVisibleSlowRepaintViewportConstrainedObjects() const;
 
@@ -1222,11 +1220,6 @@ class CORE_EXPORT FrameView final
 
   bool is_storing_composited_layer_debug_info_;
   MainThreadScrollingReasons main_thread_scrolling_reasons_;
-  // For recording main thread scrolling reasons
-  // due to layout object properties. e.g. opacity, transform.
-  // The size of the vector depends on the number of
-  // main thread scrolling reasons.
-  Vector<int> main_thread_scrolling_reasons_counter_;
 
   // TODO(kenrb): Remove these when https://crbug.com/680606 is resolved.
   std::unique_ptr<CompositorAnimationTimeline> animation_timeline_;

@@ -30,7 +30,7 @@
 #include "core/layout/LayoutImage.h"
 #include "platform/graphics/Path.h"
 #include "platform/transforms/AffineTransform.h"
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -203,11 +203,12 @@ bool HTMLAreaElement::LayoutObjectIsFocusable() const {
   return SupportsFocus() && Element::tabIndex() >= 0;
 }
 
-void HTMLAreaElement::SetFocused(bool should_be_focused) {
+void HTMLAreaElement::SetFocused(bool should_be_focused,
+                                 WebFocusType focus_type) {
   if (IsFocused() == should_be_focused)
     return;
 
-  HTMLAnchorElement::SetFocused(should_be_focused);
+  HTMLAnchorElement::SetFocused(should_be_focused, focus_type);
 
   HTMLImageElement* image_element = this->ImageElement();
   if (!image_element)

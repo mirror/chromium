@@ -23,13 +23,13 @@
 #ifndef LayoutBox_h
 #define LayoutBox_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBoxModelObject.h"
 #include "core/layout/OverflowModel.h"
 #include "platform/scroll/ScrollTypes.h"
-#include "wtf/Compiler.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/Compiler.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -327,7 +327,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   LayoutSize LocationOffset() const {
     return LayoutSize(frame_rect_.X(), frame_rect_.Y());
   }
-  LayoutSize size() const { return frame_rect_.size(); }
+  LayoutSize Size() const { return frame_rect_.Size(); }
   IntSize PixelSnappedSize() const { return frame_rect_.PixelSnappedSize(); }
 
   void SetLocation(const LayoutPoint& location) {
@@ -349,7 +349,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void SetLocationAndUpdateOverflowControlsIfNeeded(const LayoutPoint&);
 
   void SetSize(const LayoutSize& size) {
-    if (size == frame_rect_.size())
+    if (size == frame_rect_.Size())
       return;
     frame_rect_.SetSize(size);
     SizeChanged();
@@ -367,12 +367,12 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   LayoutRect FrameRect() const { return frame_rect_; }
   void SetFrameRect(const LayoutRect& rect) {
     SetLocation(rect.Location());
-    SetSize(rect.size());
+    SetSize(rect.Size());
   }
 
   // Note that those functions have their origin at this box's CSS border box.
   // As such their location doesn't account for 'top'/'left'.
-  LayoutRect BorderBoxRect() const { return LayoutRect(LayoutPoint(), size()); }
+  LayoutRect BorderBoxRect() const { return LayoutRect(LayoutPoint(), Size()); }
   LayoutRect PaddingBoxRect() const {
     return LayoutRect(BorderLeft(), BorderTop(), ClientWidth(), ClientHeight());
   }
@@ -695,7 +695,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
                      MapCoordinatesFlags mode = 0) const override;
   FloatRect LocalBoundingBoxRectForAccessibility() const final;
 
-  void GetLayout() override;
+  void UpdateLayout() override;
   void Paint(const PaintInfo&, const LayoutPoint&) const override;
   bool NodeAtPoint(HitTestResult&,
                    const HitTestLocation& location_in_container,
@@ -1364,7 +1364,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   class MutableForPainting : public LayoutObject::MutableForPainting {
    public:
     void SavePreviousSize() {
-      GetLayoutBox().previous_size_ = GetLayoutBox().size();
+      GetLayoutBox().previous_size_ = GetLayoutBox().Size();
     }
     void SavePreviousContentBoxSizeAndLayoutOverflowRect();
     void ClearPreviousContentBoxSizeAndLayoutOverflowRect() {

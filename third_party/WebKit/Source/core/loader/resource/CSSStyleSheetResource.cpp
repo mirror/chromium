@@ -30,25 +30,25 @@
 #include "core/loader/resource/StyleSheetResourceClient.h"
 #include "platform/HTTPNames.h"
 #include "platform/SharedBuffer.h"
-#include "platform/loader/fetch/FetchRequest.h"
+#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/weborigin/SecurityPolicy.h"
-#include "wtf/CurrentTime.h"
+#include "platform/wtf/CurrentTime.h"
 
 namespace blink {
 
-CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchRequest& request,
+CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
                                                     ResourceFetcher* fetcher) {
-  DCHECK_EQ(request.GetResourceRequest().GetFrameType(),
+  DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeNone);
-  request.SetRequestContext(WebURLRequest::kRequestContextStyle);
+  params.SetRequestContext(WebURLRequest::kRequestContextStyle);
   CSSStyleSheetResource* resource = ToCSSStyleSheetResource(
-      fetcher->RequestResource(request, CSSStyleSheetResourceFactory()));
+      fetcher->RequestResource(params, CSSStyleSheetResourceFactory()));
   // TODO(kouhei): Dedupe this logic w/ ScriptResource::fetch
-  if (resource && !request.IntegrityMetadata().IsEmpty())
-    resource->SetIntegrityMetadata(request.IntegrityMetadata());
+  if (resource && !params.IntegrityMetadata().IsEmpty())
+    resource->SetIntegrityMetadata(params.IntegrityMetadata());
   return resource;
 }
 

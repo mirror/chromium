@@ -27,9 +27,10 @@
 #define DateTimeNumericFieldElement_h
 
 #include "core/html/shadow/DateTimeFieldElement.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebFocusType.h"
 
 namespace blink {
 
@@ -93,7 +94,7 @@ class DateTimeNumericFieldElement : public DateTimeFieldElement {
   String Value() const final;
 
   // Node functions.
-  void SetFocused(bool) final;
+  void SetFocused(bool, WebFocusType) final;
 
   String FormatValue(int) const;
   int RoundUp(int) const;

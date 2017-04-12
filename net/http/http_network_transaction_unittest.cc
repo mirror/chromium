@@ -9813,8 +9813,9 @@ TEST_F(HttpNetworkTransactionTest, UploadUnreadableFile) {
   base::FilePath temp_file;
   ASSERT_TRUE(base::CreateTemporaryFile(&temp_file));
   std::string temp_file_content("Unreadable file.");
-  ASSERT_TRUE(base::WriteFile(temp_file, temp_file_content.c_str(),
-                                   temp_file_content.length()));
+  ASSERT_EQ(static_cast<int>(temp_file_content.length()),
+            base::WriteFile(temp_file, temp_file_content.c_str(),
+                            temp_file_content.length()));
   ASSERT_TRUE(base::MakeFileUnreadable(temp_file));
 
   std::vector<std::unique_ptr<UploadElementReader>> element_readers;
@@ -14969,6 +14970,12 @@ class FakeStream : public HttpStream,
     return false;
   }
 
+  bool GetAlternativeService(
+      AlternativeService* alternative_service) const override {
+    ADD_FAILURE();
+    return false;
+  }
+
   void GetSSLInfo(SSLInfo* ssl_info) override { ADD_FAILURE(); }
 
   void GetSSLCertRequestInfo(SSLCertRequestInfo* cert_request_info) override {
@@ -15212,6 +15219,12 @@ class FakeWebSocketBasicHandshakeStream : public WebSocketHandshakeStreamBase {
 
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override {
     NOTREACHED();
+    return false;
+  }
+
+  bool GetAlternativeService(
+      AlternativeService* alternative_service) const override {
+    ADD_FAILURE();
     return false;
   }
 

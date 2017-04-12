@@ -44,6 +44,7 @@
 #ifndef PaintLayerScrollableArea_h
 #define PaintLayerScrollableArea_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/layout/ScrollAnchor.h"
 #include "core/page/scrolling/StickyPositionScrollingConstraints.h"
@@ -51,8 +52,7 @@
 #include "core/paint/PaintLayerFragment.h"
 #include "core/paint/ScrollbarManager.h"
 #include "platform/heap/Handle.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -488,14 +488,12 @@ class CORE_EXPORT PaintLayerScrollableArea final
   StickyConstraintsMap& GetStickyConstraintsMap() {
     return EnsureRareData().sticky_constraints_map_;
   }
+
   void InvalidateAllStickyConstraints();
   void InvalidateStickyConstraintsFor(PaintLayer*,
                                       bool needs_compositing_update = true);
-
-  void RemoveStyleRelatedMainThreadScrollingReasons();
-  void AddStyleRelatedMainThreadScrollingReasons(const uint32_t);
-  bool HasMainThreadScrollingReason(uint32_t reason) const {
-    return reasons_ & reason;
+  uint32_t GetNonCompositedMainThreadScrollingReasons() {
+    return non_composited_main_thread_scrolling_reasons_;
   }
 
   uint64_t Id() const;
@@ -606,7 +604,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
   std::unique_ptr<PaintLayerScrollableAreaRareData> rare_data_;
 
   // MainThreadScrollingReason due to the properties of the LayoutObject
-  uint32_t reasons_;
+  uint32_t non_composited_main_thread_scrolling_reasons_;
 
 #if DCHECK_IS_ON()
   bool has_been_disposed_;

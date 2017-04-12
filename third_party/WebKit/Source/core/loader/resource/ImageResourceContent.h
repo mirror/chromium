@@ -16,13 +16,13 @@
 #include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/loader/fetch/ResourceStatus.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/AutoReset.h"
-#include "wtf/HashCountedSet.h"
-#include "wtf/HashMap.h"
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/HashCountedSet.h"
+#include "platform/wtf/HashMap.h"
 
 namespace blink {
 
-class FetchRequest;
+class FetchParameters;
 class ImageResourceInfo;
 class ImageResourceObserver;
 class ResourceError;
@@ -50,7 +50,7 @@ class CORE_EXPORT ImageResourceContent final
       PassRefPtr<blink::Image> image = nullptr) {
     return new ImageResourceContent(std::move(image));
   }
-  static ImageResourceContent* Fetch(FetchRequest&, ResourceFetcher*);
+  static ImageResourceContent* Fetch(FetchParameters&, ResourceFetcher*);
 
   // Returns the nullImage() if the image is not available yet.
   blink::Image* GetImage();

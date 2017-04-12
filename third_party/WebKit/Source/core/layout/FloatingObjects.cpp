@@ -24,14 +24,14 @@
 
 #include "core/layout/FloatingObjects.h"
 
+#include <algorithm>
+#include <memory>
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LineLayoutBlockFlow.h"
 #include "core/layout/shapes/ShapeOutsideInfo.h"
-#include "wtf/PtrUtil.h"
-#include <algorithm>
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -106,7 +106,7 @@ std::unique_ptr<FloatingObject> FloatingObject::CopyToNewContainer(
     bool is_descendant) const {
   return WTF::WrapUnique(new FloatingObject(
       GetLayoutObject(), GetType(),
-      LayoutRect(FrameRect().Location() - offset, FrameRect().size()),
+      LayoutRect(FrameRect().Location() - offset, FrameRect().Size()),
       should_paint, is_descendant, IsLowestNonOverhangingFloatInChild()));
 }
 

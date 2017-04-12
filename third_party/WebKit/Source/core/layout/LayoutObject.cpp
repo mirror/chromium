@@ -87,9 +87,9 @@
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/PropertyTreeState.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
-#include "wtf/allocator/Partitions.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/allocator/Partitions.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
 #ifndef NDEBUG
 #include <stdio.h>
 #endif
@@ -3031,7 +3031,7 @@ void LayoutObject::ScheduleRelayout() {
 void LayoutObject::ForceLayout() {
   SetSelfNeedsLayout(true);
   SetShouldDoFullPaintInvalidation();
-  GetLayout();
+  UpdateLayout();
 }
 
 // FIXME: Does this do anything different than forceLayout given that we don't
@@ -3039,7 +3039,7 @@ void LayoutObject::ForceLayout() {
 // forceLayout.
 void LayoutObject::ForceChildLayout() {
   SetNormalChildNeedsLayout(true);
-  GetLayout();
+  UpdateLayout();
 }
 
 enum StyleCacheState { kCached, kUncached };
@@ -3176,7 +3176,7 @@ void LayoutObject::AddAnnotatedRegions(Vector<AnnotatedRegionValue>& regions) {
     return;
 
   LayoutBox* box = ToLayoutBox(this);
-  FloatRect local_bounds(FloatPoint(), FloatSize(box->size()));
+  FloatRect local_bounds(FloatPoint(), FloatSize(box->Size()));
   FloatRect abs_bounds = LocalToAbsoluteQuad(local_bounds).BoundingBox();
 
   AnnotatedRegionValue region;

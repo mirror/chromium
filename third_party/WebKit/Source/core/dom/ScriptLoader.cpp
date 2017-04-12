@@ -29,9 +29,11 @@
 #include "bindings/core/v8/V8Binding.h"
 #include "core/HTMLNames.h"
 #include "core/SVGNames.h"
+#include "core/dom/ClassicScript.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParserTiming.h"
 #include "core/dom/IgnoreDestructiveWriteCountIncrementer.h"
+#include "core/dom/Script.h"
 #include "core/dom/ScriptElementBase.h"
 #include "core/dom/ScriptRunner.h"
 #include "core/dom/ScriptableDocumentParser.h"
@@ -39,23 +41,21 @@
 #include "core/events/Event.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/SubresourceIntegrity.h"
-#include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/CrossOriginAttribute.h"
 #include "core/html/imports/HTMLImport.h"
 #include "core/html/parser/HTMLParserIdioms.h"
-#include "core/inspector/ConsoleMessage.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
-#include "platform/loader/fetch/FetchRequest.h"
+#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringHash.h"
 #include "public/platform/WebCachePolicy.h"
-#include "wtf/StdLibExtras.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/StringHash.h"
 
 namespace blink {
 
@@ -285,13 +285,13 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
 
   // 21. "If the element has a src content attribute, run these substeps:"
   if (element_->HasSourceAttribute()) {
-    FetchRequest::DeferOption defer = FetchRequest::kNoDefer;
+    FetchParameters::DeferOption defer = FetchParameters::kNoDefer;
     if (!parser_inserted_ || element_->AsyncAttributeValue() ||
         element_->DeferAttributeValue())
-      defer = FetchRequest::kLazyLoad;
+      defer = FetchParameters::kLazyLoad;
     if (document_write_intervention_ ==
         DocumentWriteIntervention::kFetchDocWrittenScriptDeferIdle)
-      defer = FetchRequest::kIdleLoad;
+      defer = FetchParameters::kIdleLoad;
     if (!FetchScript(element_->SourceAttributeValue(), encoding, defer))
       return false;
   }
@@ -468,7 +468,8 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
                         ? element_document.Url()
                         : KURL();
 
-  if (!ExecuteScript(ScriptSourceCode(ScriptContent(), script_url, position))) {
+  if (!ExecuteScript(ClassicScript::Create(
+          ScriptSourceCode(ScriptContent(), script_url, position)))) {
     DispatchErrorEvent();
     return false;
   }
@@ -479,7 +480,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
 // Steps 15--21 of https://html.spec.whatwg.org/#prepare-a-script
 bool ScriptLoader::FetchScript(const String& source_url,
                                const String& encoding,
-                               FetchRequest::DeferOption defer) {
+                               FetchParameters::DeferOption defer) {
   Document* element_document = &(element_->GetDocument());
   if (!element_->IsConnected() || element_->GetDocument() != element_document)
     return false;
@@ -498,7 +499,7 @@ bool ScriptLoader::FetchScript(const String& source_url,
           "<https://www.chromestatus.com/feature/5718547946799104>");
     }
 
-    FetchRequest request(resource_request, element_->InitiatorName());
+    FetchParameters params(resource_request, element_->InitiatorName());
 
     // 15. "Let CORS setting be the current state of the element's
     //      crossorigin content attribute."
@@ -511,25 +512,26 @@ bool ScriptLoader::FetchScript(const String& source_url,
 
     // 21.6, "classic": "Fetch a classic script given ... CORS setting
     //                   ... and encoding."
-    if (cross_origin != kCrossOriginAttributeNotSet)
-      request.SetCrossOriginAccessControl(element_document->GetSecurityOrigin(),
-                                          cross_origin);
+    if (cross_origin != kCrossOriginAttributeNotSet) {
+      params.SetCrossOriginAccessControl(element_document->GetSecurityOrigin(),
+                                         cross_origin);
+    }
 
-    request.SetCharset(encoding);
+    params.SetCharset(encoding);
 
     // 17. "If the script element has a nonce attribute,
     //      then let cryptographic nonce be that attribute's value.
     //      Otherwise, let cryptographic nonce be the empty string."
     if (element_->IsNonceableElement())
-      request.SetContentSecurityPolicyNonce(element_->nonce());
+      params.SetContentSecurityPolicyNonce(element_->nonce());
 
     // 19. "Let parser state be "parser-inserted"
     //      if the script element has been flagged as "parser-inserted",
     //      and "not parser-inserted" otherwise."
-    request.SetParserDisposition(IsParserInserted() ? kParserInserted
-                                                    : kNotParserInserted);
+    params.SetParserDisposition(IsParserInserted() ? kParserInserted
+                                                   : kNotParserInserted);
 
-    request.SetDefer(defer);
+    params.SetDefer(defer);
 
     // 18. "If the script element has an integrity attribute,
     //      then let integrity metadata be that attribute's value.
@@ -539,7 +541,7 @@ bool ScriptLoader::FetchScript(const String& source_url,
       IntegrityMetadataSet metadata_set;
       SubresourceIntegrity::ParseIntegrityAttribute(
           integrity_attr, metadata_set, element_document);
-      request.SetIntegrityMetadata(metadata_set);
+      params.SetIntegrityMetadata(metadata_set);
     }
 
     // 21.6. "Switch on the script's type:"
@@ -547,7 +549,7 @@ bool ScriptLoader::FetchScript(const String& source_url,
     // - "classic":
     //   "Fetch a classic script given url, settings, cryptographic nonce,
     //    integrity metadata, parser state, CORS setting, and encoding."
-    resource_ = ScriptResource::Fetch(request, element_document->Fetcher());
+    resource_ = ScriptResource::Fetch(params, element_document->Fetcher());
 
     // - "module":
     //   "Fetch a module script graph given url, settings, "script",
@@ -594,37 +596,9 @@ PendingScript* ScriptLoader::CreatePendingScript() {
   return PendingScript::Create(element_, resource_);
 }
 
-void ScriptLoader::LogScriptMIMEType(LocalFrame* frame,
-                                     ScriptResource* resource,
-                                     const String& mime_type) {
-  if (MIMETypeRegistry::IsSupportedJavaScriptMIMEType(mime_type))
-    return;
-  bool is_text = mime_type.StartsWith("text/", kTextCaseASCIIInsensitive);
-  if (is_text && MIMETypeRegistry::IsLegacySupportedJavaScriptLanguage(
-                     mime_type.Substring(5)))
-    return;
-  bool is_same_origin =
-      element_->GetDocument().GetSecurityOrigin()->CanRequest(resource->Url());
-  bool is_application =
-      !is_text &&
-      mime_type.StartsWith("application/", kTextCaseASCIIInsensitive);
-
-  UseCounter::Feature feature =
-      is_same_origin
-          ? (is_text ? UseCounter::kSameOriginTextScript
-                     : is_application ? UseCounter::kSameOriginApplicationScript
-                                      : UseCounter::kSameOriginOtherScript)
-          : (is_text
-                 ? UseCounter::kCrossOriginTextScript
-                 : is_application ? UseCounter::kCrossOriginApplicationScript
-                                  : UseCounter::kCrossOriginOtherScript);
-
-  UseCounter::Count(frame, feature);
-}
-
-bool ScriptLoader::ExecuteScript(const ScriptSourceCode& source_code) {
+bool ScriptLoader::ExecuteScript(const Script* script) {
   double script_exec_start_time = MonotonicallyIncreasingTime();
-  bool result = DoExecuteScript(source_code);
+  bool result = DoExecuteScript(script);
 
   // NOTE: we do not check m_willBeParserExecuted here, since
   // m_willBeParserExecuted is false for inline scripts, and we want to
@@ -644,10 +618,10 @@ bool ScriptLoader::ExecuteScript(const ScriptSourceCode& source_code) {
 // i.e. load/error events are dispatched by the caller.
 // Steps 3--7 are implemented here in doExecuteScript().
 // TODO(hiroshige): Move event dispatching code to doExecuteScript().
-bool ScriptLoader::DoExecuteScript(const ScriptSourceCode& source_code) {
+bool ScriptLoader::DoExecuteScript(const Script* script) {
   DCHECK(already_started_);
 
-  if (source_code.IsEmpty())
+  if (script->IsEmpty())
     return true;
 
   Document* element_document = &(element_->GetDocument());
@@ -659,66 +633,27 @@ bool ScriptLoader::DoExecuteScript(const ScriptSourceCode& source_code) {
   if (!frame)
     return true;
 
-  const ContentSecurityPolicy* csp =
-      element_document->GetContentSecurityPolicy();
-  bool should_bypass_main_world_csp =
-      (frame->GetScriptController().ShouldBypassMainWorldCSP()) ||
-      csp->AllowScriptWithHash(source_code.Source(),
-                               ContentSecurityPolicy::InlineType::kBlock);
+  if (!is_external_script_) {
+    const ContentSecurityPolicy* csp =
+        element_document->GetContentSecurityPolicy();
+    bool should_bypass_main_world_csp =
+        (frame->GetScriptController().ShouldBypassMainWorldCSP()) ||
+        csp->AllowScriptWithHash(script->InlineSourceTextForCSP(),
+                                 ContentSecurityPolicy::InlineType::kBlock);
 
-  AtomicString nonce =
-      element_->IsNonceableElement() ? element_->nonce() : g_null_atom;
-  if (!is_external_script_ && !should_bypass_main_world_csp &&
-      !element_->AllowInlineScriptForCSP(nonce, start_line_number_,
-                                         source_code.Source())) {
-    return false;
+    AtomicString nonce =
+        element_->IsNonceableElement() ? element_->nonce() : g_null_atom;
+    if (!should_bypass_main_world_csp &&
+        !element_->AllowInlineScriptForCSP(nonce, start_line_number_,
+                                           script->InlineSourceTextForCSP())) {
+      return false;
+    }
   }
 
   if (is_external_script_) {
-    ScriptResource* resource = source_code.GetResource();
-    CHECK_EQ(resource, resource_);
-    CHECK(resource);
-    if (!ScriptResource::MimeTypeAllowedByNosniff(resource->GetResponse())) {
-      context_document->AddConsoleMessage(ConsoleMessage::Create(
-          kSecurityMessageSource, kErrorMessageLevel,
-          "Refused to execute script from '" + resource->Url().ElidedString() +
-              "' because its MIME type ('" + resource->HttpContentType() +
-              "') is not executable, and "
-              "strict MIME type checking is "
-              "enabled."));
+    if (!script->CheckMIMETypeBeforeRunScript(
+            context_document, element_->GetDocument().GetSecurityOrigin()))
       return false;
-    }
-
-    String mime_type = resource->HttpContentType();
-    if (mime_type.StartsWith("image/") || mime_type == "text/csv" ||
-        mime_type.StartsWith("audio/") || mime_type.StartsWith("video/")) {
-      context_document->AddConsoleMessage(ConsoleMessage::Create(
-          kSecurityMessageSource, kErrorMessageLevel,
-          "Refused to execute script from '" + resource->Url().ElidedString() +
-              "' because its MIME type ('" + mime_type +
-              "') is not executable."));
-      if (mime_type.StartsWith("image/"))
-        UseCounter::Count(frame, UseCounter::kBlockedSniffingImageToScript);
-      else if (mime_type.StartsWith("audio/"))
-        UseCounter::Count(frame, UseCounter::kBlockedSniffingAudioToScript);
-      else if (mime_type.StartsWith("video/"))
-        UseCounter::Count(frame, UseCounter::kBlockedSniffingVideoToScript);
-      else if (mime_type == "text/csv")
-        UseCounter::Count(frame, UseCounter::kBlockedSniffingCSVToScript);
-      return false;
-    }
-
-    LogScriptMIMEType(frame, resource, mime_type);
-  }
-
-  AccessControlStatus access_control_status = kNotSharableCrossOrigin;
-  if (!is_external_script_) {
-    access_control_status = kSharableCrossOrigin;
-  } else {
-    CHECK(source_code.GetResource());
-    access_control_status =
-        source_code.GetResource()->CalculateAccessControlStatus(
-            element_->GetDocument().GetSecurityOrigin());
   }
 
   const bool is_imported_script = context_document != element_document;
@@ -745,8 +680,7 @@ bool ScriptLoader::DoExecuteScript(const ScriptSourceCode& source_code) {
 
   //    2. "Run the classic script given by the script's script."
   // Note: This is where the script is compiled and actually executed.
-  frame->GetScriptController().ExecuteScriptInMainWorld(source_code,
-                                                        access_control_status);
+  script->RunScript(frame, element_->GetDocument().GetSecurityOrigin());
 
   //    - "module":
   // TODO(hiroshige): Implement this.
@@ -767,12 +701,12 @@ void ScriptLoader::Execute() {
   DCHECK(async_exec_type_ != ScriptRunner::kNone);
   DCHECK(pending_script_->GetResource());
   bool error_occurred = false;
-  ScriptSourceCode source = pending_script_->GetSource(KURL(), error_occurred);
+  Script* script = pending_script_->GetSource(KURL(), error_occurred);
   DetachPendingScript();
   if (error_occurred) {
     DispatchErrorEvent();
   } else if (!resource_->WasCanceled()) {
-    if (ExecuteScript(source))
+    if (ExecuteScript(script))
       DispatchLoadEvent();
     else
       DispatchErrorEvent();

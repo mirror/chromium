@@ -30,6 +30,7 @@
 
 #include "core/layout/LayoutFlexibleBox.h"
 
+#include <limits>
 #include "core/frame/UseCounter.h"
 #include "core/layout/FlexibleBoxAlgorithm.h"
 #include "core/layout/LayoutState.h"
@@ -39,9 +40,8 @@
 #include "core/paint/PaintLayer.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/LengthFunctions.h"
-#include "wtf/AutoReset.h"
-#include "wtf/MathExtras.h"
-#include <limits>
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
@@ -172,11 +172,11 @@ int LayoutFlexibleBox::SynthesizedBaselineFromContentBox(
     const LayoutBox& box,
     LineDirectionMode direction) {
   if (direction == kHorizontalLine) {
-    return (box.size().Height() - box.BorderBottom() - box.PaddingBottom() -
+    return (box.Size().Height() - box.BorderBottom() - box.PaddingBottom() -
             box.VerticalScrollbarWidth())
         .ToInt();
   }
-  return (box.size().Width() - box.BorderLeft() - box.PaddingLeft() -
+  return (box.Size().Width() - box.BorderLeft() - box.PaddingLeft() -
           box.HorizontalScrollbarHeight())
       .ToInt();
 }
@@ -354,7 +354,7 @@ void LayoutFlexibleBox::StyleDidChange(StyleDifference diff,
   }
 }
 
-void LayoutFlexibleBox::GetLayoutBlock(bool relayout_children) {
+void LayoutFlexibleBox::UpdateBlockLayout(bool relayout_children) {
   DCHECK(NeedsLayout());
 
   if (!relayout_children && SimplifiedLayout())
@@ -487,7 +487,7 @@ Length LayoutFlexibleBox::FlexBasisForChild(const LayoutBox& child) const {
 
 LayoutUnit LayoutFlexibleBox::CrossAxisExtentForChild(
     const LayoutBox& child) const {
-  return IsHorizontalFlow() ? child.size().Height() : child.size().Width();
+  return IsHorizontalFlow() ? child.Size().Height() : child.Size().Width();
 }
 
 LayoutUnit LayoutFlexibleBox::ChildIntrinsicLogicalHeight(
@@ -530,7 +530,7 @@ LayoutUnit LayoutFlexibleBox::CrossAxisIntrinsicExtentForChild(
 
 LayoutUnit LayoutFlexibleBox::MainAxisExtentForChild(
     const LayoutBox& child) const {
-  return IsHorizontalFlow() ? child.size().Width() : child.size().Height();
+  return IsHorizontalFlow() ? child.Size().Width() : child.Size().Height();
 }
 
 LayoutUnit LayoutFlexibleBox::MainAxisContentExtentForChildIncludingScrollbar(
@@ -541,11 +541,11 @@ LayoutUnit LayoutFlexibleBox::MainAxisContentExtentForChildIncludingScrollbar(
 }
 
 LayoutUnit LayoutFlexibleBox::CrossAxisExtent() const {
-  return IsHorizontalFlow() ? size().Height() : size().Width();
+  return IsHorizontalFlow() ? Size().Height() : Size().Width();
 }
 
 LayoutUnit LayoutFlexibleBox::MainAxisExtent() const {
-  return IsHorizontalFlow() ? size().Width() : size().Height();
+  return IsHorizontalFlow() ? Size().Width() : Size().Height();
 }
 
 LayoutUnit LayoutFlexibleBox::CrossAxisContentExtent() const {
@@ -1020,7 +1020,7 @@ void LayoutFlexibleBox::LayoutFlexItems(bool relayout_children,
     // Instead of just checking if we have a line, make sure the flexbox
     // has at least a line's worth of height to cover this case.
     LayoutUnit min_height = MinimumLogicalHeightForEmptyLine();
-    if (size().Height() < min_height)
+    if (Size().Height() < min_height)
       SetLogicalHeight(min_height);
   }
 

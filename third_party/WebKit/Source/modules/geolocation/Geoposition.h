@@ -30,7 +30,7 @@
 #include "modules/EventModules.h"
 #include "modules/geolocation/Coordinates.h"
 #include "platform/heap/Handle.h"
-#include "platform/wtf/Assertions.h"
+#include "wtf/Assertions.h"
 
 namespace blink {
 

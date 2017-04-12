@@ -4,14 +4,14 @@
 
 #include "core/css/parser/CSSSelectorParser.h"
 
+#include <memory>
 #include "core/css/CSSSelectorList.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -173,6 +173,7 @@ bool IsUserActionPseudoClass(CSSSelector::PseudoType pseudo) {
   switch (pseudo) {
     case CSSSelector::kPseudoHover:
     case CSSSelector::kPseudoFocus:
+    case CSSSelector::kPseudoFocusWithin:
     case CSSSelector::kPseudoActive:
       return true;
     default:
@@ -442,6 +443,10 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumePseudo(
   AtomicString value = token.Value().ToAtomicString().LowerASCII();
   bool has_arguments = token.GetType() == kFunctionToken;
   selector->UpdatePseudoType(value, has_arguments);
+
+  if (!RuntimeEnabledFeatures::cssSelectorsFocusWithinEnabled() &&
+      selector->GetPseudoType() == CSSSelector::kPseudoFocusWithin)
+    return nullptr;
 
   if (selector->Match() == CSSSelector::kPseudoElement &&
       disallow_pseudo_elements_)

@@ -12,7 +12,8 @@
 #include "base/values.h"
 #include "chrome/browser/android/vr_shell/animation.h"
 #include "chrome/browser/android/vr_shell/easing.h"
-#include "chrome/browser/android/vr_shell/ui_elements.h"
+#include "chrome/browser/android/vr_shell/ui_element.h"
+#include "device/vr/vr_math.h"
 
 namespace vr_shell {
 
@@ -46,7 +47,7 @@ bool ParseFloat(const base::DictionaryValue& dict,
 
 bool ParseColorf(const base::DictionaryValue& dict,
                  const std::string& key,
-                 Colorf* output) {
+                 vr::Colorf* output) {
   const base::DictionaryValue* item_dict;
   if (dict.GetDictionary(key, &item_dict)) {
     double value;
@@ -141,7 +142,7 @@ std::unique_ptr<easing::Easing> ParseEasing(const base::DictionaryValue& dict) {
   return result;
 }
 
-void ApplyAnchoring(const ContentRectangle& parent,
+void ApplyAnchoring(const UiElement& parent,
                     XAnchoring x_anchoring,
                     YAnchoring y_anchoring,
                     Transform* transform) {
@@ -149,10 +150,10 @@ void ApplyAnchoring(const ContentRectangle& parent,
   float x_offset;
   switch (x_anchoring) {
     case XLEFT:
-      x_offset = -0.5f * parent.size.x;
+      x_offset = -0.5f * parent.size.x();
       break;
     case XRIGHT:
-      x_offset = 0.5f * parent.size.x;
+      x_offset = 0.5f * parent.size.x();
       break;
     case XNONE:
       x_offset = 0.0f;
@@ -161,21 +162,21 @@ void ApplyAnchoring(const ContentRectangle& parent,
   float y_offset;
   switch (y_anchoring) {
     case YTOP:
-      y_offset = 0.5f * parent.size.y;
+      y_offset = 0.5f * parent.size.y();
       break;
     case YBOTTOM:
-      y_offset = -0.5f * parent.size.y;
+      y_offset = -0.5f * parent.size.y();
       break;
     case YNONE:
       y_offset = 0.0f;
       break;
   }
-  transform->Translate(x_offset, y_offset, 0);
+  transform->Translate(gfx::Vector3dF(x_offset, y_offset, 0));
 }
 
 }  // namespace
 
-void UiScene::AddUiElement(std::unique_ptr<ContentRectangle> element) {
+void UiScene::AddUiElement(std::unique_ptr<UiElement> element) {
   CHECK_GE(element->id, 0);
   CHECK_EQ(GetUiElementById(element->id), nullptr);
   if (element->parent_id >= 0) {
@@ -192,7 +193,7 @@ void UiScene::AddUiElementFromDict(const base::DictionaryValue& dict) {
   CHECK(ParseInt(dict, "id", &id));
   CHECK_EQ(GetUiElementById(id), nullptr);
 
-  auto element = base::MakeUnique<ContentRectangle>();
+  auto element = base::MakeUnique<UiElement>();
   element->id = id;
 
   ApplyDictToElement(dict, element.get());
@@ -202,7 +203,7 @@ void UiScene::AddUiElementFromDict(const base::DictionaryValue& dict) {
 void UiScene::UpdateUiElementFromDict(const base::DictionaryValue& dict) {
   int id;
   CHECK(ParseInt(dict, "id", &id));
-  ContentRectangle* element = GetUiElementById(id);
+  UiElement* element = GetUiElementById(id);
   CHECK_NE(element, nullptr);
   ApplyDictToElement(dict, element);
 }
@@ -221,7 +222,7 @@ void UiScene::RemoveUiElement(int element_id) {
 
 void UiScene::AddAnimation(int element_id,
                            std::unique_ptr<Animation> animation) {
-  ContentRectangle* element = GetUiElementById(element_id);
+  UiElement* element = GetUiElementById(element_id);
   CHECK_NE(element, nullptr);
   for (auto& existing_animation : element->animations) {
     CHECK_NE(existing_animation->id, animation->id);
@@ -266,7 +267,7 @@ void UiScene::AddAnimationFromDict(const base::DictionaryValue& dict,
   base::TimeTicks start = current_time + delay;
   base::TimeDelta duration = base::TimeDelta::FromMilliseconds(duration_ms);
 
-  ContentRectangle* element = GetUiElementById(element_id);
+  UiElement* element = GetUiElementById(element_id);
   CHECK_NE(element, nullptr);
   element->animations.emplace_back(base::MakeUnique<Animation>(
       animation_id, static_cast<Animation::Property>(property),
@@ -274,7 +275,7 @@ void UiScene::AddAnimationFromDict(const base::DictionaryValue& dict,
 }
 
 void UiScene::RemoveAnimation(int element_id, int animation_id) {
-  ContentRectangle* element = GetUiElementById(element_id);
+  UiElement* element = GetUiElementById(element_id);
   CHECK_NE(element, nullptr);
   auto& animations = element->animations;
   for (auto it = animations.begin(); it != animations.end(); ++it) {
@@ -340,7 +341,7 @@ void UiScene::UpdateTransforms(const base::TimeTicks& time) {
   }
 }
 
-ContentRectangle* UiScene::GetUiElementById(int element_id) {
+UiElement* UiScene::GetUiElementById(int element_id) {
   for (auto& element : ui_elements_) {
     if (element->id == element_id) {
       return element.get();
@@ -349,8 +350,8 @@ ContentRectangle* UiScene::GetUiElementById(int element_id) {
   return nullptr;
 }
 
-std::vector<const ContentRectangle*> UiScene::GetWorldElements() const {
-  std::vector<const ContentRectangle*> elements;
+std::vector<const UiElement*> UiScene::GetWorldElements() const {
+  std::vector<const UiElement*> elements;
   for (const auto& element : ui_elements_) {
     if (element->IsVisible() && !element->lock_to_fov) {
       elements.push_back(element.get());
@@ -359,8 +360,8 @@ std::vector<const ContentRectangle*> UiScene::GetWorldElements() const {
   return elements;
 }
 
-std::vector<const ContentRectangle*> UiScene::GetHeadLockedElements() const {
-  std::vector<const ContentRectangle*> elements;
+std::vector<const UiElement*> UiScene::GetHeadLockedElements() const {
+  std::vector<const UiElement*> elements;
   for (const auto& element : ui_elements_) {
     if (element->IsVisible() && element->lock_to_fov) {
       elements.push_back(element.get());
@@ -373,7 +374,7 @@ bool UiScene::HasVisibleHeadLockedElements() const {
   return !GetHeadLockedElements().empty();
 }
 
-const Colorf& UiScene::GetBackgroundColor() const {
+const vr::Colorf& UiScene::GetBackgroundColor() const {
   return background_color_;
 }
 
@@ -385,8 +386,7 @@ bool UiScene::GetWebVrRenderingEnabled() const {
   return webvr_rendering_enabled_;
 }
 
-const std::vector<std::unique_ptr<ContentRectangle>>& UiScene::GetUiElements()
-    const {
+const std::vector<std::unique_ptr<UiElement>>& UiScene::GetUiElements() const {
   return ui_elements_;
 }
 
@@ -394,11 +394,11 @@ UiScene::UiScene() = default;
 
 UiScene::~UiScene() = default;
 
-void UiScene::ApplyRecursiveTransforms(ContentRectangle* element) {
+void UiScene::ApplyRecursiveTransforms(UiElement* element) {
   if (!element->dirty)
     return;
 
-  ContentRectangle* parent = nullptr;
+  UiElement* parent = nullptr;
   if (element->parent_id >= 0) {
     parent = GetUiElementById(element->parent_id);
     CHECK(parent != nullptr);
@@ -406,7 +406,7 @@ void UiScene::ApplyRecursiveTransforms(ContentRectangle* element) {
 
   Transform* transform = element->mutable_transform();
   transform->MakeIdentity();
-  transform->Scale(element->size.x, element->size.y, element->size.z);
+  transform->Scale(element->size);
   element->computed_opacity = element->opacity;
   element->computed_lock_to_fov = element->lock_to_fov;
 
@@ -414,28 +414,27 @@ void UiScene::ApplyRecursiveTransforms(ContentRectangle* element) {
   // and it's children, if applicable.
   Transform* inheritable = &element->inheritable_transform;
   inheritable->MakeIdentity();
-  inheritable->Scale(element->scale.x, element->scale.y, element->scale.z);
-  inheritable->Rotate(element->rotation.x, element->rotation.y,
-                      element->rotation.z, element->rotation.angle);
-  inheritable->Translate(element->translation.x, element->translation.y,
-                         element->translation.z);
+  inheritable->Scale(element->scale);
+  inheritable->Rotate(element->rotation);
+  inheritable->Translate(element->translation);
   if (parent) {
     ApplyAnchoring(*parent, element->x_anchoring, element->y_anchoring,
                    inheritable);
     ApplyRecursiveTransforms(parent);
-    inheritable->to_world = MatrixMul(parent->inheritable_transform.to_world,
-                                      inheritable->to_world);
+    vr::MatrixMul(parent->inheritable_transform.to_world, inheritable->to_world,
+                  &inheritable->to_world);
 
     element->computed_opacity *= parent->opacity;
     element->computed_lock_to_fov = parent->lock_to_fov;
   }
 
-  transform->to_world = MatrixMul(inheritable->to_world, transform->to_world);
+  vr::MatrixMul(inheritable->to_world, transform->to_world,
+                &transform->to_world);
   element->dirty = false;
 }
 
 void UiScene::ApplyDictToElement(const base::DictionaryValue& dict,
-                                 ContentRectangle* element) {
+                                 UiElement* element) {
   int parent_id;
 
   if (ParseInt(dict, "parentId", &parent_id)) {
@@ -452,19 +451,27 @@ void UiScene::ApplyDictToElement(const base::DictionaryValue& dict,
   ParseFloat(dict, "opacity", &element->opacity);
 
   DCHECK(!(element->lock_to_fov && element->parent_id != -1));
-
-  ParseFloat(dict, "sizeX", &element->size.x);
-  ParseFloat(dict, "sizeY", &element->size.y);
-  ParseFloat(dict, "scaleX", &element->scale.x);
-  ParseFloat(dict, "scaleY", &element->scale.y);
-  ParseFloat(dict, "scaleZ", &element->scale.z);
+  float val;
+  if (ParseFloat(dict, "sizeX", &val))
+    element->size.set_x(val);
+  if (ParseFloat(dict, "sizeY", &val))
+    element->size.set_y(val);
+  if (ParseFloat(dict, "scaleX", &val))
+    element->scale.set_x(val);
+  if (ParseFloat(dict, "scaleY", &val))
+    element->scale.set_y(val);
+  if (ParseFloat(dict, "scaleZ", &val))
+    element->scale.set_z(val);
+  if (ParseFloat(dict, "translationX", &val))
+    element->translation.set_x(val);
+  if (ParseFloat(dict, "translationY", &val))
+    element->translation.set_y(val);
+  if (ParseFloat(dict, "translationZ", &val))
+    element->translation.set_z(val);
   ParseFloat(dict, "rotationX", &element->rotation.x);
   ParseFloat(dict, "rotationY", &element->rotation.y);
   ParseFloat(dict, "rotationZ", &element->rotation.z);
   ParseFloat(dict, "rotationAngle", &element->rotation.angle);
-  ParseFloat(dict, "translationX", &element->translation.x);
-  ParseFloat(dict, "translationY", &element->translation.y);
-  ParseFloat(dict, "translationZ", &element->translation.z);
 
   if (ParseInt(dict, "xAnchoring", &element->x_anchoring)) {
     CHECK_GE(element->parent_id, 0);
@@ -481,12 +488,17 @@ void UiScene::ApplyDictToElement(const base::DictionaryValue& dict,
       content_element_ = nullptr;
     }
 
+    int val;
     switch (element->fill) {
       case Fill::SPRITE:
-        CHECK(ParseInt(dict, "copyRectX", &element->copy_rect.x));
-        CHECK(ParseInt(dict, "copyRectY", &element->copy_rect.y));
-        CHECK(ParseInt(dict, "copyRectWidth", &element->copy_rect.width));
-        CHECK(ParseInt(dict, "copyRectHeight", &element->copy_rect.height));
+        CHECK(ParseInt(dict, "copyRectX", &val));
+        element->copy_rect.set_x(val);
+        CHECK(ParseInt(dict, "copyRectY", &val));
+        element->copy_rect.set_y(val);
+        CHECK(ParseInt(dict, "copyRectWidth", &val));
+        element->copy_rect.set_width(val);
+        CHECK(ParseInt(dict, "copyRectHeight", &val));
+        element->copy_rect.set_height(val);
         break;
       case Fill::OPAQUE_GRADIENT:
         CHECK(ParseColorf(dict, "edgeColor", &element->edge_color));

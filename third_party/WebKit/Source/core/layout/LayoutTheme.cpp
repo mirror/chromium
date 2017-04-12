@@ -53,10 +53,10 @@
 #include "platform/fonts/FontSelector.h"
 #include "platform/text/PlatformLocale.h"
 #include "platform/text/StringTruncator.h"
+#include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebFallbackThemeEngine.h"
 #include "public/platform/WebRect.h"
-#include "wtf/text/StringBuilder.h"
 
 // The methods in this file are shared by all themes on every platform.
 
@@ -378,11 +378,11 @@ int LayoutTheme::BaselinePosition(const LayoutObject* o) const {
   const LayoutBox* box = ToLayoutBox(o);
 
   if (platform_theme_)
-    return box->size().Height() + box->MarginTop() +
+    return box->Size().Height() + box->MarginTop() +
            platform_theme_->BaselinePositionAdjustment(
                o->Style()->Appearance()) *
                o->Style()->EffectiveZoom();
-  return (box->size().Height() + box->MarginTop()).ToInt();
+  return (box->Size().Height() + box->MarginTop()).ToInt();
 }
 
 bool LayoutTheme::IsControlContainer(ControlPart appearance) const {

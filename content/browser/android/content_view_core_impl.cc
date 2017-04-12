@@ -53,6 +53,7 @@
 #include "jni/ContentViewCore_jni.h"
 #include "jni/DragEvent_jni.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "third_party/WebKit/public/web/WebContextMenuData.h"
 #include "ui/android/view_android.h"
 #include "ui/android/window_android.h"
 #include "ui/base/clipboard/clipboard.h"
@@ -75,6 +76,7 @@ using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaParamRef;
 using base::android::JavaRef;
 using base::android::ScopedJavaLocalRef;
+using blink::WebContextMenuData;
 using blink::WebGestureEvent;
 using blink::WebInputEvent;
 using ui::MotionEventAndroid;
@@ -630,8 +632,11 @@ bool ContentViewCoreImpl::ShowPastePopup(const ContextMenuParams& params) {
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (obj.is_null())
     return false;
+  const bool can_select_all =
+      !!(params.edit_flags & WebContextMenuData::kCanSelectAll);
   Java_ContentViewCore_showPastePopup(env, obj, params.selection_start.x(),
-                                      params.selection_start.y());
+                                      params.selection_start.y(),
+                                      can_select_all);
   return true;
 }
 
@@ -680,22 +685,6 @@ ScopedJavaLocalRef<jobject> ContentViewCoreImpl::GetContext() const {
     return ScopedJavaLocalRef<jobject>();
 
   return Java_ContentViewCore_getContext(env, obj);
-}
-
-gfx::Size ContentViewCoreImpl::GetViewSizeWithOSKHidden() const {
-  gfx::Size size_pix;
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
-  if (j_obj.is_null())
-    return size_pix = gfx::Size();
-  size_pix = gfx::Size(
-      Java_ContentViewCore_getViewportWidthPix(env, j_obj),
-      Java_ContentViewCore_getViewportHeightWithOSKHiddenPix(env, j_obj));
-
-  gfx::Size size_dip = gfx::ScaleToCeiledSize(size_pix, 1.0f / dpi_scale());
-  if (DoBrowserControlsShrinkBlinkSize())
-    size_dip.Enlarge(0, -GetTopControlsHeightDip());
-  return size_dip;
 }
 
 gfx::Size ContentViewCoreImpl::GetViewSize() const {

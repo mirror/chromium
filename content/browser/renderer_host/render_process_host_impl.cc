@@ -183,7 +183,6 @@
 #include "ppapi/features/features.h"
 #include "services/resource_coordinator/memory/coordinator/coordinator_impl.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
-#include "services/service_manager/public/cpp/connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/runner/common/client_util.h"
@@ -703,6 +702,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
 #endif
       instance_weak_factory_(
           new base::WeakPtrFactory<RenderProcessHostImpl>(this)),
+      frame_sink_provider_(id_),
       weak_factory_(this) {
   widget_helper_ = new RenderWidgetHelper();
 
@@ -725,6 +725,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
   push_messaging_manager_.reset(new PushMessagingManager(
       GetID(), storage_partition_impl_->GetServiceWorkerContext()));
 
+  AddObserver(indexed_db_factory_.get());
 #if defined(OS_MACOSX)
   if (BootstrapSandboxManager::ShouldEnable())
     AddObserver(BootstrapSandboxManager::GetInstance());
@@ -1192,7 +1193,8 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
 
   channel_->AddAssociatedInterfaceForIOThread(
-      base::Bind(&IndexedDBDispatcherHost::AddBinding, indexed_db_factory_));
+      base::Bind(&IndexedDBDispatcherHost::AddBinding,
+                 base::Unretained(indexed_db_factory_.get())));
 
 #if defined(OS_ANDROID)
   AddUIThreadInterface(
@@ -1239,6 +1241,10 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&RenderProcessHostImpl::
                      CreateOffscreenCanvasCompositorFrameSinkProvider,
                  base::Unretained(this)));
+
+  AddUIThreadInterface(registry.get(),
+                       base::Bind(&RenderProcessHostImpl::BindFrameSinkProvider,
+                                  base::Unretained(this)));
 
   AddUIThreadInterface(registry.get(),
                        base::Bind(&OffscreenCanvasSurfaceFactoryImpl::Create));
@@ -1365,6 +1371,11 @@ void RenderProcessHostImpl::CreateOffscreenCanvasCompositorFrameSinkProvider(
         new OffscreenCanvasCompositorFrameSinkProviderImpl());
   }
   offscreen_canvas_provider_->Add(std::move(request));
+}
+
+void RenderProcessHostImpl::BindFrameSinkProvider(
+    mojom::FrameSinkProviderRequest request) {
+  frame_sink_provider_.Bind(std::move(request));
 }
 
 void RenderProcessHostImpl::CreateStoragePartitionService(
@@ -1743,6 +1754,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kEnableLCDText,
     switches::kEnableLogging,
     switches::kEnableNetworkInformation,
+    switches::kEnableNetworkService,
     switches::kEnableOverlayScrollbar,
     switches::kEnableNewVp9CodecString,
     switches::kEnablePinch,
@@ -2341,6 +2353,18 @@ bool RenderProcessHostImpl::StopWebRTCEventLog() {
   return webrtc_eventlog_host_.StopWebRTCEventLog();
 }
 
+void RenderProcessHostImpl::SetEchoCanceller3(bool enable) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  // Piggybacking on AEC dumps.
+  // TODO(hlundin): Change name for aec_dump_consumers_;
+  // http://crbug.com/709919.
+  for (std::vector<int>::iterator it = aec_dump_consumers_.begin();
+       it != aec_dump_consumers_.end(); ++it) {
+    Send(new AudioProcessingMsg_EnableAec3(*it, enable));
+  }
+}
+
 void RenderProcessHostImpl::SetWebRtcLogMessageCallback(
     base::Callback<void(const std::string&)> callback) {
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -2755,6 +2779,11 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   // this object to be no longer needed.
   if (delayed_cleanup_needed_)
     Cleanup();
+
+  // If RenderProcessHostImpl is reused, the next renderer will send a new
+  // request for FrameSinkProvider so make sure frame_sink_provider_ is ready
+  // for that.
+  frame_sink_provider_.Unbind();
 
   // This object is not deleted at this point and might be reused later.
   // TODO(darin): clean this up

@@ -59,6 +59,7 @@
 #include "modules/device_orientation/DeviceOrientationController.h"
 #include "modules/encryptedmedia/HTMLMediaElementEncryptedMedia.h"
 #include "modules/gamepad/NavigatorGamepad.h"
+#include "modules/presentation/PresentationReceiver.h"
 #include "modules/remoteplayback/HTMLMediaElementRemotePlayback.h"
 #include "modules/remoteplayback/RemotePlayback.h"
 #include "modules/serviceworkers/NavigatorServiceWorker.h"
@@ -159,6 +160,11 @@ void LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld() {
       if (RuntimeEnabledFeatures::webVREnabled() ||
           OriginTrials::webVREnabled(document->GetExecutionContext()))
         NavigatorVR::From(*document);
+      if (RuntimeEnabledFeatures::presentationEnabled() &&
+          web_frame_->GetFrame()->GetSettings()->GetPresentationReceiver()) {
+        // Call this in order to ensure the object is created.
+        PresentationReceiver::From(*document);
+      }
     }
   }
   // FIXME: when extensions go out of process, this whole concept stops working.
@@ -964,9 +970,16 @@ KURL LocalFrameClientImpl::OverrideFlashEmbedWithHTML(const KURL& url) {
   return web_frame_->Client()->OverrideFlashEmbedWithHTML(WebURL(url));
 }
 
-void LocalFrameClientImpl::SetHasReceivedUserGesture() {
-  if (web_frame_->Client())
+void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
+  // The client potentially needs to dispatch the event to other processes only
+  // for the first time.
+  if (!received_previously && web_frame_->Client())
     web_frame_->Client()->SetHasReceivedUserGesture();
+  // WebAutofillClient reacts only to the user gestures for this particular
+  // frame. |received_previously| is ignored because it may be true due to an
+  // event in a child frame.
+  if (WebAutofillClient* autofill_client = web_frame_->AutofillClient())
+    autofill_client->UserGestureObserved();
 }
 
 void LocalFrameClientImpl::AbortClientNavigation() {

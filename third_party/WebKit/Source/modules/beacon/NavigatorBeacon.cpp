@@ -106,7 +106,7 @@ bool NavigatorBeacon::SendBeaconImpl(
     const String& urlstring,
     const ArrayBufferViewOrBlobOrStringOrFormData& data,
     ExceptionState& exception_state) {
-  ExecutionContext* context = script_state->GetExecutionContext();
+  ExecutionContext* context = ExecutionContext::From(script_state);
   KURL url = context->CompleteURL(urlstring);
   if (!CanSendBeacon(context, url, exception_state))
     return false;
@@ -118,7 +118,7 @@ bool NavigatorBeacon::SendBeaconImpl(
   if (data.isArrayBufferView()) {
     allowed =
         PingLoader::SendBeacon(GetSupplementable()->GetFrame(), allowance, url,
-                               data.getAsArrayBufferView(), beacon_size);
+                               data.getAsArrayBufferView().View(), beacon_size);
   } else if (data.isBlob()) {
     Blob* blob = data.getAsBlob();
     if (!FetchUtils::IsSimpleContentType(AtomicString(blob->type()))) {

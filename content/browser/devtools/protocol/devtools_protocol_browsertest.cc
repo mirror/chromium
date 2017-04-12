@@ -785,6 +785,39 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest,
   PlaceAndCaptureBox(kFrameSize, gfx::Size(10, 10000), 1.0);
 }
 
+// Verifies that setDefaultBackgroundColor and captureScreenshot support a
+// transparent background.
+IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, TransparentScreenshots) {
+  if (base::SysInfo::IsLowEndDevice())
+    return;
+
+  shell()->LoadURL(
+      GURL("data:text/html,<body style='background:transparent'></body>"));
+  WaitForLoadStop(shell()->web_contents());
+  Attach();
+
+  // Override background to transparent.
+  std::unique_ptr<base::DictionaryValue> color(new base::DictionaryValue());
+  color->SetInteger("r", 0);
+  color->SetInteger("g", 0);
+  color->SetInteger("b", 0);
+  color->SetDouble("a", 0);
+  std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+  params->Set("color", std::move(color));
+  SendCommand("Emulation.setDefaultBackgroundColorOverride", std::move(params));
+
+  SkBitmap expected_bitmap;
+  // We compare against the actual physical backing size rather than the
+  // view size, because the view size is stored adjusted for DPI and only in
+  // integer precision.
+  gfx::Size view_size = static_cast<RenderWidgetHostViewBase*>(
+                            shell()->web_contents()->GetRenderWidgetHostView())
+                            ->GetPhysicalBackingSize();
+  expected_bitmap.allocN32Pixels(view_size.width(), view_size.height());
+  expected_bitmap.eraseColor(SK_ColorTRANSPARENT);
+  CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, true);
+}
+
 #if defined(OS_ANDROID)
 // Disabled, see http://crbug.com/469947.
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, DISABLED_SynthesizePinchGesture) {
@@ -1316,13 +1349,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest,
                                .size());
 }
 
-// TODO(701223): Enable this on android.
-#if defined(OS_ANDROID)
-#define MAYBE_VirtualTimeTest DISABLED_VirtualTimeTest
-#else
-#define MAYBE_VirtualTimeTest VirtualTimeTest
-#endif
-IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, MAYBE_VirtualTimeTest) {
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, VirtualTimeTest) {
   NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
   Attach();
 
@@ -1330,16 +1357,18 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, MAYBE_VirtualTimeTest) {
   params->SetString("policy", "pause");
   SendCommand("Emulation.setVirtualTimePolicy", std::move(params), true);
 
+  // TODO(scheduler-dev): Revisit timing when we have strict ordering
+  // guarantees.
   params.reset(new base::DictionaryValue());
   params->SetString("expression",
                     "setTimeout(function(){console.log('before')}, 1000);"
-                    "setTimeout(function(){console.log('after')}, 1001);");
+                    "setTimeout(function(){console.log('after')}, 1002);");
   SendCommand("Runtime.evaluate", std::move(params), true);
 
   // Let virtual time advance for one second.
   params.reset(new base::DictionaryValue());
   params->SetString("policy", "advance");
-  params->SetInteger("budget", 1000);
+  params->SetInteger("budget", 1001);
   SendCommand("Emulation.setVirtualTimePolicy", std::move(params), true);
 
   WaitForNotification("Emulation.virtualTimeBudgetExpired");

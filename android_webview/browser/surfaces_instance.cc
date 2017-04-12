@@ -59,9 +59,9 @@ SurfacesInstance::SurfacesInstance()
   constexpr bool is_root = true;
   constexpr bool handles_frame_sink_id_invalidation = true;
   constexpr bool needs_sync_points = true;
-  support_.reset(new cc::CompositorFrameSinkSupport(
+  support_ = cc::CompositorFrameSinkSupport::Create(
       this, surface_manager_.get(), frame_sink_id_, is_root,
-      handles_frame_sink_id_invalidation, needs_sync_points));
+      handles_frame_sink_id_invalidation, needs_sync_points);
 
   begin_frame_source_.reset(new cc::StubBeginFrameSource);
   std::unique_ptr<cc::TextureMailboxDeleter> texture_mailbox_deleter(
@@ -175,7 +175,10 @@ void SurfacesInstance::SetEmptyRootFrame() {
   support_->SubmitCompositorFrame(root_id_, std::move(empty_frame));
 }
 
-void SurfacesInstance::DidReceiveCompositorFrameAck() {}
+void SurfacesInstance::DidReceiveCompositorFrameAck(
+    const cc::ReturnedResourceArray& resources) {
+  ReclaimResources(resources);
+}
 
 void SurfacesInstance::OnBeginFrame(const cc::BeginFrameArgs& args) {}
 

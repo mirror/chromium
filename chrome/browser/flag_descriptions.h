@@ -2149,6 +2149,18 @@ extern const char kChromeHomeDescription[];
 
 #endif  // defined(OS_ANDROID)
 
+//  In-Product Help flags
+
+#if defined(OS_ANDROID)
+
+// The name of the In-Product Help demo mode in about:flags.
+extern const char kEnableIphDemoMode[];
+
+// Description of the In-Product Help demo mode in about:flags.
+extern const char kEnableIphDemoModeDescription[];
+
+#endif  // defined(OS_ANDROID)
+
 //  Settings window flags
 
 // An about::flags experiment title to show settings in a separate window
@@ -2980,6 +2992,9 @@ extern const char kOmniboxEntitySuggestionsName[];
 // Description of the flag that enables entity suggestions.
 extern const char kOmniboxEntitySuggestionsDescription[];
 
+extern const char kPauseBackgroundTabsName[];
+extern const char kPauseBackgroundTabsDescription[];
+
 #endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
         // defined(OS_WIN)
 
@@ -3017,6 +3032,9 @@ extern const char kDelayNavigationDescription[];
 
 // Description of the 'Debugging keyboard shortcuts' lab.
 extern const char kDebugShortcutsDescription[];
+
+extern const char kMemoryAblationName[];
+extern const char kMemoryAblationDescription[];
 
 #if defined(OS_ANDROID)
 

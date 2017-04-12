@@ -377,8 +377,10 @@ void DelegatedFrameHost::AttemptFrameSubscriberCapture(
   }
 }
 
-void DelegatedFrameHost::DidCreateNewRendererCompositorFrameSink() {
+void DelegatedFrameHost::DidCreateNewRendererCompositorFrameSink(
+    cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink) {
   ResetCompositorFrameSinkSupport();
+  renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
   CreateCompositorFrameSinkSupport();
   has_frame_ = false;
 }
@@ -413,8 +415,8 @@ void DelegatedFrameHost::SubmitCompositorFrame(
                                       frame.metadata.latency_info.begin(),
                                       frame.metadata.latency_info.end());
 
-    client_->DelegatedFrameHostSendReclaimCompositorResources(
-        true /* is_swap_ack*/, resources);
+    renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
+
     skipped_frames_ = true;
     BeginFrameDidNotSwap(ack);
     return;
@@ -492,15 +494,14 @@ void DelegatedFrameHost::ClearDelegatedFrame() {
   EvictDelegatedFrame();
 }
 
-void DelegatedFrameHost::DidReceiveCompositorFrameAck() {
-  client_->DelegatedFrameHostSendReclaimCompositorResources(
-      true /* is_swap_ack */, cc::ReturnedResourceArray());
+void DelegatedFrameHost::DidReceiveCompositorFrameAck(
+    const cc::ReturnedResourceArray& resources) {
+  renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
 }
 
 void DelegatedFrameHost::ReclaimResources(
     const cc::ReturnedResourceArray& resources) {
-  client_->DelegatedFrameHostSendReclaimCompositorResources(
-      false /* is_swap_ack */, resources);
+  renderer_compositor_frame_sink_->ReclaimResources(resources);
 }
 
 void DelegatedFrameHost::WillDrawSurface(const cc::LocalSurfaceId& id,
@@ -833,12 +834,14 @@ void DelegatedFrameHost::UnlockResources() {
 
 void DelegatedFrameHost::CreateCompositorFrameSinkSupport() {
   DCHECK(!support_);
+  constexpr bool is_root = false;
+  constexpr bool handles_frame_sink_id_invalidation = false;
+  constexpr bool needs_sync_points = true;
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-  support_ = base::MakeUnique<cc::CompositorFrameSinkSupport>(
+  support_ = cc::CompositorFrameSinkSupport::Create(
       this, factory->GetContextFactoryPrivate()->GetSurfaceManager(),
-      frame_sink_id_, false /* is_root */,
-      false /* handles_frame_sink_id_invalidation */,
-      true /* needs_sync_points */);
+      frame_sink_id_, is_root, handles_frame_sink_id_invalidation,
+      needs_sync_points);
   if (compositor_)
     compositor_->AddFrameSink(frame_sink_id_);
   if (needs_begin_frame_)

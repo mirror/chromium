@@ -17,9 +17,9 @@
 #include "platform/graphics/BitmapImage.h"
 #include "platform/graphics/PlaceholderImage.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/Vector.h"
 #include "v8/include/v8.h"
-#include "wtf/StdLibExtras.h"
-#include "wtf/Vector.h"
 
 namespace blink {
 namespace {
@@ -75,11 +75,11 @@ ImageResourceContent::ImageResourceContent(PassRefPtr<blink::Image> image)
   info_ = &null_info;
 }
 
-ImageResourceContent* ImageResourceContent::Fetch(FetchRequest& request,
+ImageResourceContent* ImageResourceContent::Fetch(FetchParameters& params,
                                                   ResourceFetcher* fetcher) {
   // TODO(hiroshige): Remove direct references to ImageResource by making
   // the dependencies around ImageResource and ImageResourceContent cleaner.
-  ImageResource* resource = ImageResource::Fetch(request, fetcher);
+  ImageResource* resource = ImageResource::Fetch(params, fetcher);
   if (!resource)
     return nullptr;
   return resource->GetContent();

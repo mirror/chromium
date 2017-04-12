@@ -205,7 +205,7 @@ class ServiceManagerConnection {
 
     // ui/views/mus requires a WindowManager running, so launch test_wm.
     service_manager::Connector* connector = context_->connector();
-    connector->Connect("test_wm");
+    connector->StartService("test_wm");
     service_manager_connector_ = connector->Clone();
     service_manager_identity_ = context_->identity();
     wait->Signal();
@@ -259,6 +259,14 @@ void ViewsMusTestSuite::Initialize() {
 void ViewsMusTestSuite::Shutdown() {
   service_manager_connections_.reset();
   ViewsTestSuite::Shutdown();
+}
+
+void ViewsMusTestSuite::InitializeEnv() {
+  env_ = aura::Env::CreateInstance(aura::Env::Mode::MUS);
+}
+
+void ViewsMusTestSuite::DestroyEnv() {
+  env_.reset();
 }
 
 }  // namespace views

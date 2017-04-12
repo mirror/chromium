@@ -82,9 +82,9 @@ bool CompositingLayerAssigner::SquashingWouldExceedSparsityTolerance(
   IntRect bounds = candidate->ClippedAbsoluteBoundingBox();
   IntRect new_bounding_rect = squashing_state.bounding_rect;
   new_bounding_rect.Unite(bounds);
-  const uint64_t new_bounding_rect_area = new_bounding_rect.size().Area();
+  const uint64_t new_bounding_rect_area = new_bounding_rect.Size().Area();
   const uint64_t new_squashed_area =
-      squashing_state.total_area_of_squashed_rects + bounds.size().Area();
+      squashing_state.total_area_of_squashed_rects + bounds.Size().Area();
   return new_bounding_rect_area >
          g_squashing_sparsity_tolerance * new_squashed_area;
 }
@@ -273,11 +273,6 @@ void CompositingLayerAssigner::UpdateSquashingAssignment(
   }
 }
 
-static ScrollingCoordinator* ScrollingCoordinatorFromLayer(PaintLayer& layer) {
-  Page* page = layer.GetLayoutObject().GetFrame()->GetPage();
-  return (!page) ? nullptr : page->GetScrollingCoordinator();
-}
-
 void CompositingLayerAssigner::AssignLayersToBackingsInternal(
     PaintLayer* layer,
     SquashingState& squashing_state,
@@ -302,7 +297,7 @@ void CompositingLayerAssigner::AssignLayersToBackingsInternal(
     layers_needing_paint_invalidation.push_back(layer);
     layers_changed_ = true;
     if (ScrollingCoordinator* scrolling_coordinator =
-            ScrollingCoordinatorFromLayer(*layer)) {
+            layer->GetScrollingCoordinator()) {
       if (layer->GetLayoutObject().Style()->HasViewportConstrainedPosition()) {
         scrolling_coordinator->FrameViewFixedObjectsDidChange(
             layer->GetLayoutObject().View()->GetFrameView());
@@ -321,7 +316,7 @@ void CompositingLayerAssigner::AssignLayersToBackingsInternal(
   if (layer_is_squashed) {
     squashing_state.next_squashed_layer_index++;
     IntRect layer_bounds = layer->ClippedAbsoluteBoundingBox();
-    squashing_state.total_area_of_squashed_rects += layer_bounds.size().Area();
+    squashing_state.total_area_of_squashed_rects += layer_bounds.Size().Area();
     squashing_state.bounding_rect.Unite(layer_bounds);
   }
 

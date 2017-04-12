@@ -15,7 +15,7 @@ GpuCompositorFrameSink::GpuCompositorFrameSink(
         compositor_frame_sink_private_request,
     cc::mojom::MojoCompositorFrameSinkClientPtr client)
     : delegate_(delegate),
-      support_(base::MakeUnique<cc::CompositorFrameSinkSupport>(
+      support_(cc::CompositorFrameSinkSupport::Create(
           this,
           surface_manager,
           frame_sink_id,
@@ -55,9 +55,10 @@ void GpuCompositorFrameSink::BeginFrameDidNotSwap(
   support_->BeginFrameDidNotSwap(begin_frame_ack);
 }
 
-void GpuCompositorFrameSink::DidReceiveCompositorFrameAck() {
+void GpuCompositorFrameSink::DidReceiveCompositorFrameAck(
+    const cc::ReturnedResourceArray& resources) {
   if (client_)
-    client_->DidReceiveCompositorFrameAck();
+    client_->DidReceiveCompositorFrameAck(resources);
 }
 
 void GpuCompositorFrameSink::ClaimTemporaryReference(

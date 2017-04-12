@@ -43,7 +43,7 @@
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "wtf/BitVector.h"
+#include "platform/wtf/BitVector.h"
 
 namespace blink {
 
@@ -96,6 +96,7 @@ bool SupportsInvalidation(CSSSelector::PseudoType type) {
     case CSSSelector::kPseudoHover:
     case CSSSelector::kPseudoDrag:
     case CSSSelector::kPseudoFocus:
+    case CSSSelector::kPseudoFocusWithin:
     case CSSSelector::kPseudoActive:
     case CSSSelector::kPseudoChecked:
     case CSSSelector::kPseudoEnabled:
@@ -422,6 +423,7 @@ InvalidationSet* RuleFeatureSet::InvalidationSetForSimpleSelector(
       case CSSSelector::kPseudoHover:
       case CSSSelector::kPseudoDrag:
       case CSSSelector::kPseudoFocus:
+      case CSSSelector::kPseudoFocusWithin:
       case CSSSelector::kPseudoActive:
       case CSSSelector::kPseudoChecked:
       case CSSSelector::kPseudoEnabled:

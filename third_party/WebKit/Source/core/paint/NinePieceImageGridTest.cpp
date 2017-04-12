@@ -19,8 +19,8 @@ class NinePieceImageGridTest : public RenderingTest {
   NinePieceImageGridTest() {}
 
   StyleImage* GeneratedImage() {
-    CSSLinearGradientValue* gradient =
-        CSSLinearGradientValue::Create(kRepeating);
+    CSSGradientValue* gradient = CSSLinearGradientValue::Create(
+        nullptr, nullptr, nullptr, nullptr, nullptr, kRepeating);
     return StyleGeneratedImage::Create(*gradient);
   }
 
@@ -136,9 +136,9 @@ TEST_F(NinePieceImageGridTest, NinePieceImagePainting_ScaleDownBorder) {
     NinePieceImageGrid::NinePieceDrawInfo draw_info =
         grid.GetNinePieceDrawInfo(piece, 1);
     if (draw_info.is_corner_piece)
-      EXPECT_EQ(draw_info.destination.size(), FloatSize(50, 50));
+      EXPECT_EQ(draw_info.destination.Size(), FloatSize(50, 50));
     else
-      EXPECT_TRUE(draw_info.destination.size().IsEmpty());
+      EXPECT_TRUE(draw_info.destination.Size().IsEmpty());
   }
 }
 

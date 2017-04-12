@@ -23,6 +23,7 @@
 #include "build/build_config.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
+#include "content/browser/renderer_host/frame_sink_provider_impl.h"
 #include "content/browser/renderer_host/offscreen_canvas_compositor_frame_sink_provider_impl.h"
 #include "content/browser/webrtc/webrtc_eventlog_host.h"
 #include "content/common/associated_interfaces.mojom.h"
@@ -156,6 +157,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void DisableAudioDebugRecordings() override;
   bool StartWebRTCEventLog(const base::FilePath& file_path) override;
   bool StopWebRTCEventLog() override;
+  void SetEchoCanceller3(bool enable) override;
   void SetWebRtcLogMessageCallback(
       base::Callback<void(const std::string&)> callback) override;
   void ClearWebRtcLogMessageCallback() override;
@@ -347,6 +349,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void CreateMusGpuRequest(ui::mojom::GpuRequest request);
   void CreateOffscreenCanvasCompositorFrameSinkProvider(
       blink::mojom::OffscreenCanvasCompositorFrameSinkProviderRequest request);
+  void BindFrameSinkProvider(mojom::FrameSinkProviderRequest request);
   void CreateStoragePartitionService(
       mojo::InterfaceRequest<mojom::StoragePartitionService> request);
 
@@ -583,7 +586,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // The memory allocator, if any, in which the renderer will write its metrics.
   std::unique_ptr<base::SharedPersistentMemoryAllocator> metrics_allocator_;
 
-  scoped_refptr<IndexedDBDispatcherHost> indexed_db_factory_;
+  std::unique_ptr<IndexedDBDispatcherHost, BrowserThread::DeleteOnIOThread>
+      indexed_db_factory_;
 
   bool channel_connected_;
   bool sent_render_process_ready_;
@@ -616,6 +620,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // WeakPtrs which are invalidated any time the RPHI is recycled.
   std::unique_ptr<base::WeakPtrFactory<RenderProcessHostImpl>>
       instance_weak_factory_;
+
+  FrameSinkProviderImpl frame_sink_provider_;
 
   base::WeakPtrFactory<RenderProcessHostImpl> weak_factory_;
 

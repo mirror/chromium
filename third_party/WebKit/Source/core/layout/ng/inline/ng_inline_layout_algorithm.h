@@ -14,7 +14,7 @@
 #include "core/layout/ng/ng_layout_algorithm.h"
 #include "platform/fonts/FontBaseline.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -90,10 +90,6 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   // part of layout operations and modifies the state of |this|.
   MinMaxContentSize ComputeMinMaxContentSizeByLayout();
 
-  // Copy fragment data of all lines to LayoutBlockFlow.
-  // TODO(kojii): Move to NGInlineNode (or remove when paint is implemented.)
-  void CopyFragmentDataToLayoutBlockFlow(NGLayoutResult*);
-
   // Compute inline size of an NGLayoutInlineItem.
   // Same as NGLayoutInlineItem::InlineSize(), except that this function can
   // compute atomic inlines by performing layout.
@@ -155,7 +151,6 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   LayoutUnit last_break_opportunity_position_;
   LayoutUnit content_size_;
   LayoutUnit max_inline_size_;
-  NGFragmentBuilder container_builder_;
   FontBaseline baseline_type_ = FontBaseline::kAlphabeticBaseline;
 
   NGLogicalOffset bfc_offset_;

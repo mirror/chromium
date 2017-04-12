@@ -26,16 +26,16 @@
 
 #include "core/css/CSSSelector.h"
 
+#include <algorithm>
+#include <memory>
 #include "core/HTMLNames.h"
 #include "core/css/CSSMarkup.h"
 #include "core/css/CSSSelectorList.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "wtf/Assertions.h"
-#include "wtf/HashMap.h"
-#include "wtf/StdLibExtras.h"
-#include "wtf/text/StringBuilder.h"
-#include <algorithm>
-#include <memory>
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 #ifndef NDEBUG
 #include <stdio.h>
@@ -216,6 +216,7 @@ PseudoId CSSSelector::GetPseudoId(PseudoType type) {
     case kPseudoHover:
     case kPseudoDrag:
     case kPseudoFocus:
+    case kPseudoFocusWithin:
     case kPseudoActive:
     case kPseudoChecked:
     case kPseudoEnabled:
@@ -333,6 +334,7 @@ const static NameToPseudoStruct kPseudoTypeWithoutArgumentsMap[] = {
     {"first-line", CSSSelector::kPseudoFirstLine},
     {"first-of-type", CSSSelector::kPseudoFirstOfType},
     {"focus", CSSSelector::kPseudoFocus},
+    {"focus-within", CSSSelector::kPseudoFocusWithin},
     {"future", CSSSelector::kPseudoFutureCue},
     {"horizontal", CSSSelector::kPseudoHorizontal},
     {"host", CSSSelector::kPseudoHost},
@@ -548,6 +550,7 @@ void CSSSelector::UpdatePseudoType(const AtomicString& value,
     case kPseudoFirstChild:
     case kPseudoFirstOfType:
     case kPseudoFocus:
+    case kPseudoFocusWithin:
     case kPseudoFullPageMedia:
     case kPseudoFullScreen:
     case kPseudoFullScreenAncestor:

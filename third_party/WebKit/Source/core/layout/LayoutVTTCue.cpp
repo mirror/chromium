@@ -30,7 +30,7 @@
 #include "core/html/media/MediaControls.h"
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutState.h"
-#include "wtf/MathExtras.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
@@ -46,7 +46,7 @@ class SnapToLinesLayouter {
       margin_ = settings->GetTextTrackMarginPercentage() / 100.0;
   }
 
-  void GetLayout();
+  void UpdateLayout();
 
  private:
   bool IsOutside(const IntRect&) const;
@@ -95,7 +95,7 @@ LayoutUnit SnapToLinesLayouter::ComputeInitialPositionAdjustment(
   // 10. Vertical Growing Left: Decrease position by the width of the
   // bounding box of the boxes in boxes, then increase position by step.
   if (IsFlippedBlocksWritingMode(writing_mode)) {
-    position -= cue_box_.size().Width();
+    position -= cue_box_.Size().Width();
     position += step;
   }
 
@@ -166,7 +166,7 @@ bool SnapToLinesLayouter::ShouldSwitchDirection(InlineFlowBox* first_line_box,
   return false;
 }
 
-void SnapToLinesLayouter::GetLayout() {
+void SnapToLinesLayouter::UpdateLayout() {
   // http://dev.w3.org/html5/webvtt/#dfn-apply-webvtt-cue-settings
   // Step 13, "If cue's text track cue snap-to-lines flag is set".
 
@@ -185,8 +185,8 @@ void SnapToLinesLayouter::GetLayout() {
   WritingMode writing_mode = cue_box_.Style()->GetWritingMode();
   LayoutBlock* parent_block = cue_box_.ContainingBlock();
   LayoutUnit full_dimension = blink::IsHorizontalWritingMode(writing_mode)
-                                  ? parent_block->size().Height()
-                                  : parent_block->size().Width();
+                                  ? parent_block->Size().Height()
+                                  : parent_block->Size().Width();
   LayoutUnit margin(full_dimension * margin_);
 
   // 3. Let max dimension be full dimension - (2 * margin)
@@ -359,8 +359,8 @@ IntRect LayoutVTTCue::ComputeControlsRect() const {
       ToLayoutBox(*controls->ContainerLayoutObject()));
 }
 
-void LayoutVTTCue::GetLayout() {
-  LayoutBlockFlow::GetLayout();
+void LayoutVTTCue::UpdateLayout() {
+  LayoutBlockFlow::UpdateLayout();
 
   DCHECK(FirstChild());
 
@@ -368,7 +368,7 @@ void LayoutVTTCue::GetLayout() {
 
   // http://dev.w3.org/html5/webvtt/#dfn-apply-webvtt-cue-settings - step 13.
   if (!std::isnan(snap_to_lines_position_))
-    SnapToLinesLayouter(*this, ComputeControlsRect()).GetLayout();
+    SnapToLinesLayouter(*this, ComputeControlsRect()).UpdateLayout();
   else
     RepositionCueSnapToLinesNotSet();
 }

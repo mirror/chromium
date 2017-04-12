@@ -18,7 +18,7 @@
 #include "core/style/AppliedTextDecoration.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
-#include "wtf/Optional.h"
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -63,7 +63,7 @@ static ResolvedUnderlinePosition ResolveUnderlinePosition(
     case kIdeographicBaseline:
       // Compute language-appropriate default underline position.
       // https://drafts.csswg.org/css-text-decor-3/#default-stylesheet
-      UScriptCode script = style.GetFontDescription().Script();
+      UScriptCode script = style.GetFontDescription().GetScript();
       if (script == USCRIPT_KATAKANA_OR_HIRAGANA || script == USCRIPT_HANGUL)
         return ResolvedUnderlinePosition::kOver;
       return ResolvedUnderlinePosition::kUnder;

@@ -284,6 +284,10 @@
       status: "test",
     },
     {
+      name: "CSSSelectorsFocusWithin",
+      status: "experimental",
+    },
+    {
       name: "CSSSnapSize",
       status: "stable",
     },
@@ -408,6 +412,10 @@
       status: "experimental",
     },
     {
+      name:"FetchRequestCache",
+      status: "experimental",
+    },
+    {
       name: "FileAPIBlobClose",
       status: "experimental",
     },
@@ -491,8 +499,7 @@
     },
     {
       name: "ImageCapture",
-      origin_trial_feature_name: "ImageCapture",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "ImageOrientation",

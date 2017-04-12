@@ -69,7 +69,7 @@ bool DirectCompositorFrameSink::BindToClient(
 
   constexpr bool is_root = true;
   constexpr bool handles_frame_sink_id_invalidation = false;
-  support_ = base::MakeUnique<CompositorFrameSinkSupport>(
+  support_ = CompositorFrameSinkSupport::Create(
       this, surface_manager_, frame_sink_id_, is_root,
       handles_frame_sink_id_invalidation,
       capabilities_.delegated_sync_points_required);
@@ -131,7 +131,9 @@ void DirectCompositorFrameSink::DisplayDidDrawAndSwap() {
   // be drawn.
 }
 
-void DirectCompositorFrameSink::DidReceiveCompositorFrameAck() {
+void DirectCompositorFrameSink::DidReceiveCompositorFrameAck(
+    const ReturnedResourceArray& resources) {
+  client_->ReclaimResources(resources);
   client_->DidReceiveCompositorFrameAck();
 }
 

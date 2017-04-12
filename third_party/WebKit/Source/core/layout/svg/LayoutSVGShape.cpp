@@ -40,8 +40,8 @@
 #include "core/svg/SVGPathElement.h"
 #include "platform/geometry/FloatPoint.h"
 #include "platform/graphics/StrokeData.h"
-#include "wtf/MathExtras.h"
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -171,7 +171,7 @@ void LayoutSVGShape::UpdateLocalTransform() {
   }
 }
 
-void LayoutSVGShape::GetLayout() {
+void LayoutSVGShape::UpdateLayout() {
   LayoutAnalyzer::Scope analyzer(*this);
 
   // Invalidate all resources of this client if our layout changed.

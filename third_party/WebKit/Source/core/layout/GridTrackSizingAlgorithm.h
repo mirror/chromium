@@ -10,8 +10,8 @@
 #include "core/style/GridPositionsResolver.h"
 #include "core/style/GridTrackSize.h"
 #include "platform/LayoutUnit.h"
-#include "wtf/HashSet.h"
-#include "wtf/Optional.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -110,9 +110,6 @@ class GridTrackSizingAlgorithm final {
 
 #if DCHECK_IS_ON()
   bool TracksAreWiderThanMinTrackBreadth() const;
-  bool IsTrackSizingOperation() const {
-    return sizing_operation_ == kTrackSizing;
-  };
 #endif
 
  private:

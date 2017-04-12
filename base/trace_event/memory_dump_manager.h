@@ -42,7 +42,6 @@ namespace trace_event {
 class MemoryDumpManagerDelegate;
 class MemoryDumpProvider;
 class MemoryDumpSessionState;
-class MemoryDumpScheduler;
 
 // This is the interface exposed to the rest of the codebase to deal with
 // memory tracing. The main entry point for clients is represented by
@@ -114,7 +113,7 @@ class BASE_EXPORT MemoryDumpManager : public TraceLog::EnabledStateObserver {
   // successful).
   void RequestGlobalDump(MemoryDumpType dump_type,
                          MemoryDumpLevelOfDetail level_of_detail,
-                         const MemoryDumpCallback& callback);
+                         const GlobalMemoryDumpCallback& callback);
 
   // Same as above (still asynchronous), but without callback.
   void RequestGlobalDump(MemoryDumpType dump_type,
@@ -168,7 +167,6 @@ class BASE_EXPORT MemoryDumpManager : public TraceLog::EnabledStateObserver {
   friend struct DefaultSingletonTraits<MemoryDumpManager>;
   friend class MemoryDumpManagerDelegate;
   friend class MemoryDumpManagerTest;
-  friend class MemoryDumpScheduler;
   friend class memory_instrumentation::MemoryDumpManagerDelegateImplTest;
 
   // Holds the state of a process memory dump that needs to be carried over
@@ -180,7 +178,7 @@ class BASE_EXPORT MemoryDumpManager : public TraceLog::EnabledStateObserver {
         MemoryDumpRequestArgs req_args,
         const MemoryDumpProviderInfo::OrderedSet& dump_providers,
         scoped_refptr<MemoryDumpSessionState> session_state,
-        MemoryDumpCallback callback,
+        ProcessMemoryDumpCallback callback,
         scoped_refptr<SingleThreadTaskRunner> dump_thread_task_runner);
     ~ProcessMemoryDumpAsyncState();
 
@@ -207,7 +205,7 @@ class BASE_EXPORT MemoryDumpManager : public TraceLog::EnabledStateObserver {
     scoped_refptr<MemoryDumpSessionState> session_state;
 
     // Callback passed to the initial call to CreateProcessDump().
-    MemoryDumpCallback callback;
+    ProcessMemoryDumpCallback callback;
 
     // The |success| field that will be passed as argument to the |callback|.
     bool dump_successful;
@@ -244,7 +242,7 @@ class BASE_EXPORT MemoryDumpManager : public TraceLog::EnabledStateObserver {
   // |callback| will be invoked asynchronously upon completion on the same
   // thread on which CreateProcessDump() was called.
   void CreateProcessDump(const MemoryDumpRequestArgs& args,
-                         const MemoryDumpCallback& callback);
+                         const ProcessMemoryDumpCallback& callback);
 
   // Calls InvokeOnMemoryDump() for the next MDP on the task runner specified by
   // the MDP while registration. On failure to do so, skips and continues to
@@ -257,14 +255,6 @@ class BASE_EXPORT MemoryDumpManager : public TraceLog::EnabledStateObserver {
   // runner.
   void InvokeOnMemoryDump(ProcessMemoryDumpAsyncState* owned_pmd_async_state);
 
-  // Records a quick total memory usage in |memory_total|. This is used to track
-  // and detect peaks in the memory usage of the process without having to
-  // record all data from dump providers. This value is approximate to trade-off
-  // speed, and not consistent with the rest of the memory-infra metrics. Must
-  // be called on the dump thread.
-  // Returns true if |memory_total| was updated by polling at least 1 MDP.
-  bool PollFastMemoryTotal(uint64_t* memory_total);
-
   // Helper for RegierDumpProvider* functions.
   void RegisterDumpProviderInternal(
       MemoryDumpProvider* mdp,
@@ -276,20 +266,14 @@ class BASE_EXPORT MemoryDumpManager : public TraceLog::EnabledStateObserver {
   void UnregisterDumpProviderInternal(MemoryDumpProvider* mdp,
                                       bool take_mdp_ownership_and_delete_async);
 
-  // Adds / removes provider that supports polling to
-  // |dump_providers_for_polling_|.
-  void RegisterPollingMDPOnDumpThread(
-      scoped_refptr<MemoryDumpProviderInfo> mdpinfo);
-  void UnregisterPollingMDPOnDumpThread(
-      scoped_refptr<MemoryDumpProviderInfo> mdpinfo);
+  // Fills the passed vector with the subset of dump providers which were
+  // registered with is_fast_polling_supported == true.
+  void GetDumpProvidersForPolling(
+      std::vector<scoped_refptr<MemoryDumpProviderInfo>>*);
 
   // An ordererd set of registered MemoryDumpProviderInfo(s), sorted by task
   // runner affinity (MDPs belonging to the same task runners are adjacent).
   MemoryDumpProviderInfo::OrderedSet dump_providers_;
-
-  // A copy of mdpinfo list that support polling. It must be accessed only on
-  // the dump thread if dump thread exists.
-  MemoryDumpProviderInfo::OrderedSet dump_providers_for_polling_;
 
   // Shared among all the PMDs to keep state scoped to the tracing session.
   scoped_refptr<MemoryDumpSessionState> session_state_;
@@ -333,14 +317,15 @@ class BASE_EXPORT MemoryDumpManagerDelegate {
   MemoryDumpManagerDelegate() {}
   virtual ~MemoryDumpManagerDelegate() {}
 
-  virtual void RequestGlobalMemoryDump(const MemoryDumpRequestArgs& args,
-                                       const MemoryDumpCallback& callback) = 0;
+  virtual void RequestGlobalMemoryDump(
+      const MemoryDumpRequestArgs& args,
+      const GlobalMemoryDumpCallback& callback) = 0;
 
   virtual bool IsCoordinator() const = 0;
 
  protected:
   void CreateProcessDump(const MemoryDumpRequestArgs& args,
-                         const MemoryDumpCallback& callback) {
+                         const ProcessMemoryDumpCallback& callback) {
     MemoryDumpManager::GetInstance()->CreateProcessDump(args, callback);
   }
 

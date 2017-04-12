@@ -22,8 +22,8 @@
 #define TableLayoutAlgorithm_h
 
 #include "platform/LayoutUnit.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -44,7 +44,7 @@ class TableLayoutAlgorithm {
   virtual void ApplyPreferredLogicalWidthQuirks(
       LayoutUnit& min_width,
       LayoutUnit& max_width) const = 0;
-  virtual void GetLayout() = 0;
+  virtual void UpdateLayout() = 0;
   virtual void WillChangeTableLayout() = 0;
 
  protected:

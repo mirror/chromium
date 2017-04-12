@@ -32,7 +32,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBlockFlow.h"
-#include "wtf/ListHashSet.h"
+#include "platform/wtf/ListHashSet.h"
 
 namespace blink {
 
@@ -90,7 +90,7 @@ class CORE_EXPORT LayoutFlowThread : public LayoutBlockFlow {
       const LayoutObject&,
       AncestorSearchConstraint);
 
-  void GetLayout() override;
+  void UpdateLayout() override;
 
   // Always create a Layer for the LayoutFlowThread so that we
   // can easily avoid drawing the children directly.

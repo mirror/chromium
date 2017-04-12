@@ -28,8 +28,8 @@
 #include "core/dom/TagCollection.h"
 #include "core/html/CollectionType.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
@@ -99,6 +99,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
 
     T* list = T::Create(node, collection_type, name);
     result.stored_value->value = list;
+    ScriptWrappableVisitor::WriteBarrier(this, list);
     return list;
   }
 
@@ -113,6 +114,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
 
     T* list = T::Create(node, collection_type);
     result.stored_value->value = list;
+    ScriptWrappableVisitor::WriteBarrier(this, list);
     return list;
   }
 
@@ -135,6 +137,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
     TagCollection* list =
         TagCollection::Create(node, namespace_uri, local_name);
     result.stored_value->value = list;
+    ScriptWrappableVisitor::WriteBarrier(this, list);
     return list;
   }
 

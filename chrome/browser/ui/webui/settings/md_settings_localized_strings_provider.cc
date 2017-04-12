@@ -46,6 +46,7 @@
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "ui/chromeos/strings/grit/ui_chromeos_strings.h"
+#include "ui/display/display_switches.h"
 #else
 #include "chrome/browser/ui/webui/settings/system_handler.h"
 #endif
@@ -642,8 +643,7 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       {"displayArrangementText", IDS_SETTINGS_DISPLAY_ARRANGEMENT_TEXT},
       {"displayArrangementTitle", IDS_SETTINGS_DISPLAY_ARRANGEMENT_TITLE},
       {"displayMirror", IDS_SETTINGS_DISPLAY_MIRROR},
-      {"displayMirrorOff", IDS_SETTINGS_DISPLAY_MIRRORING_OFF},
-      {"displayMirrorOn", IDS_SETTINGS_DISPLAY_MIRRORING_ON},
+      {"displayUnfiedDesktop", IDS_SETTINGS_DISPLAY_UNIFIED_DESKTOP},
       {"displayResolutionTitle", IDS_SETTINGS_DISPLAY_RESOLUTION_TITLE},
       {"displayResolutionText", IDS_SETTINGS_DISPLAY_RESOLUTION_TEXT},
       {"displayResolutionTextBest", IDS_SETTINGS_DISPLAY_RESOLUTION_TEXT_BEST},
@@ -665,10 +665,12 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       {"displayTouchCalibrationTitle",
        IDS_SETTINGS_DISPLAY_TOUCH_CALIBRATION_TITLE},
       {"displayTouchCalibrationText",
-       IDS_SETTINGS_DISPLAY_TOUCH_CALIBRATION_TEXT}
-  };
+       IDS_SETTINGS_DISPLAY_TOUCH_CALIBRATION_TEXT}};
   AddLocalizedStringsBulk(html_source, display_strings,
                           arraysize(display_strings));
+  html_source->AddBoolean("unifiedDesktopAvailable",
+                          base::CommandLine::ForCurrentProcess()->HasSwitch(
+                              ::switches::kEnableUnifiedDesktop));
 
   html_source->AddBoolean(
       "enableTouchCalibrationSetting",
@@ -885,6 +887,8 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
        IDS_SETTINGS_INTERNET_KNOWN_NETWORKS_MENU_REMOVE_PREFERRED},
       {"knownNetworksMenuForget",
        IDS_SETTINGS_INTERNET_KNOWN_NETWORKS_MENU_FORGET},
+      {"networkAllowDataRoaming",
+       IDS_SETTINGS_SETTINGS_NETWORK_ALLOW_DATA_ROAMING},
       {"networkAutoConnect", IDS_SETTINGS_INTERNET_NETWORK_AUTO_CONNECT},
       {"networkButtonActivate", IDS_SETTINGS_INTERNET_BUTTON_ACTIVATE},
       {"networkButtonConfigure", IDS_SETTINGS_INTERNET_BUTTON_CONFIGURE},
@@ -1313,8 +1317,6 @@ void AddPeopleStrings(content::WebUIDataSource* html_source) {
     {"enablePaymentsIntegrationCheckboxLabel",
      IDS_SETTINGS_ENABLE_PAYMENTS_INTEGRATION_CHECKBOX_LABEL},
     {"manageSyncedDataTitle", IDS_SETTINGS_MANAGE_SYNCED_DATA_TITLE},
-    {"manageSyncedDataDescription",
-     IDS_SETTINGS_MANAGE_SYNCED_DATA_DESCRIPTION},
     {"encryptionOptionsTitle", IDS_SETTINGS_ENCRYPTION_OPTIONS},
     {"syncDataEncryptedText", IDS_SETTINGS_SYNC_DATA_ENCRYPTED_TEXT},
     {"encryptWithGoogleCredentialsLabel",

@@ -21,6 +21,7 @@
 #include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/android/vr_shell/android_ui_gesture_target.h"
 #include "chrome/browser/android/vr_shell/ui_interface.h"
+#include "chrome/browser/android/vr_shell/ui_scene_manager.h"
 #include "chrome/browser/android/vr_shell/vr_compositor.h"
 #include "chrome/browser/android/vr_shell/vr_controller_model.h"
 #include "chrome/browser/android/vr_shell/vr_gl_thread.h"
@@ -303,6 +304,8 @@ void VrShell::SetWebVrMode(JNIEnv* env,
 
   html_interface_->SetMode(enabled ? UiInterface::Mode::WEB_VR
                                    : UiInterface::Mode::STANDARD);
+  PostToGlThreadWhenReady(base::Bind(&UiSceneManager::SetWebVRMode,
+                                     gl_thread_->GetSceneManager(), enabled));
 }
 
 void VrShell::OnLoadProgressChanged(JNIEnv* env,
@@ -352,6 +355,9 @@ void VrShell::OnTabRemoved(JNIEnv* env,
 void VrShell::SetWebVRSecureOrigin(bool secure_origin) {
   // TODO(cjgrant): Align this state with the logic that drives the omnibox.
   html_interface_->SetWebVRSecureOrigin(secure_origin);
+  PostToGlThreadWhenReady(base::Bind(&UiSceneManager::SetWebVRSecureOrigin,
+                                     gl_thread_->GetSceneManager(),
+                                     secure_origin));
 }
 
 void VrShell::SubmitWebVRFrame(int16_t frame_index,
@@ -370,9 +376,9 @@ void VrShell::SubmitControllerModel(std::unique_ptr<VrControllerModel> model) {
 }
 
 void VrShell::UpdateWebVRTextureBounds(int16_t frame_index,
-                                       const gvr::Rectf& left_bounds,
-                                       const gvr::Rectf& right_bounds,
-                                       const gvr::Sizei& source_size) {
+                                       const gfx::RectF& left_bounds,
+                                       const gfx::RectF& right_bounds,
+                                       const gfx::Size& source_size) {
   PostToGlThreadWhenReady(base::Bind(&VrShellGl::UpdateWebVRTextureBounds,
                                      gl_thread_->GetVrShellGl(), frame_index,
                                      left_bounds, right_bounds, source_size));
@@ -468,8 +474,8 @@ UiInterface* VrShell::GetUiInterface() {
 }
 
 void VrShell::UpdateScene(const base::ListValue* args) {
-  PostToGlThreadWhenReady(base::Bind(&VrShellGl::UpdateScene,
-                                     gl_thread_->GetVrShellGl(),
+  PostToGlThreadWhenReady(base::Bind(&UiSceneManager::UpdateScene,
+                                     gl_thread_->GetSceneManager(),
                                      base::Passed(args->CreateDeepCopy())));
 }
 

@@ -36,6 +36,7 @@
 #include "core/events/EventTarget.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/geometry/LayoutRect.h"
+#include "public/platform/WebFocusType.h"
 
 // This needs to be here because Element.cpp also depends on it.
 #define DUMP_NODE_STATISTICS 0
@@ -233,7 +234,7 @@ class CORE_EXPORT Node : public EventTarget {
   const AtomicString& lookupPrefix(const AtomicString& namespace_uri) const;
   const AtomicString& lookupNamespaceURI(const String& prefix) const;
 
-  String textContent(bool convert_b_rs_to_newlines = false) const;
+  String textContent(bool convert_brs_to_newlines = false) const;
   void setTextContent(const String&);
 
   bool SupportsAltText();
@@ -390,6 +391,9 @@ class CORE_EXPORT Node : public EventTarget {
   bool IsFocused() const {
     return IsUserActionElement() && IsUserActionElementFocused();
   }
+  bool HasFocusWithin() const {
+    return IsUserActionElement() && IsUserActionElementHasFocusWithin();
+  }
 
   bool NeedsAttach() const {
     return GetStyleChangeType() == kNeedsReattachStyleChange;
@@ -476,7 +480,8 @@ class CORE_EXPORT Node : public EventTarget {
     SetFlag(flag, kHasEventTargetDataFlag);
   }
 
-  virtual void SetFocused(bool flag);
+  virtual void SetFocused(bool flag, WebFocusType);
+  virtual void SetHasFocusWithin(bool flag);
   virtual void SetActive(bool flag = true);
   virtual void SetDragged(bool flag);
   virtual void SetHovered(bool flag = true);
@@ -902,6 +907,7 @@ class CORE_EXPORT Node : public EventTarget {
   bool IsUserActionElementDragged() const;
   bool IsUserActionElementHovered() const;
   bool IsUserActionElementFocused() const;
+  bool IsUserActionElementHasFocusWithin() const;
 
   void RecalcDistribution();
 

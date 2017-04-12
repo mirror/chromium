@@ -26,12 +26,12 @@
 #ifndef LayoutSVGShape_h
 #define LayoutSVGShape_h
 
+#include <memory>
 #include "core/layout/svg/LayoutSVGModelObject.h"
 #include "core/layout/svg/SVGMarkerData.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/transforms/AffineTransform.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -136,7 +136,7 @@ class LayoutSVGShape : public LayoutSVGModelObject {
     return type == kLayoutObjectSVGShape ||
            LayoutSVGModelObject::IsOfType(type);
   }
-  void GetLayout() final;
+  void UpdateLayout() final;
   void Paint(const PaintInfo&, const LayoutPoint&) const final;
   void AddOutlineRects(Vector<LayoutRect>&,
                        const LayoutPoint& additional_offset,

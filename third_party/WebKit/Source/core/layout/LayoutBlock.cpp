@@ -24,6 +24,7 @@
 
 #include "core/layout/LayoutBlock.h"
 
+#include <memory>
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -56,9 +57,8 @@
 #include "core/paint/PaintLayer.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/StdLibExtras.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/StdLibExtras.h"
 
 namespace blink {
 
@@ -414,7 +414,7 @@ void LayoutBlock::UpdateAfterLayout() {
   LayoutBox::UpdateAfterLayout();
 }
 
-void LayoutBlock::GetLayout() {
+void LayoutBlock::UpdateLayout() {
   DCHECK(!GetScrollableArea() || GetScrollableArea()->GetScrollAnchor());
 
   LayoutAnalyzer::Scope analyzer(*this);
@@ -426,7 +426,7 @@ void LayoutBlock::GetLayout() {
 
   // Table cells call layoutBlock directly, so don't add any logic here.  Put
   // code into layoutBlock().
-  GetLayoutBlock(false);
+  UpdateBlockLayout(false);
 
   // It's safe to check for control clip here, since controls can never be table
   // cells. If we have a lightweight clip, there can never be any overflow from
@@ -463,7 +463,7 @@ bool LayoutBlock::UpdateLogicalWidthAndColumnWidth() {
   return old_width != LogicalWidth() || WidthAvailableToChildrenHasChanged();
 }
 
-void LayoutBlock::GetLayoutBlock(bool) {
+void LayoutBlock::UpdateBlockLayout(bool) {
   NOTREACHED();
   ClearNeedsLayout();
 }
@@ -1251,7 +1251,7 @@ PositionWithAffinity LayoutBlock::PositionForPointRespectingEditingBoundaries(
 
   // Otherwise return before or after the child, depending on if the click was
   // to the logical left or logical right of the child
-  LayoutUnit child_middle = LogicalWidthForChildSize(child.size()) / 2;
+  LayoutUnit child_middle = LogicalWidthForChildSize(child.Size()) / 2;
   LayoutUnit logical_left = IsHorizontalWritingMode()
                                 ? point_in_child_coordinates.X()
                                 : point_in_child_coordinates.Y();
@@ -1283,7 +1283,7 @@ PositionWithAffinity LayoutBlock::PositionForPointIfOutsideAtomicInlineLevel(
 }
 
 static inline bool IsChildHitTestCandidate(LayoutBox* box) {
-  return box->size().Height() &&
+  return box->Size().Height() &&
          box->Style()->Visibility() == EVisibility::kVisible &&
          !box->IsFloatingOrOutOfFlowPositioned() && !box->IsLayoutFlowThread();
 }
@@ -1673,9 +1673,9 @@ int LayoutBlock::BaselinePosition(FontBaseline baseline_type,
       // For simplicity, we use this for all uses of deprecated flexbox.
       LayoutUnit bottom_of_content =
           direction == kHorizontalLine
-              ? size().Height() - BorderBottom() - PaddingBottom() -
+              ? Size().Height() - BorderBottom() - PaddingBottom() -
                     HorizontalScrollbarHeight()
-              : size().Width() - BorderLeft() - PaddingLeft() -
+              : Size().Width() - BorderLeft() - PaddingLeft() -
                     VerticalScrollbarWidth();
       if (baseline_pos > bottom_of_content)
         baseline_pos = -1;
@@ -1747,8 +1747,8 @@ int LayoutBlock::InlineBlockBaseline(LineDirectionMode line_direction) const {
       Style()->ContainsSize()) {
     // We are not calling LayoutBox::baselinePosition here because the caller
     // should add the margin-top/margin-right, not us.
-    return (line_direction == kHorizontalLine ? size().Height() + MarginBottom()
-                                              : size().Width() + MarginLeft())
+    return (line_direction == kHorizontalLine ? Size().Height() + MarginBottom()
+                                              : Size().Width() + MarginLeft())
         .ToInt();
   }
 
@@ -1830,7 +1830,7 @@ void LayoutBlock::UpdateHitTestResult(HitTestResult& result,
 // An inline-block uses its inlineBox as the inlineBoxWrapper,
 // so the firstChild() is nullptr if the only child is an empty inline-block.
 inline bool LayoutBlock::IsInlineBoxWrapperActuallyChild() const {
-  return IsInlineBlockOrInlineTable() && !size().IsEmpty() && GetNode() &&
+  return IsInlineBlockOrInlineTable() && !Size().IsEmpty() && GetNode() &&
          EditingIgnoresContent(*GetNode());
 }
 
@@ -1852,10 +1852,10 @@ LayoutRect LayoutBlock::LocalCaretRect(InlineBox* inline_box,
                                      extra_width_to_end_of_line);
 
   LayoutRect caret_rect =
-      LocalCaretRectForEmptyElement(size().Width(), TextIndentOffset());
+      LocalCaretRectForEmptyElement(Size().Width(), TextIndentOffset());
 
   if (extra_width_to_end_of_line)
-    *extra_width_to_end_of_line = size().Width() - caret_rect.MaxX();
+    *extra_width_to_end_of_line = Size().Width() - caret_rect.MaxX();
 
   return caret_rect;
 }
@@ -1865,7 +1865,7 @@ void LayoutBlock::AddOutlineRects(
     const LayoutPoint& additional_offset,
     IncludeBlockVisualOverflowOrNot include_block_overflows) const {
   if (!IsAnonymous())  // For anonymous blocks, the children add outline rects.
-    rects.push_back(LayoutRect(additional_offset, size()));
+    rects.push_back(LayoutRect(additional_offset, Size()));
 
   if (include_block_overflows == kIncludeBlockVisualOverflow &&
       !HasOverflowClip() && !HasControlClip()) {

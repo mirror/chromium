@@ -23,7 +23,7 @@
 #include "core/layout/svg/SVGResourcesCache.h"
 #include "core/svg/SVGElementProxy.h"
 #include "core/svg/SVGTreeScopeResources.h"
-#include "wtf/AutoReset.h"
+#include "platform/wtf/AutoReset.h"
 
 namespace blink {
 
@@ -42,7 +42,7 @@ LayoutSVGResourceContainer::LayoutSVGResourceContainer(SVGElement* node)
 
 LayoutSVGResourceContainer::~LayoutSVGResourceContainer() {}
 
-void LayoutSVGResourceContainer::GetLayout() {
+void LayoutSVGResourceContainer::UpdateLayout() {
   // FIXME: Investigate a way to detect and break resource layout dependency
   // cycles early. Then we can remove this method altogether, and fall back onto
   // LayoutSVGHiddenContainer::layout().
@@ -52,7 +52,7 @@ void LayoutSVGResourceContainer::GetLayout() {
 
   AutoReset<bool> in_layout_change(&is_in_layout_, true);
 
-  LayoutSVGHiddenContainer::GetLayout();
+  LayoutSVGHiddenContainer::UpdateLayout();
 
   ClearInvalidationMask();
 }

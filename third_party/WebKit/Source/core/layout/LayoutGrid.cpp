@@ -36,7 +36,7 @@
 #include "core/style/GridArea.h"
 #include "platform/LengthFunctions.h"
 #include "platform/text/WritingMode.h"
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -211,7 +211,7 @@ void LayoutGrid::RepeatTracksSizingIfNeeded(
   }
 }
 
-void LayoutGrid::GetLayoutBlock(bool relayout_children) {
+void LayoutGrid::UpdateBlockLayout(bool relayout_children) {
   DCHECK(NeedsLayout());
 
   // We cannot perform a simplifiedLayout() on a dirty grid that
@@ -231,7 +231,7 @@ void LayoutGrid::GetLayoutBlock(bool relayout_children) {
     // information (which may trigger relayout).
     LayoutState state(*this);
 
-    LayoutSize previous_size = size();
+    LayoutSize previous_size = Size();
 
     // We need to clear both own and containingBlock override sizes to
     // ensure we get the same result when grid's intrinsic size is
@@ -317,7 +317,7 @@ void LayoutGrid::GetLayoutBlock(bool relayout_children) {
     LayoutGridItems();
     track_sizing_algorithm_.Reset();
 
-    if (size() != previous_size)
+    if (Size() != previous_size)
       relayout_children = true;
 
     LayoutPositionedObjects(relayout_children || IsDocumentElement());
@@ -1630,19 +1630,19 @@ void LayoutGrid::UpdateAutoMarginsInColumnAxisIfNeeded(LayoutBox& child) {
 int LayoutGrid::SynthesizedBaselineFromContentBox(const LayoutBox& box,
                                                   LineDirectionMode direction) {
   if (direction == kHorizontalLine) {
-    return (box.size().Height() - box.BorderBottom() - box.PaddingBottom() -
+    return (box.Size().Height() - box.BorderBottom() - box.PaddingBottom() -
             box.HorizontalScrollbarHeight())
         .ToInt();
   }
-  return (box.size().Width() - box.BorderLeft() - box.PaddingLeft() -
+  return (box.Size().Width() - box.BorderLeft() - box.PaddingLeft() -
           box.VerticalScrollbarWidth())
       .ToInt();
 }
 
 int LayoutGrid::SynthesizedBaselineFromBorderBox(const LayoutBox& box,
                                                  LineDirectionMode direction) {
-  return (direction == kHorizontalLine ? box.size().Height()
-                                       : box.size().Width())
+  return (direction == kHorizontalLine ? box.Size().Height()
+                                       : box.Size().Width())
       .ToInt();
 }
 
@@ -1805,10 +1805,10 @@ LayoutUnit LayoutGrid::AscentForChild(const LayoutBox& child,
   if (baseline == -1) {
     if (IsHorizontalGridAxis(baseline_axis)) {
       return StyleRef().IsFlippedBlocksWritingMode()
-                 ? child.size().Width().ToInt() + margin
+                 ? child.Size().Width().ToInt() + margin
                  : margin;
     }
-    return child.size().Height() + margin;
+    return child.Size().Height() + margin;
   }
   return LayoutUnit(baseline) + margin;
 }

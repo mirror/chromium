@@ -363,7 +363,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                 }
 
                 @Override
-                public void allTabsPendingClosure(List<Integer> tabIds) {
+                public void allTabsPendingClosure(List<Tab> tabs) {
                     NewTabPageUma.recordNTPImpression(
                             NewTabPageUma.NTP_IMPESSION_POTENTIAL_NOTAB);
                 }
@@ -1860,15 +1860,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         // If Chrome Home is enabled, the super of this function is not called because it only
         // performs unnecessary transformations on the theme color.
         if (getBottomSheet() != null) {
-            color = ApiCompatibilityUtils.getColor(getResources(), R.color.default_primary_color);
-            getBottomSheet().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-            // Special case the incognito NTP and the tab switcher.
-            if ((tab != null && NewTabPage.isNTPUrl(tab.getUrl()) && tab.isIncognito())
-                    || isInOverviewMode()) {
-                color = Color.BLACK;
-            }
-            ApiCompatibilityUtils.setStatusBarColor(getWindow(), color);
+            getBottomSheet().setStatusBarColor(getWindow());
             return;
         }
 

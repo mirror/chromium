@@ -347,15 +347,15 @@ void RenderWidgetHostViewChildFrame::GestureEventAck(
     frame_connector_->BubbleScrollEvent(event);
 }
 
-void RenderWidgetHostViewChildFrame::DidReceiveCompositorFrameAck() {
-  if (!host_)
-    return;
-  host_->SendReclaimCompositorResources(true /* is_swap_ack */,
-                                        cc::ReturnedResourceArray());
+void RenderWidgetHostViewChildFrame::DidReceiveCompositorFrameAck(
+    const cc::ReturnedResourceArray& resources) {
+  renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
 }
 
-void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink() {
+void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
+    cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink) {
   ResetCompositorFrameSinkSupport();
+  renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
   CreateCompositorFrameSinkSupport();
   has_frame_ = false;
 }
@@ -624,9 +624,7 @@ bool RenderWidgetHostViewChildFrame::HasAcceleratedSurface(
 
 void RenderWidgetHostViewChildFrame::ReclaimResources(
     const cc::ReturnedResourceArray& resources) {
-  if (!host_)
-    return;
-  host_->SendReclaimCompositorResources(false /* is_swap_ack */, resources);
+  renderer_compositor_frame_sink_->ReclaimResources(resources);
 }
 
 void RenderWidgetHostViewChildFrame::OnBeginFrame(
@@ -689,10 +687,12 @@ cc::SurfaceId RenderWidgetHostViewChildFrame::SurfaceIdForTesting() const {
 
 void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
   DCHECK(!support_);
-  support_ = base::MakeUnique<cc::CompositorFrameSinkSupport>(
-      this, GetSurfaceManager(), frame_sink_id_, false /* is_root */,
-      false /* handles_frame_sink_id_invalidation */,
-      true /* needs_sync_points */);
+  constexpr bool is_root = false;
+  constexpr bool handles_frame_sink_id_invalidation = false;
+  constexpr bool needs_sync_points = true;
+  support_ = cc::CompositorFrameSinkSupport::Create(
+      this, GetSurfaceManager(), frame_sink_id_, is_root,
+      handles_frame_sink_id_invalidation, needs_sync_points);
   if (parent_frame_sink_id_.is_valid()) {
     GetSurfaceManager()->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
                                                     frame_sink_id_);

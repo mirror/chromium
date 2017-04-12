@@ -11834,6 +11834,9 @@
     ]
   },
   "Ozone Linux": {
+    "additional_compile_targets": [
+      "chrome"
+    ],
     "gtest_tests": [
       {
         "swarming": {
@@ -12931,6 +12934,7 @@
               "os": "Ubuntu-14.04"
             }
           ],
+          "hard_timeout": 900,
           "shards": 6
         }
       }

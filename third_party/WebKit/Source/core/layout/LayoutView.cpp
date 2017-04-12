@@ -25,6 +25,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/LayoutSelection.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -50,8 +51,8 @@
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -88,10 +89,6 @@ class HitTestLatencyRecorder {
 LayoutView::LayoutView(Document* document)
     : LayoutBlockFlow(document),
       frame_view_(document->View()),
-      selection_start_(nullptr),
-      selection_end_(nullptr),
-      selection_start_pos_(-1),
-      selection_end_pos_(-1),
       layout_state_(nullptr),
       layout_quote_head_(nullptr),
       layout_counter_count_(0),
@@ -220,7 +217,7 @@ bool LayoutView::CanHaveChildren() const {
 void LayoutView::LayoutContent() {
   DCHECK(NeedsLayout());
 
-  LayoutBlockFlow::GetLayout();
+  LayoutBlockFlow::UpdateLayout();
 
 #if DCHECK_IS_ON()
   CheckLayoutState();
@@ -251,7 +248,7 @@ void LayoutView::SetShouldDoFullPaintInvalidationOnResizeIfNeeded(
   }
 }
 
-void LayoutView::GetLayout() {
+void LayoutView::UpdateLayout() {
   if (!GetDocument().Paginated())
     SetPageLogicalHeight(LayoutUnit());
 
@@ -340,7 +337,7 @@ LayoutRect LayoutView::LocalVisualRect() const {
   // it is also correct but unnecessary with rootLayerScrolls) because of the
   // special LayoutView overflow model.
   LayoutRect rect = VisualOverflowRect();
-  rect.Unite(LayoutRect(rect.Location(), ViewRect().size()));
+  rect.Unite(LayoutRect(rect.Location(), ViewRect().Size()));
   return rect;
 }
 
@@ -633,14 +630,15 @@ static LayoutRect SelectionRectForLayoutObject(const LayoutObject* object) {
   return object->SelectionRectInViewCoordinates();
 }
 
-IntRect LayoutView::SelectionBounds() {
+// TODO(yoichio): Move this to LayoutSelection.
+IntRect LayoutSelection::SelectionBounds() {
   // Now create a single bounding box rect that encloses the whole selection.
   LayoutRect sel_rect;
 
   typedef HashSet<const LayoutBlock*> VisitedContainingBlockSet;
   VisitedContainingBlockSet visited_containing_blocks;
 
-  CommitPendingSelection();
+  Commit(*frame_selection_->GetDocument().GetLayoutView());
   LayoutObject* os = selection_start_;
   LayoutObject* stop =
       LayoutObjectAfterPosition(selection_end_, selection_end_pos_);
@@ -668,7 +666,8 @@ IntRect LayoutView::SelectionBounds() {
   return PixelSnappedIntRect(sel_rect);
 }
 
-void LayoutView::InvalidatePaintForSelection() {
+// TODO(yoichio): Move this to LayoutSelection.
+void LayoutSelection::InvalidatePaintForSelection() {
   LayoutObject* end =
       LayoutObjectAfterPosition(selection_end_, selection_end_pos_);
   for (LayoutObject* o = selection_start_; o && o != end;
@@ -708,7 +707,8 @@ static inline LayoutObject* GetNextOrPrevLayoutObjectBasedOnDirection(
   return next;
 }
 
-void LayoutView::SetSelection(
+// TODO(yoichio): Move this to LayoutSelection.
+void LayoutSelection::SetSelection(
     LayoutObject* start,
     int start_pos,
     LayoutObject* end,
@@ -838,7 +838,8 @@ void LayoutView::SetSelection(
                                                   exploring_backwards);
   }
 
-  if (!frame_view_)
+  // TODO(yoichio): DCHECK(frame_selection_->,,,->GetFrameView());
+  if (!frame_selection_->GetDocument().GetLayoutView()->GetFrameView())
     return;
 
   // Have any of the old selected objects changed compared to the new selection?
@@ -883,13 +884,18 @@ void LayoutView::SetSelection(
     i->key->SetShouldInvalidateSelection();
 }
 
-void LayoutView::ClearSelection() {
+// TODO(yoichio): Move this to LayoutSelection.
+void LayoutSelection::ClearSelection() {
   // For querying Layer::compositingState()
   // This is correct, since destroying layout objects needs to cause eager paint
   // invalidations.
   DisableCompositingQueryAsserts disabler;
 
   SetSelection(0, -1, 0, -1, kPaintInvalidationNewMinusOld);
+}
+
+void LayoutView::ClearSelection() {
+  frame_view_->GetFrame().Selection().ClearLayoutSelection();
 }
 
 bool LayoutView::HasPendingSelection() const {
@@ -902,7 +908,13 @@ void LayoutView::CommitPendingSelection() {
 }
 
 void LayoutView::SelectionStartEnd(int& start_pos, int& end_pos) {
-  CommitPendingSelection();
+  frame_view_->GetFrame().Selection().LayoutSelectionStartEnd(start_pos,
+                                                              end_pos);
+}
+
+// TODO(yoichio): Move this to LayoutSelection.
+void LayoutSelection::SelectionStartEnd(int& start_pos, int& end_pos) {
+  Commit(*frame_selection_->GetDocument().GetLayoutView());
   start_pos = selection_start_pos_;
   end_pos = selection_end_pos_;
 }
@@ -915,7 +927,7 @@ bool LayoutView::ShouldUsePrintingLayout() const {
 
 LayoutRect LayoutView::ViewRect() const {
   if (ShouldUsePrintingLayout())
-    return LayoutRect(LayoutPoint(), size());
+    return LayoutRect(LayoutPoint(), Size());
   if (frame_view_)
     return LayoutRect(frame_view_->VisibleContentRect());
   return LayoutRect();
@@ -950,7 +962,7 @@ bool LayoutView::RootBackgroundIsEntirelyFixed() const {
 IntSize LayoutView::GetLayoutSize(
     IncludeScrollbarsInRect scrollbar_inclusion) const {
   if (ShouldUsePrintingLayout())
-    return IntSize(size().Width().ToInt(), PageLogicalHeight().ToInt());
+    return IntSize(Size().Width().ToInt(), PageLogicalHeight().ToInt());
 
   if (!frame_view_)
     return IntSize();

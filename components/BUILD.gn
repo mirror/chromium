@@ -249,6 +249,7 @@ test("components_unittests") {
       "//components/gcm_driver/instance_id/android:instance_id_driver_test_support_java",
       "//components/invalidation/impl",
       "//components/invalidation/impl:java",
+      "//components/payments/android:unit_tests",
       "//components/policy/android:policy_java",
       "//components/safe_json",
       "//components/safe_json/android:safe_json_java",
@@ -382,11 +383,6 @@ if (is_android) {
     testonly = true
     resource_dirs = [ "//components/test/android/browsertests_apk/res" ]
     custom_package = "org.chromium.components_browsertests_apk"
-  }
-
-  # TODO(GYP_GONE): Delete this target once recipes no longer require it.
-  junit_binary("components_junit_tests") {
-    java_files = [ "//testing/android/junit/DummyTest.java" ]
   }
 }
 

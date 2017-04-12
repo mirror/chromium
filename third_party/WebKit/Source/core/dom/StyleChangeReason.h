@@ -6,8 +6,8 @@
 #define StyleChangeReason_h
 
 #include "core/dom/QualifiedName.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -55,6 +55,7 @@ extern const AtomicString& g_active;
 extern const AtomicString& g_disabled;
 extern const AtomicString& g_drag;
 extern const AtomicString& g_focus;
+extern const AtomicString& g_focus_within;
 extern const AtomicString& g_hover;
 extern const AtomicString& g_past;
 extern const AtomicString& g_unresolved;

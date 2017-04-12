@@ -9,6 +9,8 @@
 #include "bindings/core/v8/ScriptState.h"
 #include "core/css/cssom/CSSURLImageValue.h"
 #include "core/css/parser/CSSParser.h"
+#include "core/dom/ExecutionContext.h"
+#include "core/dom/NotShared.h"
 #include "core/frame/ImageBitmap.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
@@ -885,8 +887,8 @@ static inline void ClipRectsToImageRect(const FloatRect& image_rect,
     return;
 
   // Compute the src to dst transform
-  FloatSize scale(dst_rect->size().Width() / src_rect->size().Width(),
-                  dst_rect->size().Height() / src_rect->size().Height());
+  FloatSize scale(dst_rect->Size().Width() / src_rect->Size().Width(),
+                  dst_rect->Size().Height() / src_rect->Size().Height());
   FloatPoint scaled_src_location = src_rect->Location();
   scaled_src_location.Scale(scale.Width(), scale.Height());
   FloatSize offset = dst_rect->Location() - scaled_src_location;
@@ -1353,7 +1355,7 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
   }
 
   if (OriginClean() &&
-      WouldTaintOrigin(image_source, script_state->GetExecutionContext()))
+      WouldTaintOrigin(image_source, ExecutionContext::From(script_state)))
     SetOriginTainted();
 }
 
@@ -1468,7 +1470,7 @@ CanvasPattern* BaseRenderingContext2D::createPattern(
   DCHECK(image_for_rendering);
 
   bool origin_clean =
-      !WouldTaintOrigin(image_source, script_state->GetExecutionContext());
+      !WouldTaintOrigin(image_source, ExecutionContext::From(script_state));
 
   return CanvasPattern::Create(image_for_rendering.Release(), repeat_mode,
                                origin_clean);
@@ -1597,7 +1599,7 @@ ImageData* BaseRenderingContext2D::getImageData(
   IntRect image_data_rect(sx, sy, sw, sh);
   ImageBuffer* buffer = GetImageBuffer();
   if (!buffer || isContextLost()) {
-    ImageData* result = ImageData::Create(image_data_rect.size());
+    ImageData* result = ImageData::Create(image_data_rect.Size());
     if (!result)
       exception_state.ThrowRangeError("Out of memory at ImageData creation");
     return result;
@@ -1612,9 +1614,10 @@ ImageData* BaseRenderingContext2D::getImageData(
   NeedsFinalizeFrame();
 
   DOMArrayBuffer* array_buffer = DOMArrayBuffer::Create(contents);
-  return ImageData::Create(image_data_rect.size(),
-                           DOMUint8ClampedArray::Create(
-                               array_buffer, 0, array_buffer->ByteLength()));
+  return ImageData::Create(
+      image_data_rect.Size(),
+      NotShared<DOMUint8ClampedArray>(DOMUint8ClampedArray::Create(
+          array_buffer, 0, array_buffer->ByteLength())));
 }
 
 void BaseRenderingContext2D::putImageData(ImageData* data,

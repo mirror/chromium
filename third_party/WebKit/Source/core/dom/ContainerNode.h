@@ -30,7 +30,8 @@
 #include "core/CoreExport.h"
 #include "core/dom/Node.h"
 #include "core/html/CollectionType.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
+#include "public/platform/WebFocusType.h"
 
 namespace blink {
 
@@ -56,8 +57,9 @@ enum DynamicRestyleFlags {
   kChildrenAffectedByBackwardPositionalRules = 1 << 9,
   kAffectedByFirstChildRules = 1 << 10,
   kAffectedByLastChildRules = 1 << 11,
+  kChildrenOrSiblingsAffectedByFocusWithin = 1 << 12,
 
-  kNumberOfDynamicRestyleFlags = 12,
+  kNumberOfDynamicRestyleFlags = 13,
 
   kChildrenAffectedByStructuralRules =
       kChildrenAffectedByFirstChildRules | kChildrenAffectedByLastChildRules |
@@ -136,8 +138,9 @@ class CORE_EXPORT ContainerNode : public Node {
   void AttachLayoutTree(const AttachContext& = AttachContext()) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;
   LayoutRect BoundingBox() const final;
-  void SetFocused(bool) override;
+  void SetFocused(bool, WebFocusType) override;
   void FocusStateChanged();
+  void FocusWithinStateChanged();
   void SetActive(bool = true) override;
   void SetDragged(bool) override;
   void SetHovered(bool = true) override;
@@ -147,6 +150,13 @@ class CORE_EXPORT ContainerNode : public Node {
   }
   void SetChildrenOrSiblingsAffectedByFocus() {
     SetRestyleFlag(kChildrenOrSiblingsAffectedByFocus);
+  }
+
+  bool ChildrenOrSiblingsAffectedByFocusWithin() const {
+    return HasRestyleFlag(kChildrenOrSiblingsAffectedByFocusWithin);
+  }
+  void SetChildrenOrSiblingsAffectedByFocusWithin() {
+    SetRestyleFlag(kChildrenOrSiblingsAffectedByFocusWithin);
   }
 
   bool ChildrenOrSiblingsAffectedByHover() const {

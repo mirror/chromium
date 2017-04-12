@@ -32,11 +32,11 @@
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceClient.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
-class FetchRequest;
+class FetchParameters;
 class ResourceFetcher;
 class FontCustomPlatformData;
 class FontResourceClient;
@@ -45,7 +45,7 @@ class CORE_EXPORT FontResource final : public Resource {
  public:
   using ClientType = FontResourceClient;
 
-  static FontResource* Fetch(FetchRequest&, ResourceFetcher*);
+  static FontResource* Fetch(FetchParameters&, ResourceFetcher*);
   ~FontResource() override;
 
   void DidAddClient(ResourceClient*) override;

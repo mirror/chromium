@@ -250,6 +250,15 @@ CHAR-LIMIT guidelines:
       <message name="IDS_NOTIFICATION_CATEGORY_GROUP_GENERAL" desc='Subheading for "General" section of a list of notification categories. [CHAR-LIMIT=32]'>
         General
       </message>
+      <message name="IDS_NOTIFICATION_CATEGORY_INCOGNITO" desc="Label for notification that indicates incognito mode is active, within a list of notification categories. [CHAR-LIMIT=32]">
+        Incognito
+      </message>
+      <message name="IDS_NOTIFICATION_CATEGORY_MEDIA" desc="Label for notifications shown when media is playing or recording, within a list of notification categories. [CHAR-LIMIT=32]">
+        Media
+      </message>
+      <message name="IDS_NOTIFICATION_CATEGORY_DOWNLOADS" desc="Label for notifications shown when something is downloading, within a list of notification categories. [CHAR-LIMIT=32]">
+        Downloads
+      </message>
       <message name="IDS_NOTIFICATION_CATEGORY_BROWSER" desc="Label for browser-related notifications, within a list of notification categories. [CHAR-LIMIT=32]">
         Browser
       </message>
@@ -469,6 +478,12 @@ CHAR-LIMIT guidelines:
       </message>
       <message name="IDS_SEARCH_SUGGESTIONS_SUMMARY" desc="Summary for search and url suggestions.">
         Use a prediction service to show related queries and popular websites as you type in the address bar
+      </message>
+      <message name="IDS_SEARCH_SITE_SUGGESTIONS_TITLE" desc="Title for search and site suggestions.">
+        Search and site suggestions
+      </message>
+      <message name="IDS_SEARCH_SITE_SUGGESTIONS_SUMMARY" desc="Summary for search and site suggestions.">
+        Use prediction services to suggest searches and websites
       </message>
       <message name="IDS_SAFE_BROWSING_EXTENDED_REPORTING_TITLE" desc="Title for checkbox that controls whether details of possible security incidents will be sent to Google.">
         Security incidents
@@ -978,11 +993,11 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_DATA_REDUCTION_MENU_ITEM_SUMMARY" desc="Summary text for data reduction menu item.">
         <ph name="PERCENT">%1$s<ex>49%</ex></ph> data savings
       </message>
-      <message name="IDS_DATA_REDUCTION_SAVINGS_LABEL" desc="Data Reduction statistics data savings label">
-        Data Savings:
+      <message name="IDS_DATA_REDUCTION_SAVINGS_LABEL" desc="Data Reduction statistics label that states the amount of mobile data that was saved by Data Saver. Data Saver allows users to to reduce their mobile data usage by compressing network traffic.">
+        Data Saved:
       </message>
-      <message name="IDS_DATA_REDUCTION_USAGE_LABEL" desc="Data Reduction statistics data usage label">
-        Data Usage:
+      <message name="IDS_DATA_REDUCTION_USAGE_LABEL" desc="Data Reduction statistics label that states the amount of data that was used by Chrome when Data Saver is enabled.">
+        Data Used:
       </message>
       <message name="IDS_DATA_REDUCTION_PROXY_UNREACHABLE_WARN" desc="Warning message shown when Google data reduction proxy servers are not reachable.">
         Chrome is unable to reach Google servers for data compression. Your data savings may be limited.
@@ -1489,6 +1504,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <!-- DuplicateDownloadInfoBar -->
       <message name="IDS_DUPLICATE_DOWNLOAD_INFOBAR_TEXT" desc="Prompt text for the confirmation dialog asking whether the user really wants to download a file when there already exists a file with the same name">
         Do you want to download <ph name="FILE_NAME">^1<ex>specialfile.pdf</ex></ph> again?
+      </message>
+      <message name="IDS_DUPLICATE_DOWNLOAD_REQUEST_INFOBAR_TEXT" desc="Prompt text for the confirmation dialog asking whether the user really wants to download a file when a file with the same name is still being downloaded">
+        Do you want to start downloading <ph name="FILE_NAME">^1<ex>specialfile.pdf</ex></ph> again?
       </message>
       <message name="IDS_DUPLICATE_DOWNLOAD_INFOBAR_DOWNLOAD_BUTTON" desc="Label for the button that confirms that a user wants to download the file again. [CHAR-LIMIT=32]">
         Download

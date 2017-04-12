@@ -66,10 +66,10 @@ class TestDisplayItem final : public DisplayItem {
   TestDisplayItem(const FakeDisplayItemClient& client, Type type)
       : DisplayItem(client, type, sizeof(*this)) {}
 
-  void Replay(GraphicsContext&) const final { ASSERT_NOT_REACHED(); }
+  void Replay(GraphicsContext&) const final { NOTREACHED(); }
   void AppendToWebDisplayItemList(const IntRect&,
                                   WebDisplayItemList*) const final {
-    ASSERT_NOT_REACHED();
+    NOTREACHED();
   }
 };
 
@@ -2113,6 +2113,8 @@ class PaintControllerUnderInvalidationTest
   }
 
   void TestNoopPairsInSubsequence() {
+    EXPECT_FALSE(GetPaintController().LastDisplayItemIsSubsequenceEnd());
+
     FakeDisplayItemClient container("container");
     GraphicsContext context(GetPaintController());
 
@@ -2140,6 +2142,8 @@ class PaintControllerUnderInvalidationTest
       DrawRect(context, container, kBackgroundDrawingType,
                FloatRect(100, 100, 100, 100));
     }
+    EXPECT_TRUE(GetPaintController().LastDisplayItemIsSubsequenceEnd());
+
     GetPaintController().CommitNewDisplayItems();
 
 #if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS

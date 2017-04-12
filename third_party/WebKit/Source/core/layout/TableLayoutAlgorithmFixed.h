@@ -23,7 +23,7 @@
 
 #include "core/layout/TableLayoutAlgorithm.h"
 #include "platform/Length.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -37,7 +37,7 @@ class TableLayoutAlgorithmFixed final : public TableLayoutAlgorithm {
                                      LayoutUnit& max_width) override;
   void ApplyPreferredLogicalWidthQuirks(LayoutUnit& min_width,
                                         LayoutUnit& max_width) const override;
-  void GetLayout() override;
+  void UpdateLayout() override;
   void WillChangeTableLayout() override;
 
  private:

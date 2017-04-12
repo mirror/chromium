@@ -33,16 +33,17 @@
 #include "bindings/core/v8/Uint8ClampedArrayOrUint16ArrayOrFloat32Array.h"
 #include "core/CoreExport.h"
 #include "core/dom/DOMTypedArray.h"
+#include "core/dom/NotShared.h"
 #include "core/html/ImageDataColorSettings.h"
 #include "core/html/canvas/CanvasRenderingContext.h"
 #include "core/imagebitmap/ImageBitmapSource.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/CheckedNumeric.h"
+#include "platform/wtf/Compiler.h"
+#include "platform/wtf/text/WTFString.h"
 #include "third_party/skia/include/core/SkColorSpace.h"
-#include "wtf/CheckedNumeric.h"
-#include "wtf/Compiler.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -77,14 +78,14 @@ class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
   static ImageData* Create(const IntSize&,
                            const ImageDataColorSettings* = nullptr);
   static ImageData* Create(const IntSize&,
-                           DOMArrayBufferView*,
+                           NotShared<DOMArrayBufferView>,
                            const ImageDataColorSettings* = nullptr);
 
   static ImageData* Create(unsigned width, unsigned height, ExceptionState&);
-  static ImageData* Create(DOMUint8ClampedArray*,
+  static ImageData* Create(NotShared<DOMUint8ClampedArray>,
                            unsigned width,
                            ExceptionState&);
-  static ImageData* Create(DOMUint8ClampedArray*,
+  static ImageData* Create(NotShared<DOMUint8ClampedArray>,
                            unsigned width,
                            unsigned height,
                            ExceptionState&);

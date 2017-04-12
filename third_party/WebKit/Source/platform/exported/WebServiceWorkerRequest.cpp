@@ -20,6 +20,7 @@ class WebServiceWorkerRequestPrivate
       : mode_(WebURLRequest::kFetchRequestModeNoCORS),
         is_main_resource_load_(false),
         credentials_mode_(WebURLRequest::kFetchCredentialsModeOmit),
+        cache_mode_(WebURLRequest::kFetchRequestCacheModeDefault),
         redirect_mode_(WebURLRequest::kFetchRedirectModeFollow),
         request_context_(WebURLRequest::kRequestContextUnspecified),
         frame_type_(WebURLRequest::kFrameTypeNone),
@@ -33,6 +34,7 @@ class WebServiceWorkerRequestPrivate
   WebURLRequest::FetchRequestMode mode_;
   bool is_main_resource_load_;
   WebURLRequest::FetchCredentialsMode credentials_mode_;
+  WebURLRequest::FetchRequestCacheMode cache_mode_;
   WebURLRequest::FetchRedirectMode redirect_mode_;
   WebURLRequest::RequestContext request_context_;
   WebURLRequest::FrameType frame_type_;
@@ -108,7 +110,7 @@ void WebServiceWorkerRequest::SetReferrer(const WebString& web_referrer,
                                           WebReferrerPolicy referrer_policy) {
   // WebString doesn't have the distinction between empty and null. We use
   // the null WTFString for referrer.
-  ASSERT(Referrer::NoReferrer() == String());
+  DCHECK_EQ(Referrer::NoReferrer(), String());
   String referrer =
       web_referrer.IsEmpty() ? Referrer::NoReferrer() : String(web_referrer);
   private_->referrer_ =
@@ -152,6 +154,16 @@ void WebServiceWorkerRequest::SetCredentialsMode(
 WebURLRequest::FetchCredentialsMode WebServiceWorkerRequest::CredentialsMode()
     const {
   return private_->credentials_mode_;
+}
+
+void WebServiceWorkerRequest::SetCacheMode(
+    WebURLRequest::FetchRequestCacheMode cache_mode) {
+  private_->cache_mode_ = cache_mode;
+}
+
+WebURLRequest::FetchRequestCacheMode WebServiceWorkerRequest::CacheMode()
+    const {
+  return private_->cache_mode_;
 }
 
 void WebServiceWorkerRequest::SetRedirectMode(

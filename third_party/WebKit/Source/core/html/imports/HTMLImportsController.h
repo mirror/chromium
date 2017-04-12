@@ -34,12 +34,12 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/dom/Document.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class FetchRequest;
+class FetchParameters;
 class HTMLImport;
 class HTMLImportChild;
 class HTMLImportChildClient;
@@ -60,7 +60,7 @@ class HTMLImportsController final
   bool ShouldBlockScriptExecution(const Document&) const;
   HTMLImportChild* Load(HTMLImport* parent,
                         HTMLImportChildClient*,
-                        FetchRequest);
+                        FetchParameters);
 
   Document* Master() const;
 

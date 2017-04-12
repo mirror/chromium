@@ -29,7 +29,7 @@
 #include "core/CoreExport.h"
 #include "core/layout/LayoutMultiColumnFlowThread.h"
 #include "core/layout/MultiColumnFragmentainerGroup.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -205,7 +205,7 @@ class CORE_EXPORT LayoutMultiColumnSet : public LayoutBlockFlow {
   void EndFlow(LayoutUnit offset_in_flow_thread);
 
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
-  void GetLayout() override;
+  void UpdateLayout() override;
 
   void ComputeIntrinsicLogicalWidths(LayoutUnit& min_logical_width,
                                      LayoutUnit& max_logical_width) const final;

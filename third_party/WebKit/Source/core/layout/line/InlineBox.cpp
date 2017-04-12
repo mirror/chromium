@@ -27,7 +27,7 @@
 #include "core/paint/BlockPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "platform/fonts/FontMetrics.h"
-#include "wtf/allocator/Partitions.h"
+#include "platform/wtf/allocator/Partitions.h"
 
 #ifndef NDEBUG
 #include <stdio.h>
@@ -152,9 +152,10 @@ LayoutUnit InlineBox::LogicalHeight() const {
                ? LayoutUnit(font_data->GetFontMetrics().Height())
                : LayoutUnit();
   }
-  if (GetLineLayoutItem().IsBox() && Parent())
-    return IsHorizontal() ? LineLayoutBox(GetLineLayoutItem()).size().Height()
-                          : LineLayoutBox(GetLineLayoutItem()).size().Width();
+  if (GetLineLayoutItem().IsBox() && Parent()) {
+    return IsHorizontal() ? LineLayoutBox(GetLineLayoutItem()).Size().Height()
+                          : LineLayoutBox(GetLineLayoutItem()).Size().Width();
+  }
 
   DCHECK(IsInlineFlowBox());
   LineLayoutBoxModel flow_object = BoxModelObject();

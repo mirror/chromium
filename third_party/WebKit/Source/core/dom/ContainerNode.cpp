@@ -918,7 +918,7 @@ bool ContainerNode::GetLowerRightCorner(FloatPoint& point) const {
   LayoutObject* o = GetLayoutObject();
   if (!o->IsInline() || o->IsAtomicInlineLevel()) {
     LayoutBox* box = ToLayoutBox(o);
-    point = o->LocalToAbsolute(FloatPoint(box->size()), kUseTransforms);
+    point = o->LocalToAbsolute(FloatPoint(box->Size()), kUseTransforms);
     return true;
   }
 
@@ -1025,15 +1025,32 @@ void ContainerNode::FocusStateChanged() {
 
   LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
                                               kFocusControlState);
+  FocusWithinStateChanged();
 }
 
-void ContainerNode::SetFocused(bool received) {
+void ContainerNode::FocusWithinStateChanged() {
+  if (GetComputedStyle() && GetComputedStyle()->AffectedByFocusWithin()) {
+    StyleChangeType change_type =
+        GetComputedStyle()->HasPseudoStyle(kPseudoIdFirstLetter)
+            ? kSubtreeStyleChange
+            : kLocalStyleChange;
+    SetNeedsStyleRecalc(change_type,
+                        StyleChangeReasonForTracing::CreateWithExtraData(
+                            StyleChangeReason::kPseudoClass,
+                            StyleChangeExtraData::g_focus_within));
+  }
+  if (IsElementNode() &&
+      ToElement(this)->ChildrenOrSiblingsAffectedByFocusWithin())
+    ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocusWithin);
+}
+
+void ContainerNode::SetFocused(bool received, WebFocusType focus_type) {
   // Recurse up author shadow trees to mark shadow hosts if it matches :focus.
   // TODO(kochi): Handle UA shadows which marks multiple nodes as focused such
   // as <input type="date"> the same way as author shadow.
   if (ShadowRoot* root = ContainingShadowRoot()) {
     if (root->GetType() != ShadowRootType::kUserAgent)
-      OwnerShadowHost()->SetFocused(received);
+      OwnerShadowHost()->SetFocused(received, focus_type);
   }
 
   // If this is an author shadow host and indirectly focused (has focused
@@ -1048,9 +1065,16 @@ void ContainerNode::SetFocused(bool received) {
   if (IsFocused() == received)
     return;
 
-  Node::SetFocused(received);
+  Node::SetFocused(received, focus_type);
 
   FocusStateChanged();
+
+  UpdateDistribution();
+  for (ContainerNode* node = this; node;
+       node = FlatTreeTraversal::Parent(*node)) {
+    node->SetHasFocusWithin(received);
+    node->FocusWithinStateChanged();
+  }
 
   if (GetLayoutObject() || received)
     return;
@@ -1064,6 +1088,16 @@ void ContainerNode::SetFocused(bool received) {
         kLocalStyleChange,
         StyleChangeReasonForTracing::CreateWithExtraData(
             StyleChangeReason::kPseudoClass, StyleChangeExtraData::g_focus));
+
+  if (IsElementNode() &&
+      ToElement(this)->ChildrenOrSiblingsAffectedByFocusWithin()) {
+    ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocusWithin);
+  } else {
+    SetNeedsStyleRecalc(kLocalStyleChange,
+                        StyleChangeReasonForTracing::CreateWithExtraData(
+                            StyleChangeReason::kPseudoClass,
+                            StyleChangeExtraData::g_focus_within));
+  }
 }
 
 void ContainerNode::SetActive(bool down) {

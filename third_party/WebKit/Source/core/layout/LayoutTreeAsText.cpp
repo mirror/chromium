@@ -57,9 +57,9 @@
 #include "core/page/PrintContext.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/LayoutUnit.h"
-#include "wtf/HexNumber.h"
-#include "wtf/Vector.h"
-#include "wtf/text/CharacterNames.h"
+#include "platform/wtf/HexNumber.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/CharacterNames.h"
 
 namespace blink {
 
@@ -110,21 +110,6 @@ static String GetTagName(Node* n) {
   return n->nodeName();
 }
 
-static bool IsEmptyOrUnstyledAppleStyleSpan(const Node* node) {
-  if (!isHTMLSpanElement(node))
-    return false;
-
-  const HTMLElement& elem = ToHTMLElement(*node);
-  if (elem.getAttribute(classAttr) != "Apple-style-span")
-    return false;
-
-  if (!elem.HasChildren())
-    return true;
-
-  const StylePropertySet* inline_style_decl = elem.InlineStyle();
-  return (!inline_style_decl || inline_style_decl->IsEmpty());
-}
-
 String QuoteAndEscapeNonPrintables(const String& s) {
   StringBuilder result;
   result.Append('"');
@@ -171,13 +156,8 @@ void LayoutTreeAsText::WriteLayoutObject(TextStream& ts,
 
   if (o.GetNode()) {
     String tag_name = GetTagName(o.GetNode());
-    if (!tag_name.IsEmpty()) {
+    if (!tag_name.IsEmpty())
       ts << " {" << tag_name << "}";
-      // flag empty or unstyled AppleStyleSpan because we never
-      // want to leave them in the DOM
-      if (IsEmptyOrUnstyledAppleStyleSpan(o.GetNode()))
-        ts << " *empty or unstyled AppleStyleSpan*";
-    }
   }
 
   LayoutRect rect = o.DebugRect();
@@ -840,7 +820,7 @@ String ExternalRepresentation(LocalFrame* frame,
 
   PrintContext print_context(frame);
   if (behavior & kLayoutAsTextPrintingMode) {
-    FloatSize size(ToLayoutBox(layout_object)->size());
+    FloatSize size(ToLayoutBox(layout_object)->Size());
     print_context.begin(size.Width(), size.Height());
   }
 

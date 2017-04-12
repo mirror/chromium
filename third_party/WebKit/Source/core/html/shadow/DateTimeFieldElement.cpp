@@ -33,7 +33,7 @@
 #include "core/layout/TextRunConstructor.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/text/PlatformLocale.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -131,10 +131,16 @@ void DateTimeFieldElement::DefaultKeyboardEventHandler(
   }
 }
 
-void DateTimeFieldElement::SetFocused(bool value) {
-  if (field_owner_)
-    value ? field_owner_->DidFocusOnField() : field_owner_->DidBlurFromField();
-  ContainerNode::SetFocused(value);
+void DateTimeFieldElement::SetFocused(bool value, WebFocusType focus_type) {
+  if (field_owner_) {
+    if (value) {
+      field_owner_->DidFocusOnField(focus_type);
+    } else {
+      field_owner_->DidBlurFromField(focus_type);
+    }
+  }
+
+  ContainerNode::SetFocused(value, focus_type);
 }
 
 void DateTimeFieldElement::FocusOnNextField() {

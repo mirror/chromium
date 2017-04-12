@@ -21,7 +21,7 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
     cc::mojom::MojoCompositorFrameSinkClientPtr client,
     cc::mojom::DisplayPrivateAssociatedRequest display_private_request)
     : delegate_(delegate),
-      support_(base::MakeUnique<cc::CompositorFrameSinkSupport>(
+      support_(cc::CompositorFrameSinkSupport::Create(
           this,
           surface_manager,
           frame_sink_id,
@@ -115,9 +115,10 @@ void GpuRootCompositorFrameSink::DisplayWillDrawAndSwap(
 
 void GpuRootCompositorFrameSink::DisplayDidDrawAndSwap() {}
 
-void GpuRootCompositorFrameSink::DidReceiveCompositorFrameAck() {
+void GpuRootCompositorFrameSink::DidReceiveCompositorFrameAck(
+    const cc::ReturnedResourceArray& resources) {
   if (client_)
-    client_->DidReceiveCompositorFrameAck();
+    client_->DidReceiveCompositorFrameAck(resources);
 }
 
 void GpuRootCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {

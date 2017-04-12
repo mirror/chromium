@@ -33,16 +33,19 @@ FetchRequestData* FetchRequestData::Create(
   for (HTTPHeaderMap::const_iterator it = web_request.Headers().begin();
        it != web_request.Headers().end(); ++it)
     request->header_list_->Append(it->key, it->value);
-  if (web_request.GetBlobDataHandle())
+  if (web_request.GetBlobDataHandle()) {
     request->SetBuffer(new BodyStreamBuffer(
-        script_state, new BlobBytesConsumer(script_state->GetExecutionContext(),
-                                            web_request.GetBlobDataHandle())));
+        script_state,
+        new BlobBytesConsumer(ExecutionContext::From(script_state),
+                              web_request.GetBlobDataHandle())));
+  }
   request->SetContext(web_request.GetRequestContext());
   request->SetReferrer(
       Referrer(web_request.ReferrerUrl().GetString(),
                static_cast<ReferrerPolicy>(web_request.GetReferrerPolicy())));
   request->SetMode(web_request.Mode());
   request->SetCredentials(web_request.CredentialsMode());
+  request->SetCacheMode(web_request.CacheMode());
   request->SetRedirect(web_request.RedirectMode());
   request->SetMIMEType(request->header_list_->ExtractMIMEType());
   return request;
@@ -60,6 +63,7 @@ FetchRequestData* FetchRequestData::CloneExceptBody() {
   request->referrer_ = referrer_;
   request->mode_ = mode_;
   request->credentials_ = credentials_;
+  request->cache_mode_ = cache_mode_;
   request->redirect_ = redirect_;
   request->response_tainting_ = response_tainting_;
   request->mime_type_ = mime_type_;
@@ -101,6 +105,7 @@ FetchRequestData::FetchRequestData()
       referrer_(Referrer(ClientReferrerString(), kReferrerPolicyDefault)),
       mode_(WebURLRequest::kFetchRequestModeNoCORS),
       credentials_(WebURLRequest::kFetchCredentialsModeOmit),
+      cache_mode_(WebURLRequest::kFetchRequestCacheModeDefault),
       redirect_(WebURLRequest::kFetchRedirectModeFollow),
       response_tainting_(kBasicTainting) {}
 

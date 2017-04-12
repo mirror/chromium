@@ -53,7 +53,7 @@
 #include "core/paint/BlockFlowPaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -397,7 +397,7 @@ bool LayoutBlockFlow::CheckIfIsSelfCollapsingBlock() const {
 }
 
 DISABLE_CFI_PERF
-void LayoutBlockFlow::GetLayoutBlock(bool relayout_children) {
+void LayoutBlockFlow::UpdateBlockLayout(bool relayout_children) {
   DCHECK(NeedsLayout());
   DCHECK(IsInlineBlockOrInlineTable() || !IsInline());
 
@@ -738,7 +738,7 @@ bool LayoutBlockFlow::PositionAndLayoutOnceIfNeeded(
 
   bool needed_layout = child.NeedsLayout();
   if (needed_layout)
-    child.GetLayout();
+    child.UpdateLayout();
   if (View()->GetLayoutState()->IsPaginated())
     UpdateFragmentationInfoForChild(child);
   return needed_layout;
@@ -2485,7 +2485,7 @@ void LayoutBlockFlow::AbsoluteRects(
   // them to form a single irregular shape).
   // FIXME: This is wrong for vertical writing-modes.
   // https://bugs.webkit.org/show_bug.cgi?id=46781
-  LayoutRect rect(accumulated_offset, size());
+  LayoutRect rect(accumulated_offset, Size());
   rect.Expand(CollapsedMarginBoxLogicalOutsets());
   rects.push_back(PixelSnappedIntRect(rect));
   Continuation()->AbsoluteRects(
@@ -2512,7 +2512,7 @@ void LayoutBlockFlow::AbsoluteQuadsForSelf(Vector<FloatQuad>& quads,
   // them to form a single irregular shape).
   // FIXME: This is wrong for vertical writing-modes.
   // https://bugs.webkit.org/show_bug.cgi?id=46781
-  LayoutRect local_rect(LayoutPoint(), size());
+  LayoutRect local_rect(LayoutPoint(), Size());
   local_rect.Expand(CollapsedMarginBoxLogicalOutsets());
   quads.push_back(LocalToAbsoluteQuad(FloatRect(local_rect), mode));
 }
@@ -2602,8 +2602,8 @@ int LayoutBlockFlow::InlineBlockBaseline(
       Style()->ContainsSize()) {
     // We are not calling baselinePosition here because the caller should add
     // the margin-top/margin-right, not us.
-    return (line_direction == kHorizontalLine ? size().Height() + MarginBottom()
-                                              : size().Width() + MarginLeft())
+    return (line_direction == kHorizontalLine ? Size().Height() + MarginBottom()
+                                              : Size().Width() + MarginLeft())
         .ToInt();
   }
   if (IsWritingModeRoot() && !IsRubyRun())
@@ -3427,7 +3427,7 @@ void LayoutBlockFlow::ClearFloats(EClear clear) {
   PlaceNewFloats(LogicalHeight());
   // set y position
   LayoutUnit new_y = LowestFloatLogicalBottom(clear);
-  if (size().Height() < new_y)
+  if (Size().Height() < new_y)
     SetLogicalHeight(new_y);
 }
 
@@ -3456,8 +3456,8 @@ LayoutPoint LayoutBlockFlow::FlipFloatForWritingModeForChild(
   // subtract out our left offsets twice, since it's going to get added back in.
   // We hide this complication here so that the calling code looks normal for
   // the unflipped case.
-  return LayoutPoint(point.X() + size().Width() -
-                         child.GetLayoutObject()->size().Width() -
+  return LayoutPoint(point.X() + Size().Width() -
+                         child.GetLayoutObject()->Size().Width() -
                          2 * XPositionForFloatIncludingMargin(child),
                      point.Y());
 }
@@ -3732,14 +3732,14 @@ LayoutUnit LayoutBlockFlow::PositionAndLayoutFloat(
       // adjacent floats which we don't fit beside, or pushed by fragmentation
       // if we need to break before the top margin edge of the float.
       SetLogicalTopForChild(child, logical_top_margin_edge + margin_before);
-      child.GetLayout();
+      child.UpdateLayout();
 
       // May need to push the float to the next fragmentainer before attempting
       // to place it.
       logical_top_margin_edge =
           AdjustFloatLogicalTopForPagination(child, logical_top_margin_edge);
     } else {
-      child.GetLayout();
+      child.UpdateLayout();
     }
   }
 
@@ -4388,8 +4388,8 @@ void LayoutBlockFlow::PositionDialog() {
                                   : frame_view->ScrollOffsetInt().Height());
   int visible_height =
       frame_view->VisibleContentRect(kIncludeScrollbars).Height();
-  if (size().Height() < visible_height)
-    top += (visible_height - size().Height()) / 2;
+  if (Size().Height() < visible_height)
+    top += (visible_height - Size().Height()) / 2;
   SetY(top);
   dialog->SetCentered(top);
 }
@@ -4620,7 +4620,7 @@ void LayoutBlockFlow::AddOutlineRects(
     LayoutUnit bottom_margin =
         next_inline_has_line_box ? CollapsedMarginAfter() : LayoutUnit();
     if (top_margin || bottom_margin) {
-      LayoutRect rect(additional_offset, size());
+      LayoutRect rect(additional_offset, Size());
       rect.ExpandEdges(top_margin, LayoutUnit(), bottom_margin, LayoutUnit());
       rects.push_back(rect);
     }

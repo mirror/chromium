@@ -90,7 +90,7 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/UserGestureIndicator.h"
 #include "platform/geometry/FloatRect.h"
-#include "platform/loader/fetch/FetchRequest.h"
+#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -1795,8 +1795,8 @@ TEST_P(ParameterizedWebFrameTest,
                    ->GetFrameView()
                    ->GetLayoutSize()
                    .Height());
-  EXPECT_EQ(0.0, scroll_container->size().Width());
-  EXPECT_EQ(0.0, scroll_container->size().Height());
+  EXPECT_EQ(0.0, scroll_container->Size().Width());
+  EXPECT_EQ(0.0, scroll_container->Size().Height());
 
   web_view_helper.Resize(WebSize(viewport_width, 0));
   EXPECT_EQ(viewport_width, web_view_helper.WebView()
@@ -1809,8 +1809,8 @@ TEST_P(ParameterizedWebFrameTest,
                    ->GetFrameView()
                    ->GetLayoutSize()
                    .Height());
-  EXPECT_EQ(viewport_width, scroll_container->size().Width());
-  EXPECT_EQ(0.0, scroll_container->size().Height());
+  EXPECT_EQ(viewport_width, scroll_container->Size().Width());
+  EXPECT_EQ(0.0, scroll_container->Size().Height());
 
   // The flag ForceZeroLayoutHeight will cause the following resize of viewport
   // height to be ignored by the outer viewport (the container layer of
@@ -1831,12 +1831,12 @@ TEST_P(ParameterizedWebFrameTest,
                    ->GetFrameView()
                    ->GetLayoutSize()
                    .Height());
-  EXPECT_EQ(viewport_width, scroll_container->size().Width());
-  EXPECT_EQ(viewport_height, scroll_container->size().Height());
+  EXPECT_EQ(viewport_width, scroll_container->Size().Width());
+  EXPECT_EQ(viewport_height, scroll_container->Size().Height());
 
   LocalFrame* frame = web_view_helper.WebView()->MainFrameImpl()->GetFrame();
   VisualViewport& visual_viewport = frame->GetPage()->GetVisualViewport();
-  EXPECT_EQ(viewport_height, visual_viewport.ContainerLayer()->size().Height());
+  EXPECT_EQ(viewport_height, visual_viewport.ContainerLayer()->Size().Height());
   EXPECT_TRUE(
       visual_viewport.ContainerLayer()->PlatformLayer()->MasksToBounds());
   EXPECT_FALSE(scroll_container->PlatformLayer()->MasksToBounds());
@@ -2529,7 +2529,7 @@ TEST_P(ParameterizedWebFrameTest, pageScaleFactorDoesntShrinkFrameView) {
   EXPECT_EQ(viewport_height_minus_scrollbar,
             unscaled_size_minus_scrollbar.Height());
 
-  IntSize frame_view_size = view->VisibleContentRect().size();
+  IntSize frame_view_size = view->VisibleContentRect().Size();
   EXPECT_EQ(viewport_width_minus_scrollbar, frame_view_size.Width());
   EXPECT_EQ(viewport_height_minus_scrollbar, frame_view_size.Height());
 }
@@ -8431,11 +8431,11 @@ TEST_P(ParameterizedWebFrameTest, NotifyManifestChange) {
 }
 
 static Resource* FetchManifest(Document* document, const KURL& url) {
-  FetchRequest fetch_request =
-      FetchRequest(ResourceRequest(url), FetchInitiatorInfo());
-  fetch_request.SetRequestContext(WebURLRequest::kRequestContextManifest);
+  FetchParameters fetch_parameters =
+      FetchParameters(ResourceRequest(url), FetchInitiatorInfo());
+  fetch_parameters.SetRequestContext(WebURLRequest::kRequestContextManifest);
 
-  return RawResource::FetchSynchronously(fetch_request, document->Fetcher());
+  return RawResource::FetchSynchronously(fetch_parameters, document->Fetcher());
 }
 
 TEST_P(ParameterizedWebFrameTest, ManifestFetch) {
@@ -10836,8 +10836,8 @@ TEST_F(WebFrameTest, RootLayerMinimumHeight) {
   EXPECT_EQ(kViewportHeight,
             compositor->RootLayer()->BoundingBoxForCompositing().Height());
   EXPECT_EQ(kViewportHeight,
-            compositor->RootLayer()->GraphicsLayerBacking()->size().Height());
-  EXPECT_EQ(kViewportHeight, compositor->RootGraphicsLayer()->size().Height());
+            compositor->RootLayer()->GraphicsLayerBacking()->Size().Height());
+  EXPECT_EQ(kViewportHeight, compositor->RootGraphicsLayer()->Size().Height());
 
   const RasterInvalidationTracking* invalidation_tracking =
       document->GetLayoutView()
@@ -11609,6 +11609,32 @@ TEST_F(WebFrameSimTest, NormalIFrameHasLayoutObjects) {
   element->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
   Compositor().BeginFrame();
   EXPECT_FALSE(iframe_doc->documentElement()->GetLayoutObject());
+}
+
+TEST_F(WebFrameSimTest, ScrollOriginChangeUpdatesLayerPositions) {
+  WebView().Resize(WebSize(800, 600));
+  SimRequest main_resource("https://example.com/test.html", "text/html");
+
+  LoadURL("https://example.com/test.html");
+  main_resource.Complete(
+      "<!DOCTYPE html>"
+      "<body dir='rtl'>"
+      "  <div style='width:1px; height:1px; position:absolute; left:-10000px'>"
+      "  </div>"
+      "</body>");
+
+  Compositor().BeginFrame();
+  ScrollableArea* area = GetDocument().View()->LayoutViewportScrollableArea();
+  ASSERT_EQ(10000, area->ScrollOrigin().X());
+  ASSERT_EQ(10000, area->LayerForScrolling()->GetPosition().X());
+
+  // Removing the overflowing element removes all overflow so the scroll origin
+  // implicitly is reset to (0, 0).
+  GetDocument().QuerySelector("div")->remove();
+  Compositor().BeginFrame();
+
+  EXPECT_EQ(0, area->ScrollOrigin().X());
+  EXPECT_EQ(0, area->LayerForScrolling()->GetPosition().X());
 }
 
 TEST_F(WebFrameTest, NoLoadingCompletionCallbacksInDetach) {

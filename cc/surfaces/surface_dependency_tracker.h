@@ -50,10 +50,6 @@ class CC_SURFACES_EXPORT SurfaceDependencyTracker : public BeginFrameObserver,
   void OnBeginFrameSourcePausedChanged(bool paused) override;
 
   // PendingFrameObserver implementation:
-  void OnReferencedSurfacesChanged(
-      Surface* surface,
-      const std::vector<SurfaceId>* active_referenced_surfaces,
-      const std::vector<SurfaceId>* pending_referenced_surfaces) override;
   void OnSurfaceActivated(Surface* surface) override;
   void OnSurfaceDependenciesChanged(
       Surface* surface,
@@ -90,6 +86,10 @@ class CC_SURFACES_EXPORT SurfaceDependencyTracker : public BeginFrameObserver,
   // The set of SurfaceIds corresponding to observed Surfaces that have
   // blockers.
   base::flat_set<SurfaceId> observed_surfaces_by_id_;
+
+  // The set of SurfaceIds to which corresponding CompositorFrames have not
+  // arrived by the time their deadline fired.
+  base::flat_set<SurfaceId> late_surfaces_by_id_;
 
   DISALLOW_COPY_AND_ASSIGN(SurfaceDependencyTracker);
 };

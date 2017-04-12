@@ -102,6 +102,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private boolean mEditable;
     private boolean mIsPasswordType;
     private boolean mIsInsertion;
+    private boolean mCanSelectAllForPastePopup;
 
     private boolean mUnselectAllOnDismiss;
     private String mLastSelectedText;
@@ -251,13 +252,14 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         return actionMode;
     }
 
-    void createAndShowPastePopup(int x, int y) {
+    void createAndShowPastePopup(int x, int y, boolean canSelectAll) {
         if (mView.getParent() == null || mView.getVisibility() != View.VISIBLE) {
             return;
         }
 
         if (!supportsFloatingActionMode() && !canPaste()) return;
         destroyPastePopup();
+        mCanSelectAllForPastePopup = canSelectAll;
         PastePopupMenuDelegate delegate = new PastePopupMenuDelegate() {
             @Override
             public void paste() {
@@ -268,6 +270,16 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
             @Override
             public boolean canPaste() {
                 return SelectionPopupController.this.canPaste();
+            }
+
+            @Override
+            public void selectAll() {
+                SelectionPopupController.this.selectAll();
+            }
+
+            @Override
+            public boolean canSelectAll() {
+                return SelectionPopupController.this.canSelectAll();
             }
         };
         Context windowContext = mWindowAndroid.getContext().get();
@@ -400,7 +412,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        menu.clear();
+        menu.removeGroup(R.id.select_action_menu_default_items);
+        menu.removeGroup(R.id.select_action_menu_text_processing_menus);
         createActionMenu(mode, menu);
         return true;
     }
@@ -477,7 +490,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         // Android O SDK and remove |mAssistMenuItemId|.
 
         if (mClassificationResult != null && mClassificationResult.hasNamedAction()) {
-            menu.add(mAssistMenuItemId, mAssistMenuItemId, 1, mClassificationResult.label)
+            menu.add(R.id.select_action_menu_default_items, mAssistMenuItemId, 1,
+                        mClassificationResult.label)
                     .setIcon(mClassificationResult.icon);
         }
     }
@@ -738,6 +752,14 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @VisibleForTesting
     public boolean isInsertion() {
         return mIsInsertion;
+    }
+
+    /**
+     * @return true if the current selection can select all.
+     */
+    @VisibleForTesting
+    public boolean canSelectAll() {
+        return mCanSelectAllForPastePopup;
     }
 
     /**

@@ -96,7 +96,7 @@ void LayoutSliderContainer::ComputeLogicalHeight(
   LayoutBox::ComputeLogicalHeight(logical_height, logical_top, computed_values);
 }
 
-void LayoutSliderContainer::GetLayout() {
+void LayoutSliderContainer::UpdateLayout() {
   HTMLInputElement* input = toHTMLInputElement(GetNode()->OwnerShadowHost());
   bool is_vertical = HasVerticalAppearance(input);
   MutableStyleRef().SetFlexDirection(is_vertical ? kFlowColumn : kFlowRow);
@@ -123,7 +123,7 @@ void LayoutSliderContainer::GetLayout() {
   if (track)
     layout_scope.SetChildNeedsLayout(track);
 
-  LayoutFlexibleBox::GetLayout();
+  LayoutFlexibleBox::UpdateLayout();
 
   MutableStyleRef().SetDirection(old_text_direction);
   // These should always exist, unless someone mutates the shadow DOM (e.g., in
@@ -135,16 +135,17 @@ void LayoutSliderContainer::GetLayout() {
   LayoutUnit available_extent =
       is_vertical ? track->ContentHeight() : track->ContentWidth();
   available_extent -=
-      is_vertical ? thumb->size().Height() : thumb->size().Width();
+      is_vertical ? thumb->Size().Height() : thumb->Size().Width();
   LayoutUnit offset(percentage_offset * available_extent);
   LayoutPoint thumb_location = thumb->Location();
-  if (is_vertical)
+  if (is_vertical) {
     thumb_location.SetY(thumb_location.Y() + track->ContentHeight() -
-                        thumb->size().Height() - offset);
-  else if (Style()->IsLeftToRightDirection())
+                        thumb->Size().Height() - offset);
+  } else if (Style()->IsLeftToRightDirection()) {
     thumb_location.SetX(thumb_location.X() + offset);
-  else
+  } else {
     thumb_location.SetX(thumb_location.X() - offset);
+  }
   thumb->SetLocation(thumb_location);
 
   // We need one-off invalidation code here because painting of the timeline

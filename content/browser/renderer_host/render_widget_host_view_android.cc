@@ -646,11 +646,13 @@ gfx::Rect RenderWidgetHostViewAndroid::GetViewBounds() const {
   if (!content_view_core_)
     return default_bounds_;
 
+  gfx::Size size(content_view_core_->GetViewSize());
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kEnableOSKOverscroll))
-    return gfx::Rect(content_view_core_->GetViewSizeWithOSKHidden());
+          switches::kEnableOSKOverscroll)) {
+    size.Enlarge(0, view_.GetSystemWindowInsetBottom() / view_.GetDipScale());
+  }
 
-  return gfx::Rect(content_view_core_->GetViewSize());
+  return gfx::Rect(size);
 }
 
 gfx::Size RenderWidgetHostViewAndroid::GetVisibleViewportSize() const {
@@ -1107,8 +1109,13 @@ RenderWidgetHostViewAndroid::CreateSyntheticGestureTarget() {
 void RenderWidgetHostViewAndroid::SendReclaimCompositorResources(
     bool is_swap_ack) {
   DCHECK(host_);
-  host_->SendReclaimCompositorResources(is_swap_ack,
-                                        surface_returned_resources_);
+  if (is_swap_ack) {
+    renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(
+        surface_returned_resources_);
+  } else {
+    renderer_compositor_frame_sink_->ReclaimResources(
+        surface_returned_resources_);
+  }
   surface_returned_resources_.clear();
 }
 
@@ -1126,8 +1133,10 @@ void RenderWidgetHostViewAndroid::ReclaimResources(
     SendReclaimCompositorResources(false /* is_swap_ack */);
 }
 
-void RenderWidgetHostViewAndroid::DidCreateNewRendererCompositorFrameSink() {
+void RenderWidgetHostViewAndroid::DidCreateNewRendererCompositorFrameSink(
+    cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink) {
   delegated_frame_host_->CompositorFrameSinkChanged();
+  renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
   // Accumulated resources belong to the old RendererCompositorFrameSink and
   // should not be returned.
   surface_returned_resources_.clear();

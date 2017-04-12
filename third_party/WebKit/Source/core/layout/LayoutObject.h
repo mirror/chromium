@@ -50,7 +50,7 @@
 #include "platform/graphics/PaintInvalidationReason.h"
 #include "platform/graphics/paint/DisplayItemClient.h"
 #include "platform/transforms/TransformationMatrix.h"
-#include "wtf/AutoReset.h"
+#include "platform/wtf/AutoReset.h"
 
 namespace blink {
 
@@ -417,9 +417,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   PropertyTreeState ContentsProperties() const;
 
  private:
-  RarePaintData& EnsureRarePaintData();
-  RarePaintData* GetRarePaintData() { return rare_paint_data_.get(); }
-
   //////////////////////////////////////////
   // Helper functions. Dangerous to use!
   void SetPreviousSibling(LayoutObject* previous) { previous_ = previous; }
@@ -1089,7 +1086,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // In some cases, layout has to force laying out more children. An example is
   // when the width of the LayoutObject changes as this impacts children with
   // 'width' set to auto.
-  virtual void GetLayout() = 0;
+  virtual void UpdateLayout() = 0;
   virtual bool UpdateImageLoadingPriorities() { return false; }
 
   void HandleSubtreeModifications();
@@ -1120,7 +1117,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   /* This function performs a layout only if one is needed. */
   DISABLE_CFI_PERF void LayoutIfNeeded() {
     if (NeedsLayout())
-      GetLayout();
+      UpdateLayout();
   }
 
   void ForceLayout();
@@ -2107,6 +2104,9 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   void SetPreviousOutlineMayBeAffectedByDescendants(bool b) {
     bitfields_.SetPreviousOutlineMayBeAffectedByDescendants(b);
   }
+
+  RarePaintData& EnsureRarePaintData();
+  RarePaintData* GetRarePaintData() const { return rare_paint_data_.get(); }
 
  private:
   // Used only by applyFirstLineChanges to get a first line style based off of a

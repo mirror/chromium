@@ -1310,10 +1310,7 @@ void LayerTreeImpl::UnregisterLayer(LayerImpl* layer) {
 // These manage ownership of the LayerImpl.
 void LayerTreeImpl::AddLayer(std::unique_ptr<LayerImpl> layer) {
   DCHECK(std::find(layers_->begin(), layers_->end(), layer) == layers_->end());
-
-  // TODO(ajuma): Change this to a DCHECK once we've figured out what's causing
-  // crbug.com/701279.
-  CHECK(layer);
+  DCHECK(layer);
   layers_->push_back(std::move(layer));
   set_needs_update_draw_properties();
 }
@@ -1791,11 +1788,6 @@ void LayerTreeImpl::RemoveSurfaceLayer(LayerImpl* layer) {
       std::find(surface_layers_.begin(), surface_layers_.end(), layer);
   DCHECK(it != surface_layers_.end());
   surface_layers_.erase(it);
-}
-
-template <typename LayerType>
-static inline bool LayerClipsSubtree(LayerType* layer) {
-  return layer->masks_to_bounds() || layer->mask_layer();
 }
 
 static bool PointHitsRect(

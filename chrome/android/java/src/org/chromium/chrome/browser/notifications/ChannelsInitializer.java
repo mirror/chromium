@@ -19,12 +19,23 @@ import java.util.Map;
  * Initializes our notification channels.
  */
 public class ChannelsInitializer {
+    /**
+     * Version number identifying the current set of channels. This must be incremented whenever
+     * any channels are added or removed from the set of channels created in
+     * {@link ChannelsInitializer#initializeStartupChannels()}
+     */
+    static final int CHANNELS_VERSION = 0;
+
     // To define a new channel, add the channel ID to this StringDef and add a new entry to
     // PredefinedChannels.MAP below with the appropriate channel parameters.
-    @StringDef({CHANNEL_ID_BROWSER, CHANNEL_ID_SITES})
+    @StringDef({CHANNEL_ID_BROWSER, CHANNEL_ID_DOWNLOADS, CHANNEL_ID_INCOGNITO, CHANNEL_ID_MEDIA,
+            CHANNEL_ID_SITES})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ChannelId {}
     public static final String CHANNEL_ID_BROWSER = "browser";
+    public static final String CHANNEL_ID_DOWNLOADS = "downloads";
+    public static final String CHANNEL_ID_INCOGNITO = "incognito";
+    public static final String CHANNEL_ID_MEDIA = "media";
     public static final String CHANNEL_ID_SITES = "sites";
 
     @StringDef({CHANNEL_GROUP_ID_GENERAL})
@@ -35,12 +46,28 @@ public class ChannelsInitializer {
     // Map defined in static inner class so it's only initialized lazily.
     @TargetApi(Build.VERSION_CODES.N) // for NotificationManager.IMPORTANCE_* constants
     private static class PredefinedChannels {
+        /**
+         * The set of predefined channels to be initialized on startup. CHANNELS_VERSION must be
+         * incremented every time an entry is modified, removed or added to this map.
+         */
         private static final Map<String, Channel> MAP;
         static {
             Map<String, Channel> map = new HashMap<>();
             map.put(CHANNEL_ID_BROWSER,
                     new Channel(CHANNEL_ID_BROWSER,
                             org.chromium.chrome.R.string.notification_category_browser,
+                            NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            map.put(CHANNEL_ID_DOWNLOADS,
+                    new Channel(CHANNEL_ID_DOWNLOADS,
+                            org.chromium.chrome.R.string.notification_category_downloads,
+                            NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            map.put(CHANNEL_ID_INCOGNITO,
+                    new Channel(CHANNEL_ID_INCOGNITO,
+                            org.chromium.chrome.R.string.notification_category_incognito,
+                            NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            map.put(CHANNEL_ID_MEDIA,
+                    new Channel(CHANNEL_ID_MEDIA,
+                            org.chromium.chrome.R.string.notification_category_media,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
             map.put(CHANNEL_ID_SITES,
                     new Channel(CHANNEL_ID_SITES,
@@ -68,6 +95,19 @@ public class ChannelsInitializer {
         mNotificationManager = notificationManagerProxy;
     }
 
+    public void initializeStartupChannels() {
+        // CHANNELS_VERSION must be incremented if the set of channels initialized here changes.
+        for (@ChannelId String channelId : PredefinedChannels.MAP.keySet()) {
+            ensureInitialized(channelId);
+        }
+    }
+
+    void deleteAllChannels() {
+        for (String channelId : mNotificationManager.getNotificationChannelIds()) {
+            mNotificationManager.deleteNotificationChannel(channelId);
+        }
+    }
+
     /**
      * Ensures the given channel has been created on the notification manager so a notification
      * can be safely posted to it. This should only be used for channels that are predefined in
@@ -93,7 +133,7 @@ public class ChannelsInitializer {
      */
     public static class Channel {
         @ChannelId
-        final String mId;
+        public final String mId;
         final int mNameResId;
         final int mImportance;
         @ChannelGroupId

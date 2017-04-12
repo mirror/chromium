@@ -36,7 +36,8 @@ class OffscreenCanvasCompositorFrameSink
   void EvictFrame() override;
 
   // Overridden from cc::CompositorFrameSinkSupportClient:
-  void DidReceiveCompositorFrameAck() override;
+  void DidReceiveCompositorFrameAck(
+      const cc::ReturnedResourceArray& resources) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
   void WillDrawSurface(const cc::LocalSurfaceId& local_surface_id,
@@ -47,7 +48,7 @@ class OffscreenCanvasCompositorFrameSink
 
   OffscreenCanvasCompositorFrameSinkProviderImpl* const provider_;
 
-  cc::CompositorFrameSinkSupport support_;
+  std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
   cc::mojom::MojoCompositorFrameSinkClientPtr client_;
   cc::ReturnedResourceArray surface_returned_resources_;
   mojo::Binding<cc::mojom::MojoCompositorFrameSink> binding_;

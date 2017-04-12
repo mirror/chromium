@@ -109,9 +109,9 @@ bool LayoutFlowThread::MapToVisualRectInAncestorSpaceInternal(
       ancestor, transform_state, visual_rect_flags);
 }
 
-void LayoutFlowThread::GetLayout() {
+void LayoutFlowThread::UpdateLayout() {
   page_logical_size_changed_ = column_sets_invalidated_ && EverHadLayout();
-  LayoutBlockFlow::GetLayout();
+  LayoutBlockFlow::UpdateLayout();
   page_logical_size_changed_ = false;
 }
 
@@ -140,7 +140,7 @@ void LayoutFlowThread::AbsoluteQuadsForDescendant(const LayoutBox& descendant,
     object = container;
   }
   LayoutRect bounding_rect_in_flow_thread(offset_from_flow_thread,
-                                          descendant.FrameRect().size());
+                                          descendant.FrameRect().Size());
   // Set up a fragments relative to the descendant, in the flow thread
   // coordinate space, and convert each of them, individually, to absolute
   // coordinates.

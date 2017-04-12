@@ -38,7 +38,7 @@
 #include "core/style/CollapsedBorderValue.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/TransformState.h"
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -300,12 +300,12 @@ void LayoutTableCell::SetCellLogicalWidth(int table_layout_logical_width,
   SetCellWidthChanged(true);
 }
 
-void LayoutTableCell::GetLayout() {
+void LayoutTableCell::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
 
   int old_cell_baseline = CellBaselinePosition();
-  GetLayoutBlock(CellWidthChanged());
+  UpdateBlockLayout(CellWidthChanged());
 
   // If we have replaced content, the intrinsic height of our content may have
   // changed since the last time we laid out. If that's the case the intrinsic
@@ -324,7 +324,7 @@ void LayoutTableCell::GetLayout() {
     SetIntrinsicPaddingBefore(new_intrinsic_padding_before);
     SubtreeLayoutScope layouter(*this);
     layouter.SetNeedsLayout(this, LayoutInvalidationReason::kTableChanged);
-    GetLayoutBlock(CellWidthChanged());
+    UpdateBlockLayout(CellWidthChanged());
   }
 
   // FIXME: This value isn't the intrinsic content logical height, but we need
@@ -451,9 +451,9 @@ LayoutRect LayoutTableCell::LocalVisualRect() const {
       std::max(LayoutUnit(left), -self_visual_overflow_rect.X()),
       std::max(LayoutUnit(top), -self_visual_overflow_rect.Y()));
   return LayoutRect(-location.X(), -location.Y(),
-                    location.X() + std::max(size().Width() + right,
+                    location.X() + std::max(Size().Width() + right,
                                             self_visual_overflow_rect.MaxX()),
-                    location.Y() + std::max(size().Height() + bottom,
+                    location.Y() + std::max(Size().Height() + bottom,
                                             self_visual_overflow_rect.MaxY()));
 }
 
@@ -1466,8 +1466,8 @@ void LayoutTableCell::InvalidateDisplayItemClients(
 // are captured by the results.
 LayoutRect LayoutTableCell::DebugRect() const {
   LayoutRect rect = LayoutRect(
-      Location().X(), Location().Y() + IntrinsicPaddingBefore(), size().Width(),
-      size().Height() - IntrinsicPaddingBefore() - IntrinsicPaddingAfter());
+      Location().X(), Location().Y() + IntrinsicPaddingBefore(), Size().Width(),
+      Size().Height() - IntrinsicPaddingBefore() - IntrinsicPaddingAfter());
 
   LayoutBlock* cb = ContainingBlock();
   if (cb)

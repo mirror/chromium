@@ -271,7 +271,7 @@ void LayoutPart::StyleDidChange(StyleDifference diff,
   }
 }
 
-void LayoutPart::GetLayout() {
+void LayoutPart::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
   UpdateAfterLayout();
@@ -305,7 +305,7 @@ LayoutRect LayoutPart::ReplacedContentRect() const {
   // avoid that, the size of sub-frame is rounded in advance.
   LayoutRect size_rounded_rect = ContentBoxRect();
   size_rounded_rect.SetSize(
-      LayoutSize(RoundedIntSize(size_rounded_rect.size())));
+      LayoutSize(RoundedIntSize(size_rounded_rect.Size())));
   return size_rounded_rect;
 }
 
@@ -337,9 +337,9 @@ void LayoutPart::UpdateGeometry() {
     return;
 
   LayoutRect new_frame = ReplacedContentRect();
-  DCHECK(new_frame.size() == RoundedIntSize(new_frame.size()));
+  DCHECK(new_frame.Size() == RoundedIntSize(new_frame.Size()));
   bool bounds_will_change =
-      LayoutSize(frame_view_base->FrameRect().size()) != new_frame.size();
+      LayoutSize(frame_view_base->FrameRect().Size()) != new_frame.Size();
 
   FrameView* frame_view =
       frame_view_base->IsFrameView() ? ToFrameView(frame_view_base) : nullptr;
@@ -359,7 +359,7 @@ void LayoutPart::UpdateGeometry() {
   // FrameViewBase size.
   if (frame_view && frame_view->NeedsLayout() &&
       frame_view->GetFrame().GetPage())
-    frame_view->Layout();
+    frame_view->UpdateLayout();
 
   frame_view_base->GeometryMayHaveChanged();
 }
@@ -373,7 +373,7 @@ void LayoutPart::UpdateGeometryInternal(FrameViewBase& frame_view_base) {
   absolute_replaced_rect.MoveBy(absolute_location);
 
   IntRect frame_rect(IntPoint(),
-                     PixelSnappedIntRect(absolute_replaced_rect).size());
+                     PixelSnappedIntRect(absolute_replaced_rect).Size());
   // Normally the location of the frame rect is ignored by the painter, but
   // currently it is still used by a family of coordinate conversion function in
   // FrameViewBase/FrameView. This is incorrect because coordinate conversion

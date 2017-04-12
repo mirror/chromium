@@ -70,7 +70,6 @@ source_set("browser") {
     "//crypto",
     "//device/bluetooth",
     "//device/gamepad",
-    "//device/generic_sensor",
     "//device/geolocation",
     "//device/geolocation/public/interfaces",
     "//device/nfc:mojo_bindings",
@@ -848,6 +847,8 @@ source_set("browser") {
     "loader/navigation_url_loader_impl.h",
     "loader/navigation_url_loader_impl_core.cc",
     "loader/navigation_url_loader_impl_core.h",
+    "loader/navigation_url_loader_network_service.cc",
+    "loader/navigation_url_loader_network_service.h",
     "loader/netlog_observer.cc",
     "loader/netlog_observer.h",
     "loader/null_resource_controller.cc",
@@ -1061,6 +1062,8 @@ source_set("browser") {
     "renderer_host/font_utils_linux.h",
     "renderer_host/frame_metadata_util.cc",
     "renderer_host/frame_metadata_util.h",
+    "renderer_host/frame_sink_provider_impl.cc",
+    "renderer_host/frame_sink_provider_impl.h",
     "renderer_host/input/gesture_event_queue.cc",
     "renderer_host/input/gesture_event_queue.h",
     "renderer_host/input/input_ack_handler.h",
@@ -1769,6 +1772,11 @@ source_set("browser") {
   if (use_x11) {
     configs += [ "//build/config/linux:x11" ]
     deps += [ "//ui/gfx/x" ]
+  }
+
+  if (is_linux && !is_chromeos && use_x11 &&
+      (target_cpu == "x86" || target_cpu == "x64")) {
+    deps += [ "//third_party/swiftshader" ]
   }
 
   if (use_pango) {

@@ -39,7 +39,7 @@
 #include "platform/fonts/FontCache.h"
 #include "platform/text/DateTimeFormat.h"
 #include "platform/text/PlatformLocale.h"
-#include "wtf/DateMath.h"
+#include "platform/wtf/DateMath.h"
 
 namespace blink {
 
@@ -592,14 +592,14 @@ PassRefPtr<ComputedStyle> DateTimeEditElement::CustomStyleForLayoutObject() {
   return style.Release();
 }
 
-void DateTimeEditElement::DidBlurFromField() {
+void DateTimeEditElement::DidBlurFromField(WebFocusType focus_type) {
   if (edit_control_owner_)
-    edit_control_owner_->DidBlurFromControl();
+    edit_control_owner_->DidBlurFromControl(focus_type);
 }
 
-void DateTimeEditElement::DidFocusOnField() {
+void DateTimeEditElement::DidFocusOnField(WebFocusType focus_type) {
   if (edit_control_owner_)
-    edit_control_owner_->DidFocusOnControl();
+    edit_control_owner_->DidFocusOnControl(focus_type);
 }
 
 void DateTimeEditElement::DisabledStateChanged() {

@@ -9,9 +9,13 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/Navigator.h"
 #include "core/frame/UseCounter.h"
+#include "modules/presentation/NavigatorPresentation.h"
+#include "modules/presentation/Presentation.h"
 #include "modules/presentation/PresentationConnection.h"
 #include "modules/presentation/PresentationConnectionList.h"
 #include "public/platform/modules/presentation/WebPresentationClient.h"
@@ -28,10 +32,22 @@ PresentationReceiver::PresentationReceiver(LocalFrame* frame,
     client->SetReceiver(this);
 }
 
+// static
+PresentationReceiver* PresentationReceiver::From(Document& document) {
+  if (!document.GetFrame() || !document.GetFrame()->DomWindow())
+    return nullptr;
+  Navigator& navigator = *document.GetFrame()->DomWindow()->navigator();
+  Presentation* presentation = NavigatorPresentation::presentation(navigator);
+  if (!presentation)
+    return nullptr;
+
+  return presentation->receiver();
+}
+
 ScriptPromise PresentationReceiver::connectionList(ScriptState* script_state) {
   if (!connection_list_property_)
     connection_list_property_ =
-        new ConnectionListProperty(script_state->GetExecutionContext(), this,
+        new ConnectionListProperty(ExecutionContext::From(script_state), this,
                                    ConnectionListProperty::kReady);
 
   if (!connection_list_->IsEmpty() && connection_list_property_->GetState() ==

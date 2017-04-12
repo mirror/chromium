@@ -88,6 +88,11 @@
 #include "platform/network/mime/ContentType.h"
 #include "platform/network/mime/MIMETypeFromURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/text/CString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebAudioSourceProvider.h"
 #include "public/platform/WebContentDecryptionModule.h"
@@ -97,11 +102,6 @@
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackClient.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackState.h"
-#include "wtf/AutoReset.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/MathExtras.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/text/CString.h"
 
 #ifndef BLINK_MEDIA_LOG
 #define BLINK_MEDIA_LOG DVLOG(3)
@@ -2062,8 +2062,9 @@ double HTMLMediaElement::CurrentPlaybackPosition() const {
     return GetWebMediaPlayer()->CurrentTime();
 
   if (ready_state_ >= kHaveMetadata) {
-    LOG(WARNING) << __func__ << " readyState = " << ready_state_
-                 << " but no webMeidaPlayer to provide currentPlaybackPosition";
+    BLINK_MEDIA_LOG
+        << __func__ << " readyState = " << ready_state_
+        << " but no webMediaPlayer to provide currentPlaybackPosition";
   }
 
   return 0;
@@ -4252,8 +4253,8 @@ void HTMLMediaElement::CheckViewportIntersectionTimerFired(TimerBase*) {
   // scrolling around in the document, the document is changing layout, etc.
   viewport_fill_debouncer_timer_.Stop();
   bool is_mostly_filling_viewport =
-      (current_intersect_rect_.size().Area() >
-       kMostlyFillViewportThreshold * geometry.RootIntRect().size().Area());
+      (current_intersect_rect_.Size().Area() >
+       kMostlyFillViewportThreshold * geometry.RootIntRect().Size().Area());
   if (mostly_filling_viewport_ == is_mostly_filling_viewport)
     return;
 

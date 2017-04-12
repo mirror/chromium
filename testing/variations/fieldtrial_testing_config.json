@@ -424,6 +424,21 @@
             ]
         }
     ],
+    "CopylessPaste": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "CopylessPaste"
+                    ]
+                }
+            ]
+        }
+    ],
     "DataCompressionProxyDevRollout": [
         {
             "platforms": [
@@ -2554,7 +2569,7 @@
             ],
             "experiments": [
                 {
-                    "name": "EnableNewShow3Each1Day",
+                    "name": "EnableExperiment",
                     "enable_features": [
                         "ConsistentOmniboxGeolocation"
                     ]

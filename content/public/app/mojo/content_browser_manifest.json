@@ -28,6 +28,7 @@
           "content::mojom::FieldTrialRecorder",
           "content::mojom::MemoryCoordinatorHandle",
           "content::mojom::PushMessaging",
+          "content::mojom::FrameSinkProvider",
           "content::mojom::ServiceWorkerDispatcherHost",
           "content::mojom::StoragePartitionService",
           "content::mojom::URLLoaderFactory",
@@ -59,6 +60,7 @@
         "device": [ "device:wake_lock" ],
         "file": [ "file:filesystem", "file:leveldb" ],
         "media": [ "media:media" ],
+        "network": [ "url_loader" ],
         "ui": [ "display_output_protection" ],
         "service_manager": [
           "service_manager:client_process",
@@ -90,7 +92,6 @@
           "content::mojom::BrowserTarget",
           "device::mojom::VRService",
           "device::mojom::GeolocationService",
-          "device::mojom::SensorProvider",
           "device::mojom::WakeLockService",
           "device::nfc::mojom::NFC",
           "device::usb::DeviceManager",

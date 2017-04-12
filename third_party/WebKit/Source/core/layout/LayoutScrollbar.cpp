@@ -63,8 +63,8 @@ LayoutScrollbar::LayoutScrollbar(ScrollableArea* scrollable_area,
   IntRect rect(0, 0, 0, 0);
   UpdateScrollbarPart(kScrollbarBGPart);
   if (LayoutScrollbarPart* part = parts_.at(kScrollbarBGPart)) {
-    part->GetLayout();
-    rect.SetSize(FlooredIntSize(part->size()));
+    part->UpdateLayout();
+    rect.SetSize(FlooredIntSize(part->Size()));
   } else if (this->Orientation() == kHorizontalScrollbar) {
     rect.SetWidth(this->Width());
   } else {
@@ -174,9 +174,9 @@ void LayoutScrollbar::UpdateScrollbarParts(bool destroy) {
   int new_thickness = 0;
   LayoutScrollbarPart* part = parts_.at(kScrollbarBGPart);
   if (part) {
-    part->GetLayout();
+    part->UpdateLayout();
     new_thickness =
-        (is_horizontal ? part->size().Height() : part->size().Width()).ToInt();
+        (is_horizontal ? part->Size().Height() : part->Size().Width()).ToInt();
   }
 
   if (new_thickness != old_thickness) {
@@ -286,7 +286,7 @@ IntRect LayoutScrollbar::ButtonRect(ScrollbarPart part_type) const {
   if (!part_layout_object)
     return IntRect();
 
-  part_layout_object->GetLayout();
+  part_layout_object->UpdateLayout();
 
   bool is_horizontal = Orientation() == kHorizontalScrollbar;
   if (part_type == kBackButtonStartPart)
@@ -331,7 +331,7 @@ IntRect LayoutScrollbar::ButtonRect(ScrollbarPart part_type) const {
 IntRect LayoutScrollbar::TrackRect(int start_length, int end_length) const {
   LayoutScrollbarPart* part = parts_.at(kTrackBGPart);
   if (part)
-    part->GetLayout();
+    part->UpdateLayout();
 
   if (Orientation() == kHorizontalScrollbar) {
     int margin_left = part ? part->MarginLeft().ToInt() : 0;
@@ -358,7 +358,7 @@ IntRect LayoutScrollbar::TrackPieceRectWithMargins(
   if (!part_layout_object)
     return old_rect;
 
-  part_layout_object->GetLayout();
+  part_layout_object->UpdateLayout();
 
   IntRect rect = old_rect;
   if (Orientation() == kHorizontalScrollbar) {
@@ -376,10 +376,10 @@ int LayoutScrollbar::MinimumThumbLength() const {
   LayoutScrollbarPart* part_layout_object = parts_.at(kThumbPart);
   if (!part_layout_object)
     return 0;
-  part_layout_object->GetLayout();
+  part_layout_object->UpdateLayout();
   return (Orientation() == kHorizontalScrollbar
-              ? part_layout_object->size().Width()
-              : part_layout_object->size().Height())
+              ? part_layout_object->Size().Width()
+              : part_layout_object->Size().Height())
       .ToInt();
 }
 

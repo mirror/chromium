@@ -22,11 +22,11 @@
 #define QualifiedName_h
 
 #include "core/CoreExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashTableDeletedValueType.h"
-#include "wtf/HashTraits.h"
-#include "wtf/RefCounted.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashTableDeletedValueType.h"
+#include "platform/wtf/HashTraits.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -133,14 +133,6 @@ class CORE_EXPORT QualifiedName {
   bool Matches(const QualifiedName& other) const {
     return impl_ == other.impl_ || (LocalName() == other.LocalName() &&
                                     NamespaceURI() == other.NamespaceURI());
-  }
-
-  bool MatchesPossiblyIgnoringASCIICase(const QualifiedName& other,
-                                        bool should_ignore_case) const {
-    return impl_ == other.impl_ ||
-           (EqualPossiblyIgnoringASCIICase(LocalName(), other.LocalName(),
-                                           should_ignore_case) &&
-            NamespaceURI() == other.NamespaceURI());
   }
 
   bool HasPrefix() const { return impl_->prefix_ != g_null_atom; }
