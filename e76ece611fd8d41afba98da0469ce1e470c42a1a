@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78ccd140_976debbc",
+        "filename": "components/feature_engagement_tracker/internal/in_memory_store.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-12T09:31:13Z",
+      "side": 1,
+      "message": "WriteEvent",
+      "range": {
+        "startLine": 16,
+        "startChar": 41,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "e76ece611fd8d41afba98da0469ce1e470c42a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
