@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3ca940ce_421c065e",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-04-12T16:31:20Z",
+      "side": 1,
+      "message": "Removed the TODO. The underlying requirement is still there. But nobody seems to be missing the feature :-)",
+      "parentUuid": "76ce4972_0b9c12d8",
+      "range": {
+        "startLine": 611,
+        "startChar": 19,
+        "endLine": 611,
+        "endChar": 42
+      },
+      "revId": "209c601efb6399cec132bc2c8533b7af3dfac3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11861b7e_b50a4f74",
         "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e nit: I might be wrong, but do we ever set the confirmation_reason_ to UNEXPECTED?  We might never hit the code inside this block.  \n\u003e \n\u003e Compared with the original code, when there is no WebContents, we still run the callback with an empty FilePath. If we fall through and skip the UNEXPECTED block, we probably miss the callback.\n\nSorry that since there is no default block, UNEXPECTED won\u0027t get skipped, but if TARGET_CONFLICT and we don\u0027t have the WebContents, maybe we should run the callback.",
       "parentUuid": "11861b7e_b50a4f74",
+      "range": {
+        "startLine": 673,
+        "startChar": 4,
+        "endLine": 673,
+        "endChar": 47
+      },
+      "revId": "209c601efb6399cec132bc2c8533b7af3dfac3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d28da88_d2e7a328",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-04-12T16:31:20Z",
+      "side": 1,
+      "message": "Cancelling the download is consistent with what the code was doing before, which is why I went with this option.\n\nThe better option, IMO, may be to interrupt the download with some message that indicates that there\u0027s a conflicting file. The user could move the conflicting file and resume the download.\n\nBoth cancelling and overwriting, the latter of which would be the consequence of your suggestion, results in data loss. Cancellation is likely to be the lesser of the two evils since it avoids overwriting a file that may contain unrecoverable data.",
+      "parentUuid": "da1b040f_57a1a323",
       "range": {
         "startLine": 673,
         "startChar": 4,
