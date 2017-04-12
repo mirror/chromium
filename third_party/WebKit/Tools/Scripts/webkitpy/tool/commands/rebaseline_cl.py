@@ -65,6 +65,7 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
         builds = self.git_cl().latest_try_jobs(self._try_bots())
 
         builders_with_pending_builds = self.builders_with_pending_builds(builds)
+
         if builders_with_pending_builds:
             _log.info('There are existing pending builds for:')
             for builder in sorted(builders_with_pending_builds):
@@ -160,10 +161,10 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
             results_url = buildbot.results_url(build.builder_name, build.build_number)
             layout_test_results = buildbot.fetch_results(build)
             if layout_test_results is None:
-                _log.error('Failed to fetch results for: %s', build)
-                _log.error('Results were expected to exist at:\n%s/results.html', results_url)
-                _log.error('If the job failed, you could retry by running:\ngit cl try -b %s', build.builder_name)
-                return None
+                _log.info('Failed to fetch results for: %s', build)
+                _log.info('Results were expected to exist at:\n%s/results.html', results_url)
+                _log.info('If the job failed, you could retry by running:\ngit cl try -b %s', build.builder_name)
+                continue
             results[build] = layout_test_results
         return results
 
