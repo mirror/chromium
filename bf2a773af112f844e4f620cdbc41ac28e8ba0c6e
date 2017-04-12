@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c49dd86f_b5421cf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Sorry this is probably the 10,000th time you\u0027ve reminded me (｡_｡；) I\u0027ll put a sticky note on my laptop or something and try to do better next time",
+      "parentUuid": "2f1435d7_892762d0",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad8208e_ee2fef44",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-12T17:10:52Z",
       "side": 1,
       "message": "Why `is not False`?",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11f6f15_6e945396",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "I needed a way to pass a special sentinel value to position to keep it from trying to look for one (discussed further below)",
+      "parentUuid": "3ad8208e_ee2fef44",
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca8f5ddb_9e6183bc",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "When we\u0027re creating a WPT PR for a Gerrit CL locally, the commit won\u0027t have a position.\n\nHere, if we can\u0027t find the position, it gets set to \u0027undefined-commit-position\u0027 and above you can pass False to position - we should probably have only one or the other value signal that there\u0027s no position. Which do you prefer?\n\n(Also added periods to comments)",
+      "parentUuid": "d8fd6724_7ca0d703",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcbacbf3_b3d17bf0",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba37812_7276834e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcbacbf3_b3d17bf0",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "87b7f22e_34389f39",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "846a46cb_38d74d75",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2da02b25_a11a3ae3",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c29d20e_340679e6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da02b25_a11a3ae3",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e822284d_29d8d98f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "33963691_400d1c4b",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0700c5c0_ff81d8f7",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e4a2f7_b9fb9699",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0700c5c0_ff81d8f7",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "a7768f74_d2064229",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4422cfa_62126dab",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 37
+      },
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df144cd2_07ff0459",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
@@ -175,6 +343,24 @@
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb00125_8c18661e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Sorry, this was actually done (since Gerrit accepts None for both credentials and can operate without them for unauthenticated calls)",
+      "parentUuid": "df144cd2_07ff0459",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "50888d3f_263a0c42",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e04b21_fa7888b2",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1fc9915_d88cac2c",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
@@ -206,6 +410,24 @@
       "writtenOn": "2017-04-12T17:10:52Z",
       "side": 1,
       "message": "What will \"transitioning\" them involve? Adding comments to the Gerrit issues to indicate that the PR is landed?",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91700b4f_e9cc5ee7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Yes, and also making sure that the exporter doesn\u0027t create a new PR for a commit landing on master with an existing PR from Gerrit.",
+      "parentUuid": "d1fc9915_d88cac2c",
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +448,24 @@
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500c9ae6_d3188a02",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T17:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37e07d04_3daa7656",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
