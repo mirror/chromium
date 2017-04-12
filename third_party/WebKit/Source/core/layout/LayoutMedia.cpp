@@ -45,7 +45,7 @@ HTMLMediaElement* LayoutMedia::MediaElement() const {
 }
 
 void LayoutMedia::GetLayout() {
-  LayoutSize old_size = ContentBoxRect().size();
+  LayoutSize old_size = ContentBoxRect().Size();
 
   LayoutImage::GetLayout();
 
@@ -74,7 +74,7 @@ void LayoutMedia::GetLayout() {
     // TODO(mlamouri): we miss some layouts because needsLayout returns false in
     // some cases where we want to change the width of the controls because the
     // visible viewport has changed for example.
-    if (new_rect.size() == old_size && !child->NeedsLayout())
+    if (new_rect.Size() == old_size && !child->NeedsLayout())
       continue;
 
     LayoutUnit width = new_rect.Width();
