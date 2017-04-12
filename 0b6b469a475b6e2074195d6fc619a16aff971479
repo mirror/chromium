@@ -16,6 +16,24 @@
       "revId": "0b6b469a475b6e2074195d6fc619a16aff971479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0019ac_afaf7dc2",
+        "filename": "gin/wrappable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-04-12T14:20:34Z",
+      "side": 1,
+      "message": "I don\u0027t follow what you mean regarding this advantage. Can you please elaborate? What CHECK are your referring to?\n\nFWIW this (returning a MaybeLocal) is what I had done initially, but it seemed strictly more awkward to use.",
+      "parentUuid": "fe370fdd_603e1320",
+      "revId": "0b6b469a475b6e2074195d6fc619a16aff971479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
