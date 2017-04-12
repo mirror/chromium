@@ -36,7 +36,7 @@ void BeginCompositingDisplayItem::DumpPropertiesAsDebugString(
     string_builder.Append(
         WTF::String::Format(", bounds: [%f, %f, %f, %f]",
                             bounds_.Location().X(), bounds_.Location().Y(),
-                            bounds_.size().Width(), bounds_.size().Height()));
+                            bounds_.Size().Width(), bounds_.Size().Height()));
 }
 #endif
 

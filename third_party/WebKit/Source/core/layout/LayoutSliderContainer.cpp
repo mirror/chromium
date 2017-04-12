@@ -135,12 +135,12 @@ void LayoutSliderContainer::GetLayout() {
   LayoutUnit available_extent =
       is_vertical ? track->ContentHeight() : track->ContentWidth();
   available_extent -=
-      is_vertical ? thumb->size().Height() : thumb->size().Width();
+      is_vertical ? thumb->Size().Height() : thumb->Size().Width();
   LayoutUnit offset(percentage_offset * available_extent);
   LayoutPoint thumb_location = thumb->Location();
   if (is_vertical)
     thumb_location.SetY(thumb_location.Y() + track->ContentHeight() -
-                        thumb->size().Height() - offset);
+                        thumb->Size().Height() - offset);
   else if (Style()->IsLeftToRightDirection())
     thumb_location.SetX(thumb_location.X() + offset);
   else

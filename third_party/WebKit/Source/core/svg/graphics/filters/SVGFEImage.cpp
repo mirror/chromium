@@ -147,7 +147,7 @@ TextStream& FEImage::ExternalRepresentation(TextStream& ts, int indent) const {
     image_size = image_->size();
   else if (LayoutObject* layout_object = ReferencedLayoutObject())
     image_size =
-        EnclosingIntRect(GetLayoutObjectRepaintRect(layout_object)).size();
+        EnclosingIntRect(GetLayoutObjectRepaintRect(layout_object)).Size();
   WriteIndent(ts, indent);
   ts << "[feImage";
   FilterEffect::ExternalRepresentation(ts);

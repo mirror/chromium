@@ -153,8 +153,8 @@ LayoutUnit InlineBox::LogicalHeight() const {
                : LayoutUnit();
   }
   if (GetLineLayoutItem().IsBox() && Parent())
-    return IsHorizontal() ? LineLayoutBox(GetLineLayoutItem()).size().Height()
-                          : LineLayoutBox(GetLineLayoutItem()).size().Width();
+    return IsHorizontal() ? LineLayoutBox(GetLineLayoutItem()).Size().Height()
+                          : LineLayoutBox(GetLineLayoutItem()).Size().Width();
 
   DCHECK(IsInlineFlowBox());
   LineLayoutBoxModel flow_object = BoxModelObject();
