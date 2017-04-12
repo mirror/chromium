@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e82ddb05_682f600e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T18:17:46Z",
+      "side": 1,
+      "message": "NP :-)",
+      "parentUuid": "c49dd86f_b5421cf5",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad8208e_ee2fef44",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "When we\u0027re creating a WPT PR for a Gerrit CL locally, the commit won\u0027t have a position.\n\nHere, if we can\u0027t find the position, it gets set to \u0027undefined-commit-position\u0027 and above you can pass False to position - we should probably have only one or the other value signal that there\u0027s no position. Which do you prefer?\n\n(Also added periods to comments)",
       "parentUuid": "d8fd6724_7ca0d703",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47f2f7d_ca8347fa",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T18:17:46Z",
+      "side": 1,
+      "message": "a string seems potentially more expressive or explicit than False.\n\nWhat about \"no-commit-position-yet\", and clarify that that this is the case when the CL is not yet committed?",
+      "parentUuid": "ca8f5ddb_9e6183bc",
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -434,6 +470,24 @@
     },
     {
       "key": {
+        "uuid": "52cc9f79_13821351",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T18:17:46Z",
+      "side": 1,
+      "message": "Alright, this is making me remember the state transition table you made before.\n\nI guess the overall thing that this function will do will be:\n - Make PRs when appropriate.\n - Add comments to Gerrit CLs when appropriate.\nAre these the only two things?",
+      "parentUuid": "91700b4f_e9cc5ee7",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37e07d04_3daa7656",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
@@ -466,6 +520,23 @@
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23a266b8_fcda8636",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T18:17:46Z",
+      "side": 1,
+      "message": "There might be some potential to rephrase the above to avoid some nesting/repetition, e.g.:\n\n    def pr_with_change_id(self, target_change_id, pull_requests):\n        for pull_request in pull_requests:\n            change_id \u003d self._extract_metadata(\u0027Change-Id: \u0027, pull_request.body)\n            if change_id \u003d\u003d target_change_id:\n                return pull_request\n        return None\n\n    def _extract_metadata(tag, commit_body):\n        for line in commit_body.splitlines():\n            if line.startswith(tag):\n                return line[len(tag):]\n        return None",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
