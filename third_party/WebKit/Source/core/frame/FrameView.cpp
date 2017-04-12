@@ -542,6 +542,7 @@ void FrameView::InvalidateRect(const IntRect& rect) {
 }
 
 void FrameView::SetFrameRect(const IntRect& new_rect) {
+  bool root_layer_scrolls = RuntimeEnabledFeatures::rootLayerScrollingEnabled();
   IntRect old_rect = FrameRect();
   if (new_rect == old_rect)
     return;
@@ -550,19 +551,27 @@ void FrameView::SetFrameRect(const IntRect& new_rect) {
 
   const bool frame_size_changed = old_rect.size() != new_rect.size();
 
-  needs_scrollbars_update_ = frame_size_changed;
-  // TODO(wjmaclean): find out why scrollbars fail to resize for complex
-  // subframes after changing the zoom level. For now always calling
-  // updateScrollbarsIfNeeded() here fixes the issue, but it would be good to
-  // discover the deeper cause of this. http://crbug.com/607987.
-  UpdateScrollbarsIfNeeded();
+  needs_scrollbars_update_ |= frame_size_changed;
+
+  // If this is not the main frame, then we got here via
+  // LayoutPart::UpdateGeometryInternal.  In that case, we can't clamp the
+  // scroll offset yet, because we still need to run UpdateLayout(), so our
+  // clamping boundaries may yet change.
+  if (GetFrame().IsMainFrame()) {
+    if (root_layer_scrolls) {
+      if (LayoutView* lv = GetLayoutView())
+        lv->GetScrollableArea()->ClampScrollOffsetAfterOverflowChange();
+    } else {
+      AdjustScrollOffsetFromUpdateScrollbars();
+    }
+  }
 
   FrameRectsChanged();
 
   UpdateParentScrollableAreaSet();
 
   if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled() &&
-      !RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+      !root_layer_scrolls) {
     // The overflow clip property depends on the frame size and the pre
     // translation property depends on the frame location.
     SetNeedsPaintPropertyUpdate();
@@ -707,14 +716,12 @@ void FrameView::SetContentsSize(const IntSize& size) {
     return;
 
   contents_size_ = size;
-  UpdateScrollbars();
+  needs_scrollbars_update_ = true;
   ScrollableArea::ContentsResized();
 
   Page* page = GetFrame().GetPage();
   if (!page)
     return;
-
-  UpdateParentScrollableAreaSet();
 
   page->GetChromeClient().ContentsSizeChanged(frame_.Get(), size);
 
@@ -740,11 +747,6 @@ void FrameView::AdjustViewSize() {
   const IntPoint origin(-rect.X(), -rect.Y());
   if (ScrollOrigin() != origin) {
     ScrollableArea::SetScrollOrigin(origin);
-    // setContentSize (below) also calls updateScrollbars so we can avoid
-    // updating scrollbars twice by skipping the call here when the content
-    // size does not change.
-    if (!frame_->GetDocument()->Printing() && size == ContentsSize())
-      UpdateScrollbars();
   }
 
   SetContentsSize(size);
@@ -881,6 +883,7 @@ void FrameView::RecalcOverflowAfterStyleChange() {
   }
 
   AdjustViewSize();
+  UpdateScrollbars();
   UpdateScrollbarGeometry();
 
   if (ScrollOriginChanged())
@@ -1305,10 +1308,28 @@ void FrameView::Layout() {
         TRACE_DISABLED_BY_DEFAULT("blink.debug.layout.trees"), "LayoutTree",
         this, TracedLayoutObject::Create(*GetLayoutView(), false));
 
-    PerformLayout(in_subtree_layout);
+    IntSize old_size(size());
 
-    if (!in_subtree_layout && !document->Printing())
-      AdjustViewSizeAndLayout();
+    PerformLayout(in_subtree_layout);
+    UpdateScrollbars();
+    UpdateParentScrollableAreaSet();
+
+    IntSize new_size(size());
+    if (old_size != new_size) {
+      needs_scrollbars_update_ = true;
+      SetNeedsLayout();
+      MarkViewportConstrainedObjectsForLayout(
+          old_size.Width() != new_size.Width(),
+          old_size.Height() != new_size.Height());
+      if (frame_->IsMainFrame())
+        frame_->GetPage()->GetVisualViewport().MainFrameDidChangeSize();
+      frame_->Loader().RestoreScrollPositionAndViewState();
+    }
+
+    if (NeedsLayout()) {
+      AutoReset<bool> suppress(&suppress_adjust_view_size_, true);
+      Layout();
+    }
 
     ASSERT(layout_subtree_root_list_.IsEmpty());
   }  // Reset m_layoutSchedulingEnabled to its previous value.
@@ -1691,13 +1712,13 @@ void FrameView::ViewportSizeChanged(bool width_changed, bool height_changed) {
       PaintLayer* layer = GetLayoutView()->Layer();
       if (GetLayoutView()->Compositor()->NeedsFixedRootBackgroundLayer(layer)) {
         SetNeedsLayout();
-      } else if (!root_layer_scrolling_enabled) {
+      } else {
         // If root layer scrolls is on, we've already issued a full invalidation
         // above.
         GetLayoutView()->SetShouldDoFullPaintInvalidationOnResizeIfNeeded(
             width_changed, height_changed);
       }
-    } else if (height_changed && !root_layer_scrolling_enabled) {
+    } else if (height_changed) {
       // If the document rect doesn't fill the full view height, hiding the
       // URL bar will expose area outside the current LayoutView so we need to
       // paint additional background. If RLS is on, we've already invalidated
@@ -1709,7 +1730,13 @@ void FrameView::ViewportSizeChanged(bool width_changed, bool height_changed) {
     }
   }
 
-  if (!HasViewportConstrainedObjects())
+  if (GetFrame().GetDocument() && !IsInPerformLayout())
+    MarkViewportConstrainedObjectsForLayout(width_changed, height_changed);
+}
+
+void FrameView::MarkViewportConstrainedObjectsForLayout(bool width_changed,
+                                                        bool height_changed) {
+  if (!HasViewportConstrainedObjects() || !(width_changed || height_changed))
     return;
 
   for (const auto& viewport_constrained_object :
@@ -2160,9 +2187,6 @@ void FrameView::ScrollbarExistenceDidChange() {
       ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
       !ShouldUseCustomScrollbars(custom_scrollbar_element);
 
-  // FIXME: this call to layout() could be called within FrameView::layout(),
-  // but before performLayout(), causing double-layout. See also
-  // crbug.com/429242.
   if (!uses_overlay_scrollbars && NeedsLayout())
     Layout();
 
@@ -3553,6 +3577,8 @@ void FrameView::ForceLayoutForPagination(const FloatSize& page_size,
     }
   }
 
+  if (TextAutosizer* text_autosizer = frame_->GetDocument()->GetTextAutosizer())
+    text_autosizer->UpdatePageInfoInAllFrames();
   AdjustViewSizeAndLayout();
 }
 
@@ -4248,7 +4274,7 @@ bool FrameView::AdjustScrollbarExistence(
     return true;
 
   if (!HasOverlayScrollbars())
-    ContentsResized();
+    SetNeedsLayout();
   ScrollbarExistenceDidChange();
   return true;
 }

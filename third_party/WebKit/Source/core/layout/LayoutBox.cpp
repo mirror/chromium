@@ -746,11 +746,13 @@ FloatRect LayoutBox::LocalBoundingBoxRectForAccessibility() const {
                    frame_rect_.Height().ToFloat());
 }
 
-void LayoutBox::UpdateLayerTransformAfterLayout() {
+void LayoutBox::UpdateAfterLayout() {
   // Transform-origin depends on box size, so we need to update the layer
   // transform after layout.
-  if (HasLayer())
+  if (HasLayer()) {
     Layer()->UpdateTransformationMatrix();
+    Layer()->UpdateSizeAndScrollingAfterLayout();
+  }
 }
 
 LayoutUnit LayoutBox::LogicalHeightWithVisibleOverflow() const {
@@ -838,8 +840,9 @@ void LayoutBox::SetLocationAndUpdateOverflowControlsIfNeeded(
         PixelSnappedBorderBoxRect().size();
     SetLocation(location);
     if (PixelSnappedBorderBoxRect().size() !=
-        old_pixel_snapped_border_rect_size)
-      GetScrollableArea()->UpdateAfterLayout();
+        old_pixel_snapped_border_rect_size) {
+      Layer()->UpdateSizeAndScrollingAfterLayout();
+    }
     return;
   }
 

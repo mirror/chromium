@@ -281,6 +281,15 @@ class CORE_EXPORT PaintLayerScrollableArea final
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
   int VisibleHeight() const override;
   int VisibleWidth() const override;
+
+  // For a non-root-layer, or a non-main-frame root layer, these are the same
+  // as box().pixelSnappedClient(Width|Height).
+  // For the root layer of the main frame -- where the layer size may not match
+  // the box().size() -- this is the layer size with borders removed.
+  //
+  int PixelSnappedVisibleClientWidth() const;
+  int PixelSnappedVisibleClientHeight() const;
+
   IntSize ContentsSize() const override;
   void ContentsResized() override;
   bool IsScrollable() const override;

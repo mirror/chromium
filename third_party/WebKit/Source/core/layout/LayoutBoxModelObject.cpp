@@ -330,7 +330,8 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
         SetChildNeedsLayout();
       CreateLayer();
       if (Parent() && !NeedsLayout()) {
-        // FIXME: We should call a specialized version of this function.
+        // FIXME: We should call specialized versions of these functions.
+        Layer()->UpdateSizeAndScrollingAfterLayout();
         Layer()->UpdateLayerPositionsAfterLayout();
       }
     }

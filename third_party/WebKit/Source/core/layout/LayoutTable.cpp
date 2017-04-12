@@ -532,7 +532,7 @@ void LayoutTable::SimplifiedNormalFlowLayout() {
     section->LayoutIfNeeded();
     section->LayoutRows();
     section->ComputeOverflowFromCells();
-    section->UpdateLayerTransformAfterLayout();
+    section->UpdateAfterLayout();
     section->AddVisualEffectOverflow();
   }
 }
@@ -729,7 +729,7 @@ void LayoutTable::GetLayout() {
 
       SetLogicalHeight(LogicalHeight() + section->LogicalHeight());
 
-      section->UpdateLayerTransformAfterLayout();
+      section->UpdateAfterLayout();
       section->AddVisualEffectOverflow();
 
       section = SectionBelow(section);
@@ -750,8 +750,6 @@ void LayoutTable::GetLayout() {
     bool dimension_changed = old_logical_width != LogicalWidth() ||
                              old_logical_height != LogicalHeight();
     LayoutPositionedObjects(dimension_changed);
-
-    UpdateLayerTransformAfterLayout();
 
     // Layout was changed, so probably borders too.
     InvalidateCollapsedBorders();

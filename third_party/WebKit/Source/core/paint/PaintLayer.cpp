@@ -781,17 +781,13 @@ void PaintLayer::Update3DTransformedDescendantStatus() {
 }
 
 void PaintLayer::UpdateLayerPosition() {
+  // LayoutBoxes will call UpdateSizeAndScrollingAfterLayout() from
+  // LayoutBox::UpdateAfterLayout, but LayoutInlines will still need to update
+  // their size.
+  if (GetLayoutObject().IsInline() && GetLayoutObject().IsLayoutInline())
+    UpdateSizeAndScrollingAfterLayout();
   LayoutPoint local_point;
-
-  bool did_resize = false;
-  if (GetLayoutObject().IsInline() && GetLayoutObject().IsLayoutInline()) {
-    LayoutInline& inline_flow = ToLayoutInline(GetLayoutObject());
-    IntRect line_box = EnclosingIntRect(inline_flow.LinesBoundingBox());
-    size_ = line_box.size();
-  } else if (LayoutBox* box = GetLayoutBox()) {
-    IntSize new_size = PixelSnappedIntSize(box->size(), box->Location());
-    did_resize = new_size != size_;
-    size_ = new_size;
+  if (LayoutBox* box = GetLayoutBox()) {
     local_point.MoveBy(box->PhysicalLocation());
   }
 
@@ -842,12 +838,31 @@ void PaintLayer::UpdateLayerPosition() {
 
   location_ = local_point;
 
-  if (scrollable_area_ && did_resize)
-    scrollable_area_->VisibleSizeChanged();
-
 #if DCHECK_IS_ON()
   needs_position_update_ = false;
 #endif
+}
+
+void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
+  bool did_resize = false;
+  if (IsRootLayer() && RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+    const IntSize new_size = GetLayoutObject().GetDocument().View()->size();
+    did_resize = new_size != size_;
+    size_ = new_size;
+  } else if (GetLayoutObject().IsInline() && GetLayoutObject().IsLayoutInline()) {
+    LayoutInline& inline_flow = ToLayoutInline(GetLayoutObject());
+    IntRect line_box = EnclosingIntRect(inline_flow.LinesBoundingBox());
+    size_ = line_box.size();
+  } else if (LayoutBox* box = GetLayoutBox()) {
+    IntSize new_size = PixelSnappedIntSize(box->size(), box->Location());
+    did_resize = new_size != size_;
+    size_ = new_size;
+  }
+  if (GetLayoutObject().HasOverflowClip()) {
+    scrollable_area_->UpdateAfterLayout();
+    if (did_resize)
+      scrollable_area_->VisibleSizeChanged();
+  }
 }
 
 TransformationMatrix PaintLayer::PerspectiveTransform() const {

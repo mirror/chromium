@@ -368,6 +368,7 @@ class WEB_EXPORT WebViewImpl final
   //   2) Calling updateAllLifecyclePhases() is a no-op.
   // After calling WebWidget::updateAllLifecyclePhases(), expect to get this
   // notification unless the view did not need a layout.
+  void ResizeAfterLayout(WebLocalFrameImpl*);
   void LayoutUpdated(WebLocalFrameImpl*);
 
   void DidChangeContentsSize();
