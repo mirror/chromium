@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04831a40_59586d9f",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 17
+      },
+      "lineNbr": 2681,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:47:10Z",
+      "side": 1,
+      "message": "If we know that these always fail (or crash etc) we could also add specific expectations (like Failure)",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8169beb_f3e461b3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:47:10Z",
+      "side": 1,
+      "message": "Maybe is_non_wpt_real_test_file? Or maybe that\u0027s too long...",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b3c2d3_671f07f1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:47:10Z",
+      "side": 1,
+      "message": "I hope this doesn\u0027t take too long to iterate through ... I notice that below we\u0027re also iterating through all given paths for all urls.\n\nOne possible very minor optimization would be to first filter the list of paths so that it only includes \"external\", \"external/wpt\", or paths starting with \"external/wpt/...\".",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2046d8_10a7a992",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:47:10Z",
+      "side": 1,
+      "message": "Are there any cases where the url doesn\u0027t start with /?",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956843bb_00d407b2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1524,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:47:10Z",
+      "side": 1,
+      "message": "Since this only strips .js extensions, I think that the variable name doesn\u0027t help explain much in this case.\nYou could also just use the expression directly below.",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8306a7_f172f7c7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:47:10Z",
+      "side": 1,
+      "message": "Hm, \"any_file\" is an unfortunately confusing name, but I can\u0027t think of a better one. Maybe `matches_any_js_test`?\n\nBut do we want to match \"external/wpt/.../test.any.js\"? It may be more consistent if we say that test names are different than file paths, and \".../test.any.js\" is a file path, but not a test name?\n\nIMO, the best behavior eventually would be to not match here, but then if no tests match, it would be nice to suggest \"did you mean...?\" and list out matching tests in the same directory.",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
