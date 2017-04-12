@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 from webkitpy.w3c.chromium_finder import absolute_chromium_dir, absolute_chromium_wpt_dir
+from webkitpy.common.system.executive import ScriptError
 
 CHROMIUM_WPT_DIR = 'third_party/WebKit/LayoutTests/external/wpt/'
 
@@ -31,7 +32,7 @@ class ChromiumCommit(object):
                 position = position[len('Cr-Commit-Position: '):]
 
             sha = self.position_to_sha(position)
-        else:
+        elif position is not False:
             position = self.sha_to_position(sha)
 
         assert len(sha) == 40, 'Expected SHA-1 hash, got {}'.format(sha)
@@ -57,9 +58,17 @@ class ChromiumCommit(object):
         ], cwd=self.absolute_chromium_dir).strip()
 
     def sha_to_position(self, sha):
-        return self.host.executive.run_command([
-            'git', 'footers', '--position', sha
-        ], cwd=self.absolute_chromium_dir).strip()
+        try:
+            return self.host.executive.run_command([
+                'git', 'footers', '--position', sha
+            ], cwd=self.absolute_chromium_dir).strip()
+        except ScriptError as e:
+            # Some commits do not have a position
+            if 'Unable to infer commit position from footers' in e.message:
+                # TODO(jeffcarp): Figure out the best way to handle this case
+                return 'undefined-commit-position'
+            else:
+                raise
 
     def subject(self):
         return self.host.executive.run_command([
