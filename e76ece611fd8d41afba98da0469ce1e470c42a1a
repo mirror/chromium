@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98e74acd_92cb09c6",
+        "filename": "components/feature_engagement_tracker/internal/in_memory_store.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-12T22:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78ccd140_976debbc",
+      "range": {
+        "startLine": 16,
+        "startChar": 41,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "e76ece611fd8d41afba98da0469ce1e470c42a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69c3c5cb_0ff50d1c",
         "filename": "components/feature_engagement_tracker/internal/model_impl.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e76ece611fd8d41afba98da0469ce1e470c42a1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99df7c8b_f62818c2",
+        "filename": "components/feature_engagement_tracker/internal/model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-12T22:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c3c5cb_0ff50d1c",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "e76ece611fd8d41afba98da0469ce1e470c42a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f02a93fa_f91b59cf",
+        "filename": "components/feature_engagement_tracker/internal/model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-12T22:14:49Z",
+      "side": 1,
+      "message": "Done. Added DCHECK and a TODO for UMA.",
+      "parentUuid": "004e925a_d06b8918",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "e76ece611fd8d41afba98da0469ce1e470c42a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1044259e_5072788a",
         "filename": "components/feature_engagement_tracker/internal/model_impl.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "e76ece611fd8d41afba98da0469ce1e470c42a1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e179ef_54bfb06e",
+        "filename": "components/feature_engagement_tracker/internal/model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-12T22:14:49Z",
+      "side": 1,
+      "message": "Good idea! Done.\n\nThe public API is const though, so I had to create GetNonConstEvent(event_name). The public API now just calls the internal method and returns it as a const ref.",
+      "parentUuid": "1044259e_5072788a",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 13
+      },
+      "revId": "e76ece611fd8d41afba98da0469ce1e470c42a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
