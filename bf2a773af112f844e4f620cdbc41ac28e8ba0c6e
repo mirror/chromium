@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "577c0a84_8bc1ed46",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T19:29:24Z",
+      "side": 1,
+      "message": "Done (changed to that string and removed False sentinel from __init__)",
+      "parentUuid": "b47f2f7d_ca8347fa",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcbacbf3_b3d17bf0",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 1
@@ -488,6 +506,24 @@
     },
     {
       "key": {
+        "uuid": "72ecc145_9eef473e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T19:29:24Z",
+      "side": 1,
+      "message": "Yes, I believe that\u0027s it for now",
+      "parentUuid": "52cc9f79_13821351",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37e07d04_3daa7656",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
@@ -534,6 +570,24 @@
       "writtenOn": "2017-04-12T18:17:46Z",
       "side": 1,
       "message": "There might be some potential to rephrase the above to avoid some nesting/repetition, e.g.:\n\n    def pr_with_change_id(self, target_change_id, pull_requests):\n        for pull_request in pull_requests:\n            change_id \u003d self._extract_metadata(\u0027Change-Id: \u0027, pull_request.body)\n            if change_id \u003d\u003d target_change_id:\n                return pull_request\n        return None\n\n    def _extract_metadata(tag, commit_body):\n        for line in commit_body.splitlines():\n            if line.startswith(tag):\n                return line[len(tag):]\n        return None",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08659c63_585fca12",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-12T19:29:24Z",
+      "side": 1,
+      "message": "Got it, thanks. Updated with those functions. Do you think the \u0027return None\u0027 is necessary though?\n\nIn a future CL I think PullRequest should be turned from a named tuple into a class so we can add these methods to it (e.g. pull_request.change_id())",
+      "parentUuid": "23a266b8_fcda8636",
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
