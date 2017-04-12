@@ -848,7 +848,8 @@ void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
     const IntSize new_size = GetLayoutObject().GetDocument().View()->Size();
     did_resize = new_size != size_;
     size_ = new_size;
-  } else if (GetLayoutObject().IsInline() && GetLayoutObject().IsLayoutInline()) {
+  } else if (GetLayoutObject().IsInline() &&
+             GetLayoutObject().IsLayoutInline()) {
     LayoutInline& inline_flow = ToLayoutInline(GetLayoutObject());
     IntRect line_box = EnclosingIntRect(inline_flow.LinesBoundingBox());
     size_ = line_box.Size();
