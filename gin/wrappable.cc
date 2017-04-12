@@ -25,6 +25,7 @@ ObjectTemplateBuilder WrappableBase::GetObjectTemplateBuilder(
 void WrappableBase::FirstWeakCallback(
     const v8::WeakCallbackInfo<WrappableBase>& data) {
   WrappableBase* wrappable = data.GetParameter();
+  wrappable->dead_ = true;
   wrappable->wrapper_.Reset();
   data.SetSecondPassCallback(SecondWeakCallback);
 }
@@ -35,11 +36,16 @@ void WrappableBase::SecondWeakCallback(
   delete wrappable;
 }
 
-v8::Local<v8::Object> WrappableBase::GetWrapperImpl(v8::Isolate* isolate,
-                                                    WrapperInfo* info) {
+bool WrappableBase::GetWrapperImpl(v8::Isolate* isolate,
+                                   WrapperInfo* info,
+                                   v8::Local<v8::Object>* wrapper) {
   if (!wrapper_.IsEmpty()) {
-    return v8::Local<v8::Object>::New(isolate, wrapper_);
+    *wrapper = v8::Local<v8::Object>::New(isolate, wrapper_);
+    return true;
   }
+
+  if (dead_)
+    return false;
 
   PerIsolateData* data = PerIsolateData::From(isolate);
   v8::Local<v8::ObjectTemplate> templ = data->GetObjectTemplate(info);
@@ -49,22 +55,21 @@ v8::Local<v8::Object> WrappableBase::GetWrapperImpl(v8::Isolate* isolate,
     data->SetObjectTemplate(info, templ);
   }
   CHECK_EQ(kNumberOfInternalFields, templ->InternalFieldCount());
-  v8::Local<v8::Object> wrapper;
   // |wrapper| may be empty in some extreme cases, e.g., when
   // Object.prototype.constructor is overwritten.
-  if (!templ->NewInstance(isolate->GetCurrentContext()).ToLocal(&wrapper)) {
+  if (!templ->NewInstance(isolate->GetCurrentContext()).ToLocal(wrapper)) {
     // The current wrappable object will be no longer managed by V8. Delete this
     // now.
     delete this;
-    return wrapper;
+    return true;
   }
 
   int indices[] = {kWrapperInfoIndex, kEncodedValueIndex};
   void* values[] = {info, this};
-  wrapper->SetAlignedPointerInInternalFields(2, indices, values);
-  wrapper_.Reset(isolate, wrapper);
+  (*wrapper)->SetAlignedPointerInInternalFields(2, indices, values);
+  wrapper_.Reset(isolate, *wrapper);
   wrapper_.SetWeak(this, FirstWeakCallback, v8::WeakCallbackType::kParameter);
-  return wrapper;
+  return true;
 }
 
 namespace internal {
