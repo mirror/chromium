@@ -70,8 +70,9 @@ class GIN_EXPORT WrappableBase {
   // Overrides of this method should be declared final and not overridden again.
   virtual ObjectTemplateBuilder GetObjectTemplateBuilder(v8::Isolate* isolate);
 
-  v8::Local<v8::Object> GetWrapperImpl(v8::Isolate* isolate,
-                                        WrapperInfo* wrapper_info);
+  bool GetWrapperImpl(v8::Isolate* isolate,
+                      WrapperInfo* wrapper_info,
+                      v8::Local<v8::Object>* wrapper);
 
  private:
   static void FirstWeakCallback(
@@ -79,6 +80,7 @@ class GIN_EXPORT WrappableBase {
   static void SecondWeakCallback(
       const v8::WeakCallbackInfo<WrappableBase>& data);
 
+  bool dead_ = false;
   v8::Global<v8::Object> wrapper_;  // Weak
 
   DISALLOW_COPY_AND_ASSIGN(WrappableBase);
@@ -89,8 +91,18 @@ template<typename T>
 class Wrappable : public WrappableBase {
  public:
   // Retrieve (or create) the v8 wrapper object cooresponding to this object.
+  // It is illegal to call this after the wrapper has been reset.
   v8::Local<v8::Object> GetWrapper(v8::Isolate* isolate) {
-    return GetWrapperImpl(isolate, &T::kWrapperInfo);
+    v8::Local<v8::Object> wrapper;
+    CHECK(GetWrapperMaybe(isolate, &wrapper));
+    return wrapper;
+  }
+
+  // Like above, but safe to call after the wrapper has been reset (in the case
+  // of e.g. async operations which may run before this object's destruction but
+  // after wrapper cleanup.)
+  bool GetWrapperMaybe(v8::Isolate* isolate, v8::Local<v8::Object>* wrapper) {
+    return GetWrapperImpl(isolate, &T::kWrapperInfo, wrapper);
   }
 
  protected:
