@@ -845,15 +845,15 @@ void PaintLayer::UpdateLayerPosition() {
 void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
   bool did_resize = false;
   if (IsRootLayer() && RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-    const IntSize new_size = GetLayoutObject().GetDocument().View()->size();
+    const IntSize new_size = GetLayoutObject().GetDocument().View()->Size();
     did_resize = new_size != size_;
     size_ = new_size;
   } else if (GetLayoutObject().IsInline() && GetLayoutObject().IsLayoutInline()) {
     LayoutInline& inline_flow = ToLayoutInline(GetLayoutObject());
     IntRect line_box = EnclosingIntRect(inline_flow.LinesBoundingBox());
-    size_ = line_box.size();
+    size_ = line_box.Size();
   } else if (LayoutBox* box = GetLayoutBox()) {
-    IntSize new_size = PixelSnappedIntSize(box->size(), box->Location());
+    IntSize new_size = PixelSnappedIntSize(box->Size(), box->Location());
     did_resize = new_size != size_;
     size_ = new_size;
   }

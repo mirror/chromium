@@ -1305,13 +1305,13 @@ void FrameView::UpdateLayout() {
         TRACE_DISABLED_BY_DEFAULT("blink.debug.layout.trees"), "LayoutTree",
         this, TracedLayoutObject::Create(*GetLayoutView(), false));
 
-    IntSize old_size(size());
+    IntSize old_size(Size());
 
     PerformLayout(in_subtree_layout);
     UpdateScrollbars();
     UpdateParentScrollableAreaSet();
 
-    IntSize new_size(size());
+    IntSize new_size(Size());
     if (old_size != new_size) {
       needs_scrollbars_update_ = true;
       SetNeedsLayout();
@@ -1325,7 +1325,7 @@ void FrameView::UpdateLayout() {
 
     if (NeedsLayout()) {
       AutoReset<bool> suppress(&suppress_adjust_view_size_, true);
-      Layout();
+      UpdateLayout();
     }
 
     ASSERT(layout_subtree_root_list_.IsEmpty());
