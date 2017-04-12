@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1435d7_892762d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "Nit: period at end of sentence.",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad8208e_ee2fef44",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "Why `is not False`?",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8fd6724_7ca0d703",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "What cases do we know of now of Chromium commits that don\u0027t have commit positions?\n\nNit (here and below): Add periods at the end of sentences.",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbacbf3_b3d17bf0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "Nit: sort",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846a46cb_38d74d75",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "This class (or module) could use a docstring noting that this is used to interact with the Chromium instance of Gerrit code review. \"Gerrit\" also includes the source viewer functionality (e.g. chromium.googlesource.com) and of course other instances of Gerrit for other codebases.",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da02b25_a11a3ae3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "This method could be moved closer to the one place where it is used below.",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33963691_400d1c4b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "Nit (here and in other places): I think that in most cases we don\u0027t put the closing paren on its own line for function calls with line breaks. In any case, consistency of style within one file is most important, and this doesn\u0027t violate the style guide.",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0700c5c0_ff81d8f7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "Nit: single quotes for consistency",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4422cfa_62126dab",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "This loop could be simplified if you extracted a helper method `is_exportable(cl)`",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 37
+      },
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df144cd2_07ff0459",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "Nit: Add username in parentheses after TODO and colon, and period at the end of the sentence.",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e04b21_fa7888b2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "\"their status\" -\u003e \"their statuses\"",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fc9915_d88cac2c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "What will \"transitioning\" them involve? Adding comments to the Gerrit issues to indicate that the PR is landed?",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e07d04_3daa7656",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T17:10:52Z",
+      "side": 1,
+      "message": "\"Search if\" -\u003e \"Check if\". Also, period at end of sentence.",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
