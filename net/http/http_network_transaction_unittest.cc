@@ -4079,7 +4079,8 @@ TEST_F(HttpNetworkTransactionTest,
   MockRead data_reads1[] = {
       // No credentials.
       MockRead("HTTP/1.1 407 Proxy Authentication Required\r\n"),
-      MockRead("Proxy-Authenticate: Mock\r\n\r\n"),
+      MockRead("Proxy-Authenticate: Mock\r\n"),
+      MockRead("Content-Length: 0\r\n\r\n"),
       MockRead(SYNCHRONOUS, ERR_CONNECTION_CLOSED),
   };
 
