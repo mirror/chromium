@@ -16,6 +16,24 @@
       "revId": "9ee95827375639991283515ad34098a724b0dc26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44611b5_690ff14c",
+        "filename": "gin/wrappable.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-04-12T14:26:25Z",
+      "side": 1,
+      "message": "Right, I figured that\u0027s what you meant, and the having-to-update-all-callsites is the main issue I had with doing this initially, hence the introduction of a new GetWrapperMaybe.\n\nMy fears were probably unjustified though. Upon closer inspection there are maybe a dozen call sites. I\u0027ll just update them.",
+      "parentUuid": "26e66367_0ba213b0",
+      "revId": "9ee95827375639991283515ad34098a724b0dc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
