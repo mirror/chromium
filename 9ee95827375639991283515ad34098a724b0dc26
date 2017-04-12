@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26e66367_0ba213b0",
+        "filename": "gin/wrappable.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-04-12T14:23:30Z",
+      "side": 1,
+      "message": "this CHECK() ^^\n\nif that is on a hot code-path, I\u0027d expect it would show up in a profile.\n\nAnyways, it would mean that all GetWrapper() callsites have to be changed, so... *shrug*, up to you",
+      "revId": "9ee95827375639991283515ad34098a724b0dc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
