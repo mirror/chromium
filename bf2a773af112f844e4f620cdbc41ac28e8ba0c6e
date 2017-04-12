@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ce481665_8ca535e8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T19:32:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e11f6f15_6e945396",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8fd6724_7ca0d703",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
         "patchSetId": 1
@@ -524,6 +542,24 @@
     },
     {
       "key": {
+        "uuid": "3092fed5_3ce5396b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T19:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72ecc145_9eef473e",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37e07d04_3daa7656",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
@@ -588,6 +624,24 @@
       "side": 1,
       "message": "Got it, thanks. Updated with those functions. Do you think the \u0027return None\u0027 is necessary though?\n\nIn a future CL I think PullRequest should be turned from a named tuple into a class so we can add these methods to it (e.g. pull_request.change_id())",
       "parentUuid": "23a266b8_fcda8636",
+      "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c422f958_3e7bb747",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-12T19:32:25Z",
+      "side": 1,
+      "message": "It behaves the same without return None, but with return None it is more explicit and obvious what happens if there\u0027s no match.",
+      "parentUuid": "08659c63_585fca12",
       "revId": "bf2a773af112f844e4f620cdbc41ac28e8ba0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
