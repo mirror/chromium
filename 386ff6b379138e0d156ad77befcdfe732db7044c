@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1befba05_39d1f4d0",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 17
+      },
+      "lineNbr": 2681,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-13T19:06:32Z",
+      "side": 1,
+      "message": "I can\u0027t remember what the status from these tests was. I\u0027ll take them out and re-run the CQ dry run.",
+      "parentUuid": "04831a40_59586d9f",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8169beb_f3e461b3",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0b1e3c7f_d0b5e1ad",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-13T19:06:32Z",
+      "side": 1,
+      "message": "Not too long. Changed.",
+      "parentUuid": "a8169beb_f3e461b3",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b3c2d3_671f07f1",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 17
@@ -47,6 +83,24 @@
       "writtenOn": "2017-04-12T17:47:10Z",
       "side": 1,
       "message": "I hope this doesn\u0027t take too long to iterate through ... I notice that below we\u0027re also iterating through all given paths for all urls.\n\nOne possible very minor optimization would be to first filter the list of paths so that it only includes \"external\", \"external/wpt\", or paths starting with \"external/wpt/...\".",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9db5f5_210c6367",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-13T19:06:32Z",
+      "side": 1,
+      "message": "Will do below.",
+      "parentUuid": "79b3c2d3_671f07f1",
       "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2c3a1fbd_10c0cc0a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-13T19:06:32Z",
+      "side": 1,
+      "message": "Can we trust that all URLs the manifest returns will always start with \"/\"? I did this half to be safe and half to match paths below (since they don\u0027t have the leading slash).",
+      "parentUuid": "2a2046d8_10a7a992",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "956843bb_00d407b2",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 17
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "33360a2b_f9316c96",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1524,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-13T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "956843bb_00d407b2",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8306a7_f172f7c7",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 17
@@ -98,6 +188,24 @@
       "writtenOn": "2017-04-12T17:47:10Z",
       "side": 1,
       "message": "Hm, \"any_file\" is an unfortunately confusing name, but I can\u0027t think of a better one. Maybe `matches_any_js_test`?\n\nBut do we want to match \"external/wpt/.../test.any.js\"? It may be more consistent if we say that test names are different than file paths, and \".../test.any.js\" is a file path, but not a test name?\n\nIMO, the best behavior eventually would be to not match here, but then if no tests match, it would be nice to suggest \"did you mean...?\" and list out matching tests in the same directory.",
+      "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375afa8a_4876ffde",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-13T19:06:32Z",
+      "side": 1,
+      "message": "Changed variable name to the one you suggested. I wrote this functionality to satisfy a unit test that jsbell had already written [1], but the behavior is a little magical. Do you recommend we sync up with him before this lands, or make a new bug to discuss it for a follow-up fix?\n\n[1] https://chromium-review.googlesource.com/c/461722/17/third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base_unittest.py#313",
+      "parentUuid": "dd8306a7_f172f7c7",
       "revId": "386ff6b379138e0d156ad77befcdfe732db7044c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
