@@ -21,6 +21,7 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/interface_ptr_info.h"
 #include "mojo/public/cpp/system/core.h"
+#include "services/service_manager/embedder/switches.h"
 #include "services/service_manager/public/cpp/standalone_service/switches.h"
 #include "services/service_manager/runner/common/client_util.h"
 #include "services/service_manager/runner/common/switches.h"
@@ -75,9 +76,7 @@ mojom::ServicePtr ServiceProcessLauncher::Start(
       new base::CommandLine(service_path_));
 
   child_command_line->AppendArguments(parent_command_line, false);
-
-  child_command_line->AppendSwitchASCII(::switches::kProcessServiceName,
-                                        target.name());
+  child_command_line->AppendSwitchASCII(switches::kServiceName, target.name());
 #ifndef NDEBUG
   child_command_line->AppendSwitchASCII("u", target.user_id());
 #endif
@@ -91,6 +90,7 @@ mojom::ServicePtr ServiceProcessLauncher::Start(
 
   mojom::ServicePtr client = PassServiceRequestOnCommandLine(
       &process_connection_, child_command_line.get());
+
   launch_process_runner_->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&ServiceProcessLauncher::DoLaunch, base::Unretained(this),

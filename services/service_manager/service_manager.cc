@@ -624,6 +624,18 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
   Connect(std::move(params), nullptr);
 }
 
+void ServiceManager::StartService(const Identity& identity) {
+  auto params = base::MakeUnique<ConnectParams>();
+  params->set_source(CreateServiceManagerIdentity());
+
+  Identity target_identity = identity;
+  if (target_identity.user_id() == mojom::kInheritUserID)
+    target_identity.set_user_id(mojom::kRootUserID);
+  params->set_target(target_identity);
+
+  Connect(std::move(params), nullptr);
+}
+
 void ServiceManager::RegisterService(
     const Identity& identity,
     mojom::ServicePtr service,

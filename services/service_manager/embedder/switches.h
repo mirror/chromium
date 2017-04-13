@@ -7,10 +7,17 @@
 
 #include "services/service_manager/embedder/service_manager_embedder_export.h"
 
+namespace service_manager {
 namespace switches {
 
+SERVICE_MANAGER_EMBEDDER_EXPORT extern const char kEnableLogging[];
+SERVICE_MANAGER_EMBEDDER_EXPORT extern const char kProcessType[];
+SERVICE_MANAGER_EMBEDDER_EXPORT extern const char kProcessTypeServiceManager[];
+SERVICE_MANAGER_EMBEDDER_EXPORT extern const char kProcessTypeService[];
+SERVICE_MANAGER_EMBEDDER_EXPORT extern const char kServiceName[];
 SERVICE_MANAGER_EMBEDDER_EXPORT extern const char kSharedFiles[];
 
+}  // namespace switches
 }  // namespace service_manager
 
 #endif  // SERVICES_SERVICE_MANAGER_EMBEDDER_SWITCHES_H_

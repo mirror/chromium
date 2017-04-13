@@ -1184,7 +1184,6 @@ static_library("browser_tests_runner") {
     ]
 
     deps += [
-      "//mash/package",
       "//mash/session/public/interfaces:constants",
       "//services/service_manager/background:lib",
     ]
@@ -5194,7 +5193,6 @@ if (is_chromeos && enable_package_mash_services) {
     testonly = true
     data_deps = [
       ":browser_tests",
-      "//chrome/app/mash:mash_service_overrides",
     ]
   }
 

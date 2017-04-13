@@ -328,9 +328,11 @@ static_library("test_support") {
     "//components/startup_metric_utils/browser:lib",
     "//content/public/app:both",
     "//content/public/common",
+    "//content/public/common:service_names",
     "//pdf",
     "//ppapi/features",
     "//printing/features",
+    "//services/service_manager/embedder",
     "//ui/base",
   ]
 

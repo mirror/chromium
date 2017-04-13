@@ -12,8 +12,6 @@ namespace switches {
 extern const char kChildProcess[];
 extern const char kEnableSandbox[];
 extern const char kPrimordialPipeToken[];
-extern const char kProcessServiceName[];
-extern const char kServiceOverrides[];
 
 }  // namespace switches
 

@@ -68,6 +68,39 @@ if (is_win) {
   }
 }
 
+# Dependencies which must accompany ChromeMainDelegate when embedded
+# Mash services are enabled.
+if (enable_package_mash_services) {
+  embedded_mash_service_deps = [
+    "//chrome/app/mash",
+    "//mash/common",
+    "//mash/catalog_viewer:lib",
+    "//mash/catalog_viewer/public/interfaces",
+    "//mash/public/interfaces",
+    "//mash/quick_launch:lib",
+    "//mash/quick_launch/public/interfaces:constants",
+    "//mash/session:lib",
+    "//mash/session/public/interfaces:constants",
+    "//mash/task_viewer:lib",
+    "//mash/task_viewer/public/interfaces:constants",
+    "//services/service_manager/public/interfaces",
+    "//services/ui:lib",
+    "//services/ui/ime/test_ime_driver:lib",
+  ]
+
+  if (is_chromeos) {
+    embedded_mash_service_deps += [
+      "//ash/autoclick/mus:lib",
+      "//ash/mus:lib",
+      "//ash/touch_hud/mus:lib",
+    ]
+  }
+
+  if (is_linux && !is_android) {
+    embedded_mash_service_deps += [ "//components/font_service:lib" ]
+  }
+}
+
 # This target exists above chrome and it's main components in the dependency
 # tree as a central place to put assert_no_deps annotations. Since this depends
 # on Chrome and the main DLLs it uses, it will transitively assert that those
@@ -243,9 +276,11 @@ if (!is_android && !is_mac) {
         # Needed to use the master_preferences functions
         "//chrome/installer/util:with_no_strings",
         "//content/public/app:both",
+        "//content/public/common:service_names",
 
         # For headless mode.
         "//headless:headless_shell_lib",
+        "//services/service_manager/embedder",
       ]
 
       public_deps = [
@@ -274,8 +309,7 @@ if (!is_android && !is_mac) {
       }
 
       if (enable_package_mash_services) {
-        deps += [ "//chrome/app/mash" ]
-        data_deps += [ "//chrome/app:service_manifests" ]
+        deps += embedded_mash_service_deps
       }
     }
 
@@ -341,9 +375,11 @@ if (is_win) {
       "//components/crash/content/app",
       "//components/policy:generated",
       "//content/app/resources",
+      "//content/public/common:service_names",
       "//crypto",
       "//net:net_resources",
       "//ppapi/features",
+      "//services/service_manager/embedder",
       "//third_party/cld",
       "//third_party/wtl",
       "//ui/views",
@@ -396,7 +432,7 @@ if (is_win) {
     }
 
     if (enable_package_mash_services) {
-      deps += [ "//chrome/app/mash" ]
+      deps += embedded_mash_service_deps
     }
   }
 
@@ -432,6 +468,8 @@ if (is_win) {
         "//components/browser_watcher:browser_watcher_client",
         "//components/crash/content/app",
         "//content/public/app:child",
+        "//content/public/common:service_names",
+        "//services/service_manager/embedder",
       ]
 
       ldflags = [
@@ -1088,7 +1126,9 @@ if (is_win) {
       "//components/crash/content/app",
       "//components/policy:generated",
       "//content/public/app:both",
+      "//content/public/common:service_names",
       "//headless:headless_shell_lib",
+      "//services/service_manager/embedder",
       "//third_party/cld",
     ]
 
@@ -1103,7 +1143,7 @@ if (is_win) {
     ]
 
     if (enable_package_mash_services) {
-      deps += [ "//chrome/app/mash" ]
+      deps += embedded_mash_service_deps
     }
 
     configs += [ "//build/config/compiler:wexit_time_destructors" ]
@@ -1641,6 +1681,8 @@ if (is_android) {
       "//chrome/utility",
       "//components/safe_browsing_db:safe_browsing_db_mobile",
       "//content/public/app:both",
+      "//content/public/common:service_names",
+      "//services/service_manager/embedder",
     ]
   }
 }
