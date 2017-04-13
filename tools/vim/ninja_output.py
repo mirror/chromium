@@ -68,6 +68,7 @@ def GetNinjaOutputDirectory(chrome_root):
     raise RuntimeError('Unable to find a valid ninja output directory.')
 
 
+
 if __name__ == '__main__':
   if len(sys.argv) != 2:
     raise RuntimeError('Expected a single path argument.')
