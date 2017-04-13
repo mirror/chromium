@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL XMLHttpRequest: WWW-Authenticate challenge when user,pass are not passed to open() assert_equals: expected "usr\nsecret" but got "User name/password wrong or not given: f2345519-bc81-4e3e-81e6-948b2474137f\nopen-pass"
+Harness: the test ran to completion.
+

@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS appCodeName 
+PASS appName 
+PASS appVersion 
+PASS platform 
+PASS product 
+PASS productSub 
+PASS userAgent type 
+FAIL userAgent value assert_equals: userAgent should return the value sent in the User-Agent header expected "{\"error\": {\"message\": \"Traceback (most recent call last):\\n  File \\"/b/c/b/mac_layout/src/third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/wptserve/wptserve/handlers.py\\", line 246, in __call__\n    rv = self.func(request, response)\n  File \\"/b/c/b/mac_layout/src/third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/inspect-headers.py\\", line 31, in main\n    result = get_response(request.raw_headers, filter_value, filter_name)\nAttributeError: 'Request' object has no attribute 'raw_headers'\n\", \"code\": 500}}" but got "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.77.34.5 Safari/537.36\n"
+PASS vendor 
+PASS vendorSub 
+PASS taintEnabled 
+PASS oscpu 
+Harness: the test ran to completion.
+
