@@ -558,7 +558,9 @@ void HttpAuthController::DisableEmbeddedIdentity() {
 
 void HttpAuthController::OnConnectionClosed() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  InvalidateCurrentHandler(INVALIDATE_HANDLER);
+
+  if (handler_ && !handler_->CanUseNewConnection())
+    InvalidateCurrentHandler(INVALIDATE_HANDLER);
 }
 
 }  // namespace net

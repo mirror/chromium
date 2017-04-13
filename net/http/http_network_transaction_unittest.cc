@@ -4213,7 +4213,8 @@ TEST_F(HttpNetworkTransactionTest,
   MockWrite data_writes2[] = {
       MockWrite("CONNECT www.example.org:443 HTTP/1.1\r\n"
                 "Host: www.example.org:443\r\n"
-                "Proxy-Connection: keep-alive\r\n\r\n"),
+                "Proxy-Connection: keep-alive\r\n"
+                "Proxy-Authorization: auth_token\r\n\r\n"),
   };
 
   // The proxy, having had more than enough of us, just hangs up.

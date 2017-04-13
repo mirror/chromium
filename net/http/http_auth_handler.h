@@ -156,6 +156,10 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // cannot be determined.
   virtual bool AllowsExplicitCredentials();
 
+  // Returns whether this handler can continue over a new socket connection. The
+  // answer may depend on 
+  virtual bool CanUseNewConnection();
+
  protected:
   enum Property {
     ENCRYPTS_IDENTITY = 1 << 0,

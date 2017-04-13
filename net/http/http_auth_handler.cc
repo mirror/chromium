@@ -93,6 +93,10 @@ bool HttpAuthHandler::AllowsExplicitCredentials() {
   return true;
 }
 
+bool HttpAuthHandler::CanUseNewConnection() {
+  return true;
+}
+
 void HttpAuthHandler::OnGenerateAuthTokenComplete(int rv) {
   CompletionCallback callback = callback_;
   FinishGenerateAuthToken();
