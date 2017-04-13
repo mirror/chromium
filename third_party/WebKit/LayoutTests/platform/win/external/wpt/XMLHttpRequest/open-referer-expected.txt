@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL XMLHttpRequest: open() - value of Referer header assert_equals: expected "Referer: http://web-platform.test:8001/XMLHttpRequest/open-referer.htm\n" but got "{\"error\": {\"message\": \"Traceback (most recent call last):\\n  File \\"E:\\b\\c\\b\\win_layout\\src\\third_party\\WebKit\\Tools\\Scripts\\webkitpy\\thirdparty\\wpt\\wpt\\tools\\wptserve\\wptserve\\handlers.py\\", line 246, in __call__\n    rv = self.func(request, response)\n  File \\"E:\\b\\c\\b\\win_layout\\src\\third_party\\WebKit\\LayoutTests\\external\\wpt\\XMLHttpRequest/resources/inspect-headers.py\\", line 31, in main\n    result = get_response(request.raw_headers, filter_value, filter_name)\nAttributeError: 'Request' object has no attribute 'raw_headers'\n\", \"code\": 500}}"
+Harness: the test ran to completion.
+

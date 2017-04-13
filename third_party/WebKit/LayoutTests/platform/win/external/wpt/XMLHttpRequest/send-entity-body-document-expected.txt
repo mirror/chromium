@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS XML document, windows-1252 
+FAIL image file assert_equals: document should be serialized and sent as text/html;charset=UTF-8 (TEST#4) expected "text/html;charset=UTF-8" but got "application/xml;charset=UTF-8"
+FAIL HTML document, invalid UTF-8 assert_equals: document should be serialized and sent as text/html;charset=UTF-8 (TEST#1) expected "text/html;charset=UTF-8" but got "application/xml;charset=UTF-8"
+FAIL HTML document, shift-jis assert_equals: document should be serialized and sent as text/html;charset=UTF-8 (TEST#2) expected "text/html;charset=UTF-8" but got "application/xml;charset=UTF-8"
+FAIL plain text file assert_equals: document should be serialized and sent as text/html;charset=UTF-8 (TEST#3) expected "text/html;charset=UTF-8" but got "application/xml;charset=UTF-8"
+FAIL img tag assert_equals: document should be serialized and sent as text/html;charset=UTF-8 (TEST#5) expected "text/html;charset=UTF-8" but got "application/xml;charset=UTF-8"
+FAIL empty div assert_equals: document should be serialized and sent as text/html;charset=UTF-8 (TEST#6) expected "text/html;charset=UTF-8" but got "application/xml;charset=UTF-8"
+Harness: the test ran to completion.
+
