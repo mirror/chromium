@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f395d3ca_41811622",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-04-13T20:25:08Z",
+      "side": 1,
+      "message": "Here you can use: \nif tester_config[\u0027platform\u0027] !\u003d \u0027android\u0027 and decorators. GetEnabledAttributes(benchmark) \u003d\u003d {\u0027android\u0027}",
+      "range": {
+        "startLine": 600,
+        "startChar": 79,
+        "endLine": 600,
+        "endChar": 0
+      },
+      "revId": "2a576eb87ad3335398ed5fa7a231df4684aa492f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
