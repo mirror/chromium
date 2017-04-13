@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b97b5c79_12fce2a9",
+        "filename": "net/http/http_auth_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-04-13T20:42:44Z",
+      "side": 1,
+      "message": "Where does this variable come from?",
+      "revId": "0b5ea3561f983b0b9474514729b2b5d59f712013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6cfc5b_f8367c9a",
+        "filename": "net/http/http_auth_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-04-13T20:42:44Z",
+      "side": 1,
+      "message": "Remove bonus space (At least I assume that\u0027s what the pink means?)",
+      "revId": "0b5ea3561f983b0b9474514729b2b5d59f712013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e047a5b_f49e4d2a",
+        "filename": "net/http/http_auth_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-04-13T20:42:44Z",
+      "side": 1,
+      "message": "I guess this is the case when HaveAuthHandler() is true?",
+      "revId": "0b5ea3561f983b0b9474514729b2b5d59f712013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a280383_8dbc2357",
+        "filename": "net/http/http_auth_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-04-13T20:42:44Z",
+      "side": 1,
+      "message": "I assume this second paragraph is only true if HaveAuth() is false, but HaveAuthHandler is true?",
+      "revId": "0b5ea3561f983b0b9474514729b2b5d59f712013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5493a95_a9cbca6c",
+        "filename": "net/http/proxy_client_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-04-13T20:42:44Z",
+      "side": 1,
+      "message": "I can\u0027t find this method in codesearch, and it doesn\u0027t look like this CL adds it.\n\nWorth noting that the old code is ugly, but was designed to avoid O(n^2) performance, as fuzzers somehow managed to find cases that ran into the fuzz timeout.",
+      "revId": "0b5ea3561f983b0b9474514729b2b5d59f712013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
