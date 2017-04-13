@@ -2650,6 +2650,10 @@ crbug.com/706792 [ Win ] fast/text/ellipsis-platform-font-change.html [ NeedsMan
 
 # Importing 'fetch' tests from WPT.
 crbug.com/705490 external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
+crbug.com/705490 external/wpt/fetch/api/redirect/redirect-location-worker.html [ Timeout Pass ]
+crbug.com/705490 external/wpt/fetch/api/redirect/redirect-location.html [ Timeout Pass ]
+crbug.com/705490 external/wpt/fetch/api/redirect/redirect-origin-worker.html [ Timeout Pass ]
+crbug.com/705490 external/wpt/fetch/api/request/request-cache-default-conditional.html [ Timeout Pass ]
 
 # Non-deterministic output, as the failing subtests dump timestamps.
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
