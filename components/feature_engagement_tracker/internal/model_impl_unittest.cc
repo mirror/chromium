@@ -32,7 +32,7 @@ void RegisterFeatureConfig(EditableConfiguration* configuration,
                            bool valid) {
   FeatureConfig config;
   config.valid = valid;
-  config.feature_used_event = feature.name;
+  config.used.event_name = feature.name;
   configuration->SetConfiguration(&feature, config);
 }
 

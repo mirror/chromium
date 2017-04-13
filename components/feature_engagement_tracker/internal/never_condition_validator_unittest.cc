@@ -25,7 +25,7 @@ class TestModel : public Model {
  public:
   TestModel() {
     feature_config_.valid = true;
-    feature_config_.feature_used_event = "foobar";
+    feature_config_.used.event_name = "foobar";
   }
 
   void Initialize(const OnModelInitializationFinished& callback) override {}
