@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c0ca96b_daeea6cf",
+        "filename": "components/prefs/pref_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 358,
+        "startChar": 7,
+        "endLine": 358,
+        "endChar": 27
+      },
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d599c76_8a2fdfec",
+        "filename": "components/prefs/writeable_pref_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Worth saying something about why this implementation ignores path_components e.g.\n\n// Default implementation. Subclasses may use |path_components| to improve performance.",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7a5752_14b7347e",
+        "filename": "services/preferences/persistent_pref_store_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Would it be wrong to ReportSubValuesChanged here?",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f9996b_e2803337",
+        "filename": "services/preferences/pref_service_factory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Add a comment on what this block tests. I get that the registrar callback shouldn\u0027t be called, but not why (e.g. what is being tested).",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38a6715_51d11131",
+        "filename": "services/preferences/pref_service_factory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Is this testing deletes?",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec92bc9_03a01430",
+        "filename": "services/preferences/pref_service_factory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Do you need to check that !GetDictionary(kDictionaryKey)-\u003eempty() here to make sure the update actually took?",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e4ebaa_68149cfb",
+        "filename": "services/preferences/pref_service_factory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8449dc1_66890fa2",
+        "filename": "services/preferences/public/cpp/persistent_pref_store_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Non-obvious so please document what redundant means.",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4bf6ff_0e2281b5",
+        "filename": "services/preferences/public/cpp/pref_store_client_mixin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "// Clients shouldn\u0027t send empty paths.",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e401ada3_e1d75a8f",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Pointer const",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6f247d_50b36804",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "const",
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58690573_b929d46c",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-04-13T01:46:54Z",
+      "side": 1,
+      "message": "Did you mean updates_",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "7ab076b73cd0231f2853c3338932c226c9efbe4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
