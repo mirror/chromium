@@ -12,6 +12,7 @@
 #include "net/http/http_auth_handler_mock.h"
 #include "net/http/http_request_info.h"
 #include "net/http/http_response_headers.h"
+#include "net/http/http_response_info.h"
 #include "net/http/http_util.h"
 #include "net/log/net_log_with_source.h"
 #include "net/ssl/ssl_info.h"
@@ -57,10 +58,11 @@ void RunSingleRoundAuthTest(HandlerRunMode run_mode,
   request.method = "GET";
   request.url = GURL("http://example.com");
 
-  scoped_refptr<HttpResponseHeaders> headers(HeadersFromString(
+  HttpResponseInfo response;
+  response.headers = HeadersFromString(
       "HTTP/1.1 407\r\n"
       "Proxy-Authenticate: MOCK foo\r\n"
-      "\r\n"));
+      "\r\n");
 
   HttpAuthHandlerMock::Factory auth_handler_factory;
   HttpAuthHandlerMock* auth_handler = new HttpAuthHandlerMock();
@@ -74,8 +76,10 @@ void RunSingleRoundAuthTest(HandlerRunMode run_mode,
                              GURL("http://example.com"),
                              &dummy_auth_cache, &auth_handler_factory));
   SSLInfo null_ssl_info;
-  ASSERT_EQ(OK, controller->HandleAuthChallenge(headers, null_ssl_info, false,
-                                                false, dummy_log));
+  TestCompletionCallback completion_callback;
+  int result = controller->HandleAuthChallenge(
+      headers, null_ssl_info, completion_callback.callback(), dummy_log);
+  ASSERT_EQ(OK, completion_callback.GetResult(result));
   ASSERT_TRUE(controller->HaveAuthHandler());
   controller->ResetAuth(AuthCredentials());
   EXPECT_TRUE(controller->HaveAuth());
@@ -178,11 +182,12 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   request.url = GURL("http://example.com");
 
   HttpRequestHeaders request_headers;
-  scoped_refptr<HttpResponseHeaders> headers(HeadersFromString(
+  HttpResponseInfo response;
+  response.headers = HeadersFromString(
       "HTTP/1.1 401\r\n"
       "WWW-Authenticate: Mock\r\n"
       "WWW-Authenticate: Basic\r\n"
-      "\r\n"));
+      "\r\n");
 
   HttpAuthHandlerMock::Factory auth_handler_factory;
 
@@ -220,22 +225,28 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
                              GURL("http://example.com"),
                              &dummy_auth_cache, &auth_handler_factory));
   SSLInfo null_ssl_info;
-  ASSERT_EQ(OK, controller->HandleAuthChallenge(headers, null_ssl_info, false,
-                                                false, dummy_log));
+  TestCompletionCallback completion_calback;
+  int rv = controller->HandleAuthChallenge(
+      headers, null_ssl_info, completion_calback.callback(), dummy_log);
+  ASSERT_EQ(OK, completion_calback.GetResult(rv));
   ASSERT_TRUE(controller->HaveAuthHandler());
+  EXPECT_FALSE(controller->HaveAuth());
   controller->ResetAuth(AuthCredentials());
   EXPECT_TRUE(controller->HaveAuth());
 
   // Should only succeed if we are using the AUTH_SCHEME_MOCK MockHandler.
-  EXPECT_EQ(OK, controller->MaybeGenerateAuthToken(
+  ASSERT_EQ(OK, controller->MaybeGenerateAuthToken(
       &request, CompletionCallback(), dummy_log));
   controller->AddAuthorizationHeader(&request_headers);
 
   // Once a token is generated, simulate the receipt of a server response
   // indicating that the authentication attempt was rejected.
-  ASSERT_EQ(OK, controller->HandleAuthChallenge(headers, null_ssl_info, false,
-                                                false, dummy_log));
+  TestCompletionCallback completion_calback_rejected;
+  rv = controller->HandleAuthChallenge(
+      headers, null_ssl_info, completion_calback_rejected.callback(), dummy_log);
+  ASSERT_EQ(OK, completion_calback_rejected.GetResult(rv));
   ASSERT_TRUE(controller->HaveAuthHandler());
+  EXPECT_FALSE(controller->HaveAuth());
   controller->ResetAuth(AuthCredentials(base::ASCIIToUTF16("Hello"),
                         base::string16()));
   EXPECT_TRUE(controller->HaveAuth());
@@ -245,6 +256,20 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   // Should only succeed if we are using the AUTH_SCHEME_BASIC MockHandler.
   EXPECT_EQ(OK, controller->MaybeGenerateAuthToken(
       &request, CompletionCallback(), dummy_log));
+}
+
+// HandleAuthChallenge() call can be asynchronous.
+TEST(HttpAuthControllerTest, HandleAsyncChallenge) {
+}
+
+// Identities are used in the correct order.
+TEST(HttpAuthControllerTest, IdentityPriorityOrder) {
+}
+
+// Identities from abstract sources should be available to a new handler if the
+// server changes authentication scheme or if all identity sources were
+// exhausted for a handler.
+TEST(HttpAuthControllerTest, IdentityReuseAcrossHandlers) {
 }
 
 }  // namespace net

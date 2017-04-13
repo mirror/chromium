@@ -63,12 +63,6 @@ class NET_EXPORT_PRIVATE ProxyClientSocket : public StreamSocket {
                                  std::string* request_line,
                                  HttpRequestHeaders* request_headers);
 
-  // When an auth challenge (407 response) is received during tunnel
-  // construction/ this method should be called.
-  static int HandleProxyAuthChallenge(HttpAuthController* auth,
-                                      HttpResponseInfo* response,
-                                      const NetLogWithSource& net_log);
-
   // Logs (to the log and in a histogram) a blocked CONNECT response.
   static void LogBlockedTunnelResponse(int http_response_code,
                                        bool is_https_proxy);

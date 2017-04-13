@@ -109,6 +109,8 @@ class NET_EXPORT_PRIVATE SpdyProxyClientSocket : public ProxyClientSocket,
     STATE_SEND_REQUEST,
     STATE_SEND_REQUEST_COMPLETE,
     STATE_READ_REPLY_COMPLETE,
+    STATE_HANDLE_PROXY_AUTH_CHALLENGE,
+    STATE_HANDLE_PROXY_AUTH_CHALLENGE_COMPLETE,
     STATE_OPEN,
     STATE_CLOSED
   };
@@ -127,6 +129,8 @@ class NET_EXPORT_PRIVATE SpdyProxyClientSocket : public ProxyClientSocket,
   int DoSendRequest();
   int DoSendRequestComplete(int result);
   int DoReadReplyComplete(int result);
+  int DoHandleProxyAuthChallenge();
+  int DoHandleProxyAuthChallengeComplete(int result);
 
   // Populates |user_buffer_| with as much read data as possible
   // and returns the number of bytes read.

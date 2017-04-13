@@ -39,6 +39,18 @@ void PrintTo(const HttpAuthHandlerMock::State& state, ::std::ostream* os) {
 }
 
 HttpAuthHandlerMock::HttpAuthHandlerMock()
+    : resolve_(RESOLVE_UNINITIALIZED),
+      generate_async_(false),
+      generate_rv_(OK),
+      auth_token_(NULL),
+      first_round_(true),
+      connection_based_(false),
+      allows_default_credentials_(false),
+      allows_explicit_credentials_(true),
+      weak_factory_(this) {
+}
+
+HttpAuthHandlerMock::HttpAuthHandlerMock()
     : state_(State::WAIT_FOR_INIT),
       resolve_(RESOLVE_INIT),
       generate_async_(false),
@@ -53,8 +65,9 @@ HttpAuthHandlerMock::HttpAuthHandlerMock()
 HttpAuthHandlerMock::~HttpAuthHandlerMock() {
 }
 
-void HttpAuthHandlerMock::SetResolveExpectation(Resolve resolve) {
-  EXPECT_EQ(RESOLVE_INIT, resolve_);
+void HttpAuthHandlerMock::SetResolveExpectation(
+    NameResolverExpectation resolve) {
+  EXPECT_EQ(RESOLVE_UNINITIALIZED, resolve_);
   resolve_ = resolve;
 }
 

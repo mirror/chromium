@@ -159,6 +159,8 @@ class NET_EXPORT_PRIVATE HttpNetworkTransaction
     STATE_SEND_REQUEST_COMPLETE,
     STATE_READ_HEADERS,
     STATE_READ_HEADERS_COMPLETE,
+    STATE_HANDLE_AUTH_CHALLENGE,
+    STATE_HANDLE_AUTH_CHALLENGE_COMPLETE,
     STATE_READ_BODY,
     STATE_READ_BODY_COMPLETE,
     STATE_DRAIN_BODY_FOR_AUTH_RESTART,
@@ -207,6 +209,8 @@ class NET_EXPORT_PRIVATE HttpNetworkTransaction
   int DoSendRequestComplete(int result);
   int DoReadHeaders();
   int DoReadHeadersComplete(int result);
+  int DoHandleAuthChallenge();
+  int DoHandleAuthChallengeComplete(int result);
   int DoReadBody();
   int DoReadBodyComplete(int result);
   int DoDrainBodyForAuthRestart();
@@ -277,11 +281,6 @@ class NET_EXPORT_PRIVATE HttpNetworkTransaction
 
   // Returns true if we should try to add an Authorization header.
   bool ShouldApplyServerAuth() const;
-
-  // Handles HTTP status code 401 or 407.
-  // HandleAuthChallenge() returns a network error code, or OK on success.
-  // May update |pending_auth_target_| or |response_.auth_challenge|.
-  int HandleAuthChallenge();
 
   // Returns true if we have auth credentials for the given target.
   bool HaveAuth(HttpAuth::Target target) const;

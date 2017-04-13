@@ -43,20 +43,6 @@ void ProxyClientSocket::BuildTunnelRequest(
 }
 
 // static
-int ProxyClientSocket::HandleProxyAuthChallenge(
-    HttpAuthController* auth,
-    HttpResponseInfo* response,
-    const NetLogWithSource& net_log) {
-  DCHECK(response->headers.get());
-  int rv = auth->HandleAuthChallenge(response->headers, response->ssl_info,
-                                     false, true, net_log);
-  response->auth_challenge = auth->auth_info();
-  if (rv == OK)
-    return ERR_PROXY_AUTH_REQUESTED;
-  return rv;
-}
-
-// static
 void ProxyClientSocket::LogBlockedTunnelResponse(int http_status_code,
                                                  bool is_https_proxy) {
   if (is_https_proxy) {
@@ -78,35 +64,15 @@ bool ProxyClientSocket::SanitizeProxyAuth(HttpResponseInfo* response) {
 
   // Copy status line and all hop-by-hop headers to preserve keep-alive
   // behavior.
-  const char* kHeadersToKeep[] = {
-      "connection",         "proxy-connection", "keep-alive", "trailer",
-      "transfer-encoding",  "upgrade",
-
-      "content-length",
-
-      "proxy-authenticate",
-  };
-
-  // Create a list of all present header not in |kHeadersToKeep|, and then
-  // remove them.
-  size_t iter = 0;
-  std::string header_name;
-  std::string header_value;
-  std::unordered_set<std::string> headers_to_remove;
-  while (response->headers->EnumerateHeaderLines(&iter, &header_name,
-                                                 &header_value)) {
-    bool remove = true;
-    for (const char* header : kHeadersToKeep) {
-      if (base::EqualsCaseInsensitiveASCII(header, header_name)) {
-        remove = false;
-        break;
-      }
-    }
-    if (remove)
-      headers_to_remove.insert(header_name);
-  }
-
-  response->headers->RemoveHeaders(headers_to_remove);
+  new_headers->ReplaceStatusLine(old_headers->GetStatusLine());
+  CopyHeaderValues(old_headers, new_headers, "connection");
+  CopyHeaderValues(old_headers, new_headers, "proxy-connection");
+  CopyHeaderValues(old_headers, new_headers, "keep-alive");
+  CopyHeaderValues(old_headers, new_headers, "trailer");
+  CopyHeaderValues(old_headers, new_headers, "transfer-encoding");
+  CopyHeaderValues(old_headers, new_headers, "upgrade");
+  CopyHeaderValues(old_headers, new_headers, "content-length");
+  CopyHeaderValues(old_headers, new_headers, "proxy-authenticate");
 
   return true;
 }

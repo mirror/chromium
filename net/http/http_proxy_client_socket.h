@@ -97,6 +97,8 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
     STATE_SEND_REQUEST_COMPLETE,
     STATE_READ_HEADERS,
     STATE_READ_HEADERS_COMPLETE,
+    STATE_HANDLE_PROXY_AUTH_CHALLENGE,
+    STATE_HANDLE_PROXY_AUTH_CHALLENGE_COMPLETE,
     STATE_DRAIN_BODY,
     STATE_DRAIN_BODY_COMPLETE,
     STATE_DONE,
@@ -122,6 +124,8 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
   int DoSendRequestComplete(int result);
   int DoReadHeaders();
   int DoReadHeadersComplete(int result);
+  int DoHandleProxyAuthChallenge();
+  int DoHandleProxyAuthChallengeComplete(int result);
   int DoDrainBody();
   int DoDrainBodyComplete(int result);
 

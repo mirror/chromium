@@ -354,6 +354,12 @@ int HttpProxyClientSocket::DoLoop(int last_io_result) {
         net_log_.EndEventWithNetErrorCode(
             NetLogEventType::HTTP_TRANSACTION_TUNNEL_READ_HEADERS, rv);
         break;
+      case STATE_HANDLE_PROXY_AUTH_CHALLENGE:
+        rv = DoHandleProxyAuthChallenge();
+        break;
+      case STATE_HANDLE_PROXY_AUTH_CHALLENGE_COMPLETE:
+        rv = DoHandleProxyAuthChallengeComplete(rv);
+        break;
       case STATE_DRAIN_BODY:
         DCHECK_EQ(OK, rv);
         rv = DoDrainBody();
@@ -486,15 +492,8 @@ int HttpProxyClientSocket::DoReadHeadersComplete(int result) {
       return ERR_HTTPS_PROXY_TUNNEL_RESPONSE;
 
     case 407:  // Proxy Authentication Required
-      // We need this status code to allow proxy authentication.  Our
-      // authentication code is smart enough to avoid being tricked by an
-      // active network attacker.
-      // The next state is intentionally not set as it should be STATE_NONE;
-      if (!SanitizeProxyAuth(&response_)) {
-        LogBlockedTunnelResponse();
-        return ERR_TUNNEL_CONNECTION_FAILED;
-      }
-      return HandleProxyAuthChallenge(auth_.get(), &response_, net_log_);
+      next_state_ = STATE_HANDLE_PROXY_AUTH_CHALLENGE;
+      return OK;
 
     default:
       // Ignore response to avoid letting the proxy impersonate the target
@@ -506,6 +505,25 @@ int HttpProxyClientSocket::DoReadHeadersComplete(int result) {
       LogBlockedTunnelResponse();
       return ERR_TUNNEL_CONNECTION_FAILED;
   }
+}
+
+int HttpProxyClientSocket::DoHandleProxyAuthChallenge() {
+  if (!SanitizeProxyAuth(&response_)) {
+    LogBlockedTunnelResponse();
+    return ERR_TUNNEL_CONNECTION_FAILED;
+  }
+  next_state_ = STATE_HANDLE_PROXY_AUTH_CHALLENGE_COMPLETE;
+  return auth_->HandleAuthChallenge(response_, io_callback_, net_log_);
+}
+
+int HttpProxyClientSocket::DoHandleProxyAuthChallengeComplete(int result) {
+  if (result != OK)
+    return result;
+  if (auth_->HaveAuthHandler()) {
+    response_.auth_challenge = auth_->auth_info();
+    return ERR_PROXY_AUTH_REQUESTED;
+  }
+  return ERR_PROXY_AUTH_UNSUPPORTED;
 }
 
 int HttpProxyClientSocket::DoDrainBody() {
