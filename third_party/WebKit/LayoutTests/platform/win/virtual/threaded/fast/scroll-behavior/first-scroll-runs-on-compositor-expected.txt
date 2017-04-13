@@ -4,7 +4,7 @@ On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE
 
 
 PASS internals.getProgrammaticScrollAnimationState(document) is RUNNING_ON_COMPOSITOR
-PASS document.scrollingElement.scrollTop == 500 became true
+FAIL document.scrollingElement.scrollTop == 500 failed to change to true in 0.5 seconds.
 PASS successfullyParsed is true
 
 TEST COMPLETE

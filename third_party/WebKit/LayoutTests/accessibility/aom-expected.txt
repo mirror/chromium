@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS DOM Elements have an AccessibleNode 
+PASS DOM Text nodes do not have an AccessibleNode. 
+FAIL Supported properties on an AccessibleNode are all null by default Cannot read property 'role' of undefined
+FAIL ARIA attributes are reflected into AOM properties Cannot read property 'role' of undefined
+FAIL Invalid ARIA roles are still reflected into AOM properties Cannot read property 'role' of undefined
+FAIL Test setting AccessibleNode.role Cannot set property 'role' of undefined
+FAIL An invalid role should be ignored if there's no ARIA. Cannot set property 'role' of undefined
+FAIL Fallback roles are supported. Cannot set property 'role' of undefined
+FAIL Test setting AccessibleNode.label Cannot set property 'label' of undefined
+FAIL Test that AOM properties override ARIA attributes Cannot set property 'role' of undefined
+FAIL Once an AOM property has been set, ARIA no longer has any effect Cannot set property 'role' of undefined
+FAIL An AccessibleNode keeps its element alive. Cannot read property 'role' of undefined
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+Lorem ipsum dolor sit amet
+FAIL: hit offset 26.
+FAIL: hit offset 21.
+PASS
+PASS
+

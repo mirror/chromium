@@ -1,0 +1,21 @@
+Test that hitting an anonymous block child of a multicol container takes us to the right text content.
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+First column:
+FAIL document.caretRangeFromPoint(310,39).startOffset should be 3. Was 7.
+PASS document.caretRangeFromPoint(310,40).startOffset is 7
+FAIL document.caretRangeFromPoint(310,79).startOffset should be 11. Was 8.
+Second column:
+FAIL document.caretRangeFromPoint(210,39).startOffset should be 15. Was 23.
+FAIL document.caretRangeFromPoint(210,40).startOffset should be 19. Was 23.
+FAIL document.caretRangeFromPoint(210,79).startOffset should be 23. Was 24.
+Third column:
+FAIL document.caretRangeFromPoint(110,39).startOffset should be 27. Was 35.
+FAIL document.caretRangeFromPoint(110,40).startOffset should be 31. Was 35.
+FAIL document.caretRangeFromPoint(110,79).startOffset should be 35. Was 32.
+PASS successfullyParsed is true
+
+TEST COMPLETE
+xxx xxx xxx xxx xxx xxx xxx xxx xxx

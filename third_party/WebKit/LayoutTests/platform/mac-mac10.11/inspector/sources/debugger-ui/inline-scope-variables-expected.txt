@@ -1,0 +1,8 @@
+CONSOLE MESSAGE: line 13: 3
+Tests that inline scope variables are rendering correctly.
+
+Set timer for test function.
+8: b = 42
+9: a = (3) [1, 2, 3]
+11: b = 42
+

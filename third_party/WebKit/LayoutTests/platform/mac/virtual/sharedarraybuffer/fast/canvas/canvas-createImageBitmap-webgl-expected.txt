@@ -1,0 +1,7 @@
+CONSOLE ERROR: line 40: Uncaught TypeError: Cannot read property 'clearColor' of null
+Check the imageBitmap of webgl.
+FAIL Unexpected error: Uncaught TypeError: Cannot read property 'clearColor' of null
+FAIL successfullyParsed should be true. Was false.
+
+TEST COMPLETE
+

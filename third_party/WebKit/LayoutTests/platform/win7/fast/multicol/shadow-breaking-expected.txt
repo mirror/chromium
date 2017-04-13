@@ -1,0 +1,13 @@
+Test that text-shadow doesn't mess up the line positions.
+
+line
+line
+FAIL:
+Expected 220 for offsetLeft, but got 0. 
+Expected 0 for offsetTop, but got 20. 
+
+<span class="testee" data-offset-y="0" data-offset-x="220">line</span>
+FAIL:
+Expected 0 for offsetTop, but got -1. 
+
+<span class="testee" data-offset-y="0" data-offset-x="0">line</span>

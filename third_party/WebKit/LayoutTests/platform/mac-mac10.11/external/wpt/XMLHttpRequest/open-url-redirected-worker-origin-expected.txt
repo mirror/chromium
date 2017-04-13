@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS XMLHttpRequest: redirected worker scripts, origin and referrer 
+FAIL Origin header assert_equals: expected "Origin: http://web-platform.test:8001\n" but got ""
+PASS Request URL test 
+FAIL Referer header assert_equals: expected "Referer: http://web-platform.test:8001/XMLHttpRequest/resources/workerxhr-origin-referrer.js\n" but got "{\"error\": {\"message\": \"Traceback (most recent call last):\\n  File \\"/b/c/b/mac_layout/src/third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/wptserve/wptserve/handlers.py\\", line 246, in __call__\n    rv = self.func(request, response)\n  File \\"/b/c/b/mac_layout/src/third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/inspect-headers.py\\", line 31, in main\n    result = get_response(request.raw_headers, filter_value, filter_name)\nAttributeError: 'Request' object has no attribute 'raw_headers'\n\", \"code\": 500}}"
+Harness: the test ran to completion.
+

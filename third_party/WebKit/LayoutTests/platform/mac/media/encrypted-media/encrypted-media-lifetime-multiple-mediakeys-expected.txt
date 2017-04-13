@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Multiple MediaKeys lifetime assert_equals: After initial gc(), MediaKeySession: expected 0 but got 1
+Harness: the test ran to completion.
+

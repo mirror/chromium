@@ -1,0 +1,11 @@
+Verify that tab keeps selected as the persistence binding comes in.
+
+Opened tabs before persistence binding:
+    1: foo.js [selected]
+    2: bar.js
+    3: foo.js
+
+Opened tabs after persistence binding:
+    1: foo.js [selected]
+    2: bar.js
+

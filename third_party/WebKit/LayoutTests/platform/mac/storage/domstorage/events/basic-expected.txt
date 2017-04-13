@@ -1,0 +1,105 @@
+This is a test to make sure DOM Storage mutations fire StorageEvents that are caught by the event listener set via window.onstorage.
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+Testing sessionStorage
+storage.clear()
+PASS storage.length is 0
+Reset storage event list
+storageEventList = new Array()
+storage.setItem('FOO', 'BAR')
+FAIL got at least 2, expected only 1 events
+FAIL storageEventList.length should be 1. Was 2.
+FAIL storageEventList[0].key should be FOO (of type string). Was null (of type object).
+PASS storageEventList[0].oldValue is null
+FAIL storageEventList[0].newValue should be BAR (of type string). Was null (of type object).
+storage.setItem('FU', 'BAR')
+storage.setItem('a', '1')
+storage.setItem('b', '2')
+storage.setItem('b', '3')
+FAIL got at least 6, expected only 5 events
+FAIL storageEventList.length should be 5. Was 6.
+FAIL storageEventList[1].key should be FU. Was FOO.
+PASS storageEventList[1].oldValue is null
+PASS storageEventList[1].newValue is "BAR"
+FAIL storageEventList[2].key should be a. Was FU.
+PASS storageEventList[2].oldValue is null
+FAIL storageEventList[2].newValue should be 1. Was BAR.
+FAIL storageEventList[3].key should be b. Was a.
+PASS storageEventList[3].oldValue is null
+FAIL storageEventList[3].newValue should be 2. Was 1.
+PASS storageEventList[4].key is "b"
+FAIL storageEventList[4].oldValue should be 2 (of type string). Was null (of type object).
+FAIL storageEventList[4].newValue should be 3. Was 2.
+storage.removeItem('FOO')
+FAIL got at least 7, expected only 6 events
+FAIL storageEventList.length should be 6. Was 7.
+FAIL storageEventList[5].key should be FOO. Was b.
+FAIL storageEventList[5].oldValue should be BAR. Was 2.
+FAIL storageEventList[5].newValue should be null (of type object). Was 3 (of type string).
+storage.removeItem('FU')
+FAIL got at least 8, expected only 7 events
+FAIL storageEventList.length should be 7. Was 8.
+FAIL storageEventList[6].key should be FU. Was FOO.
+PASS storageEventList[6].oldValue is "BAR"
+PASS storageEventList[6].newValue is null
+storage.clear()
+FAIL got at least 9, expected only 8 events
+FAIL storageEventList.length should be 8. Was 9.
+FAIL storageEventList[7].key should be null (of type object). Was FU (of type string).
+FAIL storageEventList[7].oldValue should be null (of type object). Was BAR (of type string).
+PASS storageEventList[7].newValue is null
+
+
+Testing localStorage
+storage.clear()
+PASS storage.length is 0
+Reset storage event list
+storageEventList = new Array()
+storage.setItem('FOO', 'BAR')
+FAIL got at least 2, expected only 1 events
+FAIL storageEventList.length should be 1. Was 2.
+FAIL storageEventList[0].key should be FOO (of type string). Was null (of type object).
+PASS storageEventList[0].oldValue is null
+FAIL storageEventList[0].newValue should be BAR (of type string). Was null (of type object).
+storage.setItem('FU', 'BAR')
+storage.setItem('a', '1')
+storage.setItem('b', '2')
+storage.setItem('b', '3')
+FAIL got at least 6, expected only 5 events
+FAIL storageEventList.length should be 5. Was 6.
+FAIL storageEventList[1].key should be FU. Was FOO.
+PASS storageEventList[1].oldValue is null
+PASS storageEventList[1].newValue is "BAR"
+FAIL storageEventList[2].key should be a. Was FU.
+PASS storageEventList[2].oldValue is null
+FAIL storageEventList[2].newValue should be 1. Was BAR.
+FAIL storageEventList[3].key should be b. Was a.
+PASS storageEventList[3].oldValue is null
+FAIL storageEventList[3].newValue should be 2. Was 1.
+PASS storageEventList[4].key is "b"
+FAIL storageEventList[4].oldValue should be 2 (of type string). Was null (of type object).
+FAIL storageEventList[4].newValue should be 3. Was 2.
+storage.removeItem('FOO')
+FAIL got at least 7, expected only 6 events
+FAIL storageEventList.length should be 6. Was 7.
+FAIL storageEventList[5].key should be FOO. Was b.
+FAIL storageEventList[5].oldValue should be BAR. Was 2.
+FAIL storageEventList[5].newValue should be null (of type object). Was 3 (of type string).
+storage.removeItem('FU')
+FAIL got at least 8, expected only 7 events
+FAIL storageEventList.length should be 7. Was 8.
+FAIL storageEventList[6].key should be FU. Was FOO.
+PASS storageEventList[6].oldValue is "BAR"
+PASS storageEventList[6].newValue is null
+storage.clear()
+FAIL got at least 9, expected only 8 events
+FAIL storageEventList.length should be 8. Was 9.
+FAIL storageEventList[7].key should be null (of type object). Was FU (of type string).
+FAIL storageEventList[7].oldValue should be null (of type object). Was BAR (of type string).
+PASS storageEventList[7].newValue is null
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

@@ -1,0 +1,17 @@
+This is a testharness.js-based test.
+FAIL AccessibleNode.autocomplete Cannot set property 'autocomplete' of undefined
+FAIL AccessibleNode.checked Cannot set property 'checked' of undefined
+FAIL AccessibleNode.current Cannot set property 'current' of undefined
+FAIL AccessibleNode.invalid Cannot set property 'invalid' of undefined
+FAIL AccessibleNode.keyShortcuts Cannot set property 'keyShortcuts' of undefined
+FAIL AccessibleNode.label Cannot set property 'label' of undefined
+FAIL AccessibleNode.live Cannot set property 'live' of undefined
+FAIL AccessibleNode.orientation Cannot set property 'orientation' of undefined
+FAIL AccessibleNode.placeholder Cannot set property 'placeholder' of undefined
+FAIL AccessibleNode.relevant Cannot set property 'relevant' of undefined
+FAIL AccessibleNode.role Cannot set property 'role' of undefined
+FAIL AccessibleNode.roleDescription Cannot set property 'roleDescription' of undefined
+FAIL AccessibleNode.sort Cannot set property 'sort' of undefined
+FAIL AccessibleNode.valueText Cannot set property 'valueText' of undefined
+Harness: the test ran to completion.
+

@@ -811,7 +811,6 @@ crbug.com/567837 virtual/scalefactor150/fast/hidpi/static/gesture-scroll-amount.
 # though this is a non-flaky assert failure, we need to mark it [ Pass Crash ].
 crbug.com/389648 crbug.com/517123 crbug.com/410145 fast/text-autosizing/table-inflation-crash.html [ Pass Crash Timeout ]
 
-crbug.com/636207 [ Win Debug ] fast/dom/HTMLImageElement/image-srcset-w-onerror.html [ Failure Pass ]
 crbug.com/636207 [ Win Debug ] virtual/sharedarraybuffer/fast/dom/HTMLImageElement/image-srcset-w-onerror.html [ Failure Pass ]
 
 crbug.com/569139 fast/js/string-replace-2.html [ Failure ]
@@ -1300,7 +1299,6 @@ crbug.com/417782 virtual/rootlayerscrolls/fast/scrolling/scrollbar-tickmarks-sty
 
 crbug.com/574283 [ Mac ] fast/scroll-behavior/smooth-scroll/ongoing-smooth-scroll-anchors.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/scroll_customization/fast/scroll-behavior/smooth-scroll/ongoing-smooth-scroll-anchors.html [ Skip ]
-crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/first-scroll-runs-on-compositor.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/fixed-background-in-iframe.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/horizontal-smooth-scroll-in-rtl.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/main-thread-scrolling-reason-added.html [ Skip ]
@@ -1570,7 +1568,6 @@ crbug.com/591500 [ Win10 ] printing/simultaneous-position-float-change.html [ Fa
 crbug.com/591500 [ Win10 ] printing/webgl-repeated-printing-preservedrawingbuffer.html [ Failure ]
 crbug.com/591500 [ Win10 ] virtual/threaded/printing/simultaneous-position-float-change.html [ Failure ]
 crbug.com/591500 [ Win10 ] virtual/threaded/printing/webgl-repeated-printing-preservedrawingbuffer.html [ Failure ]
-crbug.com/591500 [ Win10 ] virtual/threaded/printing/webgl-repeated-printing.html [ Failure ]
 crbug.com/591500 [ Win10 ] printing/quirks-percentage-height-body.html [ Failure ]
 crbug.com/591500 [ Win10 ] printing/quirks-percentage-height.html [ Failure ]
 crbug.com/591500 [ Win10 ] printing/standards-percentage-heights.html [ Failure ]
@@ -1872,6 +1869,56 @@ crbug.com/626703 external/wpt/domxpath/001.html [ Failure ]
 crbug.com/710226 [ Win Mac10.9 Mac10.10 Mac10.11 Mac10.12 ] external/wpt/cssom-view/MediaQueryList-001.html [ Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/XMLHttpRequest/abort-after-stop.htm [ Timeout ]
+crbug.com/626703 external/wpt/XMLHttpRequest/event-readystatechange-loaded.htm [ Timeout ]
+crbug.com/626703 external/wpt/XMLHttpRequest/send-authentication-existing-session-manual.htm [ Skip ]
+crbug.com/626703 external/wpt/content-security-policy/inside-worker/shared-inheritance.html [ Timeout ]
+crbug.com/626703 external/wpt/content-security-policy/inside-worker/shared-script.html [ Timeout ]
+crbug.com/626703 external/wpt/content-security-policy/securitypolicyviolation/inside-shared-worker.html [ Timeout ]
+crbug.com/626703 [ Android Mac10.9 ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/variables/variable-declaration-15.html [ Failure ]
+crbug.com/626703 [ Android Mac10.12 ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/variables/variable-declaration-16.html [ Failure ]
+crbug.com/626703 [ Android Linux ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/variables/variable-declaration-17.html [ Failure ]
+crbug.com/626703 [ Android Mac10.12 ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/variables/variable-declaration-18.html [ Failure ]
+crbug.com/626703 [ Android Mac10.12 ] external/wpt/editing/run/multitest.html [ Timeout ]
+crbug.com/626703 external/wpt/fetch/api/basic/integrity-sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/html/browsers/offline/no-appcache-in-shared-workers-historical.html [ Timeout ]
+crbug.com/626703 external/wpt/html/webappapis/scripting/processing-model-2/unhandled-promise-rejections/promise-rejection-events.sharedworker.html [ Timeout ]
+crbug.com/626703 [ Android Mac10.9 ] external/wpt/service-workers/service-worker/register-same-scope-different-script-url.https.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/byte-length-queuing-strategy.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/count-queuing-strategy.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/close-propagation-backward.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/close-propagation-forward.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/error-propagation-backward.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/error-propagation-forward.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/flow-control.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/general.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/multiple-propagation.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/pipe-through.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/piping/transform-streams.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-byte-streams/general.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/bad-strategies.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/bad-underlying-sources.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/brand-checks.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/cancel.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/count-queuing-strategy-integration.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/default-reader.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/garbage-collection.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/general.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/pipe-through.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/tee.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/readable-streams/templated.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/aborting.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/bad-strategies.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/bad-underlying-sinks.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/brand-checks.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/byte-length-queuing-strategy.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/close.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/constructor.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/count-queuing-strategy.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/general.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/reentrant-strategy.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/start.sharedworker.html [ Timeout ]
+crbug.com/626703 external/wpt/streams/writable-streams/write.sharedworker.html [ Timeout ]
 crbug.com/626703 external/wpt/css/selectors4/focus-within-shadow-006.html [ Failure ]
 crbug.com/626703 [ Android Linux Win ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-multi-item-vert-001b.html [ Failure ]
 crbug.com/626703 external/wpt/cssom-view/matchMedia.xht [ Timeout ]
@@ -2482,8 +2529,6 @@ crbug.com/508728 virtual/mojo-localstorage/external/wpt/webstorage/document-doma
 
 crbug.com/676572 [ Debug ] virtual/mojo-localstorage/external/wpt/webstorage/storage_local_setitem_quotaexceedederr.html [ Pass Timeout ]
 
-crbug.com/686057 [ Mac ] external/wpt/html/webappapis/system-state-and-capabilities/the-navigator-object/NavigatorID.html [ Pass Failure ]
-
 crbug.com/508728 external/wpt/workers/Worker_cross_origin_security_err.htm [ Timeout ]
 
 # This test needs to be updated: fails because it expects showModalDialog and some other APIs.
@@ -2497,8 +2542,6 @@ crbug.com/691944 external/wpt/service-workers/service-worker/update-after-oneday
 # These tests (erroneously) see a platform-specific User-Agent header
 crbug.com/595993 external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
 crbug.com/595993 external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
-
-crbug.com/619427 [ Mac Linux ] fast/overflow/overflow-height-float-not-removed-crash3.html [ Pass Failure ]
 
 crbug.com/667371 inspector/elements/styles-1/color-aware-property-value-edit.html [ Pass Failure ]
 
@@ -2682,7 +2725,6 @@ crbug.com/698520 external/wpt/preload/fetch-destination.https.html [ Failure Pas
 # Sheriff failures 2017-03-10
 crbug.com/402805 inspector-protocol/input/emulateTouchFromMouseEvent.html [ Timeout ]
 crbug.com/700374 [ Win ] virtual/mojo-loading/http/tests/inspector/workers-on-navigation.html [ Failure Pass ]
-crbug.com/700374 [ Win ] http/tests/inspector/workers-on-navigation.html [ Failure Pass ]
 
 # Sheriff failures 2017-03-21
 crbug.com/703503 inspector/tracing/timeline-js/timeline-runtime-stats.html [ Failure Pass ]

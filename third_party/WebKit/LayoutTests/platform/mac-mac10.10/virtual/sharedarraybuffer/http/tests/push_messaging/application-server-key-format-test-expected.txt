@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+FAIL Subscribing with a valid numeric sender ID should succeed promise_test: Unhandled rejection with value: object "NotAllowedError: Registration failed - permission denied"
+PASS Subscribing with a valid p256 applicationServerKey should succeed 
+PASS Subscribing with a non-numeric sender ID should fail 
+PASS Subscribing with an empty applicationServerKey should fail 
+PASS Subscribing with a too long applicationServerKey should fail 
+Harness: the test ran to completion.
+

@@ -1,0 +1,3 @@
+Tests that the start event is fired at the correct time with different start delays.
+
+PASS: positive-delay: Start event fired immediately

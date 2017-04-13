@@ -1,0 +1,23 @@
+crbug.com/2210 - Rendering of fallback content is very inconsistent among browsers. This captures Blink's current rendering of each test case.
+
+
+PASS
+
+PASS
+X
+FAIL:
+Expected 20 for width, but got 14. 
+Expected 20 for height, but got 22. 
+
+<object class="object" data-expected-width="20" data-expected-height="20">X</object>
+
+PASS
+
+PASS
+
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS

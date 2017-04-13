@@ -1,0 +1,5 @@
+Initiating a transition and catching the transition unprefixed event with the html attribute ontransitionend.
+
+FAIL - Missing events
+[Missing] Property: left Target: box1 Elapsed Time: 0.5
+
