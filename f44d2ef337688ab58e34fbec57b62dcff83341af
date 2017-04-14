@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27f058b3_6bb8c45e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/WPTWhiteList",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-14T20:49:56Z",
+      "side": 1,
+      "message": "Should this file also include ./lint here?",
+      "revId": "f44d2ef337688ab58e34fbec57b62dcff83341af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
