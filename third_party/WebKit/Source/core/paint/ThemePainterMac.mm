@@ -239,16 +239,6 @@ bool ThemePainterMac::PaintProgressBar(const LayoutObject& layout_object,
   track_info.reserved = 0;
   track_info.filler1 = 0;
 
-  std::unique_ptr<ImageBuffer> image_buffer = ImageBuffer::Create(rect.Size());
-  if (!image_buffer)
-    return true;
-
-  IntRect clip_rect = IntRect(IntPoint(), rect.Size());
-  LocalCurrentGraphicsContext local_context(image_buffer->Canvas(), 1,
-                                            clip_rect);
-  CGContextRef cg_context = local_context.CgContext();
-  HIThemeDrawTrack(&track_info, 0, cg_context, kHIThemeOrientationNormal);
-
   GraphicsContextStateSaver state_saver(paint_info.context);
 
   if (!layout_progress.StyleRef().IsLeftToRightDirection()) {
@@ -256,11 +246,12 @@ bool ThemePainterMac::PaintProgressBar(const LayoutObject& layout_object,
     paint_info.context.Scale(-1, 1);
   }
 
-  if (!paint_info.context.ContextDisabled())
-    image_buffer->Draw(
-        paint_info.context,
-        FloatRect(rect.Location(), FloatSize(image_buffer->size())), nullptr,
-        SkBlendMode::kSrcOver);
+  IntRect clip_rect = IntRect(IntPoint(), rect.Size());
+  LocalCurrentGraphicsContext local_context(paint_info.context, clip_rect);
+
+  CGContextRef cg_context = local_context.CgContext();
+  HIThemeDrawTrack(&track_info, 0, cg_context, kHIThemeOrientationNormal);
+
   return false;
 }
 
