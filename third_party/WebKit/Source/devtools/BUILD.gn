@@ -120,7 +120,6 @@ all_devtools_files = [
   "front_end/components/breakpointsList.css",
   "front_end/components/BreakpointsSidebarPaneBase.js",
   "front_end/components/CPUThrottlingManager.js",
-  "front_end/components/DataSaverInfobar.js",
   "front_end/components/DockController.js",
   "front_end/components/DOMBreakpointsSidebarPane.js",
   "front_end/components/DOMPresentationUtils.js",

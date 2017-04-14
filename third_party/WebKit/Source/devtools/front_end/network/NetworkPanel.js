@@ -108,8 +108,6 @@ Network.NetworkPanel = class extends UI.Panel {
     this._networkLogView.addEventListener(
         Network.NetworkLogView.Events.SearchIndexUpdated, this._onSearchIndexUpdated, this);
     this._networkLogView.addEventListener(Network.NetworkLogView.Events.UpdateRequest, this._onUpdateRequest, this);
-
-    Components.DataSaverInfobar.maybeShowInPanel(this);
   }
 
   /**

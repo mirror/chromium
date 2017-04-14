@@ -329,10 +329,21 @@ NetworkLog.PageLoad = class {
     this.loadTime;
     /** @type {number} */
     this.contentLoadTime;
+
+    if (!NetworkLog.PageLoad._dataSaverMessageWasShown && mainRequest.requestHeaderValue('chrome-proxy')) {
+      var message = Common.UIString(
+          'Consider disabling %s while debugging. For more info see: %s', Common.UIString('Chrome Data Saver'),
+          'https://support.google.com/chrome/answer/2392284?hl=en');
+      mainRequest.networkManager().dispatchEventToListeners(
+          SDK.NetworkManager.Events.WarningGenerated, {message: message});
+      NetworkLog.PageLoad._dataSaverMessageWasShown = true;
+    }
   }
 };
 
 NetworkLog.PageLoad._lastIdentifier = 0;
+
+NetworkLog.PageLoad._dataSaverMessageWasShown = false;
 
 /** @typedef {!{initiators: !Set<!SDK.NetworkRequest>, initiated: !Set<!SDK.NetworkRequest>}} */
 NetworkLog.NetworkLog.InitiatorGraph;
