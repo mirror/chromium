@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "f39b16ee_ff251433",
+        "filename": "tools/clang/rewrite_to_chrome_style/tests/bool-is-macro-expected.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-14T21:29:27Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "029c6db5_038ce2ff",
+      "revId": "354cf676f5dce242a25b1ae7f3d7c0e98411b179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8123248_6ed19958",
         "filename": "tools/clang/rewrite_to_chrome_style/tests/variables-expected.cc",
         "patchSetId": 3
