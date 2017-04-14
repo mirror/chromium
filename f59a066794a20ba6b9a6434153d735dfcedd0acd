@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa353d6_ae071c53",
+        "filename": "tools/clang/rewrite_to_chrome_style/tests/macros-expected.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-14T21:01:28Z",
+      "side": 1,
+      "message": "This is a behavior change from before. It means that files that have these macros will have spurious changes to fix the naming after running the rebase tool, if we push out an updated binary. But that seems OK to me? The main macro this affects is DEFINE_TYPE_CASTS.",
+      "range": {
+        "startLine": 22,
+        "startChar": 33,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "f59a066794a20ba6b9a6434153d735dfcedd0acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
