@@ -169,10 +169,6 @@ class CC_PAINT_EXPORT PaintCanvas {
   virtual bool isClipRect() const = 0;
   virtual const SkMatrix& getTotalMatrix() const = 0;
 
-  // For GraphicsContextCanvas only.  Maybe this could be rewritten?
-  virtual void temporary_internal_describeTopLayer(SkMatrix* matrix,
-                                                   SkIRect* clip_bounds) = 0;
-
   virtual bool ToPixmap(SkPixmap* output) = 0;
 
   enum class AnnotationType {
@@ -189,6 +185,10 @@ class CC_PAINT_EXPORT PaintCanvas {
   virtual void PlaybackPaintRecord(sk_sp<const PaintRecord> record) = 0;
 
  protected:
+  // TODO(enne): remove this
+  virtual void temporary_internal_describeTopLayer(SkMatrix* matrix,
+                                                   SkIRect* clip_bounds) = 0;
+
   friend class PaintSurface;
   friend class PaintRecorder;
   friend CC_PAINT_EXPORT bool ToPixmap(PaintCanvas* canvas, SkPixmap* output);
