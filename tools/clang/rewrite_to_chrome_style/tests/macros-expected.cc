@@ -76,7 +76,7 @@ class FieldsMacro {
                                   \
  public:                          \
   int name() { return m_##name; } \
-  void Set##Name(int value) { m_##name = value; }
+  void Set##Name(int name) { m_##name = name; }
 
   DECLARE_FIELD(FooBar, FooBar)
   DECLARE_FIELD(BarBaz, BarBaz)
