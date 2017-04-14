@@ -90,8 +90,8 @@ class ASH_EXPORT SessionController
   // ordering as user sessions are created.
   void CycleActiveUser(CycleUserDirection direction);
 
-  void AddSessionStateObserver(SessionStateObserver* observer);
-  void RemoveSessionStateObserver(SessionStateObserver* observer);
+  void AddObserver(SessionStateObserver* observer);
+  void RemoveObserver(SessionStateObserver* observer);
 
   // Returns the ash notion of login status.
   // NOTE: Prefer GetSessionState() in new code because the concept of

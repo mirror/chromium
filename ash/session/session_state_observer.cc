@@ -12,12 +12,13 @@ namespace ash {
 ScopedSessionStateObserver::ScopedSessionStateObserver(
     SessionStateObserver* observer)
     : observer_(observer) {
-  Shell::Get()->session_controller()->AddSessionStateObserver(observer_);
+  if (Shell::HasInstance())
+    Shell::Get()->session_controller()->AddObserver(observer_);
 }
 
 ScopedSessionStateObserver::~ScopedSessionStateObserver() {
   if (Shell::HasInstance())
-    Shell::Get()->session_controller()->RemoveSessionStateObserver(observer_);
+    Shell::Get()->session_controller()->RemoveObserver(observer_);
 }
 
 }  // namespace ash

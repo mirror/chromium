@@ -124,13 +124,11 @@ void SessionController::CycleActiveUser(CycleUserDirection direction) {
     client_->CycleActiveUser(direction);
 }
 
-void SessionController::AddSessionStateObserver(
-    SessionStateObserver* observer) {
+void SessionController::AddObserver(SessionStateObserver* observer) {
   observers_.AddObserver(observer);
 }
 
-void SessionController::RemoveSessionStateObserver(
-    SessionStateObserver* observer) {
+void SessionController::RemoveObserver(SessionStateObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
