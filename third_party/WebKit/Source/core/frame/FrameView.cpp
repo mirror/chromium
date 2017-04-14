@@ -1686,18 +1686,6 @@ void FrameView::ViewportSizeChanged(bool width_changed, bool height_changed) {
 
   ShowOverlayScrollbars();
 
-  if (root_layer_scrolling_enabled) {
-    // The background must be repainted when the FrameView is resized, even if
-    // the initial containing block does not change (so we can't rely on layout
-    // to issue the invalidation).  This is because the background fills the
-    // main GraphicsLayer, which takes the size of the layout viewport.
-    // TODO(skobes): Paint non-fixed backgrounds into the scrolling contents
-    // layer and avoid this invalidation (http://crbug.com/568847).
-    LayoutViewItem lvi = GetLayoutViewItem();
-    if (!lvi.IsNull())
-      lvi.SetShouldDoFullPaintInvalidation();
-  }
-
   if (RuntimeEnabledFeatures::inertTopControlsEnabled() && GetLayoutView() &&
       frame_->IsMainFrame() &&
       frame_->GetPage()->GetBrowserControls().Height()) {
