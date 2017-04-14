@@ -4,20 +4,16 @@
 
 #include "ash/display/shutdown_observer_chromeos.h"
 
-#include "ash/shell.h"
 #include "ui/display/manager/chromeos/display_configurator.h"
 
 namespace ash {
 
 ShutdownObserver::ShutdownObserver(
     display::DisplayConfigurator* display_configurator)
-    : display_configurator_(display_configurator) {
-  Shell::Get()->AddShellObserver(this);
-}
+    : display_configurator_(display_configurator),
+      scoped_session_observer_(this) {}
 
-ShutdownObserver::~ShutdownObserver() {
-  Shell::Get()->RemoveShellObserver(this);
-}
+ShutdownObserver::~ShutdownObserver() {}
 
 void ShutdownObserver::OnAppTerminating() {
   // Stop handling display configuration events once the shutdown

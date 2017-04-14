@@ -65,6 +65,8 @@ class ASH_EXPORT OverviewButtonTray : public TrayBackgroundView,
   // Weak pointer, will be parented by TrayContainer for its lifetime.
   views::ImageView* icon_;
 
+  ScopedSessionStateObserver scoped_session_observer_;
+
   DISALLOW_COPY_AND_ASSIGN(OverviewButtonTray);
 };
 

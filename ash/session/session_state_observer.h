@@ -50,7 +50,7 @@ class ASH_EXPORT ScopedSessionStateObserver {
   virtual ~ScopedSessionStateObserver();
 
  private:
-  ash::SessionStateObserver* observer_;
+  ash::SessionStateObserver* const observer_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedSessionStateObserver);
 };

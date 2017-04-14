@@ -360,6 +360,7 @@ class ASH_EXPORT ShelfLayoutManager
   ScopedObserver<keyboard::KeyboardController,
                  keyboard::KeyboardControllerObserver>
       keyboard_observer_;
+  ScopedSessionStateObserver scoped_session_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfLayoutManager);
 };

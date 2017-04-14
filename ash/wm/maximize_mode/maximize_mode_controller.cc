@@ -110,6 +110,7 @@ MaximizeModeController::MaximizeModeController()
       tick_clock_(new base::DefaultTickClock()),
       tablet_mode_switch_is_on_(false),
       lid_is_closed_(false),
+      scoped_session_observer_(this),
       weak_factory_(this) {
   Shell::Get()->AddShellObserver(this);
   ShellPort::Get()->RecordUserMetricsAction(
