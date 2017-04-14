@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b28ae7_5e7ebc75",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkPanel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-04-14T19:19:25Z",
+      "side": 1,
+      "message": "Not used.",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "1b85fb6c6f17cbd6237cc03be1eb084fdc656aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9c678c_85edc65b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-04-14T19:19:25Z",
+      "side": 1,
+      "message": "Let\u0027s rename this one to _computeHeaderValue(), and use this.requestHeaderValue instead of it everywhere.",
+      "range": {
+        "startLine": 654,
+        "startChar": 49,
+        "endLine": 654,
+        "endChar": 61
+      },
+      "revId": "1b85fb6c6f17cbd6237cc03be1eb084fdc656aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8425041_740f9208",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-04-14T19:19:25Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 751,
+        "startChar": 50,
+        "endLine": 751,
+        "endChar": 62
+      },
+      "revId": "1b85fb6c6f17cbd6237cc03be1eb084fdc656aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
