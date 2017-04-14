@@ -22,6 +22,40 @@
       "revId": "354cf676f5dce242a25b1ae7f3d7c0e98411b179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029c6db5_038ce2ff",
+        "filename": "tools/clang/rewrite_to_chrome_style/tests/bool-is-macro-expected.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-04-14T21:15:48Z",
+      "side": 1,
+      "message": "It might be helpful to add a comment explaining that a bool macro looking exactly as above is defined (by stddef.h AFAIR?) when building Chromium on Linux.",
+      "revId": "354cf676f5dce242a25b1ae7f3d7c0e98411b179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8123248_6ed19958",
+        "filename": "tools/clang/rewrite_to_chrome_style/tests/variables-expected.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-04-14T21:15:48Z",
+      "side": 1,
+      "message": "Fascinating that git-cl-format didn\u0027t want to do a similar change in the *-original.cc :-)",
+      "revId": "354cf676f5dce242a25b1ae7f3d7c0e98411b179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
