@@ -10,7 +10,7 @@ pre, #log {
   left: 200px;
 }
 .spacer {
-  height: 700px;
+  height: 2000px;
 }
 iframe {
   height: 100px;
@@ -30,13 +30,15 @@ var entries = [];
 iframe.onload = function() {
   runTestCycle(function() {
     assert_true(!!iframe, "iframe exists");
-    assert_equals(window.innerWidth, 800, "Window must be 800 pixels wide.");
-    assert_equals(window.innerHeight, 600, "Window must be 600 pixels high.");
+    assert_greater_than(window.innerWidth, 200, "Window must be at least 200 pixels wide.");
+    assert_greater_than(window.innerHeight, 200, "Window must be at least 200 pixels high.");
+    assert_less_than(window.innerHeight, 2000, "Window must be no more than 2000 pixels high.");
 
     target = iframe.contentDocument.getElementById("target");
     assert_true(!!target, "Target element exists.");
     var observer = new IntersectionObserver(function(changes) {
-      entries = entries.concat(changes)
+      entries = entries.concat(changes);
+      console.log(changes[0]);
     });
     observer.observe(target);
     entries = entries.concat(observer.takeRecords());
@@ -46,9 +48,10 @@ iframe.onload = function() {
 };
 
 function step0() {
-  document.scrollingElement.scrollTop = 200;
-  runTestCycle(step1, "document.scrollingElement.scrollTop = 200");
-  checkLastEntry(entries, 0, [8, 108, 208, 308, 0, 0, 0, 0, 0, 785, 0, 600, false]);
+  var scrollTop = 2100 - document.documentElement.clientHeight;
+  document.scrollingElement.scrollTop = scrollTop;
+  runTestCycle(step1, "document.scrollingElement.scrollTop = " + scrollTop);
+  checkLastEntry(entries, 0, [8, 108, 208, 308, 0, 0, 0, 0].concat(topBounds()).concat(false));
 }
 
 function step1() {
@@ -58,13 +61,12 @@ function step1() {
 }
 
 function step2() {
-  document.scrollingElement.scrollTop = 100;
-  runTestCycle(step3, "document.scrollingElement.scrollTop = 100");
-  checkLastEntry(entries, 1, [8, 108, -42, 58, 8, 108, 0, 58, 0, 785, 0, 600, true]);
+  document.scrollingElement.scrollTop = 0;
+  runTestCycle(step3, "document.scrollingElement.scrollTop = 0");
+  checkLastEntry(entries, 1, [8, 108, -42, 58, 8, 108, 0, 58].concat(topBounds()).concat(true));
 }
 
 function step3() {
-  checkLastEntry(entries, 2, [8, 108, -42, 58, 0, 0, 0, 0, 0, 785, 0, 600, false]);
-  document.scrollingElement.scrollTop = 0;
+  checkLastEntry(entries, 2, [8, 108, -42, 58, 0, 0, 0, 0].concat(topBounds()).concat(false));
 }
 </script>

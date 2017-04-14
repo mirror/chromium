@@ -41,6 +41,14 @@ function runTestCycle(f, description) {
   }, description);
 }
 
+// Root bounds for the implicit root as defined by:
+//   http://wicg.github.io/IntersectionObserver/#intersectionobserver-implicit-root
+function topBounds() {
+  var right = document.documentElement.clientWidth;
+  var bottom = document.documentElement.clientHeight;
+  return [0, right, 0, bottom];
+}
+
 // Root bounds for a root with an overflow clip as defined by:
 //   http://wicg.github.io/IntersectionObserver/#intersectionobserver-root-intersection-rectangle
 function contentBounds(root) {

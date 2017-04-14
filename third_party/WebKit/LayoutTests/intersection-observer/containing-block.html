@@ -31,9 +31,6 @@ var entries = [];
 var root, target;
 
 runTestCycle(function() {
-  assert_equals(window.innerWidth, 800, "Window must be 800 pixels wide.");
-  assert_equals(window.innerHeight, 600, "Window must be 600 pixels high.");
-
   root = document.getElementById("root");
   assert_true(!!root, "root element exists.");
   target = document.getElementById("target");

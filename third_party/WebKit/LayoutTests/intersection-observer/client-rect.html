@@ -25,9 +25,6 @@ var iframe = document.getElementById("iframe");
 
 iframe.onload = function() {
   runTestCycle(function() {
-    assert_equals(window.innerWidth, 800, "Window must be 800 pixels wide.");
-    assert_equals(window.innerHeight, 600, "Window must be 600 pixels high.");
-
     target = iframe.contentDocument.getElementById("target");
     assert_true(!!target, "Target element exists.");
     observer = new IntersectionObserver(function(changes) {

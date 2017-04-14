@@ -22,11 +22,10 @@ pre, #log {
 var entries = [];
 
 runTestCycle(function() {
-  assert_equals(window.innerWidth, 800, "Window must be 800 pixels wide.");
-  assert_equals(window.innerHeight, 600, "Window must be 600 pixels high.");
+  assert_greater_than(window.innerWidth, 200, "Window must be at least 200 pixels wide.");
+  assert_greater_than(window.innerHeight, 200, "Window must be at least 200 pixels high.");
 
   var target = document.getElementById("target");
-  var root = document.getElementById("root");
   var observer = new IntersectionObserver(function(changes) {
     entries = entries.concat(changes)
   });
@@ -38,7 +37,7 @@ runTestCycle(function() {
 
 function step0() {
   runTestCycle(step1, "Not-intersecting notification after setting display:none on target.");
-  checkLastEntry(entries, 0, [8, 108, 8, 108, 8, 108, 8, 108, 0, 800, 0, 600, true]);
+  checkLastEntry(entries, 0, [8, 108, 8, 108, 8, 108, 8, 108, 0, window.innerWidth, 0, window.innerHeight, true]);
   target.style.display = "none";
 }
 
@@ -49,6 +48,6 @@ function step1() {
 }
 
 function step2() {
-  checkLastEntry(entries, 2, [8, 108, 8, 108, 8, 108, 8, 108, 0, 800, 0, 600, true]);
+  checkLastEntry(entries, 2, [8, 108, 8, 108, 8, 108, 8, 108, 0, window.innerWidth, 0, window.innerHeight, true]);
 }
 </script>
