@@ -204,6 +204,11 @@ void SessionController::RunUnlockAnimation(
     Shell::Get()->lock_state_controller()->OnLockScreenHide(callback);
 }
 
+void SessionController::NotifyAppTerminating() {
+  for (auto& observer : observers_)
+    observer.OnAppTerminating();
+}
+
 void SessionController::ClearUserSessionsForTest() {
   user_sessions_.clear();
 }
