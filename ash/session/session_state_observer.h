@@ -36,6 +36,9 @@ class ASH_EXPORT SessionStateObserver {
   // Called when the lock state is changed. |locked| is the current lock stated.
   virtual void OnLockStateChanged(bool locked) {}
 
+  // Called when chrome is terminating.
+  virtual void OnAppTerminating() {}
+
  protected:
   virtual ~SessionStateObserver() {}
 };

@@ -328,11 +328,6 @@ void Shell::SetDisplayWorkAreaInsets(Window* contains,
   shell_port_->SetDisplayWorkAreaInsets(WmWindow::Get(contains), insets);
 }
 
-void Shell::OnAppTerminating() {
-  for (auto& observer : shell_observers_)
-    observer.OnAppTerminating();
-}
-
 void Shell::OnCastingSessionStartedOrStopped(bool started) {
   for (auto& observer : shell_observers_)
     observer.OnCastingSessionStartedOrStopped(started);
@@ -1249,6 +1244,11 @@ void Shell::OnLockStateChanged(bool locked) {
       DCHECK(container->children().empty());
   }
 #endif
+}
+
+void Shell::OnAppTerminating() {
+  for (auto& observer : shell_observers_)
+    observer.OnAppTerminating();
 }
 
 void Shell::OnPrefServiceInitialized(
