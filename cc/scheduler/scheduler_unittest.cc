@@ -397,9 +397,13 @@ class SchedulerTest : public testing::Test {
     // it will be already in the task queue.
     if (scheduler_->begin_frame_source() ==
         fake_external_begin_frame_source_.get()) {
+      // Run pending task for previous deadline first.
+      task_runner_->RunPendingTasks();
       EXPECT_TRUE(scheduler_->begin_frames_expected());
       SendNextBeginFrame();
     } else {
+      // Begin frame might be queued up and posted after the previous deadline
+      // runs so run tasks until we get to the next frame.
       task_runner_->RunTasksWhile(client_->FrameHasNotAdvancedCallback());
     }
   }
@@ -3510,10 +3514,11 @@ TEST_F(SchedulerTest, BeginFrameAckForBeginFrameBeforeLastDeadline) {
   client_->Reset();
 
   // Send the next BeginFrame before the previous one's deadline was executed.
-  // This should trigger the previous BeginFrame's deadline synchronously,
-  // during which tiles will be prepared. As a result of that, no further
-  // BeginFrames will be needed, and the new BeginFrame should be dropped.
+  // This will wait for the previous deadline after which no further BeginFrames
+  // will be needed, and the new BeginFrame should be dropped.
   BeginFrameArgs args = SendNextBeginFrame();
+
+  task_runner().RunPendingTasks();  // Run posted deadline.
   EXPECT_ACTION("ScheduledActionPrepareTiles", client_, 0, 3);
   EXPECT_ACTION("RemoveObserver(this)", client_, 1, 3);
   EXPECT_ACTION("SendBeginMainFrameNotExpectedSoon", client_, 2, 3);
