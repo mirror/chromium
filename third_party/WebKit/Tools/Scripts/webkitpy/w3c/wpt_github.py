@@ -17,11 +17,14 @@ EXPORT_LABEL = 'chromium-export'
 
 class WPTGitHub(object):
 
-    def __init__(self, host, user, token):
+    def __init__(self, host, user, token, pr_history_window=30):
         self.host = host
         self.user = user
         self.token = token
         assert self.user and self.token
+
+        self._pr_history_window = pr_history_window
+        self._pull_requests = False
 
     def auth_token(self):
         return base64.b64encode('{}:{}'.format(self.user, self.token))
@@ -94,9 +97,13 @@ class WPTGitHub(object):
             body=item['body'],
             state=item['state'])
 
-    def all_pull_requests(self, limit=30):
-        assert limit <= 100, 'Maximum GitHub page size exceeded.'
-        path = '/search/issues?q=repo:w3c/web-platform-tests%20type:pr%20label:{}&page=1&per_page={}'.format(EXPORT_LABEL, limit)
+    def all_pull_requests(self):
+        # TODO(jeffcarp): Add pagination to fetch >99 PRs
+        assert self._pr_history_window <= 100, 'Maximum GitHub page size exceeded.'
+        path = ('/search/issues'
+                '?q=repo:w3c/web-platform-tests%20type:pr%20label:{}'
+                '&page=1'
+                '&per_page={}').format(EXPORT_LABEL, self._pr_history_window)
         data, status_code = self.request(path, method='GET')
         if status_code == 200:
             return [self.make_pr_from_item(item) for item in data['items']]
@@ -142,6 +149,32 @@ class WPTGitHub(object):
             raise Exception('Received non-204 status code attempting to delete remote branch: {}'.format(status_code))
 
         return data
+
+    def _lazy_pull_requests(self):
+        if self._pull_requests is False:
+            self._pull_requests = self.all_pull_requests()
+        return self._pull_requests
+
+    def pr_with_change_id(self, target_change_id):
+        for pull_request in self._lazy_pull_requests():
+            change_id = self._extract_metadata('Change-Id: ', pull_request.body)
+            if change_id == target_change_id:
+                return pull_request
+        return None
+
+    def pr_with_position(self, position):
+        for pull_request in self._lazy_pull_requests():
+            pr_commit_position = self._extract_metadata('Cr-Commit-Position: ', pull_request.body)
+            if position == pr_commit_position:
+                return pull_request
+        return None
+
+    def _extract_metadata(self, tag, commit_body):
+        for line in commit_body.splitlines():
+            if line.startswith(tag):
+                return line[len(tag):]
+        return None
+
 
 
 class MergeError(Exception):
