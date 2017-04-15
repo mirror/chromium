@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL XMLHttpRequest: getResponseHeader() and HTTP trailer assert_regexp_match: expected object "/trailer:\sX-Test-Me/" but got "Date: Sat, 15 Apr 2017 13:33:59 GMT\r\nTrailer: X-Test-Me\r\nServer: BaseHTTP/0.3 Python/2.7.10\r\nTransfer-Encoding: chunked\r\nContent-Type: text/plain\r\n"
+Harness: the test ran to completion.
+
