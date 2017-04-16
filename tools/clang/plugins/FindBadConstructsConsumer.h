@@ -71,7 +71,7 @@ class FindBadConstructsConsumer
                            clang::CXXRecordDecl* record);
 
   bool InTestingNamespace(const clang::Decl* record);
-  bool IsMethodInBannedOrTestingNamespace(const clang::CXXMethodDecl* method);
+  bool IsMethodInTestingNamespace(const clang::CXXMethodDecl* method);
 
   // Returns a diagnostic builder that only emits the diagnostic if the spelling
   // location (the actual characters that make up the token) is not in an

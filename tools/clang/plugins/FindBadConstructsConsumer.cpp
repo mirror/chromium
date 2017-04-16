@@ -188,6 +188,27 @@ void FindBadConstructsConsumer::Traverse(ASTContext& context) {
 }
 
 bool FindBadConstructsConsumer::TraverseDecl(Decl* decl) {
+  // TraverseDecl implements a custom traversal strategy to try to skip
+  // processing of 'uninteresting' decls.
+  if (!decl)
+    return true;
+  // This is true for a number of builtin type definitions. Just ignore them.
+  if (!decl->getLocation().isValid())
+    return true;
+  const SourceManager& source_manager = instance().getSourceManager();
+  // If the current declaration is in a system header, don't visit any of the
+  // children. In theory, it might be possible to have a declaration that spans
+  // system and non-system headers via abuse of #include, but that would be a
+  // horrible abue of the preprocessor. So don't bother trying to handle that
+  // case.
+  if (source_manager.isInSystemHeader(decl->getLocation()))
+    return true;
+  // Similarly, if the SourceLocation isn't in Chrome code, don't visit any of
+  // the children.
+  LocationType type = ClassifyLocation(decl->getLocation());
+  if (type != LocationType::kChrome)
+    return true;
+
   if (ipc_visitor_) ipc_visitor_->BeginDecl(decl);
   bool result = RecursiveASTVisitor::TraverseDecl(decl);
   if (ipc_visitor_) ipc_visitor_->EndDecl();
@@ -436,15 +457,13 @@ bool FindBadConstructsConsumer::InTestingNamespace(const Decl* record) {
   return GetNamespace(record).find("testing") != std::string::npos;
 }
 
-bool FindBadConstructsConsumer::IsMethodInBannedOrTestingNamespace(
+bool FindBadConstructsConsumer::IsMethodInTestingNamespace(
     const CXXMethodDecl* method) {
-  if (InBannedNamespace(method))
-    return true;
   for (CXXMethodDecl::method_iterator i = method->begin_overridden_methods();
        i != method->end_overridden_methods();
        ++i) {
     const CXXMethodDecl* overridden = *i;
-    if (IsMethodInBannedOrTestingNamespace(overridden) ||
+    if (IsMethodInTestingNamespace(overridden) ||
         // Provide an exception for ::testing::Test. gtest itself uses some
         // magic to try to make sure SetUp()/TearDown() aren't capitalized
         // incorrectly, but having the plugin enforce override is also nice.
@@ -453,7 +472,6 @@ bool FindBadConstructsConsumer::IsMethodInBannedOrTestingNamespace(
       return true;
     }
   }
-
   return false;
 }
 
@@ -522,7 +540,7 @@ void FindBadConstructsConsumer::CheckVirtualSpecifiers(
   OverrideAttr* override_attr = method->getAttr<OverrideAttr>();
   FinalAttr* final_attr = method->getAttr<FinalAttr>();
 
-  if (IsMethodInBannedOrTestingNamespace(method))
+  if (IsMethodInTestingNamespace(method))
     return;
 
   SourceManager& manager = instance().getSourceManager();
@@ -1009,13 +1027,6 @@ void FindBadConstructsConsumer::CheckVarDecl(clang::VarDecl* var_decl) {
         QualType deduced_type = auto_type->getDeducedType();
         if (!deduced_type.isNull() && deduced_type->isPointerType() &&
             !deduced_type->isFunctionPointerType()) {
-          // Check if we should even be considering this type (note that there
-          // should be fewer auto types than banned namespace/directory types,
-          // so check this last.
-          LocationType location_type =
-              ClassifyLocation(var_decl->getLocStart());
-          if (!InBannedNamespace(var_decl) &&
-              location_type != LocationType::kThirdParty) {
             // The range starts from |var_decl|'s loc start, which is the
             // beginning of the full expression defining this |var_decl|. It
             // ends, however, where this |var_decl|'s type loc ends, since
@@ -1032,7 +1043,6 @@ void FindBadConstructsConsumer::CheckVarDecl(clang::VarDecl* var_decl) {
                        range,
                        GetAutoReplacementTypeAsString(
                            var_decl->getType(), var_decl->getStorageClass()));
-          }
         }
       }
     } else if (non_reference_type->isPointerType()) {

@@ -24,6 +24,7 @@ def ParseArgs():
       description='Utility to build one Chromium file for debugging clang')
   parser.add_argument('-p', default='.', help='path to the compile database')
   parser.add_argument('--generate-compdb',
+                      action='store_true',
                       help='regenerate the compile database')
   parser.add_argument('--prefix',
                       help='optional prefix to prepend, e.g. --prefix=lldb')
