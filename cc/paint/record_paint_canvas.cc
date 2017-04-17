@@ -358,12 +358,6 @@ const SkMatrix& RecordPaintCanvas::getTotalMatrix() const {
   return canvas_.getTotalMatrix();
 }
 
-void RecordPaintCanvas::temporary_internal_describeTopLayer(
-    SkMatrix* matrix,
-    SkIRect* clip_bounds) {
-  return canvas_.temporary_internal_describeTopLayer(matrix, clip_bounds);
-}
-
 bool RecordPaintCanvas::ToPixmap(SkPixmap* output) {
   // TODO(enne): It'd be nice to make this NOTREACHED() or remove this from
   // RecordPaintCanvas, but this is used by GraphicsContextCanvas for knowing
