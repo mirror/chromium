@@ -2,25 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-module tracing;
+module tracing.mojom;
 
-// To participate in the tracing ecosystem, implement the TraceProvider
-// interface and connect to the tracing app. Then, when the provider's Start()
-// function is called collect tracing data and pass it back via the provided
-// TraceRecorder interface up until Stop() is called.
+// To participate in the tracing ecosystem, implement the Provider interface
+// connect to the tracing service & create a Recorder. Then, when the provider's
+// Start() function is called collect tracing data and pass it back via the
+// provided Recorder interface up until Stop() is called.
 
-interface TraceProvider {
+interface Provider {
   // Categories can either be the empty string to mean the default set of
   // categories or a comma-delimited list of categories to trace.
-  StartTracing(string categories, TraceRecorder recorder);
+  StartTracing(string categories, Recorder recorder);
   StopTracing();
 };
 
-interface TraceRecorder {
+interface Recorder {
   Record(string json);
 };
 
-interface TraceCollector {
+interface Collector {
   // Request tracing data from all connected providers to stream to
   // |stream|.
   Start(handle<data_pipe_producer> stream, string categories);
@@ -35,8 +35,8 @@ interface TraceCollector {
 // https://goo.gl/vZ8dZW).
 struct StartupPerformanceTimes {
   // TODO(msw): Rename to match "BrowserMainEntryTimeAbsolute" metric?
-  int64 shell_process_creation_time;
-  int64 shell_main_entry_point_time;
+  int64 service_manager_process_creation_time;
+  int64 service_manager_main_entry_point_time;
   int64 browser_message_loop_start_ticks;
   int64 browser_window_display_ticks;
   int64 browser_open_tabs_time_delta;
@@ -49,8 +49,8 @@ struct StartupPerformanceTimes {
 // This interface accepts startup performance timing from a variety of sources.
 interface StartupPerformanceDataCollector {
   // These setters may be called many times, only the first time is recorded.
-  SetShellProcessCreationTime(int64 time);
-  SetShellMainEntryPointTime(int64 time);
+  SetServiceManagerProcessCreationTime(int64 time);
+  SetServiceManagerMainEntryPointTime(int64 time);
   SetBrowserMessageLoopStartTicks(int64 ticks);
   SetBrowserWindowDisplayTicks(int64 ticks);
   SetBrowserOpenTabsTimeDelta(int64 delta);
@@ -59,4 +59,8 @@ interface StartupPerformanceDataCollector {
 
   // Get the currently available startup performance times.
   GetStartupPerformanceTimes() => (StartupPerformanceTimes times);
+};
+
+interface Factory {
+  CreateRecorder(Provider provider);
 };

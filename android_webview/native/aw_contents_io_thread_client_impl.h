@@ -12,10 +12,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 
-class GURL;
-
 namespace content {
-class ResourceRequestInfo;
 class WebContents;
 }
 
@@ -24,8 +21,6 @@ class URLRequest;
 }
 
 namespace android_webview {
-
-class AwWebResourceResponse;
 
 class AwContentsIoThreadClientImpl : public AwContentsIoThreadClient {
  public:
@@ -59,19 +54,8 @@ class AwContentsIoThreadClientImpl : public AwContentsIoThreadClient {
   bool ShouldBlockContentUrls() const override;
   bool ShouldBlockFileUrls() const override;
   bool ShouldAcceptThirdPartyCookies() const override;
+  bool GetSafeBrowsingEnabled() const override;
   bool ShouldBlockNetworkLoads() const override;
-  void NewDownload(const GURL& url,
-                   const std::string& user_agent,
-                   const std::string& content_disposition,
-                   const std::string& mime_type,
-                   int64_t content_length) override;
-  void NewLoginRequest(const std::string& realm,
-                       const std::string& account,
-                       const std::string& args) override;
-  void OnReceivedError(const net::URLRequest* request) override;
-  void OnReceivedHttpError(
-      const net::URLRequest* request,
-      const net::HttpResponseHeaders* response_headers) override;
 
  private:
   bool pending_association_;
@@ -80,9 +64,6 @@ class AwContentsIoThreadClientImpl : public AwContentsIoThreadClient {
 
   DISALLOW_COPY_AND_ASSIGN(AwContentsIoThreadClientImpl);
 };
-
-// JNI registration method.
-bool RegisterAwContentsIoThreadClientImpl(JNIEnv* env);
 
 } // namespace android_webview
 

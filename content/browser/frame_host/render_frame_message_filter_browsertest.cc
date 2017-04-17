@@ -9,8 +9,10 @@
 #include "base/test/histogram_tester.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/frame_host/frame_tree.h"
+#include "content/browser/frame_host/render_frame_message_filter.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
+#include "content/common/render_frame_message_filter.mojom.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
@@ -37,6 +39,12 @@ std::string GetCookieFromJS(RenderFrameHost* frame) {
   return cookie;
 }
 
+mojom::RenderFrameMessageFilter* GetFilterForProcess(
+    RenderProcessHost* process) {
+  return static_cast<RenderProcessHostImpl*>(process)
+      ->render_frame_message_filter_for_testing();
+}
+
 }  // namespace
 
 class RenderFrameMessageFilterBrowserTest : public ContentBrowserTest {
@@ -52,8 +60,8 @@ class RenderFrameMessageFilterBrowserTest : public ContentBrowserTest {
 // interacting with secure cookies.
 IN_PROC_BROWSER_TEST_F(RenderFrameMessageFilterBrowserTest, Cookies) {
   host_resolver()->AddRule("*", "127.0.0.1");
-  ASSERT_TRUE(embedded_test_server()->Start());
   SetupCrossSiteRedirector(embedded_test_server());
+  ASSERT_TRUE(embedded_test_server()->Start());
 
   net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_server.AddDefaultHandlers(
@@ -115,8 +123,8 @@ IN_PROC_BROWSER_TEST_F(RenderFrameMessageFilterBrowserTest, Cookies) {
 // JavaScript.
 IN_PROC_BROWSER_TEST_F(RenderFrameMessageFilterBrowserTest, SameSiteCookies) {
   host_resolver()->AddRule("*", "127.0.0.1");
-  ASSERT_TRUE(embedded_test_server()->Start());
   SetupCrossSiteRedirector(embedded_test_server());
+  ASSERT_TRUE(embedded_test_server()->Start());
 
   // The server sets five cookies on 'a.com' and on 'b.com', then loads a
   // page that frames both 'a.com' and 'b.com' under 'a.com'.
@@ -166,8 +174,8 @@ IN_PROC_BROWSER_TEST_F(RenderFrameMessageFilterBrowserTest,
   }
 
   host_resolver()->AddRule("*", "127.0.0.1");
-  ASSERT_TRUE(embedded_test_server()->Start());
   SetupCrossSiteRedirector(embedded_test_server());
+  ASSERT_TRUE(embedded_test_server()->Start());
   NavigateToURL(shell(),
                 embedded_test_server()->GetURL("/frame_with_load_event.html"));
 
@@ -188,18 +196,22 @@ IN_PROC_BROWSER_TEST_F(RenderFrameMessageFilterBrowserTest,
 
   EXPECT_NE(iframe->GetProcess(), main_frame->GetProcess());
 
-  // Try to get cross-site cookies from the subframe's process and wait for it
-  // to be killed.
-  std::string response;
-  FrameHostMsg_GetCookies illegal_get_cookies(
-      iframe->GetRoutingID(), GURL("http://127.0.0.1/"),
-      GURL("http://127.0.0.1/"), &response);
-
   RenderProcessHostWatcher iframe_killed(
       iframe->GetProcess(), RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
 
-  IPC::IpcSecurityTestUtil::PwnMessageReceived(
-      iframe->GetProcess()->GetChannel(), illegal_get_cookies);
+  // Try to get cross-site cookies from the subframe's process and wait for it
+  // to be killed.
+  BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
+      ->PostTask(FROM_HERE,
+                 base::Bind(
+                     [](RenderFrameHost* frame) {
+                       GetFilterForProcess(frame->GetProcess())
+                           ->GetCookies(frame->GetRoutingID(),
+                                        GURL("http://127.0.0.1/"),
+                                        GURL("http://127.0.0.1/"),
+                                        base::Bind([](const std::string&) {}));
+                     },
+                     iframe));
 
   iframe_killed.Wait();
 
@@ -215,11 +227,14 @@ IN_PROC_BROWSER_TEST_F(RenderFrameMessageFilterBrowserTest,
   RenderProcessHostWatcher main_frame_killed(
       tab->GetMainFrame()->GetProcess(),
       RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
-  FrameHostMsg_SetCookie illegal_set_cookie(tab->GetMainFrame()->GetRoutingID(),
-                                            GURL("https://baz.com/"),
-                                            GURL("https://baz.com/"), "pwn=ed");
-  IPC::IpcSecurityTestUtil::PwnMessageReceived(
-      tab->GetMainFrame()->GetProcess()->GetChannel(), illegal_set_cookie);
+
+  BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)->PostTask(
+      FROM_HERE,
+      base::Bind([] (RenderFrameHost* frame) {
+        GetFilterForProcess(frame->GetProcess())->SetCookie(
+            frame->GetRoutingID(), GURL("https://baz.com/"),
+            GURL("https://baz.com/"), "pwn=ed");
+      }, main_frame));
 
   main_frame_killed.Wait();
 

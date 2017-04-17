@@ -19,7 +19,6 @@
 namespace mojo {
 
 namespace edk {
-class PlatformChannelPair;
 
 namespace test {
 
@@ -27,13 +26,31 @@ class MultiprocessTestHelper {
  public:
   using HandlerCallback = base::Callback<void(ScopedMessagePipeHandle)>;
 
+  enum class LaunchType {
+    // Launch the child process as a child in the mojo system.
+    CHILD,
+
+    // Launch the child process as an unrelated peer process in the mojo system.
+    PEER,
+
+    // Launch the child process as a child in the mojo system, using a named
+    // pipe.
+    NAMED_CHILD,
+
+    // Launch the child process as an unrelated peer process in the mojo
+    // system, using a named pipe.
+    NAMED_PEER,
+  };
+
   MultiprocessTestHelper();
   ~MultiprocessTestHelper();
 
   // Start a child process and run the "main" function "named" |test_child_name|
   // declared using |MOJO_MULTIPROCESS_TEST_CHILD_MAIN()| or
   // |MOJO_MULTIPROCESS_TEST_CHILD_TEST()| (below).
-  ScopedMessagePipeHandle StartChild(const std::string& test_child_name);
+  ScopedMessagePipeHandle StartChild(
+      const std::string& test_child_name,
+      LaunchType launch_type = LaunchType::CHILD);
 
   // Like |StartChild()|, but appends an extra switch (with ASCII value) to the
   // command line. (The switch must not already be present in the default
@@ -41,11 +58,14 @@ class MultiprocessTestHelper {
   ScopedMessagePipeHandle StartChildWithExtraSwitch(
       const std::string& test_child_name,
       const std::string& switch_string,
-      const std::string& switch_value);
+      const std::string& switch_value,
+      LaunchType launch_type);
 
   void set_process_error_callback(const ProcessErrorCallback& callback) {
     process_error_callback_ = callback;
   }
+
+  void ClosePeerConnection();
 
   // Wait for the child process to terminate.
   // Returns the exit code of the child process. Note that, though it's declared
@@ -60,22 +80,25 @@ class MultiprocessTestHelper {
   // |EXPECT_TRUE(WaitForChildTestShutdown());|.
   bool WaitForChildTestShutdown();
 
-  const base::Process& test_child() const { return test_child_; }
+  const base::Process& test_child() const { return test_child_.process; }
 
   // Used by macros in mojo/edk/test/mojo_test_base.h to support multiprocess
   // test client initialization.
   static void ChildSetup();
-  static int RunClientMain(const base::Callback<int(MojoHandle)>& main);
+  static int RunClientMain(const base::Callback<int(MojoHandle)>& main,
+                           bool pass_pipe_ownership_to_main = false);
   static int RunClientTestMain(const base::Callback<void(MojoHandle)>& main);
 
   // For use (and only valid) in the child process:
-  static std::string primordial_pipe_token;
+  static mojo::ScopedMessagePipeHandle primordial_pipe;
 
  private:
   // Valid after |StartChild()| and before |WaitForChildShutdown()|.
-  base::Process test_child_;
+  base::SpawnChildResult test_child_;
 
   ProcessErrorCallback process_error_callback_;
+
+  std::string peer_token_;
 
   DISALLOW_COPY_AND_ASSIGN(MultiprocessTestHelper);
 };

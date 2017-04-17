@@ -31,106 +31,106 @@
 #include "core/svg/SVGAngleTearOff.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/svg/SVGElement.h"
 
 namespace blink {
 
-SVGAngleTearOff::SVGAngleTearOff(SVGAngle* targetProperty, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName)
-    : SVGPropertyTearOff<SVGAngle>(targetProperty, contextElement, propertyIsAnimVal, attributeName)
-{
+SVGAngleTearOff::SVGAngleTearOff(SVGAngle* target_property,
+                                 SVGElement* context_element,
+                                 PropertyIsAnimValType property_is_anim_val,
+                                 const QualifiedName& attribute_name)
+    : SVGPropertyTearOff<SVGAngle>(target_property,
+                                   context_element,
+                                   property_is_anim_val,
+                                   attribute_name) {}
+
+SVGAngleTearOff::~SVGAngleTearOff() {}
+
+void SVGAngleTearOff::setValue(float value, ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetValue(value);
+  CommitChange();
 }
 
-SVGAngleTearOff::~SVGAngleTearOff()
-{
+void SVGAngleTearOff::setValueInSpecifiedUnits(
+    float value,
+    ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetValueInSpecifiedUnits(value);
+  CommitChange();
 }
 
-void SVGAngleTearOff::setValue(float value, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setValue(value);
-    commitChange();
+void SVGAngleTearOff::newValueSpecifiedUnits(unsigned short unit_type,
+                                             float value_in_specified_units,
+                                             ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  if (unit_type == SVGAngle::kSvgAngletypeUnknown ||
+      unit_type > SVGAngle::kSvgAngletypeGrad) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError, "Cannot set value with unknown or invalid units (" +
+                                String::Number(unit_type) + ").");
+    return;
+  }
+  Target()->NewValueSpecifiedUnits(
+      static_cast<SVGAngle::SVGAngleType>(unit_type), value_in_specified_units);
+  CommitChange();
 }
 
-void SVGAngleTearOff::setValueInSpecifiedUnits(float value, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setValueInSpecifiedUnits(value);
-    commitChange();
+void SVGAngleTearOff::convertToSpecifiedUnits(unsigned short unit_type,
+                                              ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  if (unit_type == SVGAngle::kSvgAngletypeUnknown ||
+      unit_type > SVGAngle::kSvgAngletypeGrad) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError, "Cannot convert to unknown or invalid units (" +
+                                String::Number(unit_type) + ").");
+    return;
+  }
+  if (Target()->UnitType() == SVGAngle::kSvgAngletypeUnknown) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError, "Cannot convert from unknown or invalid units.");
+    return;
+  }
+  Target()->ConvertToSpecifiedUnits(
+      static_cast<SVGAngle::SVGAngleType>(unit_type));
+  CommitChange();
 }
 
-void SVGAngleTearOff::newValueSpecifiedUnits(unsigned short unitType, float valueInSpecifiedUnits, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    if (unitType == SVGAngle::SVG_ANGLETYPE_UNKNOWN || unitType > SVGAngle::SVG_ANGLETYPE_GRAD) {
-        exceptionState.throwDOMException(NotSupportedError, "Cannot set value with unknown or invalid units (" + String::number(unitType) + ").");
-        return;
-    }
-
-    target()->newValueSpecifiedUnits(static_cast<SVGAngle::SVGAngleType>(unitType), valueInSpecifiedUnits);
-    commitChange();
+void SVGAngleTearOff::setValueAsString(const String& value,
+                                       ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  String old_value = Target()->ValueAsString();
+  SVGParsingError status = Target()->SetValueAsString(value);
+  if (status == SVGParseStatus::kNoError && !HasExposedAngleUnit()) {
+    Target()->SetValueAsString(old_value);  // rollback to old value
+    status = SVGParseStatus::kParsingFailed;
+  }
+  if (status != SVGParseStatus::kNoError) {
+    exception_state.ThrowDOMException(
+        kSyntaxError, "The value provided ('" + value + "') is invalid.");
+    return;
+  }
+  CommitChange();
 }
 
-void SVGAngleTearOff::convertToSpecifiedUnits(unsigned short unitType, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    if (unitType == SVGAngle::SVG_ANGLETYPE_UNKNOWN || unitType > SVGAngle::SVG_ANGLETYPE_GRAD) {
-        exceptionState.throwDOMException(NotSupportedError, "Cannot convert to unknown or invalid units (" + String::number(unitType) + ").");
-        return;
-    }
-
-    if (target()->unitType() == SVGAngle::SVG_ANGLETYPE_UNKNOWN) {
-        exceptionState.throwDOMException(NotSupportedError, "Cannot convert from unknown or invalid units.");
-        return;
-    }
-
-    target()->convertToSpecifiedUnits(static_cast<SVGAngle::SVGAngleType>(unitType));
-    commitChange();
+DEFINE_TRACE_WRAPPERS(SVGAngleTearOff) {
+  visitor->TraceWrappers(contextElement());
 }
 
-void SVGAngleTearOff::setValueAsString(const String& value, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    String oldValue = target()->valueAsString();
-
-    SVGParsingError status = target()->setValueAsString(value);
-
-    if (status == SVGParseStatus::NoError && !hasExposedAngleUnit()) {
-        target()->setValueAsString(oldValue); // rollback to old value
-        status = SVGParseStatus::ParsingFailed;
-    }
-    if (status != SVGParseStatus::NoError) {
-        exceptionState.throwDOMException(SyntaxError, "The value provided ('" + value + "') is invalid.");
-        return;
-    }
-
-    commitChange();
-}
-
-DEFINE_TRACE_WRAPPERS(SVGAngleTearOff)
-{
-    visitor->traceWrappers(contextElement());
-}
-
-} // namespace blink
+}  // namespace blink

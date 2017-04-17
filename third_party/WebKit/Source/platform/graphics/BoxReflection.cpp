@@ -6,46 +6,38 @@
 
 #include "platform/geometry/FloatRect.h"
 #include "platform/graphics/skia/SkiaUtils.h"
-#include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/core/SkMatrix.h"
-#include "third_party/skia/include/core/SkPicture.h"
-#include "third_party/skia/include/core/SkRefCnt.h"
-#include "third_party/skia/include/core/SkXfermode.h"
-#include "third_party/skia/include/effects/SkPictureImageFilter.h"
-#include "third_party/skia/include/effects/SkXfermodeImageFilter.h"
 
 #include <utility>
 
 namespace blink {
 
-SkMatrix BoxReflection::reflectionMatrix() const
-{
-    SkMatrix flipMatrix;
-    switch (m_direction) {
-    case VerticalReflection:
-        flipMatrix.setScale(1, -1);
-        flipMatrix.postTranslate(0, m_offset);
-        break;
-    case HorizontalReflection:
-        flipMatrix.setScale(-1, 1);
-        flipMatrix.postTranslate(m_offset, 0);
-        break;
+SkMatrix BoxReflection::ReflectionMatrix() const {
+  SkMatrix flip_matrix;
+  switch (direction_) {
+    case kVerticalReflection:
+      flip_matrix.setScale(1, -1);
+      flip_matrix.postTranslate(0, offset_);
+      break;
+    case kHorizontalReflection:
+      flip_matrix.setScale(-1, 1);
+      flip_matrix.postTranslate(offset_, 0);
+      break;
     default:
-        // MSVC requires that SkMatrix be initialized in this unreachable case.
-        NOTREACHED();
-        flipMatrix.reset();
-        break;
-    }
-    return flipMatrix;
+      // MSVC requires that SkMatrix be initialized in this unreachable case.
+      NOTREACHED();
+      flip_matrix.reset();
+      break;
+  }
+  return flip_matrix;
 }
 
-FloatRect BoxReflection::mapRect(const FloatRect& rect) const
-{
-    SkRect reflection(rect);
-    reflectionMatrix().mapRect(&reflection);
-    FloatRect result = rect;
-    result.unite(reflection);
-    return result;
+FloatRect BoxReflection::MapRect(const FloatRect& rect) const {
+  SkRect reflection(rect);
+  ReflectionMatrix().mapRect(&reflection);
+  FloatRect result = rect;
+  result.Unite(reflection);
+  return result;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -5,14 +5,8 @@
 // https://github.com/WICG/web-share/blob/master/docs/interface.md
 
 [
-  RuntimeEnabled=WebShare,
+  OriginTrialEnabled=WebShare,
 ] partial interface Navigator {
-  // TODO(mgiuca): Take a ShareData object, not just these two fields (see
-  // spec).
-  [CallWith=ScriptState] Promise<void> share (
-    DOMString title,
-    DOMString text
-  );
-
-  // TODO(mgiuca): Add canShare method (see spec).
+  [CallWith=ScriptState, MeasureAs=WebShareShare]
+  Promise<void> share(ShareData data);
 };

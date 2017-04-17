@@ -30,31 +30,30 @@
 
 #include "core/loader/appcache/ApplicationCacheHost.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/events/ApplicationCacheErrorEvent.h"
 #include "core/events/ProgressEvent.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/inspector/InspectorApplicationCacheAgent.h"
-#include "core/inspector/InspectorInstrumentation.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/appcache/ApplicationCache.h"
 #include "core/page/FrameTree.h"
 #include "core/page/Page.h"
+#include "core/probe/CoreProbes.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLError.h"
+#include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/platform/WebVector.h"
-
-using namespace blink;
 
 namespace blink {
 
@@ -62,251 +61,302 @@ namespace blink {
 // embedding application instead of using WebCore's built in appcache system.
 // This file replaces webcore/appcache/ApplicationCacheHost.cpp in our build.
 
-ApplicationCacheHost::ApplicationCacheHost(DocumentLoader* documentLoader)
-    : m_domApplicationCache(nullptr)
-    , m_documentLoader(documentLoader)
-    , m_defersEvents(true)
-{
-    ASSERT(m_documentLoader);
+ApplicationCacheHost::ApplicationCacheHost(DocumentLoader* document_loader)
+    : dom_application_cache_(nullptr),
+      document_loader_(document_loader),
+      defers_events_(true) {
+  DCHECK(document_loader_);
 }
 
-ApplicationCacheHost::~ApplicationCacheHost()
-{
-    // Verify that detachFromDocumentLoader() has been performed already.
-    ASSERT(!m_host);
+ApplicationCacheHost::~ApplicationCacheHost() {
+  // Verify that detachFromDocumentLoader() has been performed already.
+  DCHECK(!host_);
 }
 
-void ApplicationCacheHost::willStartLoadingMainResource(ResourceRequest& request)
-{
-    // We defer creating the outer host object to avoid spurious creation/destruction
-    // around creating empty documents. At this point, we're initiating a main resource
-    // load for the document, so its for real.
+void ApplicationCacheHost::WillStartLoading(ResourceRequest& request) {
+  if (!IsApplicationCacheEnabled())
+    return;
 
-    if (!isApplicationCacheEnabled())
-        return;
+  if (request.GetFrameType() == WebURLRequest::kFrameTypeTopLevel ||
+      request.GetFrameType() == WebURLRequest::kFrameTypeNested) {
+    WillStartLoadingMainResource(request);
+  } else {
+    WillStartLoadingResource(request);
+  }
+}
 
-    ASSERT(m_documentLoader->frame());
-    LocalFrame& frame = *m_documentLoader->frame();
-    m_host = frame.loader().client()->createApplicationCacheHost(this);
-    if (!m_host)
-        return;
+void ApplicationCacheHost::WillStartLoadingMainResource(
+    ResourceRequest& request) {
+  // We defer creating the outer host object to avoid spurious
+  // creation/destruction around creating empty documents. At this point, we're
+  // initiating a main resource load for the document, so its for real.
 
+  DCHECK(IsApplicationCacheEnabled());
+
+  DCHECK(document_loader_->GetFrame());
+  LocalFrame& frame = *document_loader_->GetFrame();
+  host_ = frame.Loader().Client()->CreateApplicationCacheHost(this);
+  if (!host_)
+    return;
+
+  WrappedResourceRequest wrapped(request);
+
+  const WebApplicationCacheHost* spawning_host = nullptr;
+  Frame* spawning_frame = frame.Tree().Parent();
+  if (!spawning_frame || !spawning_frame->IsLocalFrame())
+    spawning_frame = frame.Loader().Opener();
+  if (!spawning_frame || !spawning_frame->IsLocalFrame())
+    spawning_frame = &frame;
+  if (DocumentLoader* spawning_doc_loader =
+          ToLocalFrame(spawning_frame)->Loader().GetDocumentLoader()) {
+    spawning_host =
+        spawning_doc_loader->GetApplicationCacheHost()
+            ? spawning_doc_loader->GetApplicationCacheHost()->host_.get()
+            : nullptr;
+  }
+
+  host_->WillStartMainResourceRequest(wrapped, spawning_host);
+
+  // NOTE: The semantics of this method, and others in this interface, are
+  // subtly different than the method names would suggest. For example, in this
+  // method never returns an appcached response in the SubstituteData out
+  // argument, instead we return the appcached response thru the usual resource
+  // loading pipeline.
+}
+
+void ApplicationCacheHost::SelectCacheWithoutManifest() {
+  if (host_)
+    host_->SelectCacheWithoutManifest();
+}
+
+void ApplicationCacheHost::SelectCacheWithManifest(const KURL& manifest_url) {
+  DCHECK(document_loader_);
+
+  LocalFrame* frame = document_loader_->GetFrame();
+  Document* document = frame->GetDocument();
+  if (document->IsSandboxed(kSandboxOrigin) ||
+      document->GetSecurityOrigin()->HasSuborigin()) {
+    // Prevent sandboxes and suborigins from establishing application caches.
+    SelectCacheWithoutManifest();
+    return;
+  }
+  if (document->IsSecureContext()) {
+    UseCounter::Count(document,
+                      UseCounter::kApplicationCacheManifestSelectSecureOrigin);
+    UseCounter::CountCrossOriginIframe(
+        *document, UseCounter::kApplicationCacheManifestSelectSecureOrigin);
+  } else {
+    Deprecation::CountDeprecation(
+        document, UseCounter::kApplicationCacheManifestSelectInsecureOrigin);
+    Deprecation::CountDeprecationCrossOriginIframe(
+        *document, UseCounter::kApplicationCacheManifestSelectInsecureOrigin);
+    HostsUsingFeatures::CountAnyWorld(
+        *document, HostsUsingFeatures::Feature::
+                       kApplicationCacheManifestSelectInsecureHost);
+  }
+  if (host_ && !host_->SelectCacheWithManifest(manifest_url)) {
+    // It's a foreign entry, restart the current navigation from the top of the
+    // navigation algorithm. The navigation will not result in the same resource
+    // being loaded, because "foreign" entries are never picked during
+    // navigation. see ApplicationCacheGroup::selectCache()
+    frame->Navigate(*document, document->Url(), true, UserGestureStatus::kNone);
+  }
+}
+
+void ApplicationCacheHost::DidReceiveResponseForMainResource(
+    const ResourceResponse& response) {
+  if (host_) {
+    WrappedResourceResponse wrapped(response);
+    host_->DidReceiveResponseForMainResource(wrapped);
+  }
+}
+
+void ApplicationCacheHost::MainResourceDataReceived(const char* data,
+                                                    size_t length) {
+  if (host_)
+    host_->DidReceiveDataForMainResource(data, length);
+}
+
+void ApplicationCacheHost::FailedLoadingMainResource() {
+  if (host_)
+    host_->DidFinishLoadingMainResource(false);
+}
+
+void ApplicationCacheHost::FinishedLoadingMainResource() {
+  if (host_)
+    host_->DidFinishLoadingMainResource(true);
+}
+
+void ApplicationCacheHost::WillStartLoadingResource(ResourceRequest& request) {
+  if (host_) {
     WrappedResourceRequest wrapped(request);
-
-    const WebApplicationCacheHost* spawningHost = nullptr;
-    Frame* spawningFrame = frame.tree().parent();
-    if (!spawningFrame || !spawningFrame->isLocalFrame())
-        spawningFrame = frame.loader().opener();
-    if (!spawningFrame || !spawningFrame->isLocalFrame())
-        spawningFrame = &frame;
-    if (DocumentLoader* spawningDocLoader = toLocalFrame(spawningFrame)->loader().documentLoader())
-        spawningHost = spawningDocLoader->applicationCacheHost() ? spawningDocLoader->applicationCacheHost()->m_host.get() : nullptr;
-
-    m_host->willStartMainResourceRequest(wrapped, spawningHost);
-
-    // NOTE: The semantics of this method, and others in this interface, are subtly different
-    // than the method names would suggest. For example, in this method never returns an appcached
-    // response in the SubstituteData out argument, instead we return the appcached response thru
-    // the usual resource loading pipeline.
+    host_->WillStartSubResourceRequest(wrapped);
+  }
 }
 
-void ApplicationCacheHost::selectCacheWithoutManifest()
-{
-    if (m_host)
-        m_host->selectCacheWithoutManifest();
+void ApplicationCacheHost::SetApplicationCache(
+    ApplicationCache* dom_application_cache) {
+  DCHECK(!dom_application_cache_ || !dom_application_cache);
+  dom_application_cache_ = dom_application_cache;
 }
 
-void ApplicationCacheHost::selectCacheWithManifest(const KURL& manifestURL)
-{
-    DCHECK(m_documentLoader);
-
-    LocalFrame* frame = m_documentLoader->frame();
-    Document* document = frame->document();
-    if (document->isSecureContext()) {
-        UseCounter::count(document, UseCounter::ApplicationCacheManifestSelectSecureOrigin);
-        UseCounter::countCrossOriginIframe(*document, UseCounter::ApplicationCacheManifestSelectSecureOrigin);
-    } else {
-        Deprecation::countDeprecation(document, UseCounter::ApplicationCacheManifestSelectInsecureOrigin);
-        Deprecation::countDeprecationCrossOriginIframe(*document, UseCounter::ApplicationCacheManifestSelectInsecureOrigin);
-        HostsUsingFeatures::countAnyWorld(*document, HostsUsingFeatures::Feature::ApplicationCacheManifestSelectInsecureHost);
-    }
-    if (m_host && !m_host->selectCacheWithManifest(manifestURL)) {
-        // It's a foreign entry, restart the current navigation from the top
-        // of the navigation algorithm. The navigation will not result in the
-        // same resource being loaded, because "foreign" entries are never picked
-        // during navigation.
-        // see ApplicationCacheGroup::selectCache()
-        frame->navigate(*document, document->url(), true, UserGestureStatus::None);
-    }
+void ApplicationCacheHost::DetachFromDocumentLoader() {
+  // Detach from the owning DocumentLoader and let go of
+  // WebApplicationCacheHost.
+  SetApplicationCache(nullptr);
+  host_.reset();
+  document_loader_ = nullptr;
 }
 
-void ApplicationCacheHost::didReceiveResponseForMainResource(const ResourceResponse& response)
-{
-    if (m_host) {
-        WrappedResourceResponse wrapped(response);
-        m_host->didReceiveResponseForMainResource(wrapped);
-    }
+void ApplicationCacheHost::NotifyApplicationCache(
+    EventID id,
+    int progress_total,
+    int progress_done,
+    WebApplicationCacheHost::ErrorReason error_reason,
+    const String& error_url,
+    int error_status,
+    const String& error_message) {
+  if (id != kProgressEvent) {
+    probe::updateApplicationCacheStatus(document_loader_->GetFrame());
+  }
+
+  if (defers_events_) {
+    // Event dispatching is deferred until document.onload has fired.
+    deferred_events_.push_back(DeferredEvent(id, progress_total, progress_done,
+                                             error_reason, error_url,
+                                             error_status, error_message));
+    return;
+  }
+  DispatchDOMEvent(id, progress_total, progress_done, error_reason, error_url,
+                   error_status, error_message);
 }
 
-void ApplicationCacheHost::mainResourceDataReceived(const char* data, size_t length)
-{
-    if (m_host)
-        m_host->didReceiveDataForMainResource(data, length);
+ApplicationCacheHost::CacheInfo ApplicationCacheHost::ApplicationCacheInfo() {
+  if (!host_)
+    return CacheInfo(KURL(), 0, 0, 0);
+
+  WebApplicationCacheHost::CacheInfo web_info;
+  host_->GetAssociatedCacheInfo(&web_info);
+  return CacheInfo(web_info.manifest_url, web_info.creation_time,
+                   web_info.update_time, web_info.total_size);
 }
 
-void ApplicationCacheHost::failedLoadingMainResource()
-{
-    if (m_host)
-        m_host->didFinishLoadingMainResource(false);
+void ApplicationCacheHost::FillResourceList(ResourceInfoList* resources) {
+  if (!host_)
+    return;
+
+  WebVector<WebApplicationCacheHost::ResourceInfo> web_resources;
+  host_->GetResourceList(&web_resources);
+  for (size_t i = 0; i < web_resources.size(); ++i) {
+    resources->push_back(
+        ResourceInfo(web_resources[i].url, web_resources[i].is_master,
+                     web_resources[i].is_manifest, web_resources[i].is_fallback,
+                     web_resources[i].is_foreign, web_resources[i].is_explicit,
+                     web_resources[i].size));
+  }
 }
 
-void ApplicationCacheHost::finishedLoadingMainResource()
-{
-    if (m_host)
-        m_host->didFinishLoadingMainResource(true);
+void ApplicationCacheHost::StopDeferringEvents() {
+  for (unsigned i = 0; i < deferred_events_.size(); ++i) {
+    const DeferredEvent& deferred = deferred_events_[i];
+    DispatchDOMEvent(deferred.event_id, deferred.progress_total,
+                     deferred.progress_done, deferred.error_reason,
+                     deferred.error_url, deferred.error_status,
+                     deferred.error_message);
+  }
+  deferred_events_.Clear();
+  defers_events_ = false;
 }
 
-void ApplicationCacheHost::willStartLoadingResource(ResourceRequest& request)
-{
-    if (m_host) {
-        WrappedResourceRequest wrapped(request);
-        m_host->willStartSubResourceRequest(wrapped);
-    }
+void ApplicationCacheHost::DispatchDOMEvent(
+    EventID id,
+    int progress_total,
+    int progress_done,
+    WebApplicationCacheHost::ErrorReason error_reason,
+    const String& error_url,
+    int error_status,
+    const String& error_message) {
+  // Don't dispatch an event if the window is detached.
+  if (!dom_application_cache_ || !dom_application_cache_->DomWindow())
+    return;
+
+  const AtomicString& event_type = ApplicationCache::ToEventType(id);
+  if (event_type.IsEmpty())
+    return;
+  Event* event = nullptr;
+  if (id == kProgressEvent) {
+    event =
+        ProgressEvent::Create(event_type, true, progress_done, progress_total);
+  } else if (id == kErrorEvent) {
+    event = ApplicationCacheErrorEvent::Create(error_reason, error_url,
+                                               error_status, error_message);
+  } else {
+    event = Event::Create(event_type);
+  }
+  dom_application_cache_->DispatchEvent(event);
 }
 
-void ApplicationCacheHost::setApplicationCache(ApplicationCache* domApplicationCache)
-{
-    ASSERT(!m_domApplicationCache || !domApplicationCache);
-    m_domApplicationCache = domApplicationCache;
+ApplicationCacheHost::Status ApplicationCacheHost::GetStatus() const {
+  return host_ ? static_cast<Status>(host_->GetStatus()) : kUncached;
 }
 
-void ApplicationCacheHost::detachFromDocumentLoader()
-{
-    // Detach from the owning DocumentLoader and let go of WebApplicationCacheHost.
-    setApplicationCache(nullptr);
-    m_host.reset();
-    m_documentLoader = nullptr;
+bool ApplicationCacheHost::Update() {
+  return host_ ? host_->StartUpdate() : false;
 }
 
-void ApplicationCacheHost::notifyApplicationCache(EventID id, int progressTotal, int progressDone, WebApplicationCacheHost::ErrorReason errorReason, const String& errorURL, int errorStatus, const String& errorMessage)
-{
-    if (id != PROGRESS_EVENT)
-        InspectorInstrumentation::updateApplicationCacheStatus(m_documentLoader->frame());
-
-    if (m_defersEvents) {
-        // Event dispatching is deferred until document.onload has fired.
-        m_deferredEvents.append(DeferredEvent(id, progressTotal, progressDone, errorReason, errorURL, errorStatus, errorMessage));
-        return;
-    }
-    dispatchDOMEvent(id, progressTotal, progressDone, errorReason, errorURL, errorStatus, errorMessage);
+bool ApplicationCacheHost::SwapCache() {
+  bool success = host_ ? host_->SwapCache() : false;
+  if (success) {
+    probe::updateApplicationCacheStatus(document_loader_->GetFrame());
+  }
+  return success;
 }
 
-ApplicationCacheHost::CacheInfo ApplicationCacheHost::applicationCacheInfo()
-{
-    if (!m_host)
-        return CacheInfo(KURL(), 0, 0, 0);
-
-    WebApplicationCacheHost::CacheInfo webInfo;
-    m_host->getAssociatedCacheInfo(&webInfo);
-    return CacheInfo(webInfo.manifestURL, webInfo.creationTime, webInfo.updateTime, webInfo.totalSize);
+void ApplicationCacheHost::Abort() {
+  if (host_)
+    host_->Abort();
 }
 
-void ApplicationCacheHost::fillResourceList(ResourceInfoList* resources)
-{
-    if (!m_host)
-        return;
-
-    WebVector<WebApplicationCacheHost::ResourceInfo> webResources;
-    m_host->getResourceList(&webResources);
-    for (size_t i = 0; i < webResources.size(); ++i) {
-        resources->append(ResourceInfo(
-            webResources[i].url, webResources[i].isMaster, webResources[i].isManifest, webResources[i].isFallback,
-            webResources[i].isForeign, webResources[i].isExplicit, webResources[i].size));
-    }
+bool ApplicationCacheHost::IsApplicationCacheEnabled() {
+  DCHECK(document_loader_->GetFrame());
+  return document_loader_->GetFrame()->GetSettings() &&
+         document_loader_->GetFrame()
+             ->GetSettings()
+             ->GetOfflineWebApplicationCacheEnabled();
 }
 
-void ApplicationCacheHost::stopDeferringEvents()
-{
-    for (unsigned i = 0; i < m_deferredEvents.size(); ++i) {
-        const DeferredEvent& deferred = m_deferredEvents[i];
-        dispatchDOMEvent(deferred.eventID, deferred.progressTotal, deferred.progressDone, deferred.errorReason, deferred.errorURL, deferred.errorStatus, deferred.errorMessage);
-    }
-    m_deferredEvents.clear();
-    m_defersEvents = false;
+void ApplicationCacheHost::DidChangeCacheAssociation() {
+  // FIXME: Prod the inspector to update its notion of what cache the page is
+  // using.
 }
 
-void ApplicationCacheHost::dispatchDOMEvent(EventID id, int progressTotal, int progressDone, WebApplicationCacheHost::ErrorReason errorReason, const String& errorURL, int errorStatus, const String& errorMessage)
-{
-    if (!m_domApplicationCache)
-        return;
-
-    const AtomicString& eventType = ApplicationCache::toEventType(id);
-    if (eventType.isEmpty() || !m_domApplicationCache->getExecutionContext())
-        return;
-    Event* event = nullptr;
-    if (id == PROGRESS_EVENT)
-        event = ProgressEvent::create(eventType, true, progressDone, progressTotal);
-    else if (id == ERROR_EVENT)
-        event = ApplicationCacheErrorEvent::create(errorReason, errorURL, errorStatus, errorMessage);
-    else
-        event = Event::create(eventType);
-    m_domApplicationCache->dispatchEvent(event);
+void ApplicationCacheHost::NotifyEventListener(
+    WebApplicationCacheHost::EventID event_id) {
+  NotifyApplicationCache(static_cast<ApplicationCacheHost::EventID>(event_id),
+                         0, 0, WebApplicationCacheHost::kUnknownError, String(),
+                         0, String());
 }
 
-ApplicationCacheHost::Status ApplicationCacheHost::getStatus() const
-{
-    return m_host ? static_cast<Status>(m_host->getStatus()) : UNCACHED;
+void ApplicationCacheHost::NotifyProgressEventListener(const WebURL&,
+                                                       int progress_total,
+                                                       int progress_done) {
+  NotifyApplicationCache(kProgressEvent, progress_total, progress_done,
+                         WebApplicationCacheHost::kUnknownError, String(), 0,
+                         String());
 }
 
-bool ApplicationCacheHost::update()
-{
-    return m_host ? m_host->startUpdate() : false;
+void ApplicationCacheHost::NotifyErrorEventListener(
+    WebApplicationCacheHost::ErrorReason reason,
+    const WebURL& url,
+    int status,
+    const WebString& message) {
+  NotifyApplicationCache(kErrorEvent, 0, 0, reason, url.GetString(), status,
+                         message);
 }
 
-bool ApplicationCacheHost::swapCache()
-{
-    bool success = m_host ? m_host->swapCache() : false;
-    if (success)
-        InspectorInstrumentation::updateApplicationCacheStatus(m_documentLoader->frame());
-    return success;
+DEFINE_TRACE(ApplicationCacheHost) {
+  visitor->Trace(dom_application_cache_);
+  visitor->Trace(document_loader_);
 }
 
-void ApplicationCacheHost::abort()
-{
-    if (m_host)
-        m_host->abort();
-}
-
-bool ApplicationCacheHost::isApplicationCacheEnabled()
-{
-    ASSERT(m_documentLoader->frame());
-    return m_documentLoader->frame()->settings() && m_documentLoader->frame()->settings()->offlineWebApplicationCacheEnabled();
-}
-
-void ApplicationCacheHost::didChangeCacheAssociation()
-{
-    // FIXME: Prod the inspector to update its notion of what cache the page is using.
-}
-
-void ApplicationCacheHost::notifyEventListener(WebApplicationCacheHost::EventID eventID)
-{
-    notifyApplicationCache(static_cast<ApplicationCacheHost::EventID>(eventID), 0, 0, WebApplicationCacheHost::UnknownError, String(), 0, String());
-}
-
-void ApplicationCacheHost::notifyProgressEventListener(const WebURL&, int progressTotal, int progressDone)
-{
-    notifyApplicationCache(PROGRESS_EVENT, progressTotal, progressDone, WebApplicationCacheHost::UnknownError, String(), 0, String());
-}
-
-void ApplicationCacheHost::notifyErrorEventListener(WebApplicationCacheHost::ErrorReason reason, const WebURL& url, int status, const WebString& message)
-{
-    notifyApplicationCache(ERROR_EVENT, 0, 0, reason, url.string(), status, message);
-}
-
-DEFINE_TRACE(ApplicationCacheHost)
-{
-    visitor->trace(m_domApplicationCache);
-    visitor->trace(m_documentLoader);
-}
-
-} // namespace blink
+}  // namespace blink

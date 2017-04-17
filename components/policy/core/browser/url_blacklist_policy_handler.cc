@@ -11,9 +11,9 @@
 #include "components/policy/core/browser/policy_error_map.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_pref_names.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
-#include "grit/components_strings.h"
-#include "policy/policy_constants.h"
+#include "components/strings/grit/components_strings.h"
 
 namespace policy {
 
@@ -27,14 +27,14 @@ bool URLBlacklistPolicyHandler::CheckPolicySettings(const PolicyMap& policies,
       policies.GetValue(key::kDisabledSchemes);
   const base::Value* url_blacklist = policies.GetValue(key::kURLBlacklist);
 
-  if (disabled_schemes && !disabled_schemes->IsType(base::Value::TYPE_LIST)) {
+  if (disabled_schemes && !disabled_schemes->IsType(base::Value::Type::LIST)) {
     errors->AddError(key::kDisabledSchemes, IDS_POLICY_TYPE_ERROR,
-                     base::Value::GetTypeName(base::Value::TYPE_LIST));
+                     base::Value::GetTypeName(base::Value::Type::LIST));
   }
 
-  if (url_blacklist && !url_blacklist->IsType(base::Value::TYPE_LIST)) {
+  if (url_blacklist && !url_blacklist->IsType(base::Value::Type::LIST)) {
     errors->AddError(key::kURLBlacklist, IDS_POLICY_TYPE_ERROR,
-                     base::Value::GetTypeName(base::Value::TYPE_LIST));
+                     base::Value::GetTypeName(base::Value::Type::LIST));
   }
 
   return true;
@@ -60,7 +60,7 @@ void URLBlacklistPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
   if (disabled_schemes) {
     for (const auto& entry : *disabled_schemes) {
       std::string entry_value;
-      if (entry->GetAsString(&entry_value)) {
+      if (entry.GetAsString(&entry_value)) {
         entry_value.append("://*");
         merged_url_blacklist->AppendString(entry_value);
       }
@@ -69,8 +69,8 @@ void URLBlacklistPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
 
   if (url_blacklist) {
     for (const auto& entry : *url_blacklist) {
-      if (entry->IsType(base::Value::TYPE_STRING))
-        merged_url_blacklist->Append(entry->CreateDeepCopy());
+      if (entry.IsType(base::Value::Type::STRING))
+        merged_url_blacklist->Append(entry.CreateDeepCopy());
     }
   }
 

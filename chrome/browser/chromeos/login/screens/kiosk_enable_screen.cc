@@ -12,34 +12,31 @@
 namespace chromeos {
 
 KioskEnableScreen::KioskEnableScreen(BaseScreenDelegate* base_screen_delegate,
-                                     KioskEnableScreenActor* actor)
-    : BaseScreen(base_screen_delegate), actor_(actor) {
-  DCHECK(actor_);
-  if (actor_)
-    actor_->SetDelegate(this);
+                                     KioskEnableScreenView* view)
+    : BaseScreen(base_screen_delegate, OobeScreen::SCREEN_KIOSK_ENABLE),
+      view_(view) {
+  DCHECK(view_);
+  if (view_)
+    view_->SetDelegate(this);
 }
 
 KioskEnableScreen::~KioskEnableScreen() {
-  if (actor_)
-    actor_->SetDelegate(NULL);
+  if (view_)
+    view_->SetDelegate(NULL);
 }
 
 void KioskEnableScreen::Show() {
-  if (actor_)
-    actor_->Show();
-}
-
-std::string KioskEnableScreen::GetName() const {
-  return WizardController::kKioskEnableScreenName;
+  if (view_)
+    view_->Show();
 }
 
 void KioskEnableScreen::OnExit() {
-  Finish(BaseScreenDelegate::KIOSK_ENABLE_COMPLETED);
+  Finish(ScreenExitCode::KIOSK_ENABLE_COMPLETED);
 }
 
-void KioskEnableScreen::OnActorDestroyed(KioskEnableScreenActor* actor) {
-  if (actor_ == actor)
-    actor_ = NULL;
+void KioskEnableScreen::OnViewDestroyed(KioskEnableScreenView* view) {
+  if (view_ == view)
+    view_ = NULL;
 }
 
 }  // namespace chromeos

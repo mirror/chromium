@@ -50,9 +50,6 @@ class BookmarkDrawerListView extends ListView implements BookmarkUIObserver {
                     case BookmarkDrawerListViewAdapter.TYPE_FOLDER:
                         mDelegate.openFolder(item.mFolderId);
                         break;
-                    case BookmarkDrawerListViewAdapter.TYPE_ALL_ITEMS:
-                        mDelegate.openAllBookmarks();
-                        break;
                     default:
                         assert false;
                 }
@@ -83,13 +80,6 @@ class BookmarkDrawerListView extends ListView implements BookmarkUIObserver {
     }
 
     @Override
-    public void onAllBookmarksStateSet() {
-        mAdapter.updateList();
-        setItemChecked(mAdapter.getItemPosition(BookmarkUIState.STATE_ALL_BOOKMARKS, null),
-                true);
-    }
-
-    @Override
     public void onFolderStateSet(BookmarkId folder) {
         mAdapter.updateList();
         setItemChecked(mAdapter.getItemPosition(BookmarkUIState.STATE_FOLDER, folder),
@@ -97,6 +87,8 @@ class BookmarkDrawerListView extends ListView implements BookmarkUIObserver {
     }
 
     @Override
-    public void onSelectionStateChange(List<BookmarkId> selectedBookmarks) {
-    }
+    public void onSearchStateSet() {}
+
+    @Override
+    public void onSelectionStateChange(List<BookmarkId> selectedBookmarks) {}
 }

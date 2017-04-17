@@ -5,7 +5,7 @@
 #include "ui/views/controls/resize_area.h"
 
 #include "base/logging.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/views/controls/resize_area_delegate.h"
 #include "ui/views/native_cursor.h"
@@ -13,9 +13,6 @@
 namespace views {
 
 const char ResizeArea::kViewClassName[] = "ResizeArea";
-
-////////////////////////////////////////////////////////////////////////////////
-// ResizeArea
 
 ResizeArea::ResizeArea(ResizeAreaDelegate* delegate)
     : delegate_(delegate),
@@ -34,17 +31,25 @@ gfx::NativeCursor ResizeArea::GetCursor(const ui::MouseEvent& event) {
                    : gfx::kNullCursor;
 }
 
+void ResizeArea::OnGestureEvent(ui::GestureEvent* event) {
+  if (event->type() == ui::ET_GESTURE_TAP_DOWN) {
+    SetInitialPosition(event->x());
+    event->SetHandled();
+  } else if (event->type() == ui::ET_GESTURE_SCROLL_BEGIN ||
+             event->type() == ui::ET_GESTURE_SCROLL_UPDATE) {
+    ReportResizeAmount(event->x(), false);
+    event->SetHandled();
+  } else if (event->type() == ui::ET_GESTURE_END) {
+    ReportResizeAmount(event->x(), true);
+    event->SetHandled();
+  }
+}
+
 bool ResizeArea::OnMousePressed(const ui::MouseEvent& event) {
   if (!event.IsOnlyLeftMouseButton())
     return false;
 
-  // The resize area obviously will move once you start dragging so we need to
-  // convert coordinates to screen coordinates so that we don't lose our
-  // bearings.
-  gfx::Point point(event.x(), 0);
-  View::ConvertPointToScreen(this, &point);
-  initial_position_ = point.x();
-
+  SetInitialPosition(event.x());
   return true;
 }
 
@@ -64,8 +69,8 @@ void ResizeArea::OnMouseCaptureLost() {
   ReportResizeAmount(initial_position_, true);
 }
 
-void ResizeArea::GetAccessibleState(ui::AXViewState* state) {
-  state->role = ui::AX_ROLE_SPLITTER;
+void ResizeArea::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  node_data->role = ui::AX_ROLE_SPLITTER;
 }
 
 void ResizeArea::ReportResizeAmount(int resize_amount, bool last_update) {
@@ -74,6 +79,12 @@ void ResizeArea::ReportResizeAmount(int resize_amount, bool last_update) {
   resize_amount = point.x() - initial_position_;
   delegate_->OnResize(base::i18n::IsRTL() ? -resize_amount : resize_amount,
                       last_update);
+}
+
+void ResizeArea::SetInitialPosition(int event_x) {
+  gfx::Point point(event_x, 0);
+  View::ConvertPointToScreen(this, &point);
+  initial_position_ = point.x();
 }
 
 }  // namespace views

@@ -20,10 +20,10 @@
 #include "extensions/common/permissions/permission_message_test_util.h"
 #include "extensions/common/permissions/permission_set.h"
 #include "extensions/common/permissions/permissions_data.h"
-#include "grit/extensions_strings.h"
 #include "testing/gmock/include/gmock/gmock-matchers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/views/test/test_views_delegate.h"
 
 namespace {
 
@@ -57,7 +57,8 @@ class AppInfoPermissionsPanelTest : public testing::Test {
 
   // We need the UI thread in order to construct UI elements in the view.
   content::TestBrowserThreadBundle thread_bundle_;
-  TestingProfile profile_;
+  views::TestViewsDelegate views_delegate_;
+  TestingProfile profile_;  // Needs BrowserThread::UI.
 };
 
 // Tests that an app with no permissions is treated correctly.

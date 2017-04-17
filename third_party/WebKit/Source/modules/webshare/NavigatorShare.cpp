@@ -7,101 +7,152 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
+#include "modules/webshare/ShareData.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/mojo/MojoHelper.h"
+#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
-#include "public/platform/ServiceRegistry.h"
 
 namespace blink {
 
-class NavigatorShare::ShareClientImpl final : public GarbageCollected<ShareClientImpl> {
-public:
-    ShareClientImpl(NavigatorShare*, ScriptPromiseResolver*);
+namespace {
 
-    void callback(const String& error);
-
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_navigator);
-        visitor->trace(m_resolver);
-    }
-
-private:
-    WeakMember<NavigatorShare> m_navigator;
-    Member<ScriptPromiseResolver> m_resolver;
-};
-
-NavigatorShare::ShareClientImpl::ShareClientImpl(NavigatorShare* navigator_share, ScriptPromiseResolver* resolver)
-    : m_navigator(navigator_share)
-    , m_resolver(resolver)
-{
+// Gets the human-friendly error message for a ShareError. |error| must not be
+// ShareError::OK.
+String ErrorToString(mojom::blink::ShareError error) {
+  switch (error) {
+    case mojom::blink::ShareError::OK:
+      NOTREACHED();
+      break;
+    case mojom::blink::ShareError::INTERNAL_ERROR:
+      return "Share failed";
+    case mojom::blink::ShareError::CANCELED:
+      return "Share canceled";
+  }
+  NOTREACHED();
+  return String();
 }
 
-void NavigatorShare::ShareClientImpl::callback(const String& error)
-{
-    if (m_navigator)
-        m_navigator->m_clients.remove(this);
+}  // namespace
 
-    if (error.isNull()) {
-        m_resolver->resolve();
-    } else {
-        // TODO(mgiuca): Work out which error type to use.
-        m_resolver->reject(DOMException::create(AbortError, error));
-    }
+class NavigatorShare::ShareClientImpl final
+    : public GarbageCollected<ShareClientImpl> {
+ public:
+  ShareClientImpl(NavigatorShare*, ScriptPromiseResolver*);
+
+  void Callback(mojom::blink::ShareError);
+
+  void OnConnectionError();
+
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(navigator_);
+    visitor->Trace(resolver_);
+  }
+
+ private:
+  WeakMember<NavigatorShare> navigator_;
+  Member<ScriptPromiseResolver> resolver_;
+};
+
+NavigatorShare::ShareClientImpl::ShareClientImpl(
+    NavigatorShare* navigator_share,
+    ScriptPromiseResolver* resolver)
+    : navigator_(navigator_share), resolver_(resolver) {}
+
+void NavigatorShare::ShareClientImpl::Callback(mojom::blink::ShareError error) {
+  if (navigator_)
+    navigator_->clients_.erase(this);
+
+  if (error == mojom::blink::ShareError::OK) {
+    resolver_->Resolve();
+  } else {
+    // TODO(mgiuca): Work out which error type to use.
+    resolver_->Reject(DOMException::Create(kAbortError, ErrorToString(error)));
+  }
+}
+
+void NavigatorShare::ShareClientImpl::OnConnectionError() {
+  resolver_->Reject(
+      DOMException::Create(kSecurityError, "WebShare is disabled."));
 }
 
 NavigatorShare::~NavigatorShare() = default;
 
-NavigatorShare& NavigatorShare::from(Navigator& navigator)
-{
-    NavigatorShare* supplement = static_cast<NavigatorShare*>(Supplement<Navigator>::from(navigator, supplementName()));
-    if (!supplement) {
-        supplement = new NavigatorShare();
-        provideTo(navigator, supplementName(), supplement);
-    }
-    return *supplement;
+NavigatorShare& NavigatorShare::From(Navigator& navigator) {
+  NavigatorShare* supplement = static_cast<NavigatorShare*>(
+      Supplement<Navigator>::From(navigator, SupplementName()));
+  if (!supplement) {
+    supplement = new NavigatorShare();
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-DEFINE_TRACE(NavigatorShare)
-{
-    visitor->trace(m_clients);
-    Supplement<Navigator>::trace(visitor);
+DEFINE_TRACE(NavigatorShare) {
+  visitor->Trace(clients_);
+  Supplement<Navigator>::Trace(visitor);
 }
 
-NavigatorShare::NavigatorShare()
-{
+NavigatorShare::NavigatorShare() {}
+
+const char* NavigatorShare::SupplementName() {
+  return "NavigatorShare";
 }
 
-const char* NavigatorShare::supplementName()
-{
-    return "NavigatorShare";
+ScriptPromise NavigatorShare::share(ScriptState* script_state,
+                                    const ShareData& share_data) {
+  String error_message;
+  if (!ExecutionContext::From(script_state)->IsSecureContext(error_message)) {
+    DOMException* error = DOMException::Create(kSecurityError, error_message);
+    return ScriptPromise::RejectWithDOMException(script_state, error);
+  }
+  if (!UserGestureIndicator::UtilizeUserGesture()) {
+    DOMException* error = DOMException::Create(
+        kSecurityError,
+        "Must be handling a user gesture to perform a share request.");
+    return ScriptPromise::RejectWithDOMException(script_state, error);
+  }
+
+  Document* doc = ToDocument(ExecutionContext::From(script_state));
+  DCHECK(doc);
+  if (!service_) {
+    LocalFrame* frame = doc->GetFrame();
+    DCHECK(frame);
+    frame->GetInterfaceProvider()->GetInterface(mojo::MakeRequest(&service_));
+    service_.set_connection_error_handler(ConvertToBaseCallback(WTF::Bind(
+        &NavigatorShare::OnConnectionError, WrapWeakPersistent(this))));
+    DCHECK(service_);
+  }
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ShareClientImpl* client = new ShareClientImpl(this, resolver);
+  clients_.insert(client);
+  ScriptPromise promise = resolver->Promise();
+
+  service_->Share(share_data.hasTitle() ? share_data.title() : g_empty_string,
+                  share_data.hasText() ? share_data.text() : g_empty_string,
+                  doc->CompleteURL(share_data.url()),
+                  ConvertToBaseCallback(WTF::Bind(&ShareClientImpl::Callback,
+                                                  WrapPersistent(client))));
+
+  return promise;
 }
 
-ScriptPromise NavigatorShare::share(ScriptState* scriptState, const String& title, const String& text)
-{
-    if (!m_service) {
-        Document* doc = toDocument(scriptState->getExecutionContext());
-        DCHECK(doc);
-        LocalFrame* frame = doc->frame();
-        DCHECK(frame);
-        frame->serviceRegistry()->connectToRemoteService(mojo::GetProxy(&m_service));
-        DCHECK(m_service);
-    }
-
-    ScriptPromiseResolver* resolver = ScriptPromiseResolver::create(scriptState);
-    ShareClientImpl* client = new ShareClientImpl(this, resolver);
-    m_clients.add(client);
-    ScriptPromise promise = resolver->promise();
-
-    m_service->Share(title, text, convertToBaseCallback(WTF::bind(&ShareClientImpl::callback, wrapPersistent(client))));
-
-    return promise;
+ScriptPromise NavigatorShare::share(ScriptState* script_state,
+                                    Navigator& navigator,
+                                    const ShareData& share_data) {
+  return From(navigator).share(script_state, share_data);
 }
 
-ScriptPromise NavigatorShare::share(ScriptState* scriptState, Navigator& navigator, const String& title, const String& text)
-{
-    return from(navigator).share(scriptState, title, text);
+void NavigatorShare::OnConnectionError() {
+  for (auto& client : clients_) {
+    client->OnConnectionError();
+  }
+  clients_.Clear();
+  service_.reset();
 }
 
-} // namespace blink
+}  // namespace blink

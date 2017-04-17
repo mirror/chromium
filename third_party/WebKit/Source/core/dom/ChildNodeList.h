@@ -25,52 +25,63 @@
 #ifndef ChildNodeList_h
 #define ChildNodeList_h
 
+#include "core/dom/CollectionIndexCache.h"
 #include "core/dom/ContainerNode.h"
 #include "core/dom/NodeList.h"
-#include "core/html/CollectionIndexCache.h"
 
 namespace blink {
 
 class ChildNodeList final : public NodeList {
-public:
-    static ChildNodeList* create(ContainerNode& rootNode)
-    {
-        return new ChildNodeList(rootNode);
-    }
+ public:
+  static ChildNodeList* Create(ContainerNode& root_node) {
+    return new ChildNodeList(root_node);
+  }
 
-    ~ChildNodeList() override;
+  ~ChildNodeList() override;
 
-    // DOM API.
-    unsigned length() const override { return m_collectionIndexCache.nodeCount(*this); }
-    Node* item(unsigned index) const override { return m_collectionIndexCache.nodeAt(*this, index); }
+  // DOM API.
+  unsigned length() const override {
+    return collection_index_cache_.NodeCount(*this);
+  }
+  Node* item(unsigned index) const override {
+    return collection_index_cache_.NodeAt(*this, index);
+  }
 
-    // Non-DOM API.
-    void invalidateCache() { m_collectionIndexCache.invalidate(); }
-    ContainerNode& ownerNode() const { return *m_parent; }
+  // Non-DOM API.
+  void InvalidateCache() { collection_index_cache_.Invalidate(); }
+  ContainerNode& OwnerNode() const { return *parent_; }
 
-    ContainerNode& rootNode() const { return ownerNode(); }
+  ContainerNode& RootNode() const { return OwnerNode(); }
 
-    // CollectionIndexCache API.
-    bool canTraverseBackward() const { return true; }
-    Node* traverseToFirst() const { return rootNode().firstChild(); }
-    Node* traverseToLast() const { return rootNode().lastChild(); }
-    Node* traverseForwardToOffset(unsigned offset, Node& currentNode, unsigned& currentOffset) const;
-    Node* traverseBackwardToOffset(unsigned offset, Node& currentNode, unsigned& currentOffset) const;
+  // CollectionIndexCache API.
+  bool CanTraverseBackward() const { return true; }
+  Node* TraverseToFirst() const { return RootNode().FirstChild(); }
+  Node* TraverseToLast() const { return RootNode().LastChild(); }
+  Node* TraverseForwardToOffset(unsigned offset,
+                                Node& current_node,
+                                unsigned& current_offset) const;
+  Node* TraverseBackwardToOffset(unsigned offset,
+                                 Node& current_node,
+                                 unsigned& current_offset) const;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit ChildNodeList(ContainerNode& rootNode);
+ private:
+  explicit ChildNodeList(ContainerNode& root_node);
 
-    bool isChildNodeList() const override { return true; }
-    Node* virtualOwnerNode() const override;
+  bool IsChildNodeList() const override { return true; }
+  Node* VirtualOwnerNode() const override;
 
-    Member<ContainerNode> m_parent;
-    mutable CollectionIndexCache<ChildNodeList, Node> m_collectionIndexCache;
+  Member<ContainerNode> parent_;
+  mutable CollectionIndexCache<ChildNodeList, Node> collection_index_cache_;
 };
 
-DEFINE_TYPE_CASTS(ChildNodeList, NodeList, nodeList, nodeList->isChildNodeList(), nodeList.isChildNodeList());
+DEFINE_TYPE_CASTS(ChildNodeList,
+                  NodeList,
+                  nodeList,
+                  nodeList->IsChildNodeList(),
+                  nodeList.IsChildNodeList());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ChildNodeList_h
+#endif  // ChildNodeList_h

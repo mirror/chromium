@@ -27,7 +27,6 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
@@ -38,131 +37,119 @@
 namespace blink {
 
 DOMVisualViewport::DOMVisualViewport(LocalDOMWindow* window)
-    : m_window(window)
-{
+    : window_(window) {}
+
+DOMVisualViewport::~DOMVisualViewport() {}
+
+DEFINE_TRACE(DOMVisualViewport) {
+  visitor->Trace(window_);
+  EventTargetWithInlineData::Trace(visitor);
 }
 
-DOMVisualViewport::~DOMVisualViewport()
-{
+const AtomicString& DOMVisualViewport::InterfaceName() const {
+  return EventTargetNames::DOMVisualViewport;
 }
 
-DEFINE_TRACE(DOMVisualViewport)
-{
-    visitor->trace(m_window);
-    EventTargetWithInlineData::trace(visitor);
+ExecutionContext* DOMVisualViewport::GetExecutionContext() const {
+  return window_->GetExecutionContext();
 }
 
-const AtomicString& DOMVisualViewport::interfaceName() const
-{
-    return EventTargetNames::DOMVisualViewport;
-}
-
-ExecutionContext* DOMVisualViewport::getExecutionContext() const
-{
-    return m_window->getExecutionContext();
-}
-
-double DOMVisualViewport::scrollLeft()
-{
-    LocalFrame* frame = m_window->frame();
-    if (!frame || !frame->isMainFrame())
-        return 0;
-
-    if (FrameHost* host = frame->host())
-        return host->visualViewport().scrollLeft();
-
+float DOMVisualViewport::scrollLeft() {
+  LocalFrame* frame = window_->GetFrame();
+  if (!frame || !frame->IsMainFrame())
     return 0;
+
+  if (Page* page = frame->GetPage())
+    return page->GetVisualViewport().ScrollLeft();
+
+  return 0;
 }
 
-double DOMVisualViewport::scrollTop()
-{
-    LocalFrame* frame = m_window->frame();
-    if (!frame || !frame->isMainFrame())
-        return 0;
-
-    if (FrameHost* host = frame->host())
-        return host->visualViewport().scrollTop();
-
+float DOMVisualViewport::scrollTop() {
+  LocalFrame* frame = window_->GetFrame();
+  if (!frame || !frame->IsMainFrame())
     return 0;
+
+  if (Page* page = frame->GetPage())
+    return page->GetVisualViewport().ScrollTop();
+
+  return 0;
 }
 
-double DOMVisualViewport::pageX()
-{
-    LocalFrame* frame = m_window->frame();
-    if (!frame)
-        return 0;
-
-    FrameView* view = frame->view();
-    if (!view)
-        return 0;
-
-    frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
-    double viewportX = view->getScrollableArea()->scrollPositionDouble().x();
-    return adjustScrollForAbsoluteZoom(viewportX, frame->pageZoomFactor());
-}
-
-double DOMVisualViewport::pageY()
-{
-    LocalFrame* frame = m_window->frame();
-    if (!frame)
-        return 0;
-
-    FrameView* view = frame->view();
-    if (!view)
-        return 0;
-
-    frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
-    double viewportY = view->getScrollableArea()->scrollPositionDouble().y();
-    return adjustScrollForAbsoluteZoom(viewportY, frame->pageZoomFactor());
-}
-
-double DOMVisualViewport::clientWidth()
-{
-    LocalFrame* frame = m_window->frame();
-    if (!frame)
-        return 0;
-
-    if (!frame->isMainFrame()) {
-        FloatSize viewportSize = m_window->getViewportSize(ExcludeScrollbars);
-        return adjustForAbsoluteZoom(expandedIntSize(viewportSize).width(), frame->pageZoomFactor());
-    }
-
-    if (FrameHost* host = frame->host())
-        return host->visualViewport().clientWidth();
-
+float DOMVisualViewport::pageX() {
+  LocalFrame* frame = window_->GetFrame();
+  if (!frame)
     return 0;
-}
 
-double DOMVisualViewport::clientHeight()
-{
-    LocalFrame* frame = m_window->frame();
-    if (!frame)
-        return 0;
-
-    if (!frame->isMainFrame()) {
-        FloatSize viewportSize = m_window->getViewportSize(ExcludeScrollbars);
-        return adjustForAbsoluteZoom(expandedIntSize(viewportSize).height(), frame->pageZoomFactor());
-    }
-
-    if (FrameHost* host = frame->host())
-        return host->visualViewport().clientHeight();
-
+  FrameView* view = frame->View();
+  if (!view)
     return 0;
+
+  frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  float viewport_x = view->GetScrollableArea()->GetScrollOffset().Width();
+  return AdjustScrollForAbsoluteZoom(viewport_x, frame->PageZoomFactor());
 }
 
-double DOMVisualViewport::scale()
-{
-    LocalFrame* frame = m_window->frame();
-    if (!frame)
-        return 0;
-
-    if (!frame->isMainFrame())
-        return 1;
-
-    if (FrameHost* host = m_window->frame()->host())
-        return host->visualViewport().pageScale();
-
+float DOMVisualViewport::pageY() {
+  LocalFrame* frame = window_->GetFrame();
+  if (!frame)
     return 0;
+
+  FrameView* view = frame->View();
+  if (!view)
+    return 0;
+
+  frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  float viewport_y = view->GetScrollableArea()->GetScrollOffset().Height();
+  return AdjustScrollForAbsoluteZoom(viewport_y, frame->PageZoomFactor());
 }
 
-} // namespace blink
+double DOMVisualViewport::clientWidth() {
+  LocalFrame* frame = window_->GetFrame();
+  if (!frame)
+    return 0;
+
+  if (!frame->IsMainFrame()) {
+    FloatSize viewport_size = window_->GetViewportSize(kExcludeScrollbars);
+    return AdjustForAbsoluteZoom(ExpandedIntSize(viewport_size).Width(),
+                                 frame->PageZoomFactor());
+  }
+
+  if (Page* page = frame->GetPage())
+    return page->GetVisualViewport().ClientWidth();
+
+  return 0;
+}
+
+double DOMVisualViewport::clientHeight() {
+  LocalFrame* frame = window_->GetFrame();
+  if (!frame)
+    return 0;
+
+  if (!frame->IsMainFrame()) {
+    FloatSize viewport_size = window_->GetViewportSize(kExcludeScrollbars);
+    return AdjustForAbsoluteZoom(ExpandedIntSize(viewport_size).Height(),
+                                 frame->PageZoomFactor());
+  }
+
+  if (Page* page = frame->GetPage())
+    return page->GetVisualViewport().ClientHeight();
+
+  return 0;
+}
+
+double DOMVisualViewport::scale() {
+  LocalFrame* frame = window_->GetFrame();
+  if (!frame)
+    return 0;
+
+  if (!frame->IsMainFrame())
+    return 1;
+
+  if (Page* page = window_->GetFrame()->GetPage())
+    return page->GetVisualViewport().PageScale();
+
+  return 0;
+}
+
+}  // namespace blink

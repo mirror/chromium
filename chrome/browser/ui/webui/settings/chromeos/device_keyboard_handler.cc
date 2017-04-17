@@ -4,7 +4,7 @@
 
 #include "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.h"
 
-#include "ash/new_window_delegate.h"
+#include "ash/new_window_controller.h"
 #include "ash/shell.h"
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -67,16 +67,16 @@ void KeyboardHandler::HandleInitialize(const base::ListValue* args) {
 
 void KeyboardHandler::HandleShowKeyboardShortcutsOverlay(
     const base::ListValue* args) const {
-  ash::Shell::GetInstance()->new_window_delegate()->ShowKeyboardOverlay();
+  ash::Shell::Get()->new_window_controller()->ShowKeyboardOverlay();
 }
 
 void KeyboardHandler::UpdateShowKeys() {
-  const base::FundamentalValue has_caps_lock(HasExternalKeyboard());
-  const base::FundamentalValue has_diamond_key(
+  const base::Value has_caps_lock(HasExternalKeyboard());
+  const base::Value has_diamond_key(
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kHasChromeOSDiamondKey));
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("show-keys-changed"), has_caps_lock,
+                         base::Value("show-keys-changed"), has_caps_lock,
                          has_diamond_key);
 }
 

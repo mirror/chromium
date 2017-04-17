@@ -6,10 +6,14 @@
 
 #include "base/command_line.h"
 #include "base/debug/leak_annotations.h"
+#include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "content/child/web_url_loader_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
+#include "content/common/renderer.mojom.h"
 #include "content/common/view_messages.h"
+#include "content/public/common/previews_state.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/test/frame_load_waiter.h"
 #include "content/public/test/render_view_test.h"
@@ -24,6 +28,7 @@
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/web/WebHistoryItem.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebView.h"
 
 using blink::WebString;
 
@@ -46,7 +51,7 @@ class RenderFrameImplTest : public RenderViewTest {
     RenderViewTest::SetUp();
     EXPECT_TRUE(GetMainRenderFrame()->is_main_frame_);
 
-    FrameMsg_NewFrame_WidgetParams widget_params;
+    mojom::CreateFrameWidgetParams widget_params;
     widget_params.routing_id = kSubframeWidgetRouteId;
     widget_params.hidden = false;
 
@@ -59,7 +64,7 @@ class RenderFrameImplTest : public RenderViewTest {
     frame_replication_state.unique_name = "frame-uniqueName";
 
     RenderFrameImpl::FromWebFrame(
-        view_->GetMainRenderFrame()->GetWebFrame()->firstChild())
+        view_->GetMainRenderFrame()->GetWebFrame()->FirstChild())
         ->OnSwapOut(kFrameProxyRouteId, false, frame_replication_state);
 
     RenderFrameImpl::CreateFrame(
@@ -80,8 +85,8 @@ class RenderFrameImplTest : public RenderViewTest {
      RenderViewTest::TearDown();
   }
 
-  void SetIsUsingLoFi(RenderFrameImpl* frame, bool is_using_lofi) {
-    frame->is_using_lofi_ = is_using_lofi;
+  void SetPreviewsState(RenderFrameImpl* frame, PreviewsState previews_state) {
+    frame->previews_state_ = previews_state;
   }
 
   void SetEffectionConnectionType(RenderFrameImpl* frame,
@@ -122,47 +127,33 @@ class RenderFrameTestObserver : public RenderFrameObserver {
   bool visible_;
 };
 
-#if defined(OS_ANDROID)
-// See https://crbug.com/472717
-#define MAYBE_SubframeWidget DISABLED_SubframeWidget
-#define MAYBE_FrameResize DISABLED_FrameResize
-#define MAYBE_FrameWasShown DISABLED_FrameWasShown
-#define MAYBE_FrameWasShownAfterWidgetClose DISABLED_FrameWasShownAfterWidgetClose
-#else
-#define MAYBE_SubframeWidget SubframeWidget
-#define MAYBE_FrameResize FrameResize
-#define MAYBE_FrameWasShown FrameWasShown
-#define MAYBE_FrameWasShownAfterWidgetClose FrameWasShownAfterWidgetClose
-#endif
-
 // Verify that a frame with a RenderFrameProxy as a parent has its own
 // RenderWidget.
-TEST_F(RenderFrameImplTest, MAYBE_SubframeWidget) {
+TEST_F(RenderFrameImplTest, SubframeWidget) {
   EXPECT_TRUE(frame_widget());
   EXPECT_NE(frame_widget(), static_cast<RenderViewImpl*>(view_)->GetWidget());
 }
 
 // Verify a subframe RenderWidget properly processes its viewport being
 // resized.
-TEST_F(RenderFrameImplTest, MAYBE_FrameResize) {
+TEST_F(RenderFrameImplTest, FrameResize) {
   ResizeParams resize_params;
   gfx::Size size(200, 200);
-  resize_params.screen_info = blink::WebScreenInfo();
+  resize_params.screen_info = ScreenInfo();
   resize_params.new_size = size;
   resize_params.physical_backing_size = size;
   resize_params.top_controls_height = 0.f;
-  resize_params.top_controls_shrink_blink_size = false;
-  resize_params.resizer_rect = gfx::Rect();
+  resize_params.browser_controls_shrink_blink_size = false;
   resize_params.is_fullscreen_granted = false;
 
   ViewMsg_Resize resize_message(0, resize_params);
   frame_widget()->OnMessageReceived(resize_message);
 
-  EXPECT_EQ(frame_widget()->webwidget()->size(), blink::WebSize(size));
+  EXPECT_EQ(frame_widget()->GetWebWidget()->Size(), blink::WebSize(size));
 }
 
 // Verify a subframe RenderWidget properly processes a WasShown message.
-TEST_F(RenderFrameImplTest, MAYBE_FrameWasShown) {
+TEST_F(RenderFrameImplTest, FrameWasShown) {
   RenderFrameTestObserver observer(frame());
 
   ViewMsg_WasShown was_shown_message(0, true, ui::LatencyInfo());
@@ -174,7 +165,7 @@ TEST_F(RenderFrameImplTest, MAYBE_FrameWasShown) {
 
 // Ensure that a RenderFrameImpl does not crash if the RenderView receives
 // a WasShown message after the frame's widget has been closed.
-TEST_F(RenderFrameImplTest, MAYBE_FrameWasShownAfterWidgetClose) {
+TEST_F(RenderFrameImplTest, FrameWasShownAfterWidgetClose) {
   RenderFrameTestObserver observer(frame());
 
   ViewMsg_Close close_message(0);
@@ -191,45 +182,45 @@ TEST_F(RenderFrameImplTest, MAYBE_FrameWasShownAfterWidgetClose) {
 // Test that LoFi state only updates for new main frame documents. Subframes
 // inherit from the main frame and should not change at commit time.
 TEST_F(RenderFrameImplTest, LoFiNotUpdatedOnSubframeCommits) {
-  SetIsUsingLoFi(GetMainRenderFrame(), true);
-  SetIsUsingLoFi(frame(), true);
-  EXPECT_TRUE(GetMainRenderFrame()->IsUsingLoFi());
-  EXPECT_TRUE(frame()->IsUsingLoFi());
+  SetPreviewsState(GetMainRenderFrame(), SERVER_LOFI_ON);
+  SetPreviewsState(frame(), SERVER_LOFI_ON);
+  EXPECT_EQ(SERVER_LOFI_ON, GetMainRenderFrame()->GetPreviewsState());
+  EXPECT_EQ(SERVER_LOFI_ON, frame()->GetPreviewsState());
 
   blink::WebHistoryItem item;
-  item.initialize();
+  item.Initialize();
 
   // The main frame's and subframe's LoFi states should stay the same on
   // navigations within the page.
-  frame()->didNavigateWithinPage(frame()->GetWebFrame(), item,
-                                 blink::WebStandardCommit, true);
-  EXPECT_TRUE(frame()->IsUsingLoFi());
-  GetMainRenderFrame()->didNavigateWithinPage(
-      GetMainRenderFrame()->GetWebFrame(), item, blink::WebStandardCommit,
+  frame()->DidNavigateWithinPage(frame()->GetWebFrame(), item,
+                                 blink::kWebStandardCommit, true);
+  EXPECT_EQ(SERVER_LOFI_ON, frame()->GetPreviewsState());
+  GetMainRenderFrame()->DidNavigateWithinPage(
+      GetMainRenderFrame()->GetWebFrame(), item, blink::kWebStandardCommit,
       true);
-  EXPECT_TRUE(GetMainRenderFrame()->IsUsingLoFi());
+  EXPECT_EQ(SERVER_LOFI_ON, GetMainRenderFrame()->GetPreviewsState());
 
   // The subframe's LoFi state should not be reset on commit.
   DocumentState* document_state =
-      DocumentState::FromDataSource(frame()->GetWebFrame()->dataSource());
+      DocumentState::FromDataSource(frame()->GetWebFrame()->DataSource());
   static_cast<NavigationStateImpl*>(document_state->navigation_state())
-      ->set_was_within_same_page(false);
+      ->set_was_within_same_document(false);
 
-  frame()->didCommitProvisionalLoad(frame()->GetWebFrame(), item,
-                                    blink::WebStandardCommit);
-  EXPECT_TRUE(frame()->IsUsingLoFi());
+  frame()->DidCommitProvisionalLoad(frame()->GetWebFrame(), item,
+                                    blink::kWebStandardCommit);
+  EXPECT_EQ(SERVER_LOFI_ON, frame()->GetPreviewsState());
 
   // The main frame's LoFi state should be reset to off on commit.
   document_state = DocumentState::FromDataSource(
-      GetMainRenderFrame()->GetWebFrame()->dataSource());
+      GetMainRenderFrame()->GetWebFrame()->DataSource());
   static_cast<NavigationStateImpl*>(document_state->navigation_state())
-      ->set_was_within_same_page(false);
+      ->set_was_within_same_document(false);
 
   // Calling didCommitProvisionalLoad is not representative of a full navigation
   // but serves the purpose of testing the LoFi state logic.
-  GetMainRenderFrame()->didCommitProvisionalLoad(
-      GetMainRenderFrame()->GetWebFrame(), item, blink::WebStandardCommit);
-  EXPECT_FALSE(GetMainRenderFrame()->IsUsingLoFi());
+  GetMainRenderFrame()->DidCommitProvisionalLoad(
+      GetMainRenderFrame()->GetWebFrame(), item, blink::kWebStandardCommit);
+  EXPECT_EQ(PREVIEWS_OFF, GetMainRenderFrame()->GetPreviewsState());
   // The subframe would be deleted here after a cross-document navigation. It
   // happens to be left around in this test because this does not simulate the
   // frame detach.
@@ -238,58 +229,58 @@ TEST_F(RenderFrameImplTest, LoFiNotUpdatedOnSubframeCommits) {
 // Test that effective connection type only updates for new main frame
 // documents.
 TEST_F(RenderFrameImplTest, EffectiveConnectionType) {
-  EXPECT_EQ(blink::WebEffectiveConnectionType::TypeUnknown,
-            frame()->getEffectiveConnectionType());
-  EXPECT_EQ(blink::WebEffectiveConnectionType::TypeUnknown,
-            GetMainRenderFrame()->getEffectiveConnectionType());
+  EXPECT_EQ(blink::WebEffectiveConnectionType::kTypeUnknown,
+            frame()->GetEffectiveConnectionType());
+  EXPECT_EQ(blink::WebEffectiveConnectionType::kTypeUnknown,
+            GetMainRenderFrame()->GetEffectiveConnectionType());
 
   const struct {
     blink::WebEffectiveConnectionType type;
-  } tests[] = {{blink::WebEffectiveConnectionType::TypeUnknown},
-               {blink::WebEffectiveConnectionType::Type2G},
-               {blink::WebEffectiveConnectionType::TypeBroadband}};
+  } tests[] = {{blink::WebEffectiveConnectionType::kTypeUnknown},
+               {blink::WebEffectiveConnectionType::kType2G},
+               {blink::WebEffectiveConnectionType::kType4G}};
 
   for (size_t i = 0; i < arraysize(tests); ++i) {
     SetEffectionConnectionType(GetMainRenderFrame(), tests[i].type);
     SetEffectionConnectionType(frame(), tests[i].type);
 
-    EXPECT_EQ(tests[i].type, frame()->getEffectiveConnectionType());
+    EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
     EXPECT_EQ(tests[i].type,
-              GetMainRenderFrame()->getEffectiveConnectionType());
+              GetMainRenderFrame()->GetEffectiveConnectionType());
 
     blink::WebHistoryItem item;
-    item.initialize();
+    item.Initialize();
 
     // The main frame's and subframe's effective connection type should stay the
     // same on navigations within the page.
-    frame()->didNavigateWithinPage(frame()->GetWebFrame(), item,
-                                   blink::WebStandardCommit, true);
-    EXPECT_EQ(tests[i].type, frame()->getEffectiveConnectionType());
-    GetMainRenderFrame()->didNavigateWithinPage(
-        GetMainRenderFrame()->GetWebFrame(), item, blink::WebStandardCommit,
+    frame()->DidNavigateWithinPage(frame()->GetWebFrame(), item,
+                                   blink::kWebStandardCommit, true);
+    EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
+    GetMainRenderFrame()->DidNavigateWithinPage(
+        GetMainRenderFrame()->GetWebFrame(), item, blink::kWebStandardCommit,
         true);
-    EXPECT_EQ(tests[i].type, frame()->getEffectiveConnectionType());
+    EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
 
     // The subframe's effective connection type should not be reset on commit.
     DocumentState* document_state =
-        DocumentState::FromDataSource(frame()->GetWebFrame()->dataSource());
+        DocumentState::FromDataSource(frame()->GetWebFrame()->DataSource());
     static_cast<NavigationStateImpl*>(document_state->navigation_state())
-        ->set_was_within_same_page(false);
+        ->set_was_within_same_document(false);
 
-    frame()->didCommitProvisionalLoad(frame()->GetWebFrame(), item,
-                                      blink::WebStandardCommit);
-    EXPECT_EQ(tests[i].type, frame()->getEffectiveConnectionType());
+    frame()->DidCommitProvisionalLoad(frame()->GetWebFrame(), item,
+                                      blink::kWebStandardCommit);
+    EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
 
     // The main frame's effective connection type should be reset on commit.
     document_state = DocumentState::FromDataSource(
-        GetMainRenderFrame()->GetWebFrame()->dataSource());
+        GetMainRenderFrame()->GetWebFrame()->DataSource());
     static_cast<NavigationStateImpl*>(document_state->navigation_state())
-        ->set_was_within_same_page(false);
+        ->set_was_within_same_document(false);
 
-    GetMainRenderFrame()->didCommitProvisionalLoad(
-        GetMainRenderFrame()->GetWebFrame(), item, blink::WebStandardCommit);
-    EXPECT_EQ(blink::WebEffectiveConnectionType::TypeUnknown,
-              GetMainRenderFrame()->getEffectiveConnectionType());
+    GetMainRenderFrame()->DidCommitProvisionalLoad(
+        GetMainRenderFrame()->GetWebFrame(), item, blink::kWebStandardCommit);
+    EXPECT_EQ(blink::WebEffectiveConnectionType::kTypeUnknown,
+              GetMainRenderFrame()->GetEffectiveConnectionType());
 
     // The subframe would be deleted here after a cross-document navigation.
     // It happens to be left around in this test because this does not simulate
@@ -306,7 +297,7 @@ TEST_F(RenderFrameImplTest, SaveImageFromDataURL) {
   const std::string image_data_url =
       "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
 
-  frame()->saveImageFromDataURL(WebString::fromUTF8(image_data_url));
+  frame()->SaveImageFromDataURL(WebString::FromUTF8(image_data_url));
   ProcessPendingMessages();
   const IPC::Message* msg2 = render_thread_->sink().GetFirstMessageMatching(
       FrameHostMsg_SaveImageFromDataURL::ID);
@@ -321,7 +312,7 @@ TEST_F(RenderFrameImplTest, SaveImageFromDataURL) {
 
   const std::string large_data_url(1024 * 1024 * 20 - 1, 'd');
 
-  frame()->saveImageFromDataURL(WebString::fromUTF8(large_data_url));
+  frame()->SaveImageFromDataURL(WebString::FromUTF8(large_data_url));
   ProcessPendingMessages();
   const IPC::Message* msg3 = render_thread_->sink().GetFirstMessageMatching(
       FrameHostMsg_SaveImageFromDataURL::ID);
@@ -336,11 +327,53 @@ TEST_F(RenderFrameImplTest, SaveImageFromDataURL) {
 
   const std::string exceeded_data_url(1024 * 1024 * 20 + 1, 'd');
 
-  frame()->saveImageFromDataURL(WebString::fromUTF8(exceeded_data_url));
+  frame()->SaveImageFromDataURL(WebString::FromUTF8(exceeded_data_url));
   ProcessPendingMessages();
   const IPC::Message* msg4 = render_thread_->sink().GetFirstMessageMatching(
       FrameHostMsg_SaveImageFromDataURL::ID);
   EXPECT_FALSE(msg4);
+}
+
+TEST_F(RenderFrameImplTest, ZoomLimit) {
+  const double kMinZoomLevel = ZoomFactorToZoomLevel(kMinimumZoomFactor);
+  const double kMaxZoomLevel = ZoomFactorToZoomLevel(kMaximumZoomFactor);
+
+  // Verifies navigation to a URL with preset zoom level indeed sets the level.
+  // Regression test for http://crbug.com/139559, where the level was not
+  // properly set when it is out of the default zoom limits of WebView.
+  CommonNavigationParams common_params;
+  common_params.url = GURL("data:text/html,min_zoomlimit_test");
+  common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
+  GetMainRenderFrame()->SetHostZoomLevel(common_params.url, kMinZoomLevel);
+  GetMainRenderFrame()->NavigateInternal(
+      common_params, StartNavigationParams(), RequestNavigationParams(),
+      std::unique_ptr<StreamOverrideParameters>());
+  ProcessPendingMessages();
+  EXPECT_DOUBLE_EQ(kMinZoomLevel, view_->GetWebView()->ZoomLevel());
+
+  // It should work even when the zoom limit is temporarily changed in the page.
+  view_->GetWebView()->ZoomLimitsChanged(ZoomFactorToZoomLevel(1.0),
+                                         ZoomFactorToZoomLevel(1.0));
+  common_params.url = GURL("data:text/html,max_zoomlimit_test");
+  GetMainRenderFrame()->SetHostZoomLevel(common_params.url, kMaxZoomLevel);
+  GetMainRenderFrame()->NavigateInternal(
+      common_params, StartNavigationParams(), RequestNavigationParams(),
+      std::unique_ptr<StreamOverrideParameters>());
+  ProcessPendingMessages();
+  EXPECT_DOUBLE_EQ(kMaxZoomLevel, view_->GetWebView()->ZoomLevel());
+}
+
+// Regression test for crbug.com/692557. It shouldn't crash if we inititate a
+// text finding, and then delete the frame immediately before the text finding
+// returns any text match.
+TEST_F(RenderFrameImplTest, NoCrashWhenDeletingFrameDuringFind) {
+  blink::WebFindOptions options;
+  options.force = true;
+  FrameMsg_Find find_message(0, 1, base::ASCIIToUTF16("foo"), options);
+  frame()->OnMessageReceived(find_message);
+
+  FrameMsg_Delete delete_message(0);
+  frame()->OnMessageReceived(delete_message);
 }
 
 }  // namespace

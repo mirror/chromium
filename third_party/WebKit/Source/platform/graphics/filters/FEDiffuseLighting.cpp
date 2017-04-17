@@ -27,80 +27,83 @@
 
 namespace blink {
 
-FEDiffuseLighting::FEDiffuseLighting(Filter* filter, const Color& lightingColor, float surfaceScale,
-    float diffuseConstant, PassRefPtr<LightSource> lightSource)
-    : FELighting(filter, DiffuseLighting, lightingColor, surfaceScale, diffuseConstant, 0, 0, lightSource)
-{
+FEDiffuseLighting::FEDiffuseLighting(Filter* filter,
+                                     const Color& lighting_color,
+                                     float surface_scale,
+                                     float diffuse_constant,
+                                     PassRefPtr<LightSource> light_source)
+    : FELighting(filter,
+                 kDiffuseLighting,
+                 lighting_color,
+                 surface_scale,
+                 diffuse_constant,
+                 0,
+                 0,
+                 std::move(light_source)) {}
+
+FEDiffuseLighting* FEDiffuseLighting::Create(
+    Filter* filter,
+    const Color& lighting_color,
+    float surface_scale,
+    float diffuse_constant,
+    PassRefPtr<LightSource> light_source) {
+  return new FEDiffuseLighting(filter, lighting_color, surface_scale,
+                               diffuse_constant, std::move(light_source));
 }
 
-FEDiffuseLighting* FEDiffuseLighting::create(Filter* filter, const Color& lightingColor,
-    float surfaceScale, float diffuseConstant, PassRefPtr<LightSource> lightSource)
-{
-    return new FEDiffuseLighting(filter, lightingColor, surfaceScale, diffuseConstant, lightSource);
+FEDiffuseLighting::~FEDiffuseLighting() {}
+
+Color FEDiffuseLighting::LightingColor() const {
+  return lighting_color_;
 }
 
-FEDiffuseLighting::~FEDiffuseLighting()
-{
+bool FEDiffuseLighting::SetLightingColor(const Color& lighting_color) {
+  if (lighting_color_ == lighting_color)
+    return false;
+  lighting_color_ = lighting_color;
+  return true;
 }
 
-Color FEDiffuseLighting::lightingColor() const
-{
-    return m_lightingColor;
+float FEDiffuseLighting::SurfaceScale() const {
+  return surface_scale_;
 }
 
-bool FEDiffuseLighting::setLightingColor(const Color& lightingColor)
-{
-    if (m_lightingColor == lightingColor)
-        return false;
-    m_lightingColor = lightingColor;
-    return true;
+bool FEDiffuseLighting::SetSurfaceScale(float surface_scale) {
+  if (surface_scale_ == surface_scale)
+    return false;
+  surface_scale_ = surface_scale;
+  return true;
 }
 
-float FEDiffuseLighting::surfaceScale() const
-{
-    return m_surfaceScale;
+float FEDiffuseLighting::DiffuseConstant() const {
+  return diffuse_constant_;
 }
 
-bool FEDiffuseLighting::setSurfaceScale(float surfaceScale)
-{
-    if (m_surfaceScale == surfaceScale)
-        return false;
-    m_surfaceScale = surfaceScale;
-    return true;
+bool FEDiffuseLighting::SetDiffuseConstant(float diffuse_constant) {
+  diffuse_constant = std::max(diffuse_constant, 0.0f);
+  if (diffuse_constant_ == diffuse_constant)
+    return false;
+  diffuse_constant_ = diffuse_constant;
+  return true;
 }
 
-float FEDiffuseLighting::diffuseConstant() const
-{
-    return m_diffuseConstant;
+const LightSource* FEDiffuseLighting::GetLightSource() const {
+  return light_source_.Get();
 }
 
-bool FEDiffuseLighting::setDiffuseConstant(float diffuseConstant)
-{
-    diffuseConstant = std::max(diffuseConstant, 0.0f);
-    if (m_diffuseConstant == diffuseConstant)
-        return false;
-    m_diffuseConstant = diffuseConstant;
-    return true;
+void FEDiffuseLighting::SetLightSource(PassRefPtr<LightSource> light_source) {
+  light_source_ = std::move(light_source);
 }
 
-const LightSource* FEDiffuseLighting::lightSource() const
-{
-    return m_lightSource.get();
+TextStream& FEDiffuseLighting::ExternalRepresentation(TextStream& ts,
+                                                      int indent) const {
+  WriteIndent(ts, indent);
+  ts << "[feDiffuseLighting";
+  FilterEffect::ExternalRepresentation(ts);
+  ts << " surfaceScale=\"" << surface_scale_ << "\" "
+     << "diffuseConstant=\"" << diffuse_constant_ << "\"]\n";
+  InputEffect(0)->ExternalRepresentation(ts, indent + 1);
+  return ts;
 }
 
-void FEDiffuseLighting::setLightSource(PassRefPtr<LightSource> lightSource)
-{
-    m_lightSource = lightSource;
-}
-
-TextStream& FEDiffuseLighting::externalRepresentation(TextStream& ts, int indent) const
-{
-    writeIndent(ts, indent);
-    ts << "[feDiffuseLighting";
-    FilterEffect::externalRepresentation(ts);
-    ts << " surfaceScale=\"" << m_surfaceScale << "\" " << "diffuseConstant=\"" << m_diffuseConstant << "\"]\n";
-    inputEffect(0)->externalRepresentation(ts, indent + 1);
-    return ts;
-}
-
-} // namespace blink
+}  // namespace blink

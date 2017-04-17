@@ -9,7 +9,7 @@
 #include "core/paint/PaintPhase.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/paint/DisplayItem.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -18,17 +18,25 @@ class GraphicsContext;
 // Emits display items which represent a region which is scrollable, so that it
 // can be translated by the scroll offset.
 class CORE_EXPORT ScrollRecorder {
-    USING_FAST_MALLOC(ScrollRecorder);
-public:
-    ScrollRecorder(GraphicsContext&, const DisplayItemClient&, DisplayItem::Type, const IntSize& currentOffset);
-    ScrollRecorder(GraphicsContext&, const DisplayItemClient&, PaintPhase, const IntSize& currentOffset);
-    ~ScrollRecorder();
-private:
-    const DisplayItemClient& m_client;
-    DisplayItem::Type m_beginItemType;
-    GraphicsContext& m_context;
+  USING_FAST_MALLOC(ScrollRecorder);
+
+ public:
+  ScrollRecorder(GraphicsContext&,
+                 const DisplayItemClient&,
+                 DisplayItem::Type,
+                 const IntSize& current_offset);
+  ScrollRecorder(GraphicsContext&,
+                 const DisplayItemClient&,
+                 PaintPhase,
+                 const IntSize& current_offset);
+  ~ScrollRecorder();
+
+ private:
+  const DisplayItemClient& client_;
+  DisplayItem::Type begin_item_type_;
+  GraphicsContext& context_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScrollRecorder_h
+#endif  // ScrollRecorder_h

@@ -7,30 +7,29 @@
 
 #include "core/html/LinkResource.h"
 #include "modules/ModulesExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class HTMLLinkElement;
 
 class MODULES_EXPORT ServiceWorkerLinkResource final : public LinkResource {
-public:
+ public:
+  static ServiceWorkerLinkResource* Create(HTMLLinkElement* owner);
 
-    static ServiceWorkerLinkResource* create(HTMLLinkElement* owner);
+  ~ServiceWorkerLinkResource() override;
 
-    ~ServiceWorkerLinkResource() override;
+  // LinkResource implementation:
+  void Process() override;
+  LinkResourceType GetType() const override { return kOther; }
+  bool HasLoaded() const override;
+  void OwnerRemoved() override;
 
-    // LinkResource implementation:
-    void process() override;
-    LinkResourceType type() const override { return Other; }
-    bool hasLoaded() const override;
-    void ownerRemoved() override;
-
-private:
-    explicit ServiceWorkerLinkResource(HTMLLinkElement* owner);
+ private:
+  explicit ServiceWorkerLinkResource(HTMLLinkElement* owner);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ServiceWorkerLinkResource_h
+#endif  // ServiceWorkerLinkResource_h

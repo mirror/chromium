@@ -6,71 +6,73 @@
 
 #include "core/dom/Document.h"
 #include "core/loader/DocumentLoader.h"
-#include "platform/TraceEvent.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {
 
-DocumentTiming::DocumentTiming(Document& document)
-    : m_document(document)
-{
+DocumentTiming::DocumentTiming(Document& document) : document_(document) {}
+
+DEFINE_TRACE(DocumentTiming) {
+  visitor->Trace(document_);
 }
 
-DEFINE_TRACE(DocumentTiming)
-{
-    visitor->trace(m_document);
+LocalFrame* DocumentTiming::GetFrame() const {
+  return document_ ? document_->GetFrame() : nullptr;
 }
 
-LocalFrame* DocumentTiming::frame() const
-{
-    return m_document ? m_document->frame() : nullptr;
+void DocumentTiming::NotifyDocumentTimingChanged() {
+  if (document_ && document_->Loader())
+    document_->Loader()->DidChangePerformanceTiming();
 }
 
-void DocumentTiming::notifyDocumentTimingChanged()
-{
-    if (m_document && m_document->loader())
-        m_document->loader()->didChangePerformanceTiming();
+void DocumentTiming::MarkDomLoading() {
+  dom_loading_ = MonotonicallyIncreasingTime();
+  TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing,rail", "domLoading",
+                                   TraceEvent::ToTraceTimestamp(dom_loading_),
+                                   "frame", GetFrame());
+  NotifyDocumentTimingChanged();
 }
 
-void DocumentTiming::markDomLoading()
-{
-    m_domLoading = monotonicallyIncreasingTime();
-    TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing", "domLoading", m_domLoading, "frame", frame());
-    notifyDocumentTimingChanged();
+void DocumentTiming::MarkDomInteractive() {
+  dom_interactive_ = MonotonicallyIncreasingTime();
+  TRACE_EVENT_MARK_WITH_TIMESTAMP1(
+      "blink.user_timing,rail", "domInteractive",
+      TraceEvent::ToTraceTimestamp(dom_interactive_), "frame", GetFrame());
+  NotifyDocumentTimingChanged();
 }
 
-void DocumentTiming::markDomInteractive()
-{
-    m_domInteractive = monotonicallyIncreasingTime();
-    TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing", "domInteractive", m_domInteractive, "frame", frame());
-    notifyDocumentTimingChanged();
+void DocumentTiming::MarkDomContentLoadedEventStart() {
+  dom_content_loaded_event_start_ = MonotonicallyIncreasingTime();
+  TRACE_EVENT_MARK_WITH_TIMESTAMP1(
+      "blink.user_timing,rail", "domContentLoadedEventStart",
+      TraceEvent::ToTraceTimestamp(dom_content_loaded_event_start_), "frame",
+      GetFrame());
+  NotifyDocumentTimingChanged();
 }
 
-void DocumentTiming::markDomContentLoadedEventStart()
-{
-    m_domContentLoadedEventStart = monotonicallyIncreasingTime();
-    TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing", "domContentLoadedEventStart", m_domContentLoadedEventStart, "frame", frame());
-    notifyDocumentTimingChanged();
+void DocumentTiming::MarkDomContentLoadedEventEnd() {
+  dom_content_loaded_event_end_ = MonotonicallyIncreasingTime();
+  TRACE_EVENT_MARK_WITH_TIMESTAMP1(
+      "blink.user_timing,rail", "domContentLoadedEventEnd",
+      TraceEvent::ToTraceTimestamp(dom_content_loaded_event_end_), "frame",
+      GetFrame());
+  NotifyDocumentTimingChanged();
 }
 
-void DocumentTiming::markDomContentLoadedEventEnd()
-{
-    m_domContentLoadedEventEnd = monotonicallyIncreasingTime();
-    TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing", "domContentLoadedEventEnd", m_domContentLoadedEventEnd, "frame", frame());
-    notifyDocumentTimingChanged();
+void DocumentTiming::MarkDomComplete() {
+  dom_complete_ = MonotonicallyIncreasingTime();
+  TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing,rail", "domComplete",
+                                   TraceEvent::ToTraceTimestamp(dom_complete_),
+                                   "frame", GetFrame());
+  NotifyDocumentTimingChanged();
 }
 
-void DocumentTiming::markDomComplete()
-{
-    m_domComplete = monotonicallyIncreasingTime();
-    TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing", "domComplete", m_domComplete, "frame", frame());
-    notifyDocumentTimingChanged();
+void DocumentTiming::MarkFirstLayout() {
+  first_layout_ = MonotonicallyIncreasingTime();
+  TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing,rail", "firstLayout",
+                                   TraceEvent::ToTraceTimestamp(first_layout_),
+                                   "frame", GetFrame());
+  NotifyDocumentTimingChanged();
 }
 
-void DocumentTiming::markFirstLayout()
-{
-    m_firstLayout = monotonicallyIncreasingTime();
-    TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing", "firstLayout", m_firstLayout, "frame", frame());
-    notifyDocumentTimingChanged();
-}
-
-} // namespace blink
+}  // namespace blink

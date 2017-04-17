@@ -33,54 +33,58 @@
 
 #include "core/inspector/InspectorSession.h"
 #include "core/inspector/InspectorTaskRunner.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
+#include "public/platform/WebThread.h"
 
 namespace blink {
 
-class InspectorLogAgent;
-class InstrumentingAgents;
-class V8Debugger;
-class WorkerGlobalScope;
+class CoreProbeSink;
+class WorkerThread;
 class WorkerThreadDebugger;
 
-namespace protocol {
-class Dispatcher;
-class Frontend;
-class FrontendChannel;
-}
+class WorkerInspectorController final
+    : public GarbageCollectedFinalized<WorkerInspectorController>,
+      public InspectorSession::Client,
+      private WebThread::TaskObserver {
+  WTF_MAKE_NONCOPYABLE(WorkerInspectorController);
 
-class WorkerInspectorController final : public GarbageCollectedFinalized<WorkerInspectorController>, public InspectorSession::Client {
-    WTF_MAKE_NONCOPYABLE(WorkerInspectorController);
-public:
-    static WorkerInspectorController* create(WorkerGlobalScope*);
-    ~WorkerInspectorController();
-    DECLARE_TRACE();
+ public:
+  static WorkerInspectorController* Create(WorkerThread*);
+  ~WorkerInspectorController() override;
+  DECLARE_TRACE();
 
-    InstrumentingAgents* instrumentingAgents() const { return m_instrumentingAgents.get(); }
+  CoreProbeSink* InstrumentingAgents() const {
+    return instrumenting_agents_.Get();
+  }
 
-    void connectFrontend();
-    void disconnectFrontend();
-    void dispatchMessageFromFrontend(const String&);
-    void dispose();
+  void ConnectFrontend();
+  void DisconnectFrontend();
+  void DispatchMessageFromFrontend(const String&);
+  void Dispose();
+  void FlushProtocolNotifications();
 
-private:
-    WorkerInspectorController(WorkerGlobalScope*, WorkerThreadDebugger*);
+ private:
+  WorkerInspectorController(WorkerThread*, WorkerThreadDebugger*);
 
-    // InspectorSession::Client implementation.
-    void sendProtocolMessage(int sessionId, int callId, const String& response, const String& state) override;
-    void resumeStartup() override;
-    void consoleCleared() override;
+  // InspectorSession::Client implementation.
+  void SendProtocolMessage(int session_id,
+                           int call_id,
+                           const String& response,
+                           const String& state) override;
 
-    WorkerThreadDebugger* m_debugger;
-    Member<WorkerGlobalScope> m_workerGlobalScope;
-    Member<InstrumentingAgents> m_instrumentingAgents;
-    Member<InspectorSession> m_session;
-    Member<InspectorLogAgent> m_logAgent;
+  // WebThread::TaskObserver implementation.
+  void WillProcessTask() override;
+  void DidProcessTask() override;
+
+  WorkerThreadDebugger* debugger_;
+  WorkerThread* thread_;
+  Member<CoreProbeSink> instrumenting_agents_;
+  Member<InspectorSession> session_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerInspectorController_h
+#endif  // WorkerInspectorController_h

@@ -6,111 +6,115 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptState.h"
+#include "bindings/core/v8/V8ThrowException.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/ExecutionContextTask.h"
+#include "platform/wtf/Assertions.h"
 #include "public/platform/WebString.h"
-#include "wtf/Assertions.h"
 
 namespace blink {
 
-ExceptionCode WebCdmExceptionToExceptionCode(WebContentDecryptionModuleException cdmException)
-{
-    switch (cdmException) {
-    case WebContentDecryptionModuleExceptionNotSupportedError:
-        return NotSupportedError;
-    case WebContentDecryptionModuleExceptionInvalidStateError:
-        return InvalidStateError;
-    case WebContentDecryptionModuleExceptionInvalidAccessError:
-        return InvalidAccessError;
-    case WebContentDecryptionModuleExceptionQuotaExceededError:
-        return QuotaExceededError;
-    case WebContentDecryptionModuleExceptionUnknownError:
-        return UnknownError;
-    case WebContentDecryptionModuleExceptionClientError:
-    case WebContentDecryptionModuleExceptionOutputError:
-        // Currently no matching DOMException for these 2 errors.
-        // FIXME: Update DOMException to handle these if actually added to
-        // the EME spec.
-        return UnknownError;
-    }
+ExceptionCode WebCdmExceptionToExceptionCode(
+    WebContentDecryptionModuleException cdm_exception) {
+  switch (cdm_exception) {
+    case kWebContentDecryptionModuleExceptionTypeError:
+      return kV8TypeError;
+    case kWebContentDecryptionModuleExceptionNotSupportedError:
+      return kNotSupportedError;
+    case kWebContentDecryptionModuleExceptionInvalidStateError:
+      return kInvalidStateError;
+    case kWebContentDecryptionModuleExceptionQuotaExceededError:
+      return kQuotaExceededError;
+    case kWebContentDecryptionModuleExceptionUnknownError:
+      return kUnknownError;
+  }
 
-    NOTREACHED();
-    return UnknownError;
+  NOTREACHED();
+  return kUnknownError;
 }
 
-ContentDecryptionModuleResultPromise::ContentDecryptionModuleResultPromise(ScriptState* scriptState)
-    : m_resolver(ScriptPromiseResolver::create(scriptState))
-{
+ContentDecryptionModuleResultPromise::ContentDecryptionModuleResultPromise(
+    ScriptState* script_state)
+    : resolver_(ScriptPromiseResolver::Create(script_state)) {}
+
+ContentDecryptionModuleResultPromise::~ContentDecryptionModuleResultPromise() {}
+
+void ContentDecryptionModuleResultPromise::Complete() {
+  NOTREACHED();
+  if (!IsValidToFulfillPromise())
+    return;
+  Reject(kInvalidStateError, "Unexpected completion.");
 }
 
-ContentDecryptionModuleResultPromise::~ContentDecryptionModuleResultPromise()
-{
+void ContentDecryptionModuleResultPromise::CompleteWithContentDecryptionModule(
+    WebContentDecryptionModule* cdm) {
+  NOTREACHED();
+  if (!IsValidToFulfillPromise())
+    return;
+  Reject(kInvalidStateError, "Unexpected completion.");
 }
 
-void ContentDecryptionModuleResultPromise::complete()
-{
-    NOTREACHED();
-    reject(InvalidStateError, "Unexpected completion.");
+void ContentDecryptionModuleResultPromise::CompleteWithSession(
+    WebContentDecryptionModuleResult::SessionStatus status) {
+  NOTREACHED();
+  if (!IsValidToFulfillPromise())
+    return;
+  Reject(kInvalidStateError, "Unexpected completion.");
 }
 
-void ContentDecryptionModuleResultPromise::completeWithContentDecryptionModule(WebContentDecryptionModule* cdm)
-{
-    NOTREACHED();
-    reject(InvalidStateError, "Unexpected completion.");
+void ContentDecryptionModuleResultPromise::CompleteWithError(
+    WebContentDecryptionModuleException exception_code,
+    unsigned long system_code,
+    const WebString& error_message) {
+  if (!IsValidToFulfillPromise())
+    return;
+
+  // Non-zero |systemCode| is appended to the |errorMessage|. If the
+  // |errorMessage| is empty, we'll report "Rejected with system code
+  // (systemCode)".
+  StringBuilder result;
+  result.Append(error_message);
+  if (system_code != 0) {
+    if (result.IsEmpty())
+      result.Append("Rejected with system code");
+    result.Append(" (");
+    result.AppendNumber(system_code);
+    result.Append(')');
+  }
+  Reject(WebCdmExceptionToExceptionCode(exception_code), result.ToString());
 }
 
-void ContentDecryptionModuleResultPromise::completeWithSession(WebContentDecryptionModuleResult::SessionStatus status)
-{
-    NOTREACHED();
-    reject(InvalidStateError, "Unexpected completion.");
+ScriptPromise ContentDecryptionModuleResultPromise::Promise() {
+  return resolver_->Promise();
 }
 
-void ContentDecryptionModuleResultPromise::completeWithError(WebContentDecryptionModuleException exceptionCode, unsigned long systemCode, const WebString& errorMessage)
-{
-    // Non-zero |systemCode| is appended to the |errorMessage|. If the
-    // |errorMessage| is empty, we'll report "Rejected with system code
-    // (systemCode)".
-    String errorString = errorMessage;
-    if (systemCode != 0) {
-        if (errorString.isEmpty())
-            errorString.append("Rejected with system code");
-        errorString.append(" (" + String::number(systemCode) + ")");
-    }
-    reject(WebCdmExceptionToExceptionCode(exceptionCode), errorString);
+void ContentDecryptionModuleResultPromise::Reject(ExceptionCode code,
+                                                  const String& error_message) {
+  DCHECK(IsValidToFulfillPromise());
+
+  ScriptState::Scope scope(resolver_->GetScriptState());
+  v8::Isolate* isolate = resolver_->GetScriptState()->GetIsolate();
+  resolver_->Reject(
+      V8ThrowException::CreateDOMException(isolate, code, error_message));
+  resolver_.Clear();
 }
 
-ScriptPromise ContentDecryptionModuleResultPromise::promise()
-{
-    return m_resolver->promise();
+ExecutionContext* ContentDecryptionModuleResultPromise::GetExecutionContext()
+    const {
+  return resolver_->GetExecutionContext();
 }
 
-void ContentDecryptionModuleResultPromise::reject(ExceptionCode code, const String& errorMessage)
-{
-    // Reject the promise asynchronously. This avoids problems when gc is
-    // destroying objects that result in unfulfilled promises being rejected.
-    // (Resolving promises is still done synchronously as there may be events
-    // already posted that need to happen only after the promise is resolved.)
-    // TODO(jrummell): Make resolving a promise asynchronous as well (including
-    // making sure events still happen after the promise is resolved).
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createSameThreadTask(&ContentDecryptionModuleResultPromise::rejectInternal, wrapPersistent(this), code, errorMessage));
+bool ContentDecryptionModuleResultPromise::IsValidToFulfillPromise() {
+  // getExecutionContext() is no longer valid once the context is destroyed.
+  // isContextDestroyed() is called to see if the context is in the
+  // process of being destroyed. If it is, there is no need to fulfill this
+  // promise which is about to go away anyway.
+  return GetExecutionContext() && !GetExecutionContext()->IsContextDestroyed();
 }
 
-void ContentDecryptionModuleResultPromise::rejectInternal(ExceptionCode code, const String& errorMessage)
-{
-    m_resolver->reject(DOMException::create(code, errorMessage));
-    m_resolver.clear();
+DEFINE_TRACE(ContentDecryptionModuleResultPromise) {
+  visitor->Trace(resolver_);
+  ContentDecryptionModuleResult::Trace(visitor);
 }
 
-ExecutionContext* ContentDecryptionModuleResultPromise::getExecutionContext() const
-{
-    return m_resolver->getExecutionContext();
-}
-
-DEFINE_TRACE(ContentDecryptionModuleResultPromise)
-{
-    visitor->trace(m_resolver);
-    ContentDecryptionModuleResult::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

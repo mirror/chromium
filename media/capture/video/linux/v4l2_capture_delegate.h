@@ -10,7 +10,6 @@
 
 #include "base/files/scoped_file.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "media/capture/video/video_capture_device.h"
 
@@ -27,11 +26,9 @@ class Location;
 namespace media {
 
 // Class doing the actual Linux capture using V4L2 API. V4L2 SPLANE/MPLANE
-// capture specifics are implemented in derived classes. Created and destroyed
-// on the owner's thread, otherwise living and operating on |v4l2_task_runner_|.
-// TODO(mcasas): Make this class a non-ref-counted.
-class V4L2CaptureDelegate final
-    : public base::RefCountedThreadSafe<V4L2CaptureDelegate> {
+// capture specifics are implemented in derived classes. Created on the owner's
+// thread, otherwise living, operating and destroyed on |v4l2_task_runner_|.
+class CAPTURE_EXPORT V4L2CaptureDelegate final {
  public:
   // Retrieves the #planes for a given |fourcc|, or 0 if unknown.
   static size_t GetNumPlanesForFourCc(uint32_t fourcc);
@@ -44,9 +41,10 @@ class V4L2CaptureDelegate final
   static std::list<uint32_t> GetListOfUsableFourCcs(bool prefer_mjpeg);
 
   V4L2CaptureDelegate(
-      const VideoCaptureDevice::Name& device_name,
+      const VideoCaptureDeviceDescriptor& device_descriptor,
       const scoped_refptr<base::SingleThreadTaskRunner>& v4l2_task_runner,
       int power_line_frequency);
+  ~V4L2CaptureDelegate();
 
   // Forward-to versions of VideoCaptureDevice virtual methods.
   void AllocateAndStart(int width,
@@ -55,11 +53,21 @@ class V4L2CaptureDelegate final
                         std::unique_ptr<VideoCaptureDevice::Client> client);
   void StopAndDeAllocate();
 
+  void TakePhoto(VideoCaptureDevice::TakePhotoCallback callback);
+
+  void GetPhotoCapabilities(
+      VideoCaptureDevice::GetPhotoCapabilitiesCallback callback);
+  void SetPhotoOptions(mojom::PhotoSettingsPtr settings,
+                       VideoCaptureDevice::SetPhotoOptionsCallback callback);
+
   void SetRotation(int rotation);
 
+  base::WeakPtr<V4L2CaptureDelegate> GetWeakPtr();
+
  private:
-  friend class base::RefCountedThreadSafe<V4L2CaptureDelegate>;
-  ~V4L2CaptureDelegate();
+  friend class V4L2CaptureDelegateTest;
+
+  class BufferTracker;
 
   // VIDIOC_QUERYBUFs a buffer from V4L2, creates a BufferTracker for it and
   // enqueues it (VIDIOC_QBUF) back into V4L2.
@@ -71,7 +79,7 @@ class V4L2CaptureDelegate final
                      const std::string& reason);
 
   const scoped_refptr<base::SingleThreadTaskRunner> v4l2_task_runner_;
-  const VideoCaptureDevice::Name device_name_;
+  const VideoCaptureDeviceDescriptor device_descriptor_;
   const int power_line_frequency_;
 
   // The following members are only known on AllocateAndStart().
@@ -80,15 +88,20 @@ class V4L2CaptureDelegate final
   std::unique_ptr<VideoCaptureDevice::Client> client_;
   base::ScopedFD device_fd_;
 
+  std::queue<VideoCaptureDevice::TakePhotoCallback> take_photo_callbacks_;
+
   // Vector of BufferTracker to keep track of mmap()ed pointers and their use.
-  class BufferTracker;
   std::vector<scoped_refptr<BufferTracker>> buffer_tracker_pool_;
 
   bool is_capturing_;
   int timeout_count_;
 
+  base::TimeTicks first_ref_time_;
+
   // Clockwise rotation in degrees. This value should be 0, 90, 180, or 270.
   int rotation_;
+
+  base::WeakPtrFactory<V4L2CaptureDelegate> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(V4L2CaptureDelegate);
 };

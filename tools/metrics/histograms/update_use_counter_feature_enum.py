@@ -34,11 +34,12 @@ if __name__ == '__main__':
 
   source_path = 'third_party/WebKit/Source/core/frame/UseCounter.h'
 
-  START_MARKER = '^enum Feature {'
+  START_MARKER = '^enum Feature : uint32_t {'
   END_MARKER = '^NumberOfFeatures'
 
   if options.dashboard:
-    enum_dict = ReadHistogramValues(source_path, START_MARKER, END_MARKER)
+    enum_dict, ignored = ReadHistogramValues(source_path, START_MARKER,
+        END_MARKER)
     PrintEnumForDashboard(enum_dict)
   else:
     UpdateHistogramEnum(

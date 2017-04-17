@@ -30,7 +30,7 @@
 
 #include "core/html/forms/ColorInputType.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "core/CSSPropertyNames.h"
 #include "core/InputTypeNames.h"
@@ -49,253 +49,225 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/UserGestureIndicator.h"
 #include "platform/graphics/Color.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
 // Upper limit of number of datalist suggestions shown.
-static const unsigned maxSuggestions = 1000;
+static const unsigned kMaxSuggestions = 1000;
 // Upper limit for the length of the labels for datalist suggestions.
-static const unsigned maxSuggestionLabelLength = 1000;
+static const unsigned kMaxSuggestionLabelLength = 1000;
 
-static bool isValidColorString(const String& value)
-{
-    if (value.isEmpty())
-        return false;
-    if (value[0] != '#')
-        return false;
+static bool IsValidColorString(const String& value) {
+  if (value.IsEmpty())
+    return false;
+  if (value[0] != '#')
+    return false;
 
-    // We don't accept #rgb and #aarrggbb formats.
-    if (value.length() != 7)
-        return false;
-    Color color;
-    return color.setFromString(value) && !color.hasAlpha();
+  // We don't accept #rgb and #aarrggbb formats.
+  if (value.length() != 7)
+    return false;
+  Color color;
+  return color.SetFromString(value) && !color.HasAlpha();
 }
 
 ColorInputType::ColorInputType(HTMLInputElement& element)
-    : InputType(element)
-    , KeyboardClickableInputTypeView(element)
-{
+    : InputType(element), KeyboardClickableInputTypeView(element) {}
+
+InputType* ColorInputType::Create(HTMLInputElement& element) {
+  return new ColorInputType(element);
 }
 
-InputType* ColorInputType::create(HTMLInputElement& element)
-{
-    return new ColorInputType(element);
+ColorInputType::~ColorInputType() {}
+
+DEFINE_TRACE(ColorInputType) {
+  visitor->Trace(chooser_);
+  KeyboardClickableInputTypeView::Trace(visitor);
+  ColorChooserClient::Trace(visitor);
+  InputType::Trace(visitor);
 }
 
-ColorInputType::~ColorInputType()
-{
+InputTypeView* ColorInputType::CreateView() {
+  return this;
 }
 
-DEFINE_TRACE(ColorInputType)
-{
-    visitor->trace(m_chooser);
-    KeyboardClickableInputTypeView::trace(visitor);
-    ColorChooserClient::trace(visitor);
-    InputType::trace(visitor);
+InputType::ValueMode ColorInputType::GetValueMode() const {
+  return ValueMode::kValue;
 }
 
-InputTypeView* ColorInputType::createView()
-{
-    return this;
+void ColorInputType::CountUsage() {
+  CountUsageIfVisible(UseCounter::kInputTypeColor);
 }
 
-void ColorInputType::countUsage()
-{
-    countUsageIfVisible(UseCounter::InputTypeColor);
+const AtomicString& ColorInputType::FormControlType() const {
+  return InputTypeNames::color;
 }
 
-const AtomicString& ColorInputType::formControlType() const
-{
-    return InputTypeNames::color;
+bool ColorInputType::SupportsRequired() const {
+  return false;
 }
 
-bool ColorInputType::supportsRequired() const
-{
-    return false;
+String ColorInputType::SanitizeValue(const String& proposed_value) const {
+  if (!IsValidColorString(proposed_value))
+    return "#000000";
+  return proposed_value.DeprecatedLower();
 }
 
-String ColorInputType::fallbackValue() const
-{
-    return String("#000000");
+Color ColorInputType::ValueAsColor() const {
+  Color color;
+  bool success = color.SetFromString(GetElement().value());
+  DCHECK(success);
+  return color;
 }
 
-String ColorInputType::sanitizeValue(const String& proposedValue) const
-{
-    if (!isValidColorString(proposedValue))
-        return fallbackValue();
+void ColorInputType::CreateShadowSubtree() {
+  DCHECK(GetElement().Shadow());
 
-    return proposedValue.lower();
+  Document& document = GetElement().GetDocument();
+  HTMLDivElement* wrapper_element = HTMLDivElement::Create(document);
+  wrapper_element->SetShadowPseudoId(
+      AtomicString("-webkit-color-swatch-wrapper"));
+  HTMLDivElement* color_swatch = HTMLDivElement::Create(document);
+  color_swatch->SetShadowPseudoId(AtomicString("-webkit-color-swatch"));
+  wrapper_element->AppendChild(color_swatch);
+  GetElement().UserAgentShadowRoot()->AppendChild(wrapper_element);
+
+  GetElement().UpdateView();
 }
 
-Color ColorInputType::valueAsColor() const
-{
-    Color color;
-    bool success = color.setFromString(element().value());
-    DCHECK(success);
-    return color;
+void ColorInputType::DidSetValue(const String&, bool value_changed) {
+  if (!value_changed)
+    return;
+  GetElement().UpdateView();
+  if (chooser_)
+    chooser_->SetSelectedColor(ValueAsColor());
 }
 
-void ColorInputType::createShadowSubtree()
-{
-    DCHECK(element().shadow());
+void ColorInputType::HandleDOMActivateEvent(Event* event) {
+  if (GetElement().IsDisabledFormControl())
+    return;
 
-    Document& document = element().document();
-    HTMLDivElement* wrapperElement = HTMLDivElement::create(document);
-    wrapperElement->setShadowPseudoId(AtomicString("-webkit-color-swatch-wrapper"));
-    HTMLDivElement* colorSwatch = HTMLDivElement::create(document);
-    colorSwatch->setShadowPseudoId(AtomicString("-webkit-color-swatch"));
-    wrapperElement->appendChild(colorSwatch);
-    element().userAgentShadowRoot()->appendChild(wrapperElement);
+  if (!UserGestureIndicator::UtilizeUserGesture())
+    return;
 
-    element().updateView();
+  ChromeClient* chrome_client = this->GetChromeClient();
+  if (chrome_client && !chooser_)
+    chooser_ = chrome_client->OpenColorChooser(
+        GetElement().GetDocument().GetFrame(), this, ValueAsColor());
+
+  event->SetDefaultHandled();
 }
 
-void ColorInputType::setValue(const String& value, bool valueChanged, TextFieldEventBehavior eventBehavior)
-{
-    InputType::setValue(value, valueChanged, eventBehavior);
-
-    if (!valueChanged)
-        return;
-
-    element().updateView();
-    if (m_chooser)
-        m_chooser->setSelectedColor(valueAsColor());
+void ColorInputType::ClosePopupView() {
+  EndColorChooser();
 }
 
-void ColorInputType::handleDOMActivateEvent(Event* event)
-{
-    if (element().isDisabledFormControl())
-        return;
-
-    if (!UserGestureIndicator::utilizeUserGesture())
-        return;
-
-    ChromeClient* chromeClient = this->chromeClient();
-    if (chromeClient && !m_chooser)
-        m_chooser = chromeClient->openColorChooser(element().document().frame(), this, valueAsColor());
-
-    event->setDefaultHandled();
+bool ColorInputType::ShouldRespectListAttribute() {
+  return true;
 }
 
-void ColorInputType::closePopupView()
-{
-    endColorChooser();
+bool ColorInputType::TypeMismatchFor(const String& value) const {
+  return !IsValidColorString(value);
 }
 
-bool ColorInputType::shouldRespectListAttribute()
-{
-    return true;
+void ColorInputType::WarnIfValueIsInvalid(const String& value) const {
+  if (!DeprecatedEqualIgnoringCase(value, GetElement().SanitizeValue(value)))
+    AddWarningToConsole(
+        "The specified value %s does not conform to the required format.  The "
+        "format is \"#rrggbb\" where rr, gg, bb are two-digit hexadecimal "
+        "numbers.",
+        value);
 }
 
-bool ColorInputType::typeMismatchFor(const String& value) const
-{
-    return !isValidColorString(value);
+void ColorInputType::ValueAttributeChanged() {
+  if (!GetElement().HasDirtyValue())
+    GetElement().UpdateView();
 }
 
-void ColorInputType::warnIfValueIsInvalid(const String& value) const
-{
-    if (!equalIgnoringCase(value, element().sanitizeValue(value)))
-        addWarningToConsole("The specified value %s does not conform to the required format.  The format is \"#rrggbb\" where rr, gg, bb are two-digit hexadecimal numbers.", value);
+void ColorInputType::DidChooseColor(const Color& color) {
+  if (GetElement().IsDisabledFormControl() || color == ValueAsColor())
+    return;
+  EventQueueScope scope;
+  GetElement().SetValueFromRenderer(color.Serialized());
+  GetElement().UpdateView();
+  if (!LayoutTheme::GetTheme().IsModalColorChooser())
+    GetElement().DispatchFormControlChangeEvent();
 }
 
-void ColorInputType::valueAttributeChanged()
-{
-    if (!element().hasDirtyValue())
-        element().updateView();
+void ColorInputType::DidEndChooser() {
+  if (LayoutTheme::GetTheme().IsModalColorChooser())
+    GetElement().EnqueueChangeEvent();
+  chooser_.Clear();
 }
 
-void ColorInputType::didChooseColor(const Color& color)
-{
-    if (element().isDisabledFormControl() || color == valueAsColor())
-        return;
-    EventQueueScope scope;
-    element().setValueFromRenderer(color.serialized());
-    element().updateView();
-    if (!LayoutTheme::theme().isModalColorChooser())
-        element().dispatchFormControlChangeEvent();
+void ColorInputType::EndColorChooser() {
+  if (chooser_)
+    chooser_->EndChooser();
 }
 
-void ColorInputType::didEndChooser()
-{
-    EventQueueScope scope;
-    if (LayoutTheme::theme().isModalColorChooser())
-        element().dispatchFormControlChangeEvent();
-    m_chooser.clear();
+void ColorInputType::UpdateView() {
+  HTMLElement* color_swatch = ShadowColorSwatch();
+  if (!color_swatch)
+    return;
+
+  color_swatch->SetInlineStyleProperty(CSSPropertyBackgroundColor,
+                                       GetElement().value());
 }
 
-void ColorInputType::endColorChooser()
-{
-    if (m_chooser)
-        m_chooser->endChooser();
+HTMLElement* ColorInputType::ShadowColorSwatch() const {
+  ShadowRoot* shadow = GetElement().UserAgentShadowRoot();
+  return shadow ? ToHTMLElementOrDie(shadow->FirstChild()->firstChild())
+                : nullptr;
 }
 
-void ColorInputType::updateView()
-{
-    HTMLElement* colorSwatch = shadowColorSwatch();
-    if (!colorSwatch)
-        return;
-
-    colorSwatch->setInlineStyleProperty(CSSPropertyBackgroundColor, element().value());
+Element& ColorInputType::OwnerElement() const {
+  return GetElement();
 }
 
-HTMLElement* ColorInputType::shadowColorSwatch() const
-{
-    ShadowRoot* shadow = element().userAgentShadowRoot();
-    return shadow ? toHTMLElement(shadow->firstChild()->firstChild()) : 0;
+IntRect ColorInputType::ElementRectRelativeToViewport() const {
+  return GetElement().GetDocument().View()->ContentsToViewport(
+      GetElement().PixelSnappedBoundingBox());
 }
 
-Element& ColorInputType::ownerElement() const
-{
-    return element();
+Color ColorInputType::CurrentColor() {
+  return ValueAsColor();
 }
 
-IntRect ColorInputType::elementRectRelativeToViewport() const
-{
-    return element().document().view()->contentsToViewport(element().pixelSnappedBoundingBox());
+bool ColorInputType::ShouldShowSuggestions() const {
+  return GetElement().FastHasAttribute(listAttr);
 }
 
-Color ColorInputType::currentColor()
-{
-    return valueAsColor();
-}
-
-bool ColorInputType::shouldShowSuggestions() const
-{
-    return element().fastHasAttribute(listAttr);
-}
-
-Vector<ColorSuggestion> ColorInputType::suggestions() const
-{
-    Vector<ColorSuggestion> suggestions;
-    HTMLDataListElement* dataList = element().dataList();
-    if (dataList) {
-        HTMLDataListOptionsCollection* options = dataList->options();
-        for (unsigned i = 0; HTMLOptionElement* option = options->item(i); i++) {
-            if (!element().isValidValue(option->value()))
-                continue;
-            Color color;
-            if (!color.setFromString(option->value()))
-                continue;
-            ColorSuggestion suggestion(color, option->label().left(maxSuggestionLabelLength));
-            suggestions.append(suggestion);
-            if (suggestions.size() >= maxSuggestions)
-                break;
-        }
+Vector<ColorSuggestion> ColorInputType::Suggestions() const {
+  Vector<ColorSuggestion> suggestions;
+  HTMLDataListElement* data_list = GetElement().DataList();
+  if (data_list) {
+    HTMLDataListOptionsCollection* options = data_list->options();
+    for (unsigned i = 0; HTMLOptionElement* option = options->Item(i); i++) {
+      if (option->IsDisabledFormControl() || option->value().IsEmpty())
+        continue;
+      if (!GetElement().IsValidValue(option->value()))
+        continue;
+      Color color;
+      if (!color.SetFromString(option->value()))
+        continue;
+      ColorSuggestion suggestion(
+          color, option->label().Left(kMaxSuggestionLabelLength));
+      suggestions.push_back(suggestion);
+      if (suggestions.size() >= kMaxSuggestions)
+        break;
     }
-    return suggestions;
+  }
+  return suggestions;
 }
 
-AXObject* ColorInputType::popupRootAXObject()
-{
-    return m_chooser ? m_chooser->rootAXObject() : nullptr;
+AXObject* ColorInputType::PopupRootAXObject() {
+  return chooser_ ? chooser_->RootAXObject() : nullptr;
 }
 
-ColorChooserClient* ColorInputType::colorChooserClient()
-{
-    return this;
+ColorChooserClient* ColorInputType::GetColorChooserClient() {
+  return this;
 }
 
-} // namespace blink
+}  // namespace blink

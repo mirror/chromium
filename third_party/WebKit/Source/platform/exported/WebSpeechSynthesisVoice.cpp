@@ -26,53 +26,43 @@
 #include "public/platform/WebSpeechSynthesisVoice.h"
 
 #include "platform/speech/PlatformSpeechSynthesisVoice.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 WebSpeechSynthesisVoice::WebSpeechSynthesisVoice()
-    : m_private(PlatformSpeechSynthesisVoice::create())
-{
+    : private_(PlatformSpeechSynthesisVoice::Create()) {}
+
+void WebSpeechSynthesisVoice::Assign(const WebSpeechSynthesisVoice& other) {
+  private_ = other.private_;
 }
 
-void WebSpeechSynthesisVoice::assign(const WebSpeechSynthesisVoice& other)
-{
-    m_private = other.m_private;
+void WebSpeechSynthesisVoice::Reset() {
+  private_.Reset();
 }
 
-void WebSpeechSynthesisVoice::reset()
-{
-    m_private.reset();
+void WebSpeechSynthesisVoice::SetVoiceURI(const WebString& voice_uri) {
+  private_->SetVoiceURI(voice_uri);
 }
 
-void WebSpeechSynthesisVoice::setVoiceURI(const WebString& voiceURI)
-{
-    m_private->setVoiceURI(voiceURI);
+void WebSpeechSynthesisVoice::SetName(const WebString& name) {
+  private_->SetName(name);
 }
 
-void WebSpeechSynthesisVoice::setName(const WebString& name)
-{
-    m_private->setName(name);
+void WebSpeechSynthesisVoice::SetLanguage(const WebString& language) {
+  private_->SetLang(language);
 }
 
-void WebSpeechSynthesisVoice::setLanguage(const WebString& language)
-{
-    m_private->setLang(language);
+void WebSpeechSynthesisVoice::SetIsLocalService(bool is_local_service) {
+  private_->SetLocalService(is_local_service);
 }
 
-void WebSpeechSynthesisVoice::setIsLocalService(bool isLocalService)
-{
-    m_private->setLocalService(isLocalService);
+void WebSpeechSynthesisVoice::SetIsDefault(bool is_default) {
+  private_->SetIsDefault(is_default);
 }
 
-void WebSpeechSynthesisVoice::setIsDefault(bool isDefault)
-{
-    m_private->setIsDefault(isDefault);
+WebSpeechSynthesisVoice::operator PlatformSpeechSynthesisVoice*() const {
+  return private_.Get();
 }
 
-WebSpeechSynthesisVoice::operator PlatformSpeechSynthesisVoice*() const
-{
-    return m_private.get();
-}
-
-} // namespace blink
+}  // namespace blink

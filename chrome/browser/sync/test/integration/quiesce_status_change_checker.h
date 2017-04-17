@@ -5,16 +5,20 @@
 #ifndef CHROME_BROWSER_SYNC_TEST_INTEGRATION_QUIESCE_STATUS_CHANGE_CHECKER_H_
 #define CHROME_BROWSER_SYNC_TEST_INTEGRATION_QUIESCE_STATUS_CHANGE_CHECKER_H_
 
+#include <memory>
+#include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/time/time.h"
 #include "chrome/browser/sync/test/integration/status_change_checker.h"
 
-class ProfileSyncService;
 class ProgressMarkerWatcher;
+
+namespace browser_sync {
+class ProfileSyncService;
+}  // namespace browser_sync
 
 // Waits until all provided clients have finished committing any unsynced items
 // and downloading each others' udpates.
@@ -31,22 +35,19 @@ class ProgressMarkerWatcher;
 class QuiesceStatusChangeChecker : public StatusChangeChecker {
  public:
   explicit QuiesceStatusChangeChecker(
-      std::vector<ProfileSyncService*> services);
+      std::vector<browser_sync::ProfileSyncService*> services);
   ~QuiesceStatusChangeChecker() override;
 
-  // Blocks until all clients have quiesced or we time out.
-  void Wait();
-
   // A callback function for some helper objects.
-  void OnServiceStateChanged(ProfileSyncService* service);
+  void OnServiceStateChanged(browser_sync::ProfileSyncService* service);
 
   // Implementation of StatusChangeChecker.
   bool IsExitConditionSatisfied() override;
   std::string GetDebugMessage() const override;
 
  private:
-  std::vector<ProfileSyncService*> services_;
-  ScopedVector<ProgressMarkerWatcher> observers_;
+  std::vector<browser_sync::ProfileSyncService*> services_;
+  std::vector<std::unique_ptr<ProgressMarkerWatcher>> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(QuiesceStatusChangeChecker);
 };

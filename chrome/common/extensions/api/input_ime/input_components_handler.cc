@@ -124,11 +124,11 @@ bool InputComponentsHandler::Parse(Extension* extension,
     // input_ime manifest specification.
     const base::Value* language_value = NULL;
     if (module_value->Get(keys::kLanguage, &language_value)) {
-      if (language_value->GetType() == base::Value::TYPE_STRING) {
+      if (language_value->GetType() == base::Value::Type::STRING) {
         std::string language_str;
         language_value->GetAsString(&language_str);
         languages.insert(language_str);
-      } else if (language_value->GetType() == base::Value::TYPE_LIST) {
+      } else if (language_value->GetType() == base::Value::Type::LIST) {
         const base::ListValue* language_list = NULL;
         language_value->GetAsList(&language_list);
         for (size_t j = 0; j < language_list->GetSize(); ++j) {
@@ -232,7 +232,7 @@ bool InputComponentsHandler::Parse(Extension* extension,
     info->input_components.back().options_page_url = options_page_url;
     info->input_components.back().input_view_url = input_view_url;
   }
-  extension->SetManifestData(keys::kInputComponents, info.release());
+  extension->SetManifestData(keys::kInputComponents, std::move(info));
   return true;
 }
 

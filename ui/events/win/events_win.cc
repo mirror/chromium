@@ -229,7 +229,7 @@ base::TimeTicks EventTimeFromNative(const base::NativeEvent& native_event) {
   return EventTimeForNow();
 }
 
-gfx::Point EventLocationFromNative(const base::NativeEvent& native_event) {
+gfx::PointF EventLocationFromNative(const base::NativeEvent& native_event) {
   POINT native_point;
   if ((native_event.message == WM_MOUSELEAVE ||
        native_event.message == WM_NCMOUSELEAVE) ||
@@ -242,7 +242,7 @@ gfx::Point EventLocationFromNative(const base::NativeEvent& native_event) {
     // Note: Wheel events are considered client, but their position is in screen
     //       coordinates.
     // Client message. The position is contained in the LPARAM.
-    return gfx::Point(native_event.lParam);
+    return gfx::PointF(gfx::Point(native_event.lParam));
   } else {
     DCHECK(IsNonClientMouseEvent(native_event) ||
            IsMouseWheelEvent(native_event) || IsScrollEvent(native_event));
@@ -252,7 +252,7 @@ gfx::Point EventLocationFromNative(const base::NativeEvent& native_event) {
     native_point.y = GET_Y_LPARAM(native_event.lParam);
   }
   ScreenToClient(native_event.hwnd, &native_point);
-  return gfx::Point(native_point);
+  return gfx::PointF(gfx::Point(native_point));
 }
 
 gfx::Point EventSystemLocationFromNative(
@@ -337,11 +337,10 @@ PointerDetails GetTouchPointerDetailsFromNative(
     const base::NativeEvent& native_event) {
   NOTIMPLEMENTED();
   return PointerDetails(EventPointerType::POINTER_TYPE_TOUCH,
+                        /* pointer_id*/ 0,
                         /* radius_x */ 1.0,
                         /* radius_y */ 1.0,
-                        /* force */ 0.f,
-                        /* tilt_x */ 0.f,
-                        /* tilt_y */ 0.f);
+                        /* force */ 0.f);
 }
 
 bool GetScrollOffsets(const base::NativeEvent& native_event,
@@ -349,7 +348,8 @@ bool GetScrollOffsets(const base::NativeEvent& native_event,
                       float* y_offset,
                       float* x_offset_ordinal,
                       float* y_offset_ordinal,
-                      int* finger_count) {
+                      int* finger_count,
+                      EventMomentumPhase* momentum_phase) {
   // TODO(ananta)
   // Support retrieving the scroll offsets from the scroll event.
   if (native_event.message == WM_VSCROLL || native_event.message == WM_HSCROLL)

@@ -39,9 +39,9 @@ class AndroidGranularityMovementBrowserTest : public ContentBrowserTest {
     NavigateToURL(shell(), GURL(url::kAboutBlankURL));
 
     // Load the page.
-    AccessibilityNotificationWaiter waiter(
-        shell()->web_contents(), AccessibilityModeComplete,
-        ui::AX_EVENT_LOAD_COMPLETE);
+    AccessibilityNotificationWaiter waiter(shell()->web_contents(),
+                                           kAccessibilityModeComplete,
+                                           ui::AX_EVENT_LOAD_COMPLETE);
     NavigateToURL(shell(), url);
     waiter.WaitForNotification();
 
@@ -69,11 +69,10 @@ class AndroidGranularityMovementBrowserTest : public ContentBrowserTest {
   base::string16 TraverseNodeAtGranularity(
       BrowserAccessibility* node,
       int granularity) {
-    AccessibilityNotificationWaiter waiter(
-        shell()->web_contents(), AccessibilityModeComplete,
-        ui::AX_EVENT_TREE_CHANGED);
-    node->manager()->delegate()->AccessibilitySetAccessibilityFocus(
-        node->GetId());
+    AccessibilityNotificationWaiter waiter(shell()->web_contents(),
+                                           kAccessibilityModeComplete,
+                                           ui::AX_EVENT_TREE_CHANGED);
+    node->manager()->SetAccessibilityFocus(*node);
     waiter.WaitForNotification();
 
     int start_index = -1;
@@ -150,7 +149,9 @@ IN_PROC_BROWSER_TEST_F(AndroidGranularityMovementBrowserTest,
   GURL url("data:text/html,"
            "<body>"
            "<p>One, two, three!</p>"
+           "<p>"
            "<button aria-label='Seven, eight, nine!'>Four, five, six!</button>"
+           "</p>"
            "</body></html>");
   BrowserAccessibility* root = LoadUrlAndGetAccessibilityRoot(url);
   ASSERT_EQ(2U, root->PlatformChildCount());
@@ -176,7 +177,9 @@ IN_PROC_BROWSER_TEST_F(AndroidGranularityMovementBrowserTest,
   GURL url("data:text/html,"
            "<body>"
            "<p>One, two, three!</p>"
+           "<p>"
            "<button aria-label='Seven, eight, nine!'>Four, five, six!</button>"
+           "</p>"
            "</body></html>");
   BrowserAccessibility* root = LoadUrlAndGetAccessibilityRoot(url);
   ASSERT_EQ(2U, root->PlatformChildCount());

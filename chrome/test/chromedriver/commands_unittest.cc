@@ -15,6 +15,7 @@
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
@@ -36,7 +37,8 @@ namespace {
 
 void OnGetStatus(const Status& status,
                  std::unique_ptr<base::Value> value,
-                 const std::string& session_id) {
+                 const std::string& session_id,
+                 bool w3c_compliant) {
   ASSERT_EQ(kOk, status.code());
   base::DictionaryValue* dict;
   ASSERT_TRUE(value->GetAsDictionary(&dict));
@@ -70,15 +72,16 @@ void ExecuteStubGetSession(int* count,
   std::unique_ptr<base::DictionaryValue> capabilities(
       new base::DictionaryValue());
 
-  capabilities->Set("capability1", new base::StringValue("test1"));
-  capabilities->Set("capability2", new base::StringValue("test2"));
+  capabilities->Set("capability1", new base::Value("test1"));
+  capabilities->Set("capability2", new base::Value("test2"));
 
-  callback.Run(Status(kOk), std::move(capabilities), session_id);
+  callback.Run(Status(kOk), std::move(capabilities), session_id, false);
 }
 
 void OnGetSessions(const Status& status,
                    std::unique_ptr<base::Value> value,
-                   const std::string& session_id) {
+                   const std::string& session_id,
+                   bool w3c_compliant) {
   ASSERT_EQ(kOk, status.code());
   ASSERT_TRUE(value.get());
   base::ListValue* sessions;
@@ -162,12 +165,13 @@ void ExecuteStubQuit(
     EXPECT_STREQ("id2", session_id.c_str());
   }
   (*count)++;
-  callback.Run(Status(kOk), std::unique_ptr<base::Value>(), session_id);
+  callback.Run(Status(kOk), std::unique_ptr<base::Value>(), session_id, false);
 }
 
 void OnQuitAll(const Status& status,
                std::unique_ptr<base::Value> value,
-               const std::string& session_id) {
+               const std::string& session_id,
+               bool w3c_compliant) {
   ASSERT_EQ(kOk, status.code());
   ASSERT_FALSE(value.get());
 }
@@ -209,7 +213,8 @@ void OnSimpleCommand(base::RunLoop* run_loop,
                      base::Value* expected_value,
                      const Status& status,
                      std::unique_ptr<base::Value> value,
-                     const std::string& session_id) {
+                     const std::string& session_id,
+                     bool w3c_compliant) {
   ASSERT_EQ(kOk, status.code());
   ASSERT_TRUE(expected_value->Equals(value.get()));
   ASSERT_EQ(expected_session_id, session_id);
@@ -230,7 +235,7 @@ TEST(CommandsTest, ExecuteSessionCommand) {
 
   base::DictionaryValue params;
   params.SetInteger("param", 5);
-  base::FundamentalValue expected_value(6);
+  base::Value expected_value(6);
   SessionCommand cmd = base::Bind(
       &ExecuteSimpleCommand, id, &params, &expected_value);
 
@@ -258,14 +263,16 @@ Status ShouldNotBeCalled(Session* session,
 
 void OnNoSuchSession(const Status& status,
                      std::unique_ptr<base::Value> value,
-                     const std::string& session_id) {
+                     const std::string& session_id,
+                     bool w3c_compliant) {
   EXPECT_EQ(kNoSuchSession, status.code());
   EXPECT_FALSE(value.get());
 }
 
 void OnNoSuchSessionIsOk(const Status& status,
                          std::unique_ptr<base::Value> value,
-                         const std::string& session_id) {
+                         const std::string& session_id,
+                         bool w3c_compliant) {
   EXPECT_EQ(kOk, status.code());
   EXPECT_FALSE(value.get());
 }
@@ -301,7 +308,8 @@ namespace {
 void OnNoSuchSessionAndQuit(base::RunLoop* run_loop,
                             const Status& status,
                             std::unique_ptr<base::Value> value,
-                            const std::string& session_id) {
+                            const std::string& session_id,
+                            bool w3c_compliant) {
   run_loop->Quit();
   EXPECT_EQ(kNoSuchSession, status.code());
   EXPECT_FALSE(value.get());
@@ -356,15 +364,15 @@ class FindElementWebView : public StubWebView {
           base::DictionaryValue element2;
           element2.SetString("ELEMENT", "2");
           base::ListValue list;
-          list.Append(element1.DeepCopy());
-          list.Append(element2.DeepCopy());
-          result_.reset(list.DeepCopy());
+          list.Append(element1.CreateDeepCopy());
+          list.Append(element2.CreateDeepCopy());
+          result_ = list.CreateDeepCopy();
         }
         break;
       }
       case kElementNotExistsQueryOnce: {
         if (only_one_)
-          result_ = base::Value::CreateNullValue();
+          result_ = base::MakeUnique<base::Value>();
         else
           result_.reset(new base::ListValue());
         break;
@@ -399,7 +407,7 @@ class FindElementWebView : public StubWebView {
         (scenario_ == kElementExistsQueryTwice && current_count_ == 1)) {
         // Always return empty result when testing timeout.
         if (only_one_)
-          *result = base::Value::CreateNullValue();
+          *result = base::MakeUnique<base::Value>();
         else
           result->reset(new base::ListValue());
     } else {
@@ -453,7 +461,7 @@ TEST(CommandsTest, SuccessfulFindElement) {
   base::DictionaryValue param;
   param.SetString("id", "a");
   base::ListValue expected_args;
-  expected_args.Append(param.DeepCopy());
+  expected_args.Append(param.CreateDeepCopy());
   web_view.Verify("frame_id1", &expected_args, result.get());
 }
 
@@ -484,7 +492,7 @@ TEST(CommandsTest, SuccessfulFindElements) {
   base::DictionaryValue param;
   param.SetString("name", "b");
   base::ListValue expected_args;
-  expected_args.Append(param.DeepCopy());
+  expected_args.Append(param.CreateDeepCopy());
   web_view.Verify("frame_id2", &expected_args, result.get());
 }
 
@@ -522,8 +530,8 @@ TEST(CommandsTest, SuccessfulFindChildElement) {
   base::DictionaryValue root_element_param;
   root_element_param.SetString("ELEMENT", element_id);
   base::ListValue expected_args;
-  expected_args.Append(locator_param.DeepCopy());
-  expected_args.Append(root_element_param.DeepCopy());
+  expected_args.Append(locator_param.CreateDeepCopy());
+  expected_args.Append(root_element_param.CreateDeepCopy());
   web_view.Verify("frame_id3", &expected_args, result.get());
 }
 
@@ -560,8 +568,8 @@ TEST(CommandsTest, SuccessfulFindChildElements) {
   base::DictionaryValue root_element_param;
   root_element_param.SetString("ELEMENT", element_id);
   base::ListValue expected_args;
-  expected_args.Append(locator_param.DeepCopy());
-  expected_args.Append(root_element_param.DeepCopy());
+  expected_args.Append(locator_param.CreateDeepCopy());
+  expected_args.Append(root_element_param.CreateDeepCopy());
   web_view.Verify("frame_id4", &expected_args, result.get());
 }
 
@@ -677,11 +685,11 @@ class MockCommandListener : public CommandListener {
 };
 
 Status ExecuteAddListenerToSessionCommand(
-    CommandListener* listener,
+    std::unique_ptr<CommandListener> listener,
     Session* session,
     const base::DictionaryValue& params,
     std::unique_ptr<base::Value>* return_value) {
-  session->command_listeners.push_back(listener);
+  session->command_listeners.push_back(std::move(listener));
   return Status(kOk);
 }
 
@@ -695,7 +703,8 @@ Status ExecuteQuitSessionCommand(Session* session,
 void OnSessionCommand(base::RunLoop* run_loop,
                       const Status& status,
                       std::unique_ptr<base::Value> value,
-                      const std::string& session_id) {
+                      const std::string& session_id,
+                      bool w3c_compliant) {
   ASSERT_EQ(kOk, status.code());
   run_loop->Quit();
 }
@@ -714,12 +723,13 @@ TEST(CommandsTest, SuccessNotifyingCommandListeners) {
   map[id] = thread;
 
   base::DictionaryValue params;
-  std::unique_ptr<MockCommandListener> listener(new MockCommandListener());
-  CommandListenerProxy* proxy = new CommandListenerProxy(listener.get());
+  auto listener = base::MakeUnique<MockCommandListener>();
+  auto proxy = base::MakeUnique<CommandListenerProxy>(listener.get());
   // We add |proxy| to the session instead of adding |listener| directly so that
   // after the session is destroyed by ExecuteQuitSessionCommand, we can still
   // verify the listener was called. The session owns and will destroy |proxy|.
-  SessionCommand cmd = base::Bind(&ExecuteAddListenerToSessionCommand, proxy);
+  SessionCommand cmd =
+      base::Bind(&ExecuteAddListenerToSessionCommand, base::Passed(&proxy));
   base::MessageLoop loop;
   base::RunLoop run_loop_addlistener;
 
@@ -768,17 +778,19 @@ class FailingCommandListener : public CommandListener {
   }
 };
 
-void AddListenerToSessionIfSessionExists(CommandListener* listener) {
+void AddListenerToSessionIfSessionExists(
+    std::unique_ptr<CommandListener> listener) {
   Session* session = GetThreadLocalSession();
   if (session) {
-    session->command_listeners.push_back(listener);
+    session->command_listeners.push_back(std::move(listener));
   }
 }
 
 void OnFailBecauseErrorNotifyingListeners(base::RunLoop* run_loop,
                                           const Status& status,
                                           std::unique_ptr<base::Value> value,
-                                          const std::string& session_id) {
+                                          const std::string& session_id,
+                                          bool w3c_compliant) {
   EXPECT_EQ(kUnknownError, status.code());
   EXPECT_FALSE(value.get());
   run_loop->Quit();
@@ -803,9 +815,10 @@ TEST(CommandsTest, ErrorNotifyingCommandListeners) {
   // In SuccessNotifyingCommandListenersBeforeCommand, we verified BeforeCommand
   // was called before (as opposed to after) command execution. We don't need to
   // verify this again, so we can just add |listener| with PostTask.
-  CommandListener* listener = new FailingCommandListener();
+  auto listener = base::MakeUnique<FailingCommandListener>();
   thread->task_runner()->PostTask(
-      FROM_HERE, base::Bind(&AddListenerToSessionIfSessionExists, listener));
+      FROM_HERE, base::Bind(&AddListenerToSessionIfSessionExists,
+                            base::Passed(&listener)));
 
   base::DictionaryValue params;
   // The command should never be executed if BeforeCommand fails for a listener.

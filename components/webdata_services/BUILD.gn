@@ -17,10 +17,14 @@ static_library("webdata_services") {
     "//components/password_manager/core/browser",
     "//components/search_engines",
     "//components/signin/core/browser",
+    "//components/sync",
     "//components/webdata/common",
     "//sql",
-    "//sync",
   ]
+
+  if (is_android) {
+    deps += [ "//components/payments/android" ]
+  }
 }
 
 static_library("test_support") {

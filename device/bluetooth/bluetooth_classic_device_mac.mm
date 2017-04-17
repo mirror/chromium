@@ -62,7 +62,9 @@ BluetoothUUID ExtractUuid(IOBluetoothSDPDataElement* service_class_data) {
 BluetoothClassicDeviceMac::BluetoothClassicDeviceMac(
     BluetoothAdapterMac* adapter,
     IOBluetoothDevice* device)
-    : BluetoothDeviceMac(adapter), device_([device retain]) {}
+    : BluetoothDeviceMac(adapter), device_([device retain]) {
+  UpdateTimestamp();
+}
 
 BluetoothClassicDeviceMac::~BluetoothClassicDeviceMac() {
 }
@@ -132,8 +134,8 @@ bool BluetoothClassicDeviceMac::IsConnecting() const {
   return false;
 }
 
-BluetoothDevice::UUIDList BluetoothClassicDeviceMac::GetUUIDs() const {
-  UUIDList uuids;
+BluetoothDevice::UUIDSet BluetoothClassicDeviceMac::GetUUIDs() const {
+  UUIDSet uuids;
   for (IOBluetoothSDPServiceRecord* service_record in [device_ services]) {
     IOBluetoothSDPDataElement* service_class_data =
         [service_record getAttributeDataElement:
@@ -142,19 +144,18 @@ BluetoothDevice::UUIDList BluetoothClassicDeviceMac::GetUUIDs() const {
         kBluetoothSDPDataElementTypeDataElementSequence) {
       BluetoothUUID uuid = ExtractUuid(service_class_data);
       if (uuid.IsValid())
-        uuids.push_back(uuid);
+        uuids.insert(uuid);
     }
   }
   return uuids;
 }
 
-int16_t BluetoothClassicDeviceMac::GetInquiryRSSI() const {
-  return kUnknownPower;
+base::Optional<int8_t> BluetoothClassicDeviceMac::GetInquiryRSSI() const {
+  return base::nullopt;
 }
 
-int16_t BluetoothClassicDeviceMac::GetInquiryTxPower() const {
-  NOTIMPLEMENTED();
-  return kUnknownPower;
+base::Optional<int8_t> BluetoothClassicDeviceMac::GetInquiryTxPower() const {
+  return base::nullopt;
 }
 
 bool BluetoothClassicDeviceMac::ExpectingPinCode() const {
@@ -256,8 +257,9 @@ void BluetoothClassicDeviceMac::CreateGattConnection(
 }
 
 base::Time BluetoothClassicDeviceMac::GetLastUpdateTime() const {
-  return base::Time::FromDoubleT(
-      [[device_ getLastInquiryUpdate] timeIntervalSince1970]);
+  // getLastInquiryUpdate returns nil unpredictably so just use the
+  // cross platform implementation of last update time.
+  return last_update_time_;
 }
 
 int BluetoothClassicDeviceMac::GetHostTransmitPower(

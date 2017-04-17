@@ -12,15 +12,18 @@
 #include <queue>
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "base/callback.h"
-#include "base/containers/hash_tables.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "cc/ipc/surface_id.mojom.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/ws/access_policy_delegate.h"
+#include "services/ui/ws/drag_source.h"
+#include "services/ui/ws/drag_target_connection.h"
 #include "services/ui/ws/ids.h"
 #include "services/ui/ws/user_id.h"
 #include "services/ui/ws/window_tree_binding.h"
@@ -40,13 +43,12 @@ namespace ws {
 class AccessPolicy;
 class DisplayManager;
 class Display;
-class EventMatcher;
+class DragTargetConnection;
 class ServerWindow;
 class TargetedEvent;
 class WindowManagerDisplayRoot;
 class WindowManagerState;
 class WindowServer;
-class WindowTreeTest;
 
 namespace test {
 class WindowTreeTestApi;
@@ -63,7 +65,9 @@ class WindowTreeTestApi;
 // See ids.h for details on how WindowTree handles identity of windows.
 class WindowTree : public mojom::WindowTree,
                    public AccessPolicyDelegate,
-                   public mojom::WindowManagerClient {
+                   public mojom::WindowManagerClient,
+                   public DragSource,
+                   public DragTargetConnection {
  public:
   WindowTree(WindowServer* window_server,
              const UserId& user_id,
@@ -74,8 +78,13 @@ class WindowTree : public mojom::WindowTree,
   void Init(std::unique_ptr<WindowTreeBinding> binding,
             mojom::WindowTreePtr tree);
 
-  // Called if this WindowTree hosts a WindowManager.
-  void ConfigureWindowManager();
+  // Called if this WindowTree hosts a WindowManager. See mojom for details
+  // on |automatically_create_display_roots|.
+  void ConfigureWindowManager(bool automatically_create_display_roots);
+
+  bool automatically_create_display_roots() const {
+    return automatically_create_display_roots_;
+  }
 
   ClientSpecificId id() const { return id_; }
 
@@ -146,29 +155,38 @@ class WindowTree : public mojom::WindowTree,
   WindowServer* window_server() { return window_server_; }
   const WindowServer* window_server() const { return window_server_; }
 
+  // Called from ~WindowServer. Reset WindowTreeClient so that it no longer gets
+  // any messages.
+  void PrepareForWindowServerShutdown();
+
   // Adds a new root to this tree. This is only valid for window managers.
   void AddRootForWindowManager(const ServerWindow* root);
 
   // Invoked when a tree is about to be destroyed.
   void OnWindowDestroyingTreeImpl(WindowTree* tree);
 
+  // Sends updated display information.
+  void OnWmDisplayModified(const display::Display& display);
+
   // These functions are synchronous variants of those defined in the mojom. The
   // WindowTree implementations all call into these. See the mojom for details.
   bool SetCapture(const ClientWindowId& client_window_id);
+  bool ReleaseCapture(const ClientWindowId& client_window_id);
   bool NewWindow(const ClientWindowId& client_window_id,
                  const std::map<std::string, std::vector<uint8_t>>& properties);
   bool AddWindow(const ClientWindowId& parent_id,
                  const ClientWindowId& child_id);
   bool AddTransientWindow(const ClientWindowId& window_id,
                           const ClientWindowId& transient_window_id);
-  bool SetModal(const ClientWindowId& window_id);
+  bool DeleteWindow(const ClientWindowId& window_id);
+  bool SetModalType(const ClientWindowId& window_id, ModalType modal_type);
   std::vector<const ServerWindow*> GetWindowTree(
       const ClientWindowId& window_id) const;
   bool SetWindowVisibility(const ClientWindowId& window_id, bool visible);
   bool SetWindowOpacity(const ClientWindowId& window_id, float opacity);
   bool SetFocus(const ClientWindowId& window_id);
   bool Embed(const ClientWindowId& window_id,
-             mojom::WindowTreeClientPtr client,
+             mojom::WindowTreeClientPtr window_tree_client,
              uint32_t flags);
   void DispatchInputEvent(ServerWindow* target, const ui::Event& event);
 
@@ -187,6 +205,10 @@ class WindowTree : public mojom::WindowTree,
                      const ui::Event& event,
                      bool needs_ack);
 
+  // Called when a display has been removed. This is only called on the
+  // WindowTree associated with a WindowManager.
+  void OnDisplayDestroying(int64_t display_id);
+
   // Called when |tree|'s jankiness changes (see janky_ for definition).
   // Notifies the window manager client so it can update UI for the affected
   // window(s).
@@ -195,10 +217,12 @@ class WindowTree : public mojom::WindowTree,
   // The following methods are invoked after the corresponding change has been
   // processed. They do the appropriate bookkeeping and update the client as
   // necessary.
-  void ProcessWindowBoundsChanged(const ServerWindow* window,
-                                  const gfx::Rect& old_bounds,
-                                  const gfx::Rect& new_bounds,
-                                  bool originated_change);
+  void ProcessWindowBoundsChanged(
+      const ServerWindow* window,
+      const gfx::Rect& old_bounds,
+      const gfx::Rect& new_bounds,
+      bool originated_change,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id);
   void ProcessClientAreaChanged(
       const ServerWindow* window,
       const gfx::Insets& new_client_area,
@@ -220,7 +244,7 @@ class WindowTree : public mojom::WindowTree,
                             const ServerWindow* relative_window,
                             mojom::OrderDirection direction,
                             bool originated_change);
-  void ProcessWindowDeleted(const ServerWindow* window, bool originated_change);
+  void ProcessWindowDeleted(ServerWindow* window, bool originated_change);
   void ProcessWillChangeWindowVisibility(const ServerWindow* window,
                                          bool originated_change);
   void ProcessWindowOpacityChanged(const ServerWindow* window,
@@ -228,21 +252,28 @@ class WindowTree : public mojom::WindowTree,
                                    float new_opacity,
                                    bool originated_change);
   void ProcessCursorChanged(const ServerWindow* window,
-                            int32_t cursor_id,
+                            mojom::CursorType cursor_id,
                             bool originated_change);
   void ProcessFocusChanged(const ServerWindow* old_focused_window,
                            const ServerWindow* new_focused_window);
-  void ProcessLostCapture(const ServerWindow* old_lost_capture,
-                          bool originated_change);
+  void ProcessCaptureChanged(const ServerWindow* new_capture,
+                             const ServerWindow* old_capture,
+                             bool originated_change);
   void ProcessTransientWindowAdded(const ServerWindow* window,
                                    const ServerWindow* transient_window,
                                    bool originated_change);
   void ProcessTransientWindowRemoved(const ServerWindow* window,
                                      const ServerWindow* transient_window,
                                      bool originated_change);
+  void ProcessWindowSurfaceChanged(ServerWindow* window,
+                                   const cc::SurfaceInfo& surface_info);
 
-  // Sends this event to the client if it matches an active event observer.
-  void SendToEventObserver(const ui::Event& event);
+  // Sends this event to the client if it matches an active pointer watcher.
+  // |target_window| is the target of the event, and may be null or not known
+  // to this tree.
+  void SendToPointerWatcher(const ui::Event& event,
+                            ServerWindow* target_window,
+                            int64_t display_id);
 
  private:
   friend class test::WindowTreeTestApi;
@@ -266,6 +297,9 @@ class WindowTree : public mojom::WindowTree,
 
     // Another client is being embedded in the window.
     EMBED,
+
+    // The embedded client explicitly asked to be unembedded.
+    UNEMBED,
   };
 
   bool ShouldRouteToWindowManager(const ServerWindow* window) const;
@@ -304,12 +338,12 @@ class WindowTree : public mojom::WindowTree,
 
   // Removes a root from set of roots of this tree. This does not remove
   // the window from the window tree, only from the set of roots.
-  void RemoveRoot(const ServerWindow* window, RemoveRootReason reason);
+  void RemoveRoot(ServerWindow* window, RemoveRootReason reason);
 
   // Converts Window(s) to WindowData(s) for transport. This assumes all the
   // windows are valid for the client. The parent of windows the client is not
   // allowed to see are set to NULL (in the returned WindowData(s)).
-  mojo::Array<mojom::WindowDataPtr> WindowsToWindowDatas(
+  std::vector<mojom::WindowDataPtr> WindowsToWindowDatas(
       const std::vector<const ServerWindow*>& windows);
   mojom::WindowDataPtr WindowToWindowData(const ServerWindow* window);
 
@@ -337,19 +371,33 @@ class WindowTree : public mojom::WindowTree,
 
   void DispatchInputEventImpl(ServerWindow* target, const ui::Event& event);
 
+  // Returns true if the client has a pointer watcher and this event matches.
+  bool EventMatchesPointerWatcher(const ui::Event& event) const;
+
   // Calls OnChangeCompleted() on the client.
   void NotifyChangeCompleted(uint32_t change_id,
                              mojom::WindowManagerErrorCode error_code);
 
+  // Callback for when WmMoveDragImage completes. This sends off the next
+  // queued move under the image if the mouse had further moves while we were
+  // waiting for the last move to be acknowledged.
+  void OnWmMoveDragImageAck();
+
+  // Called from SetDisplayRoot(), see mojom for details.
+  bool ProcessSetDisplayRoot(int64_t display_id,
+                             const ClientWindowId& client_window_id);
+
   // WindowTree:
   void NewWindow(uint32_t change_id,
                  Id transport_window_id,
-                 mojo::Map<mojo::String, mojo::Array<uint8_t>>
+                 const base::Optional<
+                     std::unordered_map<std::string, std::vector<uint8_t>>>&
                      transport_properties) override;
-  void NewTopLevelWindow(uint32_t change_id,
-                         Id transport_window_id,
-                         mojo::Map<mojo::String, mojo::Array<uint8_t>>
-                             transport_properties) override;
+  void NewTopLevelWindow(
+      uint32_t change_id,
+      Id transport_window_id,
+      const std::unordered_map<std::string, std::vector<uint8_t>>&
+          transport_properties) override;
   void DeleteWindow(uint32_t change_id, Id transport_window_id) override;
   void AddWindow(uint32_t change_id, Id parent_id, Id child_id) override;
   void RemoveWindowFromParent(uint32_t change_id, Id window_id) override;
@@ -358,47 +406,50 @@ class WindowTree : public mojom::WindowTree,
                           Id transient_window) override;
   void RemoveTransientWindowFromParent(uint32_t change_id,
                                        Id transient_window_id) override;
-  void SetModal(uint32_t change_id, Id window_id) override;
+  void SetModalType(uint32_t change_id, Id window_id, ModalType type) override;
   void ReorderWindow(uint32_t change_Id,
                      Id window_id,
                      Id relative_window_id,
                      mojom::OrderDirection direction) override;
   void GetWindowTree(
       Id window_id,
-      const base::Callback<void(mojo::Array<mojom::WindowDataPtr>)>& callback)
+      const base::Callback<void(std::vector<mojom::WindowDataPtr>)>& callback)
       override;
   void SetCapture(uint32_t change_id, Id window_id) override;
   void ReleaseCapture(uint32_t change_id, Id window_id) override;
-  void SetEventObserver(mojom::EventMatcherPtr matcher,
-                        uint32_t observer_id) override;
-  void SetWindowBounds(uint32_t change_id,
-                       Id window_id,
-                       const gfx::Rect& bounds) override;
+  void StartPointerWatcher(bool want_moves) override;
+  void StopPointerWatcher() override;
+  void SetWindowBounds(
+      uint32_t change_id,
+      Id window_id,
+      const gfx::Rect& bounds,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id) override;
   void SetWindowVisibility(uint32_t change_id,
                            Id window_id,
                            bool visible) override;
-  void SetWindowProperty(uint32_t change_id,
-                         Id transport_window_id,
-                         const mojo::String& name,
-                         mojo::Array<uint8_t> value) override;
+  void SetWindowProperty(
+      uint32_t change_id,
+      Id transport_window_id,
+      const std::string& name,
+      const base::Optional<std::vector<uint8_t>>& value) override;
   void SetWindowOpacity(uint32_t change_id,
                         Id window_id,
                         float opacity) override;
-  void AttachSurface(Id transport_window_id,
-                     mojom::SurfaceType type,
-                     mojo::InterfaceRequest<mojom::Surface> surface,
-                     mojom::SurfaceClientPtr client) override;
+  void AttachCompositorFrameSink(
+      Id transport_window_id,
+      cc::mojom::MojoCompositorFrameSinkRequest compositor_frame_sink,
+      cc::mojom::MojoCompositorFrameSinkClientPtr client) override;
   void Embed(Id transport_window_id,
              mojom::WindowTreeClientPtr client,
              uint32_t flags,
              const EmbedCallback& callback) override;
   void SetFocus(uint32_t change_id, Id transport_window_id) override;
   void SetCanFocus(Id transport_window_id, bool can_focus) override;
-  void SetCanAcceptEvents(Id transport_window_id,
-                          bool can_accept_events) override;
+  void SetEventTargetingPolicy(Id transport_window_id,
+                               mojom::EventTargetingPolicy policy) override;
   void SetPredefinedCursor(uint32_t change_id,
                            Id transport_window_id,
-                           ui::mojom::Cursor cursor_id) override;
+                           ui::mojom::CursorType cursor_id) override;
   void SetWindowTextInputState(Id transport_window_id,
                                mojo::TextInputStatePtr state) override;
   void SetImeVisibility(Id transport_window_id,
@@ -406,16 +457,31 @@ class WindowTree : public mojom::WindowTree,
                         mojo::TextInputStatePtr state) override;
   void OnWindowInputEventAck(uint32_t event_id,
                              mojom::EventResult result) override;
-  void SetClientArea(
-      Id transport_window_id,
-      const gfx::Insets& insets,
-      mojo::Array<gfx::Rect> transport_additional_client_areas) override;
-  void SetHitTestMask(Id transport_window_id, const gfx::Rect& mask) override;
+  void DeactivateWindow(Id window_id) override;
+  void SetClientArea(Id transport_window_id,
+                     const gfx::Insets& insets,
+                     const base::Optional<std::vector<gfx::Rect>>&
+                         transport_additional_client_areas) override;
+  void SetCanAcceptDrops(Id window_id, bool accepts_drops) override;
+  void SetHitTestMask(Id transport_window_id,
+                      const base::Optional<gfx::Rect>& mask) override;
+  void StackAbove(uint32_t change_id, Id above_id, Id below_id) override;
+  void StackAtTop(uint32_t change_id, Id window_id) override;
   void GetWindowManagerClient(
       mojo::AssociatedInterfaceRequest<mojom::WindowManagerClient> internal)
       override;
   void GetCursorLocationMemory(const GetCursorLocationMemoryCallback& callback)
       override;
+  void PerformDragDrop(
+      uint32_t change_id,
+      Id source_window_id,
+      const gfx::Point& screen_location,
+      const std::unordered_map<std::string, std::vector<uint8_t>>& drag_data,
+      const SkBitmap& drag_image,
+      const gfx::Vector2d& drag_image_offset,
+      uint32_t drag_operation,
+      ui::mojom::PointerKind source) override;
+  void CancelDragDrop(Id window_id) override;
   void PerformWindowMove(uint32_t change_id,
                          Id window_id,
                          ui::mojom::MoveLoopSource source,
@@ -423,33 +489,70 @@ class WindowTree : public mojom::WindowTree,
   void CancelWindowMove(Id window_id) override;
 
   // mojom::WindowManagerClient:
-  void AddAccelerator(uint32_t id,
-                      mojom::EventMatcherPtr event_matcher,
-                      const AddAcceleratorCallback& callback) override;
+  void AddAccelerators(std::vector<mojom::WmAcceleratorPtr> accelerators,
+                       const AddAcceleratorsCallback& callback) override;
   void RemoveAccelerator(uint32_t id) override;
   void AddActivationParent(Id transport_window_id) override;
   void RemoveActivationParent(Id transport_window_id) override;
   void ActivateNextWindow() override;
-  void SetUnderlaySurfaceOffsetAndExtendedHitArea(
-      Id window_id,
-      int32_t x_offset,
-      int32_t y_offset,
-      const gfx::Insets& hit_area) override;
+  void SetExtendedHitArea(Id window_id, const gfx::Insets& hit_area) override;
+  void SetDisplayRoot(int64_t display_id,
+                      Id window_id,
+                      const SetDisplayRootCallback& callback) override;
   void WmResponse(uint32_t change_id, bool response) override;
+  void WmSetBoundsResponse(uint32_t change_id) override;
   void WmRequestClose(Id transport_window_id) override;
   void WmSetFrameDecorationValues(
       mojom::FrameDecorationValuesPtr values) override;
   void WmSetNonClientCursor(uint32_t window_id,
-                            mojom::Cursor cursor_id) override;
+                            mojom::CursorType cursor_id) override;
   void OnWmCreatedTopLevelWindow(uint32_t change_id,
                                  Id transport_window_id) override;
-  void OnAcceleratorAck(uint32_t event_id, mojom::EventResult result) override;
+  void OnAcceleratorAck(
+      uint32_t event_id,
+      mojom::EventResult result,
+      const std::unordered_map<std::string, std::vector<uint8_t>>& properties)
+      override;
 
   // AccessPolicyDelegate:
   bool HasRootForAccessPolicy(const ServerWindow* window) const override;
   bool IsWindowKnownForAccessPolicy(const ServerWindow* window) const override;
   bool IsWindowRootOfAnotherTreeForAccessPolicy(
       const ServerWindow* window) const override;
+  bool IsWindowCreatedByWindowManager(
+      const ServerWindow* window) const override;
+
+  // DragSource:
+  void OnDragMoved(const gfx::Point& location) override;
+  void OnDragCompleted(bool success, uint32_t action_taken) override;
+  ServerWindow* GetWindowById(const WindowId& id) override;
+  DragTargetConnection* GetDragTargetForWindow(
+      const ServerWindow* window) override;
+
+  // DragTargetConnection:
+  void PerformOnDragDropStart(
+      const std::unordered_map<std::string, std::vector<uint8_t>>& mime_data)
+      override;
+  void PerformOnDragEnter(
+      const ServerWindow* window,
+      uint32_t event_flags,
+      const gfx::Point& cursor_offset,
+      uint32_t effect_bitmask,
+      const base::Callback<void(uint32_t)>& callback) override;
+  void PerformOnDragOver(
+      const ServerWindow* window,
+      uint32_t event_flags,
+      const gfx::Point& cursor_offset,
+      uint32_t effect_bitmask,
+      const base::Callback<void(uint32_t)>& callback) override;
+  void PerformOnDragLeave(const ServerWindow* window) override;
+  void PerformOnCompleteDrop(
+      const ServerWindow* window,
+      uint32_t event_flags,
+      const gfx::Point& cursor_offset,
+      uint32_t effect_bitmask,
+      const base::Callback<void(uint32_t)>& callback) override;
+  void PerformOnDragDropDone() override;
 
   WindowServer* window_server_;
 
@@ -470,13 +573,15 @@ class WindowTree : public mojom::WindowTree,
   std::set<const ServerWindow*> roots_;
 
   // The windows created by this tree. This tree owns these objects.
-  base::hash_map<WindowId, ServerWindow*> created_window_map_;
+  std::unordered_map<WindowId, ServerWindow*, WindowIdHash> created_window_map_;
 
   // The client is allowed to assign ids. These two maps providing the mapping
   // from the ids native to the server (WindowId) to those understood by the
   // client (ClientWindowId).
-  base::hash_map<ClientWindowId, WindowId> client_id_to_window_id_map_;
-  base::hash_map<WindowId, ClientWindowId> window_id_to_client_id_map_;
+  std::unordered_map<ClientWindowId, WindowId, ClientWindowIdHash>
+      client_id_to_window_id_map_;
+  std::unordered_map<WindowId, ClientWindowId, WindowIdHash>
+      window_id_to_client_id_map_;
 
   uint32_t event_ack_id_;
 
@@ -484,26 +589,39 @@ class WindowTree : public mojom::WindowTree,
   // reasonable timeframe.
   bool janky_ = false;
 
-  // Set when the client is using SetEventObserver() to observe events,
-  // otherwise null.
-  std::unique_ptr<EventMatcher> event_observer_matcher_;
+  // For performance reasons, only send move events if the client explicitly
+  // requests them.
+  bool pointer_watcher_want_moves_ = false;
 
-  // The ID supplied by the client for the current event observer.
-  uint32_t event_observer_id_ = 0;
+  // True if StartPointerWatcher() was called.
+  bool has_pointer_watcher_ = false;
 
   // WindowManager the current event came from.
   WindowManagerState* event_source_wms_ = nullptr;
 
   std::queue<std::unique_ptr<TargetedEvent>> event_queue_;
 
+  // TODO(sky): move all window manager specific state into struct to make it
+  // clear what applies only to the window manager.
   std::unique_ptr<mojo::AssociatedBinding<mojom::WindowManagerClient>>
       window_manager_internal_client_binding_;
   mojom::WindowManager* window_manager_internal_;
   std::unique_ptr<WindowManagerState> window_manager_state_;
+  // See mojom for details.
+  bool automatically_create_display_roots_ = true;
 
   std::unique_ptr<WaitingForTopLevelWindowInfo>
       waiting_for_top_level_window_info_;
   bool embedder_intercepts_events_ = false;
+
+  // State kept while we're waiting for the window manager to ack a
+  // WmMoveDragImage. Non-null while we're waiting for a response.
+  struct DragMoveState;
+  std::unique_ptr<DragMoveState> drag_move_state_;
+
+  // A weak ptr factory for callbacks from the window manager for when we send
+  // a image move. All weak ptrs are invalidated when a drag is completed.
+  base::WeakPtrFactory<WindowTree> drag_weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowTree);
 };

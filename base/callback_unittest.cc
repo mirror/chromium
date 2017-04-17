@@ -14,28 +14,23 @@
 
 namespace base {
 
-void NopInvokeFunc(internal::BindStateBase*) {}
+void NopInvokeFunc() {}
 
 // White-box testpoints to inject into a Callback<> object for checking
 // comparators and emptiness APIs.  Use a BindState that is specialized
 // based on a type we declared in the anonymous namespace above to remove any
 // chance of colliding with another instantiation and breaking the
 // one-definition-rule.
-struct FakeBindState1 : internal::BindStateBase {
-  FakeBindState1() : BindStateBase(&Destroy) {}
- private:
-  ~FakeBindState1() {}
-  static void Destroy(internal::BindStateBase* self) {
-    delete static_cast<FakeBindState1*>(self);
-  }
-};
+struct FakeBindState : internal::BindStateBase {
+  FakeBindState() : BindStateBase(&NopInvokeFunc, &Destroy, &IsCancelled) {}
 
-struct FakeBindState2 : internal::BindStateBase {
-  FakeBindState2() : BindStateBase(&Destroy) {}
  private:
-  ~FakeBindState2() {}
-  static void Destroy(internal::BindStateBase* self) {
-    delete static_cast<FakeBindState2*>(self);
+  ~FakeBindState() {}
+  static void Destroy(const internal::BindStateBase* self) {
+    delete static_cast<const FakeBindState*>(self);
+  }
+  static bool IsCancelled(const internal::BindStateBase*) {
+    return false;
   }
 };
 
@@ -44,9 +39,7 @@ namespace {
 class CallbackTest : public ::testing::Test {
  public:
   CallbackTest()
-      : callback_a_(new FakeBindState1(), &NopInvokeFunc),
-        callback_b_(new FakeBindState2(), &NopInvokeFunc) {
-  }
+      : callback_a_(new FakeBindState()), callback_b_(new FakeBindState()) {}
 
   ~CallbackTest() override {}
 
@@ -88,7 +81,7 @@ TEST_F(CallbackTest, Equals) {
   EXPECT_FALSE(callback_b_.Equals(callback_a_));
 
   // We should compare based on instance, not type.
-  Callback<void()> callback_c(new FakeBindState1(), &NopInvokeFunc);
+  Callback<void()> callback_c(new FakeBindState());
   Callback<void()> callback_a2 = callback_a_;
   EXPECT_TRUE(callback_a_.Equals(callback_a2));
   EXPECT_FALSE(callback_a_.Equals(callback_c));
@@ -104,6 +97,17 @@ TEST_F(CallbackTest, Reset) {
   ASSERT_FALSE(callback_a_.Equals(null_callback_));
 
   callback_a_.Reset();
+
+  EXPECT_TRUE(callback_a_.is_null());
+  EXPECT_TRUE(callback_a_.Equals(null_callback_));
+}
+
+TEST_F(CallbackTest, Move) {
+  // Moving should reset the callback.
+  ASSERT_FALSE(callback_a_.is_null());
+  ASSERT_FALSE(callback_a_.Equals(null_callback_));
+
+  auto tmp = std::move(callback_a_);
 
   EXPECT_TRUE(callback_a_.is_null());
   EXPECT_TRUE(callback_a_.Equals(null_callback_));
@@ -129,6 +133,23 @@ TEST_F(CallbackTest, ResetAndReturn) {
   ResetAndReturn(&tfr.cb).Run();
   ASSERT_TRUE(tfr.cb.is_null());
   ASSERT_TRUE(tfr.cb_already_run);
+}
+
+TEST_F(CallbackTest, NullAfterMoveRun) {
+  Closure cb = Bind([] {});
+  ASSERT_TRUE(cb);
+  std::move(cb).Run();
+  ASSERT_FALSE(cb);
+
+  const Closure cb2 = Bind([] {});
+  ASSERT_TRUE(cb2);
+  std::move(cb2).Run();
+  ASSERT_TRUE(cb2);
+
+  OnceClosure cb3 = BindOnce([] {});
+  ASSERT_TRUE(cb3);
+  std::move(cb3).Run();
+  ASSERT_FALSE(cb3);
 }
 
 class CallbackOwner : public base::RefCounted<CallbackOwner> {

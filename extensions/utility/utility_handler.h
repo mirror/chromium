@@ -2,46 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_UTILITY_UTILITY_HANDLER_
-#define EXTENSIONS_UTILITY_UTILITY_HANDLER_
+#ifndef EXTENSIONS_UTILITY_UTILITY_HANDLER_H_
+#define EXTENSIONS_UTILITY_UTILITY_HANDLER_H_
 
-#include <string>
-
-#include "base/callback.h"
-#include "base/macros.h"
-
-namespace base {
-class FilePath;
-}
-
-namespace IPC {
-class Message;
+namespace service_manager {
+class InterfaceRegistry;
 }
 
 namespace extensions {
 
-// A handler for extensions-related IPC from within utility processes.
-class UtilityHandler {
- public:
-  UtilityHandler();
-  ~UtilityHandler();
+namespace utility_handler {
 
-  static void UtilityThreadStarted();
+void UtilityThreadStarted();
 
-  bool OnMessageReceived(const IPC::Message& message);
+void ExposeInterfacesToBrowser(service_manager::InterfaceRegistry* registry,
+                               bool running_elevated);
 
- private:
-  // IPC message handlers.
-  void OnParseUpdateManifest(const std::string& xml);
-  void OnUnzipToDir(const base::FilePath& zip_path, const base::FilePath& dir);
-  void OnUnpackExtension(const base::FilePath& directory_path,
-                         const std::string& extension_id,
-                         int location,
-                         int creation_flags);
-
-  DISALLOW_COPY_AND_ASSIGN(UtilityHandler);
-};
+}  // namespace utility_handler
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_UTILITY_UTILITY_HANDLER_
+#endif  // EXTENSIONS_UTILITY_UTILITY_HANDLER_H_

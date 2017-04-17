@@ -18,6 +18,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
@@ -44,13 +45,18 @@ struct SimpleIndexLoadResult;
 class NET_EXPORT_PRIVATE EntryMetadata {
  public:
   EntryMetadata();
-  EntryMetadata(base::Time last_used_time, uint64_t entry_size);
+  EntryMetadata(base::Time last_used_time,
+                base::StrictNumeric<uint32_t> entry_size);
 
   base::Time GetLastUsedTime() const;
   void SetLastUsedTime(const base::Time& last_used_time);
 
-  uint64_t GetEntrySize() const;
-  void SetEntrySize(uint64_t entry_size);
+  uint32_t RawTimeForSorting() const {
+    return last_used_time_seconds_since_epoch_;
+  }
+
+  uint32_t GetEntrySize() const;
+  void SetEntrySize(base::StrictNumeric<uint32_t> entry_size);
 
   // Serialize the data into the provided pickle.
   void Serialize(base::Pickle* pickle) const;
@@ -71,7 +77,7 @@ class NET_EXPORT_PRIVATE EntryMetadata {
   // are originally calculated as >32-bit types, the actual necessary size for
   // each shouldn't exceed 32 bits, so we use 32-bit types here.
   uint32_t last_used_time_seconds_since_epoch_;
-  int32_t entry_size_;  // Storage size in bytes.
+  uint32_t entry_size_;  // Storage size in bytes.
 };
 static_assert(sizeof(EntryMetadata) == 8, "incorrect metadata size");
 
@@ -124,13 +130,19 @@ class NET_EXPORT_PRIVATE SimpleIndex
   // Update the size (in bytes) of an entry, in the metadata stored in the
   // index. This should be the total disk-file size including all streams of the
   // entry.
-  bool UpdateEntrySize(uint64_t entry_hash, int64_t entry_size);
+  bool UpdateEntrySize(uint64_t entry_hash,
+                       base::StrictNumeric<uint32_t> entry_size);
 
   using EntrySet = std::unordered_map<uint64_t, EntryMetadata>;
 
   static void InsertInEntrySet(uint64_t entry_hash,
                                const EntryMetadata& entry_metadata,
                                EntrySet* entry_set);
+
+  // For use in tests only. Updates cache_size_, but will not start evictions
+  // or adjust index writing time. Requires entry to not already be in the set.
+  void InsertEntryForTesting(uint64_t entry_hash,
+                             const EntryMetadata& entry_metadata);
 
   // Executes the |callback| when the index is ready. Allows multiple callbacks.
   int ExecuteWhenReady(const net::CompletionCallback& callback);
@@ -152,10 +164,19 @@ class NET_EXPORT_PRIVATE SimpleIndex
   // index has been initialized.
   uint64_t GetCacheSize() const;
 
+  // Returns the size of the cache entries accessed between |initial_time| and
+  // |end_time| in bytes. Can only be called after the index has been
+  // initialized.
+  uint64_t GetCacheSizeBetween(const base::Time initial_time,
+                               const base::Time end_time) const;
+
   // Returns whether the index has been initialized yet.
   bool initialized() const { return initialized_; }
 
   IndexInitMethod init_method() const { return init_method_; }
+
+  // Returns the estimate of dynamically allocated memory in bytes.
+  size_t EstimateMemoryUsage() const;
 
  private:
   friend class SimpleIndexTest;
@@ -169,7 +190,8 @@ class NET_EXPORT_PRIVATE SimpleIndex
 
   void PostponeWritingToDisk();
 
-  void UpdateEntryIteratorSize(EntrySet::iterator* it, int64_t entry_size);
+  void UpdateEntryIteratorSize(EntrySet::iterator* it,
+                               base::StrictNumeric<uint32_t> entry_size);
 
   // Must run on IO Thread.
   void MergeInitializingSet(std::unique_ptr<SimpleIndexLoadResult> load_result);
@@ -206,7 +228,9 @@ class NET_EXPORT_PRIVATE SimpleIndex
 
   // All nonstatic SimpleEntryImpl methods should always be called on the IO
   // thread, in all cases. |io_thread_checker_| documents and enforces this.
-  base::ThreadChecker io_thread_checker_;
+  // NOTE: Temporarily forced on to chase a crash, https://crbug.com/710994,
+  // turn off by 2017-04-21, also going back CHECK -> DCHECK in the impl.
+  base::ThreadCheckerImpl io_thread_checker_;
 
   // Timestamp of the last time we wrote the index to disk.
   // PostponeWritingToDisk() may give up postponing and allow the write if it

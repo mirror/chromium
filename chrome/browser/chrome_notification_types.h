@@ -6,14 +6,15 @@
 #define CHROME_BROWSER_CHROME_NOTIFICATION_TYPES_H_
 
 #include "build/build_config.h"
+#include "extensions/features/features.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/browser/notification_types.h"
 #else
 #include "content/public/browser/notification_types.h"
 #endif
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #define PREVIOUS_END extensions::NOTIFICATION_EXTENSIONS_END
 #else
 #define PREVIOUS_END content::NOTIFICATION_CONTENT_END
@@ -82,12 +83,6 @@ enum NotificationType {
   // traversal. The source is the browser, there are no details.
   NOTIFICATION_FOCUS_RETURNED_TO_BROWSER,
 
-  // A new tab is created from an existing tab to serve as a target of a
-  // navigation that is about to happen. The source will be a Source<Profile>
-  // corresponding to the profile in which the new tab will live.  Details in
-  // the form of a RetargetingDetails object are provided.
-  NOTIFICATION_RETARGETING,
-
   // Application-wide ----------------------------------------------------------
 
   // This message is sent when the application is terminating (the last
@@ -127,7 +122,7 @@ enum NotificationType {
   // Details<InfoBar::RemovedDetails>.
   NOTIFICATION_TAB_CONTENTS_INFOBAR_REMOVED,
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   // This notification is sent when extensions::TabHelper::SetExtensionApp is
   // invoked. The source is the extensions::TabHelper SetExtensionApp was
   // invoked on.
@@ -294,16 +289,6 @@ enum NotificationType {
   // No details are expected.
   NOTIFICATION_OUTDATED_INSTALL_NO_AU,
 
-  // Software incompatibility notifications ----------------------------------
-
-  // Sent when Chrome has finished compiling the list of loaded modules (and
-  // other modules of interest). No details are expected.
-  NOTIFICATION_MODULE_LIST_ENUMERATED,
-
-  // Sent when Chrome is done scanning the module list and when the user has
-  // acknowledged the module incompatibility. No details are expected.
-  NOTIFICATION_MODULE_INCOMPATIBILITY_ICON_CHANGE,
-
   // Content Settings --------------------------------------------------------
 
   // Sent when the collect cookies dialog is shown. The source is a
@@ -323,7 +308,7 @@ enum NotificationType {
 
   // Cookies -----------------------------------------------------------------
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   // Sent when a cookie changes, for consumption by extensions. The source is a
   // Profile object, the details are a ChromeCookieDetails object.
   NOTIFICATION_COOKIE_CHANGED_FOR_EXTENSIONS,
@@ -334,7 +319,7 @@ enum NotificationType {
   // Sent when a download is initiated. It is possible that the download will
   // not actually begin due to the DownloadRequestLimiter cancelling it
   // prematurely.
-  // The source is the corresponding RenderViewHost. There are no details.
+  // The source is the corresponding WebContents. There are no details.
   NOTIFICATION_DOWNLOAD_INITIATED,
 
   // Misc --------------------------------------------------------------------
@@ -355,16 +340,6 @@ enum NotificationType {
   // the browser crashes and restarts.
   // The details are a chromeos::User object.
   NOTIFICATION_SESSION_STARTED,
-
-  // Sent when user image is updated.
-  NOTIFICATION_LOGIN_USER_IMAGE_CHANGED,
-
-  // Sent by UserManager when a profile image download has been completed.
-  NOTIFICATION_PROFILE_IMAGE_UPDATED,
-
-  // Sent by UserManager when profile image download has failed or user has the
-  // default profile image or no profile image at all. No details are expected.
-  NOTIFICATION_PROFILE_IMAGE_UPDATE_FAILED,
 
   // Sent when a network error message is displayed on the WebUI login screen.
   // First paint event of this fires NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE.
@@ -445,10 +420,6 @@ enum NotificationType {
   // menu has been created and shown.
   NOTIFICATION_RENDER_VIEW_CONTEXT_MENU_SHOWN,
 
-  // Sent when the Instant Controller determines whether an Instant tab supports
-  // the Instant API or not.
-  NOTIFICATION_INSTANT_TAB_SUPPORT_DETERMINED,
-
   // Sent when the CaptivePortalService checks if we're behind a captive portal.
   // The Source is the Profile the CaptivePortalService belongs to, and the
   // Details are a Details<CaptivePortalService::CheckResults>.
@@ -467,15 +438,6 @@ enum NotificationType {
 #if defined(USE_ASH)
   // Sent when wallpaper show animation has finished.
   NOTIFICATION_WALLPAPER_ANIMATION_FINISHED,
-
-  // Sent when the Ash session has started. In its current incantation this is
-  // generated when the metro app has connected to the browser IPC channel.
-  // Used only on Windows.
-  NOTIFICATION_ASH_SESSION_STARTED,
-
-  // Sent when the Ash session ended. Currently this means the metro app exited.
-  // Used only on Windows.
-  NOTIFICATION_ASH_SESSION_ENDED,
 #endif
 
   // Protocol Handler Registry -----------------------------------------------
@@ -492,34 +454,6 @@ enum NotificationType {
   // Sent by the PluginPrefs when there is a change of plugin enable/disable
   // status. The source is the profile.
   NOTIFICATION_PLUGIN_ENABLE_STATUS_CHANGED,
-
-  // Panels Notifications. The Panels are small browser windows near the bottom
-  // of the screen.
-  // Sent when all nonblocking bounds animations are finished across panels.
-  // Used only in unit testing.
-  NOTIFICATION_PANEL_BOUNDS_ANIMATIONS_FINISHED,
-
-  // Sent when panel gains/loses focus.
-  // The source is the Panel, no details.
-  // Used only in unit testing.
-  NOTIFICATION_PANEL_CHANGED_ACTIVE_STATUS,
-
-  // Sent when panel is minimized/restored/shows title only etc.
-  // The source is the Panel, no details.
-  NOTIFICATION_PANEL_CHANGED_EXPANSION_STATE,
-
-  // Sent when panel app icon is loaded.
-  // Used only in unit testing.
-  NOTIFICATION_PANEL_APP_ICON_LOADED,
-
-  // Sent when panel collection get updated.
-  // The source is the PanelCollection, no details.
-  // Used only in coordination with notification balloons.
-  NOTIFICATION_PANEL_COLLECTION_UPDATED,
-
-  // Sent when panel is closed.
-  // The source is the Panel, no details.
-  NOTIFICATION_PANEL_CLOSED,
 
   // Sent when a global error has changed and the error UI should update it
   // self. The source is a Source<Profile> containing the profile for the

@@ -125,6 +125,7 @@ void SigninManager::CopyCredentialsFrom(const SigninManager& source) {
   possibly_invalid_email_ = source.possibly_invalid_email_;
   temp_refresh_token_ = source.temp_refresh_token_;
   password_ = source.password_;
+  source.client_->AfterCredentialsCopied();
 }
 
 void SigninManager::ClearTransientSigninData() {
@@ -141,12 +142,20 @@ void SigninManager::ClearTransientSigninData() {
 void SigninManager::HandleAuthError(const GoogleServiceAuthError& error) {
   ClearTransientSigninData();
 
-  FOR_EACH_OBSERVER(SigninManagerBase::Observer,
-                    observer_list_,
-                    GoogleSigninFailed(error));
+  for (auto& observer : observer_list_)
+    observer.GoogleSigninFailed(error);
 }
 
 void SigninManager::SignOut(
+    signin_metrics::ProfileSignout signout_source_metric,
+    signin_metrics::SignoutDelete signout_delete_metric) {
+  client_->PreSignOut(
+      base::Bind(&SigninManager::DoSignOut, base::Unretained(this),
+                 signout_source_metric, signout_delete_metric),
+      signout_source_metric);
+}
+
+void SigninManager::DoSignOut(
     signin_metrics::ProfileSignout signout_source_metric,
     signin_metrics::SignoutDelete signout_delete_metric) {
   DCHECK(IsInitialized());
@@ -201,9 +210,8 @@ void SigninManager::SignOut(
                << "IsSigninAllowed: " << IsSigninAllowed();
   token_service_->RevokeAllCredentials();
 
-  FOR_EACH_OBSERVER(SigninManagerBase::Observer,
-                    observer_list_,
-                    GoogleSignedOut(account_id, username));
+  for (auto& observer : observer_list_)
+    observer.GoogleSignedOut(account_id, username);
 }
 
 void SigninManager::Initialize(PrefService* local_state) {
@@ -262,7 +270,7 @@ bool SigninManager::IsSigninAllowed() const {
 }
 
 void SigninManager::OnSigninAllowedPrefChanged() {
-  if (!IsSigninAllowed())
+  if (!IsSigninAllowed() && (IsAuthenticated() || AuthInProgress()))
     SignOut(signin_metrics::SIGNOUT_PREF_CHANGED,
             signin_metrics::SignoutDelete::IGNORE_METRIC);
 }
@@ -333,7 +341,8 @@ void SigninManager::MergeSigninCredentialIntoCookieJar() {
   if (!IsAuthenticated())
     return;
 
-  cookie_manager_service_->AddAccountToCookie(GetAuthenticatedAccountId());
+  cookie_manager_service_->AddAccountToCookie(GetAuthenticatedAccountId(),
+                                              "ChromiumSigninManager");
 }
 
 void SigninManager::CompletePendingSignin() {
@@ -374,10 +383,11 @@ void SigninManager::OnSignedIn() {
   possibly_invalid_email_.clear();
   signin_manager_signed_in_ = true;
 
-  FOR_EACH_OBSERVER(
-      SigninManagerBase::Observer, observer_list_,
-      GoogleSigninSucceeded(GetAuthenticatedAccountId(),
-                            GetAuthenticatedAccountInfo().email, password_));
+  for (auto& observer : observer_list_) {
+    observer.GoogleSigninSucceeded(GetAuthenticatedAccountId(),
+                                   GetAuthenticatedAccountInfo().email,
+                                   password_);
+  }
 
   client_->OnSignedIn(GetAuthenticatedAccountId(), gaia_id,
                       GetAuthenticatedAccountInfo().email, password_);
@@ -400,6 +410,9 @@ void SigninManager::PostSignedIn() {
 }
 
 void SigninManager::OnAccountUpdated(const AccountInfo& info) {
+  if (!info.IsValid())
+    return;
+
   user_info_fetched_by_account_tracker_ = true;
   PostSignedIn();
 }

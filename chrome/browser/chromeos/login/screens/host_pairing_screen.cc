@@ -20,21 +20,20 @@ using namespace pairing_chromeos;
 HostPairingScreen::HostPairingScreen(
     BaseScreenDelegate* base_screen_delegate,
     Delegate* delegate,
-    HostPairingScreenActor* actor,
+    HostPairingScreenView* view,
     pairing_chromeos::HostPairingController* remora_controller)
-    : BaseScreen(base_screen_delegate),
+    : BaseScreen(base_screen_delegate, OobeScreen::SCREEN_OOBE_HOST_PAIRING),
       delegate_(delegate),
-      actor_(actor),
+      view_(view),
       remora_controller_(remora_controller),
-      current_stage_(HostPairingController::STAGE_NONE),
       weak_ptr_factory_(this) {
-  actor_->SetDelegate(this);
+  view_->SetDelegate(this);
   remora_controller_->AddObserver(this);
 }
 
 HostPairingScreen::~HostPairingScreen() {
-  if (actor_)
-    actor_->SetDelegate(NULL);
+  if (view_)
+    view_->SetDelegate(NULL);
   remora_controller_->RemoveObserver(this);
 }
 
@@ -43,26 +42,19 @@ void HostPairingScreen::CommitContextChanges() {
     return;
   base::DictionaryValue diff;
   context_.GetChangesAndReset(&diff);
-  if (actor_)
-    actor_->OnContextChanged(diff);
-}
-
-void HostPairingScreen::PrepareToShow() {
+  if (view_)
+    view_->OnContextChanged(diff);
 }
 
 void HostPairingScreen::Show() {
-  if (actor_)
-    actor_->Show();
+  if (view_)
+    view_->Show();
   PairingStageChanged(remora_controller_->GetCurrentStage());
 }
 
 void HostPairingScreen::Hide() {
-  if (actor_)
-    actor_->Hide();
-}
-
-std::string HostPairingScreen::GetName() const {
-  return WizardController::kHostPairingScreenName;
+  if (view_)
+    view_->Hide();
 }
 
 void HostPairingScreen::PairingStageChanged(Stage new_stage) {
@@ -107,13 +99,14 @@ void HostPairingScreen::PairingStageChanged(Stage new_stage) {
     }
     case HostPairingController::STAGE_ENROLLMENT_SUCCESS: {
       remora_controller_->RemoveObserver(this);
-      Finish(WizardController::ENTERPRISE_ENROLLMENT_COMPLETED);
+      Finish(ScreenExitCode::ENTERPRISE_ENROLLMENT_COMPLETED);
       break;
     }
     case HostPairingController::STAGE_ENROLLMENT_ERROR: {
       // TODO(xdai): Maybe return to the Network Setup page?
       remora_controller_->RemoveObserver(this);
       desired_page = kPageEnrollmentError;
+      context_.SetString(kContextKeyEnrollmentError, enrollment_error_string_);
       break;
     }
     default:
@@ -153,27 +146,30 @@ void HostPairingScreen::EnrollHostRequested(const std::string& auth_token) {
           ->browser_policy_connector_chromeos()
           ->GetPrescribedEnrollmentConfig();
   enrollment_helper_ = EnterpriseEnrollmentHelper::Create(
-      this, enrollment_config, std::string());
+      this, nullptr, enrollment_config, std::string());
   enrollment_helper_->EnrollUsingToken(auth_token);
   remora_controller_->OnEnrollmentStatusChanged(
       HostPairingController::ENROLLMENT_STATUS_ENROLLING);
 }
 
-void HostPairingScreen::OnActorDestroyed(HostPairingScreenActor* actor) {
-  if (actor_ == actor)
-    actor_ = NULL;
+void HostPairingScreen::OnViewDestroyed(HostPairingScreenView* view) {
+  if (view_ == view)
+    view_ = NULL;
 }
 
 void HostPairingScreen::OnAuthError(const GoogleServiceAuthError& error) {
+  enrollment_error_string_ = view_->GetErrorStringFromAuthError(error);
   OnAnyEnrollmentError();
 }
 
 void HostPairingScreen::OnEnrollmentError(policy::EnrollmentStatus status) {
+  enrollment_error_string_ = view_->GetErrorStringFromEnrollmentError(status);
   OnAnyEnrollmentError();
 }
 
 void HostPairingScreen::OnOtherError(
     EnterpriseEnrollmentHelper::OtherError error) {
+  enrollment_error_string_ = view_->GetErrorStringFromOtherError(error);
   OnAnyEnrollmentError();
 }
 

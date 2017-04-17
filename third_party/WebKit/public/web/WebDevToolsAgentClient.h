@@ -38,44 +38,48 @@ namespace blink {
 
 class WebLocalFrame;
 class WebString;
-struct WebDeviceEmulationParams;
 
 class WebDevToolsAgentClient {
-public:
-    // Sends response message over the protocol, update agent state on the browser side for
-    // potential re-attach. |callId| for notifications is 0, |state| for notifications is empty.
-    virtual void sendProtocolMessage(int sessionId, int callId, const WebString& response, const WebString& state) { }
+ public:
+  // Sends response message over the protocol, update agent state on the browser
+  // side for potential re-attach. |callId| for notifications is 0, |state| for
+  // notifications is empty.
+  virtual void SendProtocolMessage(int session_id,
+                                   int call_id,
+                                   const WebString& response,
+                                   const WebString& state) {}
 
-    // Returns process id.
-    virtual long processId() { return -1; }
+  // Returns process id.
+  virtual long ProcessId() { return -1; }
 
-    // Returns unique identifier of the entity within process.
-    virtual int debuggerId() { return -1; }
+  // Returns unique identifier of the entity within process.
+  virtual int DebuggerId() { return -1; }
 
-    // Resume the inspected renderer that is waiting for DevTools front-end to initialize its state.
-    virtual void resumeStartup() { }
+  // Resume the inspected renderer that is waiting for DevTools front-end to
+  // initialize its state.
+  virtual void ResumeStartup() {}
 
-    class WebKitClientMessageLoop {
-    public:
-        virtual ~WebKitClientMessageLoop() { }
-        virtual void run() = 0;
-        virtual void quitNow() = 0;
-    };
-    virtual WebKitClientMessageLoop* createClientMessageLoop() { return 0; }
-    virtual void willEnterDebugLoop() { }
-    virtual void didExitDebugLoop() { }
+  class WebKitClientMessageLoop {
+   public:
+    virtual ~WebKitClientMessageLoop() {}
+    virtual void Run() = 0;
+    virtual void QuitNow() = 0;
+  };
+  virtual WebKitClientMessageLoop* CreateClientMessageLoop() { return 0; }
+  virtual void WillEnterDebugLoop() {}
+  virtual void DidExitDebugLoop() {}
 
-    virtual bool requestDevToolsForFrame(WebLocalFrame*) { return false; }
+  virtual bool RequestDevToolsForFrame(WebLocalFrame*) { return false; }
 
-    virtual void enableTracing(const WebString& categoryFilter) { }
-    virtual void disableTracing() { }
+  virtual void EnableTracing(const WebString& category_filter) {}
+  virtual void DisableTracing() {}
 
-    virtual void setCPUThrottlingRate(double rate) {}
+  virtual void SetCPUThrottlingRate(double rate) {}
 
-protected:
-    ~WebDevToolsAgentClient() { }
+ protected:
+  ~WebDevToolsAgentClient() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

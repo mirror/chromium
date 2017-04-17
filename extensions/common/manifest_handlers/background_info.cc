@@ -21,7 +21,7 @@
 #include "extensions/common/manifest_handlers/permissions_parser.h"
 #include "extensions/common/permissions/api_permission_set.h"
 #include "extensions/common/switches.h"
-#include "grit/extensions_strings.h"
+#include "extensions/strings/grit/extensions_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
 using base::ASCIIToUTF16;
@@ -37,8 +37,8 @@ namespace {
 
 const char kBackground[] = "background";
 
-static base::LazyInstance<BackgroundInfo> g_empty_background_info =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BackgroundInfo>::DestructorAtExit
+    g_empty_background_info = LAZY_INSTANCE_INITIALIZER;
 
 const BackgroundInfo& GetBackgroundInfo(const Extension* extension) {
   BackgroundInfo* info = static_cast<BackgroundInfo*>(
@@ -126,7 +126,7 @@ bool BackgroundInfo::LoadBackgroundScripts(const Extension* extension,
     return true;
 
   CHECK(background_scripts_value);
-  if (background_scripts_value->GetType() != base::Value::TYPE_LIST) {
+  if (background_scripts_value->GetType() != base::Value::Type::LIST) {
     *error = ASCIIToUTF16(errors::kInvalidBackgroundScripts);
     return false;
   }
@@ -233,7 +233,7 @@ bool BackgroundInfo::LoadAllowJSAccess(const Extension* extension,
                                   &allow_js_access))
     return true;
 
-  if (!allow_js_access->IsType(base::Value::TYPE_BOOLEAN) ||
+  if (!allow_js_access->IsType(base::Value::Type::BOOLEAN) ||
       !allow_js_access->GetAsBoolean(&allow_js_access_)) {
     *error = ASCIIToUTF16(errors::kInvalidBackgroundAllowJsAccess);
     return false;
@@ -267,7 +267,7 @@ bool BackgroundManifestHandler::Parse(Extension* extension,
     return false;
   }
 
-  extension->SetManifestData(kBackground, info.release());
+  extension->SetManifestData(kBackground, std::move(info));
   return true;
 }
 

@@ -33,6 +33,21 @@
     waitForVideo('remote-view-2');
   }
 
+  // Hang up a call.
+  function hangup() {
+    gFirstConnection.close();
+    gSecondConnection.close();
+    gFirstConnection = null;
+    gSecondConnection = null;
+
+    gLocalStream.getTracks().forEach(function(track) {
+      track.stop();
+    });
+    gLocalStream = null;
+
+    sendValueToTest('OK');
+  }
+
   // Test that we can setup a call with a video track and that the remote peer
   // receives black frames if the local video track is disabled.
   function callAndDisableLocalVideo(constraints) {
@@ -134,7 +149,7 @@
 
     detectVideoPlaying('remote-view-2', function() {
       // Construct a new media stream with remote tracks.
-      var newStream = new webkitMediaStream();
+      var newStream = new MediaStream();
       newStream.addTrack(
           gSecondConnection.getRemoteStreams()[0].getAudioTracks()[0]);
       newStream.addTrack(
@@ -447,7 +462,7 @@
     if (typeof localStream.clone === "function") {
       clonedStream = localStream.clone();
     } else {
-      clonedStream = new webkitMediaStream(localStream);
+      clonedStream = new MediaStream(localStream);
     }
 
     gFirstConnection.addStream(localStream);
@@ -481,7 +496,7 @@
   // added to both peer connections.
   function createNewVideoStreamAndAddToBothConnections(localStream) {
     displayAndRemember(localStream);
-    var newStream = new webkitMediaStream();
+    var newStream = new MediaStream();
     newStream.addTrack(localStream.getVideoTracks()[0]);
     gFirstConnection.addStream(newStream);
     gSecondConnection.addStream(newStream);
@@ -494,7 +509,7 @@
 
   function iceCandidateIsLoopback(candidate) {
     return candidate.candidate.indexOf("127.0.0.1") > -1 ||
-           candidate.candidate.indexOf("::1") > -1;
+           candidate.candidate.indexOf(" ::1 ") > -1;
   }
 
   // Helper function to invoke |callback| when gathering is completed.
@@ -518,7 +533,7 @@
   }
 
   function callWithDevicePermissionGranted() {
-    var pc = new webkitRTCPeerConnection(null, null);
+    var pc = new RTCPeerConnection();
     gatherIceCandidates(pc, function(candidates) {
       var hasLoopbackCandidate = false;
       assertEquals(candidates.length > 0, true);
@@ -534,7 +549,7 @@
   }
 
   function callWithNoCandidateExpected() {
-    var pc = new webkitRTCPeerConnection({iceServers:[]}, null);
+    var pc = new RTCPeerConnection();
     gatherIceCandidates(pc, function(candidates) {
       assertEquals(candidates.length, 0);
       reportTestSuccess();
@@ -542,7 +557,7 @@
   }
 
   function callAndExpectNonLoopbackCandidates() {
-    var pc = new webkitRTCPeerConnection(null, null);
+    var pc = new RTCPeerConnection();
     gatherIceCandidates(pc, function(candidates) {
       var hasCandidate = false;
       assertEquals(candidates.length > 0, true);
@@ -550,7 +565,7 @@
         hasCandidate = true;
         assertEquals(iceCandidateIsLoopback(candidates[i]), false);
       }
-      assertTrue(hasCandidate, 'expect to see at least one non-loopback candidate');
+      assertTrue(hasCandidate, 'expect to see at least one candidate');
       reportTestSuccess();
     });
   }
@@ -564,8 +579,8 @@
   }
 
   function removeVideoCodec(offerSdp) {
-    offerSdp = offerSdp.replace('a=rtpmap:100 VP8/90000\r\n',
-                                'a=rtpmap:100 XVP8/90000\r\n');
+    offerSdp = offerSdp.replace(/a=rtpmap:(\d+)\ VP8\/90000\r\n/,
+                                'a=rtpmap:$1 XVP8/90000\r\n');
     return offerSdp;
   }
 

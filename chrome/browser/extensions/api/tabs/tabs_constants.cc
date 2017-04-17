@@ -31,6 +31,8 @@ const char kOldWindowIdKey[] = "oldWindowId";
 const char kOpenerTabIdKey[] = "openerTabId";
 const char kPinnedKey[] = "pinned";
 const char kAudibleKey[] = "audible";
+const char kDiscardedKey[] = "discarded";
+const char kAutoDiscardableKey[] = "autoDiscardable";
 const char kMutedKey[] = "muted";
 const char kMutedInfoKey[] = "mutedInfo";
 const char kQualityKey[] = "quality";
@@ -65,7 +67,6 @@ const char kStatusValueLoading[] = "loading";
 const char kWindowTypeValueNormal[] = "normal";
 const char kWindowTypeValuePopup[] = "popup";
 const char kWindowTypeValuePanel[] = "panel";
-const char kWindowTypeValueDetachedPanel[] = "detached_panel";
 const char kWindowTypeValueApp[] = "app";
 const char kWindowTypeValueDevTools[] = "devtools";
 
@@ -80,6 +81,7 @@ const char kNoCrashBrowserError[] =
     "I'm sorry. I'm afraid I can't do that.";
 const char kNoCurrentWindowError[] = "No current window";
 const char kNoLastFocusedWindowError[] = "No last-focused window";
+const char kNoTabInBrowserWindowError[] = "There is no tab in browser window.";
 const char kPerOriginOnlyInAutomaticError[] = "Can only set scope to "
     "\"per-origin\" in \"automatic\" mode.";
 const char kWindowNotFoundError[] = "No window with id: *.";

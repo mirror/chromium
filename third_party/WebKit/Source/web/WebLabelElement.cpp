@@ -33,32 +33,27 @@
 #include "core/HTMLNames.h"
 #include "core/html/HTMLLabelElement.h"
 #include "core/html/LabelableElement.h"
+#include "platform/wtf/PassRefPtr.h"
 #include "public/platform/WebString.h"
-#include "wtf/PassRefPtr.h"
 
 namespace blink {
 
-WebElement WebLabelElement::correspondingControl()
-{
-    return WebElement(unwrap<HTMLLabelElement>()->control());
+WebElement WebLabelElement::CorrespondingControl() {
+  return WebElement(Unwrap<HTMLLabelElement>()->control());
 }
 
-WebLabelElement::WebLabelElement(HTMLLabelElement* elem)
-    : WebElement(elem)
-{
+WebLabelElement::WebLabelElement(HTMLLabelElement* elem) : WebElement(elem) {}
+
+DEFINE_WEB_NODE_TYPE_CASTS(WebLabelElement,
+                           isHTMLLabelElement(ConstUnwrap<Node>()));
+
+WebLabelElement& WebLabelElement::operator=(HTMLLabelElement* elem) {
+  private_ = elem;
+  return *this;
 }
 
-DEFINE_WEB_NODE_TYPE_CASTS(WebLabelElement, isHTMLLabelElement(constUnwrap<Node>()));
-
-WebLabelElement& WebLabelElement::operator=(HTMLLabelElement* elem)
-{
-    m_private = elem;
-    return *this;
+WebLabelElement::operator HTMLLabelElement*() const {
+  return toHTMLLabelElement(private_.Get());
 }
 
-WebLabelElement::operator HTMLLabelElement*() const
-{
-    return toHTMLLabelElement(m_private.get());
-}
-
-} // namespace blink
+}  // namespace blink

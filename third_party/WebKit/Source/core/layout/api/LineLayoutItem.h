@@ -7,10 +7,12 @@
 
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutObjectInlines.h"
+#include "core/layout/LayoutText.h"
+#include "core/paint/ObjectPaintInvalidator.h"
 
 #include "platform/LayoutUnit.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashTableDeletedValueType.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashTableDeletedValueType.h"
 
 namespace blink {
 
@@ -25,485 +27,341 @@ class LineLayoutAPIShim;
 
 enum HitTestFilter;
 
-static LayoutObject* const kHashTableDeletedValue = reinterpret_cast<LayoutObject*>(-1);
+static LayoutObject* const kHashTableDeletedValue =
+    reinterpret_cast<LayoutObject*>(-1);
 
 class LineLayoutItem {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    explicit LineLayoutItem(LayoutObject* layoutObject)
-        : m_layoutObject(layoutObject)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    explicit LineLayoutItem(WTF::HashTableDeletedValueType)
-        : m_layoutObject(kHashTableDeletedValue)
-    {
-    }
+ public:
+  explicit LineLayoutItem(LayoutObject* layout_object)
+      : layout_object_(layout_object) {}
 
-    LineLayoutItem(std::nullptr_t)
-        : m_layoutObject(0)
-    {
-    }
+  explicit LineLayoutItem(WTF::HashTableDeletedValueType)
+      : layout_object_(kHashTableDeletedValue) {}
 
-    LineLayoutItem() : m_layoutObject(0) { }
+  LineLayoutItem(std::nullptr_t) : layout_object_(0) {}
 
-    explicit operator bool() const { return m_layoutObject; }
+  LineLayoutItem() : layout_object_(0) {}
 
-    bool isEqual(const LayoutObject* layoutObject) const
-    {
-        return m_layoutObject == layoutObject;
-    }
+  explicit operator bool() const { return layout_object_; }
 
-    bool operator==(const LineLayoutItem& other) const
-    {
-        return m_layoutObject == other.m_layoutObject;
-    }
+  bool IsEqual(const LayoutObject* layout_object) const {
+    return layout_object_ == layout_object;
+  }
 
-    bool operator!=(const LineLayoutItem& other) const
-    {
-        return !(*this == other);
-    }
+  bool operator==(const LineLayoutItem& other) const {
+    return layout_object_ == other.layout_object_;
+  }
 
-    String debugName() const
-    {
-        return m_layoutObject->debugName();
-    }
+  bool operator!=(const LineLayoutItem& other) const {
+    return !(*this == other);
+  }
 
-    bool needsLayout() const
-    {
-        return m_layoutObject->needsLayout();
-    }
+  String DebugName() const { return layout_object_->DebugName(); }
 
-    Node* node() const
-    {
-        return m_layoutObject->node();
-    }
+  bool NeedsLayout() const { return layout_object_->NeedsLayout(); }
 
-    Node* nonPseudoNode() const
-    {
-        return m_layoutObject->nonPseudoNode();
-    }
+  Node* GetNode() const { return layout_object_->GetNode(); }
 
-    LineLayoutItem parent() const
-    {
-        return LineLayoutItem(m_layoutObject->parent());
-    }
+  Node* NonPseudoNode() const { return layout_object_->NonPseudoNode(); }
 
-    // Implemented in LineLayoutBox.h
-    // Intentionally returns a LineLayoutBox to avoid exposing LayoutBlock
-    // to the line layout code.
-    LineLayoutBox containingBlock() const;
-
-    // Implemented in LineLayoutBoxModel.h
-    // Intentionally returns a LineLayoutBoxModel to avoid exposing LayoutBoxModelObject
-    // to the line layout code.
-    LineLayoutBoxModel enclosingBoxModelObject() const;
-
-    LineLayoutItem container() const
-    {
-        return LineLayoutItem(m_layoutObject->container());
-    }
+  LineLayoutItem Parent() const {
+    return LineLayoutItem(layout_object_->Parent());
+  }
 
-    bool isDescendantOf(const LineLayoutItem item) const
-    {
-        return m_layoutObject->isDescendantOf(item.m_layoutObject);
-    }
+  // Implemented in LineLayoutBox.h
+  // Intentionally returns a LineLayoutBox to avoid exposing LayoutBlock
+  // to the line layout code.
+  LineLayoutBox ContainingBlock() const;
 
-    void updateHitTestResult(HitTestResult& result, const LayoutPoint& point)
-    {
-        return m_layoutObject->updateHitTestResult(result, point);
-    }
+  // Implemented in LineLayoutBoxModel.h
+  // Intentionally returns a LineLayoutBoxModel to avoid exposing
+  // LayoutBoxModelObject to the line layout code.
+  LineLayoutBoxModel EnclosingBoxModelObject() const;
 
-    LineLayoutItem nextSibling() const
-    {
-        return LineLayoutItem(m_layoutObject->nextSibling());
-    }
+  LineLayoutItem Container() const {
+    return LineLayoutItem(layout_object_->Container());
+  }
 
-    LineLayoutItem previousSibling() const
-    {
-        return LineLayoutItem(m_layoutObject->previousSibling());
-    }
+  bool IsDescendantOf(const LineLayoutItem item) const {
+    return layout_object_->IsDescendantOf(item.layout_object_);
+  }
 
-    LineLayoutItem slowFirstChild() const
-    {
-        return LineLayoutItem(m_layoutObject->slowFirstChild());
-    }
+  void UpdateHitTestResult(HitTestResult& result, const LayoutPoint& point) {
+    return layout_object_->UpdateHitTestResult(result, point);
+  }
 
-    LineLayoutItem slowLastChild() const
-    {
-        return LineLayoutItem(m_layoutObject->slowLastChild());
-    }
+  LineLayoutItem NextSibling() const {
+    return LineLayoutItem(layout_object_->NextSibling());
+  }
 
-    // TODO(dgrogan/eae): Collapse these 4 methods to 1. Settle on pointer or
-    // ref. Give firstLine a default value.
-    const ComputedStyle* style() const
-    {
-        return m_layoutObject->style();
-    }
+  LineLayoutItem PreviousSibling() const {
+    return LineLayoutItem(layout_object_->PreviousSibling());
+  }
 
-    const ComputedStyle& styleRef() const
-    {
-        return m_layoutObject->styleRef();
-    }
+  LineLayoutItem SlowFirstChild() const {
+    return LineLayoutItem(layout_object_->SlowFirstChild());
+  }
 
-    const ComputedStyle* style(bool firstLine) const
-    {
-        return m_layoutObject->style(firstLine);
-    }
+  LineLayoutItem SlowLastChild() const {
+    return LineLayoutItem(layout_object_->SlowLastChild());
+  }
 
-    const ComputedStyle& styleRef(bool firstLine) const
-    {
-        return m_layoutObject->styleRef(firstLine);
-    }
+  // TODO(dgrogan/eae): Collapse these 4 methods to 1. Settle on pointer or
+  // ref. Give firstLine a default value.
+  const ComputedStyle* Style() const { return layout_object_->Style(); }
 
-    Document& document() const
-    {
-        return m_layoutObject->document();
-    }
+  const ComputedStyle& StyleRef() const { return layout_object_->StyleRef(); }
 
-    // TODO(dgrogan): This is the only caller: move the logic from LayoutObject
-    // to here.
-    bool preservesNewline() const
-    {
-        return m_layoutObject->preservesNewline();
-    }
+  const ComputedStyle* Style(bool first_line) const {
+    return layout_object_->Style(first_line);
+  }
 
-    unsigned length() const
-    {
-        return m_layoutObject->length();
-    }
+  const ComputedStyle& StyleRef(bool first_line) const {
+    return layout_object_->StyleRef(first_line);
+  }
 
-    void dirtyLinesFromChangedChild(LineLayoutItem item, MarkingBehavior markingBehaviour = MarkContainerChain) const
-    {
-        m_layoutObject->dirtyLinesFromChangedChild(item.layoutObject(), markingBehaviour);
-    }
+  Document& GetDocument() const { return layout_object_->GetDocument(); }
 
-    bool ancestorLineBoxDirty() const
-    {
-        return m_layoutObject->ancestorLineBoxDirty();
-    }
+  // TODO(dgrogan): This is the only caller: move the logic from LayoutObject
+  // to here.
+  bool PreservesNewline() const { return layout_object_->PreservesNewline(); }
 
-    // TODO(dgrogan/eae): Remove this method and replace every call with an ||.
-    bool isFloatingOrOutOfFlowPositioned() const
-    {
-        return m_layoutObject->isFloatingOrOutOfFlowPositioned();
-    }
+  unsigned length() const { return layout_object_->length(); }
 
-    bool isFloating() const
-    {
-        return m_layoutObject->isFloating();
-    }
+  void DirtyLinesFromChangedChild(
+      LineLayoutItem item,
+      MarkingBehavior marking_behaviour = kMarkContainerChain) const {
+    layout_object_->DirtyLinesFromChangedChild(item.GetLayoutObject(),
+                                               marking_behaviour);
+  }
 
-    bool isOutOfFlowPositioned() const
-    {
-        return m_layoutObject->isOutOfFlowPositioned();
-    }
+  bool AncestorLineBoxDirty() const {
+    return layout_object_->AncestorLineBoxDirty();
+  }
 
-    bool isBox() const
-    {
-        return m_layoutObject->isBox();
-    }
+  // TODO(dgrogan/eae): Remove this method and replace every call with an ||.
+  bool IsFloatingOrOutOfFlowPositioned() const {
+    return layout_object_->IsFloatingOrOutOfFlowPositioned();
+  }
 
-    bool isBoxModelObject() const
-    {
-        return m_layoutObject->isBoxModelObject();
-    }
+  bool IsFloating() const { return layout_object_->IsFloating(); }
 
-    bool isBR() const
-    {
-        return m_layoutObject->isBR();
-    }
+  bool IsOutOfFlowPositioned() const {
+    return layout_object_->IsOutOfFlowPositioned();
+  }
 
-    bool isCombineText() const
-    {
-        return m_layoutObject->isCombineText();
-    }
+  bool IsBox() const { return layout_object_->IsBox(); }
 
-    bool isHorizontalWritingMode() const
-    {
-        return m_layoutObject->isHorizontalWritingMode();
-    }
+  bool IsBoxModelObject() const { return layout_object_->IsBoxModelObject(); }
 
-    bool isImage() const
-    {
-        return m_layoutObject->isImage();
-    }
+  bool IsBR() const { return layout_object_->IsBR(); }
 
-    bool isInline() const
-    {
-        return m_layoutObject->isInline();
-    }
+  bool IsCombineText() const { return layout_object_->IsCombineText(); }
 
-    bool isInlineBlockOrInlineTable() const
-    {
-        return m_layoutObject->isInlineBlockOrInlineTable();
-    }
+  bool IsHorizontalWritingMode() const {
+    return layout_object_->IsHorizontalWritingMode();
+  }
 
-    bool isInlineElementContinuation() const
-    {
-        return m_layoutObject->isInlineElementContinuation();
-    }
+  bool IsImage() const { return layout_object_->IsImage(); }
 
-    // TODO(dgrogan/eae): Replace isType with an enum in the API? As it stands
-    // we mix isProperty and isType, which is confusing.
-    bool isLayoutBlock() const
-    {
-        return m_layoutObject->isLayoutBlock();
-    }
+  bool IsInline() const { return layout_object_->IsInline(); }
 
-    bool isLayoutBlockFlow() const
-    {
-        return m_layoutObject->isLayoutBlockFlow();
-    }
+  bool IsInlineBlockOrInlineTable() const {
+    return layout_object_->IsInlineBlockOrInlineTable();
+  }
 
-    bool isLayoutInline() const
-    {
-        return m_layoutObject->isLayoutInline();
-    }
+  bool IsInlineElementContinuation() const {
+    return layout_object_->IsInlineElementContinuation();
+  }
 
-    bool isListMarker() const
-    {
-        return m_layoutObject->isListMarker();
-    }
+  // TODO(dgrogan/eae): Replace isType with an enum in the API? As it stands
+  // we mix isProperty and isType, which is confusing.
+  bool IsLayoutBlock() const { return layout_object_->IsLayoutBlock(); }
 
-    bool isAtomicInlineLevel() const
-    {
-        return m_layoutObject->isAtomicInlineLevel();
-    }
+  bool IsLayoutBlockFlow() const { return layout_object_->IsLayoutBlockFlow(); }
 
-    bool isRubyText() const
-    {
-        return m_layoutObject->isRubyText();
-    }
+  bool IsLayoutInline() const { return layout_object_->IsLayoutInline(); }
 
-    bool isRubyRun() const
-    {
-        return m_layoutObject->isRubyRun();
-    }
+  bool IsListMarker() const { return layout_object_->IsListMarker(); }
 
-    bool isRubyBase() const
-    {
-        return m_layoutObject->isRubyBase();
-    }
+  bool IsAtomicInlineLevel() const {
+    return layout_object_->IsAtomicInlineLevel();
+  }
 
-    bool isSVGInline() const
-    {
-        return m_layoutObject->isSVGInline();
-    }
+  bool IsRubyText() const { return layout_object_->IsRubyText(); }
 
-    bool isSVGInlineText() const
-    {
-        return m_layoutObject->isSVGInlineText();
-    }
+  bool IsRubyRun() const { return layout_object_->IsRubyRun(); }
 
-    bool isSVGText() const
-    {
-        return m_layoutObject->isSVGText();
-    }
+  bool IsRubyBase() const { return layout_object_->IsRubyBase(); }
 
-    bool isSVGTextPath() const
-    {
-        return m_layoutObject->isSVGTextPath();
-    }
+  bool IsSVGInline() const { return layout_object_->IsSVGInline(); }
 
-    bool isTableCell() const
-    {
-        return m_layoutObject->isTableCell();
-    }
+  bool IsSVGInlineText() const { return layout_object_->IsSVGInlineText(); }
 
-    bool isText() const
-    {
-        return m_layoutObject->isText();
-    }
+  bool IsSVGText() const { return layout_object_->IsSVGText(); }
 
-    bool hasLayer() const
-    {
-        return m_layoutObject->hasLayer();
-    }
+  bool IsSVGTextPath() const { return layout_object_->IsSVGTextPath(); }
 
-    bool selfNeedsLayout() const
-    {
-        return m_layoutObject->selfNeedsLayout();
-    }
+  bool IsTableCell() const { return layout_object_->IsTableCell(); }
 
-    // TODO(dgrogan/eae): Why does layoutObject need to know if its ancestor
-    // line box is dirty at all?
-    void setAncestorLineBoxDirty() const
-    {
-        m_layoutObject->setAncestorLineBoxDirty();
-    }
+  bool IsText() const { return layout_object_->IsText(); }
 
-    int caretMinOffset() const
-    {
-        return m_layoutObject->caretMinOffset();
-    }
+  bool IsEmptyText() const {
+    return IsText() && ToLayoutText(layout_object_)->GetText().IsEmpty();
+  }
 
-    int caretMaxOffset() const
-    {
-        return m_layoutObject->caretMaxOffset();
-    }
+  bool HasLayer() const { return layout_object_->HasLayer(); }
 
-    bool hasFlippedBlocksWritingMode() const
-    {
-        return m_layoutObject->hasFlippedBlocksWritingMode();
-    }
+  bool SelfNeedsLayout() const { return layout_object_->SelfNeedsLayout(); }
 
-    bool visibleToHitTestRequest(const HitTestRequest& request) const
-    {
-        return m_layoutObject->visibleToHitTestRequest(request);
-    }
+  // TODO(dgrogan/eae): Why does layoutObject need to know if its ancestor
+  // line box is dirty at all?
+  void SetAncestorLineBoxDirty() const {
+    layout_object_->SetAncestorLineBoxDirty();
+  }
 
-    bool hitTest(HitTestResult& result, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestFilter filter = HitTestAll)
-    {
-        return m_layoutObject->hitTest(result, locationInContainer, accumulatedOffset, filter);
-    }
+  int CaretMinOffset() const { return layout_object_->CaretMinOffset(); }
 
-    SelectionState getSelectionState() const
-    {
-        return m_layoutObject->getSelectionState();
-    }
+  int CaretMaxOffset() const { return layout_object_->CaretMaxOffset(); }
 
-    // TODO(dgrogan/eae): Can we move this to style?
-    Color selectionBackgroundColor() const
-    {
-        return m_layoutObject->selectionBackgroundColor();
-    }
+  bool HasFlippedBlocksWritingMode() const {
+    return layout_object_->HasFlippedBlocksWritingMode();
+  }
 
-    // TODO(dgrogan/eae): Needed for Color::current. Can we move this somewhere?
-    Color resolveColor(const ComputedStyle& styleToUse, int colorProperty)
-    {
-        return m_layoutObject->resolveColor(styleToUse, colorProperty);
-    }
+  bool VisibleToHitTestRequest(const HitTestRequest& request) const {
+    return layout_object_->VisibleToHitTestRequest(request);
+  }
 
-    bool isInFlowPositioned() const
-    {
-        return m_layoutObject->isInFlowPositioned();
-    }
+  bool HitTest(HitTestResult& result,
+               const HitTestLocation& location_in_container,
+               const LayoutPoint& accumulated_offset,
+               HitTestFilter filter = kHitTestAll) {
+    return layout_object_->HitTest(result, location_in_container,
+                                   accumulated_offset, filter);
+  }
 
-    // TODO(dgrogan/eae): Can we change this to GlobalToLocal and vice versa
-    // instead of having 4 methods? See localToAbsoluteQuad below.
-    PositionWithAffinity positionForPoint(const LayoutPoint& point)
-    {
-        return m_layoutObject->positionForPoint(point);
-    }
+  SelectionState GetSelectionState() const {
+    return layout_object_->GetSelectionState();
+  }
 
-    PositionWithAffinity createPositionWithAffinity(int offset, TextAffinity affinity)
-    {
-        return m_layoutObject->createPositionWithAffinity(offset, affinity);
-    }
+  // TODO(dgrogan/eae): Can we move this to style?
+  Color SelectionBackgroundColor() const {
+    return layout_object_->SelectionBackgroundColor();
+  }
 
-    LineLayoutItem previousInPreOrder(const LayoutObject* stayWithin) const
-    {
-        return LineLayoutItem(m_layoutObject->previousInPreOrder(stayWithin));
-    }
+  // TODO(dgrogan/eae): Needed for Color::current. Can we move this somewhere?
+  Color ResolveColor(const ComputedStyle& style_to_use, int color_property) {
+    return layout_object_->ResolveColor(style_to_use, color_property);
+  }
 
-    FloatQuad localToAbsoluteQuad(const FloatQuad& quad, MapCoordinatesFlags mode = 0) const
-    {
-        return m_layoutObject->localToAbsoluteQuad(quad, mode);
-    }
+  bool IsInFlowPositioned() const {
+    return layout_object_->IsInFlowPositioned();
+  }
 
-    FloatPoint localToAbsolute(const FloatPoint& localPoint = FloatPoint(), MapCoordinatesFlags flags = 0) const
-    {
-        return m_layoutObject->localToAbsolute(localPoint, flags);
-    }
+  // TODO(dgrogan/eae): Can we change this to GlobalToLocal and vice versa
+  // instead of having 4 methods? See localToAbsoluteQuad below.
+  PositionWithAffinity PositionForPoint(const LayoutPoint& point) {
+    return layout_object_->PositionForPoint(point);
+  }
 
-    bool hasOverflowClip() const
-    {
-        return m_layoutObject->hasOverflowClip();
-    }
+  PositionWithAffinity CreatePositionWithAffinity(int offset,
+                                                  TextAffinity affinity) {
+    return layout_object_->CreatePositionWithAffinity(offset, affinity);
+  }
 
-    // TODO(dgrogan/eae): Can we instead add a TearDown method to the API
-    // instead of exposing this and other shutdown code to line layout?
-    bool documentBeingDestroyed() const
-    {
-        return m_layoutObject->documentBeingDestroyed();
-    }
+  LineLayoutItem PreviousInPreOrder(const LayoutObject* stay_within) const {
+    return LineLayoutItem(layout_object_->PreviousInPreOrder(stay_within));
+  }
 
-    LayoutRect visualRect() const
-    {
-        return m_layoutObject->visualRect();
-    }
+  FloatQuad LocalToAbsoluteQuad(const FloatQuad& quad,
+                                MapCoordinatesFlags mode = 0) const {
+    return layout_object_->LocalToAbsoluteQuad(quad, mode);
+  }
 
-    bool isHashTableDeletedValue() const
-    {
-        return m_layoutObject == kHashTableDeletedValue;
-    }
+  FloatPoint LocalToAbsolute(const FloatPoint& local_point = FloatPoint(),
+                             MapCoordinatesFlags flags = 0) const {
+    return layout_object_->LocalToAbsolute(local_point, flags);
+  }
 
-    void setShouldDoFullPaintInvalidation()
-    {
-        m_layoutObject->setShouldDoFullPaintInvalidation();
-    }
+  bool HasOverflowClip() const { return layout_object_->HasOverflowClip(); }
 
-    void slowSetPaintingLayerNeedsRepaint()
-    {
-        m_layoutObject->slowSetPaintingLayerNeedsRepaint();
-    }
+  // TODO(dgrogan/eae): Can we instead add a TearDown method to the API
+  // instead of exposing this and other shutdown code to line layout?
+  bool DocumentBeingDestroyed() const {
+    return layout_object_->DocumentBeingDestroyed();
+  }
 
-    struct LineLayoutItemHash {
-        STATIC_ONLY(LineLayoutItemHash);
-        static unsigned hash(const LineLayoutItem& key) { return WTF::PtrHash<LayoutObject>::hash(key.m_layoutObject); }
-        static bool equal(const LineLayoutItem& a, const LineLayoutItem& b)
-        {
-            return WTF::PtrHash<LayoutObject>::equal(a.m_layoutObject, b.m_layoutObject);
-        }
-        static const bool safeToCompareToEmptyOrDeleted = true;
-    };
+  LayoutRect VisualRect() const { return layout_object_->VisualRect(); }
+
+  bool IsHashTableDeletedValue() const {
+    return layout_object_ == kHashTableDeletedValue;
+  }
+
+  void SetShouldDoFullPaintInvalidation() {
+    layout_object_->SetShouldDoFullPaintInvalidation();
+  }
+
+  void SlowSetPaintingLayerNeedsRepaint() {
+    ObjectPaintInvalidator(*layout_object_).SlowSetPaintingLayerNeedsRepaint();
+  }
+
+  struct LineLayoutItemHash {
+    STATIC_ONLY(LineLayoutItemHash);
+    static unsigned GetHash(const LineLayoutItem& key) {
+      return WTF::PtrHash<LayoutObject>::GetHash(key.layout_object_);
+    }
+    static bool Equal(const LineLayoutItem& a, const LineLayoutItem& b) {
+      return WTF::PtrHash<LayoutObject>::Equal(a.layout_object_,
+                                               b.layout_object_);
+    }
+    static const bool safe_to_compare_to_empty_or_deleted = true;
+  };
 
 #ifndef NDEBUG
 
-    const char* name() const
-    {
-        return m_layoutObject->name();
-    }
+  const char* GetName() const { return layout_object_->GetName(); }
 
-    // Intentionally returns a void* to avoid exposing LayoutObject* to the line
-    // layout code.
-    void* debugPointer() const
-    {
-        return m_layoutObject;
-    }
+  // Intentionally returns a void* to avoid exposing LayoutObject* to the line
+  // layout code.
+  void* DebugPointer() const { return layout_object_; }
 
-    void showTreeForThis() const
-    {
-        m_layoutObject->showTreeForThis();
-    }
+  void ShowTreeForThis() const { layout_object_->ShowTreeForThis(); }
 
-    String decoratedName() const
-    {
-        return m_layoutObject->decoratedName();
-    }
+  String DecoratedName() const { return layout_object_->DecoratedName(); }
 
 #endif
 
-protected:
-    LayoutObject* layoutObject() { return m_layoutObject; }
-    const LayoutObject* layoutObject() const { return m_layoutObject; }
+ protected:
+  LayoutObject* GetLayoutObject() { return layout_object_; }
+  const LayoutObject* GetLayoutObject() const { return layout_object_; }
 
-private:
-    LayoutObject* m_layoutObject;
+ private:
+  LayoutObject* layout_object_;
 
-    friend class LayoutBlockFlow;
-    friend class LineLayoutAPIShim;
-    friend class LineLayoutBlockFlow;
-    friend class LineLayoutBox;
-    friend class LineLayoutRubyRun;
+  friend class LayoutBlockFlow;
+  friend class LineLayoutAPIShim;
+  friend class LineLayoutBlockFlow;
+  friend class LineLayoutBox;
+  friend class LineLayoutRubyRun;
 };
 
-} // namespace blink
+}  // namespace blink
 
 namespace WTF {
 
 template <>
 struct DefaultHash<blink::LineLayoutItem> {
-    using Hash = blink::LineLayoutItem::LineLayoutItemHash;
+  using Hash = blink::LineLayoutItem::LineLayoutItemHash;
 };
 
 template <>
-struct HashTraits<blink::LineLayoutItem> : SimpleClassHashTraits<blink::LineLayoutItem> {
-    STATIC_ONLY(HashTraits);
+struct HashTraits<blink::LineLayoutItem>
+    : SimpleClassHashTraits<blink::LineLayoutItem> {
+  STATIC_ONLY(HashTraits);
 };
 
-} // namespace WTF
+}  // namespace WTF
 
-
-#endif // LineLayoutItem_h
+#endif  // LineLayoutItem_h

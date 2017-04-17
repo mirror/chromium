@@ -46,9 +46,6 @@ class CreditCard : public AutofillDataModel {
   };
 
   CreditCard(const std::string& guid, const std::string& origin);
-  CreditCard(const base::string16& card_number,
-             int expiration_month,
-             int expiration_year);
 
   // Creates a server card.  The type must be MASKED_SERVER_CARD or
   // FULL_SERVER_CARD.
@@ -65,14 +62,8 @@ class CreditCard : public AutofillDataModel {
   // The user-visible type of the card, e.g. 'Mastercard'.
   static base::string16 TypeForDisplay(const std::string& type);
 
-// This method is not compiled on iOS because the resources are not used and
-// should not be shipped.
-// TODO(jdonnelly): Use credit card issuer images on iOS.
-// http://crbug.com/535784
-#if !defined(OS_IOS)
   // The ResourceBundle ID for the appropriate credit card image.
   static int IconResourceId(const std::string& type);
-#endif  // #if !defined(OS_IOS)
 
   // Returns the internal representation of credit card type corresponding to
   // the given |number|.  The credit card type is determined purely according to
@@ -134,6 +125,7 @@ class CreditCard : public AutofillDataModel {
   void SetExpirationYear(int expiration_year);
 
   const std::string& server_id() const { return server_id_; }
+  void set_server_id(const std::string& server_id) { server_id_ = server_id; }
 
   // For use in STL containers.
   void operator=(const CreditCard& credit_card);
@@ -182,6 +174,9 @@ class CreditCard : public AutofillDataModel {
   // Sets |number_| to |number| and computes the appropriate card |type_|.
   void SetNumber(const base::string16& number);
 
+  // Returns the date when the credit card was last used in autofill.
+  base::string16 GetLastUsedDateForDisplay(const std::string& app_locale) const;
+
   // Logs the number of days since the credit card was last used and records its
   // use.
   void RecordAndLogUse();
@@ -204,6 +199,20 @@ class CreditCard : public AutofillDataModel {
     billing_address_id_ = id;
   }
 
+  // Sets |expiration_month_| to the integer conversion of |text| and returns
+  // whether the operation was successful.
+  bool SetExpirationMonthFromString(const base::string16& text,
+                                    const std::string& app_locale);
+
+  // Sets |expiration_year_| to the integer conversion of |text|. Will handle
+  // 4-digit year or 2-digit year (eventually converted to 4-digit year).
+  void SetExpirationYearFromString(const base::string16& text);
+
+  // Sets |expiration_year_| and |expiration_month_| to the integer conversion
+  // of |text|. Will handle mmyy, mmyyyy, mm-yyyy and mm-yy as well as single
+  // digit months, with various separators.
+  void SetExpirationDateFromString(const base::string16& text);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(CreditCardTest, SetExpirationDateFromString);
   FRIEND_TEST_ALL_PREFIXES(CreditCardTest, SetExpirationYearFromString);
@@ -220,20 +229,6 @@ class CreditCard : public AutofillDataModel {
   base::string16 ExpirationMonthAsString() const;
   base::string16 Expiration4DigitYearAsString() const;
   base::string16 Expiration2DigitYearAsString() const;
-
-  // Sets |expiration_month_| to the integer conversion of |text| and returns
-  // whether the operation was successful.
-  bool SetExpirationMonthFromString(const base::string16& text,
-                                    const std::string& app_locale);
-
-  // Sets |expiration_year_| to the integer conversion of |text|. Will handle
-  // 4-digit year or 2-digit year (eventually converted to 4-digit year).
-  void SetExpirationYearFromString(const base::string16& text);
-
-  // Sets |expiration_year_| and |expiration_month_| to the integer conversion
-  // of |text|. Will handle mmyy, mmyyyy, mm-yyyy and mm-yy as well as single
-  // digit months, with various separators.
-  void SetExpirationDateFromString(const base::string16& text);
 
   // See enum definition above.
   RecordType record_type_;
@@ -274,6 +269,7 @@ extern const char kDiscoverCard[];
 extern const char kGenericCard[];
 extern const char kJCBCard[];
 extern const char kMasterCard[];
+extern const char kMirCard[];
 extern const char kUnionPay[];
 extern const char kVisaCard[];
 

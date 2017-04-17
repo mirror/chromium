@@ -35,10 +35,14 @@ function test()
         function testHighlightedText(next)
         {
             var textEditor = InspectorTest.createTestEditor();
+            InspectorTest.addSnifferPromise(SourceFrame.SourcesTextEditor.prototype, "rewriteMimeType").then(step1);
             textEditor.setMimeType("text/javascript");
-            textEditor.setText(text.join("\n"));
-            testTokenAtPosition(textEditor);
-            next();
+            function step1()
+            {
+                textEditor.setText(text.join("\n"));
+                testTokenAtPosition(textEditor);
+                next();
+            }
         },
     ]);
 }

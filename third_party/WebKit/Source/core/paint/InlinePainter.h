@@ -6,29 +6,28 @@
 #define InlinePainter_h
 
 #include "core/style/ComputedStyleConstants.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class Color;
-class GraphicsContext;
 class LayoutPoint;
-class LayoutRect;
 struct PaintInfo;
 class LayoutInline;
 
 class InlinePainter {
-    STACK_ALLOCATED();
-public:
-    InlinePainter(const LayoutInline& layoutInline) : m_layoutInline(layoutInline) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint& paintOffset);
+ public:
+  InlinePainter(const LayoutInline& layout_inline)
+      : layout_inline_(layout_inline) {}
 
-private:
-    const LayoutInline& m_layoutInline;
+  void Paint(const PaintInfo&, const LayoutPoint& paint_offset);
+
+ private:
+  const LayoutInline& layout_inline_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InlinePainter_h
+#endif  // InlinePainter_h

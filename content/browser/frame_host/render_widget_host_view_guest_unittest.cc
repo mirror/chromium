@@ -11,9 +11,9 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "build/build_config.h"
 #include "cc/surfaces/surface.h"
-#include "cc/surfaces/surface_factory.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/surfaces/surface_sequence.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
@@ -26,9 +26,11 @@
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_context.h"
+#include "content/test/fake_renderer_compositor_frame_sink.h"
 #include "content/test/test_render_view_host.h"
 #include "content/test/test_web_contents.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/compositor/compositor.h"
 
 namespace content {
 namespace {
@@ -47,7 +49,7 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
 
 class RenderWidgetHostViewGuestTest : public testing::Test {
  public:
-  RenderWidgetHostViewGuestTest() {}
+  RenderWidgetHostViewGuestTest() : task_scheduler_(&message_loop_) {}
 
   void SetUp() override {
 #if !defined(OS_ANDROID)
@@ -61,7 +63,7 @@ class RenderWidgetHostViewGuestTest : public testing::Test {
     int32_t routing_id = process_host->GetNextRoutingID();
     widget_host_ =
         new RenderWidgetHostImpl(&delegate_, process_host, routing_id, false);
-    view_ = new RenderWidgetHostViewGuest(
+    view_ = RenderWidgetHostViewGuest::Create(
         widget_host_, NULL,
         (new TestRenderWidgetHostView(widget_host_))->GetWeakPtr());
   }
@@ -75,7 +77,7 @@ class RenderWidgetHostViewGuestTest : public testing::Test {
 
     message_loop_.task_runner()->DeleteSoon(FROM_HERE,
                                             browser_context_.release());
-    message_loop_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
 #if !defined(OS_ANDROID)
     ImageTransportFactory::Terminate();
 #endif
@@ -83,6 +85,10 @@ class RenderWidgetHostViewGuestTest : public testing::Test {
 
  protected:
   base::MessageLoopForUI message_loop_;
+
+  // Needed by base::PostTaskWithTraits in RenderWidgetHostImpl constructor.
+  base::test::ScopedTaskScheduler task_scheduler_;
+
   std::unique_ptr<BrowserContext> browser_context_;
   MockRenderWidgetHostDelegate delegate_;
 
@@ -109,15 +115,11 @@ class TestBrowserPluginGuest : public BrowserPluginGuest {
  public:
   TestBrowserPluginGuest(WebContentsImpl* web_contents,
                          BrowserPluginGuestDelegate* delegate)
-      : BrowserPluginGuest(web_contents->HasOpener(), web_contents, delegate),
-        last_scale_factor_received_(0.f) {}
+      : BrowserPluginGuest(web_contents->HasOpener(), web_contents, delegate) {}
+
   ~TestBrowserPluginGuest() override {}
 
-  void ResetTestData() {
-    last_surface_id_received_ = cc::SurfaceId();
-    last_frame_size_received_ = gfx::Size();
-    last_scale_factor_received_ = 0.f;
-  }
+  void ResetTestData() { last_surface_info_ = cc::SurfaceInfo(); }
 
   void set_has_attached_since_surface_set(bool has_attached_since_surface_set) {
     BrowserPluginGuest::set_has_attached_since_surface_set_for_test(
@@ -128,18 +130,12 @@ class TestBrowserPluginGuest : public BrowserPluginGuest {
     BrowserPluginGuest::set_attached_for_test(attached);
   }
 
-  void SetChildFrameSurface(const cc::SurfaceId& surface_id,
-                            const gfx::Size& frame_size,
-                            float scale_factor,
+  void SetChildFrameSurface(const cc::SurfaceInfo& surface_info,
                             const cc::SurfaceSequence& sequence) override {
-    last_surface_id_received_ = surface_id;
-    last_frame_size_received_ = frame_size;
-    last_scale_factor_received_ = scale_factor;
+    last_surface_info_ = surface_info;
   }
 
-  cc::SurfaceId last_surface_id_received_;
-  gfx::Size last_frame_size_received_;
-  float last_scale_factor_received_;
+  cc::SurfaceInfo last_surface_info_;
 };
 
 // TODO(wjmaclean): we should restructure RenderWidgetHostViewChildFrameTest to
@@ -170,9 +166,19 @@ class RenderWidgetHostViewGuestSurfaceTest
     int32_t routing_id = process_host->GetNextRoutingID();
     widget_host_ =
         new RenderWidgetHostImpl(&delegate_, process_host, routing_id, false);
-    view_ = new RenderWidgetHostViewGuest(
+    view_ = RenderWidgetHostViewGuest::Create(
         widget_host_, browser_plugin_guest_,
         (new TestRenderWidgetHostView(widget_host_))->GetWeakPtr());
+    cc::mojom::MojoCompositorFrameSinkPtr sink;
+    cc::mojom::MojoCompositorFrameSinkRequest sink_request =
+        mojo::MakeRequest(&sink);
+    cc::mojom::MojoCompositorFrameSinkClientRequest client_request =
+        mojo::MakeRequest(&renderer_compositor_frame_sink_ptr_);
+    renderer_compositor_frame_sink_ =
+        base::MakeUnique<FakeRendererCompositorFrameSink>(
+            std::move(sink), std::move(client_request));
+    view_->DidCreateNewRendererCompositorFrameSink(
+        renderer_compositor_frame_sink_ptr_.get());
   }
 
   void TearDown() override {
@@ -189,9 +195,13 @@ class RenderWidgetHostViewGuestSurfaceTest
 #endif
   }
 
-  cc::SurfaceId surface_id() {
+  cc::SurfaceId GetSurfaceId() const {
     DCHECK(view_);
-    return static_cast<RenderWidgetHostViewChildFrame*>(view_)->surface_id_;
+    RenderWidgetHostViewChildFrame* rwhvcf =
+        static_cast<RenderWidgetHostViewChildFrame*>(view_);
+    if (!rwhvcf->local_surface_id_.is_valid())
+      return cc::SurfaceId();
+    return cc::SurfaceId(rwhvcf->frame_sink_id_, rwhvcf->local_surface_id_);
   }
 
  protected:
@@ -206,8 +216,12 @@ class RenderWidgetHostViewGuestSurfaceTest
   // destruction.
   RenderWidgetHostImpl* widget_host_;
   RenderWidgetHostViewGuest* view_;
+  std::unique_ptr<FakeRendererCompositorFrameSink>
+      renderer_compositor_frame_sink_;
 
  private:
+  cc::mojom::MojoCompositorFrameSinkClientPtr
+      renderer_compositor_frame_sink_ptr_;
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewGuestSurfaceTest);
 };
 
@@ -217,12 +231,11 @@ cc::CompositorFrame CreateDelegatedFrame(float scale_factor,
                                          const gfx::Rect& damage) {
   cc::CompositorFrame frame;
   frame.metadata.device_scale_factor = scale_factor;
-  frame.delegated_frame_data.reset(new cc::DelegatedFrameData);
+  frame.metadata.begin_frame_ack = cc::BeginFrameAck(0, 1, 1, true);
 
   std::unique_ptr<cc::RenderPass> pass = cc::RenderPass::Create();
-  pass->SetNew(cc::RenderPassId(1, 1), gfx::Rect(size), damage,
-               gfx::Transform());
-  frame.delegated_frame_data->render_pass_list.push_back(std::move(pass));
+  pass->SetNew(1, gfx::Rect(size), damage, gfx::Transform());
+  frame.render_pass_list.push_back(std::move(pass));
   return frame;
 }
 }  // anonymous namespace
@@ -231,6 +244,7 @@ TEST_F(RenderWidgetHostViewGuestSurfaceTest, TestGuestSurface) {
   gfx::Size view_size(100, 100);
   gfx::Rect view_rect(view_size);
   float scale_factor = 1.f;
+  cc::LocalSurfaceId local_surface_id(1, base::UnguessableToken::Create());
 
   ASSERT_TRUE(browser_plugin_guest_);
 
@@ -238,56 +252,60 @@ TEST_F(RenderWidgetHostViewGuestSurfaceTest, TestGuestSurface) {
   view_->Show();
 
   browser_plugin_guest_->set_attached(true);
-  view_->OnSwapCompositorFrame(
-      0, CreateDelegatedFrame(scale_factor, view_size, view_rect));
+  view_->SubmitCompositorFrame(
+      local_surface_id,
+      CreateDelegatedFrame(scale_factor, view_size, view_rect));
 
-  cc::SurfaceId id = surface_id();
-  if (!id.is_null()) {
+  cc::SurfaceId id = GetSurfaceId();
+
+  EXPECT_TRUE(id.is_valid());
+
 #if !defined(OS_ANDROID)
-    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-    cc::SurfaceManager* manager = factory->GetSurfaceManager();
-    cc::Surface* surface = manager->GetSurfaceForId(id);
-    EXPECT_TRUE(surface);
-    // There should be a SurfaceSequence created by the RWHVGuest.
-    EXPECT_EQ(1u, surface->GetDestructionDependencyCount());
+  cc::SurfaceManager* manager = ImageTransportFactory::GetInstance()
+                                    ->GetContextFactoryPrivate()
+                                    ->GetSurfaceManager();
+  cc::Surface* surface = manager->GetSurfaceForId(id);
+  EXPECT_TRUE(surface);
+  // There should be a SurfaceSequence created by the RWHVGuest.
+  EXPECT_EQ(1u, surface->GetDestructionDependencyCount());
 #endif
-    // Surface ID should have been passed to BrowserPluginGuest to
-    // be sent to the embedding renderer.
-    EXPECT_EQ(id, browser_plugin_guest_->last_surface_id_received_);
-    EXPECT_EQ(view_size, browser_plugin_guest_->last_frame_size_received_);
-    EXPECT_EQ(scale_factor, browser_plugin_guest_->last_scale_factor_received_);
-  }
+  // Surface ID should have been passed to BrowserPluginGuest to
+  // be sent to the embedding renderer.
+  EXPECT_EQ(cc::SurfaceInfo(id, scale_factor, view_size),
+            browser_plugin_guest_->last_surface_info_);
 
   browser_plugin_guest_->ResetTestData();
   browser_plugin_guest_->set_has_attached_since_surface_set(true);
 
-  view_->OnSwapCompositorFrame(
-      0, CreateDelegatedFrame(scale_factor, view_size, view_rect));
+  view_->SubmitCompositorFrame(
+      local_surface_id,
+      CreateDelegatedFrame(scale_factor, view_size, view_rect));
 
-  id = surface_id();
-  if (!id.is_null()) {
+  // Since we have not changed the frame size and scale factor, the same surface
+  // id must be used.
+  DCHECK_EQ(id, GetSurfaceId());
+
 #if !defined(OS_ANDROID)
-    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-    cc::SurfaceManager* manager = factory->GetSurfaceManager();
-    cc::Surface* surface = manager->GetSurfaceForId(id);
-    EXPECT_TRUE(surface);
-    // There should be a SurfaceSequence created by the RWHVGuest.
-    EXPECT_EQ(1u, surface->GetDestructionDependencyCount());
+  surface = manager->GetSurfaceForId(id);
+  EXPECT_TRUE(surface);
+  // Another SurfaceSequence should be created by the RWHVGuest when sending
+  // SurfaceInfo to the embedder.
+  EXPECT_EQ(2u, surface->GetDestructionDependencyCount());
 #endif
-    // Surface ID should have been passed to BrowserPluginGuest to
-    // be sent to the embedding renderer.
-    EXPECT_EQ(id, browser_plugin_guest_->last_surface_id_received_);
-    EXPECT_EQ(view_size, browser_plugin_guest_->last_frame_size_received_);
-    EXPECT_EQ(scale_factor,
-              browser_plugin_guest_->last_scale_factor_received_);
-  }
+  // Surface ID should have been passed to BrowserPluginGuest to
+  // be sent to the embedding renderer.
+  EXPECT_EQ(cc::SurfaceInfo(id, scale_factor, view_size),
+            browser_plugin_guest_->last_surface_info_);
 
   browser_plugin_guest_->set_attached(false);
   browser_plugin_guest_->ResetTestData();
 
-  view_->OnSwapCompositorFrame(
-      0, CreateDelegatedFrame(scale_factor, view_size, view_rect));
-  EXPECT_TRUE(surface_id().is_null());
+  view_->SubmitCompositorFrame(
+      local_surface_id,
+      CreateDelegatedFrame(scale_factor, view_size, view_rect));
+  // Since guest is not attached, the CompositorFrame must be processed but the
+  // frame must be evicted to return the resources immediately.
+  EXPECT_FALSE(view_->has_frame());
 }
 
 }  // namespace content

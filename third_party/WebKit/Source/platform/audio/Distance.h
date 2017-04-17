@@ -30,8 +30,8 @@
 #define Distance_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/build_config.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/build_config.h"
 
 namespace blink {
 
@@ -39,48 +39,43 @@ namespace blink {
 // http://connect.creativelabs.com/openal/Documentation/OpenAL%201.1%20Specification.htm.
 
 class PLATFORM_EXPORT DistanceEffect {
-    DISALLOW_NEW();
-public:
-    enum ModelType {
-        ModelLinear = 0,
-        ModelInverse = 1,
-        ModelExponential = 2
-    };
+  DISALLOW_NEW();
 
-    DistanceEffect();
+ public:
+  enum ModelType { kModelLinear = 0, kModelInverse = 1, kModelExponential = 2 };
 
-    // Returns scalar gain for the given distance the current distance model is used
-    double gain(double distance);
+  DistanceEffect();
 
-    ModelType model() { return m_model; }
+  // Returns scalar gain for the given distance the current distance model is
+  // used
+  double Gain(double distance);
 
-    void setModel(ModelType model, bool clamped)
-    {
-        m_model = model;
-        m_isClamped = clamped;
-    }
+  ModelType Model() { return model_; }
 
-    // Distance params
-    void setRefDistance(double refDistance) { m_refDistance = refDistance; }
-    void setMaxDistance(double maxDistance) { m_maxDistance = maxDistance; }
-    void setRolloffFactor(double rolloffFactor) { m_rolloffFactor = rolloffFactor; }
+  void SetModel(ModelType model) { model_ = model; }
 
-    double refDistance() const { return m_refDistance; }
-    double maxDistance() const { return m_maxDistance; }
-    double rolloffFactor() const { return m_rolloffFactor; }
+  // Distance params
+  void SetRefDistance(double ref_distance) { ref_distance_ = ref_distance; }
+  void SetMaxDistance(double max_distance) { max_distance_ = max_distance; }
+  void SetRolloffFactor(double rolloff_factor) {
+    rolloff_factor_ = rolloff_factor;
+  }
 
-protected:
-    double linearGain(double distance);
-    double inverseGain(double distance);
-    double exponentialGain(double distance);
+  double RefDistance() const { return ref_distance_; }
+  double MaxDistance() const { return max_distance_; }
+  double RolloffFactor() const { return rolloff_factor_; }
 
-    ModelType m_model;
-    bool m_isClamped;
-    double m_refDistance;
-    double m_maxDistance;
-    double m_rolloffFactor;
+ protected:
+  double LinearGain(double distance);
+  double InverseGain(double distance);
+  double ExponentialGain(double distance);
+
+  ModelType model_;
+  double ref_distance_;
+  double max_distance_;
+  double rolloff_factor_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Distance_h
+#endif  // Distance_h

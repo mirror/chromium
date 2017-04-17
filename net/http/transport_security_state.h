@@ -13,11 +13,13 @@
 #include "base/callback.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/strings/string_piece.h"
 #include "base/threading/non_thread_safe.h"
 #include "base/time/time.h"
 #include "net/base/expiring_cache.h"
 #include "net/base/hash_value.h"
 #include "net/base/net_export.h"
+#include "net/http/transport_security_state_source.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -25,6 +27,9 @@ namespace net {
 class HostPortPair;
 class SSLInfo;
 class X509Certificate;
+
+void NET_EXPORT_PRIVATE SetTransportSecurityStateSourceForTesting(
+    const TransportSecurityStateSource* source);
 
 // Tracks which hosts have enabled strict transport security and/or public
 // key pins.
@@ -252,11 +257,16 @@ class NET_EXPORT TransportSecurityState
   // An interface for asynchronously sending HPKP violation reports.
   class NET_EXPORT ReportSenderInterface {
    public:
-    // Sends the given serialized |report| to |report_uri|.
-    virtual void Send(const GURL& report_uri, const std::string& report) = 0;
-
-    // Sets a callback to be called when report sending fails.
-    virtual void SetErrorCallback(
+    // Sends the given serialized |report| to |report_uri| with
+    // Content-Type header as specified in
+    // |content_type|. |content_type| should be non-empty.
+    // |report_id| could be any non-negative integer. It's passed back to the
+    // error or success callbacks.
+    virtual void Send(
+        const GURL& report_uri,
+        base::StringPiece content_type,
+        base::StringPiece report,
+        const base::Callback<void()>& success_callback,
         const base::Callback<void(const GURL&, int)>& error_callback) = 0;
 
    protected:
@@ -308,13 +318,15 @@ class NET_EXPORT TransportSecurityState
   // 1. Sending Expect-Staple reports is enabled (via
   //    |enable_static_expect_staple_|)
   // 2. A report sender was provided via SetReportSender().
-  // 3. The build is timele (i.e. the preload list is fresh).
+  // 3. The build is timely (i.e. the preload list is fresh).
   // 4. The given host is present on the Expect-Staple preload list.
   // 5. |ssl_info| indicates the connection did not provide an OCSP response
   //    indicating a revocation status of GOOD.
+  // 6. The certificate chain in |ssl_info| chains to a known root. Reports
+  //    for OCSP responses behind MITM proxies are not useful to site owners.
   void CheckExpectStaple(const HostPortPair& host_port_pair,
                          const SSLInfo& ssl_info,
-                         const std::string& ocsp_response);
+                         base::StringPiece ocsp_response);
 
   // Returns true if connections to |host|, using the validated certificate
   // |validated_certificate_chain|, are expected to be accompanied with
@@ -469,6 +481,7 @@ class NET_EXPORT TransportSecurityState
 
  private:
   friend class TransportSecurityStateTest;
+  friend class TransportSecurityStateStaticFuzzer;
   FRIEND_TEST_ALL_PREFIXES(HttpSecurityHeadersTest, UpdateDynamicPKPOnly);
   FRIEND_TEST_ALL_PREFIXES(HttpSecurityHeadersTest, UpdateDynamicPKPMaxAge0);
   FRIEND_TEST_ALL_PREFIXES(HttpSecurityHeadersTest, NoClobberPins);

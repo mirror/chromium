@@ -49,7 +49,8 @@ using content::Referrer;
     Browser* browser = chrome::FindTabbedBrowser(bridge_->profile(), false);
     BrowserLiveTabContext* context =
         browser ? browser->live_tab_context() : NULL;
-    service->RestoreEntryById(context, node->session_id, UNKNOWN);
+    service->RestoreEntryById(context, node->session_id,
+                              WindowOpenDisposition::UNKNOWN);
   } else {
     DCHECK(node->url.is_valid());
     WindowOpenDisposition disposition =
@@ -65,6 +66,16 @@ using content::Referrer;
   const HistoryMenuBridge::HistoryItem* item =
       bridge_->HistoryItemForMenuItem(sender);
   [self openURLForItem:item];
+}
+
+// NSMenuDelegate:
+
+- (void)menuWillOpen:(NSMenu*)menu {
+  bridge_->SetIsMenuOpen(true);
+}
+
+- (void)menuDidClose:(NSMenu*)menu {
+  bridge_->SetIsMenuOpen(false);
 }
 
 @end  // HistoryMenuCocoaController

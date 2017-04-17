@@ -35,9 +35,8 @@
 
 namespace blink {
 
-void WebCustomElement::addEmbedderCustomElementName(const WebString& name)
-{
-    V0CustomElement::addEmbedderCustomElementName(name);
+void WebCustomElement::AddEmbedderCustomElementName(const WebString& name) {
+  V0CustomElement::AddEmbedderCustomElementName(name);
 }
 
-} // namespace blink
+}  // namespace blink

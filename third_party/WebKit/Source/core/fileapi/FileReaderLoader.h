@@ -31,16 +31,17 @@
 #ifndef FileReaderLoader_h
 #define FileReaderLoader_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/fileapi/FileError.h"
 #include "core/loader/ThreadableLoaderClient.h"
+#include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/Forward.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/text/TextEncoding.h"
-#include "wtf/text/WTFString.h"
-#include "wtf/typed_arrays/ArrayBufferBuilder.h"
-#include <memory>
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/text/TextEncoding.h"
+#include "platform/wtf/text/WTFString.h"
+#include "platform/wtf/typed_arrays/ArrayBufferBuilder.h"
 
 namespace blink {
 
@@ -48,106 +49,109 @@ class BlobDataHandle;
 class DOMArrayBuffer;
 class ExecutionContext;
 class FileReaderLoaderClient;
-class Stream;
 class TextResourceDecoder;
 class ThreadableLoader;
 
 class CORE_EXPORT FileReaderLoader final : public ThreadableLoaderClient {
-    USING_FAST_MALLOC(FileReaderLoader);
-public:
-    enum ReadType {
-        ReadAsArrayBuffer,
-        ReadAsBinaryString,
-        ReadAsText,
-        ReadAsDataURL,
-        ReadByClient
-    };
+  USING_FAST_MALLOC(FileReaderLoader);
 
-    // If client is given, do the loading asynchronously. Otherwise, load synchronously.
-    static std::unique_ptr<FileReaderLoader> create(ReadType readType, FileReaderLoaderClient* client)
-    {
-        return wrapUnique(new FileReaderLoader(readType, client));
-    }
+ public:
+  enum ReadType {
+    kReadAsArrayBuffer,
+    kReadAsBinaryString,
+    kReadAsText,
+    kReadAsDataURL,
+    kReadByClient
+  };
 
-    FileReaderLoader(ReadType, FileReaderLoaderClient*);
-    ~FileReaderLoader() override;
+  // If client is given, do the loading asynchronously. Otherwise, load
+  // synchronously.
+  static std::unique_ptr<FileReaderLoader> Create(
+      ReadType read_type,
+      FileReaderLoaderClient* client) {
+    return WTF::WrapUnique(new FileReaderLoader(read_type, client));
+  }
 
-    void start(ExecutionContext*, PassRefPtr<BlobDataHandle>);
-    void start(ExecutionContext*, const Stream&, unsigned readSize);
-    void cancel();
+  ~FileReaderLoader() override;
 
-    // ThreadableLoaderClient
-    void didReceiveResponse(unsigned long, const ResourceResponse&, std::unique_ptr<WebDataConsumerHandle>) override;
-    void didReceiveData(const char*, unsigned) override;
-    void didFinishLoading(unsigned long, double) override;
-    void didFail(const ResourceError&) override;
+  void Start(ExecutionContext*, PassRefPtr<BlobDataHandle>);
+  void Cancel();
 
-    String stringResult();
-    DOMArrayBuffer* arrayBufferResult() const;
+  // ThreadableLoaderClient
+  void DidReceiveResponse(unsigned long,
+                          const ResourceResponse&,
+                          std::unique_ptr<WebDataConsumerHandle>) override;
+  void DidReceiveData(const char*, unsigned) override;
+  void DidFinishLoading(unsigned long, double) override;
+  void DidFail(const ResourceError&) override;
 
-    // Returns the total bytes received. Bytes ignored by m_rawData won't be
-    // counted.
-    //
-    // This value doesn't grow more than numeric_limits<unsigned> when
-    // m_readType is not set to ReadByClient.
-    long long bytesLoaded() const { return m_bytesLoaded; }
+  DOMArrayBuffer* ArrayBufferResult();
+  String StringResult();
 
-    // Before didReceiveResponse() is called: Returns -1.
-    // After didReceiveResponse() is called:
-    // - If the size of the resource is known (from
-    //   m_response.expectedContentLength() or once didFinishLoading() is
-    //   called), returns it.
-    // - Otherwise, returns -1.
-    long long totalBytes() const { return m_totalBytes; }
+  // Returns the total bytes received. Bytes ignored by m_rawData won't be
+  // counted.
+  //
+  // This value doesn't grow more than numeric_limits<unsigned> when
+  // m_readType is not set to ReadByClient.
+  long long BytesLoaded() const { return bytes_loaded_; }
 
-    FileError::ErrorCode errorCode() const { return m_errorCode; }
+  // Before didReceiveResponse() is called: Returns -1.
+  // After didReceiveResponse() is called:
+  // - If the size of the resource is known (from
+  //   m_response.expectedContentLength() or once didFinishLoading() is
+  //   called), returns it.
+  // - Otherwise, returns -1.
+  long long TotalBytes() const { return total_bytes_; }
 
-    void setEncoding(const String&);
-    void setDataType(const String& dataType) { m_dataType = dataType; }
+  FileError::ErrorCode GetErrorCode() const { return error_code_; }
 
-private:
-    void startInternal(ExecutionContext&, const Stream*, PassRefPtr<BlobDataHandle>);
-    void cleanup();
+  void SetEncoding(const String&);
+  void SetDataType(const String& data_type) { data_type_ = data_type; }
 
-    void failed(FileError::ErrorCode);
-    void convertToText();
-    void convertToDataURL();
+ private:
+  FileReaderLoader(ReadType, FileReaderLoaderClient*);
 
-    static FileError::ErrorCode httpStatusCodeToErrorCode(int);
+  void Cleanup();
 
-    ReadType m_readType;
-    FileReaderLoaderClient* m_client;
-    WTF::TextEncoding m_encoding;
-    String m_dataType;
+  void Failed(FileError::ErrorCode);
+  void ConvertToText();
+  void ConvertToDataURL();
 
-    KURL m_urlForReading;
-    bool m_urlForReadingIsStream;
-    std::unique_ptr<ThreadableLoader> m_loader;
+  static FileError::ErrorCode HttpStatusCodeToErrorCode(int);
 
-    std::unique_ptr<ArrayBufferBuilder> m_rawData;
-    bool m_isRawDataConverted;
+  ReadType read_type_;
+  FileReaderLoaderClient* client_;
+  WTF::TextEncoding encoding_;
+  String data_type_;
 
-    String m_stringResult;
+  KURL url_for_reading_;
+  Persistent<ThreadableLoader> loader_;
 
-    // The decoder used to decode the text data.
-    std::unique_ptr<TextResourceDecoder> m_decoder;
+  std::unique_ptr<ArrayBufferBuilder> raw_data_;
+  bool is_raw_data_converted_;
 
-    bool m_finishedLoading;
-    long long m_bytesLoaded;
-    // If the total size of the resource is unknown, m_totalBytes is set to -1
-    // until completion of loading, and the buffer for receiving data is set to
-    // dynamically grow. Otherwise, m_totalBytes is set to the total size and
-    // the buffer for receiving data of m_totalBytes is allocated and never grow
-    // even when extra data is appeneded.
-    long long m_totalBytes;
+  Persistent<DOMArrayBuffer> array_buffer_result_;
+  String string_result_;
 
-    bool m_hasRange;
-    unsigned m_rangeStart;
-    unsigned m_rangeEnd;
+  // The decoder used to decode the text data.
+  std::unique_ptr<TextResourceDecoder> decoder_;
 
-    FileError::ErrorCode m_errorCode;
+  bool finished_loading_;
+  long long bytes_loaded_;
+  // If the total size of the resource is unknown, m_totalBytes is set to -1
+  // until completion of loading, and the buffer for receiving data is set to
+  // dynamically grow. Otherwise, m_totalBytes is set to the total size and
+  // the buffer for receiving data of m_totalBytes is allocated and never grow
+  // even when extra data is appeneded.
+  long long total_bytes_;
+
+  bool has_range_;
+  unsigned range_start_;
+  unsigned range_end_;
+
+  FileError::ErrorCode error_code_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FileReaderLoader_h
+#endif  // FileReaderLoader_h

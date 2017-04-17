@@ -5,6 +5,8 @@
 #include "chrome/common/extensions/chrome_extensions_client.h"
 
 #include <memory>
+#include <set>
+#include <string>
 
 #include "base/command_line.h"
 #include "base/files/file_path.h"
@@ -18,13 +20,13 @@
 #include "chrome/common/extensions/api/generated_schemas.h"
 #include "chrome/common/extensions/api/manifest_features.h"
 #include "chrome/common/extensions/api/permission_features.h"
+#include "chrome/common/extensions/chrome_aliases.h"
 #include "chrome/common/extensions/chrome_manifest_handlers.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/manifest_handlers/theme_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/common_resources.h"
-#include "chrome/grit/extensions_api_resources.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/version_info/version_info.h"
 #include "content/public/common/url_constants.h"
@@ -35,15 +37,10 @@
 #include "extensions/common/extension_api.h"
 #include "extensions/common/extension_icon_set.h"
 #include "extensions/common/extension_urls.h"
-#include "extensions/common/features/api_feature.h"
-#include "extensions/common/features/behavior_feature.h"
+#include "extensions/common/extensions_aliases.h"
 #include "extensions/common/features/feature_channel.h"
 #include "extensions/common/features/feature_provider.h"
-#include "extensions/common/features/json_feature_provider.h"
 #include "extensions/common/features/json_feature_provider_source.h"
-#include "extensions/common/features/manifest_feature.h"
-#include "extensions/common/features/permission_feature.h"
-#include "extensions/common/features/simple_feature.h"
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/manifest_handler.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
@@ -66,11 +63,6 @@ const char kExtensionBlocklistHttpsUrlPrefix[] =
     "https://www.gstatic.com/chrome/extensions/blacklist";
 
 const char kThumbsWhiteListedExtension[] = "khopmbdjffemhegeeobelklnbglcdgfh";
-
-template <class FeatureClass>
-SimpleFeature* CreateFeature() {
-  return new FeatureClass();
-}
 
 // Mirrors version_info::Channel for histograms.
 enum ChromeChannelForHistogram {
@@ -102,7 +94,7 @@ ChromeChannelForHistogram GetChromeChannelForHistogram(
 
 }  // namespace
 
-static base::LazyInstance<ChromeExtensionsClient> g_client =
+static base::LazyInstance<ChromeExtensionsClient>::DestructorAtExit g_client =
     LAZY_INSTANCE_INITIALIZER;
 
 ChromeExtensionsClient::ChromeExtensionsClient() {}
@@ -120,8 +112,10 @@ void ChromeExtensionsClient::Initialize() {
   }
 
   // Set up permissions.
-  PermissionsInfo::GetInstance()->AddProvider(chrome_api_permissions_);
-  PermissionsInfo::GetInstance()->AddProvider(extensions_api_permissions_);
+  PermissionsInfo::GetInstance()->AddProvider(chrome_api_permissions_,
+                                              GetChromePermissionAliases());
+  PermissionsInfo::GetInstance()->AddProvider(extensions_api_permissions_,
+                                              GetExtensionsPermissionAliases());
 
   // Set up the scripting whitelist.
   // Whitelist ChromeVox, an accessibility extension from Google that needs
@@ -130,6 +124,9 @@ void ChromeExtensionsClient::Initialize() {
   // TODO(dmazzoni): remove this once we have an extension API that
   // allows any extension to request read-only access to webui pages.
   scripting_whitelist_.push_back(extension_misc::kChromeVoxExtensionId);
+
+  webstore_base_url_ = GURL(extension_urls::kChromeWebstoreBaseURL);
+  webstore_update_url_ = GURL(extension_urls::GetDefaultWebstoreUpdateUrl());
 }
 
 const PermissionMessageProvider&
@@ -230,7 +227,7 @@ bool ChromeExtensionsClient::IsScriptableURL(
   // TODO(erikkay): This seems like the wrong test.  Shouldn't we we testing
   // against the store app extent?
   GURL store_url(extension_urls::GetWebstoreLaunchURL());
-  if (url.host() == store_url.host()) {
+  if (url.DomainIs(store_url.host())) {
     if (error)
       *error = manifest_errors::kCannotScriptGallery;
     return false;
@@ -254,31 +251,6 @@ base::StringPiece ChromeExtensionsClient::GetAPISchema(
   return api::GeneratedSchemas::Get(name);
 }
 
-void ChromeExtensionsClient::RegisterAPISchemaResources(
-    ExtensionAPI* api) const {
-  api->RegisterSchemaResource("accessibilityPrivate",
-                              IDR_EXTENSION_API_JSON_ACCESSIBILITYPRIVATE);
-  api->RegisterSchemaResource("app", IDR_EXTENSION_API_JSON_APP);
-  api->RegisterSchemaResource("browserAction",
-                              IDR_EXTENSION_API_JSON_BROWSERACTION);
-  api->RegisterSchemaResource("commands", IDR_EXTENSION_API_JSON_COMMANDS);
-  api->RegisterSchemaResource("declarativeContent",
-                              IDR_EXTENSION_API_JSON_DECLARATIVE_CONTENT);
-  api->RegisterSchemaResource("fileBrowserHandler",
-                              IDR_EXTENSION_API_JSON_FILEBROWSERHANDLER);
-  api->RegisterSchemaResource("inputMethodPrivate",
-                              IDR_EXTENSION_API_JSON_INPUTMETHODPRIVATE);
-  api->RegisterSchemaResource("pageAction", IDR_EXTENSION_API_JSON_PAGEACTION);
-  api->RegisterSchemaResource("privacy", IDR_EXTENSION_API_JSON_PRIVACY);
-  api->RegisterSchemaResource("proxy", IDR_EXTENSION_API_JSON_PROXY);
-  api->RegisterSchemaResource("ttsEngine", IDR_EXTENSION_API_JSON_TTSENGINE);
-  api->RegisterSchemaResource("tts", IDR_EXTENSION_API_JSON_TTS);
-  api->RegisterSchemaResource("types", IDR_EXTENSION_API_JSON_TYPES);
-  api->RegisterSchemaResource("types.private",
-                              IDR_EXTENSION_API_JSON_TYPES_PRIVATE);
-  api->RegisterSchemaResource("webstore", IDR_EXTENSION_API_JSON_WEBSTORE);
-}
-
 bool ChromeExtensionsClient::ShouldSuppressFatalErrors() const {
   // Suppress fatal everywhere until the cause of bugs like http://crbug/471599
   // are fixed. This would typically be:
@@ -292,24 +264,31 @@ void ChromeExtensionsClient::RecordDidSuppressFatalError() {
                             NUM_CHANNELS_FOR_HISTOGRAM);
 }
 
-std::string ChromeExtensionsClient::GetWebstoreBaseURL() const {
-  std::string gallery_prefix = extension_urls::kChromeWebstoreBaseURL;
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kAppsGalleryURL))
-    gallery_prefix =
-        base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-            switches::kAppsGalleryURL);
-  if (base::EndsWith(gallery_prefix, "/", base::CompareCase::SENSITIVE))
-    gallery_prefix = gallery_prefix.substr(0, gallery_prefix.length() - 1);
-  return gallery_prefix;
+const GURL& ChromeExtensionsClient::GetWebstoreBaseURL() const {
+  // Browser tests like to alter the command line at runtime with new update
+  // URLs. Just update the cached value of the base url (to avoid reparsing
+  // it) if the value has changed.
+  base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  if (cmdline->HasSwitch(switches::kAppsGalleryURL)) {
+    std::string url = cmdline->GetSwitchValueASCII(switches::kAppsGalleryURL);
+    if (webstore_base_url_.possibly_invalid_spec() != url)
+      webstore_base_url_ = GURL(url);
+  }
+  return webstore_base_url_;
 }
 
-std::string ChromeExtensionsClient::GetWebstoreUpdateURL() const {
+const GURL& ChromeExtensionsClient::GetWebstoreUpdateURL() const {
+  // Browser tests like to alter the command line at runtime with new update
+  // URLs. Just update the cached value of the update url (to avoid reparsing
+  // it) if the value has changed.
   base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
-  if (cmdline->HasSwitch(switches::kAppsGalleryUpdateURL))
-    return cmdline->GetSwitchValueASCII(switches::kAppsGalleryUpdateURL);
-  else
-    return extension_urls::GetDefaultWebstoreUpdateUrl().spec();
+  if (cmdline->HasSwitch(switches::kAppsGalleryUpdateURL)) {
+    std::string url =
+        cmdline->GetSwitchValueASCII(switches::kAppsGalleryUpdateURL);
+    if (webstore_update_url_.possibly_invalid_spec() != url)
+      webstore_update_url_ = GURL(url);
+  }
+  return webstore_update_url_;
 }
 
 bool ChromeExtensionsClient::IsBlacklistUpdateURL(const GURL& url) const {

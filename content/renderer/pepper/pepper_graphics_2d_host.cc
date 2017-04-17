@@ -14,9 +14,9 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "cc/paint/paint_flags.h"
 #include "cc/resources/shared_bitmap.h"
 #include "cc/resources/texture_mailbox.h"
-#include "content/child/child_shared_bitmap_manager.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/renderer_ppapi_host.h"
 #include "content/renderer/pepper/gfx_conversion.h"
@@ -34,6 +34,7 @@
 #include "ppapi/proxy/ppapi_messages.h"
 #include "ppapi/shared_impl/ppb_view_shared.h"
 #include "ppapi/thunk/enter.h"
+#include "services/ui/public/cpp/bitmap/child_shared_bitmap_manager.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkSwizzle.h"
@@ -103,25 +104,27 @@ void ConvertImageData(PPB_ImageData_Impl* src_image,
   DCHECK(PPB_ImageData_Impl::IsImageDataFormatSupported(src_image->format()));
   DCHECK(PPB_ImageData_Impl::IsImageDataFormatSupported(dest_image->format()));
 
-  const SkBitmap* src_bitmap = src_image->GetMappedBitmap();
-  const SkBitmap* dest_bitmap = dest_image->GetMappedBitmap();
+  SkBitmap src_bitmap(src_image->GetMappedBitmap());
+  SkBitmap dest_bitmap(dest_image->GetMappedBitmap());
+  SkAutoLockPixels src_lock(src_bitmap);
+  SkAutoLockPixels dest_lock(dest_bitmap);
   if (src_rect.width() == src_image->width() &&
       dest_rect.width() == dest_image->width()) {
     // Fast path if the full frame can be converted at once.
     SkSwapRB(
-        dest_bitmap->getAddr32(static_cast<int>(dest_rect.fLeft),
-                               static_cast<int>(dest_rect.fTop)),
-        src_bitmap->getAddr32(static_cast<int>(src_rect.fLeft),
-                              static_cast<int>(src_rect.fTop)),
+        dest_bitmap.getAddr32(static_cast<int>(dest_rect.fLeft),
+                              static_cast<int>(dest_rect.fTop)),
+        src_bitmap.getAddr32(static_cast<int>(src_rect.fLeft),
+                             static_cast<int>(src_rect.fTop)),
         src_rect.width() * src_rect.height());
   } else {
     // Slow path where we convert line by line.
     for (int y = 0; y < src_rect.height(); y++) {
       SkSwapRB(
-          dest_bitmap->getAddr32(static_cast<int>(dest_rect.fLeft),
-                                 static_cast<int>(dest_rect.fTop + y)),
-          src_bitmap->getAddr32(static_cast<int>(src_rect.fLeft),
-                                static_cast<int>(src_rect.fTop + y)),
+          dest_bitmap.getAddr32(static_cast<int>(dest_rect.fLeft),
+                                static_cast<int>(dest_rect.fTop + y)),
+          src_bitmap.getAddr32(static_cast<int>(src_rect.fLeft),
+                               static_cast<int>(src_rect.fTop + y)),
           src_rect.width());
     }
   }
@@ -278,9 +281,9 @@ bool PepperGraphics2DHost::ReadImageData(PP_Resource image,
 
     // We want to replace the contents of the bitmap rather than blend.
     SkPaint paint;
-    paint.setXfermodeMode(SkXfermode::kSrc_Mode);
+    paint.setBlendMode(SkBlendMode::kSrc);
     dest_canvas->drawBitmapRect(
-        *image_data_->GetMappedBitmap(), src_irect, dest_rect, &paint);
+        image_data_->GetMappedBitmap(), src_irect, dest_rect, &paint);
   }
   return true;
 }
@@ -320,12 +323,12 @@ void PepperGraphics2DHost::Paint(blink::WebCanvas* canvas,
                                  const gfx::Rect& paint_rect) {
   TRACE_EVENT0("pepper", "PepperGraphics2DHost::Paint");
   ImageDataAutoMapper auto_mapper(image_data_.get());
-  const SkBitmap& backing_bitmap = *image_data_->GetMappedBitmap();
+  SkBitmap backing_bitmap = image_data_->GetMappedBitmap();
 
   gfx::Rect invalidate_rect = plugin_rect;
   invalidate_rect.Intersect(paint_rect);
   SkRect sk_invalidate_rect = gfx::RectToSkRect(invalidate_rect);
-  SkAutoCanvasRestore auto_restore(canvas, true);
+  cc::PaintCanvasAutoRestore auto_restore(canvas, true);
   canvas->clipRect(sk_invalidate_rect);
   gfx::Size pixel_image_size(image_data_->width(), image_data_->height());
   gfx::Size image_size = gfx::ScaleToFlooredSize(pixel_image_size, scale_);
@@ -341,30 +344,22 @@ void PepperGraphics2DHost::Paint(blink::WebCanvas* canvas,
     // show white (typically less jarring) rather than black or uninitialized.
     // We don't do this for non-full-frame plugins since we specifically want
     // the page background to show through.
-    SkAutoCanvasRestore auto_restore(canvas, true);
+    cc::PaintCanvasAutoRestore auto_restore(canvas, true);
     SkRect image_data_rect =
         gfx::RectToSkRect(gfx::Rect(plugin_rect.origin(), image_size));
-    canvas->clipRect(image_data_rect, SkRegion::kDifference_Op);
+    canvas->clipRect(image_data_rect, SkClipOp::kDifference);
 
-    SkPaint paint;
-    paint.setXfermodeMode(SkXfermode::kSrc_Mode);
-    paint.setColor(SK_ColorWHITE);
-    canvas->drawRect(sk_invalidate_rect, paint);
+    cc::PaintFlags flags;
+    flags.setBlendMode(SkBlendMode::kSrc);
+    flags.setColor(SK_ColorWHITE);
+    canvas->drawRect(sk_invalidate_rect, flags);
   }
 
-  SkBitmap image;
-  // Copy to device independent bitmap when target canvas doesn't support
-  // platform paint.
-  if (!skia::SupportsPlatformPaint(canvas))
-    backing_bitmap.copyTo(&image, kN32_SkColorType);
-  else
-    image = backing_bitmap;
-
-  SkPaint paint;
+  cc::PaintFlags flags;
   if (is_always_opaque_) {
     // When we know the device is opaque, we can disable blending for slightly
     // more optimized painting.
-    paint.setXfermodeMode(SkXfermode::kSrc_Mode);
+    flags.setBlendMode(SkBlendMode::kSrc);
   }
 
   SkPoint pixel_origin(PointToSkPoint(plugin_rect.origin()));
@@ -372,7 +367,8 @@ void PepperGraphics2DHost::Paint(blink::WebCanvas* canvas,
     canvas->scale(scale_, scale_);
     pixel_origin.scale(1.0f / scale_);
   }
-  canvas->drawBitmap(image, pixel_origin.x(), pixel_origin.y(), &paint);
+  canvas->drawBitmap(backing_bitmap, pixel_origin.x(), pixel_origin.y(),
+                     &flags);
 }
 
 void PepperGraphics2DHost::ViewInitiatedPaint() {
@@ -615,8 +611,7 @@ int32_t PepperGraphics2DHost::Flush(PP_Resource* old_image_data) {
     gfx::Rect op_rect;
     switch (operation.type) {
       case QueuedOperation::TRANSFORM:
-        ExecuteTransform(operation.scale, operation.translation);
-        no_update_visible = false;
+        ExecuteTransform(operation.scale, operation.translation, &op_rect);
         break;
       case QueuedOperation::PAINT:
         ExecutePaintImageData(operation.paint_image.get(),
@@ -708,8 +703,10 @@ int32_t PepperGraphics2DHost::Flush(PP_Resource* old_image_data) {
 }
 
 void PepperGraphics2DHost::ExecuteTransform(const float& scale,
-                                            const gfx::PointF& translate) {
+                                            const gfx::PointF& translate,
+                                            gfx::Rect* invalidated_rect) {
   bound_instance_->SetGraphics2DTransform(scale, translate);
+  *invalidated_rect = PP_ToGfxRect(bound_instance_->view_data().clip_rect);
 }
 
 void PepperGraphics2DHost::ExecutePaintImageData(PPB_ImageData_Impl* image,
@@ -743,9 +740,9 @@ void PepperGraphics2DHost::ExecutePaintImageData(PPB_ImageData_Impl* image,
 
     // We want to replace the contents of the bitmap rather than blend.
     SkPaint paint;
-    paint.setXfermodeMode(SkXfermode::kSrc_Mode);
+    paint.setBlendMode(SkBlendMode::kSrc);
     backing_canvas->drawBitmapRect(
-        *image->GetMappedBitmap(), src_irect, dest_rect, &paint);
+        image->GetMappedBitmap(), src_irect, dest_rect, &paint);
   }
 }
 

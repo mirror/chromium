@@ -94,6 +94,7 @@ class NotificationViewTest : public views::ViewsTestBase,
   void ClickOnNotificationButton(const std::string& notification_id,
                                  int button_index) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
+  void UpdateNotificationSize(const std::string& notification_id) override;
 
  protected:
   // Used to fill bitmaps returned by CreateBitmap().
@@ -131,10 +132,7 @@ class NotificationViewTest : public views::ViewsTestBase,
     canvas.DrawColor(SK_ColorBLACK);
     view->OnPaint(&canvas);
 
-    SkBitmap bitmap;
-    bitmap.allocN32Pixels(canvas_size.width(), canvas_size.height());
-    canvas.sk_canvas()->readPixels(&bitmap, 0, 0);
-
+    SkBitmap bitmap = canvas.GetBitmap();
     // Incrementally inset each edge at its midpoint to find the bounds of the
     // rect containing the image's color. This assumes that the image is
     // centered in the canvas.
@@ -167,11 +165,11 @@ class NotificationViewTest : public views::ViewsTestBase,
     std::vector<views::View*>::iterator current = vertical_order.begin();
     std::vector<views::View*>::iterator last = current++;
     while (current != vertical_order.end()) {
-      gfx::Point last_point = (*last)->bounds().origin();
+      gfx::Point last_point = (*last)->origin();
       views::View::ConvertPointToTarget(
           (*last), notification_view(), &last_point);
 
-      gfx::Point current_point = (*current)->bounds().origin();
+      gfx::Point current_point = (*current)->origin();
       views::View::ConvertPointToTarget(
           (*current), notification_view(), &current_point);
 
@@ -280,6 +278,12 @@ void NotificationViewTest::ClickOnNotificationButton(
 }
 
 void NotificationViewTest::ClickOnSettingsButton(
+    const std::string& notification_id) {
+  // For this test, this method should not be invoked.
+  NOTREACHED();
+}
+
+void NotificationViewTest::UpdateNotificationSize(
     const std::string& notification_id) {
   // For this test, this method should not be invoked.
   NOTREACHED();
@@ -490,8 +494,7 @@ TEST_F(NotificationViewTest, UpdateButtonCountTest) {
   ui::MouseEvent move(ui::ET_MOUSE_MOVED, cursor_location, cursor_location,
                       ui::EventTimeForNow(), ui::EF_NONE, ui::EF_NONE);
   ui::EventDispatchDetails details =
-      views::test::WidgetTest::GetEventProcessor(widget())->
-          OnEventFromSource(&move);
+      views::test::WidgetTest::GetEventSink(widget())->OnEventFromSource(&move);
   EXPECT_FALSE(details.dispatcher_destroyed);
 
   EXPECT_EQ(views::CustomButton::STATE_HOVERED,
@@ -544,8 +547,7 @@ TEST_F(NotificationViewTest, SettingsButtonTest) {
                       ui::EventTimeForNow(), ui::EF_NONE, ui::EF_NONE);
   widget()->OnMouseEvent(&move);
   ui::EventDispatchDetails details =
-      views::test::WidgetTest::GetEventProcessor(widget())
-          ->OnEventFromSource(&move);
+      views::test::WidgetTest::GetEventSink(widget())->OnEventFromSource(&move);
   EXPECT_FALSE(details.dispatcher_destroyed);
 
   EXPECT_EQ(views::CustomButton::STATE_HOVERED,

@@ -11,6 +11,7 @@
 #include "apps/launcher.h"
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
@@ -20,9 +21,7 @@
 #include "chrome/browser/chromeos/file_manager/file_browser_handlers.h"
 #include "chrome/browser/chromeos/file_manager/fileapi_util.h"
 #include "chrome/browser/chromeos/file_manager/open_util.h"
-#include "chrome/browser/extensions/api/file_handlers/mime_util.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
-#include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/browser/ui/webui/extensions/extension_icon_source.h"
@@ -36,6 +35,7 @@
 #include "components/mime_util/mime_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "extensions/browser/api/file_handlers/mime_util.h"
 #include "extensions/browser/entry_info.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/extension_registry.h"
@@ -120,8 +120,8 @@ void KeepOnlyFileManagerInternalTasks(std::vector<FullTaskDescriptor>* tasks) {
   tasks->swap(filtered);
 }
 
-// Returns true if the given task is a handler by built-in apps like Files.app
-// itself or QuickOffice etc. They are used as the initial default app.
+// Returns true if the given task is a handler by built-in apps like the Files
+// app itself or QuickOffice etc. They are used as the initial default app.
 bool IsFallbackFileHandler(const file_tasks::TaskDescriptor& task) {
   if (task.task_type != file_tasks::TASK_TYPE_FILE_BROWSER_HANDLER &&
       task.task_type != file_tasks::TASK_TYPE_FILE_HANDLER)
@@ -198,8 +198,8 @@ void UpdateDefaultTask(PrefService* pref_service,
                                         prefs::kDefaultTasksByMimeType);
     for (std::set<std::string>::const_iterator iter = mime_types.begin();
         iter != mime_types.end(); ++iter) {
-      base::StringValue* value = new base::StringValue(task_id);
-      mime_type_pref->SetWithoutPathExpansion(*iter, value);
+      mime_type_pref->SetWithoutPathExpansion(
+          *iter, base::MakeUnique<base::Value>(task_id));
     }
   }
 
@@ -208,10 +208,10 @@ void UpdateDefaultTask(PrefService* pref_service,
                                         prefs::kDefaultTasksBySuffix);
     for (std::set<std::string>::const_iterator iter = suffixes.begin();
         iter != suffixes.end(); ++iter) {
-      base::StringValue* value = new base::StringValue(task_id);
       // Suffixes are case insensitive.
       std::string lower_suffix = base::ToLowerASCII(*iter);
-      mime_type_pref->SetWithoutPathExpansion(lower_suffix, value);
+      mime_type_pref->SetWithoutPathExpansion(
+          lower_suffix, base::MakeUnique<base::Value>(task_id));
     }
   }
 }
@@ -503,8 +503,7 @@ void FindFileHandlerTasks(Profile* profile,
       GURL best_icon = extensions::ExtensionIconSource::GetIconURL(
           extension, drive::util::kPreferredIconSize,
           ExtensionIconSet::MATCH_BIGGER,
-          false,  // grayscale
-          NULL);  // exists
+          false);  // grayscale
 
       // If file handler doesn't match as good match, regards it as generic file
       // handler.
@@ -559,11 +558,9 @@ void FindFileBrowserHandlerTasks(
     // TODO(zelidrag): Figure out how to expose icon URL that task defined in
     // manifest instead of the default extension icon.
     const GURL icon_url = extensions::ExtensionIconSource::GetIconURL(
-        extension,
-        extension_misc::EXTENSION_ICON_BITTY,
+        extension, extension_misc::EXTENSION_ICON_BITTY,
         ExtensionIconSet::MATCH_BIGGER,
-        false,  // grayscale
-        NULL);  // exists
+        false);  // grayscale
 
     result_list->push_back(FullTaskDescriptor(
         TaskDescriptor(extension_id, file_tasks::TASK_TYPE_FILE_BROWSER_HANDLER,
@@ -630,7 +627,7 @@ void ChooseAndSetDefaultTask(const PrefService& pref_service,
     FullTaskDescriptor* task = &tasks->at(i);
     DCHECK(!task->is_default());
     const std::string task_id = TaskDescriptorToId(task->task_descriptor());
-    if (ContainsKey(default_task_ids, task_id)) {
+    if (base::ContainsKey(default_task_ids, task_id)) {
       task->set_is_default(true);
       return;
     }

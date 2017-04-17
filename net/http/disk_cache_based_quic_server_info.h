@@ -13,13 +13,14 @@
 #include "base/threading/non_thread_safe.h"
 #include "base/time/time.h"
 #include "net/base/completion_callback.h"
+#include "net/base/net_export.h"
 #include "net/disk_cache/disk_cache.h"
-#include "net/quic/crypto/quic_server_info.h"
+#include "net/quic/chromium/quic_server_info.h"
 
 namespace net {
 
 class HttpCache;
-class IOBuffer;
+class IOBufferWithSize;
 class QuicServerId;
 
 // DiskCacheBasedQuicServerInfo fetches information about a QUIC server from
@@ -31,6 +32,7 @@ class NET_EXPORT_PRIVATE DiskCacheBasedQuicServerInfo
  public:
   DiskCacheBasedQuicServerInfo(const QuicServerId& server_id,
                                HttpCache* http_cache);
+  ~DiskCacheBasedQuicServerInfo() override;
 
   // QuicServerInfo implementation.
   void Start() override;
@@ -41,6 +43,7 @@ class NET_EXPORT_PRIVATE DiskCacheBasedQuicServerInfo
   bool IsReadyToPersist() override;
   void Persist() override;
   void OnExternalCacheHit() override;
+  size_t EstimateMemoryUsage() const override;
 
  private:
   struct CacheOperationDataShim;
@@ -60,38 +63,6 @@ class NET_EXPORT_PRIVATE DiskCacheBasedQuicServerInfo
     SET_DONE,
     NONE,
   };
-
-  // Enum to track number of times data read/parse/write API calls of
-  // QuicServerInfo to and from disk cache is called.
-  enum QuicServerInfoAPICall {
-    QUIC_SERVER_INFO_START = 0,
-    QUIC_SERVER_INFO_WAIT_FOR_DATA_READY = 1,
-    QUIC_SERVER_INFO_PARSE = 2,
-    QUIC_SERVER_INFO_WAIT_FOR_DATA_READY_CANCEL = 3,
-    QUIC_SERVER_INFO_READY_TO_PERSIST = 4,
-    QUIC_SERVER_INFO_PERSIST = 5,
-    QUIC_SERVER_INFO_EXTERNAL_CACHE_HIT = 6,
-    QUIC_SERVER_INFO_NUM_OF_API_CALLS = 7,
-  };
-
-  // Enum to track failure reasons to read/load/write of QuicServerInfo to
-  // and from disk cache.
-  enum FailureReason {
-    WAIT_FOR_DATA_READY_INVALID_ARGUMENT_FAILURE = 0,
-    GET_BACKEND_FAILURE = 1,
-    OPEN_FAILURE = 2,
-    CREATE_OR_OPEN_FAILURE = 3,
-    PARSE_NO_DATA_FAILURE = 4,
-    PARSE_FAILURE = 5,
-    READ_FAILURE = 6,
-    READY_TO_PERSIST_FAILURE = 7,
-    PERSIST_NO_BACKEND_FAILURE = 8,
-    WRITE_FAILURE = 9,
-    NO_FAILURE = 10,
-    NUM_OF_FAILURES = 11,
-  };
-
-  ~DiskCacheBasedQuicServerInfo() override;
 
   // Persists |pending_write_data_| if it is not empty, otherwise serializes the
   // data and pesists it.
@@ -148,8 +119,8 @@ class NET_EXPORT_PRIVATE DiskCacheBasedQuicServerInfo
   disk_cache::Backend* backend_;
   disk_cache::Entry* entry_;
   CompletionCallback wait_for_ready_callback_;
-  scoped_refptr<IOBuffer> read_buffer_;
-  scoped_refptr<IOBuffer> write_buffer_;
+  scoped_refptr<IOBufferWithSize> read_buffer_;
+  scoped_refptr<IOBufferWithSize> write_buffer_;
   std::string data_;
   base::TimeTicks load_start_time_;
   FailureReason last_failure_;

@@ -2,7 +2,8 @@
  * Copyright (C) 2001 Peter Kelly (pmk@post.com)
  * Copyright (C) 2001 Tobias Anton (anton@stud.fbi.fh-darmstadt.de)
  * Copyright (C) 2006 Samuel Weinig (sam.weinig@gmail.com)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,38 +26,46 @@
 #define ClipboardEvent_h
 
 #include "core/clipboard/DataTransfer.h"
+#include "core/events/ClipboardEventInit.h"
 #include "core/events/Event.h"
 
 namespace blink {
 
 class ClipboardEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~ClipboardEvent() override;
-    static ClipboardEvent* create()
-    {
-        return new ClipboardEvent();
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    static ClipboardEvent* create(const AtomicString& type, bool canBubble, bool cancelable, DataTransfer* dataTransfer)
-    {
-        return new ClipboardEvent(type, canBubble, cancelable, dataTransfer);
-    }
+ public:
+  ~ClipboardEvent() override;
 
-    DataTransfer* clipboardData() const { return m_clipboardData.get(); }
+  static ClipboardEvent* Create(const AtomicString& type,
+                                bool can_bubble,
+                                bool cancelable,
+                                DataTransfer* data_transfer) {
+    return new ClipboardEvent(type, can_bubble, cancelable, data_transfer);
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  static ClipboardEvent* Create(const AtomicString& type,
+                                const ClipboardEventInit& initializer) {
+    return new ClipboardEvent(type, initializer);
+  }
 
-private:
-    ClipboardEvent();
-    ClipboardEvent(const AtomicString& type, bool canBubble, bool cancelable, DataTransfer* clipboardData);
+  DataTransfer* clipboardData() const { return clipboard_data_.Get(); }
 
-    const AtomicString& interfaceName() const override;
-    bool isClipboardEvent() const override;
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<DataTransfer> m_clipboardData;
+ private:
+  ClipboardEvent(const AtomicString& type,
+                 bool can_bubble,
+                 bool cancelable,
+                 DataTransfer* clipboard_data);
+  ClipboardEvent(const AtomicString& type, const ClipboardEventInit&);
+
+  const AtomicString& InterfaceName() const override;
+  bool IsClipboardEvent() const override;
+
+  Member<DataTransfer> clipboard_data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ClipboardEvent_h
+#endif  // ClipboardEvent_h

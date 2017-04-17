@@ -18,10 +18,7 @@
 #endif
 
 class Browser;
-
-namespace content {
-class WebContents;
-}
+class Profile;
 
 namespace chrome {
 

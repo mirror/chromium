@@ -31,10 +31,10 @@
 
 namespace blink {
 
-enum class TextAffinity { Upstream, Downstream };
+enum class TextAffinity { kUpstream, kDownstream };
 
 CORE_EXPORT std::ostream& operator<<(std::ostream&, TextAffinity);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextAffinity_h
+#endif  // TextAffinity_h

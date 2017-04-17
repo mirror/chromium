@@ -7,16 +7,19 @@
 #include <memory>
 #include <vector>
 
-#include "net/quic/crypto/crypto_handshake_message.h"
-#include "net/quic/crypto/proof_source.h"
-#include "net/quic/quic_utils.h"
+#include "net/quic/core/crypto/crypto_handshake_message.h"
+#include "net/quic/core/crypto/proof_source.h"
+#include "net/quic/core/quic_utils.h"
+#include "net/quic/platform/api/quic_logging.h"
+#include "net/quic/platform/api/quic_ptr_util.h"
+#include "net/quic/platform/api/quic_str_cat.h"
+#include "net/quic/platform/api/quic_string_piece.h"
+#include "net/quic/platform/api/quic_text_utils.h"
 #include "net/quic/test_tools/crypto_test_utils.h"
 #include "net/quic/test_tools/quic_crypto_server_config_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
 
-using std::ostream;
 using std::string;
-using std::vector;
 
 namespace net {
 namespace test {
@@ -28,21 +31,38 @@ const QuicConnectionId kServerDesignateConnectionId = 24;
 // All four combinations of the two flags involved.
 enum FlagsMode { ENABLED, STATELESS_DISABLED, CHEAP_DISABLED, BOTH_DISABLED };
 
+const char* FlagsModeToString(FlagsMode mode) {
+  switch (mode) {
+    case ENABLED:
+      return "ENABLED";
+    case STATELESS_DISABLED:
+      return "STATELESS_DISABLED";
+    case CHEAP_DISABLED:
+      return "CHEAP_DISABLED";
+    case BOTH_DISABLED:
+      return "BOTH_DISABLED";
+    default:
+      QUIC_DLOG(FATAL) << "Unexpected FlagsMode";
+      return nullptr;
+  }
+}
+
 // Test various combinations of QUIC version and flag state.
 struct TestParams {
   QuicVersion version;
   FlagsMode flags;
-  friend ostream& operator<<(ostream& os, const TestParams& p) {
-    os << "{ version: " << p.version << " flags: " << p.flags << " }";
-    return os;
-  }
 };
 
-vector<TestParams> GetTestParams() {
-  vector<TestParams> params;
+string TestParamToString(const testing::TestParamInfo<TestParams>& params) {
+  return QuicStrCat("v", params.param.version, "_",
+                    FlagsModeToString(params.param.flags));
+}
+
+std::vector<TestParams> GetTestParams() {
+  std::vector<TestParams> params;
   for (FlagsMode flags :
        {ENABLED, STATELESS_DISABLED, CHEAP_DISABLED, BOTH_DISABLED}) {
-    for (QuicVersion version : QuicSupportedVersions()) {
+    for (QuicVersion version : AllSupportedVersions()) {
       TestParams param;
       param.version = version;
       param.flags = flags;
@@ -55,24 +75,26 @@ vector<TestParams> GetTestParams() {
 class StatelessRejectorTest : public ::testing::TestWithParam<TestParams> {
  public:
   StatelessRejectorTest()
-      : proof_source_(CryptoTestUtils::ProofSourceForTesting()),
+      : proof_source_(crypto_test_utils::ProofSourceForTesting()),
         config_(QuicCryptoServerConfig::TESTING,
                 QuicRandom::GetInstance(),
-                CryptoTestUtils::ProofSourceForTesting()),
+                crypto_test_utils::ProofSourceForTesting()),
         config_peer_(&config_),
         compressed_certs_cache_(
             QuicCompressedCertsCache::kQuicCompressedCertsCacheSize),
-        rejector_(GetParam().version,
-                  QuicSupportedVersions(),
-                  &config_,
-                  &compressed_certs_cache_,
-                  &clock_,
-                  QuicRandom::GetInstance(),
-                  IPEndPoint(net::test::Loopback4(), 12345),
-                  IPEndPoint(net::test::Loopback4(), 443)) {
-    FLAGS_enable_quic_stateless_reject_support =
+        rejector_(QuicMakeUnique<StatelessRejector>(
+            GetParam().version,
+            AllSupportedVersions(),
+            &config_,
+            &compressed_certs_cache_,
+            &clock_,
+            QuicRandom::GetInstance(),
+            kDefaultMaxPacketSize,
+            QuicSocketAddress(QuicIpAddress::Loopback4(), 12345),
+            QuicSocketAddress(QuicIpAddress::Loopback4(), 443))) {
+    FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support =
         GetParam().flags == ENABLED || GetParam().flags == CHEAP_DISABLED;
-    FLAGS_quic_use_cheap_stateless_rejects =
+    FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects =
         GetParam().flags == ENABLED || GetParam().flags == STATELESS_DISABLED;
 
     // Add a new primary config.
@@ -80,44 +102,59 @@ class StatelessRejectorTest : public ::testing::TestWithParam<TestParams> {
         QuicRandom::GetInstance(), &clock_, config_options_));
 
     // Save the server config.
-    scid_hex_ = "#" + QuicUtils::HexEncode(config_peer_.GetPrimaryConfig()->id);
+    scid_hex_ =
+        "#" + QuicTextUtils::HexEncode(config_peer_.GetPrimaryConfig()->id);
 
     // Encode the QUIC version.
-    ver_hex_ = QuicUtils::TagToString(QuicVersionToQuicTag(GetParam().version));
+    ver_hex_ = QuicTagToString(QuicVersionToQuicTag(GetParam().version));
 
     // Generate a public value.
     char public_value[32];
     memset(public_value, 42, sizeof(public_value));
-    pubs_hex_ = "#" + QuicUtils::HexEncode(public_value, sizeof(public_value));
+    pubs_hex_ =
+        "#" + QuicTextUtils::HexEncode(public_value, sizeof(public_value));
 
     // Generate a client nonce.
     string nonce;
     CryptoUtils::GenerateNonce(
         clock_.WallNow(), QuicRandom::GetInstance(),
-        StringPiece(
+        QuicStringPiece(
             reinterpret_cast<char*>(config_peer_.GetPrimaryConfig()->orbit),
             kOrbitSize),
         &nonce);
-    nonc_hex_ = "#" + QuicUtils::HexEncode(nonce);
+    nonc_hex_ = "#" + QuicTextUtils::HexEncode(nonce);
 
     // Generate a source address token.
     SourceAddressTokens previous_tokens;
-    IPAddress ip = net::test::Loopback4();
+    QuicIpAddress ip = QuicIpAddress::Loopback4();
     MockRandom rand;
     string stk = config_peer_.NewSourceAddressToken(
         config_peer_.GetPrimaryConfig()->id, previous_tokens, ip, &rand,
         clock_.WallNow(), nullptr);
-    stk_hex_ = "#" + QuicUtils::HexEncode(stk);
+    stk_hex_ = "#" + QuicTextUtils::HexEncode(stk);
   }
 
  protected:
+  class ProcessDoneCallback : public StatelessRejector::ProcessDoneCallback {
+   public:
+    explicit ProcessDoneCallback(StatelessRejectorTest* test) : test_(test) {}
+    void Run(std::unique_ptr<StatelessRejector> rejector) override {
+      test_->rejector_ = std::move(rejector);
+    }
+
+   private:
+    StatelessRejectorTest* test_;
+  };
+
+  QuicFlagSaver flags_;  // Save/restore all QUIC flag values.
+
   std::unique_ptr<ProofSource> proof_source_;
   MockClock clock_;
   QuicCryptoServerConfig config_;
   QuicCryptoServerConfigPeer config_peer_;
   QuicCompressedCertsCache compressed_certs_cache_;
   QuicCryptoServerConfig::ConfigOptions config_options_;
-  StatelessRejector rejector_;
+  std::unique_ptr<StatelessRejector> rejector_;
 
   // Values used in CHLO messages
   string scid_hex_;
@@ -129,72 +166,78 @@ class StatelessRejectorTest : public ::testing::TestWithParam<TestParams> {
 
 INSTANTIATE_TEST_CASE_P(Flags,
                         StatelessRejectorTest,
-                        ::testing::ValuesIn(GetTestParams()));
+                        ::testing::ValuesIn(GetTestParams()),
+                        TestParamToString);
 
 TEST_P(StatelessRejectorTest, InvalidChlo) {
   // clang-format off
-  const CryptoHandshakeMessage client_hello = CryptoTestUtils::Message(
-      "CHLO",
-      "PDMD", "X509",
-      "COPT", "SREJ",
-      nullptr);
+  const CryptoHandshakeMessage client_hello = crypto_test_utils::CreateCHLO(
+      {{"PDMD", "X509"},
+       {"COPT", "SREJ"}});
   // clang-format on
-  rejector_.OnChlo(GetParam().version, kConnectionId,
-                   kServerDesignateConnectionId, client_hello);
+  rejector_->OnChlo(GetParam().version, kConnectionId,
+                    kServerDesignateConnectionId, client_hello);
 
-  if (GetParam().flags != ENABLED || GetParam().version <= QUIC_VERSION_32) {
-    EXPECT_EQ(StatelessRejector::UNSUPPORTED, rejector_.state());
+  if (GetParam().flags != ENABLED) {
+    EXPECT_EQ(StatelessRejector::UNSUPPORTED, rejector_->state());
     return;
   }
 
-  EXPECT_EQ(StatelessRejector::FAILED, rejector_.state());
-  EXPECT_EQ(QUIC_INVALID_CRYPTO_MESSAGE_PARAMETER, rejector_.error());
+  // The StatelessRejector is undecided - proceed with async processing
+  ASSERT_EQ(StatelessRejector::UNKNOWN, rejector_->state());
+  StatelessRejector::Process(std::move(rejector_),
+                             QuicMakeUnique<ProcessDoneCallback>(this));
+
+  EXPECT_EQ(StatelessRejector::FAILED, rejector_->state());
+  EXPECT_EQ(QUIC_INVALID_CRYPTO_MESSAGE_PARAMETER, rejector_->error());
 }
 
 TEST_P(StatelessRejectorTest, ValidChloWithoutSrejSupport) {
   // clang-format off
-  const CryptoHandshakeMessage client_hello = CryptoTestUtils::Message(
-      "CHLO",
-      "PDMD", "X509",
-      "AEAD", "AESG",
-      "KEXS", "C255",
-      "PUBS", pubs_hex_.c_str(),
-      "NONC", nonc_hex_.c_str(),
-      "VER\0", ver_hex_.c_str(),
-      "$padding", static_cast<int>(kClientHelloMinimumSize),
-      nullptr);
+  const CryptoHandshakeMessage client_hello = crypto_test_utils::CreateCHLO(
+      {{"PDMD", "X509"},
+       {"AEAD", "AESG"},
+       {"KEXS", "C255"},
+       {"PUBS", pubs_hex_},
+       {"NONC", nonc_hex_},
+       {"VER\0", ver_hex_}},
+      kClientHelloMinimumSize);
   // clang-format on
 
-  rejector_.OnChlo(GetParam().version, kConnectionId,
-                   kServerDesignateConnectionId, client_hello);
-  EXPECT_EQ(StatelessRejector::UNSUPPORTED, rejector_.state());
+  rejector_->OnChlo(GetParam().version, kConnectionId,
+                    kServerDesignateConnectionId, client_hello);
+  EXPECT_EQ(StatelessRejector::UNSUPPORTED, rejector_->state());
 }
 
 TEST_P(StatelessRejectorTest, RejectChlo) {
   // clang-format off
-  const CryptoHandshakeMessage client_hello = CryptoTestUtils::Message(
-      "CHLO",
-      "PDMD", "X509",
-      "AEAD", "AESG",
-      "KEXS", "C255",
-      "COPT", "SREJ",
-      "SCID", scid_hex_.c_str(),
-      "PUBS", pubs_hex_.c_str(),
-      "NONC", nonc_hex_.c_str(),
-      "#004b5453", stk_hex_.c_str(),
-      "VER\0", ver_hex_.c_str(),
-      "$padding", static_cast<int>(kClientHelloMinimumSize),
-      nullptr);
+  const CryptoHandshakeMessage client_hello = crypto_test_utils::CreateCHLO(
+      {{"PDMD", "X509"},
+       {"AEAD", "AESG"},
+       {"KEXS", "C255"},
+       {"COPT", "SREJ"},
+       {"SCID", scid_hex_},
+       {"PUBS", pubs_hex_},
+       {"NONC", nonc_hex_},
+       {"#004b5453", stk_hex_},
+       {"VER\0", ver_hex_}},
+      kClientHelloMinimumSize);
   // clang-format on
 
-  rejector_.OnChlo(GetParam().version, kConnectionId,
-                   kServerDesignateConnectionId, client_hello);
-  if (GetParam().flags != ENABLED || GetParam().version <= QUIC_VERSION_32) {
-    EXPECT_EQ(StatelessRejector::UNSUPPORTED, rejector_.state());
+  rejector_->OnChlo(GetParam().version, kConnectionId,
+                    kServerDesignateConnectionId, client_hello);
+  if (GetParam().flags != ENABLED) {
+    EXPECT_EQ(StatelessRejector::UNSUPPORTED, rejector_->state());
     return;
   }
-  ASSERT_EQ(StatelessRejector::REJECTED, rejector_.state());
-  const CryptoHandshakeMessage& reply = rejector_.reply();
+
+  // The StatelessRejector is undecided - proceed with async processing
+  ASSERT_EQ(StatelessRejector::UNKNOWN, rejector_->state());
+  StatelessRejector::Process(std::move(rejector_),
+                             QuicMakeUnique<ProcessDoneCallback>(this));
+
+  ASSERT_EQ(StatelessRejector::REJECTED, rejector_->state());
+  const CryptoHandshakeMessage& reply = rejector_->reply();
   EXPECT_EQ(kSREJ, reply.tag());
   const uint32_t* reject_reasons;
   size_t num_reject_reasons;
@@ -206,34 +249,38 @@ TEST_P(StatelessRejectorTest, RejectChlo) {
 }
 
 TEST_P(StatelessRejectorTest, AcceptChlo) {
-  const uint64_t xlct = CryptoTestUtils::LeafCertHashForTesting();
+  const uint64_t xlct = crypto_test_utils::LeafCertHashForTesting();
   const string xlct_hex =
-      "#" +
-      QuicUtils::HexEncode(reinterpret_cast<const char*>(&xlct), sizeof(xlct));
+      "#" + QuicTextUtils::HexEncode(reinterpret_cast<const char*>(&xlct),
+                                     sizeof(xlct));
   // clang-format off
-  const CryptoHandshakeMessage client_hello = CryptoTestUtils::Message(
-      "CHLO",
-      "PDMD", "X509",
-      "AEAD", "AESG",
-      "KEXS", "C255",
-      "COPT", "SREJ",
-      "SCID", scid_hex_.c_str(),
-      "PUBS", pubs_hex_.c_str(),
-      "NONC", nonc_hex_.c_str(),
-      "#004b5453", stk_hex_.c_str(),
-      "VER\0", ver_hex_.c_str(),
-      "XLCT", xlct_hex.c_str(),
-      "$padding", static_cast<int>(kClientHelloMinimumSize),
-      nullptr);
+  const CryptoHandshakeMessage client_hello = crypto_test_utils::CreateCHLO(
+      {{"PDMD", "X509"},
+       {"AEAD", "AESG"},
+       {"KEXS", "C255"},
+       {"COPT", "SREJ"},
+       {"SCID", scid_hex_},
+       {"PUBS", pubs_hex_},
+       {"NONC", nonc_hex_},
+       {"#004b5453", stk_hex_},
+       {"VER\0", ver_hex_},
+       {"XLCT", xlct_hex}},
+      kClientHelloMinimumSize);
   // clang-format on
 
-  rejector_.OnChlo(GetParam().version, kConnectionId,
-                   kServerDesignateConnectionId, client_hello);
-  if (GetParam().flags != ENABLED || GetParam().version <= QUIC_VERSION_32) {
-    EXPECT_EQ(StatelessRejector::UNSUPPORTED, rejector_.state());
+  rejector_->OnChlo(GetParam().version, kConnectionId,
+                    kServerDesignateConnectionId, client_hello);
+  if (GetParam().flags != ENABLED) {
+    EXPECT_EQ(StatelessRejector::UNSUPPORTED, rejector_->state());
     return;
   }
-  EXPECT_EQ(StatelessRejector::ACCEPTED, rejector_.state());
+
+  // The StatelessRejector is undecided - proceed with async processing
+  ASSERT_EQ(StatelessRejector::UNKNOWN, rejector_->state());
+  StatelessRejector::Process(std::move(rejector_),
+                             QuicMakeUnique<ProcessDoneCallback>(this));
+
+  EXPECT_EQ(StatelessRejector::ACCEPTED, rejector_->state());
 }
 
 }  // namespace

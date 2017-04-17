@@ -15,6 +15,7 @@
 #include "util/file/file_writer.h"
 
 #include <limits.h>
+#include <stddef.h>
 #include <string.h>
 
 #include <algorithm>
@@ -56,6 +57,11 @@ bool WeakFileHandleFileWriter::Write(const void* data, size_t size) {
 bool WeakFileHandleFileWriter::WriteIoVec(std::vector<WritableIoVec>* iovecs) {
   DCHECK_NE(file_handle_, kInvalidFileHandle);
 
+  if (iovecs->empty()) {
+    LOG(ERROR) << "WriteIoVec(): no iovecs";
+    return false;
+  }
+
 #if defined(OS_POSIX)
 
   ssize_t size = 0;
@@ -73,9 +79,19 @@ bool WeakFileHandleFileWriter::WriteIoVec(std::vector<WritableIoVec>* iovecs) {
   iovec* iov = reinterpret_cast<iovec*>(&(*iovecs)[0]);
   size_t remaining_iovecs = iovecs->size();
 
+#if defined(OS_ANDROID)
+  // Android does not expose the IOV_MAX macro, but makes its value available
+  // via sysconf(). See Android 7.0.0 bionic/libc/bionic/sysconf.cpp sysconf().
+  // Bionic defines IOV_MAX at bionic/libc/include/limits.h, but does not ship
+  // this file to the NDK as <limits.h>, substituting
+  // bionic/libc/include/bits/posix_limits.h.
+  const size_t kIovMax = sysconf(_SC_IOV_MAX);
+#else
+  const size_t kIovMax = IOV_MAX;
+#endif
+
   while (size > 0) {
-    size_t writev_iovec_count =
-        std::min(remaining_iovecs, implicit_cast<size_t>(IOV_MAX));
+    size_t writev_iovec_count = std::min(remaining_iovecs, kIovMax);
     ssize_t written =
         HANDLE_EINTR(writev(file_handle_, iov, writev_iovec_count));
     if (written < 0) {

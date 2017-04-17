@@ -29,35 +29,39 @@
 #ifndef MultiChannelResampler_h
 #define MultiChannelResampler_h
 
-#include "platform/audio/SincResampler.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
 #include <memory>
+#include "platform/audio/SincResampler.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class AudioBus;
 
 class PLATFORM_EXPORT MultiChannelResampler {
-    USING_FAST_MALLOC(MultiChannelResampler);
-    WTF_MAKE_NONCOPYABLE(MultiChannelResampler);
-public:
-    MultiChannelResampler(double scaleFactor, unsigned numberOfChannels);
+  USING_FAST_MALLOC(MultiChannelResampler);
+  WTF_MAKE_NONCOPYABLE(MultiChannelResampler);
 
-    // Process given AudioSourceProvider for streaming applications.
-    void process(AudioSourceProvider*, AudioBus* destination, size_t framesToProcess);
+ public:
+  MultiChannelResampler(double scale_factor, unsigned number_of_channels);
 
-private:
-    // FIXME: the mac port can have a more highly optimized implementation based on CoreAudio
-    // instead of SincResampler. For now the default implementation will be used on all ports.
-    // https://bugs.webkit.org/show_bug.cgi?id=75118
+  // Process given AudioSourceProvider for streaming applications.
+  void Process(AudioSourceProvider*,
+               AudioBus* destination,
+               size_t frames_to_process);
 
-    // Each channel will be resampled using a high-quality SincResampler.
-    Vector<std::unique_ptr<SincResampler>> m_kernels;
+ private:
+  // FIXME: the mac port can have a more highly optimized implementation based
+  // on CoreAudio instead of SincResampler. For now the default implementation
+  // will be used on all ports.
+  // https://bugs.webkit.org/show_bug.cgi?id=75118
 
-    unsigned m_numberOfChannels;
+  // Each channel will be resampled using a high-quality SincResampler.
+  Vector<std::unique_ptr<SincResampler>> kernels_;
+
+  unsigned number_of_channels_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MultiChannelResampler_h
+#endif  // MultiChannelResampler_h

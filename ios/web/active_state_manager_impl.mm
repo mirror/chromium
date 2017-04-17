@@ -8,13 +8,11 @@
 #include "ios/web/public/browser_state.h"
 #include "ios/web/public/web_thread.h"
 
-namespace web {
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
-namespace {
-// The number of ActiveStateManagers that are currently in active state.
-// At most one ActiveStateManager can be active at any given time.
-int g_active_state_manager_active_count = 0;
-}  // namespace
+namespace web {
 
 ActiveStateManagerImpl::ActiveStateManagerImpl(BrowserState* browser_state)
     : browser_state_(browser_state), active_(false) {
@@ -23,7 +21,8 @@ ActiveStateManagerImpl::ActiveStateManagerImpl(BrowserState* browser_state)
 }
 
 ActiveStateManagerImpl::~ActiveStateManagerImpl() {
-  FOR_EACH_OBSERVER(Observer, observer_list_, WillBeDestroyed());
+  for (auto& observer : observer_list_)
+    observer.WillBeDestroyed();
   DCHECK(!IsActive());
 }
 
@@ -33,18 +32,14 @@ void ActiveStateManagerImpl::SetActive(bool active) {
   if (active == active_) {
     return;
   }
-  if (active) {
-    ++g_active_state_manager_active_count;
-  } else {
-    --g_active_state_manager_active_count;
-  }
-  DCHECK_GE(1, g_active_state_manager_active_count);
   active_ = active;
 
   if (active) {
-    FOR_EACH_OBSERVER(Observer, observer_list_, OnActive());
+    for (auto& observer : observer_list_)
+      observer.OnActive();
   } else {
-    FOR_EACH_OBSERVER(Observer, observer_list_, OnInactive());
+    for (auto& observer : observer_list_)
+      observer.OnInactive();
   }
 }
 

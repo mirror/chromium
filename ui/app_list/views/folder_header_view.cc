@@ -19,7 +19,6 @@
 #include "ui/views/border.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/textfield/textfield.h"
-#include "ui/views/focus/focus_manager.h"
 #include "ui/views/painter.h"
 
 namespace app_list {
@@ -28,9 +27,6 @@ namespace {
 
 const int kPreferredWidth = 360;
 const int kPreferredHeight = 48;
-const int kIconDimension = 24;
-const int kBackButtonPadding = 14;
-const int kBottomSeparatorPadding = 9;  // Non-experimental app list only.
 const int kBottomSeparatorHeight = 1;
 const int kMaxFolderNameWidth = 300;
 
@@ -39,7 +35,7 @@ const int kMaxFolderNameWidth = 300;
 class FolderHeaderView::FolderNameView : public views::Textfield {
  public:
   FolderNameView() {
-    SetBorder(views::Border::CreateEmptyBorder(1, 1, 1, 1));
+    SetBorder(views::CreateEmptyBorder(1, 1, 1, 1));
     SetTextColor(kFolderTitleColor);
   }
 
@@ -51,7 +47,6 @@ class FolderHeaderView::FolderNameView : public views::Textfield {
 
 FolderHeaderView::FolderHeaderView(FolderHeaderViewDelegate* delegate)
     : folder_item_(nullptr),
-      back_button_(nullptr),
       folder_name_view_(new FolderNameView),
       folder_name_placeholder_text_(
           ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
@@ -59,26 +54,11 @@ FolderHeaderView::FolderHeaderView(FolderHeaderViewDelegate* delegate)
       delegate_(delegate),
       folder_name_visible_(true) {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  if (!app_list::switches::IsExperimentalAppListEnabled()) {
-    back_button_ = new views::ImageButton(this);
-    back_button_->SetImage(
-        views::ImageButton::STATE_NORMAL,
-        rb.GetImageSkiaNamed(IDR_APP_LIST_FOLDER_BACK_NORMAL));
-    back_button_->SetImageAlignment(views::ImageButton::ALIGN_CENTER,
-                                    views::ImageButton::ALIGN_MIDDLE);
-    AddChildView(back_button_);
-    back_button_->SetFocusForPlatform();
-    back_button_->set_request_focus_on_press(true);
-    back_button_->SetAccessibleName(
-        ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
-            IDS_APP_LIST_FOLDER_CLOSE_FOLDER_ACCESSIBILE_NAME));
-  }
-
   folder_name_view_->SetFontList(
       rb.GetFontList(ui::ResourceBundle::MediumFont));
   folder_name_view_->set_placeholder_text_color(kFolderTitleHintTextColor);
   folder_name_view_->set_placeholder_text(folder_name_placeholder_text_);
-  folder_name_view_->SetBorder(views::Border::NullBorder());
+  folder_name_view_->SetBorder(views::NullBorder());
   folder_name_view_->SetBackgroundColor(kContentsBackgroundColor);
   folder_name_view_->set_controller(this);
   AddChildView(folder_name_view_);
@@ -115,11 +95,7 @@ void FolderHeaderView::OnFolderItemRemoved() {
 }
 
 void FolderHeaderView::SetTextFocus() {
-  if (!folder_name_view_->HasFocus()) {
-    views::FocusManager* focus_manager = GetFocusManager();
-    if (focus_manager)
-      focus_manager->SetFocusedView(folder_name_view_);
-  }
+  folder_name_view_->RequestFocus();
 }
 
 bool FolderHeaderView::HasTextFocus() const {
@@ -171,14 +147,6 @@ void FolderHeaderView::Layout() {
   if (rect.IsEmpty())
     return;
 
-  if (!switches::IsExperimentalAppListEnabled()) {
-    gfx::Rect back_bounds;
-    DCHECK(back_button_);
-    back_bounds = rect;
-    back_bounds.set_width(kIconDimension + 2 * kBackButtonPadding);
-    back_button_->SetBoundsRect(back_bounds);
-  }
-
   gfx::Rect text_bounds(rect);
   base::string16 text = folder_item_ && !folder_item_->name().empty()
                             ? base::UTF8ToUTF16(folder_item_->name())
@@ -210,10 +178,7 @@ void FolderHeaderView::OnPaint(gfx::Canvas* canvas) {
     return;
 
   // Draw bottom separator line.
-  int horizontal_padding = app_list::switches::IsExperimentalAppListEnabled()
-                               ? kExperimentalAppsGridPadding
-                               : kBottomSeparatorPadding;
-  rect.Inset(horizontal_padding, 0);
+  rect.Inset(kAppsGridPadding, 0);
   rect.set_y(rect.bottom() - kBottomSeparatorHeight);
   rect.set_height(kBottomSeparatorHeight);
   canvas->FillRect(rect, kTopSeparatorColor);

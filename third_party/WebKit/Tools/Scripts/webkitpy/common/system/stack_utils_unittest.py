@@ -29,7 +29,6 @@
 import sys
 import unittest
 
-from webkitpy.common.system import outputcapture
 from webkitpy.common.system import stack_utils
 
 
@@ -56,8 +55,8 @@ class StackUtilsTest(unittest.TestCase):
             msgs.append(msg)
 
         thread_id = current_thread_id()
-        stack_utils.log_thread_state(logger, "test-thread", thread_id,
-                                     "is tested")
+        stack_utils.log_thread_state(logger, 'test-thread', thread_id,
+                                     'is tested')
         self.assertTrue(msgs)
 
     def test_log_traceback(self):

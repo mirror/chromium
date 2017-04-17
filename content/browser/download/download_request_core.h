@@ -30,7 +30,6 @@ class URLRequestStatus;
 }  // namespace net
 
 namespace content {
-class DownloadManagerImpl;
 class ByteStreamReader;
 class ByteStreamWriter;
 struct DownloadCreateInfo;
@@ -71,8 +70,7 @@ class CONTENT_EXPORT DownloadRequestCore
   // URLRequest::Read(). Call OnReadCompleted() when the Read operation
   // completes.
   bool OnWillRead(scoped_refptr<net::IOBuffer>* buf,
-                  int* buf_size,
-                  int min_size);
+                  int* buf_size);
 
   // Used to notify DownloadRequestCore that the caller is about to abort the
   // outer request. |reason| will be used as the final interrupt reason when
@@ -124,6 +122,9 @@ class CONTENT_EXPORT DownloadRequestCore
       const net::HttpResponseHeaders& http_headers,
       DownloadSaveInfo* save_info);
 
+  static void AddPartialRequestHeaders(net::URLRequest* request,
+                                       DownloadUrlParameters* params);
+
   std::unique_ptr<DownloadCreateInfo> CreateDownloadCreateInfo(
       DownloadInterruptReason result);
 
@@ -134,6 +135,7 @@ class CONTENT_EXPORT DownloadRequestCore
   // populate the DownloadCreateInfo when the time comes.
   std::unique_ptr<DownloadSaveInfo> save_info_;
   uint32_t download_id_;
+  bool transient_;
   DownloadUrlParameters::OnStartedCallback on_started_callback_;
 
   // Data flow
@@ -147,10 +149,9 @@ class CONTENT_EXPORT DownloadRequestCore
 
   // The following are used to collect stats.
   base::TimeTicks download_start_time_;
-  base::TimeTicks last_read_time_;
   base::TimeTicks last_stream_pause_time_;
   base::TimeDelta total_pause_time_;
-  size_t last_buffer_size_;
+
   int64_t bytes_read_;
 
   int pause_count_;

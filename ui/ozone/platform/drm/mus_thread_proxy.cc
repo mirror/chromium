@@ -15,6 +15,24 @@
 
 namespace ui {
 
+CursorProxyThread::CursorProxyThread(MusThreadProxy* mus_thread_proxy)
+    : mus_thread_proxy_(mus_thread_proxy) {}
+CursorProxyThread::~CursorProxyThread() {}
+
+void CursorProxyThread::CursorSet(gfx::AcceleratedWidget window,
+                                  const std::vector<SkBitmap>& bitmaps,
+                                  const gfx::Point& point,
+                                  int frame_delay_ms) {
+  mus_thread_proxy_->CursorSet(window, bitmaps, point, frame_delay_ms);
+}
+void CursorProxyThread::Move(gfx::AcceleratedWidget window,
+                             const gfx::Point& point) {
+  mus_thread_proxy_->Move(window, point);
+}
+void CursorProxyThread::InitializeOnEvdev() {
+  mus_thread_proxy_->InitializeOnEvdev();
+}
+
 MusThreadProxy::MusThreadProxy()
     : ws_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       drm_thread_(nullptr),
@@ -24,8 +42,8 @@ void MusThreadProxy::InitializeOnEvdev() {}
 
 MusThreadProxy::~MusThreadProxy() {
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  FOR_EACH_OBSERVER(GpuThreadObserver, gpu_thread_observers_,
-                    OnGpuThreadRetired());
+  for (GpuThreadObserver& observer : gpu_thread_observers_)
+    observer.OnGpuThreadRetired();
 }
 
 // This is configured on the GPU thread.
@@ -56,16 +74,24 @@ void MusThreadProxy::DispatchObserversFromDrmThread() {
 
 void MusThreadProxy::RunObservers() {
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  FOR_EACH_OBSERVER(GpuThreadObserver, gpu_thread_observers_,
-                    OnGpuThreadReady());
+  for (GpuThreadObserver& observer : gpu_thread_observers_) {
+    // TODO(rjkroege): This needs to be different when gpu process split
+    // happens.
+    observer.OnGpuProcessLaunched();
+    observer.OnGpuThreadReady();
+  }
 }
 
 void MusThreadProxy::AddGpuThreadObserver(GpuThreadObserver* observer) {
   DCHECK(on_window_server_thread_.CalledOnValidThread());
 
   gpu_thread_observers_.AddObserver(observer);
-  if (IsConnected())
+  if (IsConnected()) {
+    // TODO(rjkroege): This needs to be different when gpu process split
+    // happens.
+    observer->OnGpuProcessLaunched();
     observer->OnGpuThreadReady();
+  }
 }
 
 void MusThreadProxy::RemoveGpuThreadObserver(GpuThreadObserver* observer) {
@@ -264,7 +290,8 @@ bool MusThreadProxy::GpuGetHDCPState(int64_t display_id) {
   return true;
 }
 
-bool MusThreadProxy::GpuSetHDCPState(int64_t display_id, HDCPState state) {
+bool MusThreadProxy::GpuSetHDCPState(int64_t display_id,
+                                     display::HDCPState state) {
   DCHECK(on_window_server_thread_.CalledOnValidThread());
   DCHECK(drm_thread_->IsRunning());
   auto callback = base::Bind(&MusThreadProxy::GpuSetHDCPStateCallback,
@@ -278,8 +305,8 @@ bool MusThreadProxy::GpuSetHDCPState(int64_t display_id, HDCPState state) {
 
 bool MusThreadProxy::GpuSetColorCorrection(
     int64_t id,
-    const std::vector<GammaRampRGBEntry>& degamma_lut,
-    const std::vector<GammaRampRGBEntry>& gamma_lut,
+    const std::vector<display::GammaRampRGBEntry>& degamma_lut,
+    const std::vector<display::GammaRampRGBEntry>& gamma_lut,
     const std::vector<float>& correction_matrix) {
   DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
@@ -327,7 +354,7 @@ void MusThreadProxy::GpuRelinquishDisplayControlCallback(bool success) const {
 
 void MusThreadProxy::GpuGetHDCPStateCallback(int64_t display_id,
                                              bool success,
-                                             HDCPState state) const {
+                                             display::HDCPState state) const {
   DCHECK(on_window_server_thread_.CalledOnValidThread());
   display_manager_->GpuReceivedHDCPState(display_id, success, state);
 }

@@ -11,9 +11,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/renderer/media/rtc_certificate.h"
 #include "content/renderer/media/webrtc/peer_connection_dependency_factory.h"
 #include "content/renderer/render_thread_impl.h"
+#include "media/media_features.h"
 #include "third_party/webrtc/base/rtccertificate.h"
 #include "third_party/webrtc/base/rtccertificategenerator.h"
 #include "third_party/webrtc/base/scoped_ref_ptr.h"
@@ -24,13 +26,13 @@ namespace {
 
 rtc::KeyParams WebRTCKeyParamsToKeyParams(
     const blink::WebRTCKeyParams& key_params) {
-  switch (key_params.keyType()) {
-    case blink::WebRTCKeyTypeRSA:
-      return rtc::KeyParams::RSA(key_params.rsaParams().modLength,
-                                 key_params.rsaParams().pubExp);
-    case blink::WebRTCKeyTypeECDSA:
+  switch (key_params.KeyType()) {
+    case blink::kWebRTCKeyTypeRSA:
+      return rtc::KeyParams::RSA(key_params.RsaParams().mod_length,
+                                 key_params.RsaParams().pub_exp);
+    case blink::kWebRTCKeyTypeECDSA:
       return rtc::KeyParams::ECDSA(
-          static_cast<rtc::ECCurve>(key_params.ecCurve()));
+          static_cast<rtc::ECCurve>(key_params.EcCurve()));
     default:
       NOTREACHED();
       return rtc::KeyParams();
@@ -43,6 +45,10 @@ rtc::KeyParams WebRTCKeyParamsToKeyParams(
 // request alive independently of the |RTCCertificateGenerator| that spawned it.
 class RTCCertificateGeneratorRequest
     : public base::RefCountedThreadSafe<RTCCertificateGeneratorRequest> {
+ private:
+  using CertificateCallbackPtr = std::unique_ptr<
+     blink::WebRTCCertificateCallback,
+     base::OnTaskRunnerDeleter>;
  public:
   RTCCertificateGeneratorRequest(
       const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
@@ -59,12 +65,16 @@ class RTCCertificateGeneratorRequest
       std::unique_ptr<blink::WebRTCCertificateCallback> observer) {
     DCHECK(main_thread_->BelongsToCurrentThread());
     DCHECK(observer);
+
+    CertificateCallbackPtr transition(
+        observer.release(),
+        base::OnTaskRunnerDeleter(base::ThreadTaskRunnerHandle::Get()));
     worker_thread_->PostTask(FROM_HERE, base::Bind(
         &RTCCertificateGeneratorRequest::GenerateCertificateOnWorkerThread,
         this,
         key_params,
         expires_ms,
-        base::Passed(std::move(observer))));
+        base::Passed(&transition)));
   }
 
  private:
@@ -74,29 +84,30 @@ class RTCCertificateGeneratorRequest
   void GenerateCertificateOnWorkerThread(
       const blink::WebRTCKeyParams key_params,
       const rtc::Optional<uint64_t> expires_ms,
-      std::unique_ptr<blink::WebRTCCertificateCallback> observer) {
+      CertificateCallbackPtr observer) {
     DCHECK(worker_thread_->BelongsToCurrentThread());
 
     rtc::scoped_refptr<rtc::RTCCertificate> certificate =
         rtc::RTCCertificateGenerator::GenerateCertificate(
             WebRTCKeyParamsToKeyParams(key_params), expires_ms);
 
-    main_thread_->PostTask(FROM_HERE, base::Bind(
-        &RTCCertificateGeneratorRequest::DoCallbackOnMainThread,
-        this,
-        base::Passed(std::move(observer)),
-        base::Passed(base::WrapUnique(new RTCCertificate(certificate)))));
+    main_thread_->PostTask(
+        FROM_HERE,
+        base::Bind(
+            &RTCCertificateGeneratorRequest::DoCallbackOnMainThread, this,
+            base::Passed(std::move(observer)),
+            base::Passed(base::MakeUnique<RTCCertificate>(certificate))));
   }
 
   void DoCallbackOnMainThread(
-      std::unique_ptr<blink::WebRTCCertificateCallback> observer,
+      CertificateCallbackPtr observer,
       std::unique_ptr<blink::WebRTCCertificate> certificate) {
     DCHECK(main_thread_->BelongsToCurrentThread());
     DCHECK(observer);
     if (certificate)
-      observer->onSuccess(std::move(certificate));
+      observer->OnSuccess(std::move(certificate));
     else
-      observer->onError();
+      observer->OnError();
   }
 
   // The main thread is the renderer thread.
@@ -107,14 +118,14 @@ class RTCCertificateGeneratorRequest
 
 }  // namespace
 
-void RTCCertificateGenerator::generateCertificate(
+void RTCCertificateGenerator::GenerateCertificate(
     const blink::WebRTCKeyParams& key_params,
     std::unique_ptr<blink::WebRTCCertificateCallback> observer) {
   generateCertificateWithOptionalExpiration(
       key_params, rtc::Optional<uint64_t>(), std::move(observer));
 }
 
-void RTCCertificateGenerator::generateCertificateWithExpiration(
+void RTCCertificateGenerator::GenerateCertificateWithExpiration(
     const blink::WebRTCKeyParams& key_params,
     uint64_t expires_ms,
     std::unique_ptr<blink::WebRTCCertificateCallback> observer) {
@@ -126,8 +137,8 @@ void RTCCertificateGenerator::generateCertificateWithOptionalExpiration(
     const blink::WebRTCKeyParams& key_params,
     const rtc::Optional<uint64_t>& expires_ms,
     std::unique_ptr<blink::WebRTCCertificateCallback> observer) {
-  DCHECK(isSupportedKeyParams(key_params));
-#if defined(ENABLE_WEBRTC)
+  DCHECK(IsSupportedKeyParams(key_params));
+#if BUILDFLAG(ENABLE_WEBRTC)
   const scoped_refptr<base::SingleThreadTaskRunner> main_thread =
       base::ThreadTaskRunnerHandle::Get();
   PeerConnectionDependencyFactory* pc_dependency_factory =
@@ -145,20 +156,20 @@ void RTCCertificateGenerator::generateCertificateWithOptionalExpiration(
 #endif
 }
 
-bool RTCCertificateGenerator::isSupportedKeyParams(
+bool RTCCertificateGenerator::IsSupportedKeyParams(
     const blink::WebRTCKeyParams& key_params) {
   return WebRTCKeyParamsToKeyParams(key_params).IsValid();
 }
 
-std::unique_ptr<blink::WebRTCCertificate> RTCCertificateGenerator::fromPEM(
+std::unique_ptr<blink::WebRTCCertificate> RTCCertificateGenerator::FromPEM(
     blink::WebString pem_private_key,
     blink::WebString pem_certificate) {
   rtc::scoped_refptr<rtc::RTCCertificate> certificate =
-      rtc::RTCCertificate::FromPEM(
-          rtc::RTCCertificatePEM(pem_private_key.utf8(),
-              pem_certificate.utf8()));
-  return std::unique_ptr<blink::WebRTCCertificate>(
-      new RTCCertificate(certificate));
+      rtc::RTCCertificate::FromPEM(rtc::RTCCertificatePEM(
+          pem_private_key.Utf8(), pem_certificate.Utf8()));
+  if (!certificate)
+    return nullptr;
+  return base::MakeUnique<RTCCertificate>(certificate);
 }
 
 }  // namespace content

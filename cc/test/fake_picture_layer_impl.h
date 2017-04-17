@@ -11,7 +11,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "cc/layers/picture_layer_impl.h"
-#include "cc/playback/raster_source.h"
+#include "cc/raster/raster_source.h"
 
 namespace cc {
 
@@ -21,15 +21,22 @@ class FakePictureLayerImpl : public PictureLayerImpl {
 
   static std::unique_ptr<FakePictureLayerImpl> Create(LayerTreeImpl* tree_impl,
                                                       int id) {
-    bool is_mask = false;
-    return base::WrapUnique(new FakePictureLayerImpl(tree_impl, id, is_mask));
+    Layer::LayerMaskType mask_type = Layer::LayerMaskType::NOT_MASK;
+    return base::WrapUnique(new FakePictureLayerImpl(tree_impl, id, mask_type));
   }
 
   static std::unique_ptr<FakePictureLayerImpl> CreateMask(
       LayerTreeImpl* tree_impl,
       int id) {
-    bool is_mask = true;
-    return base::WrapUnique(new FakePictureLayerImpl(tree_impl, id, is_mask));
+    Layer::LayerMaskType mask_type = Layer::LayerMaskType::MULTI_TEXTURE_MASK;
+    return base::WrapUnique(new FakePictureLayerImpl(tree_impl, id, mask_type));
+  }
+
+  static std::unique_ptr<FakePictureLayerImpl> CreateSingleTextureMask(
+      LayerTreeImpl* tree_impl,
+      int id) {
+    Layer::LayerMaskType mask_type = Layer::LayerMaskType::SINGLE_TEXTURE_MASK;
+    return base::WrapUnique(new FakePictureLayerImpl(tree_impl, id, mask_type));
   }
 
   // Create layer from a raster source that covers the entire layer.
@@ -37,9 +44,9 @@ class FakePictureLayerImpl : public PictureLayerImpl {
       LayerTreeImpl* tree_impl,
       int id,
       scoped_refptr<RasterSource> raster_source) {
-    bool is_mask = false;
+    Layer::LayerMaskType mask_type = Layer::LayerMaskType::NOT_MASK;
     return base::WrapUnique(
-        new FakePictureLayerImpl(tree_impl, id, raster_source, is_mask));
+        new FakePictureLayerImpl(tree_impl, id, raster_source, mask_type));
   }
 
   // Create layer from a raster source that only covers part of the layer.
@@ -48,9 +55,9 @@ class FakePictureLayerImpl : public PictureLayerImpl {
       int id,
       scoped_refptr<RasterSource> raster_source,
       const gfx::Size& layer_bounds) {
-    bool is_mask = false;
+    Layer::LayerMaskType mask_type = Layer::LayerMaskType::NOT_MASK;
     return base::WrapUnique(new FakePictureLayerImpl(
-        tree_impl, id, raster_source, is_mask, layer_bounds));
+        tree_impl, id, raster_source, mask_type, layer_bounds));
   }
 
   // Create layer from a raster source that covers the entire layer and is a
@@ -59,9 +66,19 @@ class FakePictureLayerImpl : public PictureLayerImpl {
       LayerTreeImpl* tree_impl,
       int id,
       scoped_refptr<RasterSource> raster_source) {
-    bool is_mask = true;
+    Layer::LayerMaskType mask_type = Layer::LayerMaskType::MULTI_TEXTURE_MASK;
     return base::WrapUnique(
-        new FakePictureLayerImpl(tree_impl, id, raster_source, is_mask));
+        new FakePictureLayerImpl(tree_impl, id, raster_source, mask_type));
+  }
+
+  static std::unique_ptr<FakePictureLayerImpl>
+  CreateSingleTextureMaskWithRasterSource(
+      LayerTreeImpl* tree_impl,
+      int id,
+      scoped_refptr<RasterSource> raster_source) {
+    Layer::LayerMaskType mask_type = Layer::LayerMaskType::SINGLE_TEXTURE_MASK;
+    return base::WrapUnique(
+        new FakePictureLayerImpl(tree_impl, id, raster_source, mask_type));
   }
 
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
@@ -140,9 +157,12 @@ class FakePictureLayerImpl : public PictureLayerImpl {
   }
 
   size_t release_resources_count() const { return release_resources_count_; }
-  void reset_release_resources_count() { release_resources_count_ = 0; }
+  size_t release_tile_resources_count() const {
+    return release_tile_resources_count_;
+  }
 
   void ReleaseResources() override;
+  void ReleaseTileResources() override;
 
   bool only_used_low_res_last_append_quads() const {
     return only_used_low_res_last_append_quads_;
@@ -152,22 +172,25 @@ class FakePictureLayerImpl : public PictureLayerImpl {
   FakePictureLayerImpl(LayerTreeImpl* tree_impl,
                        int id,
                        scoped_refptr<RasterSource> raster_source,
-                       bool is_mask);
+                       Layer::LayerMaskType mask_type);
   FakePictureLayerImpl(LayerTreeImpl* tree_impl,
                        int id,
                        scoped_refptr<RasterSource> raster_source,
-                       bool is_mask,
+                       Layer::LayerMaskType mask_type,
                        const gfx::Size& layer_bounds);
-  FakePictureLayerImpl(LayerTreeImpl* tree_impl, int id, bool is_mask);
+  FakePictureLayerImpl(LayerTreeImpl* tree_impl,
+                       int id,
+                       Layer::LayerMaskType mask_type);
 
  private:
   gfx::Size fixed_tile_size_;
 
-  size_t append_quads_count_;
-  size_t did_become_active_call_count_;
-  bool has_valid_tile_priorities_;
-  bool use_set_valid_tile_priorities_flag_;
-  size_t release_resources_count_;
+  size_t append_quads_count_ = 0;
+  size_t did_become_active_call_count_ = 0;
+  bool has_valid_tile_priorities_ = false;
+  bool use_set_valid_tile_priorities_flag_ = false;
+  size_t release_resources_count_ = 0;
+  size_t release_tile_resources_count_ = 0;
 };
 
 }  // namespace cc

@@ -24,7 +24,6 @@
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
-#include "ui/gfx/gpu_memory_buffer.h"
 
 #if defined(OS_MACOSX)
 #include <CoreVideo/CVPixelBuffer.h>
@@ -64,18 +63,13 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
     STORAGE_OWNED_MEMORY = 3,  // VideoFrame has allocated its own data buffer.
     STORAGE_SHMEM = 4,         // Pixels are backed by Shared Memory.
 #if defined(OS_LINUX)
-    // TODO(mcasas): Consider turning this type into STORAGE_NATIVE or another
-    // meaningful name and handle it appropriately in all cases.
+    // TODO(mcasas): Consider turning this type into STORAGE_NATIVE
+    // based on the idea of using this same enum value for both DMA
+    // buffers on Linux and CVPixelBuffers on Mac (which currently use
+    // STORAGE_UNOWNED_MEMORY) and handle it appropriately in all cases.
     STORAGE_DMABUFS = 5,  // Each plane is stored into a DmaBuf.
 #endif
-#if defined(VIDEO_HOLE)
-    // Indicates protected media that needs to be directly rendered to hw. It
-    // is, in principle, platform independent, see http://crbug.com/323157 and
-    // https://groups.google.com/a/google.com/d/topic/chrome-gpu/eIM1RwarUmk/discussion
-    STORAGE_HOLE = 6,
-#endif
-    STORAGE_GPU_MEMORY_BUFFERS = 7,
-    STORAGE_MOJO_SHARED_BUFFER = 8,
+    STORAGE_MOJO_SHARED_BUFFER = 6,
     STORAGE_LAST = STORAGE_MOJO_SHARED_BUFFER,
   };
 
@@ -177,24 +171,6 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
       uint8_t* v_data,
       base::TimeDelta timestamp);
 
-  // Wraps external YUV data with the given parameters with a VideoFrame.
-  // The returned VideoFrame does not own the GpuMemoryBuffers passed in.
-  static scoped_refptr<VideoFrame> WrapExternalYuvGpuMemoryBuffers(
-      VideoPixelFormat format,
-      const gfx::Size& coded_size,
-      const gfx::Rect& visible_rect,
-      const gfx::Size& natural_size,
-      int32_t y_stride,
-      int32_t u_stride,
-      int32_t v_stride,
-      uint8_t* y_data,
-      uint8_t* u_data,
-      uint8_t* v_data,
-      const gfx::GpuMemoryBufferHandle& y_handle,
-      const gfx::GpuMemoryBufferHandle& u_handle,
-      const gfx::GpuMemoryBufferHandle& v_handle,
-      base::TimeDelta timestamp);
-
   // Wraps external YUVA data of the given parameters with a VideoFrame.
   // The returned VideoFrame does not own the data passed in.
   static scoped_refptr<VideoFrame> WrapExternalYuvaData(
@@ -273,11 +249,6 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
   static scoped_refptr<VideoFrame> CreateTransparentFrame(
       const gfx::Size& size);
 
-#if defined(VIDEO_HOLE)
-  // Allocates a hole frame.
-  static scoped_refptr<VideoFrame> CreateHoleFrame(const gfx::Size& size);
-#endif  // defined(VIDEO_HOLE)
-
   static size_t NumPlanes(VideoPixelFormat format);
 
   // Returns the required allocation size for a (tightly packed) frame of the
@@ -325,6 +296,7 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
 
   // Returns the color space of this frame's content.
   gfx::ColorSpace ColorSpace() const;
+  void set_color_space(const gfx::ColorSpace& color_space);
 
   VideoPixelFormat format() const { return format_; }
   StorageType storage_type() const { return storage_type_; }
@@ -366,15 +338,10 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
   // Returns the offset into the shared memory where the frame data begins.
   size_t shared_memory_offset() const;
 
-  // Returns the vector of GpuMemoryBuffer handles, if present.
-  const std::vector<gfx::GpuMemoryBufferHandle>& gpu_memory_buffer_handles()
-      const;
-
 #if defined(OS_LINUX)
   // Returns backing DmaBuf file descriptor for given |plane|, if present, or
   // -1 if not.
-  // TODO(mcasas): Rename to DmabufFd() to comply with Style Guide.
-  int dmabuf_fd(size_t plane) const;
+  int DmabufFd(size_t plane) const;
 
   // Duplicates internally the |fds_in|, overwriting the current ones. Returns
   // false if something goes wrong, and leaves all internal fds closed.
@@ -385,9 +352,17 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
 
 #if defined(OS_MACOSX)
   // Returns the backing CVPixelBuffer, if present.
-  // TODO(mcasas): Rename to CvPixelBuffer() to comply with Style Guide.
-  CVPixelBufferRef cv_pixel_buffer() const;
+  CVPixelBufferRef CvPixelBuffer() const;
 #endif
+
+  // Sets the mailbox release callback.
+  //
+  // The callback may be run from ANY THREAD, and so it is up to the client to
+  // ensure thread safety.
+  //
+  // WARNING: This method is not thread safe; it should only be called if you
+  // are still the only owner of this VideoFrame.
+  void SetReleaseMailboxCB(const ReleaseMailboxCB& release_mailbox_cb);
 
   // Adds a callback to be run when the VideoFrame is about to be destroyed.
   // The callback may be run from ANY THREAD, and so it is up to the client to
@@ -426,6 +401,9 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
   // Unique identifier for this video frame; generated at construction time and
   // guaranteed to be unique within a single process.
   int unique_id() const { return unique_id_; }
+
+  // Returns the number of bits per channel for given |format|.
+  int BitsPerChannel(VideoPixelFormat format);
 
  protected:
   friend class base::RefCountedThreadSafe<VideoFrame>;
@@ -553,9 +531,6 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
   base::SharedMemoryHandle shared_memory_handle_;
   size_t shared_memory_offset_;
 
-  // GpuMemoryBuffer handles attached to the video_frame.
-  std::vector<gfx::GpuMemoryBufferHandle> gpu_memory_buffer_handles_;
-
 #if defined(OS_LINUX)
   // Dmabufs for each plane. If set, this frame has DmaBuf backing in some way.
   base::ScopedFD dmabuf_fds_[kMaxPlanes];
@@ -577,6 +552,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
 
   // Generated at construction time.
   const int unique_id_;
+
+  gfx::ColorSpace color_space_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(VideoFrame);
 };

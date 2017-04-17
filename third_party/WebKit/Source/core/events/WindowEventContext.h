@@ -29,41 +29,39 @@
 
 #include "core/frame/LocalDOMWindow.h"
 #include "platform/heap/Handle.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class EventTarget;
 class Event;
-class Node;
 class NodeEventContext;
 
 class WindowEventContext : public GarbageCollected<WindowEventContext> {
-    WTF_MAKE_NONCOPYABLE(WindowEventContext);
-public:
-    WindowEventContext(Event&, const NodeEventContext& topNodeEventContext);
+  WTF_MAKE_NONCOPYABLE(WindowEventContext);
 
-    LocalDOMWindow* window() const;
-    EventTarget* target() const;
-    bool handleLocalEvents(Event&);
+ public:
+  WindowEventContext(Event&, const NodeEventContext& top_node_event_context);
 
-    DECLARE_TRACE();
+  LocalDOMWindow* Window() const;
+  EventTarget* Target() const;
+  bool HandleLocalEvents(Event&);
 
-private:
-    Member<LocalDOMWindow> m_window;
-    Member<EventTarget> m_target;
+  DECLARE_TRACE();
+
+ private:
+  Member<LocalDOMWindow> window_;
+  Member<EventTarget> target_;
 };
 
-inline LocalDOMWindow* WindowEventContext::window() const
-{
-    return m_window.get();
+inline LocalDOMWindow* WindowEventContext::Window() const {
+  return window_.Get();
 }
 
-inline EventTarget* WindowEventContext::target() const
-{
-    return m_target.get();
+inline EventTarget* WindowEventContext::Target() const {
+  return target_.Get();
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WindowEventContext_h
+#endif  // WindowEventContext_h

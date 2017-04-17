@@ -18,5 +18,12 @@ public interface BackgroundSchedulerProcessor {
      * terminated).  If processing was already active or not able to process for some other reason,
      * returns false and this calling instance will not receive a callback.
      */
-    boolean startProcessing(DeviceConditions deviceConditions, Callback<Boolean> callback);
+    boolean startScheduledProcessing(DeviceConditions deviceConditions, Callback<Boolean> callback);
+
+    /**
+     * Stops processing background requests.
+     * @return Whether processing should be scheduled again at a later time, because there is more
+     * work.
+     */
+    boolean stopScheduledProcessing();
 }

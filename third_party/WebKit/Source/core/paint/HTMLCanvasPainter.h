@@ -5,7 +5,7 @@
 #ifndef HTMLCanvasPainter_h
 #define HTMLCanvasPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,15 +14,17 @@ class LayoutPoint;
 class LayoutHTMLCanvas;
 
 class HTMLCanvasPainter {
-    STACK_ALLOCATED();
-public:
-    HTMLCanvasPainter(const LayoutHTMLCanvas& layoutHTMLCanvas) : m_layoutHTMLCanvas(layoutHTMLCanvas) { }
-    void paintReplaced(const PaintInfo&, const LayoutPoint&);
+  STACK_ALLOCATED();
 
-private:
-    const LayoutHTMLCanvas& m_layoutHTMLCanvas;
+ public:
+  HTMLCanvasPainter(const LayoutHTMLCanvas& layout_html_canvas)
+      : layout_html_canvas_(layout_html_canvas) {}
+  void PaintReplaced(const PaintInfo&, const LayoutPoint&);
+
+ private:
+  const LayoutHTMLCanvas& layout_html_canvas_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLCanvasPainter_h
+#endif  // HTMLCanvasPainter_h

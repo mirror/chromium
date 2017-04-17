@@ -32,19 +32,22 @@
 #define AnimatedStyleBuilder_h
 
 #include "core/CSSPropertyNames.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class AnimatableValue;
-class StyleResolverState;
+class ComputedStyle;
 
 class AnimatedStyleBuilder {
-    STATIC_ONLY(AnimatedStyleBuilder);
-public:
-    static void applyProperty(CSSPropertyID, StyleResolverState&, const AnimatableValue*);
+  STATIC_ONLY(AnimatedStyleBuilder);
+
+ public:
+  static void ApplyProperty(CSSPropertyID,
+                            ComputedStyle&,
+                            const AnimatableValue*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AnimatedStyleBuilder_h
+#endif  // AnimatedStyleBuilder_h

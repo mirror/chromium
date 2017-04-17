@@ -7,17 +7,19 @@
 #include <stddef.h>
 
 #include <memory>
+#include <utility>
 
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "base/strings/stringprintf.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_util.h"
 #include "chrome/browser/chromeos/fileapi/file_access_permissions.h"
 #include "chrome/browser/chromeos/fileapi/file_system_backend_delegate.h"
 #include "chrome/browser/media_galleries/fileapi/media_file_system_backend.h"
 #include "chrome/common/url_constants.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/cros_disks_client.h"
+#include "net/base/escape.h"
 #include "storage/browser/fileapi/async_file_util.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_stream_reader.h"
@@ -27,8 +29,20 @@
 #include "storage/browser/fileapi/file_system_operation_context.h"
 #include "storage/browser/fileapi/file_system_url.h"
 #include "storage/common/fileapi/file_system_mount_option.h"
+#include "storage/common/fileapi/file_system_util.h"
 
 namespace chromeos {
+namespace {
+
+// TODO(mtomasz): Remove this hacky whitelist.
+// See: crbug.com/271946
+const char* kOemAccessibleExtensions[] = {
+    "mlbmkoenclnokonejhlfakkeabdlmpek",  // TimeScapes,
+    "nhpmmldpbfjofkipjaieeomhnmcgihfm",  // Retail Demo (public session),
+    "klimoghijjogocdbaikffefjfcfheiel",  // Retail Demo (OOBE),
+};
+
+}  // namespace
 
 // static
 bool FileSystemBackend::CanHandleURL(const storage::FileSystemURL& url) {
@@ -38,23 +52,29 @@ bool FileSystemBackend::CanHandleURL(const storage::FileSystemURL& url) {
          url.type() == storage::kFileSystemTypeRestrictedNativeLocal ||
          url.type() == storage::kFileSystemTypeDrive ||
          url.type() == storage::kFileSystemTypeProvided ||
-         url.type() == storage::kFileSystemTypeDeviceMediaAsFileStorage;
+         url.type() == storage::kFileSystemTypeDeviceMediaAsFileStorage ||
+         url.type() == storage::kFileSystemTypeArcContent ||
+         url.type() == storage::kFileSystemTypeArcDocumentsProvider;
 }
 
 FileSystemBackend::FileSystemBackend(
-    FileSystemBackendDelegate* drive_delegate,
-    FileSystemBackendDelegate* file_system_provider_delegate,
-    FileSystemBackendDelegate* mtp_delegate,
+    std::unique_ptr<FileSystemBackendDelegate> drive_delegate,
+    std::unique_ptr<FileSystemBackendDelegate> file_system_provider_delegate,
+    std::unique_ptr<FileSystemBackendDelegate> mtp_delegate,
+    std::unique_ptr<FileSystemBackendDelegate> arc_content_delegate,
+    std::unique_ptr<FileSystemBackendDelegate> arc_documents_provider_delegate,
     scoped_refptr<storage::ExternalMountPoints> mount_points,
     storage::ExternalMountPoints* system_mount_points)
     : file_access_permissions_(new FileAccessPermissions()),
       local_file_util_(storage::AsyncFileUtil::CreateForLocalFileSystem()),
-      drive_delegate_(drive_delegate),
-      file_system_provider_delegate_(file_system_provider_delegate),
-      mtp_delegate_(mtp_delegate),
+      drive_delegate_(std::move(drive_delegate)),
+      file_system_provider_delegate_(std::move(file_system_provider_delegate)),
+      mtp_delegate_(std::move(mtp_delegate)),
+      arc_content_delegate_(std::move(arc_content_delegate)),
+      arc_documents_provider_delegate_(
+          std::move(arc_documents_provider_delegate)),
       mount_points_(mount_points),
-      system_mount_points_(system_mount_points) {
-}
+      system_mount_points_(system_mount_points) {}
 
 FileSystemBackend::~FileSystemBackend() {
 }
@@ -88,6 +108,8 @@ bool FileSystemBackend::CanHandleType(storage::FileSystemType type) const {
     case storage::kFileSystemTypeNativeForPlatformApp:
     case storage::kFileSystemTypeDeviceMediaAsFileStorage:
     case storage::kFileSystemTypeProvided:
+    case storage::kFileSystemTypeArcContent:
+    case storage::kFileSystemTypeArcDocumentsProvider:
       return true;
     default:
       return false;
@@ -138,6 +160,27 @@ void FileSystemBackend::ResolveURL(const storage::FileSystemURL& url,
     std::string inner_mount_name = components[1];
     root_url += inner_mount_name + "/";
     name = inner_mount_name;
+  } else if (id == arc::kDocumentsProviderMountPointName) {
+    // For ARC documents provider file system, volumes are mounted per document
+    // provider root, so we need to fix up |root_url| to point to an individual
+    // root.
+    std::string authority;
+    std::string root_document_id;
+    base::FilePath unused_path;
+    if (!arc::ParseDocumentsProviderUrl(url, &authority, &root_document_id,
+                                        &unused_path)) {
+      callback.Run(GURL(root_url), std::string(),
+                   base::File::FILE_ERROR_SECURITY);
+      return;
+    }
+    base::FilePath mount_path =
+        arc::GetDocumentsProviderMountPath(authority, root_document_id);
+    base::FilePath relative_mount_path;
+    base::FilePath(arc::kDocumentsProviderMountPointPath)
+        .AppendRelativePath(mount_path, &relative_mount_path);
+    root_url +=
+        net::EscapePath(storage::FilePathToString(relative_mount_path)) + "/";
+    name = authority + ":" + root_document_id;
   } else {
     name = id;
   }
@@ -181,12 +224,12 @@ bool FileSystemBackend::IsAccessAllowed(
   if (url.origin().is_empty())
     return true;
 
-  std::string extension_id = url.origin().host();
-  // TODO(mtomasz): Temporarily whitelist TimeScapes.
-  // See: crbug.com/271946
-  if (extension_id == "mlbmkoenclnokonejhlfakkeabdlmpek" &&
-      url.type() == storage::kFileSystemTypeRestrictedNativeLocal) {
-    return true;
+  const std::string& extension_id = url.origin().host();
+  if (url.type() == storage::kFileSystemTypeRestrictedNativeLocal) {
+    for (size_t i = 0; i < arraysize(kOemAccessibleExtensions); ++i) {
+      if (extension_id == kOemAccessibleExtensions[i])
+        return true;
+    }
   }
 
   return file_access_permissions_->HasAccessPermission(extension_id,
@@ -238,6 +281,10 @@ storage::AsyncFileUtil* FileSystemBackend::GetAsyncFileUtil(
       return local_file_util_.get();
     case storage::kFileSystemTypeDeviceMediaAsFileStorage:
       return mtp_delegate_->GetAsyncFileUtil(type);
+    case storage::kFileSystemTypeArcContent:
+      return arc_content_delegate_->GetAsyncFileUtil(type);
+    case storage::kFileSystemTypeArcDocumentsProvider:
+      return arc_documents_provider_delegate_->GetAsyncFileUtil(type);
     default:
       NOTREACHED();
   }
@@ -254,6 +301,9 @@ storage::WatcherManager* FileSystemBackend::GetWatcherManager(
           chromeos::switches::kDisableMtpWriteSupport)) {
     return mtp_delegate_->GetWatcherManager(type);
   }
+
+  if (type == storage::kFileSystemTypeArcDocumentsProvider)
+    return arc_documents_provider_delegate_->GetWatcherManager(type);
 
   // TODO(mtomasz): Add support for other backends.
   return NULL;
@@ -283,24 +333,28 @@ storage::FileSystemOperation* FileSystemBackend::CreateFileSystemOperation(
     // MTP file operations run on MediaTaskRunner.
     return storage::FileSystemOperation::Create(
         url, context,
-        base::WrapUnique(new storage::FileSystemOperationContext(
-            context, MediaFileSystemBackend::MediaTaskRunner().get())));
+        base::MakeUnique<storage::FileSystemOperationContext>(
+            context, MediaFileSystemBackend::MediaTaskRunner().get()));
   }
 
   DCHECK(url.type() == storage::kFileSystemTypeNativeLocal ||
          url.type() == storage::kFileSystemTypeRestrictedNativeLocal ||
          url.type() == storage::kFileSystemTypeDrive ||
-         url.type() == storage::kFileSystemTypeProvided);
+         url.type() == storage::kFileSystemTypeProvided ||
+         url.type() == storage::kFileSystemTypeArcContent ||
+         url.type() == storage::kFileSystemTypeArcDocumentsProvider);
   return storage::FileSystemOperation::Create(
       url, context,
-      base::WrapUnique(new storage::FileSystemOperationContext(context)));
+      base::MakeUnique<storage::FileSystemOperationContext>(context));
 }
 
 bool FileSystemBackend::SupportsStreaming(
     const storage::FileSystemURL& url) const {
   return url.type() == storage::kFileSystemTypeDrive ||
          url.type() == storage::kFileSystemTypeProvided ||
-         url.type() == storage::kFileSystemTypeDeviceMediaAsFileStorage;
+         url.type() == storage::kFileSystemTypeDeviceMediaAsFileStorage ||
+         url.type() == storage::kFileSystemTypeArcContent ||
+         url.type() == storage::kFileSystemTypeArcDocumentsProvider;
 }
 
 bool FileSystemBackend::HasInplaceCopyImplementation(
@@ -312,6 +366,8 @@ bool FileSystemBackend::HasInplaceCopyImplementation(
       return true;
     case storage::kFileSystemTypeNativeLocal:
     case storage::kFileSystemTypeRestrictedNativeLocal:
+    case storage::kFileSystemTypeArcContent:
+    case storage::kFileSystemTypeArcDocumentsProvider:
       return false;
     default:
       NOTREACHED();
@@ -346,6 +402,12 @@ FileSystemBackend::CreateFileStreamReader(
     case storage::kFileSystemTypeDeviceMediaAsFileStorage:
       return mtp_delegate_->CreateFileStreamReader(
           url, offset, max_bytes_to_read, expected_modification_time, context);
+    case storage::kFileSystemTypeArcContent:
+      return arc_content_delegate_->CreateFileStreamReader(
+          url, offset, max_bytes_to_read, expected_modification_time, context);
+    case storage::kFileSystemTypeArcDocumentsProvider:
+      return arc_documents_provider_delegate_->CreateFileStreamReader(
+          url, offset, max_bytes_to_read, expected_modification_time, context);
     default:
       NOTREACHED();
   }
@@ -373,11 +435,13 @@ FileSystemBackend::CreateFileStreamWriter(
           storage::FileStreamWriter::CreateForLocalFile(
               context->default_file_task_runner(), url.path(), offset,
               storage::FileStreamWriter::OPEN_EXISTING_FILE));
-    case storage::kFileSystemTypeRestrictedNativeLocal:
-      // Restricted native local file system is read only.
-      return std::unique_ptr<storage::FileStreamWriter>();
     case storage::kFileSystemTypeDeviceMediaAsFileStorage:
       return mtp_delegate_->CreateFileStreamWriter(url, offset, context);
+    // Read only file systems.
+    case storage::kFileSystemTypeRestrictedNativeLocal:
+    case storage::kFileSystemTypeArcContent:
+    case storage::kFileSystemTypeArcDocumentsProvider:
+      return std::unique_ptr<storage::FileStreamWriter>();
     default:
       NOTREACHED();
   }
@@ -411,6 +475,8 @@ void FileSystemBackend::GetRedirectURLForContents(
       return;
     case storage::kFileSystemTypeNativeLocal:
     case storage::kFileSystemTypeRestrictedNativeLocal:
+    case storage::kFileSystemTypeArcContent:
+    case storage::kFileSystemTypeArcDocumentsProvider:
       callback.Run(GURL());
       return;
     default:

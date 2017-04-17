@@ -19,9 +19,9 @@
 #include "components/app_modal/javascript_app_modal_dialog.h"
 #include "components/app_modal/javascript_dialog_manager.h"
 #include "components/app_modal/javascript_native_dialog_factory.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
-#include "grit/components_strings.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/gfx/text_elider.h"
@@ -140,6 +140,10 @@ const int kMessageTextMaxSlots = 2000;
   DCHECK(!alertShown_);
   alertShown_ = YES;
   NSAlert* alert = [self alert];
+
+  [alert layout];
+  [[alert window] recalculateKeyViewLoop];
+
   [alert beginSheetModalForWindow:nil  // nil here makes it app-modal
                     modalDelegate:self
                    didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
@@ -234,11 +238,11 @@ JavaScriptAppModalDialogCocoa::JavaScriptAppModalDialogCocoa(
   NSString* other_button = l10n_util::GetNSStringWithFixup(IDS_APP_CANCEL);
   bool text_field = false;
   bool one_button = false;
-  switch (dialog_->javascript_message_type()) {
-    case content::JAVASCRIPT_MESSAGE_TYPE_ALERT:
+  switch (dialog_->javascript_dialog_type()) {
+    case content::JAVASCRIPT_DIALOG_TYPE_ALERT:
       one_button = true;
       break;
-    case content::JAVASCRIPT_MESSAGE_TYPE_CONFIRM:
+    case content::JAVASCRIPT_DIALOG_TYPE_CONFIRM:
       if (dialog_->is_before_unload_dialog()) {
         if (dialog_->is_reload()) {
           default_button = l10n_util::GetNSStringWithFixup(
@@ -253,7 +257,7 @@ JavaScriptAppModalDialogCocoa::JavaScriptAppModalDialogCocoa(
         }
       }
       break;
-    case content::JAVASCRIPT_MESSAGE_TYPE_PROMPT:
+    case content::JAVASCRIPT_DIALOG_TYPE_PROMPT:
       text_field = true;
       break;
 

@@ -8,7 +8,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -23,7 +22,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.util.TypedValue;
-import android.view.KeyEvent;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -33,8 +32,9 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.library_loader.LibraryLoader;
+import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.WindowDelegate;
 import org.chromium.chrome.browser.appmenu.AppMenuButtonHelper;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerServiceFactory;
@@ -45,16 +45,16 @@ import org.chromium.chrome.browser.omnibox.LocationBar;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout;
 import org.chromium.chrome.browser.omnibox.UrlBar;
 import org.chromium.chrome.browser.omnibox.UrlFocusChangeListener;
-import org.chromium.chrome.browser.pageinfo.WebsiteSettingsPopup;
+import org.chromium.chrome.browser.page_info.PageInfoPopup;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
-import org.chromium.chrome.browser.toolbar.ActionModeController.ActionBarDelegate;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.components.dom_distiller.core.DomDistillerService;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
+import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.interpolators.BakedBezierInterpolator;
@@ -74,13 +74,31 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
      * read-only in custom tabs.
      */
     public static class InterceptTouchLayout extends FrameLayout {
+        private GestureDetector mGestureDetector;
+
         public InterceptTouchLayout(Context context, AttributeSet attrs) {
             super(context, attrs);
+            mGestureDetector = new GestureDetector(getContext(),
+                    new GestureDetector.SimpleOnGestureListener() {
+                        @Override
+                        public boolean onSingleTapConfirmed(MotionEvent e) {
+                            if (LibraryLoader.isInitialized()) {
+                                RecordUserAction.record("CustomTabs.TapUrlBar");
+                            }
+                            return super.onSingleTapConfirmed(e);
+                        }
+                    });
         }
 
         @Override
         public boolean onInterceptTouchEvent(MotionEvent ev) {
             return true;
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            mGestureDetector.onTouchEvent(event);
+            return super.onTouchEvent(event);
         }
     }
 
@@ -107,7 +125,7 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     private CustomTabToolbarAnimationDelegate mAnimDelegate;
     private int mState = STATE_DOMAIN_ONLY;
     private String mFirstUrl;
-    private boolean mShowsOfflinePage = false;
+    private boolean mShowsOfflinePage;
 
     private Runnable mTitleAnimationStarter = new Runnable() {
         @Override
@@ -147,11 +165,6 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     }
 
     @Override
-    protected int getToolbarHeightWithoutShadowResId() {
-        return R.dimen.custom_tabs_control_container_height;
-    }
-
-    @Override
     public void initialize(ToolbarDataProvider toolbarDataProvider,
             ToolbarTabController tabController, AppMenuButtonHelper appMenuButtonHelper) {
         super.initialize(toolbarDataProvider, tabController, appMenuButtonHelper);
@@ -170,8 +183,8 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
                 if (activity == null) return;
                 String publisherName = mState == STATE_TITLE_ONLY
                         ? parsePublisherNameFromUrl(currentTab.getUrl()) : null;
-                WebsiteSettingsPopup.show(activity, currentTab, publisherName,
-                        WebsiteSettingsPopup.OPENED_FROM_TOOLBAR);
+                PageInfoPopup.show(
+                        activity, currentTab, publisherName, PageInfoPopup.OPENED_FROM_TOOLBAR);
             }
         });
     }
@@ -232,8 +245,8 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     @Override
     public boolean shouldEmphasizeHttpsScheme() {
         int securityLevel = getSecurityLevel();
-        return securityLevel == ConnectionSecurityLevel.SECURITY_ERROR
-                || securityLevel == ConnectionSecurityLevel.SECURITY_POLICY_WARNING;
+        return securityLevel == ConnectionSecurityLevel.DANGEROUS
+                || securityLevel == ConnectionSecurityLevel.SECURE_WITH_POLICY_INSTALLED_CERT;
     }
 
     @Override
@@ -301,7 +314,7 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
         // always return the url. We postpone the title animation until the title is authentic.
         if ((mState == STATE_DOMAIN_AND_TITLE || mState == STATE_TITLE_ONLY)
                 && !title.equals(currentTab.getUrl())
-                && !title.equals(UrlConstants.ABOUT_BLANK)) {
+                && !title.equals(ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL)) {
             // Delay the title animation until security icon animation finishes.
             ThreadUtils.postOnUiThreadDelayed(mTitleAnimationStarter, TITLE_ANIM_DELAY_MS);
         }
@@ -321,7 +334,7 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
                 setUrlBarHidden(false);
             }
         }
-        showOfflineBoltIfNecessary();
+        updateSecurityIcon(getSecurityLevel());
     }
 
     @Override
@@ -332,12 +345,15 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
         }
 
         String url = getCurrentTab().getUrl().trim();
+        if (mState == STATE_TITLE_ONLY) {
+            if (!TextUtils.isEmpty(getCurrentTab().getTitle())) setTitleToPageTitle();
+        }
 
         // Don't show anything for Chrome URLs and "about:blank".
         // If we have taken a pre-initialized WebContents, then the starting URL
         // is "about:blank". We should not display it.
         if (NativePageFactory.isNativePageUrl(url, getCurrentTab().isIncognito())
-                || UrlConstants.ABOUT_BLANK.equals(url)) {
+                || ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL.equals(url)) {
             mUrlBar.setUrl("", null);
             return;
         }
@@ -424,31 +440,6 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     }
 
     @Override
-    public void setMenuButtonHelper(final AppMenuButtonHelper helper) {
-        mMenuButton.setOnTouchListener(new OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return helper.onTouch(v, event);
-            }
-        });
-        mMenuButton.setOnKeyListener(new OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
-                    return helper.onEnterKeyPress(view);
-                }
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public View getMenuAnchor() {
-        return mMenuButton;
-    }
-
-    @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setTitleToPageTitle();
@@ -461,8 +452,7 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     }
 
     @Override
-    public void initializeControls(WindowDelegate windowDelegate, ActionBarDelegate delegate,
-            WindowAndroid windowAndroid) {
+    public void initializeControls(WindowDelegate windowDelegate, WindowAndroid windowAndroid) {
     }
 
     private int getSecurityLevel() {
@@ -476,42 +466,34 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
 
         mSecurityIconType = securityLevel;
 
-        if (securityLevel == ConnectionSecurityLevel.NONE) {
-            mAnimDelegate.hideSecurityButton();
-        } else {
-            boolean isSmallDevice = !DeviceFormFactor.isTablet(getContext());
-            int id = LocationBarLayout.getSecurityIconResource(securityLevel, isSmallDevice);
-            if (id == 0) {
-                mSecurityButton.setImageDrawable(null);
-            } else {
-                // ImageView#setImageResource is no-op if given resource is the current one.
-                mSecurityButton.setImageResource(id);
-                mSecurityButton.setTint(LocationBarLayout.getColorStateList(
-                        securityLevel, getToolbarDataProvider(), getResources()));
-            }
-            mAnimDelegate.showSecurityButton();
-        }
-        mUrlBar.emphasizeUrl();
-        mUrlBar.invalidate();
-    }
-
-    private void showOfflineBoltIfNecessary() {
+        boolean isSmallDevice = !DeviceFormFactor.isTablet(getContext());
         boolean isOfflinePage = getCurrentTab() != null && getCurrentTab().isOfflinePage();
-        if (isOfflinePage == mShowsOfflinePage) return;
+
+        int id = LocationBarLayout.getSecurityIconResource(
+                securityLevel, isSmallDevice, isOfflinePage);
+        boolean showSecurityButton = true;
+        if (id == 0) {
+            // Hide the button if we don't have an actual icon to display.
+            showSecurityButton = false;
+            mSecurityButton.setImageDrawable(null);
+        } else {
+            // ImageView#setImageResource is no-op if given resource is the current one.
+            mSecurityButton.setImageResource(id);
+            mSecurityButton.setTint(
+                    LocationBarLayout.getColorStateList(securityLevel, getToolbarDataProvider(),
+                            getResources(), false /* omnibox is not opaque */));
+        }
 
         mShowsOfflinePage = isOfflinePage;
-        if (mShowsOfflinePage) {
-            // If we are showing an offline page, immediately update icon to offline bolt.
-            TintedDrawable bolt = TintedDrawable.constructTintedDrawable(
-                    getResources(), R.drawable.offline_bolt);
-            bolt.setTint(mUseDarkColors ? mDarkModeTint : mLightModeTint);
-            mSecurityButton.setImageDrawable(bolt);
+
+        if (showSecurityButton) {
             mAnimDelegate.showSecurityButton();
         } else {
-            // We are hiding the offline page so connection security information will change.
-            mSecurityIconType = ConnectionSecurityLevel.NONE;
             mAnimDelegate.hideSecurityButton();
         }
+
+        mUrlBar.emphasizeUrl();
+        mUrlBar.invalidate();
     }
 
     /**
@@ -652,6 +634,11 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     }
 
     @Override
+    public boolean useLightDrawables() {
+        return !mUseDarkColors;
+    }
+
+    @Override
     public boolean onLongClick(View v) {
         if (v == mCloseButton) {
             return showAccessibilityToast(v, getResources().getString(R.string.close_tab));
@@ -747,5 +734,10 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     public View getMenuButtonWrapper() {
         // This class has no menu button wrapper, so return the menu button instead.
         return mMenuButton;
+    }
+
+    @Override
+    public boolean mustQueryUrlBarLocationForSuggestions() {
+        return false;
     }
 }

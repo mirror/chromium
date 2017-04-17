@@ -10,7 +10,22 @@ var errorEvent;
 function issueRequest(url, contentType)
 {
     xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
+    // async = false
+    xhr.open('POST', url, false);
+    xhr.onerror = () => testFailed("onerror callback should not be called.");
+    // Assumed a Content-Type that turns it into a non-simple CORS request.
+    if (contentType)
+        xhr.setRequestHeader('Content-Type', contentType);
+    try {
+        xhr.send();
+    } catch(e) {
+        errorEvent = e;
+        shouldBeEqualToString("errorEvent.name", "NetworkError");
+    }
+
+    xhr = new XMLHttpRequest();
+    // async = true
+    xhr.open('POST', url, true);
     xhr.onerror = function (a) {
         errorEvent = a;
         shouldBeEqualToString("errorEvent.type", "error");
@@ -24,8 +39,7 @@ function issueRequest(url, contentType)
 }
 
 var withContentType = true;
-var tests = [ 'http://localhost:1291a/',
-              'ftp://127.0.0.1',
+var tests = [ 'ftp://127.0.0.1',
               'localhost:8080/',
               'tel:1234' ];
 

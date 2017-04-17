@@ -16,6 +16,7 @@
 #include "chrome/browser/chromeos/base/locale_util.h"
 #include "chrome/browser/chromeos/eol_notification.h"
 #include "chrome/browser/chromeos/hats/hats_notification_controller.h"
+#include "chrome/browser/chromeos/login/oobe_screen.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_notification_controller.h"
 #include "chrome/browser/chromeos/login/signin/oauth2_login_manager.h"
 #include "chrome/browser/chromeos/login/signin/token_handle_util.h"
@@ -30,7 +31,6 @@
 class AccountId;
 class GURL;
 class PrefRegistrySimple;
-class PrefService;
 class Profile;
 class TokenHandleFetcher;
 
@@ -288,7 +288,6 @@ class UserSessionManager
   void StoreUserContextDataBeforeProfileIsCreated();
 
   void StartCrosSession();
-  void NotifyUserLoggedIn();
   void PrepareProfile();
 
   // Callback for asynchronous profile creation.
@@ -318,7 +317,7 @@ class UserSessionManager
   void FinalizePrepareProfile(Profile* profile);
 
   // Starts out-of-box flow with the specified screen.
-  void ActivateWizard(const std::string& screen_name);
+  void ActivateWizard(OobeScreen screen);
 
   // Adds first-time login URLs.
   void InitializeStartUrls() const;
@@ -339,6 +338,14 @@ class UserSessionManager
 
   // Initializes RLZ. If |disabled| is true, RLZ pings are disabled.
   void InitRlzImpl(Profile* profile, bool disabled);
+
+  // If |user| is not a kiosk app, sets session type as seen by extensions
+  // feature system according to |user|'s type.
+  // The value should eventually be set for kiosk users, too - that's done as
+  // part of special, kiosk user session bring-up.
+  // NOTE: This has to be called before profile is initialized - so it is set up
+  // when extension are loaded during profile initialization.
+  void InitNonKioskExtensionFeaturesSessionType(const user_manager::User* user);
 
   // Callback to process RetrieveActiveSessions() request results.
   void OnRestoreActiveSessions(
@@ -476,11 +483,17 @@ class UserSessionManager
   std::map<Profile*, std::unique_ptr<EolNotification>, ProfileCompare>
       eol_notification_handler_;
 
-  // Per-user-session Quick Unlock Feature Notification
+  // Per-user-session PIN Unlock Feature Notification
   std::map<Profile*,
-           scoped_refptr<QuickUnlockNotificationController>,
+           scoped_refptr<quick_unlock::QuickUnlockNotificationController>,
            ProfileCompare>
-      quick_unlock_notification_handler_;
+      pin_unlock_notification_handler_;
+
+  // Per-user-session Fingerprint Unlock Feature Notification
+  std::map<Profile*,
+           scoped_refptr<quick_unlock::QuickUnlockNotificationController>,
+           ProfileCompare>
+      fingerprint_unlock_notification_handler_;
 
   // Manages Easy unlock cryptohome keys.
   std::unique_ptr<EasyUnlockKeyManager> easy_unlock_key_manager_;
@@ -499,8 +512,7 @@ class UserSessionManager
   // Child account status is necessary for InitializeStartUrls call.
   bool waiting_for_child_account_status_;
 
-  scoped_refptr<typename HatsNotificationController::HatsNotificationController>
-      hats_notification_controller_;
+  scoped_refptr<HatsNotificationController> hats_notification_controller_;
 
   base::WeakPtrFactory<UserSessionManager> weak_factory_;
 

@@ -32,35 +32,36 @@ class StyleRuleFontFace;
 class StyleRuleCSSStyleDeclaration;
 
 class CSSFontFaceRule final : public CSSRule {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static CSSFontFaceRule* create(StyleRuleFontFace* rule, CSSStyleSheet* sheet)
-    {
-        return new CSSFontFaceRule(rule, sheet);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~CSSFontFaceRule() override;
+ public:
+  static CSSFontFaceRule* Create(StyleRuleFontFace* rule,
+                                 CSSStyleSheet* sheet) {
+    return new CSSFontFaceRule(rule, sheet);
+  }
 
-    String cssText() const override;
-    void reattach(StyleRuleBase*) override;
+  ~CSSFontFaceRule() override;
 
-    CSSStyleDeclaration* style() const;
+  String cssText() const override;
+  void Reattach(StyleRuleBase*) override;
 
-    StyleRuleFontFace* styleRule() const { return m_fontFaceRule.get(); }
+  CSSStyleDeclaration* style() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  StyleRuleFontFace* StyleRule() const { return font_face_rule_.Get(); }
 
-private:
-    CSSFontFaceRule(StyleRuleFontFace*, CSSStyleSheet* parent);
+  DECLARE_VIRTUAL_TRACE();
 
-    CSSRule::Type type() const override { return FONT_FACE_RULE; }
+ private:
+  CSSFontFaceRule(StyleRuleFontFace*, CSSStyleSheet* parent);
 
-    Member<StyleRuleFontFace> m_fontFaceRule;
-    mutable Member<StyleRuleCSSStyleDeclaration> m_propertiesCSSOMWrapper;
+  CSSRule::Type type() const override { return kFontFaceRule; }
+
+  Member<StyleRuleFontFace> font_face_rule_;
+  mutable Member<StyleRuleCSSStyleDeclaration> properties_cssom_wrapper_;
 };
 
-DEFINE_CSS_RULE_TYPE_CASTS(CSSFontFaceRule, FONT_FACE_RULE);
+DEFINE_CSS_RULE_TYPE_CASTS(CSSFontFaceRule, kFontFaceRule);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSFontFaceRule_h
+#endif  // CSSFontFaceRule_h

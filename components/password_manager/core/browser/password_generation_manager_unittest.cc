@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/strings/utf_string_conversions.h"
@@ -17,6 +18,7 @@
 #include "components/autofill/core/common/form_data.h"
 #include "components/autofill/core/common/form_field_data.h"
 #include "components/autofill/core/common/password_form_generation_data.h"
+#include "components/autofill/core/common/signatures_util.h"
 #include "components/password_manager/core/browser/password_autofill_manager.h"
 #include "components/password_manager/core/browser/password_manager.h"
 #include "components/password_manager/core/browser/stub_password_manager_client.h"
@@ -31,6 +33,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
+using autofill::FormStructure;
 using base::ASCIIToUTF16;
 using testing::_;
 
@@ -80,7 +83,7 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
  public:
   MOCK_CONST_METHOD0(GetPasswordSyncState, PasswordSyncState());
   MOCK_CONST_METHOD0(IsSavingAndFillingEnabledForCurrentPage, bool());
-  MOCK_CONST_METHOD0(IsOffTheRecord, bool());
+  MOCK_CONST_METHOD0(IsIncognito, bool());
 
   explicit MockPasswordManagerClient(std::unique_ptr<PrefService> prefs)
       : prefs_(std::move(prefs)),
@@ -110,7 +113,7 @@ class PasswordGenerationManagerTest : public testing::Test {
     // indirectly cause those prefs to be immediately accessed.
     std::unique_ptr<TestingPrefServiceSimple> prefs(
         new TestingPrefServiceSimple());
-    prefs->registry()->RegisterBooleanPref(prefs::kPasswordManagerSavingEnabled,
+    prefs->registry()->RegisterBooleanPref(prefs::kCredentialsEnableService,
                                            true);
     client_.reset(new MockPasswordManagerClient(std::move(prefs)));
   }
@@ -189,6 +192,7 @@ TEST_F(PasswordGenerationManagerTest, DetectFormsEligibleForGeneration) {
   autofill::FormStructure form1(login_form);
   std::vector<autofill::FormStructure*> forms;
   forms.push_back(&form1);
+
   autofill::FormData account_creation_form;
   account_creation_form.origin = GURL("http://accounts.yahoo.com/");
   account_creation_form.action = GURL("http://accounts.yahoo.com/signup");
@@ -197,11 +201,18 @@ TEST_F(PasswordGenerationManagerTest, DetectFormsEligibleForGeneration) {
   account_creation_form.fields.push_back(password);
   autofill::FormFieldData confirm_password;
   confirm_password.label = ASCIIToUTF16("confirm_password");
-  confirm_password.name = ASCIIToUTF16("password");
+  confirm_password.name = ASCIIToUTF16("confirm_password");
   confirm_password.form_control_type = "password";
   account_creation_form.fields.push_back(confirm_password);
+  autofill::FormSignature account_creation_form_signature =
+      autofill::CalculateFormSignature(account_creation_form);
+  autofill::FieldSignature account_creation_field_signature =
+      autofill::CalculateFieldSignatureForField(password);
+  autofill::FieldSignature confirmation_field_signature =
+      autofill::CalculateFieldSignatureForField(confirm_password);
   autofill::FormStructure form2(account_creation_form);
   forms.push_back(&form2);
+
   autofill::FormData change_password_form;
   change_password_form.origin = GURL("http://accounts.yahoo.com/");
   change_password_form.action = GURL("http://accounts.yahoo.com/change");
@@ -210,6 +221,10 @@ TEST_F(PasswordGenerationManagerTest, DetectFormsEligibleForGeneration) {
   change_password_form.fields[0].name = ASCIIToUTF16("new_password");
   change_password_form.fields.push_back(confirm_password);
   autofill::FormStructure form3(change_password_form);
+  autofill::FormSignature change_password_form_signature =
+      autofill::CalculateFormSignature(change_password_form);
+  autofill::FieldSignature change_password_field_signature =
+      autofill::CalculateFieldSignatureForField(change_password_form.fields[0]);
   forms.push_back(&form3);
 
   // Simulate the server response to set the field types.
@@ -218,6 +233,7 @@ TEST_F(PasswordGenerationManagerTest, DetectFormsEligibleForGeneration) {
   // PASSWORD = 75
   // ACCOUNT_CREATION_PASSWORD = 76
   // NEW_PASSWORD = 88
+  // CONFIRMATION_PASSWORD = 95
   autofill::AutofillQueryResponseContents response;
   response.add_field()->set_autofill_type(9);
   response.add_field()->set_autofill_type(75);
@@ -225,7 +241,7 @@ TEST_F(PasswordGenerationManagerTest, DetectFormsEligibleForGeneration) {
   response.add_field()->set_autofill_type(76);
   response.add_field()->set_autofill_type(75);
   response.add_field()->set_autofill_type(88);
-  response.add_field()->set_autofill_type(88);
+  response.add_field()->set_autofill_type(95);
 
   std::string response_string;
   ASSERT_TRUE(response.SerializeToString(&response_string));
@@ -233,30 +249,38 @@ TEST_F(PasswordGenerationManagerTest, DetectFormsEligibleForGeneration) {
 
   DetectFormsEligibleForGeneration(forms);
   EXPECT_EQ(2u, GetTestDriver()->GetFoundEligibleForGenerationForms().size());
-  EXPECT_EQ(GURL("http://accounts.yahoo.com/signup"),
-            GetTestDriver()->GetFoundEligibleForGenerationForms()[0].action);
-  EXPECT_EQ(account_creation_form.name,
-            GetTestDriver()->GetFoundEligibleForGenerationForms()[0].name);
-  EXPECT_EQ(password.name, GetTestDriver()
-                               ->GetFoundEligibleForGenerationForms()[0]
-                               .generation_field.name);
-  EXPECT_EQ(GURL("http://accounts.yahoo.com/change"),
-            GetTestDriver()->GetFoundEligibleForGenerationForms()[1].action);
-  EXPECT_EQ(ASCIIToUTF16("new_password"),
+  EXPECT_EQ(
+      account_creation_form_signature,
+      GetTestDriver()->GetFoundEligibleForGenerationForms()[0].form_signature);
+  EXPECT_EQ(
+      account_creation_field_signature,
+      GetTestDriver()->GetFoundEligibleForGenerationForms()[0].field_signature);
+  EXPECT_FALSE(GetTestDriver()
+                   ->GetFoundEligibleForGenerationForms()[0]
+                   .confirmation_field_signature.has_value());
+
+  EXPECT_EQ(
+      change_password_form_signature,
+      GetTestDriver()->GetFoundEligibleForGenerationForms()[1].form_signature);
+  EXPECT_EQ(
+      change_password_field_signature,
+      GetTestDriver()->GetFoundEligibleForGenerationForms()[1].field_signature);
+  ASSERT_TRUE(GetTestDriver()
+                  ->GetFoundEligibleForGenerationForms()[1]
+                  .confirmation_field_signature.has_value());
+  EXPECT_EQ(confirmation_field_signature,
             GetTestDriver()
                 ->GetFoundEligibleForGenerationForms()[1]
-                .generation_field.name);
-  EXPECT_EQ(change_password_form.name,
-            GetTestDriver()->GetFoundEligibleForGenerationForms()[1].name);
+                .confirmation_field_signature.value());
 }
 
 TEST_F(PasswordGenerationManagerTest, UpdatePasswordSyncStateIncognito) {
   // Disable password manager by going incognito. Even though password
   // syncing is enabled, generation should still
   // be disabled.
-  EXPECT_CALL(*client_, IsOffTheRecord()).WillRepeatedly(testing::Return(true));
+  EXPECT_CALL(*client_, IsIncognito()).WillRepeatedly(testing::Return(true));
   PrefService* prefs = client_->GetPrefs();
-  prefs->SetBoolean(prefs::kPasswordManagerSavingEnabled, true);
+  prefs->SetBoolean(prefs::kCredentialsEnableService, true);
   EXPECT_CALL(*client_, GetPasswordSyncState())
       .WillRepeatedly(testing::Return(SYNCING_NORMAL_ENCRYPTION));
 
@@ -271,8 +295,8 @@ TEST_F(PasswordGenerationManagerTest, CheckIfFormClassifierShouldRun) {
     std::unique_ptr<base::FieldTrialList> field_trial_list;
     scoped_refptr<base::FieldTrial> field_trial;
     if (is_autofill_field_metadata_enabled) {
-      field_trial_list.reset(
-          new base::FieldTrialList(new metrics::SHA1EntropyProvider("foo")));
+      field_trial_list.reset(new base::FieldTrialList(
+          base::MakeUnique<metrics::SHA1EntropyProvider>("foo")));
       field_trial = base::FieldTrialList::CreateFieldTrial(
           "AutofillFieldMetadata", "Enabled");
       EXPECT_CALL(*GetTestDriver(), AllowToRunFormClassifier())

@@ -10,27 +10,45 @@
 
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/debug/leak_annotations.h"
 #include "base/location.h"
 #include "base/memory/discardable_memory.h"
+#include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/output/buffer_to_texture_target_map.h"
-#include "components/scheduler/renderer/renderer_scheduler.h"
 #include "content/app/mojo/mojo_init.h"
 #include "content/common/in_process_child_thread_params.h"
 #include "content/common/resource_messages.h"
-#include "content/common/websocket_messages.h"
+#include "content/common/service_manager/child_connection.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/content_renderer_client.h"
+#include "content/public/test/content_browser_test.h"
+#include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_content_client_initializer.h"
+#include "content/public/test/test_launcher.h"
+#include "content/public/test/test_service_manager_context.h"
 #include "content/renderer/render_process_impl.h"
 #include "content/test/mock_render_process.h"
-#include "content/test/render_thread_impl_browser_test_ipc_helper.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/ipc/host/gpu_switches.h"
+#include "ipc/ipc.mojom.h"
+#include "ipc/ipc_channel_mojo.h"
+#include "mojo/edk/embedder/embedder.h"
+#include "mojo/edk/embedder/pending_process_connection.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
+#include "ui/gfx/buffer_format_util.h"
 
 // IPC messages for testing ----------------------------------------------------
 
@@ -66,7 +84,7 @@ class TestTaskCounter : public base::SingleThreadTaskRunner {
 
   // SingleThreadTaskRunner implementation.
   bool PostDelayedTask(const tracked_objects::Location&,
-                       const base::Closure&,
+                       base::OnceClosure,
                        base::TimeDelta) override {
     base::AutoLock auto_lock(lock_);
     count_++;
@@ -74,7 +92,7 @@ class TestTaskCounter : public base::SingleThreadTaskRunner {
   }
 
   bool PostNonNestableDelayedTask(const tracked_objects::Location&,
-                                  const base::Closure&,
+                                  base::OnceClosure,
                                   base::TimeDelta) override {
     base::AutoLock auto_lock(lock_);
     count_++;
@@ -105,15 +123,11 @@ class RenderThreadImplForTest : public RenderThreadImpl {
  public:
   RenderThreadImplForTest(
       const InProcessChildThreadParams& params,
-      std::unique_ptr<scheduler::RendererScheduler> scheduler,
+      std::unique_ptr<blink::scheduler::RendererScheduler> scheduler,
       scoped_refptr<base::SingleThreadTaskRunner>& test_task_counter)
       : RenderThreadImpl(params, std::move(scheduler), test_task_counter) {}
 
   ~RenderThreadImplForTest() override {}
-
-  using ChildThreadImpl::OnMessageReceived;
-
- private:
 };
 
 #if defined(COMPILER_MSVC)
@@ -150,15 +164,39 @@ class QuitOnTestMsgFilter : public IPC::MessageFilter {
 
 class RenderThreadImplBrowserTest : public testing::Test {
  public:
+  RenderThreadImplBrowserTest() : field_trial_list_(nullptr) {}
+
   void SetUp() override {
-    content_client_.reset(new ContentClient());
-    content_browser_client_.reset(new ContentBrowserClient());
+    // SequencedWorkerPool is enabled by default in tests. Disable it for this
+    // test to avoid a DCHECK failure when RenderThreadImpl::Init enables it.
+    // TODO(fdoray): Remove this once the SequencedWorkerPool to TaskScheduler
+    // redirection experiment concludes https://crbug.com/622400.
+    base::SequencedWorkerPool::DisableForProcessForTesting();
+
     content_renderer_client_.reset(new ContentRendererClient());
-    SetContentClient(content_client_.get());
-    SetBrowserClientForTesting(content_browser_client_.get());
     SetRendererClientForTesting(content_renderer_client_.get());
 
-    test_helper_.reset(new RenderThreadImplBrowserIPCTestHelper());
+    browser_threads_.reset(
+        new TestBrowserThreadBundle(TestBrowserThreadBundle::IO_MAINLOOP));
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner =
+        base::ThreadTaskRunnerHandle::Get();
+
+    InitializeMojo();
+    shell_context_.reset(new TestServiceManagerContext);
+    mojo::edk::PendingProcessConnection process_connection;
+    child_connection_.reset(new ChildConnection(
+        mojom::kRendererServiceName, "test", &process_connection,
+        ServiceManagerConnection::GetForProcess()->GetConnector(),
+        io_task_runner));
+
+    mojo::MessagePipe pipe;
+    child_connection_->BindInterface(IPC::mojom::ChannelBootstrap::Name_,
+                                     std::move(pipe.handle1));
+
+    channel_ =
+        IPC::ChannelProxy::Create(IPC::ChannelMojo::CreateServerFactory(
+                                      std::move(pipe.handle0), io_task_runner),
+                                  nullptr, io_task_runner);
 
     mock_process_.reset(new MockRenderProcess);
     test_task_counter_ = make_scoped_refptr(new TestTaskCounter());
@@ -173,33 +211,51 @@ class RenderThreadImplBrowserTest : public testing::Test {
         cc::BufferToTextureTargetMapToString(
             cc::DefaultBufferToTextureTargetMapForTesting()));
 
-    std::unique_ptr<scheduler::RendererScheduler> renderer_scheduler =
-        scheduler::RendererScheduler::Create();
-    InitializeMojo();
+    std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler =
+        blink::scheduler::RendererScheduler::Create();
     scoped_refptr<base::SingleThreadTaskRunner> test_task_counter(
         test_task_counter_.get());
+
+    base::FieldTrialList::CreateTrialsFromCommandLine(
+        *cmd, switches::kFieldTrialHandle, -1);
     thread_ = new RenderThreadImplForTest(
-        InProcessChildThreadParams(test_helper_->GetChannelId(),
-                                   test_helper_->GetIOTaskRunner(),
-                                   test_helper_->GetMojoIpcToken(),
-                                   test_helper_->GetMojoApplicationToken()),
+        InProcessChildThreadParams(io_task_runner,
+                                   child_connection_->service_token()),
         std::move(renderer_scheduler), test_task_counter);
     cmd->InitFromArgv(old_argv);
 
     test_msg_filter_ = make_scoped_refptr(
-        new QuitOnTestMsgFilter(test_helper_->GetMessageLoop()));
+        new QuitOnTestMsgFilter(base::MessageLoop::current()));
     thread_->AddFilter(test_msg_filter_.get());
   }
 
+  void TearDown() override {
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            kSingleProcessTestsFlag)) {
+      // In a single-process mode, we need to avoid destructing mock_process_
+      // because it will call _exit(0) and kill the process before the browser
+      // side is ready to exit.
+      ANNOTATE_LEAKING_OBJECT_PTR(mock_process_.get());
+      mock_process_.release();
+    }
+  }
+
+  IPC::Sender* sender() { return channel_.get(); }
+
   scoped_refptr<TestTaskCounter> test_task_counter_;
-  std::unique_ptr<ContentClient> content_client_;
-  std::unique_ptr<ContentBrowserClient> content_browser_client_;
+  TestContentClientInitializer content_client_initializer_;
   std::unique_ptr<ContentRendererClient> content_renderer_client_;
-  std::unique_ptr<RenderThreadImplBrowserIPCTestHelper> test_helper_;
+
+  std::unique_ptr<TestBrowserThreadBundle> browser_threads_;
+  std::unique_ptr<TestServiceManagerContext> shell_context_;
+  std::unique_ptr<ChildConnection> child_connection_;
+  std::unique_ptr<IPC::ChannelProxy> channel_;
+
   std::unique_ptr<MockRenderProcess> mock_process_;
   scoped_refptr<QuitOnTestMsgFilter> test_msg_filter_;
   RenderThreadImplForTest* thread_;  // Owned by mock_process_.
-  std::string channel_id_;
+
+  base::FieldTrialList field_trial_list_;
 };
 
 void CheckRenderThreadInputHandlerManager(RenderThreadImpl* thread) {
@@ -220,8 +276,8 @@ TEST_F(RenderThreadImplBrowserTest,
 // Disabled under LeakSanitizer due to memory leaks.
 TEST_F(RenderThreadImplBrowserTest,
        WILL_LEAK(ResourceDispatchIPCTasksGoThroughScheduler)) {
-  test_helper_->Sender()->Send(new ResourceHostMsg_FollowRedirect(0));
-  test_helper_->Sender()->Send(new TestMsg_QuitRunLoop());
+  sender()->Send(new ResourceHostMsg_FollowRedirect(0));
+  sender()->Send(new TestMsg_QuitRunLoop());
 
   base::RunLoop().Run();
   EXPECT_EQ(1, test_task_counter_->NumTasksPosted());
@@ -232,13 +288,115 @@ TEST_F(RenderThreadImplBrowserTest,
        WILL_LEAK(NonResourceDispatchIPCTasksDontGoThroughScheduler)) {
   // NOTE other than not being a resource message, the actual message is
   // unimportant.
-  test_helper_->Sender()->Send(new WebSocketMsg_NotifyFailure(1, ""));
-  test_helper_->Sender()->Send(new TestMsg_QuitRunLoop());
+
+  sender()->Send(new TestMsg_QuitRunLoop());
 
   base::RunLoop().Run();
 
   EXPECT_EQ(0, test_task_counter_->NumTasksPosted());
 }
+
+enum NativeBufferFlag { kDisableNativeBuffers, kEnableNativeBuffers };
+
+class RenderThreadImplGpuMemoryBufferBrowserTest
+    : public ContentBrowserTest,
+      public testing::WithParamInterface<
+          ::testing::tuple<NativeBufferFlag, gfx::BufferFormat>> {
+ public:
+  RenderThreadImplGpuMemoryBufferBrowserTest() {}
+  ~RenderThreadImplGpuMemoryBufferBrowserTest() override {}
+
+  gpu::GpuMemoryBufferManager* memory_buffer_manager() {
+    return memory_buffer_manager_;
+  }
+
+ private:
+  void SetUpOnRenderThread() {
+    memory_buffer_manager_ =
+        RenderThreadImpl::current()->GetGpuMemoryBufferManager();
+  }
+
+  // Overridden from BrowserTestBase:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(switches::kSingleProcess);
+    NativeBufferFlag native_buffer_flag = ::testing::get<0>(GetParam());
+    switch (native_buffer_flag) {
+      case kEnableNativeBuffers:
+        command_line->AppendSwitch(switches::kEnableNativeGpuMemoryBuffers);
+        break;
+      case kDisableNativeBuffers:
+        command_line->AppendSwitch(switches::kDisableNativeGpuMemoryBuffers);
+        break;
+    }
+  }
+
+  void SetUpOnMainThread() override {
+    NavigateToURL(shell(), GURL(url::kAboutBlankURL));
+    PostTaskToInProcessRendererAndWait(base::Bind(
+        &RenderThreadImplGpuMemoryBufferBrowserTest::SetUpOnRenderThread,
+        base::Unretained(this)));
+  }
+
+  gpu::GpuMemoryBufferManager* memory_buffer_manager_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderThreadImplGpuMemoryBufferBrowserTest);
+};
+
+// https://crbug.com/652531
+IN_PROC_BROWSER_TEST_P(RenderThreadImplGpuMemoryBufferBrowserTest,
+                       DISABLED_Map) {
+  gfx::BufferFormat format = ::testing::get<1>(GetParam());
+  gfx::Size buffer_size(4, 4);
+
+  std::unique_ptr<gfx::GpuMemoryBuffer> buffer =
+      memory_buffer_manager()->CreateGpuMemoryBuffer(
+          buffer_size, format, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
+          gpu::kNullSurfaceHandle);
+  ASSERT_TRUE(buffer);
+  EXPECT_EQ(format, buffer->GetFormat());
+
+  // Map buffer planes.
+  ASSERT_TRUE(buffer->Map());
+
+  // Write to buffer and check result.
+  size_t num_planes = gfx::NumberOfPlanesForBufferFormat(format);
+  for (size_t plane = 0; plane < num_planes; ++plane) {
+    ASSERT_TRUE(buffer->memory(plane));
+    ASSERT_TRUE(buffer->stride(plane));
+    size_t row_size_in_bytes =
+        gfx::RowSizeForBufferFormat(buffer_size.width(), format, plane);
+    EXPECT_GT(row_size_in_bytes, 0u);
+
+    std::unique_ptr<char[]> data(new char[row_size_in_bytes]);
+    memset(data.get(), 0x2a + plane, row_size_in_bytes);
+    size_t height = buffer_size.height() /
+                    gfx::SubsamplingFactorForBufferFormat(format, plane);
+    for (size_t y = 0; y < height; ++y) {
+      // Copy |data| to row |y| of |plane| and verify result.
+      memcpy(
+          static_cast<char*>(buffer->memory(plane)) + y * buffer->stride(plane),
+          data.get(), row_size_in_bytes);
+      EXPECT_EQ(0, memcmp(static_cast<char*>(buffer->memory(plane)) +
+                              y * buffer->stride(plane),
+                          data.get(), row_size_in_bytes));
+    }
+  }
+
+  buffer->Unmap();
+}
+
+INSTANTIATE_TEST_CASE_P(
+    RenderThreadImplGpuMemoryBufferBrowserTests,
+    RenderThreadImplGpuMemoryBufferBrowserTest,
+    ::testing::Combine(::testing::Values(kDisableNativeBuffers,
+                                         kEnableNativeBuffers),
+                       // These formats are guaranteed to work on all platforms.
+                       ::testing::Values(gfx::BufferFormat::R_8,
+                                         gfx::BufferFormat::BGR_565,
+                                         gfx::BufferFormat::RGBA_4444,
+                                         gfx::BufferFormat::RGBA_8888,
+                                         gfx::BufferFormat::BGRA_8888,
+                                         gfx::BufferFormat::YVU_420)));
 
 }  // namespace
 }  // namespace content

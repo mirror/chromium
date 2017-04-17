@@ -114,10 +114,19 @@ class CONTENT_EXPORT FrameTreeNode {
 
   FrameTreeNode* opener() const { return opener_; }
 
+  FrameTreeNode* original_opener() const { return original_opener_; }
+
   // Assigns a new opener for this node and, if |opener| is non-null, registers
   // an observer that will clear this node's opener if |opener| is ever
   // destroyed.
   void SetOpener(FrameTreeNode* opener);
+
+  // Assigns the initial opener for this node, and if |opener| is non-null,
+  // registers an observer that will clear this node's opener if |opener| is
+  // ever destroyed. The value set here is the root of the tree.
+  //
+  // It is not possible to change the opener once it was set.
+  void SetOriginalOpener(FrameTreeNode* opener);
 
   FrameTreeNode* child_at(size_t index) const {
     return children_[index].get();
@@ -138,6 +147,10 @@ class CONTENT_EXPORT FrameTreeNode {
   }
 
   // Returns the origin of the last committed page in this frame.
+  // WARNING: To get the last committed origin for a particular
+  // RenderFrameHost, use RenderFrameHost::GetLastCommittedOrigin() instead,
+  // which will behave correctly even when the RenderFrameHost is not the
+  // current one for this frame (such as when it's pending deletion).
   const url::Origin& current_origin() const {
     return replication_state_.origin;
   }
@@ -149,13 +162,20 @@ class CONTENT_EXPORT FrameTreeNode {
   // Set the current name and notify proxies about the update.
   void SetFrameName(const std::string& name, const std::string& unique_name);
 
-  // Add CSP header to replication state and notify proxies about the update.
-  void AddContentSecurityPolicy(const ContentSecurityPolicyHeader& header);
+  // Set the frame's feature policy header, clearing any existing header.
+  void SetFeaturePolicyHeader(const ParsedFeaturePolicyHeader& parsed_header);
+
+  // Clear any feature policy header associated with the frame.
+  void ResetFeaturePolicyHeader();
+
+  // Add CSP headers to replication state, notify proxies about the update.
+  void AddContentSecurityPolicies(
+      const std::vector<ContentSecurityPolicyHeader>& headers);
 
   // Discards previous CSP headers and notifies proxies about the update.
   // Typically invoked after committing navigation to a new document (since the
   // new document comes with a fresh set of CSP http headers).
-  void ResetContentSecurityPolicy();
+  void ResetCspHeaders();
 
   // Sets the current insecure request policy, and notifies proxies about the
   // update.
@@ -242,7 +262,10 @@ class CONTENT_EXPORT FrameTreeNode {
   // Resets the current navigation request. If |keep_state| is true, any state
   // created by the NavigationRequest (e.g. speculative RenderFrameHost,
   // loading state) will not be reset by the function.
-  void ResetNavigationRequest(bool keep_state);
+  // If |keep_state| is false and the request is renderer-initiated and
+  // |inform_renderer| is true, an IPC will be sent to the renderer process to
+  // inform it that the navigation it requested was cancelled.
+  void ResetNavigationRequest(bool keep_state, bool inform_renderer);
 
   // Returns true if this node is in a state where the loading progress is being
   // tracked.
@@ -288,6 +311,8 @@ class CONTENT_EXPORT FrameTreeNode {
   // Returns the BlameContext associated with this node.
   FrameTreeNodeBlameContext& blame_context() { return blame_context_; }
 
+  void OnSetHasReceivedUserGesture();
+
  private:
   class OpenerDestroyedObserver;
 
@@ -327,6 +352,14 @@ class CONTENT_EXPORT FrameTreeNode {
   // changes or when this node is destroyed.  It is also cleared if |opener_|
   // is disowned.
   std::unique_ptr<OpenerDestroyedObserver> opener_observer_;
+
+  // The frame that opened this frame, if any. Contrary to opener_, this
+  // cannot be changed unless the original opener is destroyed.
+  FrameTreeNode* original_opener_;
+
+  // An observer that clears this node's |original_opener_| if the opener is
+  // destroyed.
+  std::unique_ptr<OpenerDestroyedObserver> original_opener_observer_;
 
   // The immediate children of this specific frame.
   std::vector<std::unique_ptr<FrameTreeNode>> children_;

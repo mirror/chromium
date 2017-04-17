@@ -34,24 +34,20 @@
 
 namespace blink {
 
-InputType* ButtonInputType::create(HTMLInputElement& element)
-{
-    return new ButtonInputType(element);
+InputType* ButtonInputType::Create(HTMLInputElement& element) {
+  return new ButtonInputType(element);
 }
 
-const AtomicString& ButtonInputType::formControlType() const
-{
-    return InputTypeNames::button;
+const AtomicString& ButtonInputType::FormControlType() const {
+  return InputTypeNames::button;
 }
 
-bool ButtonInputType::supportsValidation() const
-{
-    return false;
+bool ButtonInputType::SupportsValidation() const {
+  return false;
 }
 
-bool ButtonInputType::isTextButton() const
-{
-    return true;
+bool ButtonInputType::IsTextButton() const {
+  return true;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -6,33 +6,26 @@
 
 namespace blink {
 
-AudioTrackList* AudioTrackList::create(HTMLMediaElement& mediaElement)
-{
-    return new AudioTrackList(mediaElement);
+AudioTrackList* AudioTrackList::Create(HTMLMediaElement& media_element) {
+  return new AudioTrackList(media_element);
 }
 
-AudioTrackList::~AudioTrackList()
-{
+AudioTrackList::~AudioTrackList() {}
+
+AudioTrackList::AudioTrackList(HTMLMediaElement& media_element)
+    : TrackListBase<AudioTrack>(&media_element) {}
+
+bool AudioTrackList::HasEnabledTrack() const {
+  for (unsigned i = 0; i < length(); ++i) {
+    if (AnonymousIndexedGetter(i)->enabled())
+      return true;
+  }
+
+  return false;
 }
 
-AudioTrackList::AudioTrackList(HTMLMediaElement& mediaElement)
-    : TrackListBase<AudioTrack>(&mediaElement)
-{
+const AtomicString& AudioTrackList::InterfaceName() const {
+  return EventTargetNames::AudioTrackList;
 }
 
-bool AudioTrackList::hasEnabledTrack() const
-{
-    for (unsigned i = 0; i < length(); ++i) {
-        if (anonymousIndexedGetter(i)->enabled())
-            return true;
-    }
-
-    return false;
-}
-
-const AtomicString& AudioTrackList::interfaceName() const
-{
-    return EventTargetNames::AudioTrackList;
-}
-
-} // namespace blink
+}  // namespace blink

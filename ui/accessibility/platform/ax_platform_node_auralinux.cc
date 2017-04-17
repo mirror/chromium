@@ -364,10 +364,6 @@ void ax_platform_node_auralinux_detach(
 
 G_END_DECLS
 
-//
-// AXPlatformNodeAuraLinux implementation.
-//
-
 namespace ui {
 
 // static
@@ -376,6 +372,16 @@ AXPlatformNode* AXPlatformNode::Create(AXPlatformNodeDelegate* delegate) {
   node->Init(delegate);
   return node;
 }
+
+// static
+AXPlatformNode* AXPlatformNode::FromNativeViewAccessible(
+    gfx::NativeViewAccessible accessible) {
+  return AtkObjectToAXPlatformNodeAuraLinux(accessible);
+}
+
+//
+// AXPlatformNodeAuraLinux implementation.
+//
 
 // static
 AXPlatformNode* AXPlatformNodeAuraLinux::application_ = nullptr;
@@ -397,6 +403,16 @@ AtkRole AXPlatformNodeAuraLinux::GetAtkRole() {
       return ATK_ROLE_ALERT;
     case ui::AX_ROLE_APPLICATION:
       return ATK_ROLE_APPLICATION;
+    case ui::AX_ROLE_AUDIO:
+#if defined(ATK_CHECK_VERSION)
+#if ATK_CHECK_VERSION(2, 12, 0)
+      return ATK_ROLE_AUDIO;
+#else
+      return ATK_ROLE_SECTION;
+#endif
+#else
+      return ATK_ROLE_SECTION;
+#endif
     case ui::AX_ROLE_BUTTON:
       return ATK_ROLE_PUSH_BUTTON;
     case ui::AX_ROLE_CHECK_BOX:
@@ -427,6 +443,16 @@ AtkRole AXPlatformNodeAuraLinux::GetAtkRole() {
       return ATK_ROLE_ENTRY;
     case ui::AX_ROLE_TOOLBAR:
       return ATK_ROLE_TOOL_BAR;
+    case ui::AX_ROLE_VIDEO:
+#if defined(ATK_CHECK_VERSION)
+#if ATK_CHECK_VERSION(2, 12, 0)
+      return ATK_ROLE_VIDEO;
+#else
+      return ATK_ROLE_SECTION;
+#endif
+#else
+      return ATK_ROLE_SECTION;
+#endif
     case ui::AX_ROLE_WINDOW:
       return ATK_ROLE_WINDOW;
     default:

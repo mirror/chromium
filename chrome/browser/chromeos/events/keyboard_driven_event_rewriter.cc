@@ -4,9 +4,9 @@
 
 #include "chrome/browser/chromeos/events/keyboard_driven_event_rewriter.h"
 
-#include "chrome/browser/chromeos/events/event_rewriter.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
-#include "components/user_manager/user_manager.h"
+#include "components/session_manager/core/session_manager.h"
+#include "ui/chromeos/events/event_rewriter_chromeos.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
 
@@ -16,11 +16,13 @@ namespace {
 
 const int kModifierMask = ui::EF_SHIFT_DOWN;
 
+KeyboardDrivenEventRewriter* instance = nullptr;
+
 // Returns true if and only if it is on login screen (i.e. user is not logged
 // in) and the keyboard driven flag in the OEM manifest is on.
 bool ShouldStripModifiersForArrowKeysAndEnter() {
-  if (user_manager::UserManager::IsInitialized() &&
-      !user_manager::UserManager::Get()->IsSessionStarted()) {
+  if (session_manager::SessionManager::Get() &&
+      !session_manager::SessionManager::Get()->IsSessionStarted()) {
     return system::InputDeviceSettings::Get()
         ->ForceKeyboardDrivenUINavigation();
   }
@@ -30,10 +32,20 @@ bool ShouldStripModifiersForArrowKeysAndEnter() {
 
 }  // namespace
 
+// static
+KeyboardDrivenEventRewriter* KeyboardDrivenEventRewriter::GetInstance() {
+  DCHECK(instance);
+  return instance;
+}
+
 KeyboardDrivenEventRewriter::KeyboardDrivenEventRewriter() {
+  DCHECK(!instance);
+  instance = this;
 }
 
 KeyboardDrivenEventRewriter::~KeyboardDrivenEventRewriter() {
+  DCHECK_EQ(instance, this);
+  instance = nullptr;
 }
 
 ui::EventRewriteStatus KeyboardDrivenEventRewriter::RewriteForTesting(
@@ -77,14 +89,25 @@ ui::EventRewriteStatus KeyboardDrivenEventRewriter::Rewrite(
     return ui::EVENT_REWRITE_CONTINUE;
   }
 
-  chromeos::EventRewriter::MutableKeyState state = {
+  ui::EventRewriterChromeOS::MutableKeyState state = {
       flags & ~(ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN),
-      key_event.code(),
-      key_event.GetDomKey(),
-      key_event.key_code()};
+      key_event.code(), key_event.GetDomKey(), key_event.key_code()};
 
-  chromeos::EventRewriter::BuildRewrittenKeyEvent(key_event, state,
-                                                  rewritten_event);
+  if (rewritten_to_tab_) {
+    if (key_code == ui::VKEY_LEFT || key_code == ui::VKEY_RIGHT ||
+        key_code == ui::VKEY_UP || key_code == ui::VKEY_DOWN) {
+      const ui::KeyEvent tab_event(ui::ET_KEY_PRESSED, ui::VKEY_TAB,
+                                   ui::EF_NONE);
+      state.code = tab_event.code();
+      state.key = tab_event.GetDomKey();
+      state.key_code = tab_event.key_code();
+      if (key_code == ui::VKEY_LEFT || key_code == ui::VKEY_UP)
+        state.flags |= ui::EF_SHIFT_DOWN;
+    }
+  }
+
+  ui::EventRewriterChromeOS::BuildRewrittenKeyEvent(key_event, state,
+                                                    rewritten_event);
   return ui::EVENT_REWRITE_REWRITTEN;
 }
 

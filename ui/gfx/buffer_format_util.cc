@@ -15,9 +15,10 @@ const BufferFormat kBufferFormats[] = {
     BufferFormat::ATC,       BufferFormat::ATCIA,
     BufferFormat::DXT1,      BufferFormat::DXT5,
     BufferFormat::ETC1,      BufferFormat::R_8,
-    BufferFormat::BGR_565,   BufferFormat::RGBA_4444,
-    BufferFormat::RGBX_8888, BufferFormat::RGBA_8888,
-    BufferFormat::BGRX_8888, BufferFormat::BGRA_8888,
+    BufferFormat::RG_88,     BufferFormat::BGR_565,
+    BufferFormat::RGBA_4444, BufferFormat::RGBX_8888,
+    BufferFormat::RGBA_8888, BufferFormat::BGRX_8888,
+    BufferFormat::BGRA_8888, BufferFormat::RGBA_F16,
     BufferFormat::UYVY_422,  BufferFormat::YUV_420_BIPLANAR,
     BufferFormat::YVU_420};
 
@@ -46,21 +47,29 @@ bool RowSizeForBufferFormatChecked(
       checked_size += 3;
       if (!checked_size.IsValid())
         return false;
-      *size_in_bytes = checked_size.ValueOrDie() & ~0x3;
+      *size_in_bytes = (checked_size & ~0x3).ValueOrDie();
       return true;
+    case BufferFormat::RG_88:
     case BufferFormat::BGR_565:
     case BufferFormat::RGBA_4444:
     case BufferFormat::UYVY_422:
       checked_size *= 2;
+      checked_size += 3;
       if (!checked_size.IsValid())
         return false;
-      *size_in_bytes = checked_size.ValueOrDie();
+      *size_in_bytes = (checked_size & ~0x3).ValueOrDie();
       return true;
     case BufferFormat::BGRX_8888:
     case BufferFormat::RGBX_8888:
     case BufferFormat::RGBA_8888:
     case BufferFormat::BGRA_8888:
       checked_size *= 4;
+      if (!checked_size.IsValid())
+        return false;
+      *size_in_bytes = checked_size.ValueOrDie();
+      return true;
+    case BufferFormat::RGBA_F16:
+      checked_size *= 8;
       if (!checked_size.IsValid())
         return false;
       *size_in_bytes = checked_size.ValueOrDie();
@@ -93,12 +102,14 @@ size_t NumberOfPlanesForBufferFormat(BufferFormat format) {
     case BufferFormat::DXT5:
     case BufferFormat::ETC1:
     case BufferFormat::R_8:
+    case BufferFormat::RG_88:
     case BufferFormat::BGR_565:
     case BufferFormat::RGBA_4444:
     case BufferFormat::RGBX_8888:
     case BufferFormat::RGBA_8888:
     case BufferFormat::BGRX_8888:
     case BufferFormat::BGRA_8888:
+    case BufferFormat::RGBA_F16:
     case BufferFormat::UYVY_422:
       return 1;
     case BufferFormat::YUV_420_BIPLANAR:
@@ -118,12 +129,14 @@ size_t SubsamplingFactorForBufferFormat(BufferFormat format, size_t plane) {
     case BufferFormat::DXT5:
     case BufferFormat::ETC1:
     case BufferFormat::R_8:
+    case BufferFormat::RG_88:
     case BufferFormat::BGR_565:
     case BufferFormat::RGBA_4444:
     case BufferFormat::RGBX_8888:
     case BufferFormat::RGBA_8888:
     case BufferFormat::BGRX_8888:
     case BufferFormat::BGRA_8888:
+    case BufferFormat::RGBA_F16:
     case BufferFormat::UYVY_422:
       return 1;
     case BufferFormat::YVU_420: {
@@ -188,12 +201,14 @@ size_t BufferOffsetForBufferFormat(const Size& size,
     case BufferFormat::DXT5:
     case BufferFormat::ETC1:
     case BufferFormat::R_8:
+    case BufferFormat::RG_88:
     case BufferFormat::BGR_565:
     case BufferFormat::RGBA_4444:
     case BufferFormat::RGBX_8888:
     case BufferFormat::RGBA_8888:
     case BufferFormat::BGRX_8888:
     case BufferFormat::BGRA_8888:
+    case BufferFormat::RGBA_F16:
     case BufferFormat::UYVY_422:
       return 0;
     case BufferFormat::YVU_420: {

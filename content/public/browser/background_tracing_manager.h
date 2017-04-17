@@ -13,7 +13,6 @@
 
 namespace content {
 class BackgroundTracingConfig;
-struct BackgroundTracingUploadConfig;
 
 // BackgroundTracingManager is used on the browser process to trigger the
 // collection of trace data and upload the results. Only the browser UI thread
@@ -94,8 +93,6 @@ class BackgroundTracingManager {
   virtual bool HasActiveScenario() = 0;
 
   virtual void InvalidateTriggerHandlesForTesting() = 0;
-  virtual void SetTracingEnabledCallbackForTesting(
-      const base::Closure& callback) = 0;
   virtual void FireTimerForTesting() = 0;
 
  protected:

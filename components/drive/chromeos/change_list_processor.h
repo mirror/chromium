@@ -11,11 +11,10 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
-#include "components/drive/file_errors.h"
 #include "components/drive/file_errors.h"
 #include "url/gurl.h"
 
@@ -27,6 +26,7 @@ namespace google_apis {
 class AboutResource;
 class ChangeList;
 class FileList;
+class TeamDriveList;
 }  // namespace google_apis
 
 namespace drive {
@@ -78,6 +78,7 @@ class ChangeList {
   ChangeList();  // For tests.
   explicit ChangeList(const google_apis::ChangeList& change_list);
   explicit ChangeList(const google_apis::FileList& file_list);
+  explicit ChangeList(const google_apis::TeamDriveList& team_drive_list);
   ~ChangeList();
 
   const std::vector<ResourceEntry>& entries() const { return entries_; }
@@ -120,7 +121,7 @@ class ChangeListProcessor {
   //
   // Must be run on the same task runner as |resource_metadata_| uses.
   FileError Apply(std::unique_ptr<google_apis::AboutResource> about_resource,
-                  ScopedVector<ChangeList> change_lists,
+                  std::vector<std::unique_ptr<ChangeList>> change_lists,
                   bool is_delta_update);
 
   // The set of changed files as a result of change list processing.

@@ -37,26 +37,28 @@
 
 namespace blink {
 
-class SVGAnimatedBoolean final : public SVGAnimatedProperty<SVGBoolean>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SVGAnimatedBoolean* create(SVGElement* contextElement, const QualifiedName& attributeName, SVGBoolean* initialValue)
-    {
-        return new SVGAnimatedBoolean(contextElement, attributeName, initialValue);
-    }
+class SVGAnimatedBoolean final : public SVGAnimatedProperty<SVGBoolean>,
+                                 public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS()
-    {
-        visitor->traceWrappers(contextElement());
-    }
+ public:
+  static SVGAnimatedBoolean* Create(SVGElement* context_element,
+                                    const QualifiedName& attribute_name) {
+    return new SVGAnimatedBoolean(context_element, attribute_name);
+  }
 
-protected:
-    SVGAnimatedBoolean(SVGElement* contextElement, const QualifiedName& attributeName, SVGBoolean* initialValue)
-        : SVGAnimatedProperty<SVGBoolean>(contextElement, attributeName, initialValue)
-    {
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    visitor->TraceWrappers(contextElement());
+  }
+
+ protected:
+  SVGAnimatedBoolean(SVGElement* context_element,
+                     const QualifiedName& attribute_name)
+      : SVGAnimatedProperty<SVGBoolean>(context_element,
+                                        attribute_name,
+                                        SVGBoolean::Create()) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGAnimatedBoolean_h
+#endif  // SVGAnimatedBoolean_h

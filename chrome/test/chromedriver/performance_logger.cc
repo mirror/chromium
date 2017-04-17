@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/json/json_writer.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
 #include "chrome/test/chromedriver/chrome/browser_info.h"
@@ -41,8 +42,14 @@ bool IsEnabled(const PerfLoggingPrefs::InspectorDomainStatus& domain_status) {
 }
 
 // Returns whether |command| is in kRequestTraceCommands[] (case-insensitive).
-bool ShouldRequestTraceEvents(const std::string& command) {
-  for (const auto& request_command : kRequestTraceCommands) {
+// In the case of GetLog, also check if it has been called previously, that it
+// was emptying an empty log.
+bool ShouldRequestTraceEvents(const std::string& command,
+                              const bool log_emptied) {
+  if (base::EqualsCaseInsensitiveASCII(command, "GetLog") && !log_emptied)
+    return false;
+
+  for (auto* request_command : kRequestTraceCommands) {
     if (base::EqualsCaseInsensitiveASCII(command, request_command))
       return true;
   }
@@ -51,7 +58,7 @@ bool ShouldRequestTraceEvents(const std::string& command) {
 
 // Returns whether the event belongs to one of kDomains.
 bool ShouldLogEvent(const std::string& method) {
-  for (const auto& domain : kDomains) {
+  for (auto* domain : kDomains) {
     if (base::StartsWith(method, domain, base::CompareCase::SENSITIVE))
       return true;
   }
@@ -102,7 +109,8 @@ Status PerformanceLogger::OnEvent(
 
 Status PerformanceLogger::BeforeCommand(const std::string& command_name) {
   // Only dump trace buffer after tracing has been started.
-  if (trace_buffering_ && ShouldRequestTraceEvents(command_name)) {
+  if (trace_buffering_ &&
+      ShouldRequestTraceEvents(command_name, log_->Emptied())) {
     Status status = CollectTraceEvents();
     if (status.IsError())
       return status;
@@ -182,8 +190,8 @@ Status PerformanceLogger::HandleTraceEvents(
                     "received DevTools trace data in unexpected format");
     }
     for (const auto& trace : *traces) {
-      base::DictionaryValue* event_dict;
-      if (!trace->GetAsDictionary(&event_dict))
+      const base::DictionaryValue* event_dict;
+      if (!trace.GetAsDictionary(&event_dict))
         return Status(kUnknownError, "trace event must be a dictionary");
       AddLogEntry(client->GetId(), "Tracing.dataCollected", *event_dict);
     }
@@ -191,7 +199,7 @@ Status PerformanceLogger::HandleTraceEvents(
     // 'value' will be between 0-1 and represents how full the DevTools trace
     // buffer is. If the buffer is full, warn the user.
     double buffer_usage = 0;
-    if (!params.GetDouble("value", &buffer_usage)) {
+    if (!params.GetDouble("percentFull", &buffer_usage)) {
       // Tracing.bufferUsage event will occur once per second, and it really
       // only serves as a warning, so if we can't reliably tell whether the
       // buffer is full, just fail silently instead of spamming the logs.
@@ -221,8 +229,14 @@ Status PerformanceLogger::StartTrace() {
     LOG(WARNING) << "tried to start tracing, but a trace was already started";
     return Status(kOk);
   }
+  std::unique_ptr<base::ListValue> categories(new base::ListValue());
+  categories->AppendStrings(base::SplitString(prefs_.trace_categories,
+                                              ",",
+                                              base::TRIM_WHITESPACE,
+                                              base::SPLIT_WANT_NONEMPTY));
   base::DictionaryValue params;
-  params.SetString("categories", prefs_.trace_categories);
+  params.Set("traceConfig.includedCategories", std::move(categories));
+  params.SetString("traceConfig.recordingMode", "recordAsMuchAsPossible");
   // Ask DevTools to report buffer usage.
   params.SetInteger("bufferUsageReportingInterval",
                     prefs_.buffer_usage_reporting_interval);
@@ -245,15 +259,15 @@ Status PerformanceLogger::CollectTraceEvents() {
                   "was not started");
   }
 
-  // As of r307466, DevTools no longer returns a response to Tracing.end
-  // commands, so we need to ignore it here to avoid a timeout. See
-  // https://code.google.com/p/chromedriver/issues/detail?id=997 for details.
-  // TODO(samuong): find other commands where we don't need the response.
-  bool wait_for_response = false;
+  // Prior to commit position 433389, DevTools did not return a response to
+  // Tracing.end commands, so we need to ignore it here to avoid a timeout. See
+  // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1607 for details.
+  // TODO(samuong): remove this after we stop supporting Chrome 56.
+  bool wait_for_response = true;
   if (session_->chrome) {
     const BrowserInfo* browser_info = session_->chrome->GetBrowserInfo();
-    if (browser_info->browser_name == "chrome" && browser_info->build_no < 2245)
-      wait_for_response = true;
+    if (browser_info->browser_name == "chrome" && browser_info->build_no < 2925)
+      wait_for_response = false;
   }
   base::DictionaryValue params;
   Status status(kOk);

@@ -1,15 +1,13 @@
 {
     "dependencies": [
+        "text_utils",
         "platform"
     ],
     "scripts": [
-        "WebInspector.js",
         "Worker.js",
         "TextDictionary.js",
         "Object.js",
-        "NotificationService.js",
         "Color.js",
-        "Geometry.js",
         "Console.js",
         "ContentProvider.js",
         "ParsedURL.js",
@@ -19,12 +17,11 @@
         "StaticContentProvider.js",
         "OutputStream.js",
         "SegmentedRange.js",
-        "Text.js",
-        "TextRange.js",
-        "TextUtils.js",
         "Throttler.js",
+        "Trie.js",
         "UIString.js",
         "ModuleExtensionInterfaces.js",
-        "FormatterWorkerPool.js"
+        "FormatterWorkerPool.js",
+        "CharacterIdMap.js"
     ]
 }

@@ -23,6 +23,7 @@
 #include "content/public/common/console_message_level.h"
 #include "extensions/browser/extension_function_histogram_value.h"
 #include "extensions/browser/info_map.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/features/feature.h"
 #include "ipc/ipc_message.h"
@@ -39,7 +40,6 @@ class Value;
 namespace content {
 class BrowserContext;
 class RenderFrameHost;
-class RenderViewHost;
 class WebContents;
 }
 
@@ -49,15 +49,11 @@ class IOThreadExtensionMessageFilter;
 class QuotaLimitHeuristic;
 }
 
-namespace IPC {
-class Sender;
-}
-
 #ifdef NDEBUG
 #define EXTENSION_FUNCTION_VALIDATE(test) \
   do {                                    \
     if (!(test)) {                        \
-      this->bad_message_ = true;          \
+      this->SetBadMessage();              \
       return ValidationFailure(this);     \
     }                                     \
   } while (0)
@@ -69,7 +65,7 @@ class Sender;
 #define EXTENSION_FUNCTION_PRERUN_VALIDATE(test) \
   do {                                           \
     if (!(test)) {                               \
-      this->bad_message_ = true;                 \
+      this->SetBadMessage();                     \
       return false;                              \
     }                                            \
   } while (0)
@@ -80,7 +76,7 @@ class Sender;
 #define EXTENSION_FUNCTION_ERROR(error) \
   do {                                  \
     error_ = error;                     \
-    this->bad_message_ = true;          \
+    this->SetBadMessage();              \
     return ValidationFailure(this);     \
   } while (0)
 
@@ -88,10 +84,14 @@ class Sender;
 // supply a unique |histogramvalue| used for histograms of extension function
 // invocation (add new ones at the end of the enum in
 // extension_function_histogram_value.h).
-#define DECLARE_EXTENSION_FUNCTION(name, histogramvalue) \
-  public: static const char* function_name() { return name; } \
-  public: static extensions::functions::HistogramValue histogram_value() \
-    { return extensions::functions::histogramvalue; }
+#define DECLARE_EXTENSION_FUNCTION(name, histogramvalue)                     \
+ public:                                                                     \
+  static constexpr const char* function_name() { return name; }              \
+                                                                             \
+ public:                                                                     \
+  static constexpr extensions::functions::HistogramValue histogram_value() { \
+    return extensions::functions::histogramvalue;                            \
+  }
 
 // Traits that describe how ExtensionFunction should be deleted. This just calls
 // the virtual "Destruct" method on ExtensionFunction, allowing derived classes
@@ -146,12 +146,19 @@ class ExtensionFunction
 
     // Returns true for success, false for failure.
     virtual bool Apply() = 0;
+
+   protected:
+    void SetFunctionResults(ExtensionFunction* function,
+                            std::unique_ptr<base::ListValue> results);
+    void SetFunctionError(ExtensionFunction* function,
+                          const std::string& error);
   };
   typedef std::unique_ptr<ResponseValueObject> ResponseValue;
 
   // The action to use when returning from RunAsync.
   //
-  // Use RespondNow() or RespondLater() rather than this class directly.
+  // Use RespondNow() or RespondLater() or AlreadyResponded() rather than this
+  // class directly.
   class ResponseActionObject {
    public:
     virtual ~ResponseActionObject() {}
@@ -168,6 +175,13 @@ class ExtensionFunction
     ScopedUserGestureForTests();
     ~ScopedUserGestureForTests();
   };
+
+  // A string used in the case of an unknown error being detected.
+  // DON'T USE THIS. It's only here during conversion to flag cases where errors
+  // aren't already set.
+  // TODO(devlin): Remove this if/when all functions are updated to return real
+  // errors.
+  static const char kUnknownErrorDoNotUse[];
 
   // Called before Run() in order to perform a common verification check so that
   // APIs subclassing this don't have to roll their own RunSafe() variants.
@@ -196,10 +210,9 @@ class ExtensionFunction
   // Callers must call Execute() on the return ResponseAction at some point,
   // exactly once.
   //
-  // SyncExtensionFunction and AsyncExtensionFunction implement this in terms
-  // of SyncExtensionFunction::RunSync and AsyncExtensionFunction::RunAsync,
-  // but this is deprecated. ExtensionFunction implementations are encouraged
-  // to just implement Run.
+  // AsyncExtensionFunctions implement this in terms of
+  // AsyncExtensionFunction::RunAsync, but this is deprecated.
+  // ExtensionFunction implementations are encouraged to just implement Run.
   virtual ResponseAction Run() WARN_UNUSED_RESULT = 0;
 
   // Gets whether quota should be applied to this individual function
@@ -226,23 +239,13 @@ class ExtensionFunction
   // TODO(dcheng): This should take a const ref.
   virtual void SetArgs(const base::ListValue* args);
 
-  // Sets a single Value as the results of the function.
-  void SetResult(std::unique_ptr<base::Value> result);
-
-  // Sets multiple Values as the results of the function.
-  void SetResultList(std::unique_ptr<base::ListValue> results);
-
   // Retrieves the results of the function as a ListValue.
   const base::ListValue* GetResultList() const;
 
   // Retrieves any error string from the function.
-  virtual std::string GetError() const;
+  virtual const std::string& GetError() const;
 
-  // Sets the function's error string.
-  virtual void SetError(const std::string& error);
-
-  // Sets the function's bad message state.
-  void set_bad_message(bool bad_message) { bad_message_ = bad_message; }
+  virtual void SetBadMessage();
 
   // Specifies the name of the function. A long-lived string (such as a string
   // literal) must be provided.
@@ -293,9 +296,6 @@ class ExtensionFunction
     response_callback_ = callback;
   }
 
-  void set_source_tab_id(int source_tab_id) { source_tab_id_ = source_tab_id; }
-  int source_tab_id() const { return source_tab_id_; }
-
   void set_source_context_type(extensions::Feature::Context type) {
     source_context_type_ = type;
   }
@@ -309,6 +309,10 @@ class ExtensionFunction
   int source_process_id() const {
     return source_process_id_;
   }
+
+  ResponseType* response_type() const { return response_type_.get(); }
+
+  bool did_respond() const { return did_respond_; }
 
   // Sets did_respond_ to true so that the function won't DCHECK if it never
   // sends a response. Typically, this shouldn't be used, even in testing. It's
@@ -371,6 +375,28 @@ class ExtensionFunction
   ResponseAction RespondNow(ResponseValue result) WARN_UNUSED_RESULT;
   // Don't respond now, but promise to call Respond(...) later.
   ResponseAction RespondLater() WARN_UNUSED_RESULT;
+  // Respond() was already called before Run() finished executing.
+  //
+  // Assume Run() uses some helper system that accepts callback that Respond()s.
+  // If that helper system calls the synchronously in some cases, then use
+  // this return value in those cases.
+  //
+  // FooExtensionFunction::Run() {
+  //   Helper::FetchResults(..., base::Bind(&Success));
+  //   if (did_respond()) return AlreadyResponded();
+  //   return RespondLater();
+  // }
+  // FooExtensionFunction::Success() {
+  //   Respond(...);
+  // }
+  //
+  // Helper::FetchResults(..., callback) {
+  //   if (...)
+  //     callback.Run(..);  // Synchronously call |callback|.
+  //   else
+  //     // Asynchronously call |callback|.
+  // }
+  ResponseAction AlreadyResponded() WARN_UNUSED_RESULT;
 
   // This is the return value of the EXTENSION_FUNCTION_VALIDATE macro, which
   // needs to work from Run(), RunAsync(), and RunSync(). The former of those
@@ -390,28 +416,46 @@ class ExtensionFunction
   // Helper method for ExtensionFunctionDeleteTraits. Deletes this object.
   virtual void Destruct() const = 0;
 
-  // Do not call this function directly, return the appropriate ResponseAction
-  // from Run() instead. If using RespondLater then call Respond().
-  //
-  // Call with true to indicate success, false to indicate failure, in which
-  // case please set |error_|.
-  virtual void SendResponse(bool success) = 0;
-
-  // Common implementation for SendResponse.
-  void SendResponseImpl(bool success);
+  // Called after the response is sent, allowing the function to perform any
+  // additional work or cleanup.
+  virtual void OnResponded() {}
 
   // Return true if the argument to this function at |index| was provided and
   // is non-null.
   bool HasOptionalArgument(size_t index);
+
+  // The extension that called this function.
+  scoped_refptr<const extensions::Extension> extension_;
+
+  // The arguments to the API. Only non-null if argument were specified.
+  std::unique_ptr<base::ListValue> args_;
+
+ private:
+  friend class ResponseValueObject;
+
+  // Call with true to indicate success, false to indicate failure. If this
+  // failed, |error_| should be set.
+  void SendResponseImpl(bool success);
+
+  base::ElapsedTimer timer_;
+
+  // The results of the API. This should be populated through the Respond()/
+  // RespondNow() methods. In legacy implementations, this is set directly, and
+  // should be set before calling SendResponse().
+  std::unique_ptr<base::ListValue> results_;
+
+  // Any detailed error from the API. This should be populated by the derived
+  // class before Run() returns.
+  std::string error_;
+
+  // The callback to run once the function has done execution.
+  ResponseCallback response_callback_;
 
   // Id of this request, used to map the response back to the caller.
   int request_id_;
 
   // The id of the profile of this function's extension.
   void* profile_id_;
-
-  // The extension that called this function.
-  scoped_refptr<const extensions::Extension> extension_;
 
   // The name of this function.
   const char* name_;
@@ -432,17 +476,6 @@ class ExtensionFunction
   // True if the call was made in response of user gesture.
   bool user_gesture_;
 
-  // The arguments to the API. Only non-null if argument were specified.
-  std::unique_ptr<base::ListValue> args_;
-
-  // The results of the API. This should be populated by the derived class
-  // before SendResponse() is called.
-  std::unique_ptr<base::ListValue> results_;
-
-  // Any detailed error from the API. This should be populated by the derived
-  // class before Run() returns.
-  std::string error_;
-
   // Any class that gets a malformed message should set this to true before
   // returning.  Usually we want to kill the message sending process.
   bool bad_message_;
@@ -451,12 +484,6 @@ class ExtensionFunction
   // is invoked.
   extensions::functions::HistogramValue histogram_value_;
 
-  // The callback to run once the function has done execution.
-  ResponseCallback response_callback_;
-
-  // The ID of the tab triggered this function call, or -1 if there is no tab.
-  int source_tab_id_;
-
   // The type of the JavaScript context where this call originated.
   extensions::Feature::Context source_context_type_;
 
@@ -464,13 +491,12 @@ class ExtensionFunction
   // if unknown.
   int source_process_id_;
 
+  // The response type of the function, if the response has been sent.
+  std::unique_ptr<ResponseType> response_type_;
+
   // Whether this function has responded.
+  // TODO(devlin): Replace this with response_type_ != null.
   bool did_respond_;
-
- private:
-  base::ElapsedTimer timer_;
-
-  void OnRespondingLater(ResponseValue response);
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionFunction);
 };
@@ -479,25 +505,12 @@ class ExtensionFunction
 // this category.
 class UIThreadExtensionFunction : public ExtensionFunction {
  public:
-  // TODO(yzshen): We should be able to remove this interface now that we
-  // support overriding the response callback.
-  // A delegate for use in testing, to intercept the call to SendResponse.
-  class DelegateForTests {
-   public:
-    virtual void OnSendResponse(UIThreadExtensionFunction* function,
-                                bool success,
-                                bool bad_message) = 0;
-  };
-
   UIThreadExtensionFunction();
 
   UIThreadExtensionFunction* AsUIThreadExtensionFunction() override;
 
   bool PreRunValidation(std::string* error) override;
-
-  void set_test_delegate(DelegateForTests* delegate) {
-    delegate_ = delegate;
-  }
+  void SetBadMessage() final;
 
   // Called when a message was received.
   // Should return true if it processed the message.
@@ -509,11 +522,6 @@ class UIThreadExtensionFunction : public ExtensionFunction {
     context_ = context;
   }
   content::BrowserContext* browser_context() const { return context_; }
-
-  // DEPRECATED: Please use render_frame_host().
-  // TODO(devlin): Remove this once all callers are updated to use
-  // render_frame_host().
-  content::RenderViewHost* render_view_host_do_not_use() const;
 
   void SetRenderFrameHost(content::RenderFrameHost* render_frame_host);
   content::RenderFrameHost* render_frame_host() const {
@@ -528,8 +536,8 @@ class UIThreadExtensionFunction : public ExtensionFunction {
     return dispatcher_.get();
   }
 
-  void set_is_from_service_worker(bool value) {
-    is_from_service_worker_ = value;
+  void set_service_worker_version_id(int64_t version_id) {
+    service_worker_version_id_ = version_id;
   }
 
   // Gets the "current" web contents if any. If there is no associated web
@@ -553,7 +561,7 @@ class UIThreadExtensionFunction : public ExtensionFunction {
 
   ~UIThreadExtensionFunction() override;
 
-  void SendResponse(bool success) override;
+  void OnResponded() override;
 
   // Sets the Blob UUIDs whose ownership is being transferred to the renderer.
   void SetTransferredBlobUUIDs(const std::vector<std::string>& blob_uuids);
@@ -567,19 +575,22 @@ class UIThreadExtensionFunction : public ExtensionFunction {
 
   void Destruct() const override;
 
+  bool is_from_service_worker() const {
+    return service_worker_version_id_ !=
+           extensions::kInvalidServiceWorkerVersionId;
+  }
+
   // The dispatcher that will service this extension function call.
   base::WeakPtr<extensions::ExtensionFunctionDispatcher> dispatcher_;
 
   // The RenderFrameHost we will send responses to.
   content::RenderFrameHost* render_frame_host_;
 
-  // Whether or not this ExtensionFunction was called by an extension Service
-  // Worker.
-  bool is_from_service_worker_;
+  // If this ExtensionFunction was called by an extension Service Worker, then
+  // this contains the worker's version id.
+  int64_t service_worker_version_id_;
 
   std::unique_ptr<RenderFrameHostTracker> tracker_;
-
-  DelegateForTests* delegate_;
 
   // The blobs transferred to the renderer process.
   std::vector<std::string> transferred_blob_uuids_;
@@ -598,6 +609,7 @@ class IOThreadExtensionFunction : public ExtensionFunction {
   IOThreadExtensionFunction();
 
   IOThreadExtensionFunction* AsIOThreadExtensionFunction() override;
+  void SetBadMessage() final;
 
   void set_ipc_sender(
       base::WeakPtr<extensions::IOThreadExtensionMessageFilter> ipc_sender,
@@ -629,8 +641,6 @@ class IOThreadExtensionFunction : public ExtensionFunction {
 
   void Destruct() const override;
 
-  void SendResponse(bool success) override;
-
  private:
   base::WeakPtr<extensions::IOThreadExtensionMessageFilter> ipc_sender_;
   int routing_id_;
@@ -646,8 +656,19 @@ class AsyncExtensionFunction : public UIThreadExtensionFunction {
  public:
   AsyncExtensionFunction();
 
+  void SetError(const std::string& error);
+
+  // ExtensionFunction:
+  const std::string& GetError() const override;
+
  protected:
   ~AsyncExtensionFunction() override;
+
+  // Sets a single Value as the results of the function.
+  void SetResult(std::unique_ptr<base::Value> result);
+
+  // Sets multiple Values as the results of the function.
+  void SetResultList(std::unique_ptr<base::ListValue> results);
 
   // Deprecated: Override UIThreadExtensionFunction and implement Run() instead.
   //
@@ -659,6 +680,18 @@ class AsyncExtensionFunction : public UIThreadExtensionFunction {
   // ValidationFailure override to match RunAsync().
   static bool ValidationFailure(AsyncExtensionFunction* function);
 
+  // Responds with success/failure. |results_| or |error_| should be set
+  // accordingly.
+  void SendResponse(bool success);
+
+  // Exposed versions of |results_| and |error_| which are curried into the
+  // ExtensionFunction response.
+  // These need to keep the same name to avoid breaking existing
+  // implementations, but this should be temporary with crbug.com/648275
+  // and crbug.com/634140.
+  std::unique_ptr<base::ListValue> results_;
+  std::string error_;
+
  private:
   // If you're hitting a compile error here due to "final" - great! You're
   // doing the right thing, you just need to extend UIThreadExtensionFunction
@@ -666,64 +699,6 @@ class AsyncExtensionFunction : public UIThreadExtensionFunction {
   ResponseAction Run() final;
 
   DISALLOW_COPY_AND_ASSIGN(AsyncExtensionFunction);
-};
-
-// A SyncExtensionFunction is an ExtensionFunction that runs synchronously
-// *relative to the browser's UI thread*. Note that this has nothing to do with
-// running synchronously relative to the extension process. From the extension
-// process's point of view, the function is still asynchronous.
-//
-// This kind of function is convenient for implementing simple APIs that just
-// need to interact with things on the browser UI thread.
-class SyncExtensionFunction : public UIThreadExtensionFunction {
- public:
-  SyncExtensionFunction();
-
- protected:
-  ~SyncExtensionFunction() override;
-
-  // Deprecated: Override UIThreadExtensionFunction and implement Run() instead.
-  //
-  // SyncExtensionFunctions implement this method. Return true to respond
-  // immediately with success, false to respond immediately with an error.
-  virtual bool RunSync() = 0;
-
-  // ValidationFailure override to match RunSync().
-  static bool ValidationFailure(SyncExtensionFunction* function);
-
- private:
-  // If you're hitting a compile error here due to "final" - great! You're
-  // doing the right thing, you just need to extend UIThreadExtensionFunction
-  // instead of SyncExtensionFunction.
-  ResponseAction Run() final;
-
-  DISALLOW_COPY_AND_ASSIGN(SyncExtensionFunction);
-};
-
-class SyncIOThreadExtensionFunction : public IOThreadExtensionFunction {
- public:
-  SyncIOThreadExtensionFunction();
-
- protected:
-  ~SyncIOThreadExtensionFunction() override;
-
-  // Deprecated: Override IOThreadExtensionFunction and implement Run() instead.
-  //
-  // SyncIOThreadExtensionFunctions implement this method. Return true to
-  // respond immediately with success, false to respond immediately with an
-  // error.
-  virtual bool RunSync() = 0;
-
-  // ValidationFailure override to match RunSync().
-  static bool ValidationFailure(SyncIOThreadExtensionFunction* function);
-
- private:
-  // If you're hitting a compile error here due to "final" - great! You're
-  // doing the right thing, you just need to extend IOThreadExtensionFunction
-  // instead of SyncIOExtensionFunction.
-  ResponseAction Run() final;
-
-  DISALLOW_COPY_AND_ASSIGN(SyncIOThreadExtensionFunction);
 };
 
 #endif  // EXTENSIONS_BROWSER_EXTENSION_FUNCTION_H_

@@ -32,64 +32,110 @@
 #include "modules/indexeddb/IDBKeyRange.h"
 #include "modules/indexeddb/IDBMetadata.h"
 #include "modules/indexeddb/IDBRequest.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/modules/indexeddb/WebIDBCursor.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabase.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
-#include "wtf/Forward.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExceptionState;
 class IDBObjectStore;
 
-class IDBIndex final : public GarbageCollectedFinalized<IDBIndex>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static IDBIndex* create(const IDBIndexMetadata& metadata, IDBObjectStore* objectStore, IDBTransaction* transaction)
-    {
-        return new IDBIndex(metadata, objectStore, transaction);
-    }
-    ~IDBIndex();
-    DECLARE_TRACE();
+class IDBIndex final : public GarbageCollectedFinalized<IDBIndex>,
+                       public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Implement the IDL
-    const String& name() const { return m_metadata.name; }
-    IDBObjectStore* objectStore() const { return m_objectStore.get(); }
-    ScriptValue keyPath(ScriptState*) const;
-    bool unique() const { return m_metadata.unique; }
-    bool multiEntry() const { return m_metadata.multiEntry; }
+ public:
+  static IDBIndex* Create(RefPtr<IDBIndexMetadata> metadata,
+                          IDBObjectStore* object_store,
+                          IDBTransaction* transaction) {
+    return new IDBIndex(std::move(metadata), object_store, transaction);
+  }
+  ~IDBIndex();
+  DECLARE_TRACE();
 
-    IDBRequest* openCursor(ScriptState*, const ScriptValue& key, const String& direction, ExceptionState&);
-    IDBRequest* openKeyCursor(ScriptState*, const ScriptValue& range, const String& direction, ExceptionState&);
-    IDBRequest* count(ScriptState*, const ScriptValue& range, ExceptionState&);
-    IDBRequest* get(ScriptState*, const ScriptValue& key, ExceptionState&);
-    IDBRequest* getAll(ScriptState*, const ScriptValue& range, ExceptionState&);
-    IDBRequest* getAll(ScriptState*, const ScriptValue& range, unsigned long maxCount, ExceptionState&);
-    IDBRequest* getKey(ScriptState*, const ScriptValue& key, ExceptionState&);
-    IDBRequest* getAllKeys(ScriptState*, const ScriptValue& range, ExceptionState&);
-    IDBRequest* getAllKeys(ScriptState*, const ScriptValue& range, uint32_t maxCount, ExceptionState&);
+  // Implement the IDL
+  const String& name() const { return Metadata().name; }
+  void setName(const String& name, ExceptionState&);
+  IDBObjectStore* objectStore() const { return object_store_.Get(); }
+  ScriptValue keyPath(ScriptState*) const;
+  bool unique() const { return Metadata().unique; }
+  bool multiEntry() const { return Metadata().multi_entry; }
 
-    void markDeleted() { m_deleted = true; }
-    bool isDeleted() const;
+  IDBRequest* openCursor(ScriptState*,
+                         const ScriptValue& key,
+                         const String& direction,
+                         ExceptionState&);
+  IDBRequest* openKeyCursor(ScriptState*,
+                            const ScriptValue& range,
+                            const String& direction,
+                            ExceptionState&);
+  IDBRequest* count(ScriptState*, const ScriptValue& range, ExceptionState&);
+  IDBRequest* get(ScriptState*, const ScriptValue& key, ExceptionState&);
+  IDBRequest* getAll(ScriptState*, const ScriptValue& range, ExceptionState&);
+  IDBRequest* getAll(ScriptState*,
+                     const ScriptValue& range,
+                     unsigned long max_count,
+                     ExceptionState&);
+  IDBRequest* getKey(ScriptState*, const ScriptValue& key, ExceptionState&);
+  IDBRequest* getAllKeys(ScriptState*,
+                         const ScriptValue& range,
+                         ExceptionState&);
+  IDBRequest* getAllKeys(ScriptState*,
+                         const ScriptValue& range,
+                         uint32_t max_count,
+                         ExceptionState&);
 
-    // Used internally and by InspectorIndexedDBAgent:
-    IDBRequest* openCursor(ScriptState*, IDBKeyRange*, WebIDBCursorDirection);
+  void MarkDeleted() {
+    DCHECK(transaction_->IsVersionChange())
+        << "Index deleted outside versionchange transaction.";
+    deleted_ = true;
+  }
+  bool IsDeleted() const { return deleted_; }
+  int64_t Id() const { return Metadata().id; }
 
-    WebIDBDatabase* backendDB() const;
+  // True if this index was created in its associated transaction.
+  // Only valid if the index's associated transaction is a versionchange.
+  bool IsNewlyCreated(
+      const IDBObjectStoreMetadata& old_object_store_metadata) const {
+    DCHECK(transaction_->IsVersionChange());
 
-private:
-    IDBIndex(const IDBIndexMetadata&, IDBObjectStore*, IDBTransaction*);
+    // Index IDs are allocated sequentially, so we can tell if an index was
+    // created in this transaction by comparing its ID against the object
+    // store's maximum index ID at the time when the transaction was started.
+    return Id() > old_object_store_metadata.max_index_id;
+  }
 
-    IDBRequest* getInternal(ScriptState*, const ScriptValue& key, ExceptionState&, bool keyOnly);
-    IDBRequest* getAllInternal(ScriptState*, const ScriptValue& range, unsigned long maxCount, ExceptionState&, bool keyOnly);
+  void RevertMetadata(RefPtr<IDBIndexMetadata> old_metadata);
 
-    IDBIndexMetadata m_metadata;
-    Member<IDBObjectStore> m_objectStore;
-    Member<IDBTransaction> m_transaction;
-    bool m_deleted = false;
+  // Used internally and by InspectorIndexedDBAgent:
+  IDBRequest* openCursor(ScriptState*, IDBKeyRange*, WebIDBCursorDirection);
+
+  WebIDBDatabase* BackendDB() const;
+
+ private:
+  IDBIndex(RefPtr<IDBIndexMetadata>, IDBObjectStore*, IDBTransaction*);
+
+  const IDBIndexMetadata& Metadata() const { return *metadata_; }
+
+  IDBRequest* GetInternal(ScriptState*,
+                          const ScriptValue& key,
+                          ExceptionState&,
+                          bool key_only);
+  IDBRequest* GetAllInternal(ScriptState*,
+                             const ScriptValue& range,
+                             unsigned long max_count,
+                             ExceptionState&,
+                             bool key_only);
+
+  RefPtr<IDBIndexMetadata> metadata_;
+  Member<IDBObjectStore> object_store_;
+  Member<IDBTransaction> transaction_;
+  bool deleted_ = false;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IDBIndex_h
+#endif  // IDBIndex_h

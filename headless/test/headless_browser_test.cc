@@ -5,18 +5,23 @@
 #include "headless/test/headless_browser_test.h"
 
 #include "base/files/file_path.h"
+#include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/path_service.h"
 #include "base/run_loop.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "headless/lib/browser/headless_browser_impl.h"
+#include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/lib/headless_content_main_delegate.h"
-#include "headless/public/domains/runtime.h"
+#include "headless/public/devtools/domains/runtime.h"
 #include "headless/public/headless_devtools_client.h"
 #include "headless/public/headless_devtools_target.h"
 #include "headless/public/headless_web_contents.h"
+#include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size.h"
 #include "url/gurl.h"
 
@@ -118,6 +123,14 @@ void LoadObserver::OnResponseReceived(
 }
 
 HeadlessBrowserTest::HeadlessBrowserTest() {
+#if defined(OS_MACOSX)
+  // On Mac the source root is not set properly. We override it by assuming
+  // that is two directories up from the execution test file.
+  base::FilePath dir_exe_path;
+  CHECK(PathService::Get(base::DIR_EXE, &dir_exe_path));
+  dir_exe_path = dir_exe_path.Append("../../");
+  CHECK(PathService::Override(base::DIR_SOURCE_ROOT, dir_exe_path));
+#endif  // defined(OS_MACOSX)
   base::FilePath headless_test_data(FILE_PATH_LITERAL("headless/test/data"));
   CreateTestServer(headless_test_data);
 }
@@ -147,19 +160,21 @@ void HeadlessBrowserTest::RunTestOnMainThreadLoop() {
   }
 }
 
-void HeadlessBrowserTest::SetBrowserOptions(HeadlessBrowser::Options options) {
-  HeadlessContentMainDelegate::GetInstance()->browser()->SetOptionsForTesting(
-      std::move(options));
-}
-
 HeadlessBrowser* HeadlessBrowserTest::browser() const {
   return HeadlessContentMainDelegate::GetInstance()->browser();
 }
 
+HeadlessBrowser::Options* HeadlessBrowserTest::options() const {
+  return HeadlessContentMainDelegate::GetInstance()->browser()->options();
+}
+
 bool HeadlessBrowserTest::WaitForLoad(HeadlessWebContents* web_contents) {
-  SynchronousLoadObserver load_observer(this, web_contents);
-  RunAsynchronousTest();
-  return load_observer.navigation_succeeded();
+  HeadlessWebContentsImpl* web_contents_impl =
+      HeadlessWebContentsImpl::From(web_contents);
+  content::TestNavigationObserver observer(web_contents_impl->web_contents(),
+                                           1);
+  observer.Wait();
+  return observer.last_navigation_succeeded();
 }
 
 std::unique_ptr<runtime::EvaluateResult> HeadlessBrowserTest::EvaluateScript(
@@ -174,7 +189,7 @@ void HeadlessBrowserTest::RunAsynchronousTest() {
   base::MessageLoop::ScopedNestableTaskAllower nestable_allower(
       base::MessageLoop::current());
   EXPECT_FALSE(run_loop_);
-  run_loop_ = base::WrapUnique(new base::RunLoop());
+  run_loop_ = base::MakeUnique<base::RunLoop>();
   run_loop_->Run();
   run_loop_ = nullptr;
 }
@@ -184,8 +199,10 @@ void HeadlessBrowserTest::FinishAsynchronousTest() {
 }
 
 HeadlessAsyncDevTooledBrowserTest::HeadlessAsyncDevTooledBrowserTest()
-    : web_contents_(nullptr),
-      devtools_client_(HeadlessDevToolsClient::Create()) {}
+    : browser_context_(nullptr),
+      web_contents_(nullptr),
+      devtools_client_(HeadlessDevToolsClient::Create()),
+      render_process_exited_(false) {}
 
 HeadlessAsyncDevTooledBrowserTest::~HeadlessAsyncDevTooledBrowserTest() {}
 
@@ -195,16 +212,51 @@ void HeadlessAsyncDevTooledBrowserTest::DevToolsTargetReady() {
   RunDevTooledTest();
 }
 
+void HeadlessAsyncDevTooledBrowserTest::RenderProcessExited(
+    base::TerminationStatus status,
+    int exit_code) {
+  if (status == base::TERMINATION_STATUS_NORMAL_TERMINATION)
+    return;
+
+  FAIL() << "Abnormal renderer termination";
+  FinishAsynchronousTest();
+  render_process_exited_ = true;
+}
+
 void HeadlessAsyncDevTooledBrowserTest::RunTest() {
-  web_contents_ = browser()->CreateWebContentsBuilder().Build();
+  HeadlessBrowserContext::Builder builder =
+      browser()->CreateBrowserContextBuilder();
+  builder.SetProtocolHandlers(GetProtocolHandlers());
+  if (GetCreateTabSocket()) {
+    builder.EnableUnsafeNetworkAccessWithMojoBindings(true);
+    builder.AddTabSocketMojoBindings();
+  }
+  browser_context_ = builder.Build();
+
+  browser()->SetDefaultBrowserContext(browser_context_);
+
+  web_contents_ = browser_context_->CreateWebContentsBuilder()
+                      .CreateTabSocket(GetCreateTabSocket())
+                      .Build();
   web_contents_->AddObserver(this);
 
   RunAsynchronousTest();
 
-  web_contents_->GetDevToolsTarget()->DetachClient(devtools_client_.get());
+  if (!render_process_exited_)
+    web_contents_->GetDevToolsTarget()->DetachClient(devtools_client_.get());
   web_contents_->RemoveObserver(this);
   web_contents_->Close();
   web_contents_ = nullptr;
+  browser_context_->Close();
+  browser_context_ = nullptr;
+}
+
+ProtocolHandlerMap HeadlessAsyncDevTooledBrowserTest::GetProtocolHandlers() {
+  return ProtocolHandlerMap();
+}
+
+bool HeadlessAsyncDevTooledBrowserTest::GetCreateTabSocket() {
+  return false;
 }
 
 }  // namespace headless

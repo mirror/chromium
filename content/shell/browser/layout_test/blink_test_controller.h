@@ -26,6 +26,7 @@
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/web_preferences.h"
+#include "content/shell/common/layout_test.mojom.h"
 #include "content/shell/common/leak_detection_result.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -35,14 +36,10 @@
 
 class SkBitmap;
 
-namespace url {
-class Origin;
-}
-
 namespace content {
 
 class LayoutTestBluetoothChooserFactory;
-class LayoutTestDevToolsFrontend;
+class LayoutTestDevToolsBindings;
 class RenderFrameHost;
 class RenderProcessHost;
 class Shell;
@@ -88,6 +85,7 @@ class BlinkTestResultPrinter {
   void PrintAudioBlock(const std::vector<unsigned char>& audio_data);
   void PrintAudioFooter();
 
+  void AddMessageToStderr(const std::string& message);
   void AddMessage(const std::string& message);
   void AddMessageRaw(const std::string& message);
   void AddErrorMessage(const std::string& message);
@@ -183,6 +181,11 @@ class BlinkTestController : public base::NonThreadSafe,
   // GpuDataManagerObserver implementation.
   void OnGpuProcessCrashed(base::TerminationStatus exit_code) override;
 
+  const base::DictionaryValue& accumulated_layout_test_runtime_flags_changes()
+      const {
+    return accumulated_layout_test_runtime_flags_changes_;
+  }
+
  private:
   enum TestPhase {
     BETWEEN_TESTS,
@@ -200,6 +203,7 @@ class BlinkTestController : public base::NonThreadSafe,
   void OnTextDump(const std::string& dump);
   void OnInitiateLayoutDump();
   void OnLayoutDumpResponse(RenderFrameHost* sender, const std::string& dump);
+  void OnPrintMessageToStderr(const std::string& message);
   void OnPrintMessage(const std::string& message);
   void OnOverridePreferences(const WebPreferences& prefs);
   void OnTestFinished();
@@ -219,6 +223,8 @@ class BlinkTestController : public base::NonThreadSafe,
   void OnGetBluetoothManualChooserEvents();
   void OnSendBluetoothManualChooserEvent(const std::string& event,
                                          const std::string& argument);
+  mojom::LayoutTestControl* GetLayoutTestControlPtr(RenderFrameHost* frame);
+  void HandleLayoutTestControlError(RenderFrameHost* frame);
 
   std::unique_ptr<BlinkTestResultPrinter> printer_;
 
@@ -226,6 +232,9 @@ class BlinkTestController : public base::NonThreadSafe,
   base::FilePath temp_path_;
 
   Shell* main_window_;
+  Shell* devtools_window_;
+
+  std::unique_ptr<LayoutTestDevToolsBindings> devtools_bindings_;
 
   // The PID of the render process of the render view host of main_window_.
   int current_pid_;
@@ -262,8 +271,6 @@ class BlinkTestController : public base::NonThreadSafe,
   const bool is_leak_detection_enabled_;
   bool crash_when_leak_found_;
 
-  LayoutTestDevToolsFrontend* devtools_frontend_;
-
   std::unique_ptr<LayoutTestBluetoothChooserFactory> bluetooth_chooser_factory_;
 
   // Map from frame_tree_node_id into frame-specific dumps.
@@ -282,6 +289,9 @@ class BlinkTestController : public base::NonThreadSafe,
   // renderer created while test is in progress).
   base::DictionaryValue accumulated_layout_test_runtime_flags_changes_;
 
+  // Map from one frame to one mojo pipe.
+  std::map<RenderFrameHost*, mojom::LayoutTestControlAssociatedPtr>
+      layout_test_control_map_;
 #if defined(OS_ANDROID)
   // Because of the nested message pump implementation, Android needs to allow
   // waiting on the UI thread while layout tests are being ran.

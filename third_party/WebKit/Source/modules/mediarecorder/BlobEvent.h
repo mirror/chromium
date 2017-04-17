@@ -5,10 +5,11 @@
 #ifndef BlobEvent_h
 #define BlobEvent_h
 
+#include "core/dom/DOMHighResTimeStamp.h"
 #include "core/fileapi/Blob.h"
 #include "modules/EventModules.h"
 #include "modules/ModulesExport.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -16,29 +17,31 @@ class Blob;
 class BlobEventInit;
 
 class MODULES_EXPORT BlobEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~BlobEvent() override {}
+  DEFINE_WRAPPERTYPEINFO();
 
-    static BlobEvent* create();
-    static BlobEvent* create(const AtomicString& type, const BlobEventInit& initializer);
-    static BlobEvent* create(const AtomicString& type, Blob*);
+ public:
+  ~BlobEvent() override {}
 
-    Blob* data() const { return m_blob.get(); }
+  static BlobEvent* Create(const AtomicString& type,
+                           const BlobEventInit& initializer);
+  static BlobEvent* Create(const AtomicString& type, Blob*, double);
 
-    // Event
-    const AtomicString& interfaceName() const final;
+  Blob* data() const { return blob_.Get(); }
+  DOMHighResTimeStamp timecode() const { return timecode_; }
 
-    DECLARE_VIRTUAL_TRACE();
+  // Event
+  const AtomicString& InterfaceName() const final;
 
-private:
-    BlobEvent() {}
-    BlobEvent(const AtomicString& type, const BlobEventInit& initializer);
-    BlobEvent(const AtomicString& type, Blob*);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<Blob> m_blob;
+ private:
+  BlobEvent(const AtomicString& type, const BlobEventInit& initializer);
+  BlobEvent(const AtomicString& type, Blob*, double);
+
+  Member<Blob> blob_;
+  DOMHighResTimeStamp timecode_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BlobEvent_h
+#endif  // BlobEvent_h

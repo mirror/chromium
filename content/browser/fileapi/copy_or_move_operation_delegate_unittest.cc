@@ -17,11 +17,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/browser/quota/mock_quota_manager.h"
-#include "content/browser/quota/mock_quota_manager_proxy.h"
-#include "content/public/test/async_file_test_helper.h"
-#include "content/public/test/test_file_system_backend.h"
-#include "content/public/test/test_file_system_context.h"
 #include "content/test/fileapi_test_file_set.h"
 #include "storage/browser/fileapi/copy_or_move_file_validator.h"
 #include "storage/browser/fileapi/copy_or_move_operation_delegate.h"
@@ -32,6 +27,11 @@
 #include "storage/browser/fileapi/file_system_operation.h"
 #include "storage/browser/fileapi/file_system_url.h"
 #include "storage/browser/quota/quota_manager.h"
+#include "storage/browser/test/async_file_test_helper.h"
+#include "storage/browser/test/mock_quota_manager.h"
+#include "storage/browser/test/mock_quota_manager_proxy.h"
+#include "storage/browser/test/test_file_system_backend.h"
+#include "storage/browser/test/test_file_system_context.h"
 #include "storage/common/fileapi/file_system_mount_option.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -194,7 +194,7 @@ class CopyOrMoveOperationTestHelper {
   void SetUp(bool require_copy_or_move_validator,
              bool init_copy_or_move_validator) {
     ASSERT_TRUE(base_.CreateUniqueTempDir());
-    base::FilePath base_dir = base_.path();
+    base::FilePath base_dir = base_.GetPath();
     quota_manager_ =
         new MockQuotaManager(false /* is_incognito */, base_dir,
                              base::ThreadTaskRunnerHandle::Get().get(),
@@ -329,7 +329,7 @@ class CopyOrMoveOperationTestHelper {
         base::FilePath relative;
         root.virtual_path().AppendRelativePath(url.virtual_path(), &relative);
         relative = relative.NormalizePathSeparators();
-        ASSERT_TRUE(ContainsKey(test_case_map, relative));
+        ASSERT_TRUE(base::ContainsKey(test_case_map, relative));
         if (entries[i].is_directory) {
           EXPECT_TRUE(test_case_map[relative]->is_directory);
           directories.push(url);
@@ -723,8 +723,8 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, ProgressCallback) {
 TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelper) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  base::FilePath source_path = temp_dir.path().AppendASCII("source");
-  base::FilePath dest_path = temp_dir.path().AppendASCII("dest");
+  base::FilePath source_path = temp_dir.GetPath().AppendASCII("source");
+  base::FilePath dest_path = temp_dir.GetPath().AppendASCII("dest");
   const char kTestData[] = "abcdefghijklmnopqrstuvwxyz0123456789";
   base::WriteFile(source_path, kTestData,
                   arraysize(kTestData) - 1);  // Exclude trailing '\0'.
@@ -778,8 +778,8 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelperWithFlush) {
   // written with or without the flag.
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  base::FilePath source_path = temp_dir.path().AppendASCII("source");
-  base::FilePath dest_path = temp_dir.path().AppendASCII("dest");
+  base::FilePath source_path = temp_dir.GetPath().AppendASCII("source");
+  base::FilePath dest_path = temp_dir.GetPath().AppendASCII("dest");
   const char kTestData[] = "abcdefghijklmnopqrstuvwxyz0123456789";
   base::WriteFile(source_path, kTestData,
                   arraysize(kTestData) - 1);  // Exclude trailing '\0'.
@@ -830,8 +830,8 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelperWithFlush) {
 TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelper_Cancel) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  base::FilePath source_path = temp_dir.path().AppendASCII("source");
-  base::FilePath dest_path = temp_dir.path().AppendASCII("dest");
+  base::FilePath source_path = temp_dir.GetPath().AppendASCII("source");
+  base::FilePath dest_path = temp_dir.GetPath().AppendASCII("dest");
   const char kTestData[] = "abcdefghijklmnopqrstuvwxyz0123456789";
   base::WriteFile(source_path, kTestData,
                   arraysize(kTestData) - 1);  // Exclude trailing '\0'.

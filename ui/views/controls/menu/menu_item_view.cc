@@ -8,11 +8,9 @@
 
 #include "base/i18n/case_conversion.h"
 #include "base/macros.h"
-#include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/models/menu_model.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_utils.h"
@@ -155,30 +153,30 @@ bool MenuItemView::GetTooltipText(const gfx::Point& p,
   return !tooltip->empty();
 }
 
-void MenuItemView::GetAccessibleState(ui::AXViewState* state) {
-  state->role = ui::AX_ROLE_MENU_ITEM;
+void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  node_data->role = ui::AX_ROLE_MENU_ITEM;
 
   base::string16 item_text;
   if (IsContainer()) {
     // The first child is taking over, just use its accessible name instead of
     // |title_|.
     View* child = child_at(0);
-    ui::AXViewState state;
-    child->GetAccessibleState(&state);
-    item_text = state.name;
+    ui::AXNodeData node_data;
+    child->GetAccessibleNodeData(&node_data);
+    item_text = node_data.GetString16Attribute(ui::AX_ATTR_NAME);
   } else {
     item_text = title_;
   }
-  state->name = GetAccessibleNameForMenuItem(item_text, GetMinorText());
+  node_data->SetName(GetAccessibleNameForMenuItem(item_text, GetMinorText()));
 
   switch (GetType()) {
     case SUBMENU:
-      state->AddStateFlag(ui::AX_STATE_HASPOPUP);
+      node_data->AddStateFlag(ui::AX_STATE_HASPOPUP);
       break;
     case CHECKBOX:
     case RADIO:
       if (GetDelegate()->IsItemChecked(GetCommand()))
-        state->AddStateFlag(ui::AX_STATE_CHECKED);
+        node_data->AddStateFlag(ui::AX_STATE_CHECKED);
       break;
     case NORMAL:
     case SEPARATOR:
@@ -437,11 +435,11 @@ const MenuItemView::MenuItemDimensions& MenuItemView::GetDimensions() const {
 }
 
 MenuController* MenuItemView::GetMenuController() {
-  return GetRootMenuItem()->controller_;
+  return GetRootMenuItem()->controller_.get();
 }
 
 const MenuController* MenuItemView::GetMenuController() const {
-  return GetRootMenuItem()->controller_;
+  return GetRootMenuItem()->controller_.get();
 }
 
 MenuDelegate* MenuItemView::GetDelegate() {
@@ -526,7 +524,9 @@ void MenuItemView::ChildrenChanged() {
     }
   }
 
-  STLDeleteElements(&removed_items_);
+  for (auto* item : removed_items_)
+    delete item;
+  removed_items_.clear();
 }
 
 void MenuItemView::Layout() {
@@ -599,7 +599,8 @@ MenuItemView::MenuItemView(MenuItemView* parent,
 
 MenuItemView::~MenuItemView() {
   delete submenu_;
-  STLDeleteElements(&removed_items_);
+  for (auto* item : removed_items_)
+    delete item;
 }
 
 const char* MenuItemView::GetClassName() const {
@@ -752,16 +753,13 @@ void MenuItemView::PaintButton(gfx::Canvas* canvas, PaintButtonMode mode) {
        (NonIconChildViewsCount() == 0));
 
   MenuDelegate *delegate = GetDelegate();
+  bool emphasized =
+      delegate && delegate->GetShouldUseNormalForegroundColor(GetCommand());
   // Render the background. As MenuScrollViewContainer draws the background, we
   // only need the background when we want it to look different, as when we're
   // selected.
   ui::NativeTheme* native_theme = GetNativeTheme();
-  SkColor override_color;
-  if (delegate && delegate->GetBackgroundColor(GetCommand(),
-                                               render_selection,
-                                               &override_color)) {
-    canvas->DrawColor(override_color);
-  } else if (render_selection) {
+  if (render_selection) {
     gfx::Rect item_bounds(0, 0, width(), height());
     AdjustBoundsForRTLUI(&item_bounds);
 
@@ -778,30 +776,8 @@ void MenuItemView::PaintButton(gfx::Canvas* canvas, PaintButtonMode mode) {
   const int available_height = height() - top_margin - bottom_margin;
 
   // Calculate some colors.
-  ui::NativeTheme::ColorId color_id;
-  if (enabled()) {
-    color_id = render_selection ?
-        ui::NativeTheme::kColorId_SelectedMenuItemForegroundColor:
-        ui::NativeTheme::kColorId_EnabledMenuItemForegroundColor;
-  } else {
-    bool emphasized = delegate &&
-                      delegate->GetShouldUseDisabledEmphasizedForegroundColor(
-                          GetCommand());
-    color_id = emphasized ?
-        ui::NativeTheme::kColorId_DisabledEmphasizedMenuItemForegroundColor :
-        ui::NativeTheme::kColorId_DisabledMenuItemForegroundColor;
-  }
-  SkColor fg_color = native_theme->GetSystemColor(color_id);
-  SkColor override_foreground_color;
-  if (delegate && delegate->GetForegroundColor(GetCommand(),
-                                               render_selection,
-                                               &override_foreground_color)) {
-    fg_color = override_foreground_color;
-  }
-  SkColor icon_color =
-      render_selection && !ui::MaterialDesignController::IsModeMaterial()
-          ? fg_color
-          : color_utils::DeriveDefaultIconColor(fg_color);
+  SkColor fg_color = GetTextColor(false, render_selection, emphasized);
+  SkColor icon_color = color_utils::DeriveDefaultIconColor(fg_color);
 
   // Render the check.
   if (type_ == CHECKBOX && delegate->IsItemChecked(GetCommand())) {
@@ -848,12 +824,12 @@ void MenuItemView::PaintButton(gfx::Canvas* canvas, PaintButtonMode mode) {
         subtitle_,
         font_list,
         GetNativeTheme()->GetSystemColor(
-            ui::NativeTheme::kColorId_ButtonDisabledColor),
+            ui::NativeTheme::kColorId_MenuItemSubtitleColor),
         text_bounds + gfx::Vector2d(0, font_list.GetHeight()),
         flags);
   }
 
-  PaintMinorText(canvas, render_selection);
+  PaintMinorText(canvas, GetTextColor(true, render_selection, emphasized));
 
   // Render the submenu indicator (arrow).
   if (HasSubmenu()) {
@@ -868,8 +844,7 @@ void MenuItemView::PaintButton(gfx::Canvas* canvas, PaintButtonMode mode) {
   }
 }
 
-void MenuItemView::PaintMinorText(gfx::Canvas* canvas,
-                                  bool render_selection) {
+void MenuItemView::PaintMinorText(gfx::Canvas* canvas, SkColor color) {
   base::string16 minor_text = GetMinorText();
   if (minor_text.empty())
     return;
@@ -889,14 +864,24 @@ void MenuItemView::PaintMinorText(gfx::Canvas* canvas,
     flags |= gfx::Canvas::TEXT_ALIGN_LEFT;
   else
     flags |= gfx::Canvas::TEXT_ALIGN_RIGHT;
-  canvas->DrawStringRectWithFlags(
-      minor_text,
-      GetFontList(),
-      GetNativeTheme()->GetSystemColor(render_selection ?
-          ui::NativeTheme::kColorId_SelectedMenuItemForegroundColor :
-          ui::NativeTheme::kColorId_ButtonDisabledColor),
-      accel_bounds,
-      flags);
+  canvas->DrawStringRectWithFlags(minor_text, GetFontList(), color,
+                                  accel_bounds, flags);
+}
+
+SkColor MenuItemView::GetTextColor(bool minor,
+                                   bool render_selection,
+                                   bool emphasized) const {
+  ui::NativeTheme::ColorId color_id =
+      minor ? ui::NativeTheme::kColorId_MenuItemSubtitleColor
+            : ui::NativeTheme::kColorId_EnabledMenuItemForegroundColor;
+  if (enabled()) {
+    if (render_selection)
+      color_id = ui::NativeTheme::kColorId_SelectedMenuItemForegroundColor;
+  } else {
+    if (!emphasized)
+      color_id = ui::NativeTheme::kColorId_DisabledMenuItemForegroundColor;
+  }
+  return GetNativeTheme()->GetSystemColor(color_id);
 }
 
 void MenuItemView::DestroyAllMenuHosts() {

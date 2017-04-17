@@ -24,7 +24,7 @@ import devil_chromium
 from pylib import constants
 
 def DoPush(options):
-  libraries = build_utils.ParseGypList(options.libraries)
+  libraries = build_utils.ParseGnList(options.libraries)
 
   device = build_device.GetBuildDeviceFromPath(
       options.build_device_configuration)
@@ -40,7 +40,8 @@ def DoPush(options):
 
     def Push():
       if needs_directory:
-        device.RunShellCommand('mkdir -p ' + options.device_dir)
+        device.RunShellCommand(
+            ['mkdir', '-p', options.device_dir], check_return=True)
         needs_directory[:] = [] # = False
       device.PushChangedFiles([(os.path.abspath(host_path), device_path)])
 

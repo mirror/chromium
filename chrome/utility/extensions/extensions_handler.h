@@ -8,45 +8,42 @@
 #include <stdint.h>
 
 #include "base/base64.h"
-#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/common/media_galleries/picasa_types.h"
 #include "chrome/utility/utility_message_handler.h"
+#include "extensions/features/features.h"
 #include "extensions/utility/utility_handler.h"
 
-#if !defined(ENABLE_EXTENSIONS)
+#if !BUILDFLAG(ENABLE_EXTENSIONS)
 #error "Extensions must be enabled"
 #endif
 
-class ChromeContentUtilityClient;
-
-namespace metadata {
-class MediaMetadataParser;
+namespace service_manager {
+class InterfaceRegistry;
 }
 
 namespace extensions {
 
 // Dispatches IPCs for Chrome extensions utility messages.
+// Note: these IPC are deprecated so there is no need to convert
+// them to mojo. https://crbug.com/680928
 class ExtensionsHandler : public UtilityMessageHandler {
  public:
-  explicit ExtensionsHandler(ChromeContentUtilityClient* utility_client);
+  ExtensionsHandler();
   ~ExtensionsHandler() override;
 
   static void PreSandboxStartup();
+
+  static void ExposeInterfacesToBrowser(
+      service_manager::InterfaceRegistry* registry,
+      bool running_elevated);
 
   // UtilityMessageHandler:
   bool OnMessageReceived(const IPC::Message& message) override;
 
  private:
   // IPC message handlers.
-  void OnCheckMediaFile(int64_t milliseconds_of_decoding,
-                        const IPC::PlatformFileForTransit& media_file);
-
-  void OnParseMediaMetadata(const std::string& mime_type,
-                            int64_t total_size,
-                            bool get_attached_images);
-
 #if defined(OS_WIN)
   void OnParseITunesPrefXml(const std::string& itunes_xml_data);
 #endif  // defined(OS_WIN)
@@ -62,15 +59,6 @@ class ExtensionsHandler : public UtilityMessageHandler {
       const picasa::AlbumUIDSet& album_uids,
       const std::vector<picasa::FolderINIContents>& folders_inis);
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
-
-#if defined(OS_WIN)
-  void OnGetWiFiCredentials(const std::string& network_guid);
-#endif  // defined(OS_WIN)
-
-  UtilityHandler utility_handler_;
-
-  // The client that owns this.
-  ChromeContentUtilityClient* const utility_client_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionsHandler);
 };

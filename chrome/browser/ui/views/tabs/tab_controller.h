@@ -5,14 +5,20 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_TABS_TAB_CONTROLLER_H_
 #define CHROME_BROWSER_UI_VIEWS_TABS_TAB_CONTROLLER_H_
 
+#include "base/callback_forward.h"
 #include "chrome/browser/ui/views/tabs/tab_strip_types.h"
+#include "third_party/skia/include/core/SkColor.h"
+#include "ui/base/ui_base_types.h"
 
 class Tab;
 
 namespace gfx {
+class Path;
 class Point;
+class Size;
 }
 namespace ui {
+struct AXNodeData;
 class ListSelectionModel;
 class LocatedEvent;
 class MouseEvent;
@@ -32,6 +38,9 @@ class TabController {
   // Returns true if we should force the close buttons of the inactive tabs
   // to be hidden.
   virtual bool ShouldHideCloseButtonForInactiveTabs() = 0;
+
+  // Returns true if ShouldPaintTab() could return a non-empty clip path.
+  virtual bool MaySetClip() = 0;
 
   // Selects the tab.
   virtual void SelectTab(Tab* tab) = 0;
@@ -88,18 +97,21 @@ class TabController {
   virtual void OnMouseEventInTab(views::View* source,
                                  const ui::MouseEvent& event) = 0;
 
-  // Returns true if |tab| needs to be painted. If false is returned the tab is
-  // not painted. If true is returned the tab should be painted and |clip| is
-  // set to the clip (if |clip| is empty means no clip).
-  virtual bool ShouldPaintTab(const Tab* tab, gfx::Rect* clip) = 0;
+  // Returns whether |tab| needs to be painted. When this returns true, |clip|
+  // is set to the path which should be clipped out of the current tab's region
+  // (for hit testing or painting), if any.  |clip| is only non-empty when
+  // stacking tabs; if it is empty, no clipping is needed.  |border_callback| is
+  // a callback which returns a tab's border given its size, and is used in
+  // computing |clip|.
+  virtual bool ShouldPaintTab(
+      const Tab* tab,
+      const base::Callback<gfx::Path(const gfx::Size&)>& border_callback,
+      gfx::Path* clip) = 0;
 
   // Returns true if tab loading throbbers can be painted to a composited layer.
   // This can only be done when the TabController can guarantee that nothing
   // in the same window will redraw on top of the the favicon area of any tab.
   virtual bool CanPaintThrobberToLayer() const = 0;
-
-  // Returns true if tabs should be painted in the rectangular light-bar style.
-  virtual bool IsImmersiveStyle() const = 0;
 
   // Returns COLOR_TOOLBAR_TOP_SEPARATOR[,_INACTIVE] depending on the activation
   // state of the window.
@@ -112,7 +124,10 @@ class TabController {
 
   // Adds private information to the tab's accessibility state.
   virtual void UpdateTabAccessibilityState(const Tab* tab,
-                                           ui::AXViewState* state) = 0;
+                                           ui::AXNodeData* node_data) = 0;
+
+  // Returns the accessible tab name for this tab.
+  virtual base::string16 GetAccessibleTabName(const Tab* tab) const = 0;
 
  protected:
   virtual ~TabController() {}

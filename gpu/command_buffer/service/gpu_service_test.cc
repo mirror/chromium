@@ -6,7 +6,7 @@
 
 #include "gpu/command_buffer/service/test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "ui/gl/gl_context_stub_with_extensions.h"
+#include "ui/gl/gl_context_stub.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_mock.h"
 #include "ui/gl/gl_surface_stub.h"
@@ -16,8 +16,7 @@
 namespace gpu {
 namespace gles2 {
 
-GpuServiceTest::GpuServiceTest() : ran_setup_(false), ran_teardown_(false) {
-}
+GpuServiceTest::GpuServiceTest() : ran_setup_(false), ran_teardown_(false) {}
 
 GpuServiceTest::~GpuServiceTest() {
   DCHECK(ran_teardown_);
@@ -32,8 +31,8 @@ void GpuServiceTest::SetUpWithGLVersion(const char* gl_version,
   gl_.reset(new ::testing::StrictMock<::gl::MockGLInterface>());
   ::gl::MockGLInterface::SetGLInterface(gl_.get());
 
-  context_ = new gl::GLContextStubWithExtensions;
-  context_->AddExtensionsString(gl_extensions);
+  context_ = new gl::GLContextStub;
+  context_->SetExtensionsString(gl_extensions);
   context_->SetGLVersionString(gl_version);
   surface_ = new gl::GLSurfaceStub;
   context_->MakeCurrent(surface_.get());
@@ -50,7 +49,7 @@ void GpuServiceTest::TearDown() {
   surface_ = nullptr;
   ::gl::MockGLInterface::SetGLInterface(NULL);
   gl_.reset();
-  gl::init::ClearGLBindings();
+  gl::init::ShutdownGL();
   ran_teardown_ = true;
 
   testing::Test::TearDown();

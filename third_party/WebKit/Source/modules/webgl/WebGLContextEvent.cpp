@@ -27,35 +27,29 @@
 
 namespace blink {
 
-WebGLContextEvent::WebGLContextEvent()
-{
+WebGLContextEvent::WebGLContextEvent() {}
+
+WebGLContextEvent::WebGLContextEvent(const AtomicString& type,
+                                     bool can_bubble,
+                                     bool cancelable,
+                                     const String& status_message)
+    : Event(type, can_bubble, cancelable), status_message_(status_message) {}
+
+WebGLContextEvent::WebGLContextEvent(const AtomicString& type,
+                                     const WebGLContextEventInit& initializer)
+    : Event(type, initializer) {
+  if (initializer.hasStatusMessage())
+    status_message_ = initializer.statusMessage();
 }
 
-WebGLContextEvent::WebGLContextEvent(const AtomicString& type, bool canBubble, bool cancelable, const String& statusMessage)
-    : Event(type, canBubble, cancelable)
-    , m_statusMessage(statusMessage)
-{
+WebGLContextEvent::~WebGLContextEvent() {}
+
+const AtomicString& WebGLContextEvent::InterfaceName() const {
+  return EventNames::WebGLContextEvent;
 }
 
-WebGLContextEvent::WebGLContextEvent(const AtomicString& type, const WebGLContextEventInit& initializer)
-    : Event(type, initializer)
-{
-    if (initializer.hasStatusMessage())
-        m_statusMessage = initializer.statusMessage();
+DEFINE_TRACE(WebGLContextEvent) {
+  Event::Trace(visitor);
 }
 
-WebGLContextEvent::~WebGLContextEvent()
-{
-}
-
-const AtomicString& WebGLContextEvent::interfaceName() const
-{
-    return EventNames::WebGLContextEvent;
-}
-
-DEFINE_TRACE(WebGLContextEvent)
-{
-    Event::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

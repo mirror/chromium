@@ -29,60 +29,73 @@
 
 namespace blink {
 
-WebGLObject::WebGLObject(WebGLRenderingContextBase*)
-    : m_attachmentCount(0)
-    , m_deleted(false)
-{
+WebGLObject::WebGLObject(WebGLRenderingContextBase* context)
+    : cached_number_of_context_losses_(context->NumberOfContextLosses()),
+      attachment_count_(0),
+      deleted_(false),
+      destruction_in_progress_(false) {}
+
+WebGLObject::~WebGLObject() {}
+
+uint32_t WebGLObject::CachedNumberOfContextLosses() const {
+  return cached_number_of_context_losses_;
 }
 
-WebGLObject::~WebGLObject()
-{
-    // Verify that platform objects have been explicitly deleted.
-    ASSERT(m_deleted);
-}
+void WebGLObject::DeleteObject(gpu::gles2::GLES2Interface* gl) {
+  deleted_ = true;
+  if (!HasObject())
+    return;
 
-void WebGLObject::deleteObject(gpu::gles2::GLES2Interface* gl)
-{
-    m_deleted = true;
-    if (!hasObject())
-        return;
+  if (!HasGroupOrContext())
+    return;
 
-    if (!hasGroupOrContext())
-        return;
+  if (CurrentNumberOfContextLosses() != cached_number_of_context_losses_) {
+    // This object has been invalidated.
+    return;
+  }
 
-    if (!m_attachmentCount) {
-        if (!gl)
-            gl = getAGLInterface();
-        if (gl) {
-            deleteObjectImpl(gl);
-            // Ensure the inherited class no longer claims to have a valid object
-            ASSERT(!hasObject());
-        }
+  if (!attachment_count_) {
+    if (!gl)
+      gl = GetAGLInterface();
+    if (gl) {
+      DeleteObjectImpl(gl);
+      // Ensure the inherited class no longer claims to have a valid object
+      ASSERT(!HasObject());
     }
+  }
 }
 
-void WebGLObject::detach()
-{
-    m_attachmentCount = 0; // Make sure OpenGL resource is deleted.
+void WebGLObject::Detach() {
+  attachment_count_ = 0;  // Make sure OpenGL resource is deleted.
 }
 
-void WebGLObject::detachAndDeleteObject()
-{
-    // To ensure that all platform objects are deleted after being detached,
-    // this method does them together.
-    //
-    // The individual WebGL destructors need to call detachAndDeleteObject()
-    // rather than do it based on Oilpan GC.
-    detach();
-    deleteObject(nullptr);
+void WebGLObject::DetachAndDeleteObject() {
+  // To ensure that all platform objects are deleted after being detached,
+  // this method does them together.
+  Detach();
+  DeleteObject(nullptr);
 }
 
-void WebGLObject::onDetached(gpu::gles2::GLES2Interface* gl)
-{
-    if (m_attachmentCount)
-        --m_attachmentCount;
-    if (m_deleted)
-        deleteObject(gl);
+void WebGLObject::RunDestructor() {
+  DCHECK(!destruction_in_progress_);
+  // This boilerplate destructor is sufficient for all subclasses, as long
+  // as they implement deleteObjectImpl properly, and don't try to touch
+  // other objects on the Oilpan heap if the destructor's been entered.
+  destruction_in_progress_ = true;
+  DetachAndDeleteObject();
 }
 
-} // namespace blink
+bool WebGLObject::DestructionInProgress() const {
+  return destruction_in_progress_;
+}
+
+void WebGLObject::OnDetached(gpu::gles2::GLES2Interface* gl) {
+  if (attachment_count_)
+    --attachment_count_;
+  if (deleted_)
+    DeleteObject(gl);
+}
+
+DEFINE_TRACE_WRAPPERS(WebGLObject) {}
+
+}  // namespace blink

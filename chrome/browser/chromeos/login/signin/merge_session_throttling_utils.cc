@@ -41,14 +41,15 @@ class ProfileSet : public base::NonThreadSafe, public std::set<Profile*> {
   static ProfileSet* Get();
 
  private:
-  friend struct ::base::DefaultLazyInstanceTraits<ProfileSet>;
+  friend struct ::base::LazyInstanceTraitsBase<ProfileSet>;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileSet);
 };
 
 // Set of all of profiles for which restore session is in progress.
 // This static member is accessible only form UI thread.
-base::LazyInstance<ProfileSet> g_blocked_profiles = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<ProfileSet>::DestructorAtExit g_blocked_profiles =
+    LAZY_INSTANCE_INITIALIZER;
 
 ProfileSet* ProfileSet::Get() {
   return g_blocked_profiles.Pointer();
@@ -182,6 +183,29 @@ bool ShouldDelayUrl(const GURL& url) {
          !AreAllSessionMergedAlready() &&
          google_util::IsGoogleHostname(url.host_piece(),
                                        google_util::ALLOW_SUBDOMAIN);
+}
+
+bool IsSessionRestorePending(Profile* profile) {
+  if (!profile)
+    return false;
+
+  chromeos::OAuth2LoginManager* login_manager =
+      chromeos::OAuth2LoginManagerFactory::GetInstance()->GetForProfile(
+          profile);
+  bool pending_session_restore = false;
+  if (login_manager) {
+    switch (login_manager->state()) {
+      case chromeos::OAuth2LoginManager::SESSION_RESTORE_PREPARING:
+      case chromeos::OAuth2LoginManager::SESSION_RESTORE_IN_PROGRESS:
+        pending_session_restore = true;
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  return pending_session_restore;
 }
 
 }  // namespace merge_session_throttling_utils

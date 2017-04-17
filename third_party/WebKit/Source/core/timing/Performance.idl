@@ -35,8 +35,7 @@
 // would allow the WorkerPerformance interface to be merged into this.
 // TODO(foolip): None of the optional DOMString arguments in this interface
 // should have a default value.
-[
-] interface Performance : EventTarget {
+interface Performance : EventTarget {
     DOMHighResTimeStamp now();
 
     // Performance Timeline
@@ -51,11 +50,6 @@
     void clearResourceTimings();
     void setResourceTimingBufferSize(unsigned long maxSize);
     attribute EventHandler onresourcetimingbufferfull;
-
-    // TODO(ksakamoto): Remove these prefixed APIs.
-    [DeprecateAs=PrefixedPerformanceClearResourceTimings, ImplementedAs=clearResourceTimings] void webkitClearResourceTimings();
-    [DeprecateAs=PrefixedPerformanceSetResourceTimingBufferSize, ImplementedAs=setResourceTimingBufferSize] void webkitSetResourceTimingBufferSize(unsigned long maxSize);
-    [DeprecateAs=PrefixedPerformanceResourceTimingBufferFull] attribute EventHandler onwebkitresourcetimingbufferfull;
 
     // Navigation Timing
     // https://w3c.github.io/navigation-timing/#extensions-to-the-performance-interface
@@ -79,4 +73,6 @@
     // TODO(foolip): There is no spec for the Memory Info API, see blink-dev:
     // https://groups.google.com/a/chromium.org/d/msg/blink-dev/g5YRCGpC9vs/b4OJz71NmPwJ
     [Measure] readonly attribute MemoryInfo memory;
+
+    serializer = {attribute};
 };

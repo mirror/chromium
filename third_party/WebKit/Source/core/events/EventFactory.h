@@ -26,12 +26,12 @@
 #ifndef EventFactory_h
 #define EventFactory_h
 
-#include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/text/AtomicString.h"
 #include <memory>
+#include "platform/heap/Handle.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -39,25 +39,25 @@ class Event;
 class ExecutionContext;
 
 class EventFactoryBase {
-    USING_FAST_MALLOC(EventFactoryBase);
-public:
-    virtual Event* create(ExecutionContext*, const String& eventType) = 0;
-    virtual ~EventFactoryBase() { }
+  USING_FAST_MALLOC(EventFactoryBase);
 
-protected:
-    EventFactoryBase() { }
+ public:
+  virtual Event* Create(ExecutionContext*, const String& event_type) = 0;
+  virtual ~EventFactoryBase() {}
+
+ protected:
+  EventFactoryBase() {}
 };
 
 class EventFactory final : public EventFactoryBase {
-public:
-    static std::unique_ptr<EventFactory> create()
-    {
-        return wrapUnique(new EventFactory());
-    }
+ public:
+  static std::unique_ptr<EventFactory> Create() {
+    return WTF::MakeUnique<EventFactory>();
+  }
 
-    Event* create(ExecutionContext*, const String& eventType) override;
+  Event* Create(ExecutionContext*, const String& event_type) override;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

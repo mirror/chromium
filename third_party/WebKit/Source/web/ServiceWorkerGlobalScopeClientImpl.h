@@ -38,50 +38,102 @@
 
 namespace blink {
 
+struct WebPaymentAppResponse;
 class WebServiceWorkerContextClient;
 class WebServiceWorkerResponse;
 class WebURL;
 
-class ServiceWorkerGlobalScopeClientImpl final : public GarbageCollectedFinalized<ServiceWorkerGlobalScopeClientImpl>, public ServiceWorkerGlobalScopeClient {
-    USING_GARBAGE_COLLECTED_MIXIN(ServiceWorkerGlobalScopeClientImpl);
-public:
-    static ServiceWorkerGlobalScopeClient* create(WebServiceWorkerContextClient&);
-    ~ServiceWorkerGlobalScopeClientImpl() override;
+class ServiceWorkerGlobalScopeClientImpl final
+    : public GarbageCollectedFinalized<ServiceWorkerGlobalScopeClientImpl>,
+      public ServiceWorkerGlobalScopeClient {
+  USING_GARBAGE_COLLECTED_MIXIN(ServiceWorkerGlobalScopeClientImpl);
 
-    void getClient(const WebString&, WebServiceWorkerClientCallbacks*) override;
-    void getClients(const WebServiceWorkerClientQueryOptions&, WebServiceWorkerClientsCallbacks*) override;
-    void openWindow(const WebURL&, WebServiceWorkerClientCallbacks*) override;
-    void setCachedMetadata(const WebURL&, const char*, size_t) override;
-    void clearCachedMetadata(const WebURL&) override;
+ public:
+  static ServiceWorkerGlobalScopeClient* Create(WebServiceWorkerContextClient&);
+  ~ServiceWorkerGlobalScopeClientImpl() override;
 
-    WebURL scope() const override;
+  void GetClient(const WebString&,
+                 std::unique_ptr<WebServiceWorkerClientCallbacks>) override;
+  void GetClients(const WebServiceWorkerClientQueryOptions&,
+                  std::unique_ptr<WebServiceWorkerClientsCallbacks>) override;
+  void OpenWindow(const WebURL&,
+                  std::unique_ptr<WebServiceWorkerClientCallbacks>) override;
+  void SetCachedMetadata(const WebURL&, const char*, size_t) override;
+  void ClearCachedMetadata(const WebURL&) override;
 
-    void didHandleActivateEvent(int eventID, WebServiceWorkerEventResult) override;
-    void didHandleExtendableMessageEvent(int eventID, WebServiceWorkerEventResult) override;
-    void respondToFetchEvent(int responseID) override;
-    void respondToFetchEvent(int responseID, const WebServiceWorkerResponse&) override;
-    void didHandleFetchEvent(int eventFinishID, WebServiceWorkerEventResult) override;
-    void didHandleInstallEvent(int installEventID, WebServiceWorkerEventResult) override;
-    void didHandleNotificationClickEvent(int eventID, WebServiceWorkerEventResult) override;
-    void didHandleNotificationCloseEvent(int eventID, WebServiceWorkerEventResult) override;
-    void didHandlePushEvent(int pushEventID, WebServiceWorkerEventResult) override;
-    void didHandleSyncEvent(int syncEventID, WebServiceWorkerEventResult) override;
-    void postMessageToClient(const WebString& clientUUID, const WebString& message, std::unique_ptr<WebMessagePortChannelArray>) override;
-    void postMessageToCrossOriginClient(const WebCrossOriginServiceWorkerClient&, const WebString& message, std::unique_ptr<WebMessagePortChannelArray>) override;
-    void skipWaiting(WebServiceWorkerSkipWaitingCallbacks*) override;
-    void claim(WebServiceWorkerClientsClaimCallbacks*) override;
-    void focus(const WebString& clientUUID, WebServiceWorkerClientCallbacks*) override;
-    void navigate(const WebString& clientUUID, const WebURL&, WebServiceWorkerClientCallbacks*) override;
-    void registerForeignFetchScopes(const WebVector<WebURL>& subScopes, const WebVector<WebSecurityOrigin>&) override;
+  WebURL Scope() const override;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { ServiceWorkerGlobalScopeClient::trace(visitor); }
+  void DidHandleActivateEvent(int event_id,
+                              WebServiceWorkerEventResult,
+                              double event_dispatch_time) override;
+  void DidHandleBackgroundFetchAbortEvent(int event_id,
+                                          WebServiceWorkerEventResult,
+                                          double event_dispatch_time) override;
+  void DidHandleBackgroundFetchClickEvent(int event_id,
+                                          WebServiceWorkerEventResult,
+                                          double event_dispatch_time) override;
+  void DidHandleBackgroundFetchFailEvent(int event_id,
+                                         WebServiceWorkerEventResult,
+                                         double event_dispatch_time) override;
+  void DidHandleBackgroundFetchedEvent(int event_id,
+                                       WebServiceWorkerEventResult,
+                                       double event_dispatch_time) override;
+  void DidHandleExtendableMessageEvent(int event_id,
+                                       WebServiceWorkerEventResult,
+                                       double event_dispatch_time) override;
+  void RespondToFetchEvent(int response_id,
+                           double event_dispatch_time) override;
+  void RespondToFetchEvent(int response_id,
+                           const WebServiceWorkerResponse&,
+                           double event_dispatch_time) override;
+  void RespondToPaymentRequestEvent(int response_id,
+                                    const WebPaymentAppResponse&,
+                                    double event_dispatch_time) override;
+  void DidHandleFetchEvent(int fetch_event_id,
+                           WebServiceWorkerEventResult,
+                           double event_dispatch_time) override;
+  void DidHandleInstallEvent(int install_event_id,
+                             WebServiceWorkerEventResult,
+                             double event_dispatch_time) override;
+  void DidHandleNotificationClickEvent(int event_id,
+                                       WebServiceWorkerEventResult,
+                                       double event_dispatch_time) override;
+  void DidHandleNotificationCloseEvent(int event_id,
+                                       WebServiceWorkerEventResult,
+                                       double event_dispatch_time) override;
+  void DidHandlePushEvent(int push_event_id,
+                          WebServiceWorkerEventResult,
+                          double event_dispatch_time) override;
+  void DidHandleSyncEvent(int sync_event_id,
+                          WebServiceWorkerEventResult,
+                          double event_dispatch_time) override;
+  void DidHandlePaymentRequestEvent(int payment_request_event_id,
+                                    WebServiceWorkerEventResult,
+                                    double event_dispatch_time) override;
+  void PostMessageToClient(const WebString& client_uuid,
+                           const WebString& message,
+                           WebMessagePortChannelArray) override;
+  void SkipWaiting(
+      std::unique_ptr<WebServiceWorkerSkipWaitingCallbacks>) override;
+  void Claim(std::unique_ptr<WebServiceWorkerClientsClaimCallbacks>) override;
+  void Focus(const WebString& client_uuid,
+             std::unique_ptr<WebServiceWorkerClientCallbacks>) override;
+  void Navigate(const WebString& client_uuid,
+                const WebURL&,
+                std::unique_ptr<WebServiceWorkerClientCallbacks>) override;
+  void RegisterForeignFetchScopes(const WebVector<WebURL>& sub_scopes,
+                                  const WebVector<WebSecurityOrigin>&) override;
 
-private:
-    explicit ServiceWorkerGlobalScopeClientImpl(WebServiceWorkerContextClient&);
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    ServiceWorkerGlobalScopeClient::Trace(visitor);
+  }
 
-    WebServiceWorkerContextClient& m_client;
+ private:
+  explicit ServiceWorkerGlobalScopeClientImpl(WebServiceWorkerContextClient&);
+
+  WebServiceWorkerContextClient& client_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ServiceWorkerGlobalScopeClientImpl_h
+#endif  // ServiceWorkerGlobalScopeClientImpl_h

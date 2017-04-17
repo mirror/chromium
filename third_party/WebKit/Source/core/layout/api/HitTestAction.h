@@ -8,13 +8,13 @@
 namespace blink {
 
 enum HitTestAction {
-    HitTestBlockBackground,
-    HitTestChildBlockBackground,
-    HitTestChildBlockBackgrounds,
-    HitTestFloat,
-    HitTestForeground
+  kHitTestBlockBackground,
+  kHitTestChildBlockBackground,
+  kHitTestChildBlockBackgrounds,
+  kHitTestFloat,
+  kHitTestForeground
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HitTestAction_h
+#endif  // HitTestAction_h

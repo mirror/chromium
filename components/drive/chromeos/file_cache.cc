@@ -19,7 +19,7 @@
 #include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -50,6 +50,16 @@ base::FilePath GetPathForId(const base::FilePath& cache_directory,
                             const std::string& id) {
   return cache_directory.Append(
       base::FilePath::FromUTF8Unsafe(util::EscapeCacheFileName(id)));
+}
+
+// Returns if the filesystem backing |path| supports file attributes.
+// This will return false if the filesystem is for example tmpfs, which is used
+// for ephemeral mode.
+bool IsFileAttributesSupported(const base::FilePath& path) {
+  if (getxattr(path.value().c_str(), "user.foo", nullptr, 0) >= 0) {
+    return true;
+  }
+  return errno != ENOTSUP;
 }
 
 // Sets extended file attribute as |name| |value| pair.
@@ -92,8 +102,14 @@ FileAttributes GetFileAttributes(const base::FilePath& path) {
   return flags;
 }
 
-// Marks the cache file to be removable by cryptohome.
+// Marks the cache file to be removable by cryptohome, or do nothing if
+// underlying filesystem doesn't support file attributes, as tmpfs for ephemeral
+// mode.
 bool SetRemovable(const base::FilePath& path) {
+  // For ephemeral mode.
+  if (!IsFileAttributesSupported(path)) {
+    return true;
+  }
   FileAttributes flags = GetFileAttributes(path);
   if (flags < 0) return false;
   if ((flags & FS_NODUMP_FL) == FS_NODUMP_FL) return true;
@@ -101,8 +117,14 @@ bool SetRemovable(const base::FilePath& path) {
   return SetFileAttributes(path, flags | FS_NODUMP_FL);
 }
 
-// Marks the cache file to be unremovable by cryptohome.
+// Marks the cache file to be unremovable by cryptohome, or do nothing if
+// underlying filesystem doesn't support file attributes, as tmpfs for ephemeral
+// mode.
 bool UnsetRemovable(const base::FilePath& path) {
+  // For ephemeral mode.
+  if (!IsFileAttributesSupported(path)) {
+    return true;
+  }
   FileAttributes flags = GetFileAttributes(path);
   if (flags < 0) return false;
   if ((flags & FS_NODUMP_FL) == 0) return true;
@@ -110,9 +132,14 @@ bool UnsetRemovable(const base::FilePath& path) {
   return SetFileAttributes(path, flags & ~FS_NODUMP_FL);
 }
 
-// Marks |path| as drive cache dir.
-// Returns if the operation succeeded.
+// Marks |path| as drive cache dir, or do nothing if underlying filesystem
+// doesn't support file attributes, as tmpfs for ephemeral mode. Returns if the
+// operation succeeded.
 bool MarkAsDriveCacheDir(const base::FilePath& path) {
+  // For ephemeral mode.
+  if (!IsFileAttributesSupported(path)) {
+    return true;
+  }
   return SetRemovable(path)
       && SetExtendedFileAttributes(path, FileCache::kGCacheFilesAttribute, "");
 }

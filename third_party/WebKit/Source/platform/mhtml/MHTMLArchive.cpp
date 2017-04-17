@@ -31,216 +31,248 @@
 #include "platform/mhtml/MHTMLArchive.h"
 
 #include "platform/DateComponents.h"
-#include "platform/MIMETypeRegistry.h"
 #include "platform/SerializedResource.h"
 #include "platform/SharedBuffer.h"
 #include "platform/mhtml/ArchiveResource.h"
 #include "platform/mhtml/MHTMLParser.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/text/QuotedPrintable.h"
 #include "platform/weborigin/SchemeRegistry.h"
-#include "wtf/Assertions.h"
-#include "wtf/CryptographicallyRandomNumber.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/DateMath.h"
-#include "wtf/text/Base64.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/CryptographicallyRandomNumber.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/DateMath.h"
+#include "platform/wtf/text/Base64.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-const char* const quotedPrintable = "quoted-printable";
-const char* const base64 = "base64";
-const char* const binary = "binary";
+const char* const kQuotedPrintable = "quoted-printable";
+const char* const kBase64 = "base64";
+const char* const kBinary = "binary";
 
-static String replaceNonPrintableCharacters(const String& text)
-{
-    StringBuilder stringBuilder;
-    for (size_t i = 0; i < text.length(); ++i) {
-        if (isASCIIPrintable(text[i]))
-            stringBuilder.append(text[i]);
-        else
-            stringBuilder.append('?');
-    }
-    return stringBuilder.toString();
-}
-
-MHTMLArchive::MHTMLArchive()
-{
-}
-
-MHTMLArchive* MHTMLArchive::create(const KURL& url, PassRefPtr<SharedBuffer> data)
-{
-    // For security reasons we only load MHTML pages from local URLs.
-    if (!SchemeRegistry::shouldTreatURLSchemeAsLocal(url.protocol()))
-        return nullptr;
-
-    MHTMLParser parser(data);
-    HeapVector<Member<ArchiveResource>> resources = parser.parseArchive();
-    if (resources.isEmpty())
-        return nullptr; // Invalid MHTML file.
-
-    MHTMLArchive* archive = new MHTMLArchive;
-    // The first document suitable resource is the main resource of the top frame.
-    for (size_t i = 0; i < resources.size(); ++i) {
-        const AtomicString& mimeType = resources[i]->mimeType();
-        if (archive->mainResource() || !MIMETypeRegistry::isSupportedNonImageMIMEType(mimeType) || MIMETypeRegistry::isSupportedJavaScriptMIMEType(mimeType) || mimeType == "text/css")
-            archive->addSubresource(resources[i].get());
-        else
-            archive->setMainResource(resources[i].get());
-    }
-    return archive;
-}
-
-void MHTMLArchive::generateMHTMLHeader(
-    const String& boundary, const String& title, const String& mimeType,
-    SharedBuffer& outputBuffer)
-{
-    ASSERT(!boundary.isEmpty());
-    ASSERT(!mimeType.isEmpty());
-
-    DateComponents now;
-    now.setMillisecondsSinceEpochForDateTime(currentTimeMS());
-    // TODO(lukasza): Passing individual date/time components seems fragile.
-    String dateString = makeRFC2822DateString(
-        now.weekDay(), now.monthDay(), now.month(), now.fullYear(),
-        now.hour(), now.minute(), now.second(), 0);
-
-    StringBuilder stringBuilder;
-    stringBuilder.append("From: <Saved by Blink>\r\n");
-    stringBuilder.append("Subject: ");
-    // We replace non ASCII characters with '?' characters to match IE's behavior.
-    stringBuilder.append(replaceNonPrintableCharacters(title));
-    stringBuilder.append("\r\nDate: ");
-    stringBuilder.append(dateString);
-    stringBuilder.append("\r\nMIME-Version: 1.0\r\n");
-    stringBuilder.append("Content-Type: multipart/related;\r\n");
-    stringBuilder.append("\ttype=\"");
-    stringBuilder.append(mimeType);
-    stringBuilder.append("\";\r\n");
-    stringBuilder.append("\tboundary=\"");
-    stringBuilder.append(boundary);
-    stringBuilder.append("\"\r\n\r\n");
-
-    // We use utf8() below instead of ascii() as ascii() replaces CRLFs with ??
-    // (we still only have put ASCII characters in it).
-    ASSERT(stringBuilder.toString().containsOnlyASCII());
-    CString asciiString = stringBuilder.toString().utf8();
-
-    outputBuffer.append(asciiString.data(), asciiString.length());
-}
-
-void MHTMLArchive::generateMHTMLPart(
-    const String& boundary,
-    const String& contentID,
-    EncodingPolicy encodingPolicy,
-    const SerializedResource& resource,
-    SharedBuffer& outputBuffer)
-{
-    ASSERT(!boundary.isEmpty());
-    ASSERT(contentID.isEmpty() || contentID[0] == '<');
-
-    StringBuilder stringBuilder;
-    stringBuilder.append("--");
-    stringBuilder.append(boundary);
-    stringBuilder.append("\r\n");
-
-    stringBuilder.append("Content-Type: ");
-    stringBuilder.append(resource.mimeType);
-    stringBuilder.append("\r\n");
-
-    if (!contentID.isEmpty()) {
-        stringBuilder.append("Content-ID: ");
-        stringBuilder.append(contentID);
-        stringBuilder.append("\r\n");
-    }
-
-    const char* contentEncoding = 0;
-    if (encodingPolicy == UseBinaryEncoding)
-        contentEncoding = binary;
-    else if (MIMETypeRegistry::isSupportedJavaScriptMIMEType(resource.mimeType) || MIMETypeRegistry::isSupportedNonImageMIMEType(resource.mimeType))
-        contentEncoding = quotedPrintable;
+static String ReplaceNonPrintableCharacters(const String& text) {
+  StringBuilder string_builder;
+  for (size_t i = 0; i < text.length(); ++i) {
+    if (IsASCIIPrintable(text[i]))
+      string_builder.Append(text[i]);
     else
-        contentEncoding = base64;
+      string_builder.Append('?');
+  }
+  return string_builder.ToString();
+}
 
-    stringBuilder.append("Content-Transfer-Encoding: ");
-    stringBuilder.append(contentEncoding);
-    stringBuilder.append("\r\n");
+MHTMLArchive::MHTMLArchive() {}
 
-    if (!resource.url.protocolIsAbout()) {
-        stringBuilder.append("Content-Location: ");
-        stringBuilder.append(resource.url.getString());
-        stringBuilder.append("\r\n");
+MHTMLArchive* MHTMLArchive::Create(const KURL& url,
+                                   PassRefPtr<const SharedBuffer> data) {
+  // MHTML pages can only be loaded from local URLs, http/https URLs, and
+  // content URLs(Android specific).  The latter is now allowed due to full
+  // sandboxing enforcement on MHTML pages.
+  if (!CanLoadArchive(url))
+    return nullptr;
+
+  MHTMLParser parser(std::move(data));
+  HeapVector<Member<ArchiveResource>> resources = parser.ParseArchive();
+  if (resources.IsEmpty())
+    return nullptr;  // Invalid MHTML file.
+
+  MHTMLArchive* archive = new MHTMLArchive;
+
+  size_t resources_count = resources.size();
+  // The first document suitable resource is the main resource of the top frame.
+  for (size_t i = 0; i < resources_count; ++i) {
+    if (archive->MainResource()) {
+      archive->AddSubresource(resources[i].Get());
+      continue;
     }
 
-    stringBuilder.append("\r\n");
+    const AtomicString& mime_type = resources[i]->MimeType();
+    bool is_mime_type_suitable_for_main_resource =
+        MIMETypeRegistry::IsSupportedNonImageMIMEType(mime_type);
+    // Want to allow image-only MHTML archives, but retain behavior for other
+    // documents that have already been created expecting the first HTML page to
+    // be considered the main resource.
+    if (resources_count == 1 &&
+        MIMETypeRegistry::IsSupportedImageResourceMIMEType(mime_type)) {
+      is_mime_type_suitable_for_main_resource = true;
+    }
+    // explicitly disallow JS and CSS as the main resource.
+    if (MIMETypeRegistry::IsSupportedJavaScriptMIMEType(mime_type) ||
+        MIMETypeRegistry::IsSupportedStyleSheetMIMEType(mime_type))
+      is_mime_type_suitable_for_main_resource = false;
 
-    CString asciiString = stringBuilder.toString().utf8();
-    outputBuffer.append(asciiString.data(), asciiString.length());
+    if (is_mime_type_suitable_for_main_resource)
+      archive->SetMainResource(resources[i].Get());
+    else
+      archive->AddSubresource(resources[i].Get());
+  }
+  return archive;
+}
 
-    if (!strcmp(contentEncoding, binary)) {
-        const char* data;
-        size_t position = 0;
-        while (size_t length = resource.data->getSomeData(data, position)) {
-            outputBuffer.append(data, length);
-            position += length;
-        }
+bool MHTMLArchive::CanLoadArchive(const KURL& url) {
+  // MHTML pages can only be loaded from local URLs, http/https URLs, and
+  // content URLs(Android specific).  The latter is now allowed due to full
+  // sandboxing enforcement on MHTML pages.
+  if (SchemeRegistry::ShouldTreatURLSchemeAsLocal(url.Protocol()))
+    return true;
+  if (url.ProtocolIsInHTTPFamily())
+    return true;
+#if OS(ANDROID)
+  if (url.ProtocolIs("content"))
+    return true;
+#endif
+  return false;
+}
+
+void MHTMLArchive::GenerateMHTMLHeader(const String& boundary,
+                                       const String& title,
+                                       const String& mime_type,
+                                       Vector<char>& output_buffer) {
+  ASSERT(!boundary.IsEmpty());
+  ASSERT(!mime_type.IsEmpty());
+
+  DateComponents now;
+  now.SetMillisecondsSinceEpochForDateTime(CurrentTimeMS());
+  // TODO(lukasza): Passing individual date/time components seems fragile.
+  String date_string = MakeRFC2822DateString(
+      now.WeekDay(), now.MonthDay(), now.Month(), now.FullYear(), now.Hour(),
+      now.Minute(), now.Second(), 0);
+
+  StringBuilder string_builder;
+  string_builder.Append("From: <Saved by Blink>\r\n");
+  string_builder.Append("Subject: ");
+  // We replace non ASCII characters with '?' characters to match IE's behavior.
+  string_builder.Append(ReplaceNonPrintableCharacters(title));
+  string_builder.Append("\r\nDate: ");
+  string_builder.Append(date_string);
+  string_builder.Append("\r\nMIME-Version: 1.0\r\n");
+  string_builder.Append("Content-Type: multipart/related;\r\n");
+  string_builder.Append("\ttype=\"");
+  string_builder.Append(mime_type);
+  string_builder.Append("\";\r\n");
+  string_builder.Append("\tboundary=\"");
+  string_builder.Append(boundary);
+  string_builder.Append("\"\r\n\r\n");
+
+  // We use utf8() below instead of ascii() as ascii() replaces CRLFs with ??
+  // (we still only have put ASCII characters in it).
+  ASSERT(string_builder.ToString().ContainsOnlyASCII());
+  CString ascii_string = string_builder.ToString().Utf8();
+
+  output_buffer.Append(ascii_string.Data(), ascii_string.length());
+}
+
+void MHTMLArchive::GenerateMHTMLPart(const String& boundary,
+                                     const String& content_id,
+                                     EncodingPolicy encoding_policy,
+                                     const SerializedResource& resource,
+                                     Vector<char>& output_buffer) {
+  ASSERT(!boundary.IsEmpty());
+  ASSERT(content_id.IsEmpty() || content_id[0] == '<');
+
+  StringBuilder string_builder;
+  string_builder.Append("--");
+  string_builder.Append(boundary);
+  string_builder.Append("\r\n");
+
+  string_builder.Append("Content-Type: ");
+  string_builder.Append(resource.mime_type);
+  string_builder.Append("\r\n");
+
+  if (!content_id.IsEmpty()) {
+    string_builder.Append("Content-ID: ");
+    string_builder.Append(content_id);
+    string_builder.Append("\r\n");
+  }
+
+  const char* content_encoding = 0;
+  if (encoding_policy == kUseBinaryEncoding)
+    content_encoding = kBinary;
+  else if (MIMETypeRegistry::IsSupportedJavaScriptMIMEType(
+               resource.mime_type) ||
+           MIMETypeRegistry::IsSupportedNonImageMIMEType(resource.mime_type))
+    content_encoding = kQuotedPrintable;
+  else
+    content_encoding = kBase64;
+
+  string_builder.Append("Content-Transfer-Encoding: ");
+  string_builder.Append(content_encoding);
+  string_builder.Append("\r\n");
+
+  if (!resource.url.ProtocolIsAbout()) {
+    string_builder.Append("Content-Location: ");
+    string_builder.Append(resource.url.GetString());
+    string_builder.Append("\r\n");
+  }
+
+  string_builder.Append("\r\n");
+
+  CString ascii_string = string_builder.ToString().Utf8();
+  output_buffer.Append(ascii_string.Data(), ascii_string.length());
+
+  if (!strcmp(content_encoding, kBinary)) {
+    const char* data;
+    size_t position = 0;
+    while (size_t length = resource.data->GetSomeData(data, position)) {
+      output_buffer.Append(data, length);
+      position += length;
+    }
+  } else {
+    // FIXME: ideally we would encode the content as a stream without having to
+    // fetch it all.
+    const char* data = resource.data->Data();
+    size_t data_length = resource.data->size();
+    Vector<char> encoded_data;
+    if (!strcmp(content_encoding, kQuotedPrintable)) {
+      QuotedPrintableEncode(data, data_length, encoded_data);
+      output_buffer.Append(encoded_data.Data(), encoded_data.size());
+      output_buffer.Append("\r\n", 2u);
     } else {
-        // FIXME: ideally we would encode the content as a stream without having to fetch it all.
-        const char* data = resource.data->data();
-        size_t dataLength = resource.data->size();
-        Vector<char> encodedData;
-        if (!strcmp(contentEncoding, quotedPrintable)) {
-            quotedPrintableEncode(data, dataLength, encodedData);
-            outputBuffer.append(encodedData.data(), encodedData.size());
-            outputBuffer.append("\r\n", 2u);
-        } else {
-            ASSERT(!strcmp(contentEncoding, base64));
-            // We are not specifying insertLFs = true below as it would cut the lines with LFs and MHTML requires CRLFs.
-            base64Encode(data, dataLength, encodedData);
-            const size_t maximumLineLength = 76;
-            size_t index = 0;
-            size_t encodedDataLength = encodedData.size();
-            do {
-                size_t lineLength = std::min(encodedDataLength - index, maximumLineLength);
-                outputBuffer.append(encodedData.data() + index, lineLength);
-                outputBuffer.append("\r\n", 2u);
-                index += maximumLineLength;
-            } while (index < encodedDataLength);
-        }
+      ASSERT(!strcmp(content_encoding, kBase64));
+      // We are not specifying insertLFs = true below as it would cut the lines
+      // with LFs and MHTML requires CRLFs.
+      Base64Encode(data, data_length, encoded_data);
+      const size_t kMaximumLineLength = 76;
+      size_t index = 0;
+      size_t encoded_data_length = encoded_data.size();
+      do {
+        size_t line_length =
+            std::min(encoded_data_length - index, kMaximumLineLength);
+        output_buffer.Append(encoded_data.Data() + index, line_length);
+        output_buffer.Append("\r\n", 2u);
+        index += kMaximumLineLength;
+      } while (index < encoded_data_length);
     }
+  }
 }
 
-void MHTMLArchive::generateMHTMLFooter(
-    const String& boundary,
-    SharedBuffer& outputBuffer)
-{
-    ASSERT(!boundary.isEmpty());
-    CString asciiString = String("--" + boundary + "--\r\n").utf8();
-    outputBuffer.append(asciiString.data(), asciiString.length());
+void MHTMLArchive::GenerateMHTMLFooterForTesting(const String& boundary,
+                                                 Vector<char>& output_buffer) {
+  ASSERT(!boundary.IsEmpty());
+  CString ascii_string = String("--" + boundary + "--\r\n").Utf8();
+  output_buffer.Append(ascii_string.Data(), ascii_string.length());
 }
 
-void MHTMLArchive::setMainResource(ArchiveResource* mainResource)
-{
-    m_mainResource = mainResource;
+void MHTMLArchive::SetMainResource(ArchiveResource* main_resource) {
+  main_resource_ = main_resource;
 }
 
-void MHTMLArchive::addSubresource(ArchiveResource* resource)
-{
-    const KURL& url = resource->url();
-    m_subresources.set(url, resource);
-    KURL cidURI = MHTMLParser::convertContentIDToURI(resource->contentID());
-    if (cidURI.isValid())
-        m_subresources.set(cidURI, resource);
+void MHTMLArchive::AddSubresource(ArchiveResource* resource) {
+  const KURL& url = resource->Url();
+  subresources_.Set(url, resource);
+  KURL cid_uri = MHTMLParser::ConvertContentIDToURI(resource->ContentID());
+  if (cid_uri.IsValid())
+    subresources_.Set(cid_uri, resource);
 }
 
-ArchiveResource* MHTMLArchive::subresourceForURL(const KURL& url) const
-{
-    return m_subresources.get(url.getString());
+ArchiveResource* MHTMLArchive::SubresourceForURL(const KURL& url) const {
+  return subresources_.at(url.GetString());
 }
 
-DEFINE_TRACE(MHTMLArchive)
-{
-    visitor->trace(m_mainResource);
-    visitor->trace(m_subresources);
+DEFINE_TRACE(MHTMLArchive) {
+  visitor->Trace(main_resource_);
+  visitor->Trace(subresources_);
 }
 
-} // namespace blink
+}  // namespace blink

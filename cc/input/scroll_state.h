@@ -8,7 +8,7 @@
 #include <list>
 #include <memory>
 
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/input/scroll_state_data.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/vector2d.h"
@@ -62,7 +62,7 @@ class CC_EXPORT ScrollState {
   }
 
   void set_scroll_chain_and_layer_tree(
-      const std::list<const ScrollNode*>& scroll_chain,
+      const std::list<ScrollNode*>& scroll_chain,
       LayerTreeImpl* layer_tree_impl) {
     layer_tree_impl_ = layer_tree_impl;
     scroll_chain_ = scroll_chain;
@@ -99,7 +99,7 @@ class CC_EXPORT ScrollState {
  private:
   ScrollStateData data_;
   LayerTreeImpl* layer_tree_impl_;
-  std::list<const ScrollNode*> scroll_chain_;
+  std::list<ScrollNode*> scroll_chain_;
 };
 
 }  // namespace cc

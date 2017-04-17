@@ -12,15 +12,14 @@
 #include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/time/time.h"
 #include "net/base/address_family.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
-#include "net/log/net_log.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/socket_performance_watcher.h"
 
 namespace base {
-class TickClock;
+class TimeDelta;
 }
 
 namespace net {
@@ -29,6 +28,8 @@ class AddressList;
 class IOBuffer;
 class IPEndPoint;
 class SocketPosix;
+class NetLog;
+struct NetLogSource;
 
 class NET_EXPORT TCPSocketPosix {
  public:
@@ -37,10 +38,11 @@ class NET_EXPORT TCPSocketPosix {
   TCPSocketPosix(
       std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
       NetLog* net_log,
-      const NetLog::Source& source);
+      const NetLogSource& source);
   virtual ~TCPSocketPosix();
 
   int Open(AddressFamily family);
+
   // Takes ownership of |socket_fd|.
   int AdoptConnectedSocket(int socket_fd, const IPEndPoint& peer_address);
 
@@ -58,6 +60,9 @@ class NET_EXPORT TCPSocketPosix {
   // Multiple outstanding requests are not supported.
   // Full duplex mode (reading and writing at the same time) is supported.
   int Read(IOBuffer* buf, int buf_len, const CompletionCallback& callback);
+  int ReadIfReady(IOBuffer* buf,
+                  int buf_len,
+                  const CompletionCallback& callback);
   int Write(IOBuffer* buf, int buf_len, const CompletionCallback& callback);
 
   int GetLocalAddress(IPEndPoint* address) const;
@@ -65,13 +70,13 @@ class NET_EXPORT TCPSocketPosix {
 
   // Sets various socket options.
   // The commonly used options for server listening sockets:
-  // - SetAddressReuse(true).
+  // - AllowAddressReuse().
   int SetDefaultOptionsForServer();
   // The commonly used options for client sockets and accepted sockets:
   // - SetNoDelay(true);
   // - SetKeepAlive(true, 45).
   void SetDefaultOptionsForClient();
-  int SetAddressReuse(bool allow);
+  int AllowAddressReuse();
   int SetReceiveBufferSize(int32_t size);
   int SetSendBufferSize(int32_t size);
   bool SetKeepAlive(bool enable, int delay);
@@ -97,18 +102,16 @@ class NET_EXPORT TCPSocketPosix {
   //
   // TCPClientSocket may attempt to connect to multiple addresses until it
   // succeeds in establishing a connection. The corresponding log will have
-  // multiple NetLog::TYPE_TCP_CONNECT_ATTEMPT entries nested within a
-  // NetLog::TYPE_TCP_CONNECT. These methods set the start/end of
-  // NetLog::TYPE_TCP_CONNECT.
+  // multiple NetLogEventType::TCP_CONNECT_ATTEMPT entries nested within a
+  // NetLogEventType::TCP_CONNECT. These methods set the start/end of
+  // NetLogEventType::TCP_CONNECT.
   //
   // TODO(yzshen): Change logging format and let TCPClientSocket log the
   // start/end of a series of connect attempts itself.
   void StartLoggingMultipleConnectAttempts(const AddressList& addresses);
   void EndLoggingMultipleConnectAttempts(int net_error);
 
-  void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
-
-  const BoundNetLog& net_log() const { return net_log_; }
+  const NetLogWithSource& net_log() const { return net_log_; }
 
  private:
   // States that using a socket with TCP FastOpen can lead to.
@@ -198,7 +201,9 @@ class NET_EXPORT TCPSocketPosix {
   void ReadCompleted(const scoped_refptr<IOBuffer>& buf,
                      const CompletionCallback& callback,
                      int rv);
+  void ReadIfReadyCompleted(const CompletionCallback& callback, int rv);
   int HandleReadCompleted(IOBuffer* buf, int rv);
+  void HandleReadCompletedHelper(int rv);
 
   void WriteCompleted(const scoped_refptr<IOBuffer>& buf,
                       const CompletionCallback& callback,
@@ -222,16 +227,6 @@ class NET_EXPORT TCPSocketPosix {
   // |socket_performance_watcher_|. May be nullptr.
   std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher_;
 
-  std::unique_ptr<base::TickClock> tick_clock_;
-
-  // Minimum interval betweeen consecutive notifications to
-  // |socket_performance_watcher_|.
-  const base::TimeDelta rtt_notifications_minimum_interval_;
-
-  // Time when the |socket_performance_watcher_| was last notified of updated
-  // RTT.
-  base::TimeTicks last_rtt_notification_;
-
   // Enables experimental TCP FastOpen option.
   bool use_tcp_fastopen_;
 
@@ -246,7 +241,7 @@ class NET_EXPORT TCPSocketPosix {
 
   bool logging_multiple_connect_attempts_;
 
-  BoundNetLog net_log_;
+  NetLogWithSource net_log_;
 
   DISALLOW_COPY_AND_ASSIGN(TCPSocketPosix);
 };

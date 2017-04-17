@@ -11,6 +11,7 @@
 #include "base/android/event_log.h"
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "base/memory/ptr_util.h"
 #include "content/browser/android/java/gin_java_script_to_java_types_coercion.h"
 #include "content/browser/android/java/java_method.h"
 #include "content/browser/android/java/jni_helper.h"
@@ -52,16 +53,16 @@ void GinJavaMethodInvocationHelper::Init(DispatcherDelegate* dispatcher) {
 void GinJavaMethodInvocationHelper::BuildObjectRefsFromListValue(
     DispatcherDelegate* dispatcher,
     const base::Value& list_value) {
-  DCHECK(list_value.IsType(base::Value::TYPE_LIST));
+  DCHECK(list_value.IsType(base::Value::Type::LIST));
   const base::ListValue* list;
   list_value.GetAsList(&list);
   for (const auto& entry : *list) {
-    if (AppendObjectRef(dispatcher, *entry))
+    if (AppendObjectRef(dispatcher, entry))
       continue;
-    if (entry->IsType(base::Value::TYPE_LIST)) {
-      BuildObjectRefsFromListValue(dispatcher, *entry);
-    } else if (entry->IsType(base::Value::TYPE_DICTIONARY)) {
-      BuildObjectRefsFromDictionaryValue(dispatcher, *entry);
+    if (entry.IsType(base::Value::Type::LIST)) {
+      BuildObjectRefsFromListValue(dispatcher, entry);
+    } else if (entry.IsType(base::Value::Type::DICTIONARY)) {
+      BuildObjectRefsFromDictionaryValue(dispatcher, entry);
     }
   }
 }
@@ -69,7 +70,7 @@ void GinJavaMethodInvocationHelper::BuildObjectRefsFromListValue(
 void GinJavaMethodInvocationHelper::BuildObjectRefsFromDictionaryValue(
     DispatcherDelegate* dispatcher,
     const base::Value& dict_value) {
-  DCHECK(dict_value.IsType(base::Value::TYPE_DICTIONARY));
+  DCHECK(dict_value.IsType(base::Value::Type::DICTIONARY));
   const base::DictionaryValue* dict;
   dict_value.GetAsDictionary(&dict);
   for (base::DictionaryValue::Iterator iter(*dict);
@@ -77,9 +78,9 @@ void GinJavaMethodInvocationHelper::BuildObjectRefsFromDictionaryValue(
        iter.Advance()) {
     if (AppendObjectRef(dispatcher, iter.value()))
       continue;
-    if (iter.value().IsType(base::Value::TYPE_LIST)) {
+    if (iter.value().IsType(base::Value::Type::LIST)) {
       BuildObjectRefsFromListValue(dispatcher, iter.value());
-    } else if (iter.value().IsType(base::Value::TYPE_DICTIONARY)) {
+    } else if (iter.value().IsType(base::Value::Type::DICTIONARY)) {
       BuildObjectRefsFromDictionaryValue(dispatcher, iter.value());
     }
   }
@@ -100,7 +101,7 @@ bool GinJavaMethodInvocationHelper::AppendObjectRef(
     if (iter == object_refs_.end()) {
       JavaObjectWeakGlobalRef object_ref(
           dispatcher->GetObjectWeakRef(object_id));
-      if (!object_ref.is_empty()) {
+      if (!object_ref.is_uninitialized()) {
         object_refs_.insert(std::make_pair(object_id, object_ref));
       }
     }
@@ -257,8 +258,7 @@ void GinJavaMethodInvocationHelper::InvokeMethod(jobject object,
       if (std::isfinite(result)) {
         result_wrapper.AppendDouble(result);
       } else {
-        result_wrapper.Append(
-            GinJavaBridgeValue::CreateNonFiniteValue(result).release());
+        result_wrapper.Append(GinJavaBridgeValue::CreateNonFiniteValue(result));
       }
       break;
     }
@@ -269,8 +269,7 @@ void GinJavaMethodInvocationHelper::InvokeMethod(jobject object,
       if (std::isfinite(result)) {
         result_wrapper.AppendDouble(result);
       } else {
-        result_wrapper.Append(
-            GinJavaBridgeValue::CreateNonFiniteValue(result).release());
+        result_wrapper.Append(GinJavaBridgeValue::CreateNonFiniteValue(result));
       }
       break;
     }
@@ -279,15 +278,13 @@ void GinJavaMethodInvocationHelper::InvokeMethod(jobject object,
         env->CallVoidMethodA(object, id, parameters);
       else
         env->CallStaticVoidMethodA(clazz, id, parameters);
-      result_wrapper.Append(
-          GinJavaBridgeValue::CreateUndefinedValue().release());
+      result_wrapper.Append(GinJavaBridgeValue::CreateUndefinedValue());
       break;
     case JavaType::TypeArray:
       // LIVECONNECT_COMPLIANCE: Existing behavior is to not call methods that
       // return arrays. Spec requires calling the method and converting the
       // result to a JavaScript array.
-      result_wrapper.Append(
-          GinJavaBridgeValue::CreateUndefinedValue().release());
+      result_wrapper.Append(GinJavaBridgeValue::CreateUndefinedValue());
       break;
     case JavaType::TypeString: {
       jstring java_string = static_cast<jstring>(
@@ -304,8 +301,7 @@ void GinJavaMethodInvocationHelper::InvokeMethod(jobject object,
       if (!scoped_java_string.obj()) {
         // LIVECONNECT_COMPLIANCE: Existing behavior is to return undefined.
         // Spec requires returning a null string.
-        result_wrapper.Append(
-            GinJavaBridgeValue::CreateUndefinedValue().release());
+        result_wrapper.Append(GinJavaBridgeValue::CreateUndefinedValue());
         break;
       }
       result_wrapper.AppendString(
@@ -325,7 +321,7 @@ void GinJavaMethodInvocationHelper::InvokeMethod(jobject object,
       }
       ScopedJavaLocalRef<jobject> scoped_java_object(env, java_object);
       if (!scoped_java_object.obj()) {
-        result_wrapper.Append(base::Value::CreateNullValue());
+        result_wrapper.Append(base::MakeUnique<base::Value>());
         break;
       }
       SetObjectResult(scoped_java_object, object_->GetSafeAnnotationClass());

@@ -5,14 +5,15 @@
 #include "chrome/browser/android/compositor/layer/content_layer.h"
 
 #include "base/lazy_instance.h"
+#include "cc/base/filter_operations.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_collections.h"
+#include "cc/layers/surface_layer.h"
 #include "chrome/browser/android/compositor/layer/thumbnail_layer.h"
 #include "chrome/browser/android/compositor/tab_content_manager.h"
 #include "content/public/browser/android/compositor.h"
 #include "ui/gfx/geometry/size.h"
 
-namespace chrome {
 namespace android {
 
 // static
@@ -32,25 +33,27 @@ static void SetOpacityOnLeaf(scoped_refptr<cc::Layer> layer, float alpha) {
   }
 }
 
-static bool DoesLeafDrawContents(scoped_refptr<cc::Layer> layer) {
+static cc::Layer* GetDrawsContentLeaf(scoped_refptr<cc::Layer> layer) {
   if (!layer.get())
-    return false;
+    return nullptr;
 
-  // TODO: Remove the need for this logic. We can't really guess from
-  // an opaque layer type whether it has valid live contents, or for example
-  // just a background color placeholder. Need to get this from somewhere else
-  // like ContentViewCore or RWHV.
-  if (layer->DrawsContent() && !layer->hide_layer_and_subtree() &&
-      !layer->background_color()) {
-    return true;
-  }
+  // If the subtree is hidden, then any layers in this tree will not be drawn.
+  if (layer->hide_layer_and_subtree())
+    return nullptr;
+
+  if (layer->opacity() == 0.0f)
+    return nullptr;
+
+  if (layer->DrawsContent())
+    return layer.get();
 
   const cc::LayerList& children = layer->children();
   for (unsigned i = 0; i < children.size(); i++) {
-    if (DoesLeafDrawContents(children[i]))
-      return true;
+    cc::Layer* leaf = GetDrawsContentLeaf(children[i]);
+    if (leaf)
+      return leaf;
   }
-  return false;
+  return nullptr;
 }
 
 void ContentLayer::SetProperties(int id,
@@ -59,85 +62,68 @@ void ContentLayer::SetProperties(int id,
                                  bool should_override_content_alpha,
                                  float content_alpha_override,
                                  float saturation,
-                                 const gfx::Rect& desired_bounds,
-                                 const gfx::Size& content_size) {
-  scoped_refptr<cc::Layer> content_layer =
-      tab_content_manager_->GetLiveLayer(id);
-  ClipContentLayer(content_layer, desired_bounds);
-  bool content_layer_draws = DoesLeafDrawContents(content_layer);
+                                 bool should_clip,
+                                 const gfx::Rect& clip) {
+  scoped_refptr<cc::Layer> live_layer = tab_content_manager_->GetLiveLayer(id);
+  if (live_layer)
+    live_layer->SetHideLayerAndSubtree(!can_use_live_layer);
+  bool live_layer_draws = GetDrawsContentLeaf(live_layer);
 
   scoped_refptr<ThumbnailLayer> static_layer =
-      tab_content_manager_->GetStaticLayer(
-          id, !(can_use_live_layer && content_layer_draws));
+      tab_content_manager_->GetOrCreateStaticLayer(id, !live_layer_draws);
 
-  ClipStaticLayer(static_layer, desired_bounds);
+  float content_opacity =
+      should_override_content_alpha ? content_alpha_override : 1.0f;
+  float static_opacity =
+      should_override_content_alpha ? content_alpha_override : 1.0f;
+  if (live_layer_draws)
+    static_opacity = static_to_view_blend;
 
-  // Reset the attachment logic if the number of children doesn't match the
-  // boolean flags. At some point while a tab is in the background one or more
-  // layers may be removed from this tree.
-  // Note that this needs to be checked *after* we access TabContentManager, as
-  // that class might remove layers internally, messing up our own tracking.
-  unsigned int expected_layers = 0;
-  expected_layers += content_attached_ ? 1 : 0;
-  expected_layers += static_attached_ ? 1 : 0;
-  if (layer_->children().size() != expected_layers) {
-    content_attached_ = false;
-    static_attached_ = false;
-    const cc::LayerList& layer_children = layer_->children();
-    for (unsigned i = 0; i < layer_children.size(); i++)
-      layer_children[i]->RemoveFromParent();
+  const cc::LayerList& layer_children = layer_->children();
+  for (unsigned i = 0; i < layer_children.size(); i++)
+    layer_children[i]->RemoveFromParent();
+
+  if (live_layer.get()) {
+    live_layer->SetMasksToBounds(should_clip);
+    live_layer->SetBounds(clip.size());
+    SetOpacityOnLeaf(live_layer, content_opacity);
+
+    layer_->AddChild(live_layer);
   }
-
-  gfx::Size content_bounds(0, 0);
-  if (!content_layer.get() || !can_use_live_layer) {
-    SetContentLayer(nullptr);
-    SetStaticLayer(static_layer);
-    if (static_layer.get())
-      content_bounds = static_layer->layer()->bounds();
-    else
-      content_bounds.set_width(content_size.width());
-  } else {
-    SetContentLayer(content_layer);
-    content_bounds = content_layer->bounds();
-
-    if (static_to_view_blend == 0.0f && !content_layer_draws)
-      static_to_view_blend = 1.0f;
-
-    if (static_to_view_blend != 0.0f && static_layer.get()) {
-      static_layer->layer()->SetOpacity(static_to_view_blend);
-      SetStaticLayer(static_layer);
-      if (content_bounds.GetArea() == 0 || !content_layer_draws)
-        content_bounds = static_layer->layer()->bounds();
-    } else {
-      SetStaticLayer(nullptr);
-    }
-  }
-
-  if (should_override_content_alpha) {
-    for (unsigned int i = 0; i < layer_->children().size(); ++i)
-      SetOpacityOnLeaf(layer_->children()[i], content_alpha_override);
-  }
-
-  if (!content_layer_draws && !static_attached_)
-    content_bounds = gfx::Size(0, 0);
-
-  layer_->SetBounds(content_bounds);
-
-  // Only worry about saturation on the static layer.
   if (static_layer.get()) {
-    static_filter_operations_.Clear();
+    static_layer->layer()->SetIsDrawable(true);
+    if (should_clip)
+      static_layer->Clip(clip);
+    else
+      static_layer->ClearClip();
+    SetOpacityOnLeaf(static_layer->layer(), static_opacity);
+
+    cc::FilterOperations static_filter_operations;
     if (saturation < 1.0f) {
-      static_filter_operations_.Append(
+      static_filter_operations.Append(
           cc::FilterOperation::CreateSaturateFilter(saturation));
     }
-    static_layer->layer()->SetFilters(static_filter_operations_);
+    static_layer->layer()->SetFilters(static_filter_operations);
+
+    layer_->AddChild(static_layer->layer());
   }
 }
 
-gfx::Size ContentLayer::GetContentSize() {
-  if (content_attached_ && DoesLeafDrawContents(layer()->children()[0]))
-    return layer_->children()[0]->bounds();
-  return gfx::Size(0, 0);
+gfx::Size ContentLayer::ComputeSize(int id) const {
+  gfx::Size size;
+
+  scoped_refptr<cc::Layer> live_layer = tab_content_manager_->GetLiveLayer(id);
+  cc::SurfaceLayer* surface_layer =
+      static_cast<cc::SurfaceLayer*>(GetDrawsContentLeaf(live_layer));
+  if (surface_layer)
+    size.SetToMax(surface_layer->primary_surface_info().size_in_pixels());
+
+  scoped_refptr<ThumbnailLayer> static_layer =
+      tab_content_manager_->GetStaticLayer(id);
+  if (static_layer.get() && GetDrawsContentLeaf(static_layer->layer()))
+    size.SetToMax(static_layer->layer()->bounds());
+
+  return size;
 }
 
 scoped_refptr<cc::Layer> ContentLayer::layer() {
@@ -146,82 +132,9 @@ scoped_refptr<cc::Layer> ContentLayer::layer() {
 
 ContentLayer::ContentLayer(TabContentManager* tab_content_manager)
     : layer_(cc::Layer::Create()),
-      content_attached_(false),
-      static_attached_(false),
       tab_content_manager_(tab_content_manager) {}
 
 ContentLayer::~ContentLayer() {
 }
 
-void ContentLayer::SetContentLayer(scoped_refptr<cc::Layer> layer) {
-  // Check indices
-  // content_attached_, expect at least 1 child.
-  DCHECK(!content_attached_ || layer_->children().size() > 0);
-
-  if (!layer.get()) {
-    if (content_attached_)
-      layer_->child_at(0)->RemoveFromParent();
-    content_attached_ = false;
-    return;
-  }
-
-  bool new_layer = false;
-  if (content_attached_ && layer_->child_at(0)->id() != layer->id()) {
-    layer_->ReplaceChild(layer_->child_at(0), layer);
-    new_layer = true;
-  } else if (!content_attached_) {
-    layer_->InsertChild(layer, 0);
-    new_layer = true;
-  }
-
-  // If this is a new layer, reset it's opacity.
-  if (new_layer)
-    SetOpacityOnLeaf(layer, 1.0f);
-
-  content_attached_ = true;
-}
-
-void ContentLayer::SetStaticLayer(
-    scoped_refptr<ThumbnailLayer> new_static_layer) {
-  // Make sure child access will be valid.
-  // !content_attached_ AND !static_attached_, expect 0 children.
-  // content_attached_ XOR static_attached_, expect 1 child.
-  // content_attached_ AND static_attached_, expect 2 children.
-  DCHECK((!content_attached_ && !static_attached_) ||
-         (content_attached_ != static_attached_ &&
-          layer_->children().size() >= 1) ||
-         (content_attached_ && static_attached_ &&
-          layer_->children().size() >= 2));
-
-  if (!new_static_layer.get()) {
-    if (static_layer_.get()) {
-      static_layer_->layer()->RemoveFromParent();
-      static_layer_ = nullptr;
-    }
-    static_attached_ = false;
-    return;
-  }
-  static_layer_ = new_static_layer;
-  static_layer_->AddSelfToParentOrReplaceAt(layer_, content_attached_ ? 1 : 0);
-  static_layer_->layer()->SetIsDrawable(true);
-  static_attached_ = true;
-}
-
-void ContentLayer::ClipContentLayer(scoped_refptr<cc::Layer> content_layer,
-                                    gfx::Rect clipping) {
-  if (!content_layer.get())
-    return;
-
-  content_layer->SetMasksToBounds(true);
-  content_layer->SetBounds(clipping.size());
-}
-
-void ContentLayer::ClipStaticLayer(scoped_refptr<ThumbnailLayer> static_layer,
-                                   gfx::Rect clipping) {
-  if (!static_layer.get())
-    return;
-  static_layer->Clip(clipping);
-}
-
 }  //  namespace android
-}  //  namespace chrome

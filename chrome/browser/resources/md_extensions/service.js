@@ -7,9 +7,11 @@ cr.define('extensions', function() {
 
   /**
    * @constructor
+   * @implements {extensions.ErrorPageDelegate}
    * @implements {extensions.ItemDelegate}
-   * @implements {extensions.SidebarDelegate}
+   * @implements {extensions.LoadErrorDelegate}
    * @implements {extensions.PackDialogDelegate}
+   * @implements {extensions.ToolbarDelegate}
    */
   function Service() {}
 
@@ -21,10 +23,12 @@ cr.define('extensions', function() {
     managerReady: function(manager) {
       /** @private {extensions.Manager} */
       this.manager_ = manager;
-      this.manager_.sidebar.setDelegate(this);
+      this.manager_.toolbar.setDelegate(this);
       this.manager_.set('itemDelegate', this);
-      this.manager_.$['pack-dialog'].set('delegate', this);
-      var keyboardShortcuts = this.manager_.$['keyboard-shortcuts'];
+      this.manager_.packDialog.set('delegate', this);
+      this.manager_.loadError.set('delegate', this);
+      this.manager_.errorPage.delegate = this;
+      var keyboardShortcuts = this.manager_.keyboardShortcuts;
       keyboardShortcuts.addEventListener(
           'shortcut-updated',
           this.onExtensionCommandUpdated_.bind(this));
@@ -45,6 +49,15 @@ cr.define('extensions', function() {
         this.extensions_ = extensions;
         for (let extension of extensions)
           this.manager_.addItem(extension);
+
+        var id = new URLSearchParams(location.search).get('id');
+        if (id) {
+          var data = this.extensions_.find(function(e) {
+            return e.id == id;
+          });
+          if (data)
+            this.manager_.showItemDetails(data);
+        }
       }.bind(this));
       chrome.developerPrivate.getProfileConfiguration(
           this.onProfileStateChanged_.bind(this));
@@ -149,6 +162,28 @@ cr.define('extensions', function() {
       chrome.developerPrivate.setShortcutHandlingSuspended(isCapturing);
     },
 
+    /**
+     * Attempts to load an unpacked extension, optionally as another attempt at
+     * a previously-specified load.
+     * @param {string=} opt_retryGuid
+     * @private
+     */
+    loadUnpackedHelper_: function(opt_retryGuid) {
+      chrome.developerPrivate.loadUnpacked(
+          {failQuietly: true, populateError: true, retryGuid: opt_retryGuid},
+          (loadError) => {
+        if (chrome.runtime.lastError &&
+            chrome.runtime.lastError.message !=
+                'File selection was canceled.') {
+          throw new Error(chrome.runtime.lastError.message);
+        }
+        if (loadError) {
+          this.manager_.loadError.loadError = loadError;
+          this.manager_.loadError.show();
+        }
+      });
+    },
+
     /** @override */
     deleteItem: function(id) {
       if (this.isDeleting_)
@@ -211,8 +246,25 @@ cr.define('extensions', function() {
     },
 
     /** @override */
+    reloadItem: function(id) {
+      chrome.developerPrivate.reload(id, {failQuietly: false});
+    },
+
+    /** @override */
     repairItem: function(id) {
       chrome.developerPrivate.repairExtension(id);
+    },
+
+    /** @override */
+    showItemOptionsPage: function(id) {
+      var extension = this.extensions_.find(function(extension) {
+        return extension.id == id;
+      });
+      assert(extension && extension.optionsPage);
+      if (extension.optionsPage.openInTab)
+        chrome.developerPrivate.showOptions(id);
+      else
+        this.manager_.optionsDialog.show(extension);
     },
 
     /** @override */
@@ -223,7 +275,12 @@ cr.define('extensions', function() {
 
     /** @override */
     loadUnpacked: function() {
-      chrome.developerPrivate.loadUnpacked({failQuietly: true});
+      this.loadUnpackedHelper_();
+    },
+
+    /** @override */
+    retryLoadUnpacked: function(retryGuid) {
+      this.loadUnpackedHelper_(retryGuid);
     },
 
     /** @override */
@@ -248,6 +305,24 @@ cr.define('extensions', function() {
     /** @override */
     updateAllExtensions: function() {
       chrome.developerPrivate.autoUpdate();
+    },
+
+    /** @override */
+    deleteErrors: function(extensionId, errorIds, type) {
+      chrome.developerPrivate.deleteExtensionErrors({
+        extensionId: extensionId,
+        errorIds: errorIds,
+        type: type,
+      });
+    },
+
+    /** @override */
+    requestFileSource: function(args) {
+      return new Promise(function(resolve, reject) {
+        chrome.developerPrivate.requestFileSource(args, function(code) {
+          resolve(code);
+        });
+      });
     },
   };
 

@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.compositor.layouts;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.RectF;
 import android.os.Build;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -21,11 +20,9 @@ import org.chromium.chrome.browser.compositor.bottombar.readermode.ReaderModePan
 import org.chromium.chrome.browser.compositor.layouts.components.LayoutTab;
 import org.chromium.chrome.browser.compositor.layouts.components.VirtualView;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
-import org.chromium.chrome.browser.compositor.layouts.eventfilter.EdgeSwipeEventFilter;
-import org.chromium.chrome.browser.compositor.layouts.eventfilter.EdgeSwipeEventFilter.ScrollDirection;
 import org.chromium.chrome.browser.compositor.layouts.eventfilter.EdgeSwipeHandler;
 import org.chromium.chrome.browser.compositor.layouts.eventfilter.EmptyEdgeSwipeHandler;
-import org.chromium.chrome.browser.compositor.layouts.eventfilter.GestureHandler;
+import org.chromium.chrome.browser.compositor.layouts.eventfilter.ScrollDirection;
 import org.chromium.chrome.browser.compositor.overlays.SceneOverlay;
 import org.chromium.chrome.browser.compositor.scene_layer.ToolbarSceneLayer;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManagementDelegate;
@@ -57,12 +54,7 @@ public class LayoutManagerDocument extends LayoutManager
     protected final StaticLayout mStaticLayout;
 
     // Event Filters
-    private final EdgeSwipeEventFilter mStaticEdgeEventFilter;
     private final EdgeSwipeHandler mToolbarSwipeHandler;
-
-    // Event Filter Handlers
-    /** A {@link GestureHandler} that will delegate all events to {@link #getActiveLayout()}. */
-    protected final GestureHandler mGestureHandler;
 
     // Internal State
     private final SparseArray<LayoutTab> mTabCache = new SparseArray<LayoutTab>();
@@ -89,25 +81,18 @@ public class LayoutManagerDocument extends LayoutManager
         mToolbarOverlay = new ToolbarSceneLayer(mContext, this, renderHost);
 
         // Build Event Filter Handlers
-        mGestureHandler = new GestureHandlerLayoutDelegate(this);
         mToolbarSwipeHandler = new ToolbarSwipeHandler(this);
-
-        // Build Event Filters
-        mStaticEdgeEventFilter =
-                new EdgeSwipeEventFilter(mContext, this, new StaticEdgeSwipeHandler());
 
         mOverlayPanelManager = new OverlayPanelManager();
 
         // Build Layouts
-        mStaticLayout = new StaticLayout(
-                mContext, this, renderHost, mStaticEdgeEventFilter, mOverlayPanelManager);
+        mStaticLayout = new StaticLayout(mContext, this, renderHost, null, mOverlayPanelManager);
 
         // Contextual Search scene overlay.
-        mContextualSearchPanel =
-                new ContextualSearchPanel(mContext, this, this, mOverlayPanelManager);
+        mContextualSearchPanel = new ContextualSearchPanel(mContext, this, mOverlayPanelManager);
 
         // Reader Mode scene overlay.
-        mReaderModePanel = new ReaderModePanel(mContext, this, this, mOverlayPanelManager, this);
+        mReaderModePanel = new ReaderModePanel(mContext, this, mOverlayPanelManager, this);
 
         // Set up layout parameters
         mStaticLayout.setLayoutHandlesTabLifecycles(true);
@@ -126,9 +111,6 @@ public class LayoutManagerDocument extends LayoutManager
 
         // Save state
         mContextualSearchDelegate = contextualSearchDelegate;
-
-        // Initialize Event Filters
-        mStaticEdgeEventFilter.setTabModelSelector(selector);
 
         // Initialize Layouts
         mStaticLayout.setTabModelSelector(selector, content);
@@ -186,11 +168,11 @@ public class LayoutManagerDocument extends LayoutManager
     }
 
     @Override
-    protected void onViewportChanged(RectF viewportDp) {
-        super.onViewportChanged(viewportDp);
+    public void onViewportChanged() {
+        super.onViewportChanged();
         for (int i = 0; i < mTabCache.size(); i++) {
             // This assumes that the content width/height is always the size of the host.
-            mTabCache.valueAt(i).setContentSize(viewportDp.width(), viewportDp.height());
+            mTabCache.valueAt(i).setContentSize(mHost.getWidth(), mHost.getHeight());
         }
     }
 
@@ -258,13 +240,15 @@ public class LayoutManagerDocument extends LayoutManager
         if (layoutTab == null) return;
 
         String url = tab.getUrl();
-        boolean isNativePage = url != null && url.startsWith(UrlConstants.CHROME_NATIVE_SCHEME);
+        boolean isNativePage = url != null && url.startsWith(UrlConstants.CHROME_NATIVE_URL_PREFIX);
         int themeColor = tab.getThemeColor();
+
         boolean canUseLiveTexture =
                 tab.getContentViewCore() != null && !tab.isShowingSadTab() && !isNativePage;
+
         boolean needsUpdate = layoutTab.initFromHost(tab.getBackgroundColor(), tab.shouldStall(),
                 canUseLiveTexture, themeColor, ColorUtils.getTextBoxColorForToolbarBackground(
-                                    mContext.getResources(), tab, themeColor),
+                                                       mContext.getResources(), tab, themeColor),
                 ColorUtils.getTextBoxAlphaForToolbarBackground(tab));
         if (needsUpdate) requestUpdate();
 
@@ -276,11 +260,11 @@ public class LayoutManagerDocument extends LayoutManager
             boolean isTitleNeeded, float maxContentWidth, float maxContentHeight) {
         LayoutTab tab = mTabCache.get(id);
         if (tab == null) {
-            tab = new LayoutTab(id, incognito, mLastContentWidthDp, mLastContentHeightDp,
+            tab = new LayoutTab(id, incognito, mHost.getWidth(), mHost.getHeight(),
                     showCloseButton, isTitleNeeded);
             mTabCache.put(id, tab);
         } else {
-            tab.init(mLastContentWidthDp, mLastContentHeightDp, showCloseButton, isTitleNeeded);
+            tab.init(mHost.getWidth(), mHost.getHeight(), showCloseButton, isTitleNeeded);
         }
         if (maxContentWidth > 0.f) tab.setMaxContentWidth(maxContentWidth);
         if (maxContentHeight > 0.f) tab.setMaxContentHeight(maxContentHeight);
@@ -311,7 +295,7 @@ public class LayoutManagerDocument extends LayoutManager
 
     @Override
     public void setOverlayPanelContentViewCore(ContentViewCore contentViewCore) {
-        mHost.onContentViewCoreAdded(contentViewCore);
+        mHost.onOverlayPanelContentViewCoreAdded(contentViewCore);
     }
 
     @Override

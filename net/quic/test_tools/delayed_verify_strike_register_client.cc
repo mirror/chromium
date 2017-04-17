@@ -4,9 +4,7 @@
 
 #include "net/quic/test_tools/delayed_verify_strike_register_client.h"
 
-using base::StringPiece;
 using std::string;
-using std::vector;
 
 namespace net {
 namespace test {
@@ -27,7 +25,7 @@ DelayedVerifyStrikeRegisterClient::DelayedVerifyStrikeRegisterClient(
 DelayedVerifyStrikeRegisterClient::~DelayedVerifyStrikeRegisterClient() {}
 
 void DelayedVerifyStrikeRegisterClient::VerifyNonceIsValidAndUnique(
-    StringPiece nonce,
+    QuicStringPiece nonce,
     QuicWallTime now,
     ResultCallback* cb) {
   if (delay_verifications_) {
@@ -42,10 +40,10 @@ int DelayedVerifyStrikeRegisterClient::PendingVerifications() const {
 }
 
 void DelayedVerifyStrikeRegisterClient::RunPendingVerifications() {
-  vector<VerifyArgs> pending;
+  std::vector<VerifyArgs> pending;
   pending_verifications_.swap(pending);
-  for (vector<VerifyArgs>::const_iterator it = pending.begin(),
-                                          end = pending.end();
+  for (std::vector<VerifyArgs>::const_iterator it = pending.begin(),
+                                               end = pending.end();
        it != end; ++it) {
     LocalStrikeRegisterClient::VerifyNonceIsValidAndUnique(it->nonce, it->now,
                                                            it->cb);

@@ -8,6 +8,9 @@ if (is_android) {
   import("//build/config/android/config.gni")
 }
 
+# TODO(crbug.com/706392): Fix password reuse detection for Android.
+password_reuse_detection_support = !is_android && !is_ios
+
 static_library("browser") {
   sources = [
     "affiliated_match_helper.cc",
@@ -28,6 +31,8 @@ static_library("browser") {
     "affiliation_utils.h",
     "browser_save_password_progress_logger.cc",
     "browser_save_password_progress_logger.h",
+    "credential_manager_logger.cc",
+    "credential_manager_logger.h",
     "credential_manager_password_form_manager.cc",
     "credential_manager_password_form_manager.h",
     "credential_manager_pending_request_task.cc",
@@ -44,9 +49,14 @@ static_library("browser") {
     "facet_manager.cc",
     "facet_manager.h",
     "facet_manager_host.h",
+    "form_fetcher.h",
+    "form_fetcher_impl.cc",
+    "form_fetcher_impl.h",
     "form_saver.h",
     "form_saver_impl.cc",
     "form_saver_impl.h",
+    "http_password_store_migrator.cc",
+    "http_password_store_migrator.h",
     "import/csv_reader.cc",
     "import/csv_reader.h",
     "import/password_csv_reader.cc",
@@ -120,9 +130,20 @@ static_library("browser") {
     "webdata/password_web_data_service_win.h",
   ]
 
+  if (password_reuse_detection_support) {
+    sources += [
+      "password_reuse_detection_manager.cc",
+      "password_reuse_detection_manager.h",
+      "password_reuse_detector.cc",
+      "password_reuse_detector.h",
+      "password_reuse_detector_consumer.cc",
+      "password_reuse_detector_consumer.h",
+    ]
+  }
+
   public_deps = [
     "//base",
-    "//sync",
+    "//components/sync",
   ]
   deps = [
     ":proto",
@@ -136,8 +157,9 @@ static_library("browser") {
     "//components/password_manager/core/common",
     "//components/pref_registry",
     "//components/prefs",
+    "//components/security_state/core",
     "//components/strings",
-    "//components/sync_driver",
+    "//components/sync",
     "//components/url_formatter",
     "//components/variations",
     "//components/webdata/common",
@@ -151,8 +173,21 @@ static_library("browser") {
     "//url",
   ]
 
+  if (!is_ios) {
+    sources += [
+      "hsts_query.cc",
+      "hsts_query.h",
+      "http_data_cleaner.cc",
+      "http_data_cleaner.h",
+    ]
+  }
+
   if (is_mac || is_ios) {
     sources -= [ "login_database_posix.cc" ]
+  }
+
+  if (!is_ios) {
+    deps += [ "//components/safe_browsing/password_protection" ]
   }
 
   # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
@@ -172,6 +207,8 @@ static_library("test_support") {
     "fake_affiliation_api.h",
     "fake_affiliation_fetcher.cc",
     "fake_affiliation_fetcher.h",
+    "fake_form_fetcher.cc",
+    "fake_form_fetcher.h",
     "mock_affiliated_match_helper.cc",
     "mock_affiliated_match_helper.h",
     "mock_affiliation_consumer.cc",
@@ -180,6 +217,8 @@ static_library("test_support") {
     "mock_password_store.h",
     "password_manager_test_utils.cc",
     "password_manager_test_utils.h",
+    "stub_credentials_filter.cc",
+    "stub_credentials_filter.h",
     "stub_form_saver.h",
     "stub_log_manager.cc",
     "stub_log_manager.h",
@@ -199,6 +238,7 @@ static_library("test_support") {
   deps = [
     "//base",
     "//components/autofill/core/common",
+    "//net:net",
     "//testing/gtest",
   ]
 }
@@ -217,6 +257,7 @@ bundle_data("unit_tests_bundle_data") {
     "//components/test/data/password_manager/login_db_v16.sql",
     "//components/test/data/password_manager/login_db_v17.sql",
     "//components/test/data/password_manager/login_db_v18.sql",
+    "//components/test/data/password_manager/login_db_v19.sql",
     "//components/test/data/password_manager/login_db_v1_broken.sql",
     "//components/test/data/password_manager/login_db_v2.sql",
     "//components/test/data/password_manager/login_db_v2_broken.sql",
@@ -247,11 +288,15 @@ source_set("unit_tests") {
     "affiliation_service_unittest.cc",
     "affiliation_utils_unittest.cc",
     "browser_save_password_progress_logger_unittest.cc",
+    "credential_manager_logger_unittest.cc",
+    "credential_manager_password_form_manager_unittest.cc",
     "export/csv_writer_unittest.cc",
     "export/password_csv_writer_unittest.cc",
     "export/password_exporter_unittest.cc",
     "facet_manager_unittest.cc",
+    "form_fetcher_impl_unittest.cc",
     "form_saver_impl_unittest.cc",
+    "http_password_store_migrator_unittest.cc",
     "import/csv_reader_unittest.cc",
     "import/password_csv_reader_unittest.cc",
     "import/password_importer_unittest.cc",
@@ -278,6 +323,20 @@ source_set("unit_tests") {
   if (is_mac) {
     sources -= [ "password_store_default_unittest.cc" ]
   }
+  if (is_ios) {
+    sources += [ "login_database_ios_unittest.cc" ]
+  } else {
+    sources += [
+      "hsts_query_unittest.cc",
+      "http_data_cleaner_unittest.cc",
+    ]
+  }
+  if (password_reuse_detection_support) {
+    sources += [
+      "password_reuse_detection_manager_unittest.cc",
+      "password_reuse_detector_unittest.cc",
+    ]
+  }
   deps = [
     ":test_support",
     ":unit_tests_bundle_data",
@@ -289,12 +348,13 @@ source_set("unit_tests") {
     "//components/password_manager/core/browser:proto",
     "//components/password_manager/core/common",
     "//components/prefs:test_support",
+    "//components/security_state/core",
     "//components/strings",
-    "//components/sync_driver:test_support",
+    "//components/sync:test_support_driver",
+    "//components/sync:test_support_model",
     "//components/variations",
     "//net:test_support",
     "//sql:test_support",
-    "//sync:test_support_sync_api",
     "//testing/gmock",
     "//testing/gtest",
     "//ui/base",

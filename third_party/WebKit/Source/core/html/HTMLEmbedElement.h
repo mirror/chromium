@@ -23,39 +23,44 @@
 #ifndef HTMLEmbedElement_h
 #define HTMLEmbedElement_h
 
+#include "core/CoreExport.h"
 #include "core/html/HTMLPlugInElement.h"
 
 namespace blink {
 
-class HTMLEmbedElement final : public HTMLPlugInElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLEmbedElement* create(Document&, bool createdByParser = false);
+class CORE_EXPORT HTMLEmbedElement final : public HTMLPlugInElement {
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool isExposed() const;
+ public:
+  static HTMLEmbedElement* Create(Document&, bool created_by_parser = false);
 
-private:
-    HTMLEmbedElement(Document&, bool createdByParser);
+  bool IsExposed() const;
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
+ private:
+  HTMLEmbedElement(Document&, bool created_by_parser);
 
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
 
-    bool isURLAttribute(const Attribute&) const override;
-    const QualifiedName& subResourceAttributeName() const override;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
 
-    LayoutPart* existingLayoutPart() const override;
+  bool IsURLAttribute(const Attribute&) const override;
+  const QualifiedName& SubResourceAttributeName() const override;
 
-    void updateWidgetInternal() override;
+  LayoutPart* ExistingLayoutPart() const override;
 
-    void parametersForPlugin(Vector<String>& paramNames, Vector<String>& paramValues);
+  void UpdatePluginInternal() override;
 
-    bool shouldRegisterAsNamedItem() const override { return true; }
-    bool isInteractiveContent() const override;
+  void ParametersForPlugin(Vector<String>& param_names,
+                           Vector<String>& param_values);
+
+  bool ShouldRegisterAsNamedItem() const override { return true; }
+  bool IsInteractiveContent() const override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLEmbedElement_h
+#endif  // HTMLEmbedElement_h

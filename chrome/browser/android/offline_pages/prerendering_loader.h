@@ -6,23 +6,20 @@
 #define CHROME_BROWSER_ANDROID_OFFLINE_PAGES_PRERENDERING_LOADER_H_
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "base/callback.h"
 #include "chrome/browser/android/offline_pages/prerender_adapter.h"
-#include "components/offline_pages/background/offliner.h"
-#include "components/offline_pages/snapshot_controller.h"
+#include "components/offline_pages/core/background/offliner.h"
+#include "components/offline_pages/core/snapshot_controller.h"
 
 class GURL;
 
 namespace content {
 class BrowserContext;
 class WebContents;
-class SessionStorageNamespace;
 }  // namespace content
-
-namespace gfx {
-class Size;
-}  // namespace gfx
 
 namespace offline_pages {
 
@@ -37,6 +34,8 @@ class PrerenderingLoader : public PrerenderAdapter::Observer,
   typedef base::Callback<void(Offliner::RequestStatus, content::WebContents*)>
       LoadPageCallback;
 
+  typedef base::Callback<void(int64_t)> ProgressCallback;
+
   explicit PrerenderingLoader(content::BrowserContext* browser_context);
   ~PrerenderingLoader() override;
 
@@ -48,7 +47,9 @@ class PrerenderingLoader : public PrerenderAdapter::Observer,
   // once - first for a successful load and then if canceled after the
   // load (which may be from resources being reclaimed) at which point
   // the retrieved WebContents should no longer be used.
-  virtual bool LoadPage(const GURL& url, const LoadPageCallback& callback);
+  virtual bool LoadPage(const GURL& url,
+                        const LoadPageCallback& load_done_callback,
+                        const ProgressCallback& progress_callback);
 
   // Stops (completes or cancels) the load request. Must be called when
   // LoadPageCallback is done with consuming the contents. May be called
@@ -57,10 +58,6 @@ class PrerenderingLoader : public PrerenderAdapter::Observer,
   // This loader should also be responsible for stopping offline
   // prerenders when Chrome is transitioned to foreground.
   virtual void StopLoading();
-
-  // Returns whether prerendering is possible for this device's configuration
-  // and the browser context.
-  virtual bool CanPrerender();
 
   // Returns whether the loader is idle and able to accept new LoadPage
   // request.
@@ -76,13 +73,21 @@ class PrerenderingLoader : public PrerenderAdapter::Observer,
       std::unique_ptr<PrerenderAdapter> prerender_adapter);
 
   // PrerenderAdapter::Observer implementation:
-  void OnPrerenderStart() override;
   void OnPrerenderStopLoading() override;
   void OnPrerenderDomContentLoaded() override;
   void OnPrerenderStop() override;
+  void OnPrerenderNetworkBytesChanged(int64_t bytes) override;
 
   // SnapshotController::Client implementation:
   void StartSnapshot() override;
+
+  // Returns true if the lowbar of snapshotting a page is met.
+  virtual bool IsLowbarMet();
+
+  // Returns a vector of strings for analysis of loading progress.
+  const std::vector<std::string>& GetLoadingSignalData() {
+    return signal_data_;
+  }
 
  private:
   // State of the loader (only one request may be active at a time).
@@ -106,6 +111,12 @@ class PrerenderingLoader : public PrerenderAdapter::Observer,
   // Cancels any current prerender and moves loader to idle state.
   void CancelPrerender();
 
+  // Mark the time when we started loading the page.
+  void MarkLoadStartTime();
+
+  // Add a signal to the signal data.
+  void AddLoadingSignal(const char* signal_name);
+
   // Tracks loading state including whether the Loader is idle.
   State state_;
 
@@ -122,9 +133,21 @@ class PrerenderingLoader : public PrerenderAdapter::Observer,
   // storage namespace for rendering. This will NOT have the loaded page.
   std::unique_ptr<content::WebContents> session_contents_;
 
+  // Signal data collected for this rendering attempt
+  std::vector<std::string> signal_data_;
+
   // Callback to call when the active load request completes, fails, or is
   // canceled.
-  LoadPageCallback callback_;
+  LoadPageCallback load_done_callback_;
+
+  // Callback to call when we know more bytes have loaded from the network.
+  ProgressCallback progress_callback_;
+
+  // True if the lowbar of snapshotting a page is met.
+  bool is_lowbar_met_;
+
+  // Time in ticks of when we start loading the page.
+  base::TimeTicks load_start_time_;
 
   DISALLOW_COPY_AND_ASSIGN(PrerenderingLoader);
 };

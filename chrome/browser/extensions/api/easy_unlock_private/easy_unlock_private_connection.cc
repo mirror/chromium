@@ -5,13 +5,13 @@
 #include "chrome/browser/extensions/api/easy_unlock_private/easy_unlock_private_connection.h"
 
 #include "base/lazy_instance.h"
-#include "components/proximity_auth/connection.h"
+#include "components/cryptauth/connection.h"
 
 namespace extensions {
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<
-    ApiResourceManager<EasyUnlockPrivateConnection>>> g_factory =
-    LAZY_INSTANCE_INITIALIZER;
+    ApiResourceManager<EasyUnlockPrivateConnection>>>::DestructorAtExit
+    g_factory = LAZY_INSTANCE_INITIALIZER;
 
 template <>
 BrowserContextKeyedAPIFactory<ApiResourceManager<EasyUnlockPrivateConnection>>*
@@ -22,14 +22,14 @@ ApiResourceManager<EasyUnlockPrivateConnection>::GetFactoryInstance() {
 EasyUnlockPrivateConnection::EasyUnlockPrivateConnection(
     bool persistent,
     const std::string& owner_extension_id,
-    std::unique_ptr<proximity_auth::Connection> connection)
+    std::unique_ptr<cryptauth::Connection> connection)
     : ApiResource(owner_extension_id),
       persistent_(persistent),
       connection_(connection.release()) {}
 
 EasyUnlockPrivateConnection::~EasyUnlockPrivateConnection() {}
 
-proximity_auth::Connection* EasyUnlockPrivateConnection::GetConnection() const {
+cryptauth::Connection* EasyUnlockPrivateConnection::GetConnection() const {
   return connection_.get();
 }
 

@@ -18,6 +18,7 @@
 #include "content/public/browser/resource_request_info.h"
 #include "net/http/http_response_headers.h"
 #include "net/url_request/url_request_job.h"
+#include "url/url_constants.h"
 
 namespace android_webview {
 
@@ -101,8 +102,8 @@ class ShouldInterceptRequestAdaptor
   void WebResourceResponseObtained(
       std::unique_ptr<AwWebResourceResponse> response) {
     if (response) {
-      callback_.Run(base::WrapUnique(
-          new StreamReaderJobDelegateImpl(std::move(response))));
+      callback_.Run(
+          base::MakeUnique<StreamReaderJobDelegateImpl>(std::move(response)));
     } else {
       callback_.Run(nullptr);
     }
@@ -119,11 +120,20 @@ std::unique_ptr<AwContentsIoThreadClient> GetCorrespondingIoThreadClient(
     net::URLRequest* request) {
   if (content::ResourceRequestInfo::OriginatedFromServiceWorker(request))
     return AwContentsIoThreadClient::GetServiceWorkerIoThreadClient();
-
   int render_process_id, render_frame_id;
   if (!content::ResourceRequestInfo::GetRenderFrameForRequest(
       request, &render_process_id, &render_frame_id)) {
     return nullptr;
+  }
+
+  if (render_process_id == -1 || render_frame_id == -1) {
+    const content::ResourceRequestInfo* resourceRequestInfo =
+        content::ResourceRequestInfo::ForRequest(request);
+    if (resourceRequestInfo == nullptr) {
+      return nullptr;
+    }
+    return AwContentsIoThreadClient::FromID(
+        resourceRequestInfo->GetFrameTreeNodeId());
   }
 
   return AwContentsIoThreadClient::FromID(render_process_id, render_frame_id);
@@ -144,6 +154,13 @@ net::URLRequestJob* AwRequestInterceptor::MaybeInterceptRequest(
   if (request->GetUserData(kRequestAlreadyHasJobDataKey))
     return nullptr;
 
+  // With PlzNavigate, we now seem to receive blob URLs in interceptor.
+  // Ignore these URLs.
+  // TODO(sgurun) is this the best place to do that? Talk with jam@.
+  if (request->url().SchemeIs(url::kBlobScheme)) {
+    return nullptr;
+  }
+
   std::unique_ptr<AwContentsIoThreadClient> io_thread_client =
       GetCorrespondingIoThreadClient(request);
 
@@ -160,8 +177,8 @@ net::URLRequestJob* AwRequestInterceptor::MaybeInterceptRequest(
                        new base::SupportsUserData::Data());
   return new AndroidStreamReaderURLRequestJob(
       request, network_delegate,
-      base::WrapUnique(
-          new ShouldInterceptRequestAdaptor(std::move(io_thread_client))),
+      base::MakeUnique<ShouldInterceptRequestAdaptor>(
+          std::move(io_thread_client)),
       true);
 }
 

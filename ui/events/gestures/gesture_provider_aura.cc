@@ -61,25 +61,22 @@ void GestureProviderAura::OnGestureEvent(const GestureEventData& gesture) {
     // Dispatching event caused by timer.
     client_->OnGestureEvent(gesture_consumer_, event.get());
   } else {
-    // Memory managed by ScopedVector pending_gestures_.
     pending_gestures_.push_back(std::move(event));
   }
 }
 
-ScopedVector<GestureEvent>* GestureProviderAura::GetAndResetPendingGestures() {
-  if (pending_gestures_.empty())
-    return NULL;
-  // Caller is responsible for deleting old_pending_gestures.
-  ScopedVector<GestureEvent>* old_pending_gestures =
-      new ScopedVector<GestureEvent>();
-  old_pending_gestures->swap(pending_gestures_);
-  return old_pending_gestures;
+std::vector<std::unique_ptr<GestureEvent>>
+GestureProviderAura::GetAndResetPendingGestures() {
+  std::vector<std::unique_ptr<GestureEvent>> result;
+  result.swap(pending_gestures_);
+  return result;
 }
 
 void GestureProviderAura::OnTouchEnter(int pointer_id, float x, float y) {
   std::unique_ptr<TouchEvent> touch_event(new TouchEvent(
-      ET_TOUCH_PRESSED, gfx::Point(), EF_IS_SYNTHESIZED, pointer_id,
-      ui::EventTimeForNow(), 0.0f, 0.0f, 0.0f, 0.0f));
+      ET_TOUCH_PRESSED, gfx::Point(), ui::EventTimeForNow(),
+      PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, pointer_id),
+      EF_IS_SYNTHESIZED, 0.0f));
   gfx::PointF point(x, y);
   touch_event->set_location_f(point);
   touch_event->set_root_location_f(point);

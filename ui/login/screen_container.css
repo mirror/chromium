@@ -6,11 +6,11 @@
 #outer-container {
   -webkit-box-align: center;
   -webkit-box-pack: center;
-  -webkit-perspective: 1px; /* Workaround, see http://crbug.com/360567 */
   bottom: 57px;  /* Leave space for the header bar */
   display: -webkit-box;
   left: 0;
   min-height: 717px; /* This enables scrolling. Min resolution: 1024x768 */
+  perspective: 1px; /* Workaround, see http://crbug.com/360567 */
   position: absolute;
   right: 0;
   top: 0;
@@ -18,7 +18,8 @@
 }
 
 .oobe-display #outer-container {
-  -webkit-perspective: 600px;
+  bottom: 47px; /* header-bar is 47 pixels high during OOBE */
+  perspective: 600px;
 }
 
 .pin-container.pin-enabled {
@@ -62,24 +63,44 @@
   pointer-events: none;
 }
 
+#oobe-shield {
+  display: none;
+}
+
+#oobe-shield[md-mode] {
+  background-color: rgba(20, 29, 40, .8); /* #141D28 80% */
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+#oobe[md-mode] #progress-dots {
+  display: none;
+}
+
 /* Screens that have a border and background. */
 #oobe.auto-enrollment-check #inner-container,
 #oobe.autolaunch #inner-container,
 #oobe.confirm-password #inner-container,
-#oobe.connect #inner-container,
+#oobe:not([md-mode]).connect #inner-container,
 #oobe.debugging #inner-container,
 #oobe.enrollment #inner-container,
-#oobe.eula #inner-container,
+#oobe:not([md-mode]).eula #inner-container,
 #oobe.fatal-error #inner-container,
 #oobe.gaia-signin #inner-container,
 #oobe.hid-detection #inner-container,
 #oobe.kiosk-enable #inner-container,
 #oobe.oauth-enrollment #inner-container,
 #oobe.password-changed #inner-container,
+#oobe.ad-password-change #inner-container,
 #oobe.reset #inner-container,
 #oobe.supervised-user-creation #inner-container,
 #oobe.supervised-user-creation-dialog #inner-container,
 #oobe.terms-of-service #inner-container,
+#oobe.arc-tos #inner-container,
 #oobe.update #inner-container,
 #oobe.user-image #inner-container,
 #oobe.wrong-hwid #inner-container,
@@ -100,26 +121,33 @@
 
 /* Only play this animation when 'down' class is removed. */
 .oobe-display #inner-container:not(.down) {
-  -webkit-transition: transform 200ms ease-in-out;
+  transition: transform 200ms ease-in-out;
 }
 
 .oobe-display #inner-container.down {
   transform: translateY(50px) rotateX(-2.5deg);
 }
 
-#step-logo {
+#oobe:not([md-mode]) #step-logo {
   -webkit-margin-start: 17px;
   display: -webkit-box;
   position: absolute;
   top: 15px;
 }
 
+#oobe[md-mode] #step-logo {
+  display: none;
+}
+
 #progress-dots {
   -webkit-box-pack: center;
-  -webkit-transition: opacity 200ms ease-in-out,
-                      visibility 200ms ease-in-out;
   display: -webkit-box;
   margin-top: 15px;
+  transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+}
+
+#oobe[md-mode] #progress-dots {
+  display: none;
 }
 
 /* Hidden for the duration of initial transition. */
@@ -141,6 +169,7 @@
 
 #account-picker-dot,
 #app-launch-splash-dot,
+#arc-kiosk-splash-dot,
 #auto-enrollment-check-dot,
 #autolaunch-dot,
 #confirm-password-dot,
@@ -159,6 +188,7 @@
 #supervised-user-creation-dialog-dot,
 #supervised-user-creation-dot,
 #terms-of-service-dot,
+#arc-tos-dot,
 #tpm-error-message-dot,
 #wrong-hwid-dot,
 #unrecoverable-cryptohome-error-dot {

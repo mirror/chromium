@@ -3,7 +3,8 @@
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Peter Kelly (pmk@post.com)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2012 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,7 +27,7 @@
 #define Attribute_h
 
 #include "core/dom/QualifiedName.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -34,52 +35,58 @@ namespace blink {
 // value. It is distinct from the web-exposed Attr, which also knows of the
 // element to which it attached, if any.
 class Attribute {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    Attribute(const QualifiedName& name, const AtomicString& value)
-        : m_name(name)
-        , m_value(value)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    // NOTE: The references returned by these functions are only valid for as long
-    // as the Attribute stays in place. For example, calling a function that mutates
-    // an Element's internal attribute storage may invalidate them.
-    const AtomicString& value() const { return m_value; }
-    const AtomicString& prefix() const { return m_name.prefix(); }
-    const AtomicString& localName() const { return m_name.localName(); }
-    const AtomicString& namespaceURI() const { return m_name.namespaceURI(); }
+ public:
+  Attribute(const QualifiedName& name, const AtomicString& value)
+      : name_(name), value_(value) {}
 
-    const QualifiedName& name() const { return m_name; }
+  // NOTE: The references returned by these functions are only valid for as long
+  // as the Attribute stays in place. For example, calling a function that
+  // mutates an Element's internal attribute storage may invalidate them.
+  const AtomicString& Value() const { return value_; }
+  const AtomicString& Prefix() const { return name_.Prefix(); }
+  const AtomicString& LocalName() const { return name_.LocalName(); }
+  const AtomicString& NamespaceURI() const { return name_.NamespaceURI(); }
 
-    bool isEmpty() const { return m_value.isEmpty(); }
-    bool matches(const QualifiedName&) const;
+  const QualifiedName& GetName() const { return name_; }
 
-    void setValue(const AtomicString& value) { m_value = value; }
+  bool IsEmpty() const { return value_.IsEmpty(); }
+  bool Matches(const QualifiedName&) const;
+  bool MatchesCaseInsensitive(const QualifiedName&) const;
 
-    // Note: This API is only for HTMLTreeBuilder.  It is not safe to change the
-    // name of an attribute once parseAttribute has been called as DOM
-    // elements may have placed the Attribute in a hash by name.
-    void parserSetName(const QualifiedName& name) { m_name = name; }
+  void SetValue(const AtomicString& value) { value_ = value; }
+
+  // Note: This API is only for HTMLTreeBuilder.  It is not safe to change the
+  // name of an attribute once parseAttribute has been called as DOM
+  // elements may have placed the Attribute in a hash by name.
+  void ParserSetName(const QualifiedName& name) { name_ = name; }
 
 #if COMPILER(MSVC)
-    // NOTE: This constructor is not actually implemented, it's just defined so MSVC
-    // will let us use a zero-length array of Attributes.
-    Attribute();
+  // NOTE: This constructor is not actually implemented, it's just defined so
+  // MSVC will let us use a zero-length array of Attributes.
+  Attribute();
 #endif
 
-private:
-    QualifiedName m_name;
-    AtomicString m_value;
+ private:
+  QualifiedName name_;
+  AtomicString value_;
 };
 
-inline bool Attribute::matches(const QualifiedName& qualifiedName) const
-{
-    if (qualifiedName.localName() != localName())
-        return false;
-    return qualifiedName.prefix() == starAtom || qualifiedName.namespaceURI() == namespaceURI();
+inline bool Attribute::Matches(const QualifiedName& qualified_name) const {
+  if (qualified_name.LocalName() != LocalName())
+    return false;
+  return qualified_name.Prefix() == g_star_atom ||
+         qualified_name.NamespaceURI() == NamespaceURI();
 }
 
-} // namespace blink
+inline bool Attribute::MatchesCaseInsensitive(
+    const QualifiedName& qualified_name) const {
+  return qualified_name.LocalNameUpper() == name_.LocalNameUpper() &&
+         (qualified_name.Prefix() == g_star_atom ||
+          qualified_name.NamespaceURI() == NamespaceURI());
+}
 
-#endif // Attribute_h
+}  // namespace blink
+
+#endif  // Attribute_h

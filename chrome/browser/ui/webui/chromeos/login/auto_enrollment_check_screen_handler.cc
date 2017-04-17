@@ -4,7 +4,7 @@
 
 #include "chrome/browser/ui/webui/chromeos/login/auto_enrollment_check_screen_handler.h"
 
-#include "chrome/browser/ui/webui/chromeos/login/oobe_screen.h"
+#include "chrome/browser/chromeos/login/oobe_screen.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/login/localized_values_builder.h"
 
@@ -17,14 +17,13 @@ const char kJsScreenPath[] = "login.AutoEnrollmentCheckScreen";
 namespace chromeos {
 
 AutoEnrollmentCheckScreenHandler::AutoEnrollmentCheckScreenHandler()
-    : BaseScreenHandler(kJsScreenPath),
-      delegate_(NULL),
-      show_on_init_(false) {
+    : BaseScreenHandler(kScreenId) {
+  set_call_js_prefix(kJsScreenPath);
 }
 
 AutoEnrollmentCheckScreenHandler::~AutoEnrollmentCheckScreenHandler() {
   if (delegate_)
-    delegate_->OnActorDestroyed(this);
+    delegate_->OnViewDestroyed(this);
 }
 
 void AutoEnrollmentCheckScreenHandler::Show() {
@@ -32,7 +31,7 @@ void AutoEnrollmentCheckScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
-  ShowScreen(OobeScreen::SCREEN_AUTO_ENROLLMENT_CHECK);
+  ShowScreen(kScreenId);
 }
 
 void AutoEnrollmentCheckScreenHandler::SetDelegate(Delegate* delegate) {

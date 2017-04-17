@@ -4,90 +4,92 @@
 
 #include "modules/push_messaging/PushSubscription.h"
 
+#include <memory>
 #include "bindings/core/v8/CallbackPromiseAdapter.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/V8ObjectBuilder.h"
 #include "modules/push_messaging/PushError.h"
 #include "modules/push_messaging/PushSubscriptionOptions.h"
 #include "modules/serviceworkers/ServiceWorkerRegistration.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/text/Base64.h"
 #include "public/platform/Platform.h"
 #include "public/platform/modules/push_messaging/WebPushProvider.h"
 #include "public/platform/modules/push_messaging/WebPushSubscription.h"
-#include "wtf/Assertions.h"
-#include "wtf/text/Base64.h"
-#include <memory>
 
 namespace blink {
 
-PushSubscription* PushSubscription::take(ScriptPromiseResolver*, std::unique_ptr<WebPushSubscription> pushSubscription, ServiceWorkerRegistration* serviceWorkerRegistration)
-{
-    if (!pushSubscription)
-        return nullptr;
-    return new PushSubscription(*pushSubscription, serviceWorkerRegistration);
-}
-
-void PushSubscription::dispose(WebPushSubscription* pushSubscription)
-{
-    if (pushSubscription)
-        delete pushSubscription;
-}
-
-PushSubscription::PushSubscription(const WebPushSubscription& subscription, ServiceWorkerRegistration* serviceWorkerRegistration)
-    : m_endpoint(subscription.endpoint)
-    , m_options(PushSubscriptionOptions::create(subscription.options))
-    , m_p256dh(DOMArrayBuffer::create(subscription.p256dh.data(), subscription.p256dh.size()))
-    , m_auth(DOMArrayBuffer::create(subscription.auth.data(), subscription.auth.size()))
-    , m_serviceWorkerRegistration(serviceWorkerRegistration)
-{
-}
-
-PushSubscription::~PushSubscription()
-{
-}
-
-DOMArrayBuffer* PushSubscription::getKey(const AtomicString& name) const
-{
-    if (name == "p256dh")
-        return m_p256dh;
-    if (name == "auth")
-        return m_auth;
-
+PushSubscription* PushSubscription::Take(
+    ScriptPromiseResolver*,
+    std::unique_ptr<WebPushSubscription> push_subscription,
+    ServiceWorkerRegistration* service_worker_registration) {
+  if (!push_subscription)
     return nullptr;
+  return new PushSubscription(*push_subscription, service_worker_registration);
 }
 
-ScriptPromise PushSubscription::unsubscribe(ScriptState* scriptState)
-{
-    ScriptPromiseResolver* resolver = ScriptPromiseResolver::create(scriptState);
-    ScriptPromise promise = resolver->promise();
-
-    WebPushProvider* webPushProvider = Platform::current()->pushProvider();
-    DCHECK(webPushProvider);
-
-    webPushProvider->unsubscribe(m_serviceWorkerRegistration->webRegistration(), new CallbackPromiseAdapter<bool, PushError>(resolver));
-    return promise;
+void PushSubscription::Dispose(WebPushSubscription* push_subscription) {
+  if (push_subscription)
+    delete push_subscription;
 }
 
-ScriptValue PushSubscription::toJSONForBinding(ScriptState* scriptState)
-{
-    DCHECK(m_p256dh);
+PushSubscription::PushSubscription(
+    const WebPushSubscription& subscription,
+    ServiceWorkerRegistration* service_worker_registration)
+    : endpoint_(subscription.endpoint),
+      options_(PushSubscriptionOptions::Create(subscription.options)),
+      p256dh_(DOMArrayBuffer::Create(subscription.p256dh.Data(),
+                                     subscription.p256dh.size())),
+      auth_(DOMArrayBuffer::Create(subscription.auth.Data(),
+                                   subscription.auth.size())),
+      service_worker_registration_(service_worker_registration) {}
 
-    V8ObjectBuilder result(scriptState);
-    result.addString("endpoint", endpoint());
+PushSubscription::~PushSubscription() {}
 
-    V8ObjectBuilder keys(scriptState);
-    keys.add("p256dh", WTF::base64URLEncode(static_cast<const char*>(m_p256dh->data()), m_p256dh->byteLength()));
-    keys.add("auth", WTF::base64URLEncode(static_cast<const char*>(m_auth->data()), m_auth->byteLength()));
-    result.add("keys", keys);
+DOMArrayBuffer* PushSubscription::getKey(const AtomicString& name) const {
+  if (name == "p256dh")
+    return p256dh_;
+  if (name == "auth")
+    return auth_;
 
-    return result.scriptValue();
+  return nullptr;
 }
 
-DEFINE_TRACE(PushSubscription)
-{
-    visitor->trace(m_options);
-    visitor->trace(m_p256dh);
-    visitor->trace(m_auth);
-    visitor->trace(m_serviceWorkerRegistration);
+ScriptPromise PushSubscription::unsubscribe(ScriptState* script_state) {
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  WebPushProvider* web_push_provider = Platform::Current()->PushProvider();
+  DCHECK(web_push_provider);
+
+  web_push_provider->Unsubscribe(
+      service_worker_registration_->WebRegistration(),
+      WTF::MakeUnique<CallbackPromiseAdapter<bool, PushError>>(resolver));
+  return promise;
 }
 
-} // namespace blink
+ScriptValue PushSubscription::toJSONForBinding(ScriptState* script_state) {
+  DCHECK(p256dh_);
+
+  V8ObjectBuilder result(script_state);
+  result.AddString("endpoint", endpoint());
+
+  V8ObjectBuilder keys(script_state);
+  keys.Add("p256dh",
+           WTF::Base64URLEncode(static_cast<const char*>(p256dh_->Data()),
+                                p256dh_->ByteLength()));
+  keys.Add("auth", WTF::Base64URLEncode(static_cast<const char*>(auth_->Data()),
+                                        auth_->ByteLength()));
+  result.Add("keys", keys);
+
+  return result.GetScriptValue();
+}
+
+DEFINE_TRACE(PushSubscription) {
+  visitor->Trace(options_);
+  visitor->Trace(p256dh_);
+  visitor->Trace(auth_);
+  visitor->Trace(service_worker_registration_);
+}
+
+}  // namespace blink

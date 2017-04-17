@@ -7,27 +7,24 @@
 
 #import <Foundation/Foundation.h>
 
-#import "NetworkCommunication.h"
-
+@class OmahaCommunication;
 @protocol OmahaCommunicationDelegate
-- (void)onOmahaSuccessWithResponseBody:(NSData*)responseBody
-                              AndError:(NSError*)error;
+- (void)omahaCommunication:(OmahaCommunication*)messenger
+                 onSuccess:(NSArray*)URLs;
+- (void)omahaCommunication:(OmahaCommunication*)messenger
+                 onFailure:(NSError*)error;
 @end
 
-@interface OmahaCommunication : NSObject<NSURLSessionDataDelegate> {
-  id<OmahaCommunicationDelegate> _delegate;
-}
+@interface OmahaCommunication : NSObject<NSURLSessionDataDelegate>
 
 @property(nonatomic, copy) NSXMLDocument* requestXMLBody;
-// TODO: talk to @sdy about use of NetworkCommunication
-@property(nonatomic, copy) NetworkCommunication* sessionHelper;
 @property(nonatomic, assign) id<OmahaCommunicationDelegate> delegate;
 
 - (id)init;
 - (id)initWithBody:(NSXMLDocument*)xmlBody;
 
-// Sends the request created using the session helper.
-- (void)sendRequest;
+// Asks the Omaha servers for the most updated version of Chrome.
+- (void)fetchDownloadURLs;
 
 @end
 

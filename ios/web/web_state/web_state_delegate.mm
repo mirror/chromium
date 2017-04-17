@@ -18,15 +18,41 @@ WebStateDelegate::~WebStateDelegate() {
   DCHECK(attached_states_.empty());
 }
 
-void WebStateDelegate::LoadProgressChanged(WebState*, double) {}
+WebState* WebStateDelegate::CreateNewWebState(WebState* source,
+                                              const GURL& url,
+                                              const GURL& opener_url,
+                                              bool initiated_by_user) {
+  return nullptr;
+}
+
+void WebStateDelegate::CloseWebState(WebState* source) {}
+
+WebState* WebStateDelegate::OpenURLFromWebState(
+    WebState*,
+    const WebState::OpenURLParams&) {
+  return nullptr;
+}
 
 bool WebStateDelegate::HandleContextMenu(WebState*, const ContextMenuParams&) {
   return false;
 }
 
+void WebStateDelegate::ShowRepostFormWarningDialog(
+    WebState*,
+    const base::Callback<void(bool)>& callback) {
+  callback.Run(true);
+}
+
 JavaScriptDialogPresenter* WebStateDelegate::GetJavaScriptDialogPresenter(
     WebState*) {
   return nullptr;
+}
+
+void WebStateDelegate::OnAuthRequired(WebState* source,
+                                      NSURLProtectionSpace* protection_space,
+                                      NSURLCredential* proposed_credential,
+                                      const AuthCallback& callback) {
+  callback.Run(nil, nil);
 }
 
 void WebStateDelegate::Attach(WebState* source) {

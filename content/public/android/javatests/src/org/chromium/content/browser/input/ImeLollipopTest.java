@@ -6,15 +6,18 @@ package org.chromium.content.browser.input;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
 import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.InputConnection;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
+
+import java.util.concurrent.Callable;
 
 /**
  * Integration tests for text input for Android L (or above) features.
@@ -24,6 +27,7 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 public class ImeLollipopTest extends ImeTest {
     @MediumTest
     @Feature({"TextInput"})
+    @RetryOnFailure
     public void testUpdateCursorAnchorInfo() throws Throwable {
         requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
 
@@ -58,20 +62,24 @@ public class ImeLollipopTest extends ImeTest {
         });
         requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE);
         waitForUpdateCursorAnchorInfoComposingText("abcd");
+
+        setComposingText("abcde", 2);
+        requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE);
+        waitForUpdateCursorAnchorInfoComposingText("abcde");
     }
 
-    private void requestCursorUpdates(final int cursorUpdateMode) {
+    private void requestCursorUpdates(final int cursorUpdateMode) throws Exception {
         final InputConnection connection = mConnection;
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+        runBlockingOnImeThread(new Callable<Void>() {
             @Override
-            public void run() {
+            public Void call() {
                 connection.requestCursorUpdates(cursorUpdateMode);
+                return null;
             }
         });
     }
 
-    private void waitForUpdateCursorAnchorInfoComposingText(final String expected)
-            throws InterruptedException {
+    private void waitForUpdateCursorAnchorInfoComposingText(final String expected) {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {

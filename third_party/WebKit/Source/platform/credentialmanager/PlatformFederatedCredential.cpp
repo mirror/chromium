@@ -6,20 +6,24 @@
 
 namespace blink {
 
-PlatformFederatedCredential* PlatformFederatedCredential::create(const String& id, PassRefPtr<SecurityOrigin> provider, const String& name, const KURL& iconURL)
-{
-    return new PlatformFederatedCredential(id, provider, name, iconURL);
+PlatformFederatedCredential* PlatformFederatedCredential::Create(
+    const String& id,
+    PassRefPtr<SecurityOrigin> provider,
+    const String& name,
+    const KURL& icon_url) {
+  return new PlatformFederatedCredential(id, std::move(provider), name,
+                                         icon_url);
 }
 
-PlatformFederatedCredential::PlatformFederatedCredential(const String& id, PassRefPtr<SecurityOrigin> provider, const String& name, const KURL& iconURL)
-    : PlatformCredential(id, name, iconURL)
-    , m_provider(provider)
-{
-    setType("federated");
+PlatformFederatedCredential::PlatformFederatedCredential(
+    const String& id,
+    PassRefPtr<SecurityOrigin> provider,
+    const String& name,
+    const KURL& icon_url)
+    : PlatformCredential(id, name, icon_url), provider_(std::move(provider)) {
+  SetType("federated");
 }
 
-PlatformFederatedCredential::~PlatformFederatedCredential()
-{
-}
+PlatformFederatedCredential::~PlatformFederatedCredential() {}
 
-} // namespace blink
+}  // namespace blink

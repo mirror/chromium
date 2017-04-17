@@ -9,45 +9,48 @@
 
 namespace blink {
 
-void BeginFilterDisplayItem::replay(GraphicsContext& context) const
-{
-    FloatRect imageFilterBounds(FloatPoint(), m_bounds.size());
-    context.save();
-    context.translate(m_bounds.x(), m_bounds.y());
-    context.beginLayer(1, SkXfermode::kSrcOver_Mode, &imageFilterBounds, ColorFilterNone, m_imageFilter);
-    context.translate(-m_bounds.x(), -m_bounds.y());
+void BeginFilterDisplayItem::Replay(GraphicsContext& context) const {
+  FloatRect image_filter_bounds(bounds_);
+  image_filter_bounds.Move(-origin_.X(), -origin_.Y());
+  context.Save();
+  context.Translate(origin_.X(), origin_.Y());
+  context.BeginLayer(1, SkBlendMode::kSrcOver, &image_filter_bounds,
+                     kColorFilterNone, image_filter_);
+  context.Translate(-origin_.X(), -origin_.Y());
 }
 
-void BeginFilterDisplayItem::appendToWebDisplayItemList(const IntRect& visualRect, WebDisplayItemList* list) const
-{
-    list->appendFilterItem(visualRect, m_webFilterOperations->asFilterOperations(), m_bounds);
+void BeginFilterDisplayItem::AppendToWebDisplayItemList(
+    const IntRect& visual_rect,
+    WebDisplayItemList* list) const {
+  list->AppendFilterItem(compositor_filter_operations_.AsCcFilterOperations(),
+                         bounds_, origin_);
 }
 
-bool BeginFilterDisplayItem::drawsContent() const
-{
-    // Skia cannot currently tell us if a filter will draw content,
-    // even when no input primitives are drawn.
-    return true;
+bool BeginFilterDisplayItem::DrawsContent() const {
+  // Skia cannot currently tell us if a filter will draw content,
+  // even when no input primitives are drawn.
+  return true;
 }
 
 #ifndef NDEBUG
-void BeginFilterDisplayItem::dumpPropertiesAsDebugString(WTF::StringBuilder& stringBuilder) const
-{
-    DisplayItem::dumpPropertiesAsDebugString(stringBuilder);
-    stringBuilder.append(WTF::String::format(", filter bounds: [%f,%f,%f,%f]",
-        m_bounds.x(), m_bounds.y(), m_bounds.width(), m_bounds.height()));
+void BeginFilterDisplayItem::DumpPropertiesAsDebugString(
+    WTF::StringBuilder& string_builder) const {
+  DisplayItem::DumpPropertiesAsDebugString(string_builder);
+  string_builder.Append(WTF::String::Format(", filter bounds: [%f,%f,%f,%f]",
+                                            bounds_.X(), bounds_.Y(),
+                                            bounds_.Width(), bounds_.Height()));
 }
 #endif
 
-void EndFilterDisplayItem::replay(GraphicsContext& context) const
-{
-    context.endLayer();
-    context.restore();
+void EndFilterDisplayItem::Replay(GraphicsContext& context) const {
+  context.EndLayer();
+  context.Restore();
 }
 
-void EndFilterDisplayItem::appendToWebDisplayItemList(const IntRect& visualRect, WebDisplayItemList* list) const
-{
-    list->appendEndFilterItem(visualRect);
+void EndFilterDisplayItem::AppendToWebDisplayItemList(
+    const IntRect& visual_rect,
+    WebDisplayItemList* list) const {
+  list->AppendEndFilterItem();
 }
 
-} // namespace blink
+}  // namespace blink

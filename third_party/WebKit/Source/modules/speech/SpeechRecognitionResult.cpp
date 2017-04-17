@@ -27,28 +27,26 @@
 
 namespace blink {
 
-SpeechRecognitionResult* SpeechRecognitionResult::create(const HeapVector<Member<SpeechRecognitionAlternative>>& alternatives, bool final)
-{
-    return new SpeechRecognitionResult(alternatives, final);
+SpeechRecognitionResult* SpeechRecognitionResult::Create(
+    const HeapVector<Member<SpeechRecognitionAlternative>>& alternatives,
+    bool final) {
+  return new SpeechRecognitionResult(alternatives, final);
 }
 
-SpeechRecognitionAlternative* SpeechRecognitionResult::item(unsigned index)
-{
-    if (index >= m_alternatives.size())
-        return nullptr;
+SpeechRecognitionAlternative* SpeechRecognitionResult::item(unsigned index) {
+  if (index >= alternatives_.size())
+    return nullptr;
 
-    return m_alternatives[index];
+  return alternatives_[index];
 }
 
-SpeechRecognitionResult::SpeechRecognitionResult(const HeapVector<Member<SpeechRecognitionAlternative>>& alternatives, bool final)
-    : m_final(final)
-    , m_alternatives(alternatives)
-{
+SpeechRecognitionResult::SpeechRecognitionResult(
+    const HeapVector<Member<SpeechRecognitionAlternative>>& alternatives,
+    bool final)
+    : final_(final), alternatives_(alternatives) {}
+
+DEFINE_TRACE(SpeechRecognitionResult) {
+  visitor->Trace(alternatives_);
 }
 
-DEFINE_TRACE(SpeechRecognitionResult)
-{
-    visitor->trace(m_alternatives);
-}
-
-} // namespace blink
+}  // namespace blink

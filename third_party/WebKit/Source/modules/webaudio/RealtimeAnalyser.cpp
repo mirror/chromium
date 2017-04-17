@@ -10,318 +10,335 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/RealtimeAnalyser.h"
+#include <limits.h>
+#include <algorithm>
+#include <complex>
 #include "platform/audio/AudioBus.h"
 #include "platform/audio/AudioUtilities.h"
 #include "platform/audio/VectorMath.h"
-#include "wtf/MathExtras.h"
-#include "wtf/PtrUtil.h"
-#include <algorithm>
-#include <complex>
-#include <limits.h>
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-const double RealtimeAnalyser::DefaultSmoothingTimeConstant = 0.8;
-const double RealtimeAnalyser::DefaultMinDecibels = -100;
-const double RealtimeAnalyser::DefaultMaxDecibels = -30;
+const double RealtimeAnalyser::kDefaultSmoothingTimeConstant = 0.8;
+const double RealtimeAnalyser::kDefaultMinDecibels = -100;
+const double RealtimeAnalyser::kDefaultMaxDecibels = -30;
 
-const unsigned RealtimeAnalyser::DefaultFFTSize = 2048;
-// All FFT implementations are expected to handle power-of-two sizes MinFFTSize <= size <= MaxFFTSize.
-const unsigned RealtimeAnalyser::MinFFTSize = 32;
-const unsigned RealtimeAnalyser::MaxFFTSize = 32768;
-const unsigned RealtimeAnalyser::InputBufferSize = RealtimeAnalyser::MaxFFTSize * 2;
+const unsigned RealtimeAnalyser::kDefaultFFTSize = 2048;
+// All FFT implementations are expected to handle power-of-two sizes
+// MinFFTSize <= size <= MaxFFTSize.
+const unsigned RealtimeAnalyser::kMinFFTSize = 32;
+const unsigned RealtimeAnalyser::kMaxFFTSize = 32768;
+const unsigned RealtimeAnalyser::kInputBufferSize =
+    RealtimeAnalyser::kMaxFFTSize * 2;
 
 RealtimeAnalyser::RealtimeAnalyser()
-    : m_inputBuffer(InputBufferSize)
-    , m_writeIndex(0)
-    , m_downMixBus(AudioBus::create(1, AudioUtilities::kRenderQuantumFrames))
-    , m_fftSize(DefaultFFTSize)
-    , m_magnitudeBuffer(DefaultFFTSize / 2)
-    , m_smoothingTimeConstant(DefaultSmoothingTimeConstant)
-    , m_minDecibels(DefaultMinDecibels)
-    , m_maxDecibels(DefaultMaxDecibels)
-    , m_lastAnalysisTime(-1)
-{
-    m_analysisFrame = wrapUnique(new FFTFrame(DefaultFFTSize));
+    : input_buffer_(kInputBufferSize),
+      write_index_(0),
+      down_mix_bus_(AudioBus::Create(1, AudioUtilities::kRenderQuantumFrames)),
+      fft_size_(kDefaultFFTSize),
+      magnitude_buffer_(kDefaultFFTSize / 2),
+      smoothing_time_constant_(kDefaultSmoothingTimeConstant),
+      min_decibels_(kDefaultMinDecibels),
+      max_decibels_(kDefaultMaxDecibels),
+      last_analysis_time_(-1) {
+  analysis_frame_ = WTF::MakeUnique<FFTFrame>(kDefaultFFTSize);
 }
 
-bool RealtimeAnalyser::setFftSize(size_t size)
-{
-    ASSERT(isMainThread());
+bool RealtimeAnalyser::SetFftSize(size_t size) {
+  DCHECK(IsMainThread());
 
-    // Only allow powers of two.
-    unsigned log2size = static_cast<unsigned>(log2(size));
-    bool isPOT(1UL << log2size == size);
+  // Only allow powers of two within the allowed range.
+  if (size > kMaxFFTSize || size < kMinFFTSize ||
+      !AudioUtilities::IsPowerOfTwo(size))
+    return false;
 
-    if (!isPOT || size > MaxFFTSize || size < MinFFTSize)
-        return false;
+  if (fft_size_ != size) {
+    analysis_frame_ = WTF::MakeUnique<FFTFrame>(size);
+    // m_magnitudeBuffer has size = fftSize / 2 because it contains floats
+    // reduced from complex values in m_analysisFrame.
+    magnitude_buffer_.Allocate(size / 2);
+    fft_size_ = size;
+  }
 
-    if (m_fftSize != size) {
-        m_analysisFrame = wrapUnique(new FFTFrame(size));
-        // m_magnitudeBuffer has size = fftSize / 2 because it contains floats reduced from complex values in m_analysisFrame.
-        m_magnitudeBuffer.allocate(size / 2);
-        m_fftSize = size;
-    }
-
-    return true;
+  return true;
 }
 
-void RealtimeAnalyser::writeInput(AudioBus* bus, size_t framesToProcess)
-{
-    bool isBusGood = bus && bus->numberOfChannels() > 0 && bus->channel(0)->length() >= framesToProcess;
-    ASSERT(isBusGood);
-    if (!isBusGood)
-        return;
+void RealtimeAnalyser::WriteInput(AudioBus* bus, size_t frames_to_process) {
+  bool is_bus_good = bus && bus->NumberOfChannels() > 0 &&
+                     bus->Channel(0)->length() >= frames_to_process;
+  DCHECK(is_bus_good);
+  if (!is_bus_good)
+    return;
 
-    // FIXME : allow to work with non-FFTSize divisible chunking
-    bool isDestinationGood = m_writeIndex < m_inputBuffer.size() && m_writeIndex + framesToProcess <= m_inputBuffer.size();
-    ASSERT(isDestinationGood);
-    if (!isDestinationGood)
-        return;
+  // FIXME : allow to work with non-FFTSize divisible chunking
+  bool is_destination_good =
+      write_index_ < input_buffer_.size() &&
+      write_index_ + frames_to_process <= input_buffer_.size();
+  DCHECK(is_destination_good);
+  if (!is_destination_good)
+    return;
 
-    // Perform real-time analysis
-    float* dest = m_inputBuffer.data() + m_writeIndex;
+  // Perform real-time analysis
+  float* dest = input_buffer_.Data() + write_index_;
 
-    // Clear the bus and downmix the input according to the down mixing rules.  Then save the result
-    // in the m_inputBuffer at the appropriate place.
-    m_downMixBus->zero();
-    m_downMixBus->sumFrom(*bus);
-    memcpy(dest, m_downMixBus->channel(0)->data(), framesToProcess * sizeof(*dest));
+  // Clear the bus and downmix the input according to the down mixing rules.
+  // Then save the result in the m_inputBuffer at the appropriate place.
+  down_mix_bus_->Zero();
+  down_mix_bus_->SumFrom(*bus);
+  memcpy(dest, down_mix_bus_->Channel(0)->Data(),
+         frames_to_process * sizeof(*dest));
 
-    m_writeIndex += framesToProcess;
-    if (m_writeIndex >= InputBufferSize)
-        m_writeIndex = 0;
+  write_index_ += frames_to_process;
+  if (write_index_ >= kInputBufferSize)
+    write_index_ = 0;
 }
 
 namespace {
 
-void applyWindow(float* p, size_t n)
-{
-    ASSERT(isMainThread());
+void ApplyWindow(float* p, size_t n) {
+  DCHECK(IsMainThread());
 
-    // Blackman window
-    double alpha = 0.16;
-    double a0 = 0.5 * (1 - alpha);
-    double a1 = 0.5;
-    double a2 = 0.5 * alpha;
+  // Blackman window
+  double alpha = 0.16;
+  double a0 = 0.5 * (1 - alpha);
+  double a1 = 0.5;
+  double a2 = 0.5 * alpha;
 
-    for (unsigned i = 0; i < n; ++i) {
-        double x = static_cast<double>(i) / static_cast<double>(n);
-        double window = a0 - a1 * cos(twoPiDouble * x) + a2 * cos(twoPiDouble * 2.0 * x);
-        p[i] *= float(window);
-    }
+  for (unsigned i = 0; i < n; ++i) {
+    double x = static_cast<double>(i) / static_cast<double>(n);
+    double window =
+        a0 - a1 * cos(twoPiDouble * x) + a2 * cos(twoPiDouble * 2.0 * x);
+    p[i] *= float(window);
+  }
 }
 
-} // namespace
+}  // namespace
 
-void RealtimeAnalyser::doFFTAnalysis()
-{
-    ASSERT(isMainThread());
+void RealtimeAnalyser::DoFFTAnalysis() {
+  DCHECK(IsMainThread());
 
-    // Unroll the input buffer into a temporary buffer, where we'll apply an analysis window followed by an FFT.
-    size_t fftSize = this->fftSize();
+  // Unroll the input buffer into a temporary buffer, where we'll apply an
+  // analysis window followed by an FFT.
+  size_t fft_size = this->FftSize();
 
-    AudioFloatArray temporaryBuffer(fftSize);
-    float* inputBuffer = m_inputBuffer.data();
-    float* tempP = temporaryBuffer.data();
+  AudioFloatArray temporary_buffer(fft_size);
+  float* input_buffer = input_buffer_.Data();
+  float* temp_p = temporary_buffer.Data();
 
-    // Take the previous fftSize values from the input buffer and copy into the temporary buffer.
-    unsigned writeIndex = m_writeIndex;
-    if (writeIndex < fftSize) {
-        memcpy(tempP, inputBuffer + writeIndex - fftSize + InputBufferSize, sizeof(*tempP) * (fftSize - writeIndex));
-        memcpy(tempP + fftSize - writeIndex, inputBuffer, sizeof(*tempP) * writeIndex);
-    } else {
-        memcpy(tempP, inputBuffer + writeIndex - fftSize, sizeof(*tempP) * fftSize);
-    }
+  // Take the previous fftSize values from the input buffer and copy into the
+  // temporary buffer.
+  unsigned write_index = write_index_;
+  if (write_index < fft_size) {
+    memcpy(temp_p, input_buffer + write_index - fft_size + kInputBufferSize,
+           sizeof(*temp_p) * (fft_size - write_index));
+    memcpy(temp_p + fft_size - write_index, input_buffer,
+           sizeof(*temp_p) * write_index);
+  } else {
+    memcpy(temp_p, input_buffer + write_index - fft_size,
+           sizeof(*temp_p) * fft_size);
+  }
 
-    // Window the input samples.
-    applyWindow(tempP, fftSize);
+  // Window the input samples.
+  ApplyWindow(temp_p, fft_size);
 
-    // Do the analysis.
-    m_analysisFrame->doFFT(tempP);
+  // Do the analysis.
+  analysis_frame_->DoFFT(temp_p);
 
-    float* realP = m_analysisFrame->realData();
-    float* imagP = m_analysisFrame->imagData();
+  float* real_p = analysis_frame_->RealData();
+  float* imag_p = analysis_frame_->ImagData();
 
-    // Blow away the packed nyquist component.
-    imagP[0] = 0;
+  // Blow away the packed nyquist component.
+  imag_p[0] = 0;
 
-    // Normalize so than an input sine wave at 0dBfs registers as 0dBfs (undo FFT scaling factor).
-    const double magnitudeScale = 1.0 / fftSize;
+  // Normalize so than an input sine wave at 0dBfs registers as 0dBfs (undo FFT
+  // scaling factor).
+  const double magnitude_scale = 1.0 / fft_size;
 
-    // A value of 0 does no averaging with the previous result.  Larger values produce slower, but smoother changes.
-    double k = m_smoothingTimeConstant;
-    k = std::max(0.0, k);
-    k = std::min(1.0, k);
+  // A value of 0 does no averaging with the previous result.  Larger values
+  // produce slower, but smoother changes.
+  double k = smoothing_time_constant_;
+  k = std::max(0.0, k);
+  k = std::min(1.0, k);
 
-    // Convert the analysis data from complex to magnitude and average with the previous result.
-    float* destination = magnitudeBuffer().data();
-    size_t n = magnitudeBuffer().size();
-    for (size_t i = 0; i < n; ++i) {
-        std::complex<double> c(realP[i], imagP[i]);
-        double scalarMagnitude = abs(c) * magnitudeScale;
-        destination[i] = float(k * destination[i] + (1 - k) * scalarMagnitude);
-    }
+  // Convert the analysis data from complex to magnitude and average with the
+  // previous result.
+  float* destination = MagnitudeBuffer().Data();
+  size_t n = MagnitudeBuffer().size();
+  for (size_t i = 0; i < n; ++i) {
+    std::complex<double> c(real_p[i], imag_p[i]);
+    double scalar_magnitude = abs(c) * magnitude_scale;
+    destination[i] = float(k * destination[i] + (1 - k) * scalar_magnitude);
+  }
 }
 
-void RealtimeAnalyser::convertFloatToDb(DOMFloat32Array* destinationArray)
-{
-    // Convert from linear magnitude to floating-point decibels.
-    unsigned sourceLength = magnitudeBuffer().size();
-    size_t len = std::min(sourceLength, destinationArray->length());
-    if (len > 0) {
-        const float* source = magnitudeBuffer().data();
-        float* destination = destinationArray->data();
+void RealtimeAnalyser::ConvertFloatToDb(DOMFloat32Array* destination_array) {
+  // Convert from linear magnitude to floating-point decibels.
+  unsigned source_length = MagnitudeBuffer().size();
+  size_t len = std::min(source_length, destination_array->length());
+  if (len > 0) {
+    const float* source = MagnitudeBuffer().Data();
+    float* destination = destination_array->Data();
 
-        for (unsigned i = 0; i < len; ++i) {
-            float linearValue = source[i];
-            double dbMag = AudioUtilities::linearToDecibels(linearValue);
-            destination[i] = float(dbMag);
-        }
+    for (unsigned i = 0; i < len; ++i) {
+      float linear_value = source[i];
+      double db_mag = AudioUtilities::LinearToDecibels(linear_value);
+      destination[i] = float(db_mag);
     }
+  }
 }
 
-void RealtimeAnalyser::getFloatFrequencyData(DOMFloat32Array* destinationArray, double currentTime)
-{
-    ASSERT(isMainThread());
-    ASSERT(destinationArray);
+void RealtimeAnalyser::GetFloatFrequencyData(DOMFloat32Array* destination_array,
+                                             double current_time) {
+  DCHECK(IsMainThread());
+  DCHECK(destination_array);
 
-    if (currentTime <= m_lastAnalysisTime) {
-        convertFloatToDb(destinationArray);
-        return;
-    }
+  if (current_time <= last_analysis_time_) {
+    ConvertFloatToDb(destination_array);
+    return;
+  }
 
-    // Time has advanced since the last call; update the FFT data.
-    m_lastAnalysisTime = currentTime;
-    doFFTAnalysis();
+  // Time has advanced since the last call; update the FFT data.
+  last_analysis_time_ = current_time;
+  DoFFTAnalysis();
 
-    convertFloatToDb(destinationArray);
+  ConvertFloatToDb(destination_array);
 }
 
-void RealtimeAnalyser::convertToByteData(DOMUint8Array* destinationArray)
-{
-    // Convert from linear magnitude to unsigned-byte decibels.
-    unsigned sourceLength = magnitudeBuffer().size();
-    size_t len = std::min(sourceLength, destinationArray->length());
-    if (len > 0) {
-        const double rangeScaleFactor = m_maxDecibels == m_minDecibels ? 1 : 1 / (m_maxDecibels - m_minDecibels);
-        const double minDecibels = m_minDecibels;
+void RealtimeAnalyser::ConvertToByteData(DOMUint8Array* destination_array) {
+  // Convert from linear magnitude to unsigned-byte decibels.
+  unsigned source_length = MagnitudeBuffer().size();
+  size_t len = std::min(source_length, destination_array->length());
+  if (len > 0) {
+    const double range_scale_factor = max_decibels_ == min_decibels_
+                                          ? 1
+                                          : 1 / (max_decibels_ - min_decibels_);
+    const double min_decibels = min_decibels_;
 
-        const float* source = magnitudeBuffer().data();
-        unsigned char* destination = destinationArray->data();
+    const float* source = MagnitudeBuffer().Data();
+    unsigned char* destination = destination_array->Data();
 
-        for (unsigned i = 0; i < len; ++i) {
-            float linearValue = source[i];
-            double dbMag = AudioUtilities::linearToDecibels(linearValue);
+    for (unsigned i = 0; i < len; ++i) {
+      float linear_value = source[i];
+      double db_mag = AudioUtilities::LinearToDecibels(linear_value);
 
-            // The range m_minDecibels to m_maxDecibels will be scaled to byte values from 0 to UCHAR_MAX.
-            double scaledValue = UCHAR_MAX * (dbMag - minDecibels) * rangeScaleFactor;
+      // The range m_minDecibels to m_maxDecibels will be scaled to byte values
+      // from 0 to UCHAR_MAX.
+      double scaled_value =
+          UCHAR_MAX * (db_mag - min_decibels) * range_scale_factor;
 
-            // Clip to valid range.
-            if (scaledValue < 0)
-                scaledValue = 0;
-            if (scaledValue > UCHAR_MAX)
-                scaledValue = UCHAR_MAX;
+      // Clip to valid range.
+      if (scaled_value < 0)
+        scaled_value = 0;
+      if (scaled_value > UCHAR_MAX)
+        scaled_value = UCHAR_MAX;
 
-            destination[i] = static_cast<unsigned char>(scaledValue);
-        }
+      destination[i] = static_cast<unsigned char>(scaled_value);
     }
+  }
 }
 
-void RealtimeAnalyser::getByteFrequencyData(DOMUint8Array* destinationArray, double currentTime)
-{
-    ASSERT(isMainThread());
-    ASSERT(destinationArray);
+void RealtimeAnalyser::GetByteFrequencyData(DOMUint8Array* destination_array,
+                                            double current_time) {
+  DCHECK(IsMainThread());
+  DCHECK(destination_array);
 
-    if (currentTime <= m_lastAnalysisTime) {
-        // FIXME: Is it worth caching the data so we don't have to do the conversion every time?
-        // Perhaps not, since we expect many calls in the same rendering quantum.
-        convertToByteData(destinationArray);
-        return;
-    }
+  if (current_time <= last_analysis_time_) {
+    // FIXME: Is it worth caching the data so we don't have to do the conversion
+    // every time?  Perhaps not, since we expect many calls in the same
+    // rendering quantum.
+    ConvertToByteData(destination_array);
+    return;
+  }
 
-    // Time has advanced since the last call; update the FFT data.
-    m_lastAnalysisTime = currentTime;
-    doFFTAnalysis();
+  // Time has advanced since the last call; update the FFT data.
+  last_analysis_time_ = current_time;
+  DoFFTAnalysis();
 
-    convertToByteData(destinationArray);
+  ConvertToByteData(destination_array);
 }
 
-void RealtimeAnalyser::getFloatTimeDomainData(DOMFloat32Array* destinationArray)
-{
-    ASSERT(isMainThread());
-    ASSERT(destinationArray);
+void RealtimeAnalyser::GetFloatTimeDomainData(
+    DOMFloat32Array* destination_array) {
+  DCHECK(IsMainThread());
+  DCHECK(destination_array);
 
-    unsigned fftSize = this->fftSize();
-    size_t len = std::min(fftSize, destinationArray->length());
-    if (len > 0) {
-        bool isInputBufferGood = m_inputBuffer.size() == InputBufferSize && m_inputBuffer.size() > fftSize;
-        ASSERT(isInputBufferGood);
-        if (!isInputBufferGood)
-            return;
+  unsigned fft_size = this->FftSize();
+  size_t len = std::min(fft_size, destination_array->length());
+  if (len > 0) {
+    bool is_input_buffer_good = input_buffer_.size() == kInputBufferSize &&
+                                input_buffer_.size() > fft_size;
+    DCHECK(is_input_buffer_good);
+    if (!is_input_buffer_good)
+      return;
 
-        float* inputBuffer = m_inputBuffer.data();
-        float* destination = destinationArray->data();
+    float* input_buffer = input_buffer_.Data();
+    float* destination = destination_array->Data();
 
-        unsigned writeIndex = m_writeIndex;
+    unsigned write_index = write_index_;
 
-        for (unsigned i = 0; i < len; ++i) {
-            // Buffer access is protected due to modulo operation.
-            float value = inputBuffer[(i + writeIndex - fftSize + InputBufferSize) % InputBufferSize];
+    for (unsigned i = 0; i < len; ++i) {
+      // Buffer access is protected due to modulo operation.
+      float value =
+          input_buffer[(i + write_index - fft_size + kInputBufferSize) %
+                       kInputBufferSize];
 
-            destination[i] = value;
-        }
+      destination[i] = value;
     }
+  }
 }
 
-void RealtimeAnalyser::getByteTimeDomainData(DOMUint8Array* destinationArray)
-{
-    ASSERT(isMainThread());
-    ASSERT(destinationArray);
+void RealtimeAnalyser::GetByteTimeDomainData(DOMUint8Array* destination_array) {
+  DCHECK(IsMainThread());
+  DCHECK(destination_array);
 
-    unsigned fftSize = this->fftSize();
-    size_t len = std::min(fftSize, destinationArray->length());
-    if (len > 0) {
-        bool isInputBufferGood = m_inputBuffer.size() == InputBufferSize && m_inputBuffer.size() > fftSize;
-        ASSERT(isInputBufferGood);
-        if (!isInputBufferGood)
-            return;
+  unsigned fft_size = this->FftSize();
+  size_t len = std::min(fft_size, destination_array->length());
+  if (len > 0) {
+    bool is_input_buffer_good = input_buffer_.size() == kInputBufferSize &&
+                                input_buffer_.size() > fft_size;
+    DCHECK(is_input_buffer_good);
+    if (!is_input_buffer_good)
+      return;
 
-        float* inputBuffer = m_inputBuffer.data();
-        unsigned char* destination = destinationArray->data();
+    float* input_buffer = input_buffer_.Data();
+    unsigned char* destination = destination_array->Data();
 
-        unsigned writeIndex = m_writeIndex;
+    unsigned write_index = write_index_;
 
-        for (unsigned i = 0; i < len; ++i) {
-            // Buffer access is protected due to modulo operation.
-            float value = inputBuffer[(i + writeIndex - fftSize + InputBufferSize) % InputBufferSize];
+    for (unsigned i = 0; i < len; ++i) {
+      // Buffer access is protected due to modulo operation.
+      float value =
+          input_buffer[(i + write_index - fft_size + kInputBufferSize) %
+                       kInputBufferSize];
 
-            // Scale from nominal -1 -> +1 to unsigned byte.
-            double scaledValue = 128 * (value + 1);
+      // Scale from nominal -1 -> +1 to unsigned byte.
+      double scaled_value = 128 * (value + 1);
 
-            // Clip to valid range.
-            if (scaledValue < 0)
-                scaledValue = 0;
-            if (scaledValue > UCHAR_MAX)
-                scaledValue = UCHAR_MAX;
+      // Clip to valid range.
+      if (scaled_value < 0)
+        scaled_value = 0;
+      if (scaled_value > UCHAR_MAX)
+        scaled_value = UCHAR_MAX;
 
-            destination[i] = static_cast<unsigned char>(scaledValue);
-        }
+      destination[i] = static_cast<unsigned char>(scaled_value);
     }
+  }
 }
 
-} // namespace blink
-
+}  // namespace blink

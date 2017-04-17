@@ -20,9 +20,9 @@
 #include "net/http/http_transaction_factory.h"
 #include "net/log/net_log.h"
 #include "net/proxy/proxy_service.h"
+#include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/url_request/http_user_agent_settings.h"
-#include "net/url_request/url_request_backoff_manager.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_job_factory.h"
 #include "net/url_request/url_request_throttler_manager.h"
@@ -141,12 +141,6 @@ void URLRequestContextStorage::set_throttler_manager(
   throttler_manager_ = std::move(throttler_manager);
 }
 
-void URLRequestContextStorage::set_backoff_manager(
-    std::unique_ptr<URLRequestBackoffManager> backoff_manager) {
-  context_->set_backoff_manager(backoff_manager.get());
-  backoff_manager_ = std::move(backoff_manager);
-}
-
 void URLRequestContextStorage::set_http_user_agent_settings(
     std::unique_ptr<HttpUserAgentSettings> http_user_agent_settings) {
   context_->set_http_user_agent_settings(http_user_agent_settings.get());
@@ -157,6 +151,12 @@ void URLRequestContextStorage::set_sdch_manager(
     std::unique_ptr<SdchManager> sdch_manager) {
   context_->set_sdch_manager(sdch_manager.get());
   sdch_manager_ = std::move(sdch_manager);
+}
+
+void URLRequestContextStorage::set_reporting_service(
+    std::unique_ptr<ReportingService> reporting_service) {
+  context_->set_reporting_service(reporting_service.get());
+  reporting_service_ = std::move(reporting_service);
 }
 
 }  // namespace net

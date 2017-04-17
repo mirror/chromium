@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.media.router;
 
-import android.content.Context;
-
 /**
  * An interface components providing media sinks and routes need to implement to hooks up into
  * {@link ChromeMediaRouter}.
@@ -15,7 +13,7 @@ public interface MediaRouteProvider {
      * Builder for {@link MediaRouteProvider}.
      */
     interface Builder {
-        MediaRouteProvider create(Context applicationContext, MediaRouteManager manager);
+        MediaRouteProvider create(MediaRouteManager manager);
     }
     /**
      * @param sourceId The id of the source to check.
@@ -81,13 +79,4 @@ public interface MediaRouteProvider {
      * @param nativeCallbackId The id of the result callback tracked by the native side.
      */
     void sendStringMessage(String routeId, String message, int nativeCallbackId);
-
-    /**
-     * Sends a binary message to the route with the given id. The route must be created by this
-     * provider.
-     * @param routeId The id of the route to send the message to.
-     * @param data The binary message to send.
-     * @param nativeCallbackId The id of the result callback tracked by the native side.
-     */
-    void sendBinaryMessage(String routeId, byte[] data, int nativeCallbackId);
 }

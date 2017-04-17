@@ -21,13 +21,11 @@
 #include "base/containers/stack_container.h"
 #include "base/files/file.h"
 #include "base/format_macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
-#include "ipc/brokerable_attachment.h"
 #include "ipc/ipc_message_start.h"
 #include "ipc/ipc_param_traits.h"
 #include "ipc/ipc_sync_message.h"
@@ -40,6 +38,7 @@ class NullableString16;
 class Time;
 class TimeDelta;
 class TimeTicks;
+class UnguessableToken;
 struct FileDescriptor;
 
 #if (defined(OS_MACOSX) && !defined(OS_IOS)) || defined(OS_WIN)
@@ -307,6 +306,37 @@ struct IPC_EXPORT ParamTraits<double> {
   static void Log(const param_type& p, std::string* l);
 };
 
+template <class P, size_t Size>
+struct ParamTraits<P[Size]> {
+  using param_type = P[Size];
+  static void GetSize(base::PickleSizer* sizer, const param_type& p) {
+    for (const P& element : p)
+      GetParamSize(sizer, element);
+  }
+  static void Write(base::Pickle* m, const param_type& p) {
+    for (const P& element : p)
+      WriteParam(m, element);
+  }
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r) {
+    for (P& element : *r) {
+      if (!ReadParam(m, iter, &element))
+        return false;
+    }
+    return true;
+  }
+  static void Log(const param_type& p, std::string* l) {
+    l->append("[");
+    for (const P& element : p) {
+      if (&element != &p[0])
+        l->append(" ");
+      LogParam(element, l);
+    }
+    l->append("]");
+  }
+};
+
 // STL ParamTraits -------------------------------------------------------------
 
 template <>
@@ -512,17 +542,6 @@ struct ParamTraits<std::pair<A, B> > {
   }
 };
 
-// IPC ParamTraits -------------------------------------------------------------
-template <>
-struct IPC_EXPORT ParamTraits<BrokerableAttachment::AttachmentId> {
-  typedef BrokerableAttachment::AttachmentId param_type;
-  static void Write(base::Pickle* m, const param_type& p);
-  static bool Read(const base::Pickle* m,
-                   base::PickleIterator* iter,
-                   param_type* r);
-  static void Log(const param_type& p, std::string* l);
-};
-
 // Base ParamTraits ------------------------------------------------------------
 
 template <>
@@ -658,6 +677,17 @@ struct IPC_EXPORT ParamTraits<base::TimeDelta> {
 template <>
 struct IPC_EXPORT ParamTraits<base::TimeTicks> {
   typedef base::TimeTicks param_type;
+  static void GetSize(base::PickleSizer* sizer, const param_type& p);
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct IPC_EXPORT ParamTraits<base::UnguessableToken> {
+  typedef base::UnguessableToken param_type;
   static void GetSize(base::PickleSizer* sizer, const param_type& p);
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
@@ -822,39 +852,6 @@ struct ParamTraits<std::tuple<A, B, C, D, E>> {
     LogParam(std::get<3>(p), l);
     l->append(", ");
     LogParam(std::get<4>(p), l);
-  }
-};
-
-template<class P>
-struct ParamTraits<ScopedVector<P> > {
-  typedef ScopedVector<P> param_type;
-  static void Write(base::Pickle* m, const param_type& p) {
-    WriteParam(m, static_cast<int>(p.size()));
-    for (size_t i = 0; i < p.size(); i++)
-      WriteParam(m, *p[i]);
-  }
-  static bool Read(const base::Pickle* m,
-                   base::PickleIterator* iter,
-                   param_type* r) {
-    int size = 0;
-    if (!iter->ReadLength(&size))
-      return false;
-    if (INT_MAX/sizeof(P) <= static_cast<size_t>(size))
-      return false;
-    r->resize(size);
-    for (int i = 0; i < size; i++) {
-      (*r)[i] = new P();
-      if (!ReadParam(m, iter, (*r)[i]))
-        return false;
-    }
-    return true;
-  }
-  static void Log(const param_type& p, std::string* l) {
-    for (size_t i = 0; i < p.size(); ++i) {
-      if (i != 0)
-        l->append(" ");
-      LogParam(*p[i], l);
-    }
   }
 };
 
@@ -1099,10 +1096,9 @@ struct IPC_EXPORT ParamTraits<MSG> {
 // Generic message subclasses
 
 // defined in ipc_logging.cc
-IPC_EXPORT void GenerateLogData(const std::string& channel,
-                                const Message& message,
-                                LogData* data, bool get_params);
-
+IPC_EXPORT void GenerateLogData(const Message& message,
+                                LogData* data,
+                                bool get_params);
 
 #if defined(IPC_MESSAGE_LOG_ENABLED)
 inline void AddOutputParamsToLog(const Message* msg, std::string* l) {
@@ -1129,7 +1125,7 @@ inline void ConnectMessageAndReply(const Message* msg, Message* reply) {
     // output parameters at that point.  Instead, save its data and log it
     // with the outgoing reply message when it's sent.
     LogData* data = new LogData;
-    GenerateLogData("", *msg, data, true);
+    GenerateLogData(*msg, data, true);
     msg->set_dont_log();
     reply->set_sync_log_data(data);
   }

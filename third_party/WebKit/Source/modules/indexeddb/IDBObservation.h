@@ -8,8 +8,8 @@
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/PassRefPtr.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
-#include "wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -18,28 +18,29 @@ class IDBValue;
 class ScriptState;
 struct WebIDBObservation;
 
-class IDBObservation final : public GarbageCollectedFinalized<IDBObservation>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
+class IDBObservation final : public GarbageCollectedFinalized<IDBObservation>,
+                             public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    static WebIDBOperationType stringToOperationType(const String&);
-    static IDBObservation* create(const WebIDBObservation&);
-    ~IDBObservation();
+ public:
+  static WebIDBOperationType StringToOperationType(const String&);
+  static IDBObservation* Create(const WebIDBObservation&, v8::Isolate*);
+  ~IDBObservation();
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-    // Implement the IDL
-    ScriptValue key(ScriptState*);
-    ScriptValue value(ScriptState*);
-    const String& type() const;
+  // Implement the IDL
+  ScriptValue key(ScriptState*);
+  ScriptValue value(ScriptState*);
+  const String& type() const;
 
-private:
-    IDBObservation(const WebIDBObservation&);
-    Member<IDBKeyRange> m_keyRange;
-    RefPtr<IDBValue> m_value;
-    const WebIDBOperationType m_operationType;
+ private:
+  IDBObservation(const WebIDBObservation&, v8::Isolate*);
+  Member<IDBKeyRange> key_range_;
+  RefPtr<IDBValue> value_;
+  const WebIDBOperationType operation_type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IDBObservation_h
+#endif  // IDBObservation_h

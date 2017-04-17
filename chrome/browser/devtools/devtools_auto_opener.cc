@@ -9,17 +9,16 @@
 
 DevToolsAutoOpener::DevToolsAutoOpener()
     : browser_tab_strip_tracker_(this, nullptr, nullptr) {
-  browser_tab_strip_tracker_.Init(
-      BrowserTabStripTracker::InitWith::ALL_BROWERS);
+  browser_tab_strip_tracker_.Init();
 }
 
 DevToolsAutoOpener::~DevToolsAutoOpener() {
 }
 
-void DevToolsAutoOpener::TabInsertedAt(
-    content::WebContents* contents,
-    int index,
-    bool foreground) {
+void DevToolsAutoOpener::TabInsertedAt(TabStripModel* tab_strip_model,
+                                       content::WebContents* contents,
+                                       int index,
+                                       bool foreground) {
   if (!DevToolsWindow::IsDevToolsWindow(contents))
     DevToolsWindow::OpenDevToolsWindow(contents);
 }

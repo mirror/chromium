@@ -8,17 +8,24 @@
 #include "chrome/browser/autocomplete/chrome_autocomplete_scheme_classifier.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
-#include "chrome/browser/ssl/chrome_security_state_model_client.h"
+#include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/prefs/pref_service.h"
-#include "content/public/browser/cert_store.h"
+#include "components/security_state/core/security_state.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/ssl_status.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/ssl_status.h"
+#include "content/public/common/url_constants.h"
+#include "extensions/common/constants.h"
+
+#if !defined(OS_ANDROID)
+#include "components/omnibox/browser/vector_icons.h" // nogncheck
+#include "components/toolbar/vector_icons.h"  // nogncheck
+#endif
 
 ChromeToolbarModelDelegate::ChromeToolbarModelDelegate() {}
 
@@ -69,61 +76,54 @@ bool ChromeToolbarModelDelegate::ShouldDisplayURL() const {
   return !search::IsInstantNTP(GetActiveWebContents());
 }
 
-security_state::SecurityStateModel::SecurityLevel
-ChromeToolbarModelDelegate::GetSecurityLevel() const {
+security_state::SecurityLevel ChromeToolbarModelDelegate::GetSecurityLevel()
+    const {
   content::WebContents* web_contents = GetActiveWebContents();
   // If there is no active WebContents (which can happen during toolbar
   // initialization), assume no security style.
   if (!web_contents)
-    return security_state::SecurityStateModel::NONE;
-  auto* client = ChromeSecurityStateModelClient::FromWebContents(web_contents);
-  return client->GetSecurityInfo().security_level;
-}
-
-base::string16 ChromeToolbarModelDelegate::GetSearchTerms(
-    security_state::SecurityStateModel::SecurityLevel security_level) const {
-  content::WebContents* web_contents = GetActiveWebContents();
-  base::string16 search_terms(search::GetSearchTerms(web_contents));
-  if (search_terms.empty()) {
-    // We mainly do this to enforce the subsequent DCHECK.
-    return base::string16();
-  }
-
-  // If the page is still loading and the security style is unknown, consider
-  // the page secure.  Without this, after the user hit enter on some search
-  // terms, the omnibox would change to displaying the loading URL before
-  // changing back to the search terms once they could be extracted, thus
-  // causing annoying flicker.
-  DCHECK(web_contents);
-  content::NavigationController& nav_controller = web_contents->GetController();
-  content::NavigationEntry* entry = nav_controller.GetVisibleEntry();
-  if ((entry != nav_controller.GetLastCommittedEntry()) &&
-      (entry->GetSSL().security_style == content::SECURITY_STYLE_UNKNOWN))
-    return search_terms;
-
-  // If the URL is using a Google base URL specified via the command line, we
-  // bypass the security check below.
-  if (entry &&
-      google_util::StartsWithCommandLineGoogleBaseURL(entry->GetVirtualURL()))
-    return search_terms;
-
-  // Otherwise, extract search terms for HTTPS pages that do not have a security
-  // error.
-  bool extract_search_terms =
-      (security_level != security_state::SecurityStateModel::NONE) &&
-      (security_level != security_state::SecurityStateModel::SECURITY_ERROR);
-  return extract_search_terms ? search_terms : base::string16();
+    return security_state::NONE;
+  auto* helper = SecurityStateTabHelper::FromWebContents(web_contents);
+  security_state::SecurityInfo security_info;
+  helper->GetSecurityInfo(&security_info);
+  return security_info.security_level;
 }
 
 scoped_refptr<net::X509Certificate> ChromeToolbarModelDelegate::GetCertificate()
     const {
-  scoped_refptr<net::X509Certificate> cert;
   content::NavigationEntry* entry = GetNavigationEntry();
-  if (entry) {
-    content::CertStore::GetInstance()->RetrieveCert(entry->GetSSL().cert_id,
-                                                    &cert);
-  }
-  return cert;
+  if (!entry)
+    return scoped_refptr<net::X509Certificate>();
+  return entry->GetSSL().certificate;
+}
+
+bool ChromeToolbarModelDelegate::FailsMalwareCheck() const {
+  content::WebContents* web_contents = GetActiveWebContents();
+  // If there is no active WebContents (which can happen during toolbar
+  // initialization), so nothing can fail.
+  if (!web_contents)
+    return false;
+  security_state::SecurityInfo security_info;
+  SecurityStateTabHelper::FromWebContents(web_contents)
+      ->GetSecurityInfo(&security_info);
+  return security_info.malicious_content_status !=
+         security_state::MALICIOUS_CONTENT_STATUS_NONE;
+}
+
+const gfx::VectorIcon* ChromeToolbarModelDelegate::GetVectorIconOverride()
+    const {
+#if !defined(OS_ANDROID)
+  GURL url;
+  GetURL(&url);
+
+  if (url.SchemeIs(content::kChromeUIScheme))
+    return &toolbar::kProductIcon;
+
+  if (url.SchemeIs(extensions::kExtensionScheme))
+    return &omnibox::kExtensionAppIcon;
+#endif
+
+  return nullptr;
 }
 
 content::NavigationController*

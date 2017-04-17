@@ -23,7 +23,7 @@
 #define StyleRuleImport_h
 
 #include "core/css/StyleRule.h"
-#include "core/fetch/StyleSheetResourceClient.h"
+#include "core/loader/resource/StyleSheetResourceClient.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -33,69 +33,85 @@ class MediaQuerySet;
 class StyleSheetContents;
 
 class StyleRuleImport : public StyleRuleBase {
-    USING_PRE_FINALIZER(StyleRuleImport, dispose);
-public:
-    static StyleRuleImport* create(const String& href, MediaQuerySet*);
+  USING_PRE_FINALIZER(StyleRuleImport, Dispose);
 
-    ~StyleRuleImport();
+ public:
+  static StyleRuleImport* Create(const String& href, MediaQuerySet*);
 
-    StyleSheetContents* parentStyleSheet() const { return m_parentStyleSheet; }
-    void setParentStyleSheet(StyleSheetContents* sheet) { ASSERT(sheet); m_parentStyleSheet = sheet; }
-    void clearParentStyleSheet() { m_parentStyleSheet = nullptr; }
+  ~StyleRuleImport();
 
-    String href() const { return m_strHref; }
-    StyleSheetContents* styleSheet() const { return m_styleSheet.get(); }
+  StyleSheetContents* ParentStyleSheet() const { return parent_style_sheet_; }
+  void SetParentStyleSheet(StyleSheetContents* sheet) {
+    DCHECK(sheet);
+    parent_style_sheet_ = sheet;
+  }
+  void ClearParentStyleSheet() { parent_style_sheet_ = nullptr; }
 
-    bool isLoading() const;
-    MediaQuerySet* mediaQueries() { return m_mediaQueries.get(); }
+  String Href() const { return str_href_; }
+  StyleSheetContents* GetStyleSheet() const { return style_sheet_.Get(); }
 
-    void requestStyleSheet();
+  bool IsLoading() const;
+  MediaQuerySet* MediaQueries() { return media_queries_.Get(); }
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  void RequestStyleSheet();
 
-private:
-    // FIXME: inherit from StyleSheetResourceClient directly to eliminate back pointer, as there are no space savings in this.
-    // NOTE: We put the StyleSheetResourceClient in a member instead of inheriting from it
-    // to avoid adding a vptr to StyleRuleImport.
-    class ImportedStyleSheetClient final : public GarbageCollectedFinalized<ImportedStyleSheetClient>, public StyleSheetResourceClient {
-        USING_GARBAGE_COLLECTED_MIXIN(ImportedStyleSheetClient);
-    public:
-        ImportedStyleSheetClient(StyleRuleImport* ownerRule) : m_ownerRule(ownerRule) { }
-        ~ImportedStyleSheetClient() override { }
-        void setCSSStyleSheet(const String& href, const KURL& baseURL, const String& charset, const CSSStyleSheetResource* sheet) override
-        {
-            m_ownerRule->setCSSStyleSheet(href, baseURL, charset, sheet);
-        }
-        String debugName() const override { return "ImportedStyleSheetClient"; }
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-        DEFINE_INLINE_TRACE()
-        {
-            visitor->trace(m_ownerRule);
-            StyleSheetResourceClient::trace(visitor);
-        }
+ private:
+  // FIXME: inherit from StyleSheetResourceClient directly to eliminate back
+  // pointer, as there are no space savings in this.
+  // NOTE: We put the StyleSheetResourceClient in a member instead of inheriting
+  // from it to avoid adding a vptr to StyleRuleImport.
+  class ImportedStyleSheetClient final
+      : public GarbageCollectedFinalized<ImportedStyleSheetClient>,
+        public StyleSheetResourceClient {
+    USING_GARBAGE_COLLECTED_MIXIN(ImportedStyleSheetClient);
 
-    private:
-        Member<StyleRuleImport> m_ownerRule;
-    };
+   public:
+    ImportedStyleSheetClient(StyleRuleImport* owner_rule)
+        : owner_rule_(owner_rule) {}
+    ~ImportedStyleSheetClient() override {}
+    void SetCSSStyleSheet(const String& href,
+                          const KURL& base_url,
+                          ReferrerPolicy referrer_policy,
+                          const String& charset,
+                          const CSSStyleSheetResource* sheet) override {
+      owner_rule_->SetCSSStyleSheet(href, base_url, referrer_policy, charset,
+                                    sheet);
+    }
+    String DebugName() const override { return "ImportedStyleSheetClient"; }
 
-    void setCSSStyleSheet(const String& href, const KURL& baseURL, const String& charset, const CSSStyleSheetResource*);
+    DEFINE_INLINE_TRACE() {
+      visitor->Trace(owner_rule_);
+      StyleSheetResourceClient::Trace(visitor);
+    }
 
-    StyleRuleImport(const String& href, MediaQuerySet*);
+   private:
+    Member<StyleRuleImport> owner_rule_;
+  };
 
-    void dispose();
+  void SetCSSStyleSheet(const String& href,
+                        const KURL& base_url,
+                        ReferrerPolicy,
+                        const String& charset,
+                        const CSSStyleSheetResource*);
 
-    Member<StyleSheetContents> m_parentStyleSheet;
+  StyleRuleImport(const String& href, MediaQuerySet*);
 
-    Member<ImportedStyleSheetClient> m_styleSheetClient;
-    String m_strHref;
-    Member<MediaQuerySet> m_mediaQueries;
-    Member<StyleSheetContents> m_styleSheet;
-    Member<CSSStyleSheetResource> m_resource;
-    bool m_loading;
+  void Dispose();
+
+  Member<StyleSheetContents> parent_style_sheet_;
+
+  Member<ImportedStyleSheetClient> style_sheet_client_;
+  String str_href_;
+  Member<MediaQuerySet> media_queries_;
+  Member<StyleSheetContents> style_sheet_;
+  Member<CSSStyleSheetResource> resource_;
+  bool loading_;
 };
 
 DEFINE_STYLE_RULE_TYPE_CASTS(Import);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

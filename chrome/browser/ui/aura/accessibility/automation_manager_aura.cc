@@ -6,24 +6,26 @@
 
 #include <stddef.h>
 
-#include <vector>
-
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/api/automation_internal/automation_event_router.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/common/extensions/api/automation_api_constants.h"
 #include "chrome/common/extensions/chrome_extension_messages.h"
 #include "content/public/browser/ax_event_notification_details.h"
 #include "content/public/browser/browser_context.h"
+#include "ui/accessibility/ax_action_data.h"
+#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_tree_id_registry.h"
+#include "ui/aura/env.h"
 #include "ui/aura/window.h"
-#include "ui/views/accessibility/ax_aura_obj_cache.h"
 #include "ui/views/accessibility/ax_aura_obj_wrapper.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
 #if defined(OS_CHROMEOS)
-#include "ash/wm/window_util.h"
+#include "ash/wm/window_util.h"  // nogncheck
 #endif
 
 using content::BrowserContext;
@@ -36,11 +38,10 @@ AutomationManagerAura* AutomationManagerAura::GetInstance() {
 
 void AutomationManagerAura::Enable(BrowserContext* context) {
   enabled_ = true;
-  if (!current_tree_.get())
-    current_tree_.reset(new AXTreeSourceAura());
-  ResetSerializer();
+  Reset(false);
 
   SendEvent(context, current_tree_->GetRoot(), ui::AX_EVENT_LOAD_COMPLETE);
+  views::AXAuraObjCache::GetInstance()->SetDelegate(this);
 
 #if defined(OS_CHROMEOS)
   aura::Window* active_window = ash::wm::GetActiveWindow();
@@ -54,9 +55,7 @@ void AutomationManagerAura::Enable(BrowserContext* context) {
 
 void AutomationManagerAura::Disable() {
   enabled_ = false;
-
-  // Reset the serializer to save memory.
-  current_tree_serializer_->Reset();
+  Reset(true);
 }
 
 void AutomationManagerAura::HandleEvent(BrowserContext* context,
@@ -65,17 +64,10 @@ void AutomationManagerAura::HandleEvent(BrowserContext* context,
   if (!enabled_)
     return;
 
-  if (!context && g_browser_process->profile_manager())
-    context = g_browser_process->profile_manager()->GetLastUsedProfile();
-
-  if (!context) {
-    LOG(WARNING) << "Accessibility notification but no browser context";
-    return;
-  }
-
-  views::AXAuraObjWrapper* aura_obj =
-      views::AXAuraObjCache::GetInstance()->GetOrCreate(view);
-  SendEvent(context, aura_obj, event_type);
+  views::AXAuraObjWrapper* aura_obj = view ?
+      views::AXAuraObjCache::GetInstance()->GetOrCreate(view) :
+      current_tree_->GetRoot();
+  SendEvent(nullptr, aura_obj, event_type);
 }
 
 void AutomationManagerAura::HandleAlert(content::BrowserContext* context,
@@ -89,52 +81,52 @@ void AutomationManagerAura::HandleAlert(content::BrowserContext* context,
   SendEvent(context, obj, ui::AX_EVENT_ALERT);
 }
 
-void AutomationManagerAura::DoDefault(int32_t id) {
+void AutomationManagerAura::PerformAction(
+    const ui::AXActionData& data) {
   CHECK(enabled_);
-  current_tree_->DoDefault(id);
+
+  current_tree_->HandleAccessibleAction(data);
 }
 
-void AutomationManagerAura::Focus(int32_t id) {
-  CHECK(enabled_);
-  current_tree_->Focus(id);
-}
-
-void AutomationManagerAura::MakeVisible(int32_t id) {
-  CHECK(enabled_);
-  current_tree_->MakeVisible(id);
-}
-
-void AutomationManagerAura::SetSelection(int32_t anchor_id,
-                                         int32_t anchor_offset,
-                                         int32_t focus_id,
-                                         int32_t focus_offset) {
-  CHECK(enabled_);
-  if (anchor_id != focus_id) {
-    NOTREACHED();
+void AutomationManagerAura::OnChildWindowRemoved(
+    views::AXAuraObjWrapper* parent) {
+  if (!enabled_)
     return;
-  }
-  current_tree_->SetSelection(anchor_id, anchor_offset, focus_offset);
-}
 
-void AutomationManagerAura::ShowContextMenu(int32_t id) {
-  CHECK(enabled_);
-  current_tree_->ShowContextMenu(id);
+  if (!parent)
+    parent = current_tree_->GetRoot();
+
+  SendEvent(nullptr, parent, ui::AX_EVENT_CHILDREN_CHANGED);
 }
 
 AutomationManagerAura::AutomationManagerAura()
-    : enabled_(false), processing_events_(false) {}
+    : AXHostDelegate(extensions::api::automation::kDesktopTreeID),
+      enabled_(false),
+      processing_events_(false) {}
 
 AutomationManagerAura::~AutomationManagerAura() {
 }
 
-void AutomationManagerAura::ResetSerializer() {
-  current_tree_serializer_.reset(
-      new AuraAXTreeSerializer(current_tree_.get()));
+void AutomationManagerAura::Reset(bool reset_serializer) {
+  if (!current_tree_)
+    current_tree_.reset(new AXTreeSourceAura());
+  reset_serializer ? current_tree_serializer_.reset()
+                   : current_tree_serializer_.reset(
+                         new AuraAXTreeSerializer(current_tree_.get()));
 }
 
 void AutomationManagerAura::SendEvent(BrowserContext* context,
                                       views::AXAuraObjWrapper* aura_obj,
                                       ui::AXEvent event_type) {
+  if (!context && g_browser_process->profile_manager()) {
+    context = g_browser_process->profile_manager()->GetLastUsedProfile();
+  }
+
+  if (!context) {
+    LOG(WARNING) << "Accessibility notification but no browser context";
+    return;
+  }
+
   if (processing_events_) {
     pending_events_.push_back(std::make_pair(aura_obj, event_type));
     return;
@@ -156,6 +148,7 @@ void AutomationManagerAura::SendEvent(BrowserContext* context,
   params.tree_id = 0;
   params.id = aura_obj->GetID();
   params.event_type = event_type;
+  params.mouse_location = aura::Env::GetInstance()->last_mouse_location();
   AutomationEventRouter* router = AutomationEventRouter::GetInstance();
   router->DispatchAccessibilityEvent(params);
 

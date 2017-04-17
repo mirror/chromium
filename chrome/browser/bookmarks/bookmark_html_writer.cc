@@ -25,13 +25,14 @@
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/favicon/favicon_service_factory.h"
+#include "chrome/browser/profiles/profile.h"
 #include "components/bookmarks/browser/bookmark_codec.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/favicon/core/favicon_service.h"
 #include "components/favicon_base/favicon_types.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_source.h"
-#include "grit/components_strings.h"
 #include "net/base/escape.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/favicon_size.h"
@@ -112,10 +113,10 @@ class Writer : public base::RefCountedThreadSafe<Writer> {
 
     base::Value* roots = NULL;
     if (!Write(kHeader) ||
-        bookmarks_->GetType() != base::Value::TYPE_DICTIONARY ||
+        bookmarks_->GetType() != base::Value::Type::DICTIONARY ||
         !static_cast<base::DictionaryValue*>(bookmarks_.get())->Get(
             BookmarkCodec::kRootsKey, &roots) ||
-        roots->GetType() != base::Value::TYPE_DICTIONARY) {
+        roots->GetType() != base::Value::Type::DICTIONARY) {
       NOTREACHED();
       return;
     }
@@ -127,13 +128,13 @@ class Writer : public base::RefCountedThreadSafe<Writer> {
     base::Value* mobile_folder_value = NULL;
     if (!roots_d_value->Get(BookmarkCodec::kRootFolderNameKey,
                             &root_folder_value) ||
-        root_folder_value->GetType() != base::Value::TYPE_DICTIONARY ||
+        root_folder_value->GetType() != base::Value::Type::DICTIONARY ||
         !roots_d_value->Get(BookmarkCodec::kOtherBookmarkFolderNameKey,
                             &other_folder_value) ||
-        other_folder_value->GetType() != base::Value::TYPE_DICTIONARY ||
+        other_folder_value->GetType() != base::Value::Type::DICTIONARY ||
         !roots_d_value->Get(BookmarkCodec::kMobileBookmarkFolderNameKey,
                             &mobile_folder_value) ||
-        mobile_folder_value->GetType() != base::Value::TYPE_DICTIONARY) {
+        mobile_folder_value->GetType() != base::Value::Type::DICTIONARY) {
       NOTREACHED();
       return;  // Invalid type for root folder and/or other folder.
     }
@@ -305,7 +306,7 @@ class Writer : public base::RefCountedThreadSafe<Writer> {
     if (!value.GetString(BookmarkCodec::kDateModifiedKey,
                          &last_modified_date) ||
         !value.Get(BookmarkCodec::kChildrenKey, &child_values) ||
-        child_values->GetType() != base::Value::TYPE_LIST) {
+        child_values->GetType() != base::Value::Type::LIST) {
       NOTREACHED();
       return false;
     }
@@ -345,7 +346,7 @@ class Writer : public base::RefCountedThreadSafe<Writer> {
     for (size_t i = 0; i < children->GetSize(); ++i) {
       const base::Value* child_value;
       if (!children->Get(i, &child_value) ||
-          child_value->GetType() != base::Value::TYPE_DICTIONARY) {
+          child_value->GetType() != base::Value::Type::DICTIONARY) {
         NOTREACHED();
         return false;
       }
@@ -409,10 +410,12 @@ BookmarkFaviconFetcher::~BookmarkFaviconFetcher() {
 }
 
 void BookmarkFaviconFetcher::ExportBookmarks() {
-  ExtractUrls(BookmarkModelFactory::GetForProfile(
-      profile_)->bookmark_bar_node());
-  ExtractUrls(BookmarkModelFactory::GetForProfile(profile_)->other_node());
-  ExtractUrls(BookmarkModelFactory::GetForProfile(profile_)->mobile_node());
+  ExtractUrls(BookmarkModelFactory::GetForBrowserContext(profile_)
+                  ->bookmark_bar_node());
+  ExtractUrls(
+      BookmarkModelFactory::GetForBrowserContext(profile_)->other_node());
+  ExtractUrls(
+      BookmarkModelFactory::GetForBrowserContext(profile_)->mobile_node());
   if (!bookmark_urls_.empty())
     FetchNextFavicon();
   else
@@ -448,10 +451,11 @@ void BookmarkFaviconFetcher::ExecuteWriter() {
   BookmarkCodec codec;
   BrowserThread::PostTask(
       BrowserThread::FILE, FROM_HERE,
-      base::Bind(&Writer::DoWrite,
-                 new Writer(codec.Encode(BookmarkModelFactory::GetForProfile(
-                                profile_)),
-                            path_, favicons_map_.release(), observer_)));
+      base::Bind(
+          &Writer::DoWrite,
+          new Writer(codec.Encode(
+                         BookmarkModelFactory::GetForBrowserContext(profile_)),
+                     path_, favicons_map_.release(), observer_)));
   if (g_fetcher) {
     base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, g_fetcher);
     g_fetcher = nullptr;

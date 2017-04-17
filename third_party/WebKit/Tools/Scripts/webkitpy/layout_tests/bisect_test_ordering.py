@@ -63,7 +63,7 @@ class Bisector(object):
             self.print_result()
             return 0
         if not self.test_fails(self.tests):
-            _log.error('%s does not fail' % self.expected_failure)
+            _log.error('%s does not fail', self.expected_failure)
             return 1
         # Split the list of test into buckets. Each bucket has at least one test required to cause
         # the expected failure at the end. Split buckets in half until there are only buckets left
@@ -98,7 +98,7 @@ class Bisector(object):
         for bucket in self.buckets:
             tests += bucket.tests
         extra_args = ' --debug' if self.is_debug else ''
-        print 'run-webkit-tests%s --child-processes=1 --order=none %s' % (extra_args, " ".join(tests))
+        print 'run-webkit-tests%s --child-processes=1 --order=none %s' % (extra_args, ' '.join(tests))
 
     def is_done(self):
         for bucket in self.buckets:
@@ -146,8 +146,9 @@ class Bisector(object):
     def test_fails(self, tests):
         extra_args = ['--debug'] if self.is_debug else []
         path_to_run_webkit_tests = self.webkit_finder.path_from_webkit_base('Tools', 'Scripts', 'run-webkit-tests')
-        output = self.executive.popen([path_to_run_webkit_tests, '--child-processes', '1', '--order', 'none', '--no-retry',
-                                       '--no-show-results', '--verbose'] + extra_args + tests, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output = self.executive.popen(
+            [path_to_run_webkit_tests, '--child-processes', '1', '--order', 'none', '--no-retry',
+             '--no-show-results', '--verbose'] + extra_args + tests, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         failure_string = self.expected_failure + ' failed'
         if failure_string in output.stderr.read():
             return True
@@ -158,9 +159,12 @@ def main(argv):
     logging.basicConfig()
 
     option_parser = optparse.OptionParser()
-    option_parser.add_option('--test-list', action='store',
-                             help='file that list tests to bisect. The last test in the list is the expected failure.', metavar='FILE'),
-    option_parser.add_option('--debug', action='store_true', default=False, help='whether to use a debug build'),
+    option_parser.add_option(
+        '--test-list',
+        action='store',
+        help='file that list tests to bisect. The last test in the list is the expected failure.',
+        metavar='FILE')
+    option_parser.add_option('--debug', action='store_true', default=False, help='whether to use a debug build')
     options, _ = option_parser.parse_args(argv)
 
     tests = open(options.test_list).read().strip().split('\n')

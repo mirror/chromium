@@ -7,44 +7,55 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "modules/webaudio/AudioContextOptions.h"
 #include "modules/webaudio/BaseAudioContext.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
+class AudioContextOptions;
+class AudioTimestamp;
 class Document;
 class ExceptionState;
 class ScriptState;
+class WebAudioLatencyHint;
 
 // This is an BaseAudioContext which actually plays sound, unlike an
 // OfflineAudioContext which renders sound into a buffer.
-class AudioContext : public BaseAudioContext {
-public:
-    static BaseAudioContext* create(Document&, ExceptionState&);
+class MODULES_EXPORT AudioContext : public BaseAudioContext {
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~AudioContext() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static AudioContext* Create(Document&,
+                              const AudioContextOptions&,
+                              ExceptionState&);
 
-    ScriptPromise closeContext(ScriptState*) final;
-    bool isContextClosed() const final;
+  ~AudioContext() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    ScriptPromise suspendContext(ScriptState*) final;
-    ScriptPromise resumeContext(ScriptState*) final;
+  ScriptPromise closeContext(ScriptState*);
+  bool IsContextClosed() const final;
 
-    bool hasRealtimeConstraint() final { return true; }
+  ScriptPromise suspendContext(ScriptState*) final;
+  ScriptPromise resumeContext(ScriptState*) final;
 
-protected:
-    AudioContext(Document&);
+  bool HasRealtimeConstraint() final { return true; }
 
-    void didClose() final;
+  void getOutputTimestamp(ScriptState*, AudioTimestamp&);
+  double baseLatency() const;
 
-private:
-    void stopRendering();
+ protected:
+  AudioContext(Document&, const WebAudioLatencyHint&);
 
-    unsigned m_contextId;
-    Member<ScriptPromiseResolver> m_closeResolver;
+  void DidClose() final;
+
+ private:
+  void StopRendering();
+
+  unsigned context_id_;
+  Member<ScriptPromiseResolver> close_resolver_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AudioContext_h
+#endif  // AudioContext_h

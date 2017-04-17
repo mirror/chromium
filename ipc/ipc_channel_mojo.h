@@ -14,18 +14,19 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/scoped_vector.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "ipc/ipc.mojom.h"
 #include "ipc/ipc_channel.h"
 #include "ipc/ipc_channel_factory.h"
 #include "ipc/ipc_export.h"
 #include "ipc/ipc_message_pipe_reader.h"
 #include "ipc/ipc_mojo_bootstrap.h"
+#include "mojo/public/cpp/bindings/thread_safe_interface_ptr.h"
 #include "mojo/public/cpp/system/core.h"
 
 namespace IPC {
@@ -42,7 +43,6 @@ namespace IPC {
 class IPC_EXPORT ChannelMojo
     : public Channel,
       public Channel::AssociatedInterfaceSupport,
-      public NON_EXPORTED_BASE(MojoBootstrap::Delegate),
       public NON_EXPORTED_BASE(internal::MessagePipeReader::Delegate) {
  public:
   // Creates a ChannelMojo.
@@ -68,33 +68,24 @@ class IPC_EXPORT ChannelMojo
 
   // Channel implementation
   bool Connect() override;
+  void Pause() override;
+  void Unpause(bool flush) override;
+  void Flush() override;
   void Close() override;
   bool Send(Message* message) override;
-  bool IsSendThreadSafe() const override;
-  base::ProcessId GetPeerPID() const override;
-  base::ProcessId GetSelfPID() const override;
   Channel::AssociatedInterfaceSupport* GetAssociatedInterfaceSupport() override;
-
-#if defined(OS_POSIX) && !defined(OS_NACL_SFI)
-  int GetClientFileDescriptor() const override;
-  base::ScopedFD TakeClientFileDescriptor() override;
-#endif  // defined(OS_POSIX) && !defined(OS_NACL_SFI)
 
   // These access protected API of IPC::Message, which has ChannelMojo
   // as a friend class.
   static MojoResult WriteToMessageAttachmentSet(
-      mojo::Array<mojom::SerializedHandlePtr> handle_buffer,
+      base::Optional<std::vector<mojom::SerializedHandlePtr>> handle_buffer,
       Message* message);
   static MojoResult ReadFromMessageAttachmentSet(
       Message* message,
-      mojo::Array<mojom::SerializedHandlePtr>* handles);
-
-  // MojoBootstrapDelegate implementation
-  void OnPipesAvailable(mojom::ChannelAssociatedPtr sender,
-                        mojom::ChannelAssociatedRequest receiver) override;
+      base::Optional<std::vector<mojom::SerializedHandlePtr>>* handles);
 
   // MessagePipeReader::Delegate
-  void OnPeerPidReceived() override;
+  void OnPeerPidReceived(int32_t peer_pid) override;
   void OnMessageReceived(const Message& message) override;
   void OnPipeError() override;
   void OnAssociatedInterfaceRequest(
@@ -108,8 +99,14 @@ class IPC_EXPORT ChannelMojo
       Listener* listener,
       const scoped_refptr<base::SingleThreadTaskRunner>& ipc_task_runner);
 
+  void ForwardMessageFromThreadSafePtr(mojo::Message message);
+  void ForwardMessageWithResponderFromThreadSafePtr(
+      mojo::Message message,
+      std::unique_ptr<mojo::MessageReceiver> responder);
+
   // Channel::AssociatedInterfaceSupport:
-  mojo::AssociatedGroup* GetAssociatedGroup() override;
+  std::unique_ptr<mojo::ThreadSafeForwarder<mojom::Channel>>
+  CreateThreadSafeChannel() override;
   void AddGenericAssociatedInterface(
       const std::string& name,
       const GenericAssociatedInterfaceFactory& factory) override;
@@ -118,7 +115,7 @@ class IPC_EXPORT ChannelMojo
       mojo::ScopedInterfaceEndpointHandle handle) override;
 
   // A TaskRunner which runs tasks on the ChannelMojo's owning thread.
-  scoped_refptr<base::TaskRunner> task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   const mojo::MessagePipeHandle pipe_;
   std::unique_ptr<MojoBootstrap> bootstrap_;

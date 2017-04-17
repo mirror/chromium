@@ -100,6 +100,9 @@ class CONTENT_EXPORT V8ValueConverter {
   // converting arguments to extension APIs.
   virtual void SetStripNullFromObjects(bool val) = 0;
 
+  // If true, treats -0 as an integer. Otherwise, -0 is converted to a double.
+  virtual void SetConvertNegativeZeroToInt(bool val) = 0;
+
   // Extend default behavior of V8ValueConverter.
   virtual void SetStrategy(Strategy* strategy) = 0;
 
@@ -117,11 +120,11 @@ class CONTENT_EXPORT V8ValueConverter {
   //
   // Unsupported types (unless explicitly configured) are not converted, so
   // this method may return NULL -- the exception is when converting arrays,
-  // where unsupported types are converted to Value(TYPE_NULL).
+  // where unsupported types are converted to Value(Type::NONE).
   //
   // Likewise, if an object throws while converting a property it will not be
   // converted, whereas if an array throws while converting an item it will be
-  // converted to Value(TYPE_NULL).
+  // converted to Value(Type::NONE).
   virtual std::unique_ptr<base::Value> FromV8Value(
       v8::Local<v8::Value> value,
       v8::Local<v8::Context> context) const = 0;

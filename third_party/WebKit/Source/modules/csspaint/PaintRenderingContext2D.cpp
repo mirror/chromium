@@ -5,76 +5,79 @@
 #include "modules/csspaint/PaintRenderingContext2D.h"
 
 #include "platform/graphics/ImageBuffer.h"
+#include "platform/graphics/paint/PaintCanvas.h"
 #include <memory>
 
 namespace blink {
 
-PaintRenderingContext2D::PaintRenderingContext2D(std::unique_ptr<ImageBuffer> imageBuffer, bool hasAlpha, float zoom)
-    : m_imageBuffer(std::move(imageBuffer)), m_hasAlpha(hasAlpha)
-{
-    m_clipAntialiasing = AntiAliased;
-    modifiableState().setShouldAntialias(true);
+PaintRenderingContext2D::PaintRenderingContext2D(
+    std::unique_ptr<ImageBuffer> image_buffer,
+    bool has_alpha,
+    float zoom)
+    : image_buffer_(std::move(image_buffer)), has_alpha_(has_alpha) {
+  clip_antialiasing_ = kAntiAliased;
+  ModifiableState().SetShouldAntialias(true);
 
-    // RecordingImageBufferSurface doesn't call ImageBufferSurface::clear explicitly.
-    DCHECK(m_imageBuffer);
-    m_imageBuffer->canvas()->clear(hasAlpha ? SK_ColorTRANSPARENT : SK_ColorBLACK);
-    m_imageBuffer->didDraw(FloatRect(0, 0, width(), height()));
+  // RecordingImageBufferSurface doesn't call ImageBufferSurface::clear
+  // explicitly.
+  DCHECK(image_buffer_);
+  image_buffer_->Canvas()->clear(has_alpha ? SK_ColorTRANSPARENT
+                                           : SK_ColorBLACK);
+  image_buffer_->DidDraw(FloatRect(0, 0, Width(), Height()));
 
-    m_imageBuffer->canvas()->scale(zoom, zoom);
+  image_buffer_->Canvas()->scale(zoom, zoom);
 }
 
-int PaintRenderingContext2D::width() const
-{
-    ASSERT(m_imageBuffer);
-    return m_imageBuffer->size().width();
+int PaintRenderingContext2D::Width() const {
+  ASSERT(image_buffer_);
+  return image_buffer_->size().Width();
 }
 
-int PaintRenderingContext2D::height() const
-{
-    ASSERT(m_imageBuffer);
-    return m_imageBuffer->size().height();
+int PaintRenderingContext2D::Height() const {
+  ASSERT(image_buffer_);
+  return image_buffer_->size().Height();
 }
 
-bool PaintRenderingContext2D::parseColorOrCurrentColor(Color& color, const String& colorString) const
-{
-    // We ignore "currentColor" for PaintRenderingContext2D and just make it
-    // "black". "currentColor" can be emulated by having "color" as an input
-    // property for the css-paint-api.
-    // https://github.com/w3c/css-houdini-drafts/issues/133
-    return ::blink::parseColorOrCurrentColor(color, colorString, nullptr);
+bool PaintRenderingContext2D::ParseColorOrCurrentColor(
+    Color& color,
+    const String& color_string) const {
+  // We ignore "currentColor" for PaintRenderingContext2D and just make it
+  // "black". "currentColor" can be emulated by having "color" as an input
+  // property for the css-paint-api.
+  // https://github.com/w3c/css-houdini-drafts/issues/133
+  return ::blink::ParseColorOrCurrentColor(color, color_string, nullptr);
 }
 
-SkCanvas* PaintRenderingContext2D::drawingCanvas() const
-{
-    return m_imageBuffer->canvas();
+ColorBehavior PaintRenderingContext2D::DrawImageColorBehavior() const {
+  return ColorBehavior::TransformToGlobalTarget();
 }
 
-SkCanvas* PaintRenderingContext2D::existingDrawingCanvas() const
-{
-    ASSERT(m_imageBuffer);
-    return m_imageBuffer->canvas();
+PaintCanvas* PaintRenderingContext2D::DrawingCanvas() const {
+  return image_buffer_->Canvas();
 }
 
-AffineTransform PaintRenderingContext2D::baseTransform() const
-{
-    ASSERT(m_imageBuffer);
-    return m_imageBuffer->baseTransform();
+PaintCanvas* PaintRenderingContext2D::ExistingDrawingCanvas() const {
+  ASSERT(image_buffer_);
+  return image_buffer_->Canvas();
 }
 
-void PaintRenderingContext2D::didDraw(const SkIRect& dirtyRect)
-{
-    ASSERT(m_imageBuffer);
-    return m_imageBuffer->didDraw(SkRect::Make(dirtyRect));
+AffineTransform PaintRenderingContext2D::BaseTransform() const {
+  ASSERT(image_buffer_);
+  return image_buffer_->BaseTransform();
 }
 
-void PaintRenderingContext2D::validateStateStack()
-{
-#if ENABLE(ASSERT)
-    SkCanvas* skCanvas = existingDrawingCanvas();
-    if (skCanvas) {
-        ASSERT(static_cast<size_t>(skCanvas->getSaveCount()) == m_stateStack.size());
-    }
+void PaintRenderingContext2D::DidDraw(const SkIRect& dirty_rect) {
+  ASSERT(image_buffer_);
+  return image_buffer_->DidDraw(SkRect::Make(dirty_rect));
+}
+
+void PaintRenderingContext2D::ValidateStateStack() const {
+#if DCHECK_IS_ON()
+  if (PaintCanvas* sk_canvas = ExistingDrawingCanvas()) {
+    DCHECK_EQ(static_cast<size_t>(sk_canvas->getSaveCount()),
+              state_stack_.size() + 1);
+  }
 #endif
 }
 
-} // namespace blink
+}  // namespace blink

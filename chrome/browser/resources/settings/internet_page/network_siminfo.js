@@ -3,8 +3,7 @@
 // found in the LICENSE file.
 
 /**
- * @fileoverview Polymer element for displaying and modifying a list of cellular
- * access points.
+ * @fileoverview Polymer element for displaying and modifying cellular sim info.
  */
 (function() {
 
@@ -31,98 +30,103 @@ Polymer({
      */
     networkProperties: {
       type: Object,
-      observer: 'networkPropertiesChanged_'
-    },
-
-    /** Set to true when a PUK is required to unlock the SIM. */
-    pukRequired: {
-      type: Boolean,
-      value: false,
-      observer: 'pukRequiredChanged_'
-    },
-
-    /**
-     * Set to an ErrorType value after an incorrect PIN or PUK entry.
-     * @type {ErrorType}
-     */
-    error: {
-      type: Object,
-      value: ErrorType.NONE
+      observer: 'networkPropertiesChanged_',
     },
 
     /**
      * Interface for networkingPrivate calls, passed from internet_page.
      * @type {NetworkingPrivate}
      */
-    networkingPrivate: {
+    networkingPrivate: Object,
+
+    /**
+     * Reflects networkProperties.Cellular.SIMLockStatus.LockEnabled for the
+     * toggle button.
+     * @private
+     */
+    lockEnabled_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
+     * Set to true when a PUK is required to unlock the SIM.
+     * @private
+     */
+    pukRequired_: {
+      type: Boolean,
+      value: false,
+      observer: 'pukRequiredChanged_',
+    },
+
+    /**
+     * Set to an ErrorType value after an incorrect PIN or PUK entry.
+     * @private {ErrorType}
+     */
+    error_: {
       type: Object,
+      value: ErrorType.NONE,
     },
   },
 
   sendSimLockEnabled_: false,
 
-  /** Polymer networkProperties changed method. */
+  /** @private */
   networkPropertiesChanged_: function() {
     if (!this.networkProperties || !this.networkProperties.Cellular)
       return;
     var simLockStatus = this.networkProperties.Cellular.SIMLockStatus;
-    this.pukRequired =
+    this.pukRequired_ =
         !!simLockStatus && simLockStatus.LockType == CrOnc.LockType.PUK;
+    this.lockEnabled_ = simLockStatus.LockEnabled;
   },
 
-  /** Polymer networkProperties changed method. */
+  /** @private */
   pukRequiredChanged_: function() {
-    if (this.$.unlockPukDialog.opened) {
-      if (this.pukRequired)
+    if (this.$.unlockPukDialog.open) {
+      if (this.pukRequired_)
         this.$.unlockPuk.focus();
       else
         this.$.unlockPukDialog.close();
       return;
     }
 
-    if (!this.pukRequired)
+    if (!this.pukRequired_)
       return;
 
     // If the PUK was activated while attempting to enter or change a pin,
     // close the dialog and open the unlock PUK dialog.
     var showUnlockPuk = false;
-    if (this.$.enterPinDialog.opened) {
+    if (this.$.enterPinDialog.open) {
       this.$.enterPinDialog.close();
       showUnlockPuk = true;
     }
-    if (this.$.changePinDialog.opened) {
+    if (this.$.changePinDialog.open) {
       this.$.changePinDialog.close();
       showUnlockPuk = true;
     }
-    if (this.$.unlockPinDialog.opened) {
+    if (this.$.unlockPinDialog.open) {
       this.$.unlockPinDialog.close();
       showUnlockPuk = true;
     }
     if (!showUnlockPuk)
       return;
 
-    this.error = ErrorType.NONE;
-    this.$.unlockPukDialog.open();
-    this.$.unlockPuk.focus();
+    this.showUnlockPukDialog_();
   },
 
-  /** Polymer networkProperties changed method. */
+  /**
+   * Opens the pin dialog when the sim lock enabled state changes.
+   * @param {Event} event
+   * @private
+   */
   onSimLockEnabledChange_: function(event) {
     if (!this.networkProperties || !this.networkProperties.Cellular)
       return;
     this.sendSimLockEnabled_ = event.target.checked;
-    this.error = ErrorType.NONE;
-    this.$.enterPinDialog.open();
-  },
-
-  /**
-   * Focuses the correct element when the dialog is opened.
-   * @param {Event} event
-   * @private
-   */
-  onEnterPinDialogOpened_: function(event) {
+    this.error_ = ErrorType.NONE;
     this.$.enterPin.value = '';
-    this.$.enterPin.focus();
+    this.$.enterPinDialog.showModal();
   },
 
   /**
@@ -131,23 +135,22 @@ Polymer({
    * @private
    */
   sendEnterPin_: function(event) {
-    var guid = this.networkProperties && this.networkProperties.GUID;
-    if (!guid)
-      return;
-
+    var guid = (this.networkProperties && this.networkProperties.GUID) || '';
     var pin = this.$.enterPin.value;
-    if (!this.validatePin_(pin))
+    if (!this.validatePin_(pin)) {
+      this.onEnterPinDialogCancel_();
       return;
-
-    var simState = /** @type {!CrOnc.CellularSimState} */({
+    }
+    var simState = /** @type {!CrOnc.CellularSimState} */ ({
       currentPin: pin,
-      requirePin: this.sendSimLockEnabled_
+      requirePin: this.sendSimLockEnabled_,
     });
     this.networkingPrivate.setCellularSimState(guid, simState, function() {
       if (chrome.runtime.lastError) {
-        this.error = ErrorType.INCORRECT_PIN;
+        this.error_ = ErrorType.INCORRECT_PIN;
+        this.$.enterPin.inputElement.select();
       } else {
-        this.error = ErrorType.NONE;
+        this.error_ = ErrorType.NONE;
         this.$.enterPinDialog.close();
       }
     }.bind(this));
@@ -155,26 +158,18 @@ Polymer({
 
   /**
    * Opens the Change PIN dialog.
-   * @param {Event} event
+   * @param {!Event} event
    * @private
    */
   onChangePinTap_: function(event) {
     if (!this.networkProperties || !this.networkProperties.Cellular)
       return;
-    this.error = ErrorType.NONE;
-    this.$.changePinDialog.open();
-  },
-
-  /**
-   * Focuses the correct element when the dialog is opened.
-   * @param {Event} event
-   * @private
-   */
-  onChangePinDialogOpened_: function(event) {
+    event.preventDefault();
+    this.error_ = ErrorType.NONE;
     this.$.changePinOld.value = '';
     this.$.changePinNew1.value = '';
     this.$.changePinNew2.value = '';
-    this.$.changePinOld.focus();
+    this.$.changePinDialog.showModal();
   },
 
   /**
@@ -183,24 +178,22 @@ Polymer({
    * @private
    */
   sendChangePin_: function(event) {
-    var guid = this.networkProperties && this.networkProperties.GUID;
-    if (!guid)
-      return;
-
+    var guid = (this.networkProperties && this.networkProperties.GUID) || '';
     var newPin = this.$.changePinNew1.value;
     if (!this.validatePin_(newPin, this.$.changePinNew2.value))
       return;
 
-    var simState = /** @type {!CrOnc.CellularSimState} */({
+    var simState = /** @type {!CrOnc.CellularSimState} */ ({
       requirePin: true,
       currentPin: this.$.changePinOld.value,
       newPin: newPin
     });
     this.networkingPrivate.setCellularSimState(guid, simState, function() {
       if (chrome.runtime.lastError) {
-        this.error = ErrorType.INCORRECT_PIN;
+        this.error_ = ErrorType.INCORRECT_PIN;
+        this.$.changePinOld.inputElement.select();
       } else {
-        this.error = ErrorType.NONE;
+        this.error_ = ErrorType.NONE;
         this.$.changePinDialog.close();
       }
     }.bind(this));
@@ -208,22 +201,14 @@ Polymer({
 
   /**
    * Opens the Unlock PIN dialog.
-   * @param {Event} event
+   * @param {!Event} event
    * @private
    */
   onUnlockPinTap_: function(event) {
-    this.error = ErrorType.NONE;
-    this.$.unlockPinDialog.open();
-  },
-
-  /**
-   * Focuses the correct element when the dialog is opened.
-   * @param {Event} event
-   * @private
-   */
-  onUnlockPinDialogOpened_: function(event) {
+    event.preventDefault();
+    this.error_ = ErrorType.NONE;
     this.$.unlockPin.value = '';
-    this.$.unlockPin.focus();
+    this.$.unlockPinDialog.showModal();
   },
 
   /**
@@ -232,43 +217,29 @@ Polymer({
    * @private
    */
   sendUnlockPin_: function(event) {
-    var guid = this.networkProperties && this.networkProperties.GUID;
-    if (!guid)
-      return;
+    var guid = (this.networkProperties && this.networkProperties.GUID) || '';
     var pin = this.$.unlockPin.value;
     if (!this.validatePin_(pin))
       return;
 
     this.networkingPrivate.unlockCellularSim(guid, pin, '', function() {
       if (chrome.runtime.lastError) {
-        this.error = ErrorType.INCORRECT_PIN;
+        this.error_ = ErrorType.INCORRECT_PIN;
+        this.$.unlockPin.inputElement.select();
       } else {
-        this.error = ErrorType.NONE;
+        this.error_ = ErrorType.NONE;
         this.$.unlockPinDialog.close();
       }
     }.bind(this));
   },
 
-  /**
-   * Opens the Unlock PUK dialog.
-   * @param {Event} event
-   * @private
-   */
-  unlockPuk_: function(event) {
-    this.error = ErrorType.NONE;
-    this.$.unlockPukDialog.open();
-  },
-
-  /**
-   * Focuses the correct element when the dialog is opened.
-   * @param {Event} event
-   * @private
-   */
-  onUnlockPukDialogOpened_: function(event) {
+  /** @private */
+  showUnlockPukDialog_: function() {
+    this.error_ = ErrorType.NONE;
     this.$.unlockPuk.value = '';
     this.$.unlockPin1.value = '';
     this.$.unlockPin2.value = '';
-    this.$.unlockPuk.focus();
+    this.$.unlockPukDialog.showModal();
   },
 
   /**
@@ -277,10 +248,7 @@ Polymer({
    * @private
    */
   sendUnlockPuk_: function(event) {
-    var guid = this.networkProperties && this.networkProperties.GUID;
-    if (!guid)
-      return;
-
+    var guid = (this.networkProperties && this.networkProperties.GUID) || '';
     var puk = this.$.unlockPuk.value;
     if (!this.validatePuk_(puk))
       return;
@@ -290,68 +258,69 @@ Polymer({
 
     this.networkingPrivate.unlockCellularSim(guid, pin, puk, function() {
       if (chrome.runtime.lastError) {
-        this.error = ErrorType.INCORRECT_PUK;
+        this.error_ = ErrorType.INCORRECT_PUK;
+        this.$.unlockPuk.inputElement.select();
       } else {
-        this.error = ErrorType.NONE;
-        this.$.unlockSimDialog.close();
+        this.error_ = ErrorType.NONE;
+        this.$.unlockPukDialog.close();
       }
     }.bind(this));
   },
 
   /**
-   * @param {!CrOnc.NetworkProperties|undefined} networkProperties
-   * @return {boolean} True if the Cellular SIM is locked.
+   * @return {boolean}
    * @private
    */
-  isSimLocked_: function(networkProperties) {
-    return !!networkProperties && CrOnc.isSimLocked(networkProperties);
+  showSimLocked_: function() {
+    if (!this.networkProperties || !this.networkProperties.Cellular ||
+        !this.networkProperties.Cellular.SIMPresent) {
+      return false;
+    }
+    return CrOnc.isSimLocked(this.networkProperties);
   },
 
   /**
-   * @param {!CrOnc.NetworkProperties|undefined} networkProperties
-   * @return {string} The message for the number of retries left.
+   * @return {boolean}
    * @private
    */
-  getRetriesLeftMsg_: function(networkProperties) {
+  showSimUnlocked_: function() {
+    if (!this.networkProperties || !this.networkProperties.Cellular ||
+        !this.networkProperties.Cellular.SIMPresent) {
+      return false;
+    }
+    return !CrOnc.isSimLocked(this.networkProperties);
+  },
+
+  /** @private */
+  getErrorMsg_: function() {
+    if (this.error_ == ErrorType.NONE)
+      return '';
+    // TODO(stevenjb): Translate
+    var msg;
+    if (this.error_ == ErrorType.INCORRECT_PIN)
+      msg = 'Incorrect PIN.';
+    else if (this.error_ == ErrorType.INCORRECT_PUK)
+      msg = 'Incorrect PUK.';
+    else if (this.error_ == ErrorType.MISMATCHED_PIN)
+      msg = 'PIN values do not match.';
+    else if (this.error_ == ErrorType.INVALID_PIN)
+      msg = 'Invalid PIN.';
+    else if (this.error_ == ErrorType.INVALID_PUK)
+      msg = 'Invalid PUK.';
+    else
+      return 'UNKNOWN ERROR';
     var retriesLeft =
-        this.get('Cellular.SIMLockStatus.RetriesLeft', networkProperties) || 0;
-    // TODO(stevenjb): Localize
-    return 'Retries left: ' + retriesLeft.toString();
-  },
-
-  /**
-   * @param {string} error
-   * @return {boolean} True if an error message should be shown for |error|.
-   * @private
-   */
-  showError_: function(error) {
-    return !!error && error != ErrorType.NONE;
-  },
-
-  /**
-   * @param {string} error
-   * @return {string} The error message to display for |error|.
-   * @private
-   */
-  getErrorMsg_: function(error) {
-    // TODO(stevenjb_: Translate
-    if (error == ErrorType.INCORRECT_PIN)
-      return 'Incorrect PIN.';
-    if (error == ErrorType.INCORRECT_PUK)
-      return 'Incorrect PUK.';
-    if (error == ErrorType.MISMATCHED_PIN)
-      return 'PIN values do not match.';
-    if (error == ErrorType.INVALID_PIN)
-      return 'Invalid PIN.';
-    if (error == ErrorType.INVALID_PUK)
-      return 'Invalid PUK.';
-    return '';
+        this.get(
+            'Cellular.SIMLockStatus.RetriesLeft', this.networkProperties) ||
+        0;
+    msg += ' Retries left: ' + retriesLeft.toString();
+    return msg;
   },
 
   /**
    * Checks whether |pin1| is of the proper length and if opt_pin2 is not
    * undefined, whether pin1 and opt_pin2 match. On any failure, sets
-   * |this.error| and returns false.
+   * |this.error_| and returns false.
    * @param {string} pin1
    * @param {string=} opt_pin2
    * @return {boolean} True if the pins match and are of minimum length.
@@ -359,18 +328,18 @@ Polymer({
    */
   validatePin_: function(pin1, opt_pin2) {
     if (pin1.length < PIN_MIN_LENGTH) {
-      this.error = ErrorType.INVALID_PIN;
+      this.error_ = ErrorType.INVALID_PIN;
       return false;
     }
     if (opt_pin2 != undefined && pin1 != opt_pin2) {
-      this.error = ErrorType.MISMATCHED_PIN;
+      this.error_ = ErrorType.MISMATCHED_PIN;
       return false;
     }
     return true;
   },
 
   /**
-   * Checks whether |puk| is of the proper length. If not, sets |this.error|
+   * Checks whether |puk| is of the proper length. If not, sets |this.error_|
    * and returns false.
    * @param {string} puk
    * @return {boolean} True if the puk is of minimum length.
@@ -378,10 +347,31 @@ Polymer({
    */
   validatePuk_: function(puk) {
     if (puk.length < PUK_MIN_LENGTH) {
-      this.error = ErrorType.INVALID_PUK;
+      this.error_ = ErrorType.INVALID_PUK;
       return false;
     }
     return true;
-  }
+  },
+
+  /** @private */
+  onEnterPinDialogCancel_: function() {
+    this.lockEnabled_ =
+        this.networkProperties.Cellular.SIMLockStatus.LockEnabled;
+  },
+
+  /** @private */
+  onEnterPinDialogClose_: function() {
+    this.$$('#simLockButton').focus();
+  },
+
+  /** @private */
+  onChangePinDialogClose_: function() {
+    this.$$('#changePinButton').focus();
+  },
+
+  /** @private */
+  onUnlockPinDialogClose_: function() {
+    this.$$('#unlockPinButton').focus();
+  },
 });
 })();

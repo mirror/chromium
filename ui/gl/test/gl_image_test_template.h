@@ -14,6 +14,7 @@
 
 #include "base/strings/stringize_macros.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/scoped_async_task_scheduler.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/buffer_format_util.h"
@@ -35,60 +36,87 @@
 namespace gl {
 namespace {
 
+GLuint LoadVertexShader() {
+  bool is_desktop_core_profile =
+      GLContext::GetCurrent()->GetVersionInfo()->is_desktop_core_profile;
+  std::string vertex_shader = base::StringPrintf(
+      "%s"  // version
+      "%s vec2 a_position;\n"
+      "%s vec2 v_texCoord;\n"
+      "void main() {\n"
+      "  gl_Position = vec4(a_position.x, a_position.y, 0.0, 1.0);\n"
+      "  v_texCoord = (a_position + vec2(1.0, 1.0)) * 0.5;\n"
+      "}",
+      is_desktop_core_profile ? "#version 150\n" : "",
+      is_desktop_core_profile ? "in" : "attribute",
+      is_desktop_core_profile ? "out" : "varying");
+  return GLHelper::LoadShader(GL_VERTEX_SHADER, vertex_shader.c_str());
+}
+
 // Compiles a fragment shader for sampling out of a texture of |size| bound to
 // |target| and checks for compilation errors.
 GLuint LoadFragmentShader(unsigned target, const gfx::Size& size) {
-  // clang-format off
-  const char kFragmentShader[] = STRINGIZE(
-    uniform SamplerType a_texture;
-    varying vec2 v_texCoord;
-    void main() {
-      gl_FragColor = TextureLookup(a_texture, v_texCoord * TextureScale);
-    }
-  );
-  const char kShaderFloatPrecision[] = STRINGIZE(
-    precision mediump float;
-  );
-  // clang-format on
-
+  bool is_desktop_core_profile =
+      GLContext::GetCurrent()->GetVersionInfo()->is_desktop_core_profile;
   bool is_gles = GLContext::GetCurrent()->GetVersionInfo()->is_es;
+
+  std::string fragment_shader_main = base::StringPrintf(
+      "uniform SamplerType a_texture;\n"
+      "%s vec2 v_texCoord;\n"
+      "%s"  // output variable declaration
+      "void main() {\n"
+      "  %s = TextureLookup(a_texture, v_texCoord * TextureScale);\n"
+      "}",
+      is_desktop_core_profile ? "in" : "varying",
+      is_desktop_core_profile ? "out vec4 my_FragData;\n" : "",
+      is_desktop_core_profile ? "my_FragData" : "gl_FragData[0]");
+
   switch (target) {
     case GL_TEXTURE_2D:
       return GLHelper::LoadShader(
           GL_FRAGMENT_SHADER,
-          base::StringPrintf("%s\n"
+          base::StringPrintf("%s"  // version
+                             "%s"  // precision
                              "#define SamplerType sampler2D\n"
-                             "#define TextureLookup texture2D\n"
+                             "#define TextureLookup %s\n"
                              "#define TextureScale vec2(1.0, 1.0)\n"
-                             "%s",
-                             is_gles ? kShaderFloatPrecision : "",
-                             kFragmentShader)
+                             "%s",  // main function
+                             is_desktop_core_profile ? "#version 150\n" : "",
+                             is_gles ? "precision mediump float;\n" : "",
+                             is_desktop_core_profile ? "texture" : "texture2D",
+                             fragment_shader_main.c_str())
               .c_str());
     case GL_TEXTURE_RECTANGLE_ARB:
+      DCHECK(!is_gles);
       return GLHelper::LoadShader(
           GL_FRAGMENT_SHADER,
-          base::StringPrintf("#extension GL_ARB_texture_rectangle : require\n"
-                             "%s\n"
-                             "#define SamplerType sampler2DRect\n"
-                             "#define TextureLookup texture2DRect\n"
-                             "#define TextureScale vec2(%f, %f)\n"
-                             "%s",
-                             is_gles ? kShaderFloatPrecision : "",
-                             static_cast<double>(size.width()),
-                             static_cast<double>(size.height()),
-                             kFragmentShader)
+          base::StringPrintf(
+              "%s"  // version
+              "%s"  // extension
+              "#define SamplerType sampler2DRect\n"
+              "#define TextureLookup %s\n"
+              "#define TextureScale vec2(%f, %f)\n"
+              "%s",  // main function
+              is_desktop_core_profile ? "#version 150\n" : "",
+              is_desktop_core_profile
+                  ? ""
+                  : "#extension GL_ARB_texture_rectangle : require\n",
+              is_desktop_core_profile ? "texture" : "texture2DRect",
+              static_cast<double>(size.width()),
+              static_cast<double>(size.height()), fragment_shader_main.c_str())
               .c_str());
     case GL_TEXTURE_EXTERNAL_OES:
+      DCHECK(is_gles);
       return GLHelper::LoadShader(
           GL_FRAGMENT_SHADER,
           base::StringPrintf("#extension GL_OES_EGL_image_external : require\n"
-                             "%s\n"
+                             "%s"  // precision
                              "#define SamplerType samplerExternalOES\n"
                              "#define TextureLookup texture2D\n"
                              "#define TextureScale vec2(1.0, 1.0)\n"
-                             "%s",
-                             is_gles ? kShaderFloatPrecision : "",
-                             kFragmentShader)
+                             "%s",  // main function
+                             is_gles ? "precision mediump float;\n" : "",
+                             fragment_shader_main.c_str())
               .c_str());
     default:
       NOTREACHED();
@@ -99,24 +127,13 @@ GLuint LoadFragmentShader(unsigned target, const gfx::Size& size) {
 // Draws texture bound to |target| of texture unit 0 to the currently bound
 // frame buffer.
 void DrawTextureQuad(GLenum target, const gfx::Size& size) {
-  // clang-format off
-  const char kVertexShader[] = STRINGIZE(
-    attribute vec2 a_position;
-    varying vec2 v_texCoord;
-    void main() {
-      gl_Position = vec4(a_position.x, a_position.y, 0.0, 1.0);
-      v_texCoord = (a_position + vec2(1.0, 1.0)) * 0.5;
-    }
-  );
-  // clang-format on
-
   GLuint vao = 0;
   if (GLHelper::ShouldTestsUseVAOs()) {
     glGenVertexArraysOES(1, &vao);
     glBindVertexArrayOES(vao);
   }
 
-  GLuint vertex_shader = GLHelper::LoadShader(GL_VERTEX_SHADER, kVertexShader);
+  GLuint vertex_shader = LoadVertexShader();
   GLuint fragment_shader = LoadFragmentShader(target, size);
   GLuint program = GLHelper::SetupProgram(vertex_shader, fragment_shader);
   EXPECT_NE(program, 0u);
@@ -149,7 +166,7 @@ class GLImageTest : public testing::Test {
     GLImageTestSupport::InitializeGL();
     surface_ = gl::init::CreateOffscreenGLSurface(gfx::Size());
     context_ =
-        gl::init::CreateGLContext(nullptr, surface_.get(), PreferIntegratedGpu);
+        gl::init::CreateGLContext(nullptr, surface_.get(), GLContextAttribs());
     context_->MakeCurrent(surface_.get());
   }
   void TearDown() override {
@@ -160,6 +177,7 @@ class GLImageTest : public testing::Test {
   }
 
  protected:
+  base::test::ScopedAsyncTaskScheduler scoped_async_task_scheduler_;
   scoped_refptr<GLSurface> surface_;
   scoped_refptr<GLContext> context_;
   GLImageTestDelegate delegate_;
@@ -167,7 +185,7 @@ class GLImageTest : public testing::Test {
 
 TYPED_TEST_CASE_P(GLImageTest);
 
-TYPED_TEST_P(GLImageTest, CreateAndDestroy) {
+TYPED_TEST_P(GLImageTest, Create) {
   const gfx::Size small_image_size(4, 4);
   const gfx::Size large_image_size(512, 512);
   const uint8_t* image_color = this->delegate_.GetImageColor();
@@ -187,16 +205,35 @@ TYPED_TEST_P(GLImageTest, CreateAndDestroy) {
   // Verify that image size is correct.
   EXPECT_EQ(small_image->GetSize().ToString(), small_image_size.ToString());
   EXPECT_EQ(large_image->GetSize().ToString(), large_image_size.ToString());
-
-  // Verify that destruction of images work correctly both when we have a
-  // context and when we don't.
-  small_image->Destroy(true /* have_context */);
-  large_image->Destroy(false /* have_context */);
 }
 
 // The GLImageTest test case verifies the behaviour that is expected from a
 // GLImage in order to be conformant.
-REGISTER_TYPED_TEST_CASE_P(GLImageTest, CreateAndDestroy);
+REGISTER_TYPED_TEST_CASE_P(GLImageTest, Create);
+
+template <typename GLImageTestDelegate>
+class GLImageOddSizeTest : public GLImageTest<GLImageTestDelegate> {};
+
+// This test verifies that odd-sized GLImages can be created and destroyed.
+TYPED_TEST_CASE_P(GLImageOddSizeTest);
+
+TYPED_TEST_P(GLImageOddSizeTest, Create) {
+  const gfx::Size odd_image_size(17, 53);
+  const uint8_t* image_color = this->delegate_.GetImageColor();
+
+  // Create an odd-sized solid color green image of preferred format. This must
+  // succeed in order for a GLImage to be conformant.
+  scoped_refptr<GLImage> odd_image =
+      this->delegate_.CreateSolidColorImage(odd_image_size, image_color);
+  ASSERT_TRUE(odd_image);
+
+  // Verify that image size is correct.
+  EXPECT_EQ(odd_image->GetSize().ToString(), odd_image_size.ToString());
+}
+
+// The GLImageTest test case verifies the behaviour that is expected from a
+// GLImage in order to be conformant.
+REGISTER_TYPED_TEST_CASE_P(GLImageOddSizeTest, Create);
 
 template <typename GLImageTestDelegate>
 class GLImageZeroInitializeTest : public GLImageTest<GLImageTestDelegate> {};
@@ -209,12 +246,12 @@ TYPED_TEST_P(GLImageZeroInitializeTest, ZeroInitialize) {
 #if defined(OS_MACOSX)
   // This functionality is disabled on Mavericks because it breaks PDF
   // rendering. https://crbug.com/594343.
-  if (base::mac::IsOSMavericks())
+  if (base::mac::IsOS10_9())
     return;
 
   // This functionality is disabled on Yosemite because it is suspected of
   // causing performance regressions on old hardware. https://crbug.com/606850.
-  if (base::mac::IsOSYosemite())
+  if (base::mac::IsOS10_10())
     return;
 #endif
 
@@ -252,7 +289,6 @@ TYPED_TEST_P(GLImageZeroInitializeTest, ZeroInitialize) {
   // Clean up.
   glDeleteTextures(1, &texture);
   glDeleteFramebuffersEXT(1, &framebuffer);
-  image->Destroy(true /* have_context */);
 }
 
 REGISTER_TYPED_TEST_CASE_P(GLImageZeroInitializeTest, ZeroInitialize);
@@ -299,7 +335,6 @@ TYPED_TEST_P(GLImageBindTest, BindTexImage) {
   // Clean up.
   glDeleteTextures(1, &texture);
   glDeleteFramebuffersEXT(1, &framebuffer);
-  image->Destroy(true /* have_context */);
 }
 
 REGISTER_TYPED_TEST_CASE_P(GLImageBindTest, BindTexImage);
@@ -313,6 +348,13 @@ TYPED_TEST_P(GLImageCopyTest, CopyTexImage) {
   const gfx::Size image_size(256, 256);
   const uint8_t* image_color = this->delegate_.GetImageColor();
   const uint8_t texture_color[] = {0, 0, 0xff, 0xff};
+
+  GLuint vao = 0;
+  if (GLContext::GetCurrent()->GetVersionInfo()->IsAtLeastGL(3, 3)) {
+    // To avoid glGetVertexAttribiv(0, ...) failing.
+    glGenVertexArraysOES(1, &vao);
+    glBindVertexArrayOES(vao);
+  }
 
   GLuint framebuffer =
       GLTestHelper::SetupFramebuffer(image_size.width(), image_size.height());
@@ -354,7 +396,9 @@ TYPED_TEST_P(GLImageCopyTest, CopyTexImage) {
   // Clean up.
   glDeleteTextures(1, &texture);
   glDeleteFramebuffersEXT(1, &framebuffer);
-  image->Destroy(true /* have_context */);
+  if (vao) {
+    glDeleteVertexArraysOES(1, &vao);
+  }
 }
 
 // The GLImageCopyTest test case verifies that the GLImage implementation

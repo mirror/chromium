@@ -174,6 +174,9 @@ Animation.prototype.currentTime;
 /** @type {number} */
 Animation.prototype.playbackRate;
 
+/** @type {!Promise<!Animation>} */
+Animation.prototype.finished;
+
 Animation.prototype.finish = function() {};
 
 Animation.prototype.play = function() {};
@@ -183,13 +186,6 @@ Animation.prototype.pause = function() {};
 Animation.prototype.reverse = function() {};
 
 Animation.prototype.cancel = function() {};
-
-/**
- * @param {boolean=} opt_useCapture
- * @override
- */
-Animation.prototype.addEventListener = function(
-    type, listener, opt_useCapture) {};
 
 /** @type {EventHandler} */
 Animation.prototype.onfinish;

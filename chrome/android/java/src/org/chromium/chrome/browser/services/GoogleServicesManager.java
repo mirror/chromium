@@ -16,7 +16,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.signin.SigninHelper;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.sync.SyncController;
-import org.chromium.sync.signin.ChromeSigninController;
+import org.chromium.components.signin.ChromeSigninController;
 
 /**
  * Starts and monitors various sync and Google services related tasks.
@@ -70,7 +70,7 @@ public class GoogleServicesManager implements ApplicationStateListener {
             // us.
             mContext = context.getApplicationContext();
 
-            mChromeSigninController = ChromeSigninController.get(mContext);
+            mChromeSigninController = ChromeSigninController.get();
             mSigninHelper = SigninHelper.get(mContext);
 
             // The sign out flow starts by clearing the signed in user in the ChromeSigninController

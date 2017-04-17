@@ -19,7 +19,7 @@ TEST(DriveAPIParserTest, AboutResourceParser) {
       test_util::LoadJSONFile("drive/about.json");
   ASSERT_TRUE(document.get());
 
-  ASSERT_EQ(base::Value::TYPE_DICTIONARY, document->GetType());
+  ASSERT_EQ(base::Value::Type::DICTIONARY, document->GetType());
   std::unique_ptr<AboutResource> resource(new AboutResource());
   EXPECT_TRUE(resource->Parse(*document));
 
@@ -36,7 +36,7 @@ TEST(DriveAPIParserTest, AppListParser) {
       test_util::LoadJSONFile("drive/applist.json");
   ASSERT_TRUE(document.get());
 
-  ASSERT_EQ(base::Value::TYPE_DICTIONARY, document->GetType());
+  ASSERT_EQ(base::Value::Type::DICTIONARY, document->GetType());
   std::unique_ptr<AppList> applist(new AppList);
   EXPECT_TRUE(applist->Parse(*document));
 
@@ -107,6 +107,47 @@ TEST(DriveAPIParserTest, AppListParser) {
   EXPECT_EQ("https://www.example.com/createForApp2", app2.create_url().spec());
 }
 
+// Test Team Drive resource parsing.
+TEST(DriveAPIParserTest, TeamDriveResourceParser) {
+  std::unique_ptr<base::Value> document =
+      test_util::LoadJSONFile("drive/team_drive.json");
+  ASSERT_TRUE(document.get());
+
+  ASSERT_EQ(base::Value::Type::DICTIONARY, document->GetType());
+  std::unique_ptr<TeamDriveResource> resource(new TeamDriveResource());
+  EXPECT_TRUE(resource->Parse(*document));
+
+  EXPECT_EQ("TestTeamDriveId", resource->id());
+  EXPECT_EQ("My Team", resource->name());
+  const TeamDriveCapabilities& capabilities = resource->capabilities();
+  EXPECT_TRUE(capabilities.can_add_children());
+  EXPECT_TRUE(capabilities.can_comment());
+  EXPECT_TRUE(capabilities.can_copy());
+  EXPECT_TRUE(capabilities.can_delete_team_drive());
+  EXPECT_TRUE(capabilities.can_download());
+  EXPECT_TRUE(capabilities.can_edit());
+  EXPECT_TRUE(capabilities.can_list_children());
+  EXPECT_TRUE(capabilities.can_manage_members());
+  EXPECT_TRUE(capabilities.can_read_revisions());
+  EXPECT_TRUE(capabilities.can_remove_children());
+  EXPECT_TRUE(capabilities.can_rename());
+  EXPECT_TRUE(capabilities.can_rename_team_drive());
+  EXPECT_TRUE(capabilities.can_share());
+}
+
+TEST(DriveAPIParserTest, TeamDriveListParser) {
+  std::unique_ptr<base::Value> document(
+      test_util::LoadJSONFile("drive/team_drive_list.json"));
+  ASSERT_TRUE(document.get());
+  EXPECT_TRUE(TeamDriveList::HasTeamDriveListKind(*document));
+
+  ASSERT_EQ(base::Value::Type::DICTIONARY, document->GetType());
+  std::unique_ptr<TeamDriveList> resource(new TeamDriveList());
+  EXPECT_TRUE(resource->Parse(*document));
+  EXPECT_EQ(3U, resource->items().size());
+  EXPECT_EQ("theNextPageToken", resource->next_page_token());
+}
+
 // Test file list parsing.
 TEST(DriveAPIParserTest, FileListParser) {
   std::string error;
@@ -114,7 +155,7 @@ TEST(DriveAPIParserTest, FileListParser) {
       test_util::LoadJSONFile("drive/filelist.json");
   ASSERT_TRUE(document.get());
 
-  ASSERT_EQ(base::Value::TYPE_DICTIONARY, document->GetType());
+  ASSERT_EQ(base::Value::Type::DICTIONARY, document->GetType());
   std::unique_ptr<FileList> filelist(new FileList);
   EXPECT_TRUE(filelist->Parse(*document));
 
@@ -134,6 +175,7 @@ TEST(DriveAPIParserTest, FileListParser) {
   EXPECT_EQ("application/octet-stream", file1.mime_type());
 
   EXPECT_FALSE(file1.labels().is_trashed());
+  EXPECT_FALSE(file1.labels().is_starred());
   EXPECT_FALSE(file1.shared());
 
   EXPECT_EQ(640, file1.image_media_metadata().width());
@@ -171,6 +213,7 @@ TEST(DriveAPIParserTest, FileListParser) {
   EXPECT_EQ("application/vnd.google-apps.document", file2.mime_type());
 
   EXPECT_TRUE(file2.labels().is_trashed());
+  EXPECT_TRUE(file2.labels().is_starred());
   EXPECT_TRUE(file2.shared());
 
   EXPECT_EQ(-1, file2.image_media_metadata().width());
@@ -214,7 +257,7 @@ TEST(DriveAPIParserTest, ChangeListParser) {
       test_util::LoadJSONFile("drive/changelist.json");
   ASSERT_TRUE(document.get());
 
-  ASSERT_EQ(base::Value::TYPE_DICTIONARY, document->GetType());
+  ASSERT_EQ(base::Value::Type::DICTIONARY, document->GetType());
   std::unique_ptr<ChangeList> changelist(new ChangeList);
   EXPECT_TRUE(changelist->Parse(*document));
 
@@ -222,10 +265,11 @@ TEST(DriveAPIParserTest, ChangeListParser) {
             changelist->next_link().spec());
   EXPECT_EQ(13664, changelist->largest_change_id());
 
-  ASSERT_EQ(4U, changelist->items().size());
+  ASSERT_EQ(5U, changelist->items().size());
 
   const ChangeResource& change1 = *changelist->items()[0];
   EXPECT_EQ(8421, change1.change_id());
+  EXPECT_EQ(ChangeResource::FILE, change1.type());
   EXPECT_FALSE(change1.is_deleted());
   EXPECT_EQ("1Pc8jzfU1ErbN_eucMMqdqzY3eBm0v8sxXm_1CtLxABC", change1.file_id());
   EXPECT_EQ(change1.file_id(), change1.file()->file_id());
@@ -234,6 +278,7 @@ TEST(DriveAPIParserTest, ChangeListParser) {
 
   const ChangeResource& change2 = *changelist->items()[1];
   EXPECT_EQ(8424, change2.change_id());
+  EXPECT_EQ(ChangeResource::FILE, change2.type());
   EXPECT_FALSE(change2.is_deleted());
   EXPECT_EQ("0B4v7G8yEYAWHUmRrU2lMS2hLABC", change2.file_id());
   EXPECT_EQ(change2.file_id(), change2.file()->file_id());
@@ -242,6 +287,7 @@ TEST(DriveAPIParserTest, ChangeListParser) {
 
   const ChangeResource& change3 = *changelist->items()[2];
   EXPECT_EQ(8429, change3.change_id());
+  EXPECT_EQ(ChangeResource::FILE, change3.type());
   EXPECT_FALSE(change3.is_deleted());
   EXPECT_EQ("0B4v7G8yEYAWHYW1OcExsUVZLABC", change3.file_id());
   EXPECT_EQ(change3.file_id(), change3.file()->file_id());
@@ -251,12 +297,26 @@ TEST(DriveAPIParserTest, ChangeListParser) {
   // Deleted entry.
   const ChangeResource& change4 = *changelist->items()[3];
   EXPECT_EQ(8430, change4.change_id());
+  EXPECT_EQ(ChangeResource::FILE, change4.type());
   EXPECT_EQ("ABCv7G8yEYAWHc3Y5X0hMSkJYXYZ", change4.file_id());
   EXPECT_TRUE(change4.is_deleted());
   base::Time modification_time;
   ASSERT_TRUE(util::GetTimeFromString("2012-07-27T12:34:56.789Z",
                                       &modification_time));
   EXPECT_EQ(modification_time, change4.modification_date());
+
+  // Team Drive entry.
+  const ChangeResource& change5 = *changelist->items()[4];
+  EXPECT_EQ(8431, change5.change_id());
+  EXPECT_EQ(ChangeResource::TEAM_DRIVE, change5.type());
+  EXPECT_EQ("id-of-team-drive-test-data", change5.team_drive()->id());
+  EXPECT_EQ("id-of-team-drive-test-data", change5.team_drive_id());
+  EXPECT_FALSE(change5.is_deleted());
+  ASSERT_TRUE(
+      util::GetTimeFromString("2017-07-27T12:34:56.789Z", &modification_time));
+  EXPECT_EQ(modification_time, change5.modification_date());
+  // capabilities resource inside team_drive should be parsed
+  EXPECT_TRUE(change5.team_drive()->capabilities().can_share());
 }
 
 TEST(DriveAPIParserTest, HasKind) {

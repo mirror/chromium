@@ -10,30 +10,28 @@
 #include "base/callback.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/native_web_keyboard_event.h"
-#include "content/public/browser/readback_types.h"
+#include "content/public/common/drop_data.h"
 #include "ipc/ipc_channel.h"
 #include "ipc/ipc_sender.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebDragOperation.h"
+#include "third_party/WebKit/public/platform/WebGestureEvent.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
-#include "third_party/skia/include/core/SkImageInfo.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/surface/transport_dib.h"
 
-namespace gfx {
-class Rect;
-}
-
 namespace blink {
 class WebMouseEvent;
-struct WebScreenInfo;
+class WebMouseWheelEvent;
 }
 
 namespace content {
 
+struct CursorInfo;
 class RenderProcessHost;
-class RenderWidgetHostImpl;
 class RenderWidgetHostIterator;
 class RenderWidgetHostView;
+struct ScreenInfo;
 
 // A RenderWidgetHost manages the browser side of a browser<->renderer
 // HWND connection.  The HWND lives in the browser process, and
@@ -160,29 +158,6 @@ class CONTENT_EXPORT RenderWidgetHost : public IPC::Sender {
   // contents, but e.g. in the omnibox.
   virtual void SetActive(bool active) = 0;
 
-  // Copies the given subset of the backing store, and passes the result as a
-  // bitmap to a callback.
-  //
-  // If |src_rect| is empty, the whole contents is copied. If non empty
-  // |accelerated_dst_size| is given and accelerated compositing is active, the
-  // content is shrunk so that it fits in |accelerated_dst_size|. If
-  // |accelerated_dst_size| is larger than the content size, the content is not
-  // resized. If |accelerated_dst_size| is empty, the size copied from the
-  // source contents is used. |callback| is invoked with true on success, false
-  // otherwise, along with a SkBitmap containing the copied pixel data.
-  //
-  // NOTE: |callback| is called synchronously if the backing store is available.
-  // When accelerated compositing is active, |callback| may be called
-  // asynchronously.
-  virtual void CopyFromBackingStore(const gfx::Rect& src_rect,
-                                    const gfx::Size& accelerated_dst_size,
-                                    const ReadbackRequestCallback& callback,
-                                    const SkColorType color_type) = 0;
-  // Ensures that the view does not drop the backing store even when hidden.
-  virtual bool CanCopyFromBackingStore() = 0;
-  virtual void LockBackingStore() = 0;
-  virtual void UnlockBackingStore() = 0;
-
   // Forwards the given message to the renderer. These are called by
   // the view when it has received a message.
   virtual void ForwardMouseEvent(
@@ -207,21 +182,13 @@ class CONTENT_EXPORT RenderWidgetHost : public IPC::Sender {
   // Returns true if the renderer is loading, false if not.
   virtual bool IsLoading() const = 0;
 
-  // Called to notify the RenderWidget that the resize rect has changed without
-  // the size of the RenderWidget itself changing.
-  virtual void ResizeRectChanged(const gfx::Rect& new_rect) = 0;
-
-  // Restart the active hang monitor timeout. Clears all existing timeouts and
-  // starts with a new one.  This can be because the renderer has become
+  // Restart the active hang monitor timeout if the renderer is actively
+  // waiting on a response. Clears all existing timeouts and starts with
+  // a new one.  This can be because the renderer has become
   // active, the tab is being hidden, or the user has chosen to wait some more
   // to give the tab a chance to become active and we don't want to display a
   // warning too soon.
-  virtual void RestartHangMonitorTimeout() = 0;
-
-  // Stops and disables hang monitor. This avoids flakiness in tests that need
-  // to observe things like beforeunload dialogs, which could fail if the
-  // timeout skips the dialog.
-  virtual void DisableHangMonitorForTesting() = 0;
+  virtual void RestartHangMonitorTimeoutIfNecessary() = 0;
 
   virtual void SetIgnoreInputEvents(bool ignore_input_events) = 0;
 
@@ -244,12 +211,13 @@ class CONTENT_EXPORT RenderWidgetHost : public IPC::Sender {
   virtual void AddMouseEventCallback(const MouseEventCallback& callback) = 0;
   virtual void RemoveMouseEventCallback(const MouseEventCallback& callback) = 0;
 
-  // Observer for WebInputEvents (but not input event acks).
+  // Observer for WebInputEvents.
   class InputEventObserver {
    public:
     virtual ~InputEventObserver() {}
 
-    virtual void OnInputEvent(const blink::WebInputEvent&) = 0;
+    virtual void OnInputEvent(const blink::WebInputEvent&) {};
+    virtual void OnInputEventAck(const blink::WebInputEvent&) {};
   };
 
   // Add/remove an input event observer.
@@ -257,10 +225,48 @@ class CONTENT_EXPORT RenderWidgetHost : public IPC::Sender {
   virtual void RemoveInputEventObserver(InputEventObserver* observer) = 0;
 
   // Get the screen info corresponding to this render widget.
-  virtual void GetWebScreenInfo(blink::WebScreenInfo* result) = 0;
+  virtual void GetScreenInfo(ScreenInfo* result) = 0;
 
-  // Sends a compositor proto to the render widget.
-  virtual void HandleCompositorProto(const std::vector<uint8_t>& proto) = 0;
+  // Drag-and-drop drop target messages that get sent to Blink.
+  virtual void DragTargetDragEnter(
+      const DropData& drop_data,
+      const gfx::Point& client_pt,
+      const gfx::Point& screen_pt,
+      blink::WebDragOperationsMask operations_allowed,
+      int key_modifiers) {}
+  virtual void DragTargetDragEnterWithMetaData(
+      const std::vector<DropData::Metadata>& metadata,
+      const gfx::Point& client_pt,
+      const gfx::Point& screen_pt,
+      blink::WebDragOperationsMask operations_allowed,
+      int key_modifiers) {};
+  virtual void DragTargetDragOver(
+      const gfx::Point& client_pt,
+      const gfx::Point& screen_pt,
+      blink::WebDragOperationsMask operations_allowed,
+      int key_modifiers) {}
+  virtual void DragTargetDragLeave(const gfx::Point& client_point,
+                                   const gfx::Point& screen_point) {}
+  virtual void DragTargetDrop(const DropData& drop_data,
+                              const gfx::Point& client_pt,
+                              const gfx::Point& screen_pt,
+                              int key_modifiers) {}
+
+  // Notifies the renderer that a drag operation that it started has ended,
+  // either in a drop or by being cancelled.
+  virtual void DragSourceEndedAt(const gfx::Point& client_pt,
+                                 const gfx::Point& screen_pt,
+                                 blink::WebDragOperation operation) {};
+
+  // Notifies the renderer that we're done with the drag and drop operation.
+  // This allows the renderer to reset some state.
+  virtual void DragSourceSystemDragEnded() {};
+
+  // Filters drop data before it is passed to RenderWidgetHost.
+  virtual void FilterDropData(DropData* drop_data) {}
+
+  // Sets cursor to a specified one when it is over this widget.
+  virtual void SetCursor(const CursorInfo& cursor_info) {}
 };
 
 }  // namespace content

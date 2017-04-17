@@ -5,21 +5,19 @@
 package org.chromium.chrome.browser.webapps;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.library_loader.LibraryProcessType;
-import org.chromium.chrome.browser.ChromeApplication;
-import org.chromium.chrome.browser.ShortcutHelper;
+import org.chromium.base.process_launcher.ChildProcessCreationParams;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationParams;
+import org.chromium.chrome.browser.metrics.WebApkUma;
+import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabRedirectHandler;
 import org.chromium.components.navigation_interception.NavigationParams;
-import org.chromium.content.browser.ChildProcessCreationParams;
-import org.chromium.content.browser.ScreenOrientationProvider;
-import org.chromium.content_public.browser.LoadUrlParams;
-import org.chromium.ui.base.PageTransition;
 import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
 
 /**
@@ -27,59 +25,24 @@ import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
  * UI-less Chrome.
  */
 public class WebApkActivity extends WebappActivity {
+    /** Manages whether to check update for the WebAPK, and starts update check if needed. */
+    private WebApkUpdateManager mUpdateManager;
+
+    /** Indicates whether launching renderer in WebAPK process is enabled. */
+    private boolean mCanLaunchRendererInWebApkProcess;
+
+    private final ChildProcessCreationParams mDefaultParams =
+            ChildProcessCreationParams.getDefault();
+
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        // We could bring a WebAPK hosted WebappActivity to foreground and navigate it to a
-        // different URL. For example, WebAPK "foo" is launched and navigates to
-        // "www.foo.com/foo". In Chrome, user clicks a link "www.foo.com/bar" in Google search
-        // results. After clicking the link, WebAPK "foo" is brought to foreground, and
-        // loads the page of "www.foo.com/bar" at the same time.
-        // The extra {@link ShortcutHelper.EXTRA_URL} provides the URL that the WebAPK will
-        // navigate to.
-        String overrideUrl = intent.getStringExtra(ShortcutHelper.EXTRA_URL);
-        if (overrideUrl != null && isInitialized()
-                && !overrideUrl.equals(getActivityTab().getUrl())) {
-            getActivityTab().loadUrl(
-                    new LoadUrlParams(overrideUrl, PageTransition.AUTO_TOPLEVEL));
-        }
+    protected WebappInfo createWebappInfo(Intent intent) {
+        return (intent == null) ? WebApkInfo.createEmpty() : WebApkInfo.create(intent);
     }
 
     @Override
-    protected void onDataStorageFetched(WebappDataStorage storage) {
-        if (storage == null) {
-            recordSplashScreenThemeColorUma();
-            initializeSplashScreenWidgets(null);
-            // Register the WebAPK. It is possible that a WebAPK's meta data was deleted when user
-            // cleared Chrome's data. When it is launching again, we know that the WebAPK is
-            // still installed, so re-register it.
-            WebappRegistry.registerWebapp(WebApkActivity.this, getId(),
-                    new WebappRegistry.FetchWebappDataStorageCallback() {
-                        @Override
-                        public void onWebappDataStorageRetrieved(
-                                WebappDataStorage storage) {
-                            storage.updateFromShortcutIntent(getIntent());
-                        }
-                    });
-            return;
-        }
-
-        // Update WebappInfo from WebappDataStorage because the information in WebappDataStorage
-        // is more up to date than the information in the launch intent. Whenever the Web Manifest
-        // changes, WebappDataStorage is updated. Depending on which of the Web Manifest's fields
-        // change a new WebAPK may or may not be downloaded from the WebAPK server.
-        // TODO(hanxi): Introduces data fetcher to detect web manifest changes and update
-        //              SharedPreference for WebAPKs.
-        int orientation = storage.getOrientation();
-        if (mWebappInfo.orientation() != orientation) {
-            mWebappInfo.updateOrientation(orientation);
-            ScreenOrientationProvider.lockOrientation(
-                    (byte) mWebappInfo.orientation(), WebApkActivity.this);
-        }
-        mWebappInfo.updateThemeColor(storage.getThemeColor());
-        recordSplashScreenThemeColorUma();
-        storage.updateLastUsedTime();
-        retrieveSplashScreenImage(storage);
+    protected void initializeUI(Bundle savedInstance) {
+        super.initializeUI(savedInstance);
+        getActivityTab().setWebappManifestScope(mWebappInfo.scopeUri().toString());
     }
 
     @Override
@@ -108,7 +71,20 @@ public class WebApkActivity extends WebappActivity {
                 // WebAPK scope navigates via JavaScript while the WebAPK is in the background.
                 return false;
             }
+
+            @Override
+            public BrowserControlsVisibilityDelegate createBrowserControlsVisibilityDelegate(
+                    Tab tab) {
+                return new WebApkBrowserControlsDelegate(WebApkActivity.this, tab);
+            }
         };
+    }
+
+    @Override
+    public void finishNativeInitialization() {
+        super.finishNativeInitialization();
+        if (!isInitialized()) return;
+        mCanLaunchRendererInWebApkProcess = ChromeWebApkHost.canLaunchRendererInWebApkProcess();
     }
 
     @Override
@@ -118,28 +94,59 @@ public class WebApkActivity extends WebappActivity {
                 ContextUtils.getApplicationContext(), getWebApkPackageName());
     }
 
+    @Override
+    public void onStopWithNative() {
+        super.onStopWithNative();
+        if (mUpdateManager != null && mUpdateManager.requestPendingUpdate()) {
+            WebApkUma.recordUpdateRequestSent(WebApkUma.UPDATE_REQUEST_SENT_ONSTOP);
+        }
+    }
+
     /**
      * Returns the WebAPK's package name.
      */
-    private String getWebApkPackageName() {
+    public String getWebApkPackageName() {
         return getWebappInfo().webApkPackageName();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        // WebAPK hosts Chrome's renderer processes by declaring the Chrome's renderer service in
-        // its AndroidManifest.xml. We set {@link ChildProcessCreationParams} for WebAPK's renderer
-        // process so the {@link ChildProcessLauncher} knows which application's renderer
-        // service to connect.
-        initializeChildProcessCreationParams(true);
+    public void onResumeWithNative() {
+        super.onResumeWithNative();
+
+        // When launching Chrome renderer in WebAPK process is enabled, WebAPK hosts Chrome's
+        // renderer processes by declaring the Chrome's renderer service in its AndroidManifest.xml
+        // and sets {@link ChildProcessCreationParams} for WebAPK's renderer process so the
+        // {@link ChildProcessLauncher} knows which application's renderer service to connect to.
+        initializeChildProcessCreationParams(mCanLaunchRendererInWebApkProcess);
     }
 
     @Override
-    protected void initializeChildProcessCreationParams() {
-        // TODO(hanxi): crbug.com/611842. Investigates whether this function works for multiple
-        // windows or with --site-per-process enabled.
-        initializeChildProcessCreationParams(true);
+    protected void onDeferredStartupWithStorage(WebappDataStorage storage) {
+        super.onDeferredStartupWithStorage(storage);
+
+        mUpdateManager = new WebApkUpdateManager(WebApkActivity.this, storage);
+        mUpdateManager.updateIfNeeded(getActivityTab(),
+                (WebApkInfo) mWebappInfo);
+    }
+
+    @Override
+    protected void onDeferredStartupWithNullStorage() {
+        super.onDeferredStartupWithNullStorage();
+
+        // Register the WebAPK. The WebAPK is not registered when it is created so it has to be
+        // registered now. The WebAPK may also become unregistered after a user clears Chrome's
+        // data.
+        WebappRegistry.getInstance().register(
+                mWebappInfo.id(), new WebappRegistry.FetchWebappDataStorageCallback() {
+                    @Override
+                    public void onWebappDataStorageRetrieved(WebappDataStorage storage) {
+                        // Initialize the time of the last is-update-needed check with the
+                        // registration time. This prevents checking for updates on the first run.
+                        storage.updateTimeOfLastCheckForUpdatedWebManifest();
+
+                        onDeferredStartupWithStorage(storage);
+                    }
+                });
     }
 
     @Override
@@ -155,13 +162,22 @@ public class WebApkActivity extends WebappActivity {
      *                     WebAPK renderer process.
      */
     private void initializeChildProcessCreationParams(boolean isForWebApk) {
-        ChromeApplication chrome = (ChromeApplication) ContextUtils.getApplicationContext();
-        ChildProcessCreationParams params = chrome.getChildProcessCreationParams();
+        // TODO(hanxi): crbug.com/664530. WebAPKs shouldn't use a global ChildProcessCreationParams.
+        ChildProcessCreationParams params = mDefaultParams;
         if (isForWebApk) {
-            int extraBindFlag = params == null ? 0 : params.getExtraBindFlags();
+            boolean isExternalService = false;
+            boolean bindToCaller = false;
             params = new ChildProcessCreationParams(getWebappInfo().webApkPackageName(),
-                    extraBindFlag, LibraryProcessType.PROCESS_CHILD);
+                    isExternalService, LibraryProcessType.PROCESS_CHILD, bindToCaller);
         }
-        ChildProcessCreationParams.set(params);
+        ChildProcessCreationParams.registerDefault(params);
+    }
+
+    @Override
+    protected void onDestroyInternal() {
+        if (mUpdateManager != null) {
+            mUpdateManager.destroy();
+        }
+        super.onDestroyInternal();
     }
 }

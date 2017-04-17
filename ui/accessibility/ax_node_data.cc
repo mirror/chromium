@@ -13,6 +13,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/accessibility/ax_text_utils.h"
 #include "ui/gfx/transform.h"
 
 using base::DoubleToString;
@@ -57,10 +58,110 @@ typename std::vector<std::pair<FirstType, SecondType>>::const_iterator
 
 }  // namespace
 
+// Return true if |attr| is a node ID that would need to be mapped when
+// renumbering the ids in a combined tree.
+bool IsNodeIdIntAttribute(AXIntAttribute attr) {
+  switch (attr) {
+    case AX_ATTR_ACTIVEDESCENDANT_ID:
+    case AX_ATTR_ERRORMESSAGE_ID:
+    case AX_ATTR_IN_PAGE_LINK_TARGET_ID:
+    case AX_ATTR_MEMBER_OF_ID:
+    case AX_ATTR_NEXT_ON_LINE_ID:
+    case AX_ATTR_PREVIOUS_ON_LINE_ID:
+    case AX_ATTR_TABLE_HEADER_ID:
+    case AX_ATTR_TABLE_COLUMN_HEADER_ID:
+    case AX_ATTR_TABLE_ROW_HEADER_ID:
+      return true;
+
+    // Note: all of the attributes are included here explicitly,
+    // rather than using "default:", so that it's a compiler error to
+    // add a new attribute without explicitly considering whether it's
+    // a node id attribute or not.
+    case AX_INT_ATTRIBUTE_NONE:
+    case AX_ATTR_ACTION:
+    case AX_ATTR_SCROLL_X:
+    case AX_ATTR_SCROLL_X_MIN:
+    case AX_ATTR_SCROLL_X_MAX:
+    case AX_ATTR_SCROLL_Y:
+    case AX_ATTR_SCROLL_Y_MIN:
+    case AX_ATTR_SCROLL_Y_MAX:
+    case AX_ATTR_TEXT_SEL_START:
+    case AX_ATTR_TEXT_SEL_END:
+    case AX_ATTR_TABLE_ROW_COUNT:
+    case AX_ATTR_TABLE_COLUMN_COUNT:
+    case AX_ATTR_TABLE_ROW_INDEX:
+    case AX_ATTR_TABLE_COLUMN_INDEX:
+    case AX_ATTR_TABLE_CELL_COLUMN_INDEX:
+    case AX_ATTR_TABLE_CELL_COLUMN_SPAN:
+    case AX_ATTR_TABLE_CELL_ROW_INDEX:
+    case AX_ATTR_TABLE_CELL_ROW_SPAN:
+    case AX_ATTR_SORT_DIRECTION:
+    case AX_ATTR_HIERARCHICAL_LEVEL:
+    case AX_ATTR_NAME_FROM:
+    case AX_ATTR_DESCRIPTION_FROM:
+    case AX_ATTR_CHILD_TREE_ID:
+    case AX_ATTR_SET_SIZE:
+    case AX_ATTR_POS_IN_SET:
+    case AX_ATTR_COLOR_VALUE:
+    case AX_ATTR_ARIA_CURRENT_STATE:
+    case AX_ATTR_BACKGROUND_COLOR:
+    case AX_ATTR_COLOR:
+    case AX_ATTR_INVALID_STATE:
+    case AX_ATTR_TEXT_DIRECTION:
+    case AX_ATTR_TEXT_STYLE:
+    case AX_ATTR_ARIA_COL_COUNT:
+    case AX_ATTR_ARIA_COL_INDEX:
+    case AX_ATTR_ARIA_ROW_COUNT:
+    case AX_ATTR_ARIA_ROW_INDEX:
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
+// Return true if |attr| contains a vector of node ids that would need
+// to be mapped when renumbering the ids in a combined tree.
+bool IsNodeIdIntListAttribute(AXIntListAttribute attr) {
+  switch (attr) {
+    case AX_ATTR_CELL_IDS:
+    case AX_ATTR_CONTROLS_IDS:
+    case AX_ATTR_DESCRIBEDBY_IDS:
+    case AX_ATTR_DETAILS_IDS:
+    case AX_ATTR_FLOWTO_IDS:
+    case AX_ATTR_INDIRECT_CHILD_IDS:
+    case AX_ATTR_LABELLEDBY_IDS:
+    case AX_ATTR_RADIO_GROUP_IDS:
+    case AX_ATTR_UNIQUE_CELL_IDS:
+      return true;
+
+    // Note: all of the attributes are included here explicitly,
+    // rather than using "default:", so that it's a compiler error to
+    // add a new attribute without explicitly considering whether it's
+    // a node id attribute or not.
+    case AX_INT_LIST_ATTRIBUTE_NONE:
+    case AX_ATTR_LINE_BREAKS:
+    case AX_ATTR_MARKER_TYPES:
+    case AX_ATTR_MARKER_STARTS:
+    case AX_ATTR_MARKER_ENDS:
+    case AX_ATTR_CHARACTER_OFFSETS:
+    case AX_ATTR_CACHED_LINE_STARTS:
+    case AX_ATTR_WORD_STARTS:
+    case AX_ATTR_WORD_ENDS:
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
 AXNodeData::AXNodeData()
     : id(-1),
       role(AX_ROLE_UNKNOWN),
-      state(0xFFFFFFFF) {
+      // Turn on all flags to more easily catch bugs where no flags are set.
+      // This will be cleared back to a 0-state before use.
+      state(0xFFFFFFFF),
+      offset_container_id(-1) {
 }
 
 AXNodeData::~AXNodeData() {
@@ -78,6 +179,7 @@ AXNodeData::AXNodeData(const AXNodeData& other) {
   html_attributes = other.html_attributes;
   child_ids = other.child_ids;
   location = other.location;
+  offset_container_id = other.offset_container_id;
   if (other.transform)
     transform.reset(new gfx::Transform(*other.transform));
 }
@@ -94,8 +196,11 @@ AXNodeData& AXNodeData::operator=(AXNodeData other) {
   html_attributes = other.html_attributes;
   child_ids = other.child_ids;
   location = other.location;
+  offset_container_id = other.offset_container_id;
   if (other.transform)
     transform.reset(new gfx::Transform(*other.transform));
+  else
+    transform.reset(nullptr);
   return *this;
 }
 
@@ -282,11 +387,46 @@ void AXNodeData::AddIntListAttribute(AXIntListAttribute attribute,
 }
 
 void AXNodeData::SetName(const std::string& name) {
+  for (size_t i = 0; i < string_attributes.size(); ++i) {
+    if (string_attributes[i].first == AX_ATTR_NAME) {
+      string_attributes[i].second = name;
+      return;
+    }
+  }
+
   string_attributes.push_back(std::make_pair(AX_ATTR_NAME, name));
 }
 
+void AXNodeData::SetName(const base::string16& name) {
+  SetName(base::UTF16ToUTF8(name));
+}
+
 void AXNodeData::SetValue(const std::string& value) {
+  for (size_t i = 0; i < string_attributes.size(); ++i) {
+    if (string_attributes[i].first == AX_ATTR_VALUE) {
+      string_attributes[i].second = value;
+      return;
+    }
+  }
+
   string_attributes.push_back(std::make_pair(AX_ATTR_VALUE, value));
+}
+
+void AXNodeData::SetValue(const base::string16& value) {
+  SetValue(base::UTF16ToUTF8(value));
+}
+
+// static
+bool AXNodeData::IsFlagSet(uint32_t state, ui::AXState state_flag) {
+  return 0 != (state & (1 << state_flag));
+}
+
+void AXNodeData::AddStateFlag(ui::AXState state_flag) {
+  state |= (1 << state_flag);
+}
+
+bool AXNodeData::HasStateFlag(ui::AXState state_flag) const {
+  return IsFlagSet(state, state_flag);
 }
 
 std::string AXNodeData::ToString() const {
@@ -343,12 +483,21 @@ std::string AXNodeData::ToString() const {
                    IntToString(location.width()) + ", " +
                    IntToString(location.height()) + ")";
 
+  if (offset_container_id != -1)
+    result += " offset_container_id=" + IntToString(offset_container_id);
+
   if (transform && !transform->IsIdentity())
     result += " transform=" + transform->ToString();
 
   for (size_t i = 0; i < int_attributes.size(); ++i) {
     std::string value = IntToString(int_attributes[i].second);
     switch (int_attributes[i].first) {
+      case AX_ATTR_ACTION:
+        result +=
+            " action=" +
+            base::UTF16ToUTF8(ActionToUnlocalizedString(
+                static_cast<AXSupportedAction>(int_attributes[i].second)));
+        break;
       case AX_ATTR_SCROLL_X:
         result += " scroll_x=" + value;
         break;
@@ -375,6 +524,18 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_ATTR_TEXT_SEL_END:
         result += " sel_end=" + value;
+        break;
+      case AX_ATTR_ARIA_COL_COUNT:
+        result += " aria_col_count=" + value;
+        break;
+      case AX_ATTR_ARIA_COL_INDEX:
+        result += " aria_col_index=" + value;
+        break;
+      case AX_ATTR_ARIA_ROW_COUNT:
+        result += " aria_row_count=" + value;
+        break;
+      case AX_ATTR_ARIA_ROW_INDEX:
+        result += " aria_row_index=" + value;
         break;
       case AX_ATTR_TABLE_ROW_COUNT:
         result += " rows=" + value;
@@ -426,15 +587,23 @@ std::string AXNodeData::ToString() const {
         }
         break;
       case AX_ATTR_NAME_FROM:
-        result += " name_from=" + ui::ToString(
-            static_cast<ui::AXNameFrom>(int_attributes[i].second));
+        result +=
+            " name_from=" +
+            ui::ToString(static_cast<AXNameFrom>(int_attributes[i].second));
         break;
       case AX_ATTR_DESCRIPTION_FROM:
-        result += " description_from=" + ui::ToString(
-            static_cast<ui::AXDescriptionFrom>(int_attributes[i].second));
+        result += " description_from=" +
+                  ui::ToString(
+                      static_cast<AXDescriptionFrom>(int_attributes[i].second));
         break;
       case AX_ATTR_ACTIVEDESCENDANT_ID:
         result += " activedescendant=" + value;
+        break;
+      case AX_ATTR_ERRORMESSAGE_ID:
+        result += " errormessage=" + value;
+        break;
+      case AX_ATTR_IN_PAGE_LINK_TARGET_ID:
+        result += " in_page_link_target_id=" + value;
         break;
       case AX_ATTR_MEMBER_OF_ID:
         result += " member_of_id=" + value;
@@ -552,14 +721,14 @@ std::string AXNodeData::ToString() const {
       case AX_ATTR_ACCESS_KEY:
         result += " access_key=" + value;
         break;
-      case AX_ATTR_ACTION:
-        result += " action=" + value;
-        break;
       case AX_ATTR_ARIA_INVALID_VALUE:
         result += " aria_invalid_value=" + value;
         break;
       case AX_ATTR_AUTO_COMPLETE:
         result += " autocomplete=" + value;
+        break;
+      case AX_ATTR_CHROME_CHANNEL:
+        result += " chrome_channel=" + value;
         break;
       case AX_ATTR_DESCRIPTION:
         result += " description=" + value;
@@ -572,6 +741,16 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_ATTR_HTML_TAG:
         result += " html_tag=" + value;
+        break;
+      case AX_ATTR_IMAGE_DATA_URL:
+        result += " image_data_url=(" +
+            IntToString(static_cast<int>(value.size())) + " bytes)";
+        break;
+      case AX_ATTR_INNER_HTML:
+        result += " inner_html=" + value;
+        break;
+      case AX_ATTR_KEY_SHORTCUTS:
+        result += " key_shortcuts=" + value;
         break;
       case AX_ATTR_LANGUAGE:
         result += " language=" + value;
@@ -593,6 +772,9 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_ATTR_ROLE:
         result += " role=" + value;
+        break;
+      case AX_ATTR_ROLE_DESCRIPTION:
+        result += " role_description=" + value;
         break;
       case AX_ATTR_SHORTCUT:
         result += " shortcut=" + value;
@@ -661,6 +843,9 @@ std::string AXNodeData::ToString() const {
       case AX_ATTR_CANVAS_HAS_FALLBACK:
         result += " has_fallback=" + value;
         break;
+      case AX_ATTR_MODAL:
+        result += " modal=" + value;
+        break;
       case AX_BOOL_ATTRIBUTE_NONE:
         break;
     }
@@ -678,11 +863,17 @@ std::string AXNodeData::ToString() const {
       case AX_ATTR_DESCRIBEDBY_IDS:
         result += " describedby_ids=" + IntVectorToString(values);
         break;
+      case AX_ATTR_DETAILS_IDS:
+        result += " details_ids=" + IntVectorToString(values);
+        break;
       case AX_ATTR_FLOWTO_IDS:
         result += " flowto_ids=" + IntVectorToString(values);
         break;
       case AX_ATTR_LABELLEDBY_IDS:
         result += " labelledby_ids=" + IntVectorToString(values);
+        break;
+      case AX_ATTR_RADIO_GROUP_IDS:
+        result += " radio_group_ids=" + IntVectorToString(values);
         break;
       case AX_ATTR_LINE_BREAKS:
         result += " line_breaks=" + IntVectorToString(values);
@@ -726,6 +917,9 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_ATTR_CHARACTER_OFFSETS:
         result += " character_offsets=" + IntVectorToString(values);
+        break;
+      case AX_ATTR_CACHED_LINE_STARTS:
+        result += " cached_line_start_offsets=" + IntVectorToString(values);
         break;
       case AX_ATTR_WORD_STARTS:
         result += " word_starts=" + IntVectorToString(values);

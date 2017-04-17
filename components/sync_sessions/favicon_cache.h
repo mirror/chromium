@@ -26,9 +26,9 @@
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/history/core/browser/history_types.h"
 #include "components/sessions/core/session_id.h"
-#include "sync/api/sync_change.h"
-#include "sync/api/sync_error_factory.h"
-#include "sync/api/syncable_service.h"
+#include "components/sync/model/sync_change.h"
+#include "components/sync/model/sync_error_factory.h"
+#include "components/sync/model/syncable_service.h"
 #include "url/gurl.h"
 
 namespace chrome {
@@ -43,7 +43,7 @@ namespace history {
 class HistoryService;
 }
 
-namespace browser_sync {
+namespace sync_sessions {
 
 enum IconSize {
   SIZE_INVALID,
@@ -123,13 +123,13 @@ class FaviconCache : public syncer::SyncableService,
 
 
   // Map of favicon url to favicon image.
-  typedef std::map<GURL, linked_ptr<SyncedFaviconInfo> > FaviconMap;
-  typedef std::set<linked_ptr<SyncedFaviconInfo>,
-                   FaviconRecencyFunctor> RecencySet;
+  using FaviconMap = std::map<GURL, linked_ptr<SyncedFaviconInfo>>;
+  using RecencySet =
+      std::set<linked_ptr<SyncedFaviconInfo>, FaviconRecencyFunctor>;
   // Map of page url to task id (for favicon loading).
-  typedef std::map<GURL, base::CancelableTaskTracker::TaskId> PageTaskMap;
+  using PageTaskMap = std::map<GURL, base::CancelableTaskTracker::TaskId>;
   // Map of page url to favicon url.
-  typedef std::map<GURL, GURL> PageFaviconMap;
+  using PageFaviconMap = std::map<GURL, GURL>;
 
   // Helper method to perform OnReceivedSyncFavicon work without worrying about
   // whether caller holds a sync transaction.
@@ -250,6 +250,6 @@ class FaviconCache : public syncer::SyncableService,
   DISALLOW_COPY_AND_ASSIGN(FaviconCache);
 };
 
-}  // namespace browser_sync
+}  // namespace sync_sessions
 
 #endif  // COMPONENTS_SYNC_SESSIONS_FAVICON_CACHE_H_

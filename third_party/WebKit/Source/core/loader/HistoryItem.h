@@ -33,110 +33,122 @@
 #include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/heap/Handle.h"
+#include "platform/scroll/ScrollTypes.h"
 #include "platform/weborigin/Referrer.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class Document;
 class DocumentState;
 class EncodedFormData;
 class KURL;
 class ResourceRequest;
+enum class WebCachePolicy;
 
-class CORE_EXPORT HistoryItem final : public GarbageCollectedFinalized<HistoryItem> {
-public:
-    static HistoryItem* create()
-    {
-        return new HistoryItem;
-    }
-    ~HistoryItem();
+class CORE_EXPORT HistoryItem final
+    : public GarbageCollectedFinalized<HistoryItem> {
+ public:
+  static HistoryItem* Create() { return new HistoryItem; }
+  ~HistoryItem();
 
-    const String& urlString() const;
-    KURL url() const;
+  const String& UrlString() const;
+  KURL Url() const;
 
-    const Referrer& referrer() const;
-    const String& target() const;
+  const Referrer& GetReferrer() const;
 
-    EncodedFormData* formData();
-    const AtomicString& formContentType() const;
+  EncodedFormData* FormData();
+  const AtomicString& FormContentType() const;
 
-    const FloatPoint& visualViewportScrollPoint() const;
-    void setVisualViewportScrollPoint(const FloatPoint&);
-    const IntPoint& scrollPoint() const;
-    void setScrollPoint(const IntPoint&);
+  void SetDidSaveScrollOrScaleState(bool did_save_scroll_or_scale_state) {
+    did_save_scroll_or_scale_state_ = did_save_scroll_or_scale_state;
+  }
 
-    float pageScaleFactor() const;
-    void setPageScaleFactor(float);
+  bool DidSaveScrollOrScaleState() const {
+    return did_save_scroll_or_scale_state_;
+  }
 
-    Vector<String> getReferencedFilePaths();
-    const Vector<String>& documentState();
-    void setDocumentState(const Vector<String>&);
-    void setDocumentState(DocumentState*);
-    void clearDocumentState();
+  const ScrollOffset& VisualViewportScrollOffset() const;
+  void SetVisualViewportScrollOffset(const ScrollOffset&);
+  const ScrollOffset& GetScrollOffset() const;
+  void SetScrollOffset(const ScrollOffset&);
 
-    void setURL(const KURL&);
-    void setURLString(const String&);
-    void setReferrer(const Referrer&);
-    void setTarget(const String&);
+  float PageScaleFactor() const;
+  void SetPageScaleFactor(float);
 
-    void setStateObject(PassRefPtr<SerializedScriptValue>);
-    SerializedScriptValue* stateObject() const { return m_stateObject.get(); }
+  Vector<String> GetReferencedFilePaths();
+  const Vector<String>& GetDocumentState();
+  void SetDocumentState(const Vector<String>&);
+  void SetDocumentState(DocumentState*);
+  void ClearDocumentState();
 
-    void setItemSequenceNumber(long long number) { m_itemSequenceNumber = number; }
-    long long itemSequenceNumber() const { return m_itemSequenceNumber; }
+  void SetURL(const KURL&);
+  void SetURLString(const String&);
+  void SetReferrer(const Referrer&);
 
-    void setDocumentSequenceNumber(long long number) { m_documentSequenceNumber = number; }
-    long long documentSequenceNumber() const { return m_documentSequenceNumber; }
+  void SetStateObject(PassRefPtr<SerializedScriptValue>);
+  SerializedScriptValue* StateObject() const { return state_object_.Get(); }
 
-    void setScrollRestorationType(HistoryScrollRestorationType  type) { m_scrollRestorationType = type; }
-    HistoryScrollRestorationType scrollRestorationType() { return m_scrollRestorationType; }
+  void SetItemSequenceNumber(long long number) {
+    item_sequence_number_ = number;
+  }
+  long long ItemSequenceNumber() const { return item_sequence_number_; }
 
-    void setFormInfoFromRequest(const ResourceRequest&);
-    void setFormData(PassRefPtr<EncodedFormData>);
-    void setFormContentType(const AtomicString&);
+  void SetDocumentSequenceNumber(long long number) {
+    document_sequence_number_ = number;
+  }
+  long long DocumentSequenceNumber() const { return document_sequence_number_; }
 
-    bool isCurrentDocument(Document*) const;
+  void SetScrollRestorationType(HistoryScrollRestorationType type) {
+    scroll_restoration_type_ = type;
+  }
+  HistoryScrollRestorationType ScrollRestorationType() {
+    return scroll_restoration_type_;
+  }
 
-    DECLARE_TRACE();
+  void SetFormInfoFromRequest(const ResourceRequest&);
+  void SetFormData(PassRefPtr<EncodedFormData>);
+  void SetFormContentType(const AtomicString&);
 
-private:
-    HistoryItem();
+  ResourceRequest GenerateResourceRequest(WebCachePolicy);
 
-    String m_urlString;
-    Referrer m_referrer;
-    String m_target;
+  DECLARE_TRACE();
 
-    FloatPoint m_visualViewportScrollPoint;
-    IntPoint m_scrollPoint;
-    float m_pageScaleFactor;
-    Vector<String> m_documentStateVector;
-    Member<DocumentState> m_documentState;
+ private:
+  HistoryItem();
 
-    // If two HistoryItems have the same item sequence number, then they are
-    // clones of one another. Traversing history from one such HistoryItem to
-    // another is a no-op. HistoryItem clones are created for parent and
-    // sibling frames when only a subframe navigates.
-    int64_t m_itemSequenceNumber;
+  String url_string_;
+  Referrer referrer_;
 
-    // If two HistoryItems have the same document sequence number, then they
-    // refer to the same instance of a document. Traversing history from one
-    // such HistoryItem to another preserves the document.
-    int64_t m_documentSequenceNumber;
+  bool did_save_scroll_or_scale_state_;
+  ScrollOffset visual_viewport_scroll_offset_;
+  ScrollOffset scroll_offset_;
+  float page_scale_factor_;
+  Vector<String> document_state_vector_;
+  Member<DocumentState> document_state_;
 
-    // Type of the scroll restoration for the history item determines if scroll
-    // position should be restored when it is loaded during history traversal.
-    HistoryScrollRestorationType m_scrollRestorationType;
+  // If two HistoryItems have the same item sequence number, then they are
+  // clones of one another. Traversing history from one such HistoryItem to
+  // another is a no-op. HistoryItem clones are created for parent and
+  // sibling frames when only a subframe navigates.
+  int64_t item_sequence_number_;
 
-    // Support for HTML5 History
-    RefPtr<SerializedScriptValue> m_stateObject;
+  // If two HistoryItems have the same document sequence number, then they
+  // refer to the same instance of a document. Traversing history from one
+  // such HistoryItem to another preserves the document.
+  int64_t document_sequence_number_;
 
-    // info used to repost form data
-    RefPtr<EncodedFormData> m_formData;
-    AtomicString m_formContentType;
+  // Type of the scroll restoration for the history item determines if scroll
+  // position should be restored when it is loaded during history traversal.
+  HistoryScrollRestorationType scroll_restoration_type_;
 
-}; // class HistoryItem
+  // Support for HTML5 History
+  RefPtr<SerializedScriptValue> state_object_;
 
-} // namespace blink
+  // info used to repost form data
+  RefPtr<EncodedFormData> form_data_;
+  AtomicString form_content_type_;
+};  // class HistoryItem
 
-#endif // HISTORYITEM_H
+}  // namespace blink
+
+#endif  // HISTORYITEM_H

@@ -75,6 +75,25 @@ InspectorTest.sendCommandOrDie = function(command, properties, callback)
     }
 }
 
+InspectorTest.sendCommandPromise = function(method, params)
+{
+    var callback;
+    var promise = new Promise(fulfill => callback = fulfill);
+    InspectorTest.sendCommand(method, params, callback);
+    return promise;
+}
+
+InspectorTest.waitForEventPromise = function(eventName)
+{
+    return new Promise(fulfill => InspectorTest.eventHandler[eventName] = fullfillAndClearListener.bind(null, fulfill));
+
+    function fullfillAndClearListener(fulfill, result)
+    {
+        fulfill(result);
+        delete InspectorTest.eventHandler[eventName];
+    }
+}
+
 InspectorTest.domUndo = function(callback)
 {
     InspectorTest.sendCommandOrDie("DOM.undo", {}, callback);
@@ -196,8 +215,9 @@ InspectorTest.log = function(message)
 * Formats and logs object to document.
 * @param {Object} object
 * @param {string=} title
+* @param {Array<string>=} unstableKeys
 */
-InspectorTest.logObject = function(object, title)
+InspectorTest.logObject = function(object, title, unstableKeys)
 {
     var lines = [];
 
@@ -226,7 +246,10 @@ InspectorTest.logObject = function(object, title)
             if (!object.hasOwnProperty(name))
                 continue;
             var prefixWithName = "    " + prefix + name + " : ";
-            dumpValue(object[name], "    " + prefix, prefixWithName);
+            var value = object[name];
+            if (unstableKeys && unstableKeys.indexOf(name) !== -1)
+                value = "<" + typeof(value) + ">";
+            dumpValue(value, "    " + prefix, prefixWithName);
         }
         lines.push(prefix + "}");
     }
@@ -275,28 +298,9 @@ InspectorTest.evaluateInPage = function(string, callback)
     });
 };
 
-InspectorTest._asyncCallbacks = {};
-InspectorTest._asyncCallbackId = 0;
-
-InspectorTest.evaluateInPageAsync = function(string, callback)
+InspectorTest.evaluateInPageAsync = function(expression)
 {
-    var id = ++InspectorTest._asyncCallbackId;
-    InspectorTest._asyncCallbacks[id] = callback;
-    var callbackString = "testRunner.evaluateInWebInspector.bind(testRunner, 42, \"InspectorTest._evaluateInPageAsyncCompleted(" + id + ")\")";
-    var code = string.replace("%callback", callbackString);
-    InspectorTest.evaluateInPage(code);
-};
-
-InspectorTest._evaluateInPageAsyncCompleted = function(id)
-{
-    var callback = InspectorTest._asyncCallbacks[id];
-    delete InspectorTest._asyncCallbacks[id];
-    if (!callback) {
-        InspectorTest.log("Error: no callback for async function");
-        InspectorTest.completeTest();
-        return;
-    }
-    callback();
+    return InspectorTest.sendCommandPromise("Runtime.evaluate", { "expression": expression, awaitPromise: true, returnByValue: true }).then((message) => message.result.result.value);
 }
 
 InspectorTest.completeTestIfError = function(messageObject)
@@ -369,59 +373,58 @@ InspectorTest.pageReloaded = function()
         callback();
 }
 
-var lastPromiseEvalId = 0;
-var pendingPromiseEvalRequests = {};
-
-/**
- * The given function should take two callback paraters before the arguments:
- *  * resolve - called when successful (with optional result)
- *  * reject  - called when there was a failure (with optional error)
- */
-InspectorTest.invokePageFunctionPromise = function(functionName, parameters)
+InspectorTest.reloadProtocolTest = function(ignoreCache, callback)
 {
-    return new Promise(function(resolve, reject) {
-        var id = ++lastPromiseEvalId;
-        pendingPromiseEvalRequests[id] = { resolve: InspectorTest.safeWrap(resolve), reject: InspectorTest.safeWrap(reject) };
+    InspectorTest._pageLoadedCallback = afterReload;
+    // This will ensure we maintain logs after navigate.
 
-        var jsonParameters = [];
-        for (var i = 0; i < parameters.length; ++i)
-            jsonParameters.push(JSON.stringify(parameters[i]));
-        var asyncEvalWrapper = function(callId, functionName, argumentsArray)
-        {
-            function evalCallbackResolve(result)
-            {
-                testRunner.evaluateInWebInspector(2, "InspectorTest.didInvokePageFunctionPromise(" + callId + ", " + JSON.stringify(result) + ", true);");
-            }
+    getLogs(getOldLogsCallback);
 
-            function evalCallbackReject(result)
-            {
-                testRunner.evaluateInWebInspector(2, "InspectorTest.didInvokePageFunctionPromise(" + callId + ", " + JSON.stringify(result) + ", false);");
-            }
-
-            var args = [evalCallbackResolve, evalCallbackReject].concat(argumentsArray.map(JSON.stringify));
-            var functionCall = functionName + ".call(null, " + args.join(", ") + ")";
-            try {
-                eval(functionCall);
-            } catch(e) {
-                InspectorTest.log("Error: " + e);
-                evalCallbackReject(e);
-            }
-        }
-        var pageRequest = "(" + asyncEvalWrapper.toString() + ")(" + id + ", unescape('" + escape(functionName) + "'), [" + jsonParameters.join(", ") + "])";
-        InspectorTest.evaluateInPage(pageRequest);
-    });
-}
-
-InspectorTest.didInvokePageFunctionPromise = function(callId, value, didResolve)
-{
-    var callbacks = pendingPromiseEvalRequests[callId];
-    if (!callbacks) {
-        InspectorTest.log("Missing callback for async eval " + callId + ", perhaps callback invoked twice?");
-        return;
+    function getLogs(getLogsCallback)
+    {
+        InspectorTest.evaluateInPage("outputElement.innerHTML", data => getLogsCallback(data.split("<br>")));
     }
-    var callback = didResolve ? callbacks.resolve : callbacks.reject;
-    delete pendingPromiseEvalRequests[callId];
-    callback(value);
+
+    function clearLogs(clearLogsCallback)
+    {
+        InspectorTest.evaluateInPage("outputElement.textContent = \"\"", clearLogsCallback);
+    }
+
+    var oldLogs;
+
+    function getOldLogsCallback(data)
+    {
+        oldLogs = data;
+        prepareForReload();
+    }
+
+    function prepareForReload()
+    {
+        InspectorTest.evaluateInPage("prepareForReload()", reload);
+    }
+
+    function reload()
+    {
+        InspectorTest.sendCommand("Page.reload", { "ignoreCache": ignoreCache });
+    }
+
+    function afterReload()
+    {
+        var currentLogs;
+        getLogs(data => {
+            currentLogs = data;
+            clearLogs(addLogsBack);
+        });
+
+        function addLogsBack()
+        {
+            for (var log of oldLogs)
+                InspectorTest.log(log);
+            for (var log of currentLogs)
+                InspectorTest.log(log);
+            callback();
+        }
+    }
 }
 
 window.addEventListener("load", InspectorTest.readyForTest.bind(InspectorTest), false);

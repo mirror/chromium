@@ -10,13 +10,15 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/validation.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/autofill/core/common/form_field_data.h"
-#include "grit/components_scaled_resources.h"
+#include "components/grit/components_scaled_resources.h"
+#include "components/variations/variations_params_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::ASCIIToUTF16;
@@ -50,9 +52,7 @@ const char* const kValidNumbers[] = {
   "4222-2222-2222-2",
   "5019717010103742",
   "6331101999990016",
-
-  // A UnionPay card that doesn't pass the Luhn checksum
-  "6200000000000000",
+  "6247130048162403",
 };
 const char* const kInvalidNumbers[] = {
   "4111 1111 112", /* too short */
@@ -60,6 +60,13 @@ const char* const kInvalidNumbers[] = {
   "4111-1111-1111-1110", /* wrong Luhn checksum */
   "3056 9309 0259 04aa", /* non-digit characters */
 };
+
+const std::string kUTF8MidlineEllipsis =
+    "  "
+    "\xE2\x80\xA2\xE2\x80\x86"
+    "\xE2\x80\xA2\xE2\x80\x86"
+    "\xE2\x80\xA2\xE2\x80\x86"
+    "\xE2\x80\xA2\xE2\x80\x86";
 
 }  // namespace
 
@@ -95,14 +102,10 @@ TEST(CreditCardTest, PreviewSummaryAndTypeAndLastFourDigitsStrings) {
   test::SetCreditCardInfo(
       &credit_card2, "John Dillinger", "5105 1051 0510 5100", "", "2010");
   base::string16 summary2 = credit_card2.Label();
-  EXPECT_EQ(UTF8ToUTF16(
-                "MasterCard\xC2\xA0\xE2\x8B\xAF"
-                "5100"),
+  EXPECT_EQ(UTF8ToUTF16("MasterCard" + kUTF8MidlineEllipsis + "5100"),
             summary2);
   base::string16 obfuscated2 = credit_card2.TypeAndLastFourDigits();
-  EXPECT_EQ(UTF8ToUTF16(
-                "MasterCard\xC2\xA0\xE2\x8B\xAF"
-                "5100"),
+  EXPECT_EQ(UTF8ToUTF16("MasterCard" + kUTF8MidlineEllipsis + "5100"),
             obfuscated2);
 
   // Case 3: No year.
@@ -110,14 +113,10 @@ TEST(CreditCardTest, PreviewSummaryAndTypeAndLastFourDigitsStrings) {
   test::SetCreditCardInfo(
       &credit_card3, "John Dillinger", "5105 1051 0510 5100", "01", "");
   base::string16 summary3 = credit_card3.Label();
-  EXPECT_EQ(UTF8ToUTF16(
-                "MasterCard\xC2\xA0\xE2\x8B\xAF"
-                "5100"),
+  EXPECT_EQ(UTF8ToUTF16("MasterCard" + kUTF8MidlineEllipsis + "5100"),
             summary3);
   base::string16 obfuscated3 = credit_card3.TypeAndLastFourDigits();
-  EXPECT_EQ(UTF8ToUTF16(
-                "MasterCard\xC2\xA0\xE2\x8B\xAF"
-                "5100"),
+  EXPECT_EQ(UTF8ToUTF16("MasterCard" + kUTF8MidlineEllipsis + "5100"),
             obfuscated3);
 
   // Case 4: Have everything.
@@ -125,14 +124,10 @@ TEST(CreditCardTest, PreviewSummaryAndTypeAndLastFourDigitsStrings) {
   test::SetCreditCardInfo(
       &credit_card4, "John Dillinger", "5105 1051 0510 5100", "01", "2010");
   base::string16 summary4 = credit_card4.Label();
-  EXPECT_EQ(UTF8ToUTF16(
-                "MasterCard\xC2\xA0\xE2\x8B\xAF"
-                "5100, 01/2010"),
+  EXPECT_EQ(UTF8ToUTF16("MasterCard" + kUTF8MidlineEllipsis + "5100, 01/2010"),
             summary4);
   base::string16 obfuscated4 = credit_card4.TypeAndLastFourDigits();
-  EXPECT_EQ(UTF8ToUTF16(
-                "MasterCard\xC2\xA0\xE2\x8B\xAF"
-                "5100"),
+  EXPECT_EQ(UTF8ToUTF16("MasterCard" + kUTF8MidlineEllipsis + "5100"),
             obfuscated4);
 
   // Case 5: Very long credit card
@@ -142,14 +137,10 @@ TEST(CreditCardTest, PreviewSummaryAndTypeAndLastFourDigitsStrings) {
       "John Dillinger",
       "0123456789 0123456789 0123456789 5105 1051 0510 5100", "01", "2010");
   base::string16 summary5 = credit_card5.Label();
-  EXPECT_EQ(UTF8ToUTF16(
-                "Card\xC2\xA0\xE2\x8B\xAF"
-                "5100, 01/2010"),
+  EXPECT_EQ(UTF8ToUTF16("Card" + kUTF8MidlineEllipsis + "5100, 01/2010"),
             summary5);
   base::string16 obfuscated5 = credit_card5.TypeAndLastFourDigits();
-  EXPECT_EQ(UTF8ToUTF16(
-                "Card\xC2\xA0\xE2\x8B\xAF"
-                "5100"),
+  EXPECT_EQ(UTF8ToUTF16("Card" + kUTF8MidlineEllipsis + "5100"),
             obfuscated5);
 }
 
@@ -167,78 +158,89 @@ TEST(CreditCardTest, AssignmentOperator) {
   EXPECT_TRUE(a == b);
 }
 
-TEST(CreditCardTest, SetExpirationYearFromString) {
-  static const struct {
-    std::string expiration_year;
-    int expected_year;
-  } kTestCases[] = {
-      // Valid values.
-      {"2040", 2040},
-      {"45", 2045},
-      {"045", 2045},
-      {"9", 2009},
+struct SetExpirationYearFromStringTestCase {
+  std::string expiration_year;
+  int expected_year;
+};
 
-      // Unrecognized year values.
-      {"052045", 0},
-      {"123", 0},
-      {"y2045", 0},
-  };
+class SetExpirationYearFromStringTest
+    : public testing::TestWithParam<SetExpirationYearFromStringTestCase> {};
 
-  for (size_t i = 0; i < arraysize(kTestCases); ++i) {
-    CreditCard card(base::GenerateGUID(), "some origin");
-    card.SetExpirationYearFromString(
-        ASCIIToUTF16(kTestCases[i].expiration_year));
+TEST_P(SetExpirationYearFromStringTest, SetExpirationYearFromString) {
+  auto test_case = GetParam();
+  CreditCard card(base::GenerateGUID(), "some origin");
+  card.SetExpirationYearFromString(ASCIIToUTF16(test_case.expiration_year));
 
-    EXPECT_EQ(kTestCases[i].expected_year, card.expiration_year())
-        << kTestCases[i].expiration_year << " " << kTestCases[i].expected_year;
-  }
+  EXPECT_EQ(test_case.expected_year, card.expiration_year())
+      << test_case.expiration_year << " " << test_case.expected_year;
 }
 
-TEST(CreditCardTest, SetExpirationDateFromString) {
-  static const struct {
-    std::string expiration_date;
-    int expected_month;
-    int expected_year;
-  } kTestCases[] = {{"10", 0, 0},       // Too small.
-                    {"1020451", 0, 0},  // Too long.
+INSTANTIATE_TEST_CASE_P(CreditCardTest,
+                        SetExpirationYearFromStringTest,
+                        testing::Values(
+                            // Valid values.
+                            SetExpirationYearFromStringTestCase{"2040", 2040},
+                            SetExpirationYearFromStringTestCase{"45", 2045},
+                            SetExpirationYearFromStringTestCase{"045", 2045},
+                            SetExpirationYearFromStringTestCase{"9", 2009},
 
-                    // No separators.
-                    {"105", 0, 0},  // Too ambiguous.
-                    {"0545", 5, 2045},
-                    {"52045", 0, 0},  // Too ambiguous.
-                    {"052045", 5, 2045},
+                            // Unrecognized year values.
+                            SetExpirationYearFromStringTestCase{"052045", 0},
+                            SetExpirationYearFromStringTestCase{"123", 0},
+                            SetExpirationYearFromStringTestCase{"y2045", 0}));
 
-                    // "/" separator.
-                    {"05/45", 5, 2045},
-                    {"5/2045", 5, 2045},
-                    {"05/2045", 5, 2045},
+struct SetExpirationDateFromStringTestCase {
+  std::string expiration_date;
+  int expected_month;
+  int expected_year;
+};
 
-                    // "-" separator.
-                    {"05-45", 5, 2045},
-                    {"5-2045", 5, 2045},
-                    {"05-2045", 5, 2045},
+class SetExpirationDateFromStringTest
+    : public testing::TestWithParam<SetExpirationDateFromStringTestCase> {};
 
-                    // "|" separator.
-                    {"05|45", 5, 2045},
-                    {"5|2045", 5, 2045},
-                    {"05|2045", 5, 2045},
+TEST_P(SetExpirationDateFromStringTest, SetExpirationDateFromString) {
+  auto test_case = GetParam();
+  CreditCard card(base::GenerateGUID(), "some origin");
+  card.SetExpirationDateFromString(ASCIIToUTF16(test_case.expiration_date));
 
-                    // Invalid values.
-                    {"13/2016", 0, 2016},
-                    {"16/13", 0, 2013},
-                    {"May-2015", 0, 0},
-                    {"05-/2045", 0, 0},
-                    {"05_2045", 0, 0}};
-
-  for (size_t i = 0; i < arraysize(kTestCases); ++i) {
-    CreditCard card(base::GenerateGUID(), "some origin");
-    card.SetExpirationDateFromString(
-        ASCIIToUTF16(kTestCases[i].expiration_date));
-
-    EXPECT_EQ(kTestCases[i].expected_month, card.expiration_month());
-    EXPECT_EQ(kTestCases[i].expected_year, card.expiration_year());
-  }
+  EXPECT_EQ(test_case.expected_month, card.expiration_month());
+  EXPECT_EQ(test_case.expected_year, card.expiration_year());
 }
+
+INSTANTIATE_TEST_CASE_P(
+    CreditCardTest,
+    SetExpirationDateFromStringTest,
+    testing::Values(
+        SetExpirationDateFromStringTestCase{"10", 0, 0},       // Too small.
+        SetExpirationDateFromStringTestCase{"1020451", 0, 0},  // Too long.
+
+        // No separators.
+        SetExpirationDateFromStringTestCase{"105", 0, 0},  // Too ambiguous.
+        SetExpirationDateFromStringTestCase{"0545", 5, 2045},
+        SetExpirationDateFromStringTestCase{"52045", 0, 0},  // Too ambiguous.
+        SetExpirationDateFromStringTestCase{"052045", 5, 2045},
+
+        // "/" separator.
+        SetExpirationDateFromStringTestCase{"05/45", 5, 2045},
+        SetExpirationDateFromStringTestCase{"5/2045", 5, 2045},
+        SetExpirationDateFromStringTestCase{"05/2045", 5, 2045},
+
+        // "-" separator.
+        SetExpirationDateFromStringTestCase{"05-45", 5, 2045},
+        SetExpirationDateFromStringTestCase{"5-2045", 5, 2045},
+        SetExpirationDateFromStringTestCase{"05-2045", 5, 2045},
+
+        // "|" separator.
+        SetExpirationDateFromStringTestCase{"05|45", 5, 2045},
+        SetExpirationDateFromStringTestCase{"5|2045", 5, 2045},
+        SetExpirationDateFromStringTestCase{"05|2045", 5, 2045},
+
+        // Invalid values.
+        SetExpirationDateFromStringTestCase{"13/2016", 0, 2016},
+        SetExpirationDateFromStringTestCase{"16/13", 0, 2013},
+        SetExpirationDateFromStringTestCase{"May-2015", 0, 0},
+        SetExpirationDateFromStringTestCase{"05-/2045", 0, 0},
+        SetExpirationDateFromStringTestCase{"05_2045", 0, 0}));
 
 TEST(CreditCardTest, Copy) {
   CreditCard a(base::GenerateGUID(), "https://www.example.com");
@@ -249,77 +251,84 @@ TEST(CreditCardTest, Copy) {
   EXPECT_TRUE(a == b);
 }
 
-TEST(CreditCardTest, IsLocalDuplicateOfServerCard) {
-  struct {
-    CreditCard::RecordType first_card_record_type;
-    const char* first_card_name;
-    const char* first_card_number;
-    const char* first_card_exp_mo;
-    const char* first_card_exp_yr;
+struct IsLocalDuplicateOfServerCardTestCase {
+  CreditCard::RecordType first_card_record_type;
+  const char* first_card_name;
+  const char* first_card_number;
+  const char* first_card_exp_mo;
+  const char* first_card_exp_yr;
 
-    CreditCard::RecordType second_card_record_type;
-    const char* second_card_name;
-    const char* second_card_number;
-    const char* second_card_exp_mo;
-    const char* second_card_exp_yr;
-    const char* second_card_type;
+  CreditCard::RecordType second_card_record_type;
+  const char* second_card_name;
+  const char* second_card_number;
+  const char* second_card_exp_mo;
+  const char* second_card_exp_yr;
+  const char* second_card_type;
 
-    bool is_local_duplicate;
-  } test_cases[] = {
-    { LOCAL_CARD, "", "", "", "",
-      LOCAL_CARD, "", "", "", "", nullptr, false },
-    { LOCAL_CARD, "", "", "", "",
-      FULL_SERVER_CARD, "", "", "", "", nullptr, true},
-    { FULL_SERVER_CARD, "", "", "", "",
-      FULL_SERVER_CARD, "", "", "", "", nullptr, false},
-    { LOCAL_CARD, "John Dillinger", "423456789012", "01", "2010",
-      FULL_SERVER_CARD, "John Dillinger", "423456789012", "01", "2010", nullptr,
-      true },
-    { LOCAL_CARD, "J Dillinger", "423456789012", "01", "2010",
-      FULL_SERVER_CARD, "John Dillinger", "423456789012", "01", "2010", nullptr,
-      false },
-    { LOCAL_CARD, "", "423456789012", "01", "2010",
-      FULL_SERVER_CARD, "John Dillinger", "423456789012", "01", "2010", nullptr,
-      true },
-    { LOCAL_CARD, "", "423456789012", "", "",
-      FULL_SERVER_CARD, "John Dillinger", "423456789012", "01", "2010", nullptr,
-      true },
-    { LOCAL_CARD, "", "423456789012", "", "",
-      MASKED_SERVER_CARD, "John Dillinger", "9012", "01", "2010", kVisaCard,
-      true },
-    { LOCAL_CARD, "", "423456789012", "", "",
-      MASKED_SERVER_CARD, "John Dillinger", "9012", "01", "2010", kMasterCard,
-      false },
-    { LOCAL_CARD, "John Dillinger", "4234-5678-9012", "01", "2010",
-      FULL_SERVER_CARD, "John Dillinger", "423456789012", "01", "2010", nullptr,
-      true },
-  };
+  bool is_local_duplicate;
+};
 
-  for (size_t i = 0; i < arraysize(test_cases); ++i) {
-    CreditCard a(base::GenerateGUID(), std::string());
-    a.set_record_type(test_cases[i].first_card_record_type);
-    test::SetCreditCardInfo(&a,
-                            test_cases[i].first_card_name,
-                            test_cases[i].first_card_number,
-                            test_cases[i].first_card_exp_mo,
-                            test_cases[i].first_card_exp_yr);
+class IsLocalDuplicateOfServerCardTest
+    : public testing::TestWithParam<IsLocalDuplicateOfServerCardTestCase> {};
 
-    CreditCard b(base::GenerateGUID(), std::string());
-    b.set_record_type(test_cases[i].second_card_record_type);
-    test::SetCreditCardInfo(&b,
-                            test_cases[i].second_card_name,
-                            test_cases[i].second_card_number,
-                            test_cases[i].second_card_exp_mo,
-                            test_cases[i].second_card_exp_yr);
+TEST_P(IsLocalDuplicateOfServerCardTest, IsLocalDuplicateOfServerCard) {
+  auto test_case = GetParam();
+  CreditCard a(base::GenerateGUID(), std::string());
+  a.set_record_type(test_case.first_card_record_type);
+  test::SetCreditCardInfo(
+      &a, test_case.first_card_name, test_case.first_card_number,
+      test_case.first_card_exp_mo, test_case.first_card_exp_yr);
 
-    if (test_cases[i].second_card_record_type == CreditCard::MASKED_SERVER_CARD)
-      b.SetTypeForMaskedCard(test_cases[i].second_card_type);
+  CreditCard b(base::GenerateGUID(), std::string());
+  b.set_record_type(test_case.second_card_record_type);
+  test::SetCreditCardInfo(
+      &b, test_case.second_card_name, test_case.second_card_number,
+      test_case.second_card_exp_mo, test_case.second_card_exp_yr);
 
-    EXPECT_EQ(test_cases[i].is_local_duplicate,
-              a.IsLocalDuplicateOfServerCard(b)) << " when comparing cards "
-                  << a.Label() << " and " << b.Label();
-  }
+  if (test_case.second_card_record_type == CreditCard::MASKED_SERVER_CARD)
+    b.SetTypeForMaskedCard(test_case.second_card_type);
+
+  EXPECT_EQ(test_case.is_local_duplicate, a.IsLocalDuplicateOfServerCard(b))
+      << " when comparing cards " << a.Label() << " and " << b.Label();
 }
+
+INSTANTIATE_TEST_CASE_P(
+    CreditCardTest,
+    IsLocalDuplicateOfServerCardTest,
+    testing::Values(
+        IsLocalDuplicateOfServerCardTestCase{LOCAL_CARD, "", "", "", "",
+                                             LOCAL_CARD, "", "", "", "",
+                                             nullptr, false},
+        IsLocalDuplicateOfServerCardTestCase{LOCAL_CARD, "", "", "", "",
+                                             FULL_SERVER_CARD, "", "", "", "",
+                                             nullptr, true},
+        IsLocalDuplicateOfServerCardTestCase{FULL_SERVER_CARD, "", "", "", "",
+                                             FULL_SERVER_CARD, "", "", "", "",
+                                             nullptr, false},
+        IsLocalDuplicateOfServerCardTestCase{
+            LOCAL_CARD, "John Dillinger", "423456789012", "01", "2010",
+            FULL_SERVER_CARD, "John Dillinger", "423456789012", "01", "2010",
+            nullptr, true},
+        IsLocalDuplicateOfServerCardTestCase{
+            LOCAL_CARD, "J Dillinger", "423456789012", "01", "2010",
+            FULL_SERVER_CARD, "John Dillinger", "423456789012", "01", "2010",
+            nullptr, false},
+        IsLocalDuplicateOfServerCardTestCase{
+            LOCAL_CARD, "", "423456789012", "01", "2010", FULL_SERVER_CARD,
+            "John Dillinger", "423456789012", "01", "2010", nullptr, true},
+        IsLocalDuplicateOfServerCardTestCase{
+            LOCAL_CARD, "", "423456789012", "", "", FULL_SERVER_CARD,
+            "John Dillinger", "423456789012", "01", "2010", nullptr, true},
+        IsLocalDuplicateOfServerCardTestCase{
+            LOCAL_CARD, "", "423456789012", "", "", MASKED_SERVER_CARD,
+            "John Dillinger", "9012", "01", "2010", kVisaCard, true},
+        IsLocalDuplicateOfServerCardTestCase{
+            LOCAL_CARD, "", "423456789012", "", "", MASKED_SERVER_CARD,
+            "John Dillinger", "9012", "01", "2010", kMasterCard, false},
+        IsLocalDuplicateOfServerCardTestCase{
+            LOCAL_CARD, "John Dillinger", "4234-5678-9012", "01", "2010",
+            FULL_SERVER_CARD, "John Dillinger", "423456789012", "01", "2010",
+            nullptr, true}));
 
 TEST(CreditCardTest, HasSameNumberAs) {
   CreditCard a(base::GenerateGUID(), std::string());
@@ -387,14 +396,16 @@ TEST(CreditCardTest, Compare) {
 TEST(CreditCardTest, IconResourceId) {
   EXPECT_EQ(IDR_AUTOFILL_CC_AMEX,
             CreditCard::IconResourceId(kAmericanExpressCard));
-  EXPECT_EQ(IDR_AUTOFILL_CC_GENERIC,
+  EXPECT_EQ(IDR_AUTOFILL_CC_DINERS,
             CreditCard::IconResourceId(kDinersCard));
   EXPECT_EQ(IDR_AUTOFILL_CC_DISCOVER,
             CreditCard::IconResourceId(kDiscoverCard));
-  EXPECT_EQ(IDR_AUTOFILL_CC_GENERIC,
+  EXPECT_EQ(IDR_AUTOFILL_CC_JCB,
             CreditCard::IconResourceId(kJCBCard));
   EXPECT_EQ(IDR_AUTOFILL_CC_MASTERCARD,
             CreditCard::IconResourceId(kMasterCard));
+  EXPECT_EQ(IDR_AUTOFILL_CC_MIR,
+            CreditCard::IconResourceId(kMirCard));
   EXPECT_EQ(IDR_AUTOFILL_CC_VISA,
             CreditCard::IconResourceId(kVisaCard));
 }
@@ -542,14 +553,14 @@ TEST(CreditCardTest, IsValid) {
   card.SetRawInfo(CREDIT_CARD_NUMBER, ASCIIToUTF16("41111"));
   EXPECT_FALSE(card.IsValid());
 
-  for (size_t i = 0; i < arraysize(kValidNumbers); ++i) {
-    SCOPED_TRACE(kValidNumbers[i]);
-    card.SetRawInfo(CREDIT_CARD_NUMBER, ASCIIToUTF16(kValidNumbers[i]));
+  for (const char* valid_number : kValidNumbers) {
+    SCOPED_TRACE(valid_number);
+    card.SetRawInfo(CREDIT_CARD_NUMBER, ASCIIToUTF16(valid_number));
     EXPECT_TRUE(card.IsValid());
   }
-  for (size_t i = 0; i < arraysize(kInvalidNumbers); ++i) {
-    SCOPED_TRACE(kInvalidNumbers[i]);
-    card.SetRawInfo(CREDIT_CARD_NUMBER, ASCIIToUTF16(kInvalidNumbers[i]));
+  for (const char* invalid_number : kInvalidNumbers) {
+    SCOPED_TRACE(invalid_number);
+    card.SetRawInfo(CREDIT_CARD_NUMBER, ASCIIToUTF16(invalid_number));
     EXPECT_FALSE(card.IsValid());
   }
 }
@@ -617,170 +628,222 @@ TEST(CreditCardTest, CreditCardVerificationCode) {
   EXPECT_EQ(base::string16(), card.GetRawInfo(CREDIT_CARD_VERIFICATION_CODE));
 }
 
+struct GetCreditCardTypeTestCase {
+  std::string card_number;
+  std::string type;
+  bool is_valid;
+};
 
-TEST(CreditCardTest, GetCreditCardType) {
-  struct {
-    std::string card_number;
-    std::string type;
-    bool is_valid;
-  } test_cases[] = {
-    // The relevant sample numbers from
-    // http://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm
-    { "378282246310005", kAmericanExpressCard, true },
-    { "371449635398431", kAmericanExpressCard, true },
-    { "378734493671000", kAmericanExpressCard, true },
-    { "30569309025904", kDinersCard, true },
-    { "38520000023237", kDinersCard, true },
-    { "6011111111111117", kDiscoverCard, true },
-    { "6011000990139424", kDiscoverCard, true },
-    { "3530111333300000", kJCBCard, true },
-    { "3566002020360505", kJCBCard, true },
-    { "5555555555554444", kMasterCard, true },
-    { "5105105105105100", kMasterCard, true },
-    { "4111111111111111", kVisaCard, true },
-    { "4012888888881881", kVisaCard, true },
-    { "4222222222222", kVisaCard, true },
+// We are doing batches here because INSTANTIATE_TEST_CASE_P has a
+// 50 upper limit.
+class GetCreditCardTypeTestBatch1
+    : public testing::TestWithParam<GetCreditCardTypeTestCase> {};
 
-    // The relevant sample numbers from
-    // http://auricsystems.com/support-center/sample-credit-card-numbers/
-    { "343434343434343", kAmericanExpressCard, true },
-    { "371144371144376", kAmericanExpressCard, true },
-    { "341134113411347", kAmericanExpressCard, true },
-    { "36438936438936", kDinersCard, true },
-    { "36110361103612", kDinersCard, true },
-    { "36111111111111", kDinersCard, true },
-    { "6011016011016011", kDiscoverCard, true },
-    { "6011000990139424", kDiscoverCard, true },
-    { "6011000000000004", kDiscoverCard, true },
-    { "6011000995500000", kDiscoverCard, true },
-    { "6500000000000002", kDiscoverCard, true },
-    { "3566002020360505", kJCBCard, true },
-    { "3528000000000007", kJCBCard, true },
-    { "5500005555555559", kMasterCard, true },
-    { "5555555555555557", kMasterCard, true },
-    { "5454545454545454", kMasterCard, true },
-    { "5555515555555551", kMasterCard, true },
-    { "5405222222222226", kMasterCard, true },
-    { "5478050000000007", kMasterCard, true },
-    { "5111005111051128", kMasterCard, true },
-    { "5112345112345114", kMasterCard, true },
-    { "5115915115915118", kMasterCard, true },
-
-    // A UnionPay card that doesn't pass the Luhn checksum
-    { "6200000000000000", kUnionPay, true },
-
-    // Empty string
-    { std::string(), kGenericCard, false },
-
-    // Non-numeric
-    { "garbage", kGenericCard, false },
-    { "4garbage", kVisaCard, false },
-
-    // Fails Luhn check.
-    { "4111111111111112", kVisaCard, false },
-
-    // Invalid length.
-    { "3434343434343434", kAmericanExpressCard, false },
-    { "411111111111116", kVisaCard, false },
-
-    // Issuer Identification Numbers (IINs) that Chrome recognizes.
-    { "4", kVisaCard, false },
-    { "34", kAmericanExpressCard, false },
-    { "37", kAmericanExpressCard, false },
-    { "300", kDinersCard, false },
-    { "301", kDinersCard, false },
-    { "302", kDinersCard, false },
-    { "303", kDinersCard, false },
-    { "304", kDinersCard, false },
-    { "305", kDinersCard, false },
-    { "3095", kDinersCard, false },
-    { "36", kDinersCard, false },
-    { "38", kDinersCard, false },
-    { "39", kDinersCard, false },
-    { "6011", kDiscoverCard, false },
-    { "644", kDiscoverCard, false },
-    { "645", kDiscoverCard, false },
-    { "646", kDiscoverCard, false },
-    { "647", kDiscoverCard, false },
-    { "648", kDiscoverCard, false },
-    { "649", kDiscoverCard, false },
-    { "65", kDiscoverCard, false },
-    { "3528", kJCBCard, false },
-    { "3531", kJCBCard, false },
-    { "3589", kJCBCard, false },
-    { "51", kMasterCard, false },
-    { "52", kMasterCard, false },
-    { "53", kMasterCard, false },
-    { "54", kMasterCard, false },
-    { "55", kMasterCard, false },
-    { "62", kUnionPay, false },
-
-    // Not enough data to determine an IIN uniquely.
-    { "3", kGenericCard, false },
-    { "30", kGenericCard, false },
-    { "309", kGenericCard, false },
-    { "35", kGenericCard, false },
-    { "5", kGenericCard, false },
-    { "6", kGenericCard, false },
-    { "60", kGenericCard, false },
-    { "601", kGenericCard, false },
-    { "64", kGenericCard, false },
-
-    // Unknown IINs.
-    { "0", kGenericCard, false },
-    { "1", kGenericCard, false },
-    { "2", kGenericCard, false },
-    { "306", kGenericCard, false },
-    { "307", kGenericCard, false },
-    { "308", kGenericCard, false },
-    { "3091", kGenericCard, false },
-    { "3094", kGenericCard, false },
-    { "3096", kGenericCard, false },
-    { "31", kGenericCard, false },
-    { "32", kGenericCard, false },
-    { "33", kGenericCard, false },
-    { "351", kGenericCard, false },
-    { "3527", kGenericCard, false },
-    { "359", kGenericCard, false },
-    { "50", kGenericCard, false },
-    { "56", kGenericCard, false },
-    { "57", kGenericCard, false },
-    { "58", kGenericCard, false },
-    { "59", kGenericCard, false },
-    { "600", kGenericCard, false },
-    { "602", kGenericCard, false },
-    { "603", kGenericCard, false },
-    { "604", kGenericCard, false },
-    { "605", kGenericCard, false },
-    { "606", kGenericCard, false },
-    { "607", kGenericCard, false },
-    { "608", kGenericCard, false },
-    { "609", kGenericCard, false },
-    { "61", kGenericCard, false },
-    { "63", kGenericCard, false },
-    { "640", kGenericCard, false },
-    { "641", kGenericCard, false },
-    { "642", kGenericCard, false },
-    { "643", kGenericCard, false },
-    { "66", kGenericCard, false },
-    { "67", kGenericCard, false },
-    { "68", kGenericCard, false },
-    { "69", kGenericCard, false },
-    { "7", kGenericCard, false },
-    { "8", kGenericCard, false },
-    { "9", kGenericCard, false },
-
-    // Oddball case: Unknown issuer, but valid Luhn check and plausible length.
-    { "7000700070007000", kGenericCard, true },
-  };
-
-  for (size_t i = 0; i < arraysize(test_cases); ++i) {
-    base::string16 card_number = ASCIIToUTF16(test_cases[i].card_number);
-    SCOPED_TRACE(card_number);
-    EXPECT_EQ(test_cases[i].type, CreditCard::GetCreditCardType(card_number));
-    EXPECT_EQ(test_cases[i].is_valid, IsValidCreditCardNumber(card_number));
-  }
+TEST_P(GetCreditCardTypeTestBatch1, GetCreditCardType) {
+  auto test_case = GetParam();
+  base::string16 card_number = ASCIIToUTF16(test_case.card_number);
+  SCOPED_TRACE(card_number);
+  EXPECT_EQ(test_case.type, CreditCard::GetCreditCardType(card_number));
+  EXPECT_EQ(test_case.is_valid, IsValidCreditCardNumber(card_number));
 }
+
+INSTANTIATE_TEST_CASE_P(
+    CreditCardTest,
+    GetCreditCardTypeTestBatch1,
+    testing::Values(
+        // The relevant sample numbers from
+        // http://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm
+        GetCreditCardTypeTestCase{"378282246310005", kAmericanExpressCard,
+                                  true},
+        GetCreditCardTypeTestCase{"371449635398431", kAmericanExpressCard,
+                                  true},
+        GetCreditCardTypeTestCase{"378734493671000", kAmericanExpressCard,
+                                  true},
+        GetCreditCardTypeTestCase{"30569309025904", kDinersCard, true},
+        GetCreditCardTypeTestCase{"38520000023237", kDinersCard, true},
+        GetCreditCardTypeTestCase{"6011111111111117", kDiscoverCard, true},
+        GetCreditCardTypeTestCase{"6011000990139424", kDiscoverCard, true},
+        GetCreditCardTypeTestCase{"3530111333300000", kJCBCard, true},
+        GetCreditCardTypeTestCase{"3566002020360505", kJCBCard, true},
+        GetCreditCardTypeTestCase{"5555555555554444", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5105105105105100", kMasterCard, true},
+        GetCreditCardTypeTestCase{"4111111111111111", kVisaCard, true},
+        GetCreditCardTypeTestCase{"4012888888881881", kVisaCard, true},
+        GetCreditCardTypeTestCase{"4222222222222", kVisaCard, true},
+
+        // The relevant sample numbers from
+        // https://www.auricsystems.com/sample-credit-card-numbers/
+        GetCreditCardTypeTestCase{"343434343434343", kAmericanExpressCard,
+                                  true},
+        GetCreditCardTypeTestCase{"371144371144376", kAmericanExpressCard,
+                                  true},
+        GetCreditCardTypeTestCase{"341134113411347", kAmericanExpressCard,
+                                  true},
+        GetCreditCardTypeTestCase{"36438936438936", kDinersCard, true},
+        GetCreditCardTypeTestCase{"36110361103612", kDinersCard, true},
+        GetCreditCardTypeTestCase{"36111111111111", kDinersCard, true},
+        GetCreditCardTypeTestCase{"6011016011016011", kDiscoverCard, true},
+        GetCreditCardTypeTestCase{"6011000990139424", kDiscoverCard, true},
+        GetCreditCardTypeTestCase{"6011000000000004", kDiscoverCard, true},
+        GetCreditCardTypeTestCase{"6011000995500000", kDiscoverCard, true},
+        GetCreditCardTypeTestCase{"6500000000000002", kDiscoverCard, true},
+        GetCreditCardTypeTestCase{"3566002020360505", kJCBCard, true},
+        GetCreditCardTypeTestCase{"3528000000000007", kJCBCard, true},
+        GetCreditCardTypeTestCase{"5500005555555559", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5555555555555557", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5454545454545454", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5555515555555551", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5405222222222226", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5478050000000007", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5111005111051128", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5112345112345114", kMasterCard, true},
+        GetCreditCardTypeTestCase{"5115915115915118", kMasterCard, true},
+        GetCreditCardTypeTestCase{"6247130048162403", kUnionPay, true},
+        GetCreditCardTypeTestCase{"6247130048162403", kUnionPay, true},
+        GetCreditCardTypeTestCase{"622384452162063648", kUnionPay, true},
+        GetCreditCardTypeTestCase{"2204883716636153", kMirCard, true},
+        GetCreditCardTypeTestCase{"2200111234567898", kMirCard, true},
+        GetCreditCardTypeTestCase{"2200481349288130", kMirCard, true},
+
+        // Empty string
+        GetCreditCardTypeTestCase{std::string(), kGenericCard, false},
+
+        // Non-numeric
+        GetCreditCardTypeTestCase{"garbage", kGenericCard, false},
+        GetCreditCardTypeTestCase{"4garbage", kVisaCard, false},
+
+        // Fails Luhn check.
+        GetCreditCardTypeTestCase{"4111111111111112", kVisaCard, false},
+        GetCreditCardTypeTestCase{"6247130048162413", kUnionPay, false},
+        GetCreditCardTypeTestCase{"2204883716636154", kMirCard, false}));
+
+class GetCreditCardTypeTestBatch2
+    : public testing::TestWithParam<GetCreditCardTypeTestCase> {};
+
+TEST_P(GetCreditCardTypeTestBatch2, GetCreditCardType) {
+  auto test_case = GetParam();
+  base::string16 card_number = ASCIIToUTF16(test_case.card_number);
+  SCOPED_TRACE(card_number);
+  EXPECT_EQ(test_case.type, CreditCard::GetCreditCardType(card_number));
+  EXPECT_EQ(test_case.is_valid, IsValidCreditCardNumber(card_number));
+}
+
+INSTANTIATE_TEST_CASE_P(
+    CreditCardTest,
+    GetCreditCardTypeTestBatch2,
+    testing::Values(
+        // Invalid length.
+        GetCreditCardTypeTestCase{"3434343434343434", kAmericanExpressCard,
+                                  false},
+        GetCreditCardTypeTestCase{"411111111111116", kVisaCard, false},
+        GetCreditCardTypeTestCase{"220011123456783", kMirCard, false},
+
+        // Issuer Identification Numbers (IINs) that Chrome recognizes.
+        GetCreditCardTypeTestCase{"4", kVisaCard, false},
+        GetCreditCardTypeTestCase{"22", kMirCard, false},
+        GetCreditCardTypeTestCase{"34", kAmericanExpressCard, false},
+        GetCreditCardTypeTestCase{"37", kAmericanExpressCard, false},
+        GetCreditCardTypeTestCase{"300", kDinersCard, false},
+        GetCreditCardTypeTestCase{"301", kDinersCard, false},
+        GetCreditCardTypeTestCase{"302", kDinersCard, false},
+        GetCreditCardTypeTestCase{"303", kDinersCard, false},
+        GetCreditCardTypeTestCase{"304", kDinersCard, false},
+        GetCreditCardTypeTestCase{"305", kDinersCard, false},
+        GetCreditCardTypeTestCase{"3095", kDinersCard, false},
+        GetCreditCardTypeTestCase{"36", kDinersCard, false},
+        GetCreditCardTypeTestCase{"38", kDinersCard, false},
+        GetCreditCardTypeTestCase{"39", kDinersCard, false},
+        GetCreditCardTypeTestCase{"6011", kDiscoverCard, false},
+        GetCreditCardTypeTestCase{"644", kDiscoverCard, false},
+        GetCreditCardTypeTestCase{"645", kDiscoverCard, false},
+        GetCreditCardTypeTestCase{"646", kDiscoverCard, false},
+        GetCreditCardTypeTestCase{"647", kDiscoverCard, false},
+        GetCreditCardTypeTestCase{"648", kDiscoverCard, false},
+        GetCreditCardTypeTestCase{"649", kDiscoverCard, false},
+        GetCreditCardTypeTestCase{"65", kDiscoverCard, false},
+        GetCreditCardTypeTestCase{"3528", kJCBCard, false},
+        GetCreditCardTypeTestCase{"3531", kJCBCard, false},
+        GetCreditCardTypeTestCase{"3589", kJCBCard, false},
+        GetCreditCardTypeTestCase{"51", kMasterCard, false},
+        GetCreditCardTypeTestCase{"52", kMasterCard, false},
+        GetCreditCardTypeTestCase{"53", kMasterCard, false},
+        GetCreditCardTypeTestCase{"54", kMasterCard, false},
+        GetCreditCardTypeTestCase{"55", kMasterCard, false},
+        GetCreditCardTypeTestCase{"62", kUnionPay, false},
+
+        // Not enough data to determine an IIN uniquely.
+        GetCreditCardTypeTestCase{"2", kGenericCard, false},
+        GetCreditCardTypeTestCase{"3", kGenericCard, false},
+        GetCreditCardTypeTestCase{"30", kGenericCard, false},
+        GetCreditCardTypeTestCase{"309", kGenericCard, false},
+        GetCreditCardTypeTestCase{"35", kGenericCard, false},
+        GetCreditCardTypeTestCase{"5", kGenericCard, false},
+        GetCreditCardTypeTestCase{"6", kGenericCard, false},
+        GetCreditCardTypeTestCase{"60", kGenericCard, false},
+        GetCreditCardTypeTestCase{"601", kGenericCard, false},
+        GetCreditCardTypeTestCase{"64", kGenericCard, false}));
+
+class GetCreditCardTypeTestBatch3
+    : public testing::TestWithParam<GetCreditCardTypeTestCase> {};
+
+TEST_P(GetCreditCardTypeTestBatch3, GetCreditCardType) {
+  auto test_case = GetParam();
+  base::string16 card_number = ASCIIToUTF16(test_case.card_number);
+  SCOPED_TRACE(card_number);
+  EXPECT_EQ(test_case.type, CreditCard::GetCreditCardType(card_number));
+  EXPECT_EQ(test_case.is_valid, IsValidCreditCardNumber(card_number));
+}
+
+INSTANTIATE_TEST_CASE_P(
+    CreditCardTest,
+    GetCreditCardTypeTestBatch3,
+    testing::Values(
+        // Unknown IINs.
+        GetCreditCardTypeTestCase{"0", kGenericCard, false},
+        GetCreditCardTypeTestCase{"1", kGenericCard, false},
+        GetCreditCardTypeTestCase{"306", kGenericCard, false},
+        GetCreditCardTypeTestCase{"307", kGenericCard, false},
+        GetCreditCardTypeTestCase{"308", kGenericCard, false},
+        GetCreditCardTypeTestCase{"3091", kGenericCard, false},
+        GetCreditCardTypeTestCase{"3094", kGenericCard, false},
+        GetCreditCardTypeTestCase{"3096", kGenericCard, false},
+        GetCreditCardTypeTestCase{"31", kGenericCard, false},
+        GetCreditCardTypeTestCase{"32", kGenericCard, false},
+        GetCreditCardTypeTestCase{"33", kGenericCard, false},
+        GetCreditCardTypeTestCase{"351", kGenericCard, false},
+        GetCreditCardTypeTestCase{"3527", kGenericCard, false},
+        GetCreditCardTypeTestCase{"359", kGenericCard, false},
+        GetCreditCardTypeTestCase{"50", kGenericCard, false},
+        GetCreditCardTypeTestCase{"56", kGenericCard, false},
+        GetCreditCardTypeTestCase{"57", kGenericCard, false},
+        GetCreditCardTypeTestCase{"58", kGenericCard, false},
+        GetCreditCardTypeTestCase{"59", kGenericCard, false},
+        GetCreditCardTypeTestCase{"600", kGenericCard, false},
+        GetCreditCardTypeTestCase{"602", kGenericCard, false},
+        GetCreditCardTypeTestCase{"603", kGenericCard, false},
+        GetCreditCardTypeTestCase{"604", kGenericCard, false},
+        GetCreditCardTypeTestCase{"605", kGenericCard, false},
+        GetCreditCardTypeTestCase{"606", kGenericCard, false},
+        GetCreditCardTypeTestCase{"607", kGenericCard, false},
+        GetCreditCardTypeTestCase{"608", kGenericCard, false},
+        GetCreditCardTypeTestCase{"609", kGenericCard, false},
+        GetCreditCardTypeTestCase{"61", kGenericCard, false},
+        GetCreditCardTypeTestCase{"63", kGenericCard, false},
+        GetCreditCardTypeTestCase{"640", kGenericCard, false},
+        GetCreditCardTypeTestCase{"641", kGenericCard, false},
+        GetCreditCardTypeTestCase{"642", kGenericCard, false},
+        GetCreditCardTypeTestCase{"643", kGenericCard, false},
+        GetCreditCardTypeTestCase{"66", kGenericCard, false},
+        GetCreditCardTypeTestCase{"67", kGenericCard, false},
+        GetCreditCardTypeTestCase{"68", kGenericCard, false},
+        GetCreditCardTypeTestCase{"69", kGenericCard, false},
+        GetCreditCardTypeTestCase{"7", kGenericCard, false},
+        GetCreditCardTypeTestCase{"8", kGenericCard, false},
+        GetCreditCardTypeTestCase{"9", kGenericCard, false},
+
+        // Oddball case: Unknown issuer, but valid Luhn check and plausible
+        // length.
+        GetCreditCardTypeTestCase{"7000700070007000", kGenericCard, true}));
 
 TEST(CreditCardTest, LastFourDigits) {
   CreditCard card(base::GenerateGUID(), "https://www.example.com/");
@@ -797,111 +860,215 @@ TEST(CreditCardTest, LastFourDigits) {
   ASSERT_EQ(base::ASCIIToUTF16("489"), card.LastFourDigits());
 }
 
-TEST(CreditCardTest, CanBuildFromCardNumberAndExpirationDate) {
-  base::string16 card_number = base::ASCIIToUTF16("test");
-  int month = 1;
-  int year = 2999;
-  CreditCard card(card_number, month, year);
-  EXPECT_EQ(card_number, card.number());
-  EXPECT_EQ(month, card.expiration_month());
-  EXPECT_EQ(year, card.expiration_year());
+// Verifies that a credit card should be updated.
+struct ShouldUpdateExpirationTestCase {
+  bool should_update_expiration;
+  int month;
+  int year;
+  CreditCard::RecordType record_type;
+  CreditCard::ServerStatus server_status;
+};
+
+class ShouldUpdateExpirationTest
+    : public testing::TestWithParam<ShouldUpdateExpirationTestCase> {};
+
+class TestingTimes {
+ public:
+  TestingTimes() {
+    now_ = base::Time::Now();
+    (now_ - base::TimeDelta::FromDays(365)).LocalExplode(&last_year_);
+    (now_ - base::TimeDelta::FromDays(31)).LocalExplode(&last_month_);
+    now_.LocalExplode(&current_);
+    (now_ + base::TimeDelta::FromDays(31)).LocalExplode(&next_month_);
+    (now_ + base::TimeDelta::FromDays(365)).LocalExplode(&next_year_);
+  }
+
+  base::Time now_;
+  base::Time::Exploded last_year_;
+  base::Time::Exploded last_month_;
+  base::Time::Exploded current_;
+  base::Time::Exploded next_month_;
+  base::Time::Exploded next_year_;
+};
+
+TestingTimes testingTimes;
+
+TEST_P(ShouldUpdateExpirationTest, ShouldUpdateExpiration) {
+  auto test_case = GetParam();
+  CreditCard card;
+  card.SetExpirationMonth(test_case.month);
+  card.SetExpirationYear(test_case.year);
+  card.set_record_type(test_case.record_type);
+  if (card.record_type() != CreditCard::LOCAL_CARD)
+    card.SetServerStatus(test_case.server_status);
+
+  EXPECT_EQ(test_case.should_update_expiration,
+            card.ShouldUpdateExpiration(testingTimes.now_));
 }
 
-// Verifies that a credit card should be updated.
-TEST(CreditCardTest, ShouldUpdateExpiration) {
-  base::Time now = base::Time::Now();
+INSTANTIATE_TEST_CASE_P(
+    CreditCardTest,
+    ShouldUpdateExpirationTest,
+    testing::Values(
+        // Cards that expired last year should always be updated.
+        ShouldUpdateExpirationTestCase{true, testingTimes.last_year_.month,
+                                       testingTimes.last_year_.year,
+                                       CreditCard::LOCAL_CARD},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.last_year_.month, testingTimes.last_year_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.last_year_.month, testingTimes.last_year_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.last_year_.month, testingTimes.last_year_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::EXPIRED},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.last_year_.month, testingTimes.last_year_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::EXPIRED},
 
-  base::Time::Exploded last_year;
-  (now - base::TimeDelta::FromDays(365)).LocalExplode(&last_year);
+        // Cards that expired last month should always be updated.
+        ShouldUpdateExpirationTestCase{true, testingTimes.last_month_.month,
+                                       testingTimes.last_month_.year,
+                                       CreditCard::LOCAL_CARD},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.last_month_.month, testingTimes.last_month_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.last_month_.month, testingTimes.last_month_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.last_month_.month, testingTimes.last_month_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::EXPIRED},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.last_month_.month, testingTimes.last_month_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::EXPIRED},
 
-  base::Time::Exploded last_month;
-  (now - base::TimeDelta::FromDays(31)).LocalExplode(&last_month);
+        // Cards that expire this month should be updated only if the server
+        // status is EXPIRED.
+        ShouldUpdateExpirationTestCase{false, testingTimes.current_.month,
+                                       testingTimes.current_.year,
+                                       CreditCard::LOCAL_CARD},
+        ShouldUpdateExpirationTestCase{
+            false, testingTimes.current_.month, testingTimes.current_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            false, testingTimes.current_.month, testingTimes.current_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.current_.month, testingTimes.current_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::EXPIRED},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.current_.month, testingTimes.current_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::EXPIRED},
 
-  base::Time::Exploded current;
-  now.LocalExplode(&current);
+        // Cards that expire next month should be updated only if the server
+        // status is EXPIRED.
+        ShouldUpdateExpirationTestCase{false, testingTimes.next_month_.month,
+                                       testingTimes.next_month_.year,
+                                       CreditCard::LOCAL_CARD},
+        ShouldUpdateExpirationTestCase{false, testingTimes.next_month_.month,
+                                       testingTimes.next_month_.year,
+                                       CreditCard::MASKED_SERVER_CARD,
+                                       CreditCard::OK},
+        ShouldUpdateExpirationTestCase{false, testingTimes.next_month_.month,
+                                       testingTimes.next_month_.year,
+                                       CreditCard::FULL_SERVER_CARD,
+                                       CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.next_month_.month, testingTimes.next_month_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::EXPIRED},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.next_month_.month, testingTimes.next_month_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::EXPIRED},
 
-  base::Time::Exploded next_month;
-  (now + base::TimeDelta::FromDays(31)).LocalExplode(&next_month);
+        // Cards that expire next year should be updated only if the server
+        // status is EXPIRED.
+        ShouldUpdateExpirationTestCase{false, testingTimes.next_year_.month,
+                                       testingTimes.next_year_.year,
+                                       CreditCard::LOCAL_CARD},
+        ShouldUpdateExpirationTestCase{
+            false, testingTimes.next_year_.month, testingTimes.next_year_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            false, testingTimes.next_year_.month, testingTimes.next_year_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::OK},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.next_year_.month, testingTimes.next_year_.year,
+            CreditCard::MASKED_SERVER_CARD, CreditCard::EXPIRED},
+        ShouldUpdateExpirationTestCase{
+            true, testingTimes.next_year_.month, testingTimes.next_year_.year,
+            CreditCard::FULL_SERVER_CARD, CreditCard::EXPIRED}));
 
-  base::Time::Exploded next_year;
-  (now + base::TimeDelta::FromDays(365)).LocalExplode(&next_year);
+// TODO(wuandy): rewriting below test with INSTANTIATE_TEST_CASE_P seems to
+// trigger a complaint on windows compilers. Removing it and revert to
+// original test for now.
+
+// Test that credit card last used date suggestion can be generated correctly
+// in different variations.
+TEST(CreditCardTest, GetLastUsedDateForDisplay) {
+  const base::Time::Exploded kTestDateTimeExploded = {
+      2016, 12, 6, 10,  // Sat, Dec 10, 2016
+      15,   42, 7, 0    // 15:42:07.000
+  };
+  base::Time kArbitraryTime;
+  EXPECT_TRUE(
+      base::Time::FromLocalExploded(kTestDateTimeExploded, &kArbitraryTime));
+
+  // Test for added to chrome/chromium.
+  CreditCard credit_card0(base::GenerateGUID(), "https://www.example.com");
+  credit_card0.set_use_count(1);
+  credit_card0.set_use_date(kArbitraryTime - base::TimeDelta::FromDays(1));
+  test::SetCreditCardInfo(&credit_card0, "John Dillinger",
+                          "423456789012" /* Visa */, "01", "2021");
+
+  // Test for last used date.
+  CreditCard credit_card1(base::GenerateGUID(), "https://www.example.com");
+  test::SetCreditCardInfo(&credit_card1, "Clyde Barrow",
+                          "347666888555" /* American Express */, "04", "2021");
+  credit_card1.set_use_count(10);
+  credit_card1.set_use_date(kArbitraryTime - base::TimeDelta::FromDays(10));
+
+  // Test for last used more than one year ago.
+  CreditCard credit_card2(base::GenerateGUID(), "https://www.example.com");
+  credit_card2.set_use_count(5);
+  credit_card2.set_use_date(kArbitraryTime - base::TimeDelta::FromDays(366));
+  test::SetCreditCardInfo(&credit_card2, "Bonnie Parker",
+                          "518765432109" /* Mastercard */, "12", "2021");
 
   static const struct {
-    bool should_update_expiration;
-    int month;
-    int year;
-    CreditCard::RecordType record_type;
-    CreditCard::ServerStatus server_status;
+    const char* show_expiration_date;
+    const std::string& app_locale;
+    base::string16 added_to_autofill_date;
+    base::string16 last_used_date;
+    base::string16 last_used_year_ago;
   } kTestCases[] = {
-
-      // Cards that expired last year should always be updated.
-      {true, last_year.month, last_year.year, CreditCard::LOCAL_CARD},
-      {true, last_year.month, last_year.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::OK},
-      {true, last_year.month, last_year.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::OK},
-      {true, last_year.month, last_year.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::EXPIRED},
-      {true, last_year.month, last_year.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::EXPIRED},
-
-      // Cards that expired last month should always be updated.
-      {true, last_month.month, last_month.year, CreditCard::LOCAL_CARD},
-      {true, last_month.month, last_month.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::OK},
-      {true, last_month.month, last_month.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::OK},
-      {true, last_month.month, last_month.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::EXPIRED},
-      {true, last_month.month, last_month.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::EXPIRED},
-
-      // Cards that expire this month should be updated only if the server
-      // status is EXPIRED.
-      {false, current.month, current.year, CreditCard::LOCAL_CARD},
-      {false, current.month, current.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::OK},
-      {false, current.month, current.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::OK},
-      {true, current.month, current.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::EXPIRED},
-      {true, current.month, current.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::EXPIRED},
-
-      // Cards that expire next month should be updated only if the server
-      // status is EXPIRED.
-      {false, next_month.month, next_month.year, CreditCard::LOCAL_CARD},
-      {false, next_month.month, next_month.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::OK},
-      {false, next_month.month, next_month.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::OK},
-      {true, next_month.month, next_month.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::EXPIRED},
-      {true, next_month.month, next_month.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::EXPIRED},
-
-      // Cards that expire next year should be updated only if the server status
-      // is EXPIRED.
-      {false, next_year.month, next_year.year, CreditCard::LOCAL_CARD},
-      {false, next_year.month, next_year.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::OK},
-      {false, next_year.month, next_year.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::OK},
-      {true, next_year.month, next_year.year, CreditCard::MASKED_SERVER_CARD,
-       CreditCard::EXPIRED},
-      {true, next_year.month, next_year.year, CreditCard::FULL_SERVER_CARD,
-       CreditCard::EXPIRED},
+      // only show last used date.
+      {"false", "en_US", ASCIIToUTF16("Added Dec 09"),
+       ASCIIToUTF16("Last used Nov 30"),
+       ASCIIToUTF16("Last used over a year ago")},
+      // show expiration date and last used date.
+      {"true", "en_US", ASCIIToUTF16("Exp: 01/21, added Dec 09"),
+       ASCIIToUTF16("Exp: 04/21, last used Nov 30"),
+       ASCIIToUTF16("Exp: 12/21, last used over a year ago")},
   };
 
-  for (size_t i = 0; i < arraysize(kTestCases); ++i) {
-    CreditCard card(base::ASCIIToUTF16("1234"), kTestCases[i].month,
-                    kTestCases[i].year);
-    card.set_record_type(kTestCases[i].record_type);
-    if (card.record_type() != CreditCard::LOCAL_CARD)
-      card.SetServerStatus(kTestCases[i].server_status);
+  variations::testing::VariationParamsManager variation_params_;
 
-    EXPECT_EQ(kTestCases[i].should_update_expiration,
-              card.ShouldUpdateExpiration(now));
+  for (const auto& test_case : kTestCases) {
+    variation_params_.SetVariationParamsWithFeatureAssociations(
+        kAutofillCreditCardLastUsedDateDisplay.name,
+        {{kAutofillCreditCardLastUsedDateShowExpirationDateKey,
+          test_case.show_expiration_date}},
+        {kAutofillCreditCardLastUsedDateDisplay.name});
+
+    EXPECT_EQ(test_case.added_to_autofill_date,
+              credit_card0.GetLastUsedDateForDisplay(test_case.app_locale));
+    EXPECT_EQ(test_case.last_used_date,
+              credit_card1.GetLastUsedDateForDisplay(test_case.app_locale));
+    EXPECT_EQ(test_case.last_used_year_ago,
+              credit_card2.GetLastUsedDateForDisplay(test_case.app_locale));
+    variation_params_.ClearAllVariationParams();
   }
 }
 

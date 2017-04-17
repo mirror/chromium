@@ -23,6 +23,8 @@ public class JniInterface {
 
     private static final String TOKEN_SCOPE = "oauth2:https://www.googleapis.com/auth/chromoting";
 
+    private static final String LIBRARY_NAME = "remoting_client_jni";
+
     // Used to fetch auth token for native client.
     private static OAuthTokenConsumer sLoggerTokenConsumer;
 
@@ -36,19 +38,32 @@ public class JniInterface {
     public static void loadLibrary(Context context) {
         ContextUtils.initApplicationContext(context.getApplicationContext());
         sLoggerTokenConsumer = new OAuthTokenConsumer(context.getApplicationContext(), TOKEN_SCOPE);
-        System.loadLibrary("remoting_client_jni");
+        try {
+            System.loadLibrary(LIBRARY_NAME);
+        } catch (UnsatisfiedLinkError e) {
+            Log.w(TAG, "Couldn't load " + LIBRARY_NAME + ", trying " + LIBRARY_NAME + ".cr");
+            System.loadLibrary(LIBRARY_NAME + ".cr");
+        }
         ContextUtils.initApplicationContextForNative();
         nativeLoadNative();
     }
 
     public static void setAccountForLogging(String account) {
         sAccount = account;
+        fetchAuthToken();
     }
 
+    /**
+     * Fetch the OAuth token and feed it to the native interface.
+     */
     @CalledByNative
     private static void fetchAuthToken() {
         if (sAccount == null) {
-            throw new IllegalStateException("Account is not set before fetching the auth token.");
+            // It is safe to ignore this request since setAccountForLogging() will be called later
+            // and will request the auth token. Logs will be queued up and sent once the auth token
+            // is set.
+            Log.w(TAG, "Account is not set before fetching the auth token.");
+            return;
         }
         sLoggerTokenConsumer.consume(sAccount, new OAuthTokenFetcher.Callback() {
             @Override

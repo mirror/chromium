@@ -6,12 +6,13 @@
 
 ShortcutInfo::ShortcutInfo(const GURL& shortcut_url)
     : url(shortcut_url),
-      display(blink::WebDisplayModeBrowser),
-      orientation(blink::WebScreenOrientationLockDefault),
-      source(SOURCE_ADD_TO_HOMESCREEN),
+      display(blink::kWebDisplayModeBrowser),
+      orientation(blink::kWebScreenOrientationLockDefault),
+      source(SOURCE_ADD_TO_HOMESCREEN_SHORTCUT),
       theme_color(content::Manifest::kInvalidOrMissingColor),
-      background_color(content::Manifest::kInvalidOrMissingColor) {
-}
+      background_color(content::Manifest::kInvalidOrMissingColor),
+      ideal_splash_image_size_in_px(0),
+      minimum_splash_image_size_in_px(0) {}
 
 ShortcutInfo::ShortcutInfo(const ShortcutInfo& other) = default;
 
@@ -39,21 +40,27 @@ void ShortcutInfo::UpdateFromManifest(const content::Manifest& manifest) {
     scope = manifest.scope;
 
   // Set the display based on the manifest value, if any.
-  if (manifest.display != blink::WebDisplayModeUndefined)
+  if (manifest.display != blink::kWebDisplayModeUndefined)
     display = manifest.display;
 
-  // 'minimal-ui' is not yet supported, so fallback in this case.
-  // See crbug.com/604390.
-  if (manifest.display == blink::WebDisplayModeMinimalUi)
-    display = blink::WebDisplayModeBrowser;
+  // 'minimal-ui' is not yet supported (see crbug.com/604390). Otherwise, set
+  // the source to be standalone if appropriate.
+  if (manifest.display == blink::kWebDisplayModeMinimalUi) {
+    display = blink::kWebDisplayModeBrowser;
+  } else if (display == blink::kWebDisplayModeStandalone ||
+             display == blink::kWebDisplayModeFullscreen) {
+    source = SOURCE_ADD_TO_HOMESCREEN_STANDALONE;
+  }
 
   // Set the orientation based on the manifest value, if any.
-  if (manifest.orientation != blink::WebScreenOrientationLockDefault) {
+  if (manifest.orientation != blink::kWebScreenOrientationLockDefault) {
     // Ignore the orientation if the display mode is different from
-    // 'standalone'.
+    // 'standalone' or 'fullscreen'.
     // TODO(mlamouri): send a message to the developer console about this.
-    if (display == blink::WebDisplayModeStandalone)
+    if (display == blink::kWebDisplayModeStandalone ||
+        display == blink::kWebDisplayModeFullscreen) {
       orientation = manifest.orientation;
+    }
   }
 
   // Set the theme color based on the manifest value, if any.
@@ -63,6 +70,11 @@ void ShortcutInfo::UpdateFromManifest(const content::Manifest& manifest) {
   // Set the background color based on the manifest value, if any.
   if (manifest.background_color != content::Manifest::kInvalidOrMissingColor)
     background_color = manifest.background_color;
+
+  // Set the icon urls based on the icons in the manifest, if any.
+  icon_urls.clear();
+  for (const content::Manifest::Icon& icon : manifest.icons)
+    icon_urls.push_back(icon.src.spec());
 }
 
 void ShortcutInfo::UpdateSource(const Source new_source) {

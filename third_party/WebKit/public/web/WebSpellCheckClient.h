@@ -31,55 +31,26 @@
 #ifndef WebSpellCheckClient_h
 #define WebSpellCheckClient_h
 
-#include "../platform/WebString.h"
-#include "../platform/WebVector.h"
-#include "WebTextCheckingType.h"
+#include "public/platform/WebString.h"
 
 namespace blink {
 
-class WebString;
-class WebTextCheckingCompletion;
-struct WebTextCheckingResult;
-
+// TODO(xiaochengh): Renaming WebSpellCheckClient to WebSpellingUIClient.
 class WebSpellCheckClient {
-public:
-    // The client should perform spell-checking on the given text. If the
-    // text contains a misspelled word, then upon return misspelledOffset
-    // will point to the start of the misspelled word, and misspelledLength
-    // will indicates its length. Otherwise, if there was not a spelling
-    // error, then upon return misspelledLength is 0. If optional_suggestions
-    // is given, then it will be filled with suggested words (not a cheap step).
-    virtual void spellCheck(const WebString& text,
-                            int& misspelledOffset,
-                            int& misspelledLength,
-                            WebVector<WebString>* optionalSuggestions) { }
+ public:
+  // Show or hide the spelling UI.
+  virtual void ShowSpellingUI(bool show) {}
 
-    // The client should perform spell-checking on the given text. This function will
-    // enumerate all misspellings at once.
-    virtual void checkTextOfParagraph(const WebString&,
-                                      WebTextCheckingTypeMask mask,
-                                      WebVector<WebTextCheckingResult>* results) { }
+  // Returns true if the spelling UI is showing.
+  virtual bool IsShowingSpellingUI() { return false; }
 
-    // Requests asynchronous spelling and grammar checking, whose result should be
-    // returned by passed completion object.
-    virtual void requestCheckingOfText(const WebString& textToCheck,
-                                       const WebVector<uint32_t>& markersInText,
-                                       const WebVector<unsigned>& markerOffsets,
-                                       WebTextCheckingCompletion* completionCallback) { }
+  // Update the spelling UI with the given word.
+  virtual void UpdateSpellingUIWithMisspelledWord(const WebString& word) {}
 
-    // Show or hide the spelling UI.
-    virtual void showSpellingUI(bool show) { }
-
-    // Returns true if the spelling UI is showing.
-    virtual bool isShowingSpellingUI() { return false; }
-
-    // Update the spelling UI with the given word.
-    virtual void updateSpellingUIWithMisspelledWord(const WebString& word) { }
-
-protected:
-    ~WebSpellCheckClient() { }
+ protected:
+  virtual ~WebSpellCheckClient() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

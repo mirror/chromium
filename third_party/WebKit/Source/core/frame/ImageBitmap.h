@@ -5,6 +5,7 @@
 #ifndef ImageBitmap_h
 #define ImageBitmap_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "core/html/HTMLImageElement.h"
@@ -16,93 +17,153 @@
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/heap/Handle.h"
-#include "wtf/PassRefPtr.h"
-#include <memory>
+#include "platform/wtf/PassRefPtr.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
-
 class HTMLCanvasElement;
 class HTMLVideoElement;
 class ImageData;
 class ImageDecoder;
+class OffscreenCanvas;
 
 enum AlphaDisposition {
-    PremultiplyAlpha,
-    DontPremultiplyAlpha,
+  kPremultiplyAlpha,
+  kDontPremultiplyAlpha,
 };
 enum DataColorFormat {
-    RGBAColorType,
-    N32ColorType,
+  kRGBAColorType,
+  kN32ColorType,
+};
+enum ColorSpaceInfoUpdate {
+  kUpdateColorSpaceInformation,
+  kDontUpdateColorSpaceInformation,
 };
 
-class CORE_EXPORT ImageBitmap final : public GarbageCollectedFinalized<ImageBitmap>, public ScriptWrappable, public CanvasImageSource, public ImageBitmapSource {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static ImageBitmap* create(HTMLImageElement*, Optional<IntRect>, Document*, const ImageBitmapOptions& = ImageBitmapOptions());
-    static ImageBitmap* create(HTMLVideoElement*, Optional<IntRect>, Document*, const ImageBitmapOptions& = ImageBitmapOptions());
-    static ImageBitmap* create(HTMLCanvasElement*, Optional<IntRect>, const ImageBitmapOptions& = ImageBitmapOptions());
-    static ImageBitmap* create(ImageData*, Optional<IntRect>, const ImageBitmapOptions& = ImageBitmapOptions());
-    static ImageBitmap* create(ImageBitmap*, Optional<IntRect>, const ImageBitmapOptions& = ImageBitmapOptions());
-    static ImageBitmap* create(PassRefPtr<StaticBitmapImage>);
-    static ImageBitmap* create(PassRefPtr<StaticBitmapImage>, Optional<IntRect>, const ImageBitmapOptions& = ImageBitmapOptions());
-    static ImageBitmap* create(WebExternalTextureMailbox&);
-    // This function is called by structured-cloning an ImageBitmap.
-    // isImageBitmapPremultiplied indicates whether the original ImageBitmap is premultiplied or not.
-    // isImageBitmapOriginClean indicates whether the original ImageBitmap is origin clean or not.
-    static ImageBitmap* create(std::unique_ptr<uint8_t[]> data, uint32_t width, uint32_t height, bool isImageBitmapPremultiplied, bool isImageBitmapOriginClean);
-    static PassRefPtr<SkImage> getSkImageFromDecoder(std::unique_ptr<ImageDecoder>);
-    static bool isResizeOptionValid(const ImageBitmapOptions&, ExceptionState&);
-    static bool isSourceSizeValid(int sourceWidth, int sourceHeight, ExceptionState&);
+class CORE_EXPORT ImageBitmap final
+    : public GarbageCollectedFinalized<ImageBitmap>,
+      public ScriptWrappable,
+      public CanvasImageSource,
+      public ImageBitmapSource {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Type and helper function required by CallbackPromiseAdapter:
-    using WebType = sk_sp<SkImage>;
-    static ImageBitmap* take(ScriptPromiseResolver*, sk_sp<SkImage>);
+ public:
+  static ImageBitmap* Create(HTMLImageElement*,
+                             Optional<IntRect>,
+                             Document*,
+                             const ImageBitmapOptions& = ImageBitmapOptions());
+  static ImageBitmap* Create(HTMLVideoElement*,
+                             Optional<IntRect>,
+                             Document*,
+                             const ImageBitmapOptions& = ImageBitmapOptions());
+  static ImageBitmap* Create(HTMLCanvasElement*,
+                             Optional<IntRect>,
+                             const ImageBitmapOptions& = ImageBitmapOptions());
+  static ImageBitmap* Create(OffscreenCanvas*,
+                             Optional<IntRect>,
+                             const ImageBitmapOptions& = ImageBitmapOptions());
+  static ImageBitmap* Create(ImageData*,
+                             Optional<IntRect>,
+                             const ImageBitmapOptions& = ImageBitmapOptions());
+  static ImageBitmap* Create(ImageBitmap*,
+                             Optional<IntRect>,
+                             const ImageBitmapOptions& = ImageBitmapOptions());
+  static ImageBitmap* Create(PassRefPtr<StaticBitmapImage>);
+  static ImageBitmap* Create(PassRefPtr<StaticBitmapImage>,
+                             Optional<IntRect>,
+                             const ImageBitmapOptions& = ImageBitmapOptions());
+  // This function is called by structured-cloning an ImageBitmap.
+  // isImageBitmapPremultiplied indicates whether the original ImageBitmap is
+  // premultiplied or not.
+  // isImageBitmapOriginClean indicates whether the original ImageBitmap is
+  // origin clean or not.
+  static ImageBitmap* Create(const void* pixel_data,
+                             uint32_t width,
+                             uint32_t height,
+                             bool is_image_bitmap_premultiplied,
+                             bool is_image_bitmap_origin_clean);
+  static sk_sp<SkImage> GetSkImageFromDecoder(
+      std::unique_ptr<ImageDecoder>,
+      SkColorType* decoded_color_type = nullptr,
+      sk_sp<SkColorSpace>* decoded_color_space = nullptr,
+      ColorSpaceInfoUpdate = kDontUpdateColorSpaceInformation);
+  static bool IsResizeOptionValid(const ImageBitmapOptions&, ExceptionState&);
+  static bool IsSourceSizeValid(int source_width,
+                                int source_height,
+                                ExceptionState&);
 
-    StaticBitmapImage* bitmapImage() const { return (m_image) ? m_image.get() : nullptr; }
-    std::unique_ptr<uint8_t[]> copyBitmapData(AlphaDisposition alphaOp = DontPremultiplyAlpha, DataColorFormat format = RGBAColorType);
-    unsigned long width() const;
-    unsigned long height() const;
-    IntSize size() const;
+  // Type and helper function required by CallbackPromiseAdapter:
+  using WebType = sk_sp<SkImage>;
+  static ImageBitmap* Take(ScriptPromiseResolver*, sk_sp<SkImage>);
 
-    bool isNeutered() const { return m_isNeutered; }
-    bool originClean() const { return m_image->originClean(); }
-    bool isPremultiplied() const { return m_image->isPremultiplied(); }
-    PassRefPtr<StaticBitmapImage> transfer();
-    void close();
-    bool isTextureBacked() const;
+  PassRefPtr<StaticBitmapImage> BitmapImage() const { return image_; }
+  PassRefPtr<Uint8Array> CopyBitmapData(
+      AlphaDisposition = kDontPremultiplyAlpha,
+      DataColorFormat = kRGBAColorType);
+  unsigned long width() const;
+  unsigned long height() const;
+  IntSize Size() const;
 
-    ~ImageBitmap() override;
+  bool IsNeutered() const { return is_neutered_; }
+  bool OriginClean() const { return image_->OriginClean(); }
+  bool IsPremultiplied() const { return image_->IsPremultiplied(); }
+  PassRefPtr<StaticBitmapImage> Transfer();
+  void close();
 
-    // CanvasImageSource implementation
-    PassRefPtr<Image> getSourceImageForCanvas(SourceImageStatus*, AccelerationHint, SnapshotReason, const FloatSize&) const override;
-    bool wouldTaintOrigin(SecurityOrigin*) const override { return !m_image->originClean(); }
-    void adjustDrawRects(FloatRect* srcRect, FloatRect* dstRect) const override;
-    FloatSize elementSize(const FloatSize&) const override;
-    bool isImageBitmap() const override { return true; }
-    int sourceWidth() override { return m_image ? m_image->width() : 0; }
-    int sourceHeight() override { return m_image ? m_image->height() : 0; }
+  ~ImageBitmap() override;
 
-    // ImageBitmapSource implementation
-    IntSize bitmapSourceSize() const override { return size(); }
-    ScriptPromise createImageBitmap(ScriptState*, EventTarget&, Optional<IntRect>, const ImageBitmapOptions&, ExceptionState&) override;
+  // CanvasImageSource implementation
+  PassRefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
+                                            AccelerationHint,
+                                            SnapshotReason,
+                                            const FloatSize&) const override;
+  bool WouldTaintOrigin(SecurityOrigin*) const override {
+    return !image_->OriginClean();
+  }
+  void AdjustDrawRects(FloatRect* src_rect, FloatRect* dst_rect) const override;
+  FloatSize ElementSize(const FloatSize&) const override;
+  bool IsImageBitmap() const override { return true; }
+  int SourceWidth() override { return image_ ? image_->width() : 0; }
+  int SourceHeight() override { return image_ ? image_->height() : 0; }
+  bool IsAccelerated() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  // ImageBitmapSource implementation
+  IntSize BitmapSourceSize() const override { return Size(); }
+  ScriptPromise CreateImageBitmap(ScriptState*,
+                                  EventTarget&,
+                                  Optional<IntRect>,
+                                  const ImageBitmapOptions&,
+                                  ExceptionState&) override;
 
-private:
-    ImageBitmap(HTMLImageElement*, Optional<IntRect>, Document*, const ImageBitmapOptions&);
-    ImageBitmap(HTMLVideoElement*, Optional<IntRect>, Document*, const ImageBitmapOptions&);
-    ImageBitmap(HTMLCanvasElement*, Optional<IntRect>, const ImageBitmapOptions&);
-    ImageBitmap(ImageData*, Optional<IntRect>, const ImageBitmapOptions&);
-    ImageBitmap(ImageBitmap*, Optional<IntRect>, const ImageBitmapOptions&);
-    ImageBitmap(PassRefPtr<StaticBitmapImage>);
-    ImageBitmap(PassRefPtr<StaticBitmapImage>, Optional<IntRect>, const ImageBitmapOptions&);
-    ImageBitmap(WebExternalTextureMailbox&);
-    ImageBitmap(std::unique_ptr<uint8_t[]> data, uint32_t width, uint32_t height, bool isImageBitmapPremultiplied, bool isImageBitmapOriginClean);
+  DECLARE_VIRTUAL_TRACE();
 
-    RefPtr<StaticBitmapImage> m_image;
-    bool m_isNeutered = false;
+ private:
+  ImageBitmap(HTMLImageElement*,
+              Optional<IntRect>,
+              Document*,
+              const ImageBitmapOptions&);
+  ImageBitmap(HTMLVideoElement*,
+              Optional<IntRect>,
+              Document*,
+              const ImageBitmapOptions&);
+  ImageBitmap(HTMLCanvasElement*, Optional<IntRect>, const ImageBitmapOptions&);
+  ImageBitmap(OffscreenCanvas*, Optional<IntRect>, const ImageBitmapOptions&);
+  ImageBitmap(ImageData*, Optional<IntRect>, const ImageBitmapOptions&);
+  ImageBitmap(ImageBitmap*, Optional<IntRect>, const ImageBitmapOptions&);
+  ImageBitmap(PassRefPtr<StaticBitmapImage>);
+  ImageBitmap(RefPtr<StaticBitmapImage>,
+              Optional<IntRect>,
+              const ImageBitmapOptions&);
+  ImageBitmap(const void* pixel_data,
+              uint32_t width,
+              uint32_t height,
+              bool is_image_bitmap_premultiplied,
+              bool is_image_bitmap_origin_clean);
+
+  RefPtr<StaticBitmapImage> image_;
+  bool is_neutered_ = false;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ImageBitmap_h
+#endif  // ImageBitmap_h

@@ -34,7 +34,7 @@ Polymer({
     monthList_: {
       type: Array,
       value: [
-        '01', '02', '03', '04', '05', '06', '07', '09', '10', '11', '12',
+        '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
       ],
     },
 
@@ -43,16 +43,36 @@ Polymer({
      * @private {!Array<string>}
      */
     yearList_: Array,
+
+    /** @private */
+    expirationYear_: String,
+
+    /** @private {string|undefined} */
+    expirationMonth_: String,
   },
 
   behaviors: [
     I18nBehavior,
   ],
 
+  /**
+   * @return {boolean} True iff the provided expiration date is passed.
+   * @private
+   */
+  checkIfCardExpired_: function(expirationMonth_, expirationYear_) {
+    var now = new Date();
+    return (expirationYear_ < now.getFullYear() ||
+           (expirationYear_ == now.getFullYear() &&
+            expirationMonth_ <= now.getMonth()));
+  },
+
   /** @override */
   attached: function() {
     this.title_ = this.i18n(
         this.creditCard.guid ? 'editCreditCardTitle' : 'addCreditCardTitle');
+
+    // Needed to initialize the disabled state of the Save button.
+    this.onCreditCardNameOrNumberChanged_();
 
     // Add a leading '0' if a month is 1 char.
     if (this.creditCard.expirationMonth.length == 1)
@@ -77,10 +97,11 @@ Polymer({
     }
     this.yearList_ = yearList;
 
-    this.expirationYear = this.creditCard.expirationYear;
-    this.expirationMonth = this.creditCard.expirationMonth;
-
-    this.$.dialog.open();
+    this.async(function() {
+      this.expirationYear_ = selectedYear.toString();
+      this.expirationMonth_ = this.creditCard.expirationMonth;
+      this.$.dialog.showModal();
+    }.bind(this));
   },
 
   /** Closes the dialog. */
@@ -93,7 +114,7 @@ Polymer({
    * @private
    */
   onCancelButtonTap_: function() {
-    this.close();
+    this.$.dialog.cancel();
   },
 
   /**
@@ -101,10 +122,39 @@ Polymer({
    * @private
    */
   onSaveButtonTap_: function() {
-    this.creditCard.expirationYear = this.expirationYear;
-    this.creditCard.expirationMonth = this.expirationMonth;
-    this.fire('save-credit-card', this.creditCard);
-    this.close();
+    if (!this.saveEnabled_())
+      return;
+
+    // If the card is expired, reflect the error to the user.
+    // Otherwise, update the card, save and close the dialog.
+    if (!this.checkIfCardExpired_(this.expirationMonth_,
+                                  this.expirationYear_)) {
+      this.creditCard.expirationYear = this.expirationYear_;
+      this.creditCard.expirationMonth = this.expirationMonth_;
+      this.fire('save-credit-card', this.creditCard);
+      this.close();
+    }
+  },
+
+  /** @private */
+  onMonthChange_: function() {
+    this.expirationMonth_ = this.monthList_[this.$.month.selectedIndex];
+  },
+
+  /** @private */
+  onYearChange_: function() {
+    this.expirationYear_ = this.yearList_[this.$.year.selectedIndex];
+  },
+
+  /** @private */
+  onCreditCardNameOrNumberChanged_: function() {
+    this.$.saveButton.disabled = !this.saveEnabled_();
+  },
+
+  /** @private */
+  saveEnabled_: function() {
+    return (this.creditCard.name && this.creditCard.name.trim()) ||
+        (this.creditCard.cardNumber && this.creditCard.cardNumber.trim());
   },
 });
 })();

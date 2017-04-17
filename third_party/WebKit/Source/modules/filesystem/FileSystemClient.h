@@ -31,12 +31,12 @@
 #ifndef FileSystemClient_h
 #define FileSystemClient_h
 
+#include <memory>
 #include "modules/ModulesExport.h"
 #include "platform/FileSystemType.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -46,20 +46,26 @@ class ContentSettingCallbacks;
 class WorkerClients;
 
 class FileSystemClient {
-    USING_FAST_MALLOC(FileSystemClient);
-    WTF_MAKE_NONCOPYABLE(FileSystemClient);
-public:
-    FileSystemClient() { }
-    virtual ~FileSystemClient() { }
+  USING_FAST_MALLOC(FileSystemClient);
+  WTF_MAKE_NONCOPYABLE(FileSystemClient);
 
-    virtual bool requestFileSystemAccessSync(ExecutionContext*) = 0;
-    virtual void requestFileSystemAccessAsync(ExecutionContext*, std::unique_ptr<ContentSettingCallbacks>) = 0;
+ public:
+  FileSystemClient() {}
+  virtual ~FileSystemClient() {}
+
+  virtual bool RequestFileSystemAccessSync(ExecutionContext*) = 0;
+  virtual void RequestFileSystemAccessAsync(
+      ExecutionContext*,
+      std::unique_ptr<ContentSettingCallbacks>) = 0;
 };
 
-MODULES_EXPORT void provideLocalFileSystemTo(LocalFrame&, std::unique_ptr<FileSystemClient>);
+MODULES_EXPORT void ProvideLocalFileSystemTo(LocalFrame&,
+                                             std::unique_ptr<FileSystemClient>);
 
-MODULES_EXPORT void provideLocalFileSystemToWorker(WorkerClients*, std::unique_ptr<FileSystemClient>);
+MODULES_EXPORT void ProvideLocalFileSystemToWorker(
+    WorkerClients*,
+    std::unique_ptr<FileSystemClient>);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FileSystemClient_h
+#endif  // FileSystemClient_h

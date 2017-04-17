@@ -71,8 +71,7 @@ BitmapFetcherService::~BitmapFetcherService() {
 }
 
 void BitmapFetcherService::CancelRequest(int request_id) {
-  ScopedVector<BitmapFetcherRequest>::iterator iter;
-  for (iter = requests_.begin(); iter != requests_.end(); ++iter) {
+  for (auto iter = requests_.begin(); iter != requests_.end(); ++iter) {
     if ((*iter)->request_id() == request_id) {
       requests_.erase(iter);
       // Deliberately leave the associated fetcher running to populate cache.
@@ -83,14 +82,14 @@ void BitmapFetcherService::CancelRequest(int request_id) {
 
 BitmapFetcherService::RequestId BitmapFetcherService::RequestImage(
     const GURL& url,
-    Observer* observer) {
+    Observer* observer,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   // Create a new request, assigning next available request ID.
   ++current_request_id_;
   if (current_request_id_ == REQUEST_ID_INVALID)
     ++current_request_id_;
   int request_id = current_request_id_;
-  std::unique_ptr<BitmapFetcherRequest> request(
-      new BitmapFetcherRequest(request_id, observer));
+  auto request = base::MakeUnique<BitmapFetcherRequest>(request_id, observer);
 
   // Reject invalid URLs.
   if (!url.is_valid())
@@ -111,22 +110,26 @@ BitmapFetcherService::RequestId BitmapFetcherService::RequestImage(
     return REQUEST_ID_INVALID;
 
   // Make sure there's a fetcher for this URL and attach to request.
-  const chrome::BitmapFetcher* fetcher = EnsureFetcherForUrl(url);
+  const chrome::BitmapFetcher* fetcher =
+      EnsureFetcherForUrl(url, traffic_annotation);
   request->set_fetcher(fetcher);
 
-  requests_.push_back(request.release());
+  requests_.push_back(std::move(request));
   return requests_.back()->request_id();
 }
 
-void BitmapFetcherService::Prefetch(const GURL& url) {
+void BitmapFetcherService::Prefetch(
+    const GURL& url,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (url.is_valid())
-    EnsureFetcherForUrl(url);
+    EnsureFetcherForUrl(url, traffic_annotation);
 }
 
 std::unique_ptr<chrome::BitmapFetcher> BitmapFetcherService::CreateFetcher(
-    const GURL& url) {
+    const GURL& url,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   std::unique_ptr<chrome::BitmapFetcher> new_fetcher(
-      new chrome::BitmapFetcher(url, this));
+      new chrome::BitmapFetcher(url, this, traffic_annotation));
 
   new_fetcher->Init(
       content::BrowserContext::GetDefaultStoragePartition(context_)->
@@ -139,12 +142,14 @@ std::unique_ptr<chrome::BitmapFetcher> BitmapFetcherService::CreateFetcher(
 }
 
 const chrome::BitmapFetcher* BitmapFetcherService::EnsureFetcherForUrl(
-    const GURL& url) {
+    const GURL& url,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   const chrome::BitmapFetcher* fetcher = FindFetcherForUrl(url);
   if (fetcher)
     return fetcher;
 
-  std::unique_ptr<chrome::BitmapFetcher> new_fetcher = CreateFetcher(url);
+  std::unique_ptr<chrome::BitmapFetcher> new_fetcher =
+      CreateFetcher(url, traffic_annotation);
   active_fetchers_.push_back(std::move(new_fetcher));
   return active_fetchers_.back().get();
 }
@@ -175,7 +180,7 @@ void BitmapFetcherService::OnFetchComplete(const GURL& url,
   DCHECK(fetcher);
 
   // Notify all attached requests of completion.
-  ScopedVector<BitmapFetcherRequest>::iterator iter = requests_.begin();
+  auto iter = requests_.begin();
   while (iter != requests_.end()) {
     if ((*iter)->get_fetcher() == fetcher) {
       (*iter)->NotifyImageChanged(bitmap);

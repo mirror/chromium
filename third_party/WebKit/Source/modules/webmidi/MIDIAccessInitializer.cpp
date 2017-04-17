@@ -9,139 +9,122 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/ExecutionContext.h"
+#include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
+#include "modules/permissions/PermissionUtils.h"
 #include "modules/webmidi/MIDIAccess.h"
-#include "modules/webmidi/MIDIController.h"
 #include "modules/webmidi/MIDIOptions.h"
 #include "modules/webmidi/MIDIPort.h"
+#include "platform/UserGestureIndicator.h"
+#include "platform/mojo/MojoHelper.h"
+#include "public/platform/InterfaceProvider.h"
+#include "public/platform/modules/permissions/permission.mojom-blink.h"
 
 namespace blink {
 
-using PortState = WebMIDIAccessorClient::MIDIPortState;
+using midi::mojom::PortState;
+using midi::mojom::Result;
+using mojom::blink::PermissionStatus;
 
-MIDIAccessInitializer::MIDIAccessInitializer(ScriptState* scriptState, const MIDIOptions& options)
-    : ScriptPromiseResolver(scriptState)
-    , m_options(options)
-    , m_hasBeenDisposed(false)
-    , m_permissionResolved(false)
-{
+MIDIAccessInitializer::MIDIAccessInitializer(ScriptState* script_state,
+                                             const MIDIOptions& options)
+    : ScriptPromiseResolver(script_state), options_(options) {}
+
+void MIDIAccessInitializer::ContextDestroyed(ExecutionContext*) {
+  permission_service_.reset();
 }
 
-MIDIAccessInitializer::~MIDIAccessInitializer()
-{
-    dispose();
+ScriptPromise MIDIAccessInitializer::Start() {
+  ScriptPromise promise = this->Promise();
+  accessor_ = MIDIAccessor::Create(this);
+
+  ConnectToPermissionService(GetExecutionContext(),
+                             mojo::MakeRequest(&permission_service_));
+  permission_service_->RequestPermission(
+      CreateMidiPermissionDescriptor(options_.hasSysex() && options_.sysex()),
+      GetExecutionContext()->GetSecurityOrigin(),
+      UserGestureIndicator::ProcessingUserGesture(),
+      ConvertToBaseCallback(WTF::Bind(
+          &MIDIAccessInitializer::OnPermissionsUpdated, WrapPersistent(this))));
+
+  return promise;
 }
 
-void MIDIAccessInitializer::contextDestroyed()
-{
-    dispose();
-    LifecycleObserver::contextDestroyed();
+void MIDIAccessInitializer::DidAddInputPort(const String& id,
+                                            const String& manufacturer,
+                                            const String& name,
+                                            const String& version,
+                                            PortState state) {
+  DCHECK(accessor_);
+  port_descriptors_.push_back(PortDescriptor(
+      id, manufacturer, name, MIDIPort::kTypeInput, version, state));
 }
 
-void MIDIAccessInitializer::dispose()
-{
-    if (m_hasBeenDisposed)
-        return;
-
-    if (!getExecutionContext())
-        return;
-
-    if (!m_permissionResolved) {
-        Document* document = toDocument(getExecutionContext());
-        DCHECK(document);
-        if (MIDIController* controller = MIDIController::from(document->frame()))
-            controller->cancelPermissionRequest(this);
-        m_permissionResolved = true;
-    }
-
-    m_hasBeenDisposed = true;
+void MIDIAccessInitializer::DidAddOutputPort(const String& id,
+                                             const String& manufacturer,
+                                             const String& name,
+                                             const String& version,
+                                             PortState state) {
+  DCHECK(accessor_);
+  port_descriptors_.push_back(PortDescriptor(
+      id, manufacturer, name, MIDIPort::kTypeOutput, version, state));
 }
 
-ScriptPromise MIDIAccessInitializer::start()
-{
-    ScriptPromise promise = this->promise();
-    m_accessor = MIDIAccessor::create(this);
-
-    Document* document = toDocument(getExecutionContext());
-    DCHECK(document);
-    if (MIDIController* controller = MIDIController::from(document->frame()))
-        controller->requestPermission(this, m_options);
-    else
-        reject(DOMException::create(SecurityError));
-
-    return promise;
+void MIDIAccessInitializer::DidSetInputPortState(unsigned port_index,
+                                                 PortState state) {
+  // didSetInputPortState() is not allowed to call before didStartSession()
+  // is called. Once didStartSession() is called, MIDIAccessorClient methods
+  // are delegated to MIDIAccess. See constructor of MIDIAccess.
+  NOTREACHED();
 }
 
-void MIDIAccessInitializer::didAddInputPort(const String& id, const String& manufacturer, const String& name, const String& version, PortState state)
-{
-    DCHECK(m_accessor);
-    m_portDescriptors.append(PortDescriptor(id, manufacturer, name, MIDIPort::TypeInput, version, state));
+void MIDIAccessInitializer::DidSetOutputPortState(unsigned port_index,
+                                                  PortState state) {
+  // See comments on didSetInputPortState().
+  NOTREACHED();
 }
 
-void MIDIAccessInitializer::didAddOutputPort(const String& id, const String& manufacturer, const String& name, const String& version, PortState state)
-{
-    DCHECK(m_accessor);
-    m_portDescriptors.append(PortDescriptor(id, manufacturer, name, MIDIPort::TypeOutput, version, state));
+void MIDIAccessInitializer::DidStartSession(Result result) {
+  DCHECK(accessor_);
+  // We would also have AbortError and SecurityError according to the spec.
+  // SecurityError is handled in onPermission(s)Updated().
+  switch (result) {
+    case Result::NOT_INITIALIZED:
+      break;
+    case Result::OK:
+      return Resolve(MIDIAccess::Create(
+          std::move(accessor_), options_.hasSysex() && options_.sysex(),
+          port_descriptors_, GetExecutionContext()));
+    case Result::NOT_SUPPORTED:
+      return Reject(DOMException::Create(kNotSupportedError));
+    case Result::INITIALIZATION_ERROR:
+      return Reject(DOMException::Create(
+          kInvalidStateError, "Platform dependent initialization failed."));
+  }
+  NOTREACHED();
+  Reject(DOMException::Create(kInvalidStateError,
+                              "Unknown internal error occurred."));
 }
 
-void MIDIAccessInitializer::didSetInputPortState(unsigned portIndex, PortState state)
-{
-    // didSetInputPortState() is not allowed to call before didStartSession()
-    // is called. Once didStartSession() is called, MIDIAccessorClient methods
-    // are delegated to MIDIAccess. See constructor of MIDIAccess.
-    NOTREACHED();
+ExecutionContext* MIDIAccessInitializer::GetExecutionContext() const {
+  return ExecutionContext::From(GetScriptState());
 }
 
-void MIDIAccessInitializer::didSetOutputPortState(unsigned portIndex, PortState state)
-{
-    // See comments on didSetInputPortState().
-    NOTREACHED();
+void MIDIAccessInitializer::OnPermissionsUpdated(PermissionStatus status) {
+  permission_service_.reset();
+  if (status == PermissionStatus::GRANTED)
+    accessor_->StartSession();
+  else
+    Reject(DOMException::Create(kSecurityError));
 }
 
-void MIDIAccessInitializer::didStartSession(bool success, const String& error, const String& message)
-{
-    DCHECK(m_accessor);
-    if (success) {
-        resolve(MIDIAccess::create(std::move(m_accessor), m_options.hasSysex() && m_options.sysex(), m_portDescriptors, getExecutionContext()));
-    } else {
-        // The spec says the name is one of
-        //  - SecurityError
-        //  - AbortError
-        //  - InvalidStateError
-        //  - NotSupportedError
-        // TODO(toyoshim): Do not rely on |error| string. Instead an enum
-        // representing an ExceptionCode should be defined and deliverred.
-        ExceptionCode ec = InvalidStateError;
-        if (error == DOMException::getErrorName(SecurityError)) {
-            ec = SecurityError;
-        } else if (error == DOMException::getErrorName(AbortError)) {
-            ec = AbortError;
-        } else if (error == DOMException::getErrorName(InvalidStateError)) {
-            ec = InvalidStateError;
-        } else if (error == DOMException::getErrorName(NotSupportedError)) {
-            ec = NotSupportedError;
-        }
-        reject(DOMException::create(ec, message));
-    }
+void MIDIAccessInitializer::OnPermissionUpdated(PermissionStatus status) {
+  permission_service_.reset();
+  if (status == PermissionStatus::GRANTED)
+    accessor_->StartSession();
+  else
+    Reject(DOMException::Create(kSecurityError));
 }
 
-void MIDIAccessInitializer::resolvePermission(bool allowed)
-{
-    m_permissionResolved = true;
-    if (allowed)
-        m_accessor->startSession();
-    else
-        reject(DOMException::create(SecurityError));
-}
-
-SecurityOrigin* MIDIAccessInitializer::getSecurityOrigin() const
-{
-    return getExecutionContext()->getSecurityOrigin();
-}
-
-ExecutionContext* MIDIAccessInitializer::getExecutionContext() const
-{
-    return getScriptState()->getExecutionContext();
-}
-
-} // namespace blink
+}  // namespace blink

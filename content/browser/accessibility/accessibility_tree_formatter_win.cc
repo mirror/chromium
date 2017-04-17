@@ -56,35 +56,37 @@ AccessibilityTreeFormatterWin::~AccessibilityTreeFormatterWin() {
 }
 
 const char* const ALL_ATTRIBUTES[] = {
-  "name",
-  "value",
-  "states",
-  "attributes",
-  "text_attributes",
-  "role_name",
-  "ia2_hypertext",
-  "currentValue",
-  "minimumValue",
-  "maximumValue",
-  "description",
-  "default_action",
-  "keyboard_shortcut",
-  "location",
-  "size",
-  "index_in_parent",
-  "n_relations",
-  "group_level",
-  "similar_items_in_group",
-  "position_in_group",
-  "table_rows",
-  "table_columns",
-  "row_index",
-  "column_index",
-  "n_characters",
-  "caret_offset",
-  "n_selections",
-  "selection_start",
-  "selection_end"
+    "name",
+    "value",
+    "states",
+    "attributes",
+    "text_attributes",
+    "role_name",
+    "ia2_hypertext",
+    "currentValue",
+    "minimumValue",
+    "maximumValue",
+    "description",
+    "default_action",
+    "keyboard_shortcut",
+    "location",
+    "size",
+    "index_in_parent",
+    "n_relations",
+    "group_level",
+    "similar_items_in_group",
+    "position_in_group",
+    "table_rows",
+    "table_columns",
+    "row_index",
+    "column_index",
+    "n_characters",
+    "caret_offset",
+    "n_selections",
+    "selection_start",
+    "selection_end",
+    "localized_extended_role",
+    "inner_html",
 };
 
 namespace {
@@ -283,9 +285,10 @@ void AccessibilityTreeFormatterWin::AddProperties(
     dict->SetInteger("n_relations", n_relations);
 
   LONG group_level, similar_items_in_group, position_in_group;
-  if (SUCCEEDED(ax_object->get_groupPosition(&group_level,
-                                 &similar_items_in_group,
-                                 &position_in_group))) {
+  // |GetGroupPosition| returns S_FALSE when no grouping information is
+  // available so avoid using |SUCCEEDED|.
+  if (ax_object->get_groupPosition(&group_level, &similar_items_in_group,
+                                   &position_in_group) == S_OK) {
     dict->SetInteger("group_level", group_level);
     dict->SetInteger("similar_items_in_group", similar_items_in_group);
     dict->SetInteger("position_in_group", position_in_group);
@@ -326,6 +329,18 @@ void AccessibilityTreeFormatterWin::AddProperties(
       }
     }
   }
+
+  if (SUCCEEDED(ax_object->get_localizedExtendedRole(temp_bstr.Receive()))) {
+    dict->SetString("localized_extended_role", base::string16(temp_bstr,
+        temp_bstr.Length()));
+  }
+  temp_bstr.Reset();
+
+  if (SUCCEEDED(ax_object->get_innerHTML(temp_bstr.Receive()))) {
+    dict->SetString("inner_html",
+                    base::string16(temp_bstr, temp_bstr.Length()));
+  }
+  temp_bstr.Reset();
 }
 
 base::string16 AccessibilityTreeFormatterWin::ToString(
@@ -348,7 +363,7 @@ base::string16 AccessibilityTreeFormatterWin::ToString(
       continue;
 
     switch (value->GetType()) {
-      case base::Value::TYPE_STRING: {
+      case base::Value::Type::STRING: {
         base::string16 string_value;
         value->GetAsString(&string_value);
         WriteAttribute(false,
@@ -358,7 +373,7 @@ base::string16 AccessibilityTreeFormatterWin::ToString(
                        &line);
         break;
       }
-      case base::Value::TYPE_INTEGER: {
+      case base::Value::Type::INTEGER: {
         int int_value = 0;
         value->GetAsInteger(&int_value);
         WriteAttribute(false,
@@ -369,7 +384,7 @@ base::string16 AccessibilityTreeFormatterWin::ToString(
                        &line);
         break;
       }
-      case base::Value::TYPE_DOUBLE: {
+      case base::Value::Type::DOUBLE: {
         double double_value = 0.0;
         value->GetAsDouble(&double_value);
         WriteAttribute(false,
@@ -380,7 +395,7 @@ base::string16 AccessibilityTreeFormatterWin::ToString(
                        &line);
         break;
       }
-      case base::Value::TYPE_LIST: {
+      case base::Value::Type::LIST: {
         // Currently all list values are string and are written without
         // attribute names.
         const base::ListValue* list_value;
@@ -389,12 +404,12 @@ base::string16 AccessibilityTreeFormatterWin::ToString(
              it != list_value->end();
              ++it) {
           base::string16 string_value;
-          if ((*it)->GetAsString(&string_value))
+          if (it->GetAsString(&string_value))
             WriteAttribute(false, string_value, &line);
         }
         break;
       }
-      case base::Value::TYPE_DICTIONARY: {
+      case base::Value::Type::DICTIONARY: {
         // Currently all dictionary values are coordinates.
         // Revisit this if that changes.
         const base::DictionaryValue* dict_value;

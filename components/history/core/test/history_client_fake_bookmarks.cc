@@ -15,7 +15,8 @@
 
 namespace history {
 
-class FakeBookmarkDatabase : public base::RefCounted<FakeBookmarkDatabase> {
+class FakeBookmarkDatabase
+    : public base::RefCountedThreadSafe<FakeBookmarkDatabase> {
  public:
   FakeBookmarkDatabase() {}
 
@@ -27,7 +28,7 @@ class FakeBookmarkDatabase : public base::RefCounted<FakeBookmarkDatabase> {
   void GetBookmarks(std::vector<URLAndTitle>* bookmarks);
 
  private:
-  friend class base::RefCounted<FakeBookmarkDatabase>;
+  friend class base::RefCountedThreadSafe<FakeBookmarkDatabase>;
 
   ~FakeBookmarkDatabase() {}
 
@@ -179,12 +180,12 @@ bool HistoryClientFakeBookmarks::CanAddURL(const GURL& url) {
 }
 
 void HistoryClientFakeBookmarks::NotifyProfileError(
-    sql::InitStatus init_status) {
-}
+    sql::InitStatus init_status,
+    const std::string& diagnostics) {}
 
 std::unique_ptr<HistoryBackendClient>
 HistoryClientFakeBookmarks::CreateBackendClient() {
-  return base::WrapUnique(new HistoryBackendClientFakeBookmarks(bookmarks_));
+  return base::MakeUnique<HistoryBackendClientFakeBookmarks>(bookmarks_);
 }
 
 }  // namespace history

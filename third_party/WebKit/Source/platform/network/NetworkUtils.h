@@ -6,18 +6,38 @@
 #define NetworkUtils_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
+class KURL;
+class SharedBuffer;
+class ResourceResponse;
+
 namespace NetworkUtils {
 
-PLATFORM_EXPORT bool isReservedIPAddress(const String& host);
+enum PrivateRegistryFilter {
+  kIncludePrivateRegistries,
+  kExcludePrivateRegistries,
+};
 
-PLATFORM_EXPORT bool isLocalHostname(const String& host, bool* isLocal6);
+PLATFORM_EXPORT bool IsReservedIPAddress(const String& host);
 
-} // NetworkUtils
+PLATFORM_EXPORT bool IsLocalHostname(const String& host, bool* is_local6);
 
-} // namespace blink
+PLATFORM_EXPORT String GetDomainAndRegistry(const String& host,
+                                            PrivateRegistryFilter);
 
-#endif // NetworkUtils_h
+// Returns the decoded data url as ResourceResponse and SharedBuffer
+// if url had a supported mimetype and parsing was successful.
+PLATFORM_EXPORT PassRefPtr<SharedBuffer> ParseDataURLAndPopulateResponse(
+    const KURL&,
+    ResourceResponse&);
+
+PLATFORM_EXPORT bool IsRedirectResponseCode(int);
+
+}  // NetworkUtils
+
+}  // namespace blink
+
+#endif  // NetworkUtils_h

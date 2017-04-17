@@ -6,6 +6,7 @@ cr.exportPath('options');
 
 /**
  * @typedef {{actionLinkText: (string|undefined),
+ *            accountInfo: (string|undefined),
  *            childUser: (boolean|undefined),
  *            hasError: (boolean|undefined),
  *            hasUnrecoverableError: (boolean|undefined),
@@ -15,6 +16,7 @@ cr.exportPath('options');
  *            signedIn: (boolean|undefined),
  *            signinAllowed: (boolean|undefined),
  *            signoutAllowed: (boolean|undefined),
+ *            statusAction: (string|undefined),
  *            statusText: (string|undefined),
  *            supervisedUser: (boolean|undefined),
  *            syncSystemEnabled: (boolean|undefined)}}
@@ -48,6 +50,7 @@ options.AutomaticTimezoneDetectionType = {
   DISABLED: 1,
   IP_ONLY: 2,
   SEND_WIFI_ACCESS_POINTS: 3,
+  SEND_ALL_LOCATION_INFO: 4,
 };
 
 cr.define('options', function() {
@@ -192,10 +195,10 @@ cr.define('options', function() {
         $('advanced-settings').hidden = true;
       }
 
-      $('advanced-settings').addEventListener('webkitTransitionEnd',
+      $('advanced-settings').addEventListener('transitionend',
           this.updateAdvancedSettingsExpander_.bind(this));
 
-      if (loadTimeData.getBoolean('showAbout')) {
+      if (loadTimeData.valueExists('aboutOverlayTabTitle')) {
         $('about-button').hidden = false;
         $('about-button').addEventListener('click', function() {
           PageManager.showPageByName('help');
@@ -214,6 +217,10 @@ cr.define('options', function() {
       // Sync (Sign in) section.
       this.updateSyncState_(/** @type {options.SyncStatus} */(
           loadTimeData.getValue('syncData')));
+      if (!$('sync-overview').hidden) {
+        chrome.send('metricsHandler:recordAction',
+                    ['Signin_Impression_FromSettings']);
+      }
 
       $('start-stop-sync').onclick = function(event) {
         if (self.signedIn_) {
@@ -333,6 +340,10 @@ cr.define('options', function() {
 
       // Device section (ChromeOS only).
       if (cr.isChromeOS) {
+        // Probe for stylus hardware state. C++ will invoke
+        // BrowserOptions.setStylusInputStatus_ when the data is available.
+        chrome.send('requestStylusHardwareState');
+
         if (loadTimeData.getBoolean('showPowerStatus')) {
           $('power-settings-link').onclick = function(evt) {
             PageManager.showPageByName('power-overlay');
@@ -351,14 +362,11 @@ cr.define('options', function() {
           chrome.send('coreOptionsUserMetricsAction',
                       ['Options_ShowTouchpadSettings']);
         };
-        if (loadTimeData.getBoolean('enableStorageManager')) {
-          $('storage-manager-button').hidden = false;
-          $('storage-manager-button').onclick = function(evt) {
-            PageManager.showPageByName('storage');
-            chrome.send('coreOptionsUserMetricsAction',
-                        ['Options_ShowStorageManager']);
-          };
-        }
+        $('storage-manager-button').onclick = function(evt) {
+          PageManager.showPageByName('storage');
+          chrome.send('coreOptionsUserMetricsAction',
+                      ['Options_ShowStorageManager']);
+        };
       }
 
       // Search section.
@@ -428,6 +436,15 @@ cr.define('options', function() {
           chrome.send('coreOptionsUserMetricsAction',
               ['Options_ManageAccounts']);
         };
+
+        if (loadTimeData.getBoolean('showQuickUnlockSettings')) {
+          $('manage-screenlock').onclick = function(event) {
+            PageManager.showPageByName('quickUnlockConfigureOverlay');
+            settings.recordLockScreenProgress(
+                LockScreenProgress.START_SCREEN_LOCK);
+          };
+          $('manage-screenlock').hidden = false;
+        }
       } else {
         $('import-data').onclick = function(event) {
           ImportDataOverlay.show();
@@ -634,16 +651,6 @@ cr.define('options', function() {
         };
       }
 
-      // Device control section.
-      if (cr.isChromeOS &&
-          UIAccountTweaks.currentUserIsOwner() &&
-          loadTimeData.getBoolean('consumerManagementEnabled')) {
-        $('device-control-section').hidden = false;
-        $('consumer-management-button').onclick = function(event) {
-          PageManager.showPageByName('consumer-management-overlay');
-        };
-      }
-
       // Easy Unlock section.
       if (loadTimeData.getBoolean('easyUnlockAllowed')) {
         $('easy-unlock-section').hidden = false;
@@ -673,6 +680,10 @@ cr.define('options', function() {
       $('defaultZoomFactor').onchange = function(event) {
         chrome.send('defaultZoomFactorAction',
             [String(event.target.options[event.target.selectedIndex].value)]);
+      };
+      $('safeBrowsingExtendedReportingCheckbox').onchange = function(event) {
+        chrome.send('safeBrowsingExtendedReportingAction',
+            [event.target.checked]);
       };
 
       // Languages section.
@@ -711,6 +722,16 @@ cr.define('options', function() {
         };
       }
 
+      // CUPS Print section (CrOS only).
+      if (cr.isChromeOS) {
+        if (!loadTimeData.getBoolean('cupsPrintDisabled')) {
+          $('cups-printers-section').hidden = false;
+          $('cupsPrintersManageButton').onclick = function() {
+            chrome.send('showCupsPrintDevicesPage');
+          };
+        }
+      }
+
       if (loadTimeData.getBoolean('cloudPrintShowMDnsOptions')) {
         $('cloudprint-options-mdns').hidden = false;
         $('cloudPrintDevicesPageButton').onclick = function() {
@@ -720,13 +741,13 @@ cr.define('options', function() {
 
       // Accessibility section (CrOS only).
       if (cr.isChromeOS) {
-        var updateAccessibilitySettingsButton = function() {
+        var updateAccessibilitySettingsSection = function() {
           $('accessibility-settings').hidden =
               !($('accessibility-spoken-feedback-check').checked);
         };
         Preferences.getInstance().addEventListener(
             'settings.accessibility',
-            updateAccessibilitySettingsButton);
+            updateAccessibilitySettingsSection);
         $('accessibility-learn-more').onclick = function(unused_event) {
           chrome.send('coreOptionsUserMetricsAction',
                       ['Options_AccessibilityLearnMore']);
@@ -734,9 +755,12 @@ cr.define('options', function() {
         $('accessibility-settings-button').onclick = function(unused_event) {
           window.open(loadTimeData.getString('accessibilitySettingsURL'));
         };
+        $('talkback-settings-button').onclick = function(unused_event) {
+          chrome.send('showAccessibilityTalkBackSettings');
+        };
         $('accessibility-spoken-feedback-check').onchange =
-            updateAccessibilitySettingsButton;
-        updateAccessibilitySettingsButton();
+            updateAccessibilitySettingsSection;
+        updateAccessibilitySettingsSection();
 
         var updateScreenMagnifierCenterFocus = function() {
           $('accessibility-screen-magnifier-center-focus-check').disabled =
@@ -792,7 +816,11 @@ cr.define('options', function() {
 
       // Reset profile settings section.
       $('reset-profile-settings').onclick = function(event) {
-        PageManager.showPageByName('resetProfileSettings');
+        // We use the hash to indicate the source of the reset request. The hash
+        // is removed by the reset profile settings overlay once it has been
+        // consumed.
+        PageManager.showPageByName('resetProfileSettings', true,
+                                   {hash: '#userclick'});
       };
 
       // Extension controlled UI.
@@ -828,15 +856,21 @@ cr.define('options', function() {
         $('android-apps-settings-label').innerHTML =
             loadTimeData.getString('androidAppsSettingsLabel');
         Preferences.getInstance().addEventListener('arc.enabled', function(e) {
-          var settings = $('android-apps-settings');
           // Only change settings visibility on committed settings changes.
-          if (!settings || e.value.uncommitted)
+          if (e.value.uncommitted)
             return;
-          settings.hidden = !e.value.value;
+
+          var isArcEnabled = !e.value.value;
+          $('android-apps-settings').hidden = isArcEnabled;
+          $('talkback-settings-button').hidden = isArcEnabled;
+          $('stylus-find-more-link').hidden = isArcEnabled;
         });
 
         $('android-apps-settings-link').addEventListener('click', function(e) {
-            chrome.send('showAndroidAppsSettings');
+            // MouseEvent.detail indicates the current click count (or tap
+            // count, in the case of touch events) in the 'click' event.
+            var activatedFromKeyboard = e.detail == 0;
+            chrome.send('showAndroidAppsSettings', [activatedFromKeyboard]);
         });
       }
     },
@@ -903,7 +937,7 @@ cr.define('options', function() {
       // If the section is already animating, dispatch a synthetic transition
       // end event as the upcoming code will cancel the current one.
       if (section.classList.contains('sliding'))
-        cr.dispatchSimpleEvent(section, 'webkitTransitionEnd');
+        cr.dispatchSimpleEvent(section, 'transitionend');
 
       this.addTransitionEndListener_(section);
 
@@ -1027,7 +1061,7 @@ cr.define('options', function() {
     },
 
     /**
-     * Adds a |webkitTransitionEnd| listener to the given section so that
+     * Adds a |transitionend| listener to the given section so that
      * it can be animated. The listener will only be added to a given section
      * once, so this can be called as multiple times.
      * @param {HTMLElement} section The section to be animated.
@@ -1037,14 +1071,14 @@ cr.define('options', function() {
       if (section.hasTransitionEndListener_)
         return;
 
-      section.addEventListener('webkitTransitionEnd',
+      section.addEventListener('transitionend',
           this.onTransitionEnd_.bind(this));
       section.hasTransitionEndListener_ = true;
     },
 
     /**
      * Called after an animation transition has ended.
-     * @param {Event} event The webkitTransitionEnd event. NOTE: May be
+     * @param {Event} event The transitionend event. NOTE: May be
      *     synthetic.
      * @private
      */
@@ -1167,6 +1201,9 @@ cr.define('options', function() {
                   loadTimeData.getString('syncButtonTextSignIn');
       $('start-stop-sync-indicator').hidden = signInButton.hidden;
 
+      $('account-info').textContent = syncData.accountInfo;
+      $('account-info').hidden = !this.signedIn_;
+
       // TODO(estade): can this just be textContent?
       $('sync-status-text').innerHTML = syncData.statusText;
       var statusSet = syncData.statusText.length != 0;
@@ -1181,13 +1218,34 @@ cr.define('options', function() {
       $('sync-action-link').disabled = syncData.managed ||
                                        !syncData.syncSystemEnabled;
 
-      // On Chrome OS, sign out the user and sign in again to get fresh
-      // credentials on auth errors.
       $('sync-action-link').onclick = function(event) {
-        if (cr.isChromeOS && syncData.hasError)
-          SyncSetupOverlay.doSignOutOnAuthError();
-        else
-          SyncSetupOverlay.showSetupUI();
+        switch (syncData.statusAction) {
+          case 'reauthenticate':
+            SyncSetupOverlay.startSignIn(false /* creatingSupervisedUser */);
+            break;
+          case 'signOutAndSignIn':
+// <if expr="chromeos">
+            // On Chrome OS, sign out the user and sign in again to get fresh
+            // credentials on auth errors.
+            SyncSetupOverlay.doSignOutOnAuthError();
+// </if>
+// <if expr="not chromeos">
+            if (syncData.signoutAllowed) {
+              // Silently sign the user out without deleting their profile and
+              // prompt them to sign back in.
+              chrome.send('SyncSetupStopSyncing', [false /* deleteProfile */]);
+              SyncSetupOverlay.startSignIn(false /* creatingSupervisedUser */);
+            } else {
+              chrome.send('showDisconnectManagedProfileDialog');
+            }
+// </if>
+            break;
+          case 'upgradeClient':
+            PageManager.showPageByName('help');
+            break;
+          default:
+            SyncSetupOverlay.showSetupUI();
+        }
       };
 
       if (syncData.hasError)
@@ -1751,6 +1809,21 @@ cr.define('options', function() {
     },
 
     /**
+     * Called when stylus hardware detection probing is complete.
+     * @param {boolean} hasStylus
+     * @private
+     */
+    setStylusInputStatus_: function(hasStylus) {
+      if (!hasStylus)
+        return;
+
+      $('stylus-settings-link').onclick = function(event) {
+        PageManager.showPageByName('stylus-overlay');
+      };
+      $('stylus-row').hidden = false;
+    },
+
+    /**
      * This is called from chromium code when system timezone "managed" state
      * is changed. Enables or disables dependent settings.
      * @param {boolean} managed Is true when system Timezone is managed by
@@ -1860,6 +1933,15 @@ cr.define('options', function() {
         $('metrics-reporting-setting').style.display = 'block';
       else
         $('metrics-reporting-setting').style.display = 'none';
+    },
+
+    /**
+      * Set the checked state of the Safe Browsing Extended Reporting Enabled
+      * checkbox.
+      * @private
+      */
+    setExtendedReportingEnabledCheckboxState_: function(checked) {
+      $('safeBrowsingExtendedReportingCheckbox').checked = checked;
     },
 
     /**
@@ -2325,27 +2407,29 @@ cr.define('options', function() {
     'removeBluetoothDevice',
     'scrollToSection',
     'setAccountPictureManaged',
-    'setWallpaperManaged',
+    'setAllHotwordSectionsVisible',
+    'setAudioHistorySectionVisible',
     'setAutoOpenFileTypesDisplayed',
     'setCanSetTime',
+    'setExtendedReportingEnabledCheckboxState',
     'setFontSize',
+    'setHighContrastCheckboxState',
     'setHotwordRetrainLinkVisible',
+    'setMetricsReportingCheckboxState',
+    'setMetricsReportingSettingVisibility',
     'setNativeThemeButtonEnabled',
     'setNetworkPredictionValue',
     'setNowSectionVisible',
-    'setHighContrastCheckboxState',
-    'setAllHotwordSectionsVisible',
-    'setMetricsReportingCheckboxState',
-    'setMetricsReportingSettingVisibility',
     'setProfilesInfo',
     'setSpokenFeedbackCheckboxState',
-    'setSystemTimezoneManaged',
+    'setStylusInputStatus',
     'setSystemTimezoneAutomaticDetectionManaged',
+    'setSystemTimezoneManaged',
     'setThemesResetButtonEnabled',
     'setVirtualKeyboardCheckboxState',
+    'setWallpaperManaged',
     'setupPageZoomSelector',
     'setupProxySettingsButton',
-    'setAudioHistorySectionVisible',
     'showCreateProfileError',
     'showCreateProfileSuccess',
     'showCreateProfileWarning',
@@ -2373,43 +2457,6 @@ cr.define('options', function() {
     // TODO(jhawkins): Investigate the use case for this method.
     BrowserOptions.getLoggedInUsername = function() {
       return BrowserOptions.getInstance().username_;
-    };
-
-    /**
-     * Shows different button text for each consumer management enrollment
-     * status.
-     * @enum {string} status Consumer management service status string.
-     */
-    BrowserOptions.setConsumerManagementStatus = function(status) {
-      var button = $('consumer-management-button');
-      if (status == 'StatusUnknown') {
-        button.hidden = true;
-        return;
-      }
-
-      button.hidden = false;
-      /** @type {string} */ var strId;
-      switch (status) {
-        case ConsumerManagementOverlay.Status.STATUS_UNENROLLED:
-          strId = 'consumerManagementEnrollButton';
-          button.disabled = false;
-          ConsumerManagementOverlay.setStatus(status);
-          break;
-        case ConsumerManagementOverlay.Status.STATUS_ENROLLING:
-          strId = 'consumerManagementEnrollingButton';
-          button.disabled = true;
-          break;
-        case ConsumerManagementOverlay.Status.STATUS_ENROLLED:
-          strId = 'consumerManagementUnenrollButton';
-          button.disabled = false;
-          ConsumerManagementOverlay.setStatus(status);
-          break;
-        case ConsumerManagementOverlay.Status.STATUS_UNENROLLING:
-          strId = 'consumerManagementUnenrollingButton';
-          button.disabled = true;
-          break;
-      }
-      button.textContent = loadTimeData.getString(strId);
     };
 
     /**

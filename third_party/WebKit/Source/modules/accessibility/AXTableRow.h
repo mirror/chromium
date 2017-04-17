@@ -35,38 +35,43 @@ namespace blink {
 
 class AXObjectCacheImpl;
 
-class AXTableRow : public AXLayoutObject {
-    WTF_MAKE_NONCOPYABLE(AXTableRow);
+class MODULES_EXPORT AXTableRow : public AXLayoutObject {
+  WTF_MAKE_NONCOPYABLE(AXTableRow);
 
-protected:
-    AXTableRow(LayoutObject*, AXObjectCacheImpl&);
+ protected:
+  AXTableRow(LayoutObject*, AXObjectCacheImpl&);
 
-public:
-    static AXTableRow* create(LayoutObject*, AXObjectCacheImpl&);
-    ~AXTableRow() override;
+ public:
+  static AXTableRow* Create(LayoutObject*, AXObjectCacheImpl&);
+  ~AXTableRow() override;
 
-    bool isTableRow() const final;
+  void AddChildren() final;
+  bool IsTableRow() const final;
 
-    // retrieves the "row" header (a th tag in the rightmost column)
-    virtual AXObject* headerObject();
-    // retrieves the "row" headers (th, scope) from left to right for the each row.
-    virtual void headerObjectsForRow(AXObjectVector&);
-    AXObject* parentTable() const;
+  // retrieves the "row" header (a th tag in the rightmost column)
+  virtual AXObject* HeaderObject();
+  // Retrieves the "row" headers (th, scope) from left to right for the each
+  // row.
+  virtual void HeaderObjectsForRow(AXObjectVector&);
+  AXObject* ParentTable() const;
 
-    void setRowIndex(int rowIndex) { m_rowIndex = rowIndex; }
-    int rowIndex() const { return m_rowIndex; }
+  void SetRowIndex(int row_index) { row_index_ = row_index; }
+  int RowIndex() const { return row_index_; }
 
-protected:
-    AccessibilityRole determineAccessibilityRole() final;
+  unsigned AriaColumnIndex() const;
+  unsigned AriaRowIndex() const;
 
-private:
-    int m_rowIndex;
+ protected:
+  AccessibilityRole DetermineAccessibilityRole() final;
 
-    bool computeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const final;
+ private:
+  int row_index_;
+
+  bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const final;
 };
 
-DEFINE_AX_OBJECT_TYPE_CASTS(AXTableRow, isTableRow());
+DEFINE_AX_OBJECT_TYPE_CASTS(AXTableRow, IsTableRow());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AXTableRow_h
+#endif  // AXTableRow_h

@@ -11,7 +11,7 @@
 #include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -30,8 +30,8 @@
 #include "chrome/common/extensions/api/extension_action/action_info.h"
 #include "components/crx_file/id_util.h"
 #include "content/public/browser/navigation_controller.h"
-#include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
@@ -125,7 +125,7 @@ ExtensionAction::ShowAction ExtensionActionRunner::RunAction(
 }
 
 void ExtensionActionRunner::RunBlockedActions(const Extension* extension) {
-  DCHECK(ContainsKey(pending_scripts_, extension->id()) ||
+  DCHECK(base::ContainsKey(pending_scripts_, extension->id()) ||
          web_request_blocked_.count(extension->id()) != 0);
 
   // Clicking to run the extension counts as granting it permission to run on
@@ -357,8 +357,9 @@ void ExtensionActionRunner::ShowBlockedActionBubble(
           FROM_HERE,
           base::Bind(callback, *default_bubble_close_action_for_testing_));
     } else {
-      toolbar_actions_bar->ShowToolbarActionBubble(base::WrapUnique(
-          new BlockedActionBubbleDelegate(callback, extension->id())));
+      toolbar_actions_bar->ShowToolbarActionBubble(
+          base::MakeUnique<BlockedActionBubbleDelegate>(callback,
+                                                        extension->id()));
     }
   }
 }
@@ -382,7 +383,7 @@ void ExtensionActionRunner::OnBlockedActionBubbleClosed(
           ->active_tab_permission_granter()
           ->GrantIfRequested(extension);
     }
-    web_contents()->GetController().Reload(false);
+    web_contents()->GetController().Reload(content::ReloadType::NORMAL, false);
   }
 }
 
@@ -398,11 +399,13 @@ bool ExtensionActionRunner::OnMessageReceived(
   return handled;
 }
 
-void ExtensionActionRunner::DidNavigateMainFrame(
-    const content::LoadCommittedDetails& details,
-    const content::FrameNavigateParams& params) {
-  if (details.is_in_page)
+void ExtensionActionRunner::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() ||
+      !navigation_handle->HasCommitted() ||
+      navigation_handle->IsSameDocument()) {
     return;
+  }
 
   LogUMA();
   num_page_requests_ = 0;

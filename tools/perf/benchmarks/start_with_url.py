@@ -33,6 +33,7 @@ class _StartupPerfBenchmark(perf_benchmark.PerfBenchmark):
 @benchmark.Enabled('has tabs')
 @benchmark.Enabled('android')
 @benchmark.Disabled('chromeos', 'linux', 'mac', 'win')
+@benchmark.Owner(emails=['pasko@chromium.org'])
 class StartWithUrlColdTBM(_StartupPerfBenchmark):
   """Measures time to start Chrome cold with startup URLs."""
 
@@ -44,6 +45,11 @@ class StartWithUrlColdTBM(_StartupPerfBenchmark):
     super(StartWithUrlColdTBM, self).SetExtraBrowserOptions(options)
 
   @classmethod
+  def ShouldDisable(cls, possible_browser):  # http://crbug.com/667470
+    return (possible_browser.platform.GetDeviceTypeName() in
+            ['Nexus 7v2', 'Nexus 9'])
+
+  @classmethod
   def Name(cls):
     return 'start_with_url.cold.startup_pages'
 
@@ -52,6 +58,7 @@ class StartWithUrlColdTBM(_StartupPerfBenchmark):
 @benchmark.Enabled('android')
 @benchmark.Disabled('android-reference')  # crbug.com/588786
 @benchmark.Disabled('chromeos', 'linux', 'mac', 'win')
+@benchmark.Owner(emails=['pasko@chromium.org'])
 class StartWithUrlWarmTBM(_StartupPerfBenchmark):
   """Measures stimetime to start Chrome warm with startup URLs."""
 

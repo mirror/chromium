@@ -4,20 +4,19 @@
 
 #include "ash/content/screen_orientation_delegate_chromeos.h"
 
-#include "ash/aura/wm_window_aura.h"
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/shell.h"
-#include "content/public/browser/screen_orientation_provider.h"
+#include "ash/wm_window.h"
 #include "content/public/browser/web_contents.h"
 
 namespace ash {
 
 ScreenOrientationDelegateChromeos::ScreenOrientationDelegateChromeos() {
-  content::ScreenOrientationProvider::SetDelegate(this);
+  content::WebContents::SetScreenOrientationDelegate(this);
 }
 
 ScreenOrientationDelegateChromeos::~ScreenOrientationDelegateChromeos() {
-  content::ScreenOrientationProvider::SetDelegate(nullptr);
+  content::WebContents::SetScreenOrientationDelegate(nullptr);
 }
 
 bool ScreenOrientationDelegateChromeos::FullScreenRequired(
@@ -28,24 +27,21 @@ bool ScreenOrientationDelegateChromeos::FullScreenRequired(
 void ScreenOrientationDelegateChromeos::Lock(
     content::WebContents* web_contents,
     blink::WebScreenOrientationLockType lock_orientation) {
-  Shell::GetInstance()
-      ->screen_orientation_controller()
-      ->LockOrientationForWindow(
-          WmWindowAura::Get(web_contents->GetNativeView()), lock_orientation);
+  Shell::Get()->screen_orientation_controller()->LockOrientationForWindow(
+      WmWindow::Get(web_contents->GetNativeView()), lock_orientation,
+      ScreenOrientationController::LockCompletionBehavior::None);
 }
 
 bool ScreenOrientationDelegateChromeos::ScreenOrientationProviderSupported() {
-  return Shell::GetInstance()
+  return Shell::Get()
       ->screen_orientation_controller()
       ->ScreenOrientationProviderSupported();
 }
 
 void ScreenOrientationDelegateChromeos::Unlock(
     content::WebContents* web_contents) {
-  Shell::GetInstance()
-      ->screen_orientation_controller()
-      ->UnlockOrientationForWindow(
-          WmWindowAura::Get(web_contents->GetNativeView()));
+  Shell::Get()->screen_orientation_controller()->UnlockOrientationForWindow(
+      WmWindow::Get(web_contents->GetNativeView()));
 }
 
 }  // namespace ash

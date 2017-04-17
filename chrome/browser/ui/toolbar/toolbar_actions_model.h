@@ -9,12 +9,11 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/observer_list.h"
 #include "base/scoped_observer.h"
 #include "chrome/browser/extensions/api/extension_action/extension_action_api.h"
-#include "chrome/browser/extensions/component_migration_helper.h"
 #include "chrome/browser/extensions/extension_action.h"
+#include "chrome/browser/ui/toolbar/component_action_delegate.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "extensions/browser/extension_prefs.h"
@@ -22,6 +21,7 @@
 #include "extensions/common/extension.h"
 
 class Browser;
+class ComponentToolbarActionsFactory;
 class PrefService;
 class Profile;
 class ToolbarActionsBar;
@@ -31,7 +31,6 @@ namespace extensions {
 class ExtensionActionManager;
 class ExtensionMessageBubbleController;
 class ExtensionRegistry;
-class ExtensionSet;
 }
 
 // Model for the browser actions toolbar. This is a per-profile instance, and
@@ -41,16 +40,14 @@ class ExtensionSet;
 // overflow menu on a per-window basis. Callers interested in the arrangement of
 // actions in a particular window should check that window's instance of
 // ToolbarActionsBar, which is responsible for the per-window layout.
-class ToolbarActionsModel
-    : public extensions::ExtensionActionAPI::Observer,
-      public extensions::ExtensionRegistryObserver,
-      public KeyedService,
-      public extensions::ComponentMigrationHelper::ComponentActionDelegate {
+class ToolbarActionsModel : public extensions::ExtensionActionAPI::Observer,
+                            public extensions::ExtensionRegistryObserver,
+                            public KeyedService,
+                            public ComponentActionDelegate {
  public:
   // The different options for highlighting.
   enum HighlightType {
     HIGHLIGHT_NONE,
-    HIGHLIGHT_INFO,
     HIGHLIGHT_WARNING,
   };
 
@@ -154,7 +151,7 @@ class ToolbarActionsModel
 
   bool actions_initialized() const { return actions_initialized_; }
 
-  ScopedVector<ToolbarActionViewController> CreateActions(
+  std::vector<std::unique_ptr<ToolbarActionViewController>> CreateActions(
       Browser* browser,
       ToolbarActionsBar* bar);
   std::unique_ptr<ToolbarActionViewController> CreateActionForItem(
@@ -166,10 +163,6 @@ class ToolbarActionsModel
     return is_highlighting() ? highlighted_items_ : toolbar_items_;
   }
 
-  extensions::ComponentMigrationHelper* component_migration_helper() {
-    return component_migration_helper_.get();
-  }
-
   bool is_highlighting() const { return highlight_type_ != HIGHLIGHT_NONE; }
   HighlightType highlight_type() const { return highlight_type_; }
 
@@ -178,9 +171,14 @@ class ToolbarActionsModel
     has_active_bubble_ = has_active_bubble;
   }
 
+  ComponentToolbarActionsFactory* component_actions_factory() {
+    return component_actions_factory_.get();
+  }
+
   void SetActionVisibility(const std::string& action_id, bool visible);
 
-  // ComponentMigrationHelper::ComponentActionDelegate:
+  // ComponentActionDelegate:
+  // AddComponentAction() is a no-op if |actions_initialized_| is false.
   void AddComponentAction(const std::string& action_id) override;
   void RemoveComponentAction(const std::string& action_id) override;
   bool HasComponentAction(const std::string& action_id) const override;
@@ -203,6 +201,10 @@ class ToolbarActionsModel
   // profile, if any.
   std::unique_ptr<extensions::ExtensionMessageBubbleController>
   GetExtensionMessageBubbleController(Browser* browser);
+
+  // Sets the component action factory for this object. Used in tests.
+  void SetMockActionsFactoryForTest(
+      std::unique_ptr<ComponentToolbarActionsFactory> mock_factory);
 
  private:
   // Callback when actions are ready.
@@ -258,12 +260,11 @@ class ToolbarActionsModel
   bool HasItem(const ToolbarItem& item) const;
 
   // Adds |item| to the toolbar.  If the item has an existing preference for
-  // toolbar position, that will be used to determine its location.  If
-  // |is_component| is true, the item will be given a default postion of 0,
-  // otherwise the default is at the end of the visible items. If the toolbar is
-  // in highlighting mode, the item will not be visible until highlighting mode
-  // is exited.
-  void AddItem(const ToolbarItem& item, bool is_component);
+  // toolbar position, that will be used to determine its location. Otherwise
+  // it will be placed at the end of the visible items. If the toolbar is in
+  // highlighting mode, the item will not be visible until highlighting mode is
+  // exited.
+  void AddItem(const ToolbarItem& item);
 
   // Removes |item| from the toolbar.  If the toolbar is in highlighting mode,
   // the item is also removed from the highlighted list (if present).
@@ -272,6 +273,9 @@ class ToolbarActionsModel
   // Looks up and returns the extension with the given |id| in the set of
   // enabled extensions.
   const extensions::Extension* GetExtensionById(const std::string& id) const;
+
+  // Returns true if the action is visible on the toolbar.
+  bool IsActionVisible(const std::string& action_id) const;
 
   // Our observers.
   base::ObserverList<Observer> observers_;
@@ -291,9 +295,7 @@ class ToolbarActionsModel
   // The ExtensionActionManager, cached for convenience.
   extensions::ExtensionActionManager* extension_action_manager_;
 
-  // The ComponentMigrationHelper.
-  std::unique_ptr<extensions::ComponentMigrationHelper>
-      component_migration_helper_;
+  std::unique_ptr<ComponentToolbarActionsFactory> component_actions_factory_;
 
   // True if we've handled the initial EXTENSIONS_READY notification.
   bool actions_initialized_;

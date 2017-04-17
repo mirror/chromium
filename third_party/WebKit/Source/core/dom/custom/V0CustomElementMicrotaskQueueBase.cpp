@@ -8,29 +8,26 @@
 
 namespace blink {
 
-void V0CustomElementMicrotaskQueueBase::dispatch()
-{
-    RELEASE_ASSERT(!m_inDispatch);
-    m_inDispatch = true;
-    doDispatch();
-    m_inDispatch = false;
+void V0CustomElementMicrotaskQueueBase::Dispatch() {
+  CHECK(!in_dispatch_);
+  in_dispatch_ = true;
+  DoDispatch();
+  in_dispatch_ = false;
 }
 
-DEFINE_TRACE(V0CustomElementMicrotaskQueueBase)
-{
-    visitor->trace(m_queue);
+DEFINE_TRACE(V0CustomElementMicrotaskQueueBase) {
+  visitor->Trace(queue_);
 }
 
 #if !defined(NDEBUG)
-void V0CustomElementMicrotaskQueueBase::show(unsigned indent)
-{
-    for (unsigned q = 0; q < m_queue.size(); ++q) {
-        if (m_queue[q])
-            m_queue[q]->show(indent);
-        else
-            fprintf(stderr, "%*snull\n", indent, "");
-    }
+void V0CustomElementMicrotaskQueueBase::Show(unsigned indent) {
+  for (const auto& step : queue_) {
+    if (step)
+      step->Show(indent);
+    else
+      fprintf(stderr, "%*snull\n", indent, "");
+  }
 }
 #endif
 
-} // namespace blink
+}  // namespace blink

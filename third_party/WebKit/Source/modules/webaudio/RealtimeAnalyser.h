@@ -10,101 +10,105 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef RealtimeAnalyser_h
 #define RealtimeAnalyser_h
 
+#include <memory>
 #include "core/dom/DOMTypedArray.h"
 #include "platform/audio/AudioArray.h"
 #include "platform/audio/FFTFrame.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class AudioBus;
 
 class RealtimeAnalyser final {
-    WTF_MAKE_NONCOPYABLE(RealtimeAnalyser);
-    DISALLOW_NEW();
-public:
-    RealtimeAnalyser();
+  WTF_MAKE_NONCOPYABLE(RealtimeAnalyser);
+  DISALLOW_NEW();
 
-    size_t fftSize() const { return m_fftSize; }
-    bool setFftSize(size_t);
+ public:
+  RealtimeAnalyser();
 
-    unsigned frequencyBinCount() const { return m_fftSize / 2; }
+  size_t FftSize() const { return fft_size_; }
+  bool SetFftSize(size_t);
 
-    void setMinDecibels(double k) { m_minDecibels = k; }
-    double minDecibels() const { return m_minDecibels; }
+  unsigned FrequencyBinCount() const { return fft_size_ / 2; }
 
-    void setMaxDecibels(double k) { m_maxDecibels = k; }
-    double maxDecibels() const { return m_maxDecibels; }
+  void SetMinDecibels(double k) { min_decibels_ = k; }
+  double MinDecibels() const { return min_decibels_; }
 
-    void setSmoothingTimeConstant(double k) { m_smoothingTimeConstant = k; }
-    double smoothingTimeConstant() const { return m_smoothingTimeConstant; }
+  void SetMaxDecibels(double k) { max_decibels_ = k; }
+  double MaxDecibels() const { return max_decibels_; }
 
-    void getFloatFrequencyData(DOMFloat32Array*, double);
-    void getByteFrequencyData(DOMUint8Array*, double);
-    void getFloatTimeDomainData(DOMFloat32Array*);
-    void getByteTimeDomainData(DOMUint8Array*);
+  void SetSmoothingTimeConstant(double k) { smoothing_time_constant_ = k; }
+  double SmoothingTimeConstant() const { return smoothing_time_constant_; }
 
-    // The audio thread writes input data here.
-    void writeInput(AudioBus*, size_t framesToProcess);
+  void GetFloatFrequencyData(DOMFloat32Array*, double);
+  void GetByteFrequencyData(DOMUint8Array*, double);
+  void GetFloatTimeDomainData(DOMFloat32Array*);
+  void GetByteTimeDomainData(DOMUint8Array*);
 
-    static const double DefaultSmoothingTimeConstant;
-    static const double DefaultMinDecibels;
-    static const double DefaultMaxDecibels;
+  // The audio thread writes input data here.
+  void WriteInput(AudioBus*, size_t frames_to_process);
 
-    static const unsigned DefaultFFTSize;
-    static const unsigned MinFFTSize;
-    static const unsigned MaxFFTSize;
-    static const unsigned InputBufferSize;
+  static const double kDefaultSmoothingTimeConstant;
+  static const double kDefaultMinDecibels;
+  static const double kDefaultMaxDecibels;
 
-private:
-    // The audio thread writes the input audio here.
-    AudioFloatArray m_inputBuffer;
-    unsigned m_writeIndex;
+  static const unsigned kDefaultFFTSize;
+  static const unsigned kMinFFTSize;
+  static const unsigned kMaxFFTSize;
+  static const unsigned kInputBufferSize;
 
-    // Input audio is downmixed to this bus before copying to m_inputBuffer.
-    RefPtr<AudioBus> m_downMixBus;
+ private:
+  // The audio thread writes the input audio here.
+  AudioFloatArray input_buffer_;
+  unsigned write_index_;
 
-    size_t m_fftSize;
-    std::unique_ptr<FFTFrame> m_analysisFrame;
-    void doFFTAnalysis();
+  // Input audio is downmixed to this bus before copying to m_inputBuffer.
+  RefPtr<AudioBus> down_mix_bus_;
 
-    // Convert the contents of magnitudeBuffer to byte values, saving the result in |destination|.
-    void convertToByteData(DOMUint8Array* destination);
+  size_t fft_size_;
+  std::unique_ptr<FFTFrame> analysis_frame_;
+  void DoFFTAnalysis();
 
-    // Convert magnidue buffer to dB, saving the result in |destination|
-    void convertFloatToDb(DOMFloat32Array* destination);
+  // Convert the contents of magnitudeBuffer to byte values, saving the result
+  // in |destination|.
+  void ConvertToByteData(DOMUint8Array* destination);
 
-    // doFFTAnalysis() stores the floating-point magnitude analysis data here.
-    AudioFloatArray m_magnitudeBuffer;
-    AudioFloatArray& magnitudeBuffer() { return m_magnitudeBuffer; }
+  // Convert magnidue buffer to dB, saving the result in |destination|
+  void ConvertFloatToDb(DOMFloat32Array* destination);
 
-    // A value between 0 and 1 which averages the previous version of m_magnitudeBuffer with the current analysis magnitude data.
-    double m_smoothingTimeConstant;
+  // doFFTAnalysis() stores the floating-point magnitude analysis data here.
+  AudioFloatArray magnitude_buffer_;
+  AudioFloatArray& MagnitudeBuffer() { return magnitude_buffer_; }
 
-    // The range used when converting when using getByteFrequencyData().
-    double m_minDecibels;
-    double m_maxDecibels;
+  // A value between 0 and 1 which averages the previous version of
+  // m_magnitudeBuffer with the current analysis magnitude data.
+  double smoothing_time_constant_;
 
-    // Time at which the FFT was last computed.
-    double m_lastAnalysisTime;
+  // The range used when converting when using getByteFrequencyData().
+  double min_decibels_;
+  double max_decibels_;
+
+  // Time at which the FFT was last computed.
+  double last_analysis_time_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RealtimeAnalyser_h
+#endif  // RealtimeAnalyser_h

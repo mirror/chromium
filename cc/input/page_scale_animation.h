@@ -9,7 +9,7 @@
 
 #include "base/macros.h"
 #include "base/time/time.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "ui/gfx/geometry/cubic_bezier.h"
 #include "ui/gfx/geometry/size_f.h"
 #include "ui/gfx/geometry/vector2d.h"
@@ -20,15 +20,14 @@ namespace cc {
 // Used in the CC to pass around a scale animation that hasn't yet been
 // initialized.
 struct PendingPageScaleAnimation {
-  PendingPageScaleAnimation(
-      const gfx::Vector2d _target_offset,
-      bool _use_anchor,
-      float _scale,
-      const base::TimeDelta& _duration)
-      : target_offset(_target_offset),
-        use_anchor(_use_anchor),
-        scale(_scale),
-        duration(_duration) {}
+  PendingPageScaleAnimation(const gfx::Vector2d& target_offset,
+                            bool use_anchor,
+                            float scale,
+                            const base::TimeDelta& duration)
+      : target_offset(target_offset),
+        use_anchor(use_anchor),
+        scale(scale),
+        duration(duration) {}
   gfx::Vector2d target_offset;
   bool use_anchor;
   float scale;

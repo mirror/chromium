@@ -202,8 +202,8 @@ std::unique_ptr<ui::MenuModel> MessageCenterTray::CreateNotificationMenuModel(
   }
 #endif
 
-  return base::WrapUnique(
-      new NotificationMenuModel(this, notifier_id, display_source));
+  return base::MakeUnique<NotificationMenuModel>(this, notifier_id,
+                                                 display_source);
 }
 
 void MessageCenterTray::OnNotificationAdded(
@@ -233,6 +233,11 @@ void MessageCenterTray::OnNotificationButtonClicked(
     int button_index) {
   if (popups_visible_)
     OnMessageCenterChanged();
+}
+
+void MessageCenterTray::OnNotificationSettingsClicked(bool handled) {
+  if (!handled)
+    ShowNotifierSettingsBubble();
 }
 
 void MessageCenterTray::OnNotificationDisplayed(

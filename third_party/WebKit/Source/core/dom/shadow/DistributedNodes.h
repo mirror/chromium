@@ -32,41 +32,45 @@
 #define DistributedNodes_h
 
 #include "core/dom/Node.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class DistributedNodes final {
-    DISALLOW_NEW();
-public:
-    DistributedNodes() { }
+  DISALLOW_NEW();
 
-    Node* first() const { return m_nodes.first(); }
-    Node* last() const { return m_nodes.last(); }
-    Node* at(size_t index) const { return m_nodes.at(index); }
+ public:
+  DistributedNodes() {}
 
-    size_t size() const { return m_nodes.size(); }
-    bool isEmpty() const { return m_nodes.isEmpty(); }
+  Node* First() const { return nodes_.front(); }
+  Node* Last() const { return nodes_.back(); }
+  Node* at(size_t index) const { return nodes_.at(index); }
 
-    void append(Node*);
-    void clear() { m_nodes.clear(); m_indices.clear(); }
-    void shrinkToFit() { m_nodes.shrinkToFit(); }
+  size_t size() const { return nodes_.size(); }
+  bool IsEmpty() const { return nodes_.IsEmpty(); }
 
-    bool contains(const Node* node) const { return m_indices.contains(node); }
-    size_t find(const Node*) const;
-    Node* nextTo(const Node*) const;
-    Node* previousTo(const Node*) const;
+  void Append(Node*);
+  void Clear() {
+    nodes_.Clear();
+    indices_.Clear();
+  }
+  void ShrinkToFit() { nodes_.ShrinkToFit(); }
 
-    void swap(DistributedNodes& other);
+  bool Contains(const Node* node) const { return indices_.Contains(node); }
+  size_t Find(const Node*) const;
+  Node* NextTo(const Node*) const;
+  Node* PreviousTo(const Node*) const;
 
-    DECLARE_TRACE();
+  void Swap(DistributedNodes& other);
 
-private:
-    HeapVector<Member<Node>> m_nodes;
-    HeapHashMap<Member<const Node>, size_t> m_indices;
+  DECLARE_TRACE();
+
+ private:
+  HeapVector<Member<Node>> nodes_;
+  HeapHashMap<Member<const Node>, size_t> indices_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

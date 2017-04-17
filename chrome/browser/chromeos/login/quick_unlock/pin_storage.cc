@@ -9,11 +9,12 @@
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_utils.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/login/auth/key.h"
-#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "crypto/random.h"
 
 namespace chromeos {
+namespace quick_unlock {
 
 namespace {
 
@@ -40,36 +41,15 @@ std::string ComputeSecret(const std::string& pin, const std::string& salt) {
 }  // namespace
 
 // static
-const base::TimeDelta PinStorage::kStrongAuthTimeout =
-    base::TimeDelta::FromHours(24);
-
-// static
-void PinStorage::RegisterProfilePrefs(
-    user_prefs::PrefRegistrySyncable* registry) {
-  registry->RegisterStringPref(prefs::kQuickUnlockPinSalt, "",
-                               user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
-  registry->RegisterStringPref(prefs::kQuickUnlockPinSecret, "",
-                               user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+void PinStorage::RegisterProfilePrefs(PrefRegistrySimple* registry) {
+  registry->RegisterStringPref(prefs::kQuickUnlockPinSalt, "");
+  registry->RegisterStringPref(prefs::kQuickUnlockPinSecret, "");
 }
 
 PinStorage::PinStorage(PrefService* pref_service)
     : pref_service_(pref_service) {}
 
 PinStorage::~PinStorage() {}
-
-void PinStorage::MarkStrongAuth() {
-  last_strong_auth_ = base::Time::Now();
-  ResetUnlockAttemptCount();
-}
-
-bool PinStorage::HasStrongAuth() const {
-  return !last_strong_auth_.is_null();
-}
-
-base::TimeDelta PinStorage::TimeSinceLastStrongAuth() const {
-  DCHECK(!last_strong_auth_.is_null());
-  return base::Time::Now() - last_strong_auth_;
-}
 
 void PinStorage::AddUnlockAttempt() {
   ++unlock_attempt_count_;
@@ -107,11 +87,8 @@ std::string PinStorage::PinSecret() const {
 bool PinStorage::IsPinAuthenticationAvailable() const {
   const bool exceeded_unlock_attempts =
       unlock_attempt_count() >= kMaximumUnlockAttempts;
-  const bool has_strong_auth =
-      HasStrongAuth() && TimeSinceLastStrongAuth() < kStrongAuthTimeout;
 
-  return IsQuickUnlockEnabled() && IsPinSet() && has_strong_auth &&
-         !exceeded_unlock_attempts;
+  return IsPinEnabled(pref_service_) && IsPinSet() && !exceeded_unlock_attempts;
 }
 
 bool PinStorage::TryAuthenticatePin(const std::string& pin) {
@@ -122,4 +99,5 @@ bool PinStorage::TryAuthenticatePin(const std::string& pin) {
   return ComputeSecret(pin, PinSalt()) == PinSecret();
 }
 
+}  // namespace quick_unlock
 }  // namespace chromeos

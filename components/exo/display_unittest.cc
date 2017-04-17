@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/common/shell_window_ids.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "components/exo/buffer.h"
 #include "components/exo/display.h"
 #include "components/exo/shared_memory.h"
@@ -13,7 +13,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(USE_OZONE)
-#include "ui/ozone/public/native_pixmap.h"
+#include "ui/gfx/native_pixmap.h"
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
 #endif
@@ -61,7 +61,7 @@ TEST_F(DisplayTest, DISABLED_CreateLinuxDMABufBuffer) {
 
   std::unique_ptr<Display> display(new Display);
   // Creating a prime buffer from a native pixmap handle should succeed.
-  scoped_refptr<ui::NativePixmap> pixmap =
+  scoped_refptr<gfx::NativePixmap> pixmap =
       ui::OzonePlatform::GetInstance()
           ->GetSurfaceFactoryOzone()
           ->CreateNativePixmap(gfx::kNullAcceleratedWidget, buffer_size,

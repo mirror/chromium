@@ -73,7 +73,7 @@ function addFewBlackboxedListenersAndClick(addNonBlackboxedListener)
 function test()
 {
     var frameworkRegexString = "/framework\\.js$";
-    WebInspector.settingForTest("skipStackFramesPattern").set(frameworkRegexString);
+    Common.settingForTest("skipStackFramesPattern").set(frameworkRegexString);
 
     InspectorTest.setQuiet(true);
 
@@ -84,8 +84,8 @@ function test()
 
             function step1(node)
             {
-                var pane = WebInspector.domBreakpointsSidebarPane;
-                pane._setBreakpoint(node, pane._breakpointTypes.SubtreeModified, true);
+                var pane = Components.domBreakpointsSidebarPane;
+                pane._setBreakpoint(node, Components.DOMBreakpointsSidebarPane.BreakpointTypes.SubtreeModified, true);
                 InspectorTest.evaluateInPageWithTimeout("appendElement('rootElement', 'childElement')");
                 InspectorTest.waitUntilPausedAndDumpStackAndResume(next);
             }
@@ -93,15 +93,15 @@ function test()
 
         function testXHRBreakpoint(next)
         {
-            var pane = WebInspector.panels.sources.sidebarPanes.xhrBreakpoints;
+            var pane = self.runtime.sharedInstance(Sources.XHRBreakpointsSidebarPane);
             pane._setBreakpoint("foo", true);
-            InspectorTest.evaluateInPageWithTimeout("sendXHR('/foo?a=b')");
+            InspectorTest.evaluateInPageWithTimeout("sendXHR('file:///foo?a=b')");
             InspectorTest.waitUntilPausedAndDumpStackAndResume(next);
         },
 
         function testEventListenerBreakpoint(next)
         {
-            var pane = WebInspector.panels.sources.sidebarPanes.eventListenerBreakpoints;
+            var pane = self.runtime.sharedInstance(Sources.EventListenerBreakpointsSidebarPane);
             pane._setBreakpoint("listener:click");
             InspectorTest.evaluateInPageWithTimeout("addListenerAndClick(false)");
             InspectorTest.waitUntilPausedAndPerformSteppingActions([
@@ -112,7 +112,7 @@ function test()
 
         function testSteppingThroughEventListenerBreakpoint(next)
         {
-            var pane = WebInspector.panels.sources.sidebarPanes.eventListenerBreakpoints;
+            var pane = self.runtime.sharedInstance(Sources.EventListenerBreakpointsSidebarPane);
             pane._setBreakpoint("listener:click");
             InspectorTest.evaluateInPageWithTimeout("addListenerAndClick(true)");
             InspectorTest.waitUntilPausedAndPerformSteppingActions([
@@ -120,14 +120,14 @@ function test()
                 "StepOver", "Print", // should break at the first "remover()"
                 "StepOver", "StepOver", "StepOver", "Print", // enter testElementClicked()
                 "StepOut", "StepOver", "StepOver", "StepOver", "StepOver", "Print", // enter testElementClicked()
-                "StepOver", "StepOver", "Print",
+                "StepOver", "StepOver", "StepOver", "Print",
                 "Resume",
             ], next);
         },
 
         function testSteppingOutOnEventListenerBreakpoint(next)
         {
-            var pane = WebInspector.panels.sources.sidebarPanes.eventListenerBreakpoints;
+            var pane = self.runtime.sharedInstance(Sources.EventListenerBreakpointsSidebarPane);
             pane._setBreakpoint("listener:click");
             InspectorTest.evaluateInPageWithTimeout("addListenerAndClick(true)");
             InspectorTest.waitUntilPausedAndPerformSteppingActions([
@@ -138,20 +138,9 @@ function test()
             ], next);
         },
 
-        function testSteppingOutOnEventListenerBreakpointAllBlackboxed(next)
-        {
-            var pane = WebInspector.panels.sources.sidebarPanes.eventListenerBreakpoints;
-            pane._setBreakpoint("listener:click");
-            InspectorTest.evaluateInPageWithTimeout("addFewBlackboxedListenersAndClick(false)");
-            InspectorTest.waitUntilPausedAndPerformSteppingActions([
-                "StepOut", "Print",
-                "Resume",
-            ], next);
-        },
-
         function testSteppingOutOnEventListenerBreakpointAllBlackboxedButOne(next)
         {
-            var pane = WebInspector.panels.sources.sidebarPanes.eventListenerBreakpoints;
+            var pane = self.runtime.sharedInstance(Sources.EventListenerBreakpointsSidebarPane);
             pane._setBreakpoint("listener:click");
             InspectorTest.evaluateInPageWithTimeout("addFewBlackboxedListenersAndClick(true)");
             InspectorTest.waitUntilPausedAndPerformSteppingActions([
@@ -164,8 +153,8 @@ function test()
 
         function tearDown(next)
         {
-            WebInspector.panels.sources.sidebarPanes.xhrBreakpoints._removeBreakpoint("foo");
-            WebInspector.panels.sources.sidebarPanes.eventListenerBreakpoints._removeBreakpoint("listener:click");
+            self.runtime.sharedInstance(Sources.XHRBreakpointsSidebarPane)._removeBreakpoint("foo");
+            self.runtime.sharedInstance(Sources.EventListenerBreakpointsSidebarPane)._removeBreakpoint("listener:click");
             next();
         }
     ]);

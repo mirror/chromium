@@ -5,32 +5,18 @@
 import("//build/config/linux/pkg_config.gni")
 import("//ui/ozone/ozone.gni")
 
-declare_args() {
-  use_drm_atomic = false
-}
-
 visibility = [ "//ui/ozone/*" ]
-
-pkg_config("libdrm") {
-  packages = [ "libdrm" ]
-}
-
-config("drm_atomic") {
-  if (use_drm_atomic) {
-    defines = [ "USE_DRM_ATOMIC" ]
-  }
-}
 
 source_set("gbm") {
   sources = [
     "client_native_pixmap_factory_gbm.cc",
     "client_native_pixmap_factory_gbm.h",
-    "common/client_native_pixmap_dmabuf.cc",
-    "common/client_native_pixmap_dmabuf.h",
     "common/drm_util.cc",
     "common/drm_util.h",
     "common/scoped_drm_types.cc",
     "common/scoped_drm_types.h",
+    "cursor_proxy_mojo.cc",
+    "cursor_proxy_mojo.h",
     "gpu/crtc_controller.cc",
     "gpu/crtc_controller.h",
     "gpu/drm_buffer.cc",
@@ -47,8 +33,6 @@ source_set("gbm") {
     "gpu/drm_display.h",
     "gpu/drm_gpu_display_manager.cc",
     "gpu/drm_gpu_display_manager.h",
-    "gpu/drm_gpu_platform_support.cc",
-    "gpu/drm_gpu_platform_support.h",
     "gpu/drm_overlay_validator.cc",
     "gpu/drm_overlay_validator.h",
     "gpu/drm_thread.cc",
@@ -79,8 +63,12 @@ source_set("gbm") {
     "gpu/hardware_display_controller.h",
     "gpu/hardware_display_plane.cc",
     "gpu/hardware_display_plane.h",
+    "gpu/hardware_display_plane_atomic.cc",
+    "gpu/hardware_display_plane_atomic.h",
     "gpu/hardware_display_plane_manager.cc",
     "gpu/hardware_display_plane_manager.h",
+    "gpu/hardware_display_plane_manager_atomic.cc",
+    "gpu/hardware_display_plane_manager_atomic.h",
     "gpu/hardware_display_plane_manager_legacy.cc",
     "gpu/hardware_display_plane_manager_legacy.h",
     "gpu/inter_thread_messaging_proxy.cc",
@@ -125,7 +113,11 @@ source_set("gbm") {
   deps = [
     "//base",
     "//ipc",
+    "//mojo/common:common_base",
+    "//services/service_manager/public/cpp:sources",
+    "//services/ui/public/interfaces:constants",
     "//skia",
+    "//third_party/libdrm",
     "//third_party/minigbm",
     "//ui/base",
     "//ui/display",
@@ -142,30 +134,17 @@ source_set("gbm") {
     "//ui/gl",
     "//ui/ozone:ozone_base",
     "//ui/ozone/common",
-    "//ui/ozone/gl",
+    "//ui/ozone/public/interfaces",
     "//ui/platform_window",
   ]
-
-  configs += [ ":libdrm" ]
 
   public_configs = [ "//third_party/khronos:khronos_headers" ]
 
   defines = [ "OZONE_IMPLEMENTATION" ]
-
-  if (use_drm_atomic) {
-    configs += [ ":drm_atomic" ]
-    sources += [
-      "gpu/hardware_display_plane_atomic.cc",
-      "gpu/hardware_display_plane_atomic.h",
-      "gpu/hardware_display_plane_manager_atomic.cc",
-      "gpu/hardware_display_plane_manager_atomic.h",
-    ]
-  }
 }
 
 source_set("gbm_unittests") {
   testonly = true
-  configs += [ ":drm_atomic" ]
   sources = [
     "gpu/drm_overlay_validator_unittest.cc",
     "gpu/drm_window_unittest.cc",
@@ -190,10 +169,9 @@ source_set("gbm_unittests") {
     ":gbm",
     "//skia",
     "//testing/gtest",
+    "//third_party/libdrm",
     "//ui/gfx",
     "//ui/ozone:platform",
     "//ui/ozone/common",
   ]
-
-  public_configs = [ ":libdrm" ]
 }

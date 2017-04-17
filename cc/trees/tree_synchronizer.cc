@@ -28,12 +28,14 @@ void SynchronizeTreesInternal(LayerTreeType* source_tree,
   std::unique_ptr<OwnedLayerImplList> old_layers(tree_impl->DetachLayers());
 
   OwnedLayerImplMap old_layer_map;
-  for (auto& it : *old_layers)
+  for (auto& it : *old_layers) {
+    DCHECK(it);
     old_layer_map[it->id()] = std::move(it);
+  }
 
   PushLayerList(&old_layer_map, source_tree, tree_impl);
 
-  for (int id : property_trees->effect_tree.mask_replica_layer_ids()) {
+  for (int id : property_trees->effect_tree.mask_layer_ids()) {
     std::unique_ptr<LayerImpl> layer_impl(ReuseOrCreateLayerImpl(
         &old_layer_map, source_tree->LayerById(id), tree_impl));
     tree_impl->AddLayer(std::move(layer_impl));

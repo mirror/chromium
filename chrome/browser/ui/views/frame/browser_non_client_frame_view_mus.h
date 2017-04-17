@@ -18,16 +18,6 @@
 #endif
 
 class TabIconView;
-class WebAppLeftHeaderView;
-
-namespace ui {
-class Window;
-}
-
-namespace views {
-class ImageButton;
-class ToggleImageButton;
-}
 
 class BrowserNonClientFrameViewMus : public BrowserNonClientFrameView,
                                      public TabIconViewModel,
@@ -46,9 +36,8 @@ class BrowserNonClientFrameViewMus : public BrowserNonClientFrameView,
   int GetTopInset(bool restored) const override;
   int GetThemeBackgroundXInset() const override;
   void UpdateThrobber(bool running) override;
-  void UpdateToolbar() override;
-  views::View* GetLocationIconView() const override;
   views::View* GetProfileSwitcherView() const override;
+  void UpdateClientArea() override;
 
   // views::NonClientFrameView:
   gfx::Rect GetBoundsForClientView() const override;
@@ -65,7 +54,7 @@ class BrowserNonClientFrameViewMus : public BrowserNonClientFrameView,
   void OnPaint(gfx::Canvas* canvas) override;
   void Layout() override;
   const char* GetClassName() const override;
-  void GetAccessibleState(ui::AXViewState* state) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   gfx::Size GetMinimumSize() const override;
 
   // TabIconViewModel:
@@ -77,18 +66,9 @@ class BrowserNonClientFrameViewMus : public BrowserNonClientFrameView,
   void UpdateProfileIcons() override;
 
  private:
-  ui::Window* mus_window();
-
-  // Resets the client area on the ui::Window.
-  void UpdateClientArea();
-
   // TabStripObserver:
   void TabStripMaxXChanged(TabStrip* tab_strip) override;
   void TabStripDeleted(TabStrip* tab_strip) override;
-
-  // views::NonClientFrameView:
-  bool DoesIntersectRect(const views::View* target,
-                         const gfx::Rect& rect) const override;
 
   // Distance between the left edge of the NonClientFrameView and the tab strip.
   int GetTabStripLeftInset() const;
@@ -97,20 +77,10 @@ class BrowserNonClientFrameViewMus : public BrowserNonClientFrameView,
   // strip.
   int GetTabStripRightInset() const;
 
-  // Returns true if we should use a super short header with light bars instead
-  // of regular tabs. This header is used in immersive fullscreen when the
-  // top-of-window views are not revealed.
-  bool UseImmersiveLightbarHeaderStyle() const;
-
   // Returns true if the header should be painted so that it looks the same as
   // the header used for packaged apps. Packaged apps use a different color
   // scheme than browser windows.
   bool UsePackagedAppHeaderStyle() const;
-
-  // Returns true if the header should be painted with a WebApp header style.
-  // The WebApp header style has a back button and title along with the usual
-  // accoutrements.
-  bool UseWebAppHeaderStyle() const;
 
   // Layout the incognito button.
   void LayoutIncognitoButton();
@@ -122,15 +92,14 @@ class BrowserNonClientFrameViewMus : public BrowserNonClientFrameView,
   // need their frames painted.
   bool ShouldPaint() const;
 
-  // Paints the header background when the frame is in immersive fullscreen and
-  // tab light bar is visible.
-  void PaintImmersiveLightbarStyleHeader(gfx::Canvas* canvas);
-
   void PaintToolbarBackground(gfx::Canvas* canvas);
 
   // Draws the line under the header for windows without a toolbar and not using
   // the packaged app header style.
   void PaintContentEdge(gfx::Canvas* canvas);
+
+  // Returns the height for the header (non-client frame area).
+  int GetHeaderHeight() const;
 
   // TODO(sky): Figure out how to support WebAppLeftHeaderView.
 

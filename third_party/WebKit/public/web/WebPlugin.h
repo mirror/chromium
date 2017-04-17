@@ -32,17 +32,14 @@
 #ifndef WebPlugin_h
 #define WebPlugin_h
 
-#include "../platform/WebCanvas.h"
-#include "../platform/WebDragOperation.h"
-#include "../platform/WebFocusType.h"
-#include "../platform/WebString.h"
-#include "../platform/WebURL.h"
 #include "WebDragStatus.h"
-#include "WebWidget.h"
-#include <v8.h>
-
-struct NPObject;
-struct _NPP;
+#include "WebInputMethodController.h"
+#include "public/platform/WebCanvas.h"
+#include "public/platform/WebDragOperation.h"
+#include "public/platform/WebFocusType.h"
+#include "public/platform/WebString.h"
+#include "public/platform/WebURL.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -57,140 +54,198 @@ struct WebPrintPresetOptions;
 struct WebPoint;
 struct WebRect;
 struct WebURLError;
-template <typename T> class WebVector;
+template <typename T>
+class WebVector;
 
 class WebPlugin {
-public:
-    // Initializes the plugin using |container| to communicate with the renderer
-    // code. |container| must own this plugin. |container| must not be nullptr.
-    //
-    // Returns true if a plugin (not necessarily this one) has been successfully
-    // initialized into |container|.
-    //
-    // NOTE: This method is subtle. This plugin may be marked for deletion via
-    // destroy() during initialization. When this occurs, container() will
-    // return nullptr. Because deletions during initialize() must be
-    // asynchronous, this object is still alive immediately after initialize().
-    //   1) If container() == nullptr and this method returns true, this plugin
-    //      has been replaced by another during initialization. This new plugin
-    //      may be accessed via container->plugin().
-    //   2) If container() == nullptr and this method returns false, this plugin
-    //      and the container have both been marked for deletion.
-    virtual bool initialize(WebPluginContainer*) = 0;
+ public:
+  // Initializes the plugin using |container| to communicate with the renderer
+  // code. |container| must own this plugin. |container| must not be nullptr.
+  //
+  // Returns true if a plugin (not necessarily this one) has been successfully
+  // initialized into |container|.
+  //
+  // NOTE: This method is subtle. This plugin may be marked for deletion via
+  // destroy() during initialization. When this occurs, container() will
+  // return nullptr. Because deletions during initialize() must be
+  // asynchronous, this object is still alive immediately after initialize().
+  //   1) If container() == nullptr and this method returns true, this plugin
+  //      has been replaced by another during initialization. This new plugin
+  //      may be accessed via container->plugin().
+  //   2) If container() == nullptr and this method returns false, this plugin
+  //      and the container have both been marked for deletion.
+  virtual bool Initialize(WebPluginContainer*) = 0;
 
-    // Plugins must arrange for themselves to be deleted sometime during or after this
-    // method is called. This method is only called by the owning WebPluginContainer.
-    // The exception is if the plugin has been detached by a WebPluginContainer,
-    // i.e. been replaced by another plugin. Then it must be destroyed separately.
-    // Once this method has been called, container() must return nullptr.
-    virtual void destroy() = 0;
+  // Plugins must arrange for themselves to be deleted sometime during or after
+  // this method is called. This method is only called by the owning
+  // WebPluginContainer.
+  // The exception is if the plugin has been detached by a WebPluginContainer,
+  // i.e. been replaced by another plugin. Then it must be destroyed separately.
+  // Once this method has been called, container() must return nullptr.
+  virtual void Destroy() = 0;
 
-    // Returns the container that this plugin has been initialized with.
-    // Must return nullptr if this plugin is scheduled for deletion.
-    //
-    // NOTE: This container doesn't necessarily own this plugin. For example,
-    // if the container has been assigned a new plugin, then the container will
-    // own the new plugin, not this old plugin.
-    virtual WebPluginContainer* container() const { return nullptr; }
+  // Returns the container that this plugin has been initialized with.
+  // Must return nullptr if this plugin is scheduled for deletion.
+  //
+  // NOTE: This container doesn't necessarily own this plugin. For example,
+  // if the container has been assigned a new plugin, then the container will
+  // own the new plugin, not this old plugin.
+  virtual WebPluginContainer* Container() const { return nullptr; }
 
-    virtual v8::Local<v8::Object> v8ScriptableObject(v8::Isolate*) { return v8::Local<v8::Object>(); }
+  virtual v8::Local<v8::Object> V8ScriptableObject(v8::Isolate*) {
+    return v8::Local<v8::Object>();
+  }
 
-    virtual bool supportsKeyboardFocus() const { return false; }
-    virtual bool supportsEditCommands() const { return false; }
-    // Returns true if this plugin supports input method, which implements
-    // setComposition() and confirmComposition() below.
-    virtual bool supportsInputMethod() const { return false; }
+  virtual bool SupportsKeyboardFocus() const { return false; }
+  virtual bool SupportsEditCommands() const { return false; }
+  // Returns true if this plugin supports input method, which implements
+  // setComposition(), commitText() and finishComposingText() below.
+  virtual bool SupportsInputMethod() const { return false; }
 
-    virtual bool canProcessDrag() const { return false; }
+  virtual bool CanProcessDrag() const { return false; }
 
-    virtual void updateAllLifecyclePhases() = 0;
-    virtual void paint(WebCanvas*, const WebRect&) = 0;
+  virtual void UpdateAllLifecyclePhases() = 0;
+  virtual void Paint(WebCanvas*, const WebRect&) = 0;
 
-    // Coordinates are relative to the containing window.
-    virtual void updateGeometry(
-        const WebRect& windowRect, const WebRect& clipRect,
-        const WebRect& unobscuredRect, const WebVector<WebRect>& cutOutsRects,
-        bool isVisible) = 0;
+  // Coordinates are relative to the containing window.
+  virtual void UpdateGeometry(const WebRect& window_rect,
+                              const WebRect& clip_rect,
+                              const WebRect& unobscured_rect,
+                              const WebVector<WebRect>& cut_outs_rects,
+                              bool is_visible) = 0;
 
-    virtual void updateFocus(bool focused, WebFocusType) = 0;
+  virtual void UpdateFocus(bool focused, WebFocusType) = 0;
 
-    virtual void updateVisibility(bool) = 0;
+  virtual void UpdateVisibility(bool) = 0;
 
-    virtual WebInputEventResult handleInputEvent(const WebInputEvent&, WebCursorInfo&) = 0;
+  virtual WebInputEventResult HandleInputEvent(const WebInputEvent&,
+                                               WebCursorInfo&) = 0;
 
-    virtual bool handleDragStatusUpdate(WebDragStatus, const WebDragData&, WebDragOperationsMask, const WebPoint& position, const WebPoint& screenPosition) { return false; }
+  virtual bool HandleDragStatusUpdate(WebDragStatus,
+                                      const WebDragData&,
+                                      WebDragOperationsMask,
+                                      const WebPoint& position,
+                                      const WebPoint& screen_position) {
+    return false;
+  }
 
-    virtual void didReceiveResponse(const WebURLResponse&) = 0;
-    virtual void didReceiveData(const char* data, int dataLength) = 0;
-    virtual void didFinishLoading() = 0;
-    virtual void didFailLoading(const WebURLError&) = 0;
+  virtual void DidReceiveResponse(const WebURLResponse&) = 0;
+  virtual void DidReceiveData(const char* data, int data_length) = 0;
+  virtual void DidFinishLoading() = 0;
+  virtual void DidFailLoading(const WebURLError&) = 0;
 
-    // Printing interface.
-    // Whether the plugin supports its own paginated print. The other print
-    // interface methods are called only if this method returns true.
-    virtual bool supportsPaginatedPrint() { return false; }
-    // Returns true if the printed content should not be scaled to
-    // the printer's printable area.
-    virtual bool isPrintScalingDisabled() { return false; }
-    // Returns true on success and sets the out parameter to the print preset options for the document.
-    virtual bool getPrintPresetOptionsFromDocument(WebPrintPresetOptions*) { return false; }
+  // Printing interface.
+  // Whether the plugin supports its own paginated print. The other print
+  // interface methods are called only if this method returns true.
+  virtual bool SupportsPaginatedPrint() { return false; }
+  // Returns true if the printed content should not be scaled to
+  // the printer's printable area.
+  virtual bool IsPrintScalingDisabled() { return false; }
+  // Returns true on success and sets the out parameter to the print preset
+  // options for the document.
+  virtual bool GetPrintPresetOptionsFromDocument(WebPrintPresetOptions*) {
+    return false;
+  }
 
-    // Sets up printing with the specified printParams. Returns the number of
-    // pages to be printed at these settings.
-    virtual int printBegin(const WebPrintParams& printParams) { return 0; }
+  // Sets up printing with the specified printParams. Returns the number of
+  // pages to be printed at these settings.
+  virtual int PrintBegin(const WebPrintParams& print_params) { return 0; }
 
-    virtual void printPage(int pageNumber, WebCanvas* canvas) { }
+  virtual void PrintPage(int page_number, WebCanvas* canvas) {}
 
-    // Ends the print operation.
-    virtual void printEnd() { }
+  // Ends the print operation.
+  virtual void PrintEnd() {}
 
-    virtual bool hasSelection() const { return false; }
-    virtual WebString selectionAsText() const { return WebString(); }
-    virtual WebString selectionAsMarkup() const { return WebString(); }
+  virtual bool HasSelection() const { return false; }
+  virtual WebString SelectionAsText() const { return WebString(); }
+  virtual WebString SelectionAsMarkup() const { return WebString(); }
 
-    virtual bool executeEditCommand(const WebString& name) { return false; }
-    virtual bool executeEditCommand(const WebString& name, const WebString& value) { return false; }
+  virtual bool ExecuteEditCommand(const WebString& name) { return false; }
+  virtual bool ExecuteEditCommand(const WebString& name,
+                                  const WebString& value) {
+    return false;
+  }
 
-    // Sets composition text from input method, and returns true if the
-    // composition is set successfully.
-    virtual bool setComposition(const WebString& text, const WebVector<WebCompositionUnderline>& underlines, int selectionStart, int selectionEnd) { return false; }
-    // Confirms an ongoing composition and returns true if there is an ongoing
-    // composition or the text is inserted.
-    virtual bool confirmComposition(const WebString& text, WebWidget::ConfirmCompositionBehavior selectionBehavior) { return false; }
-    // Deletes the current selection plus the specified number of characters
-    // before and after the selection or caret.
-    virtual void extendSelectionAndDelete(int before, int after) { }
-    // If the given position is over a link, returns the absolute url.
-    // Otherwise an empty url is returned.
-    virtual WebURL linkAtPosition(const WebPoint& position) const { return WebURL(); }
+  // Sets composition text from input method, and returns true if the
+  // composition is set successfully. If |replacementRange| is not null, the
+  // text inside |replacementRange| will be replaced by |text|
+  virtual bool SetComposition(
+      const WebString& text,
+      const WebVector<WebCompositionUnderline>& underlines,
+      const WebRange& replacement_range,
+      int selection_start,
+      int selection_end) {
+    return false;
+  }
 
-    // Find interface.
-    // Start a new search.  The plugin should search for a little bit at a time so that it
-    // doesn't block the thread in case of a large document.  The results, along with the
-    // find's identifier, should be sent asynchronously to WebFrameClient's reportFindInPage* methods.
-    // Returns true if the search started, or false if the plugin doesn't support search.
-    virtual bool startFind(const WebString& searchText, bool caseSensitive, int identifier) { return false; }
-    // Tells the plugin to jump forward or backward in the list of find results.
-    virtual void selectFindResult(bool forward, int identifier) { }
-    // Tells the plugin that the user has stopped the find operation.
-    virtual void stopFind() { }
+  // Deletes the ongoing composition if any, inserts the specified text, and
+  // moves the caret according to relativeCaretPosition. If |replacementRange|
+  // is not null, the text inside |replacementRange| will be replaced by |text|.
+  virtual bool CommitText(const WebString& text,
+                          const WebVector<WebCompositionUnderline>& underlines,
+                          const WebRange& replacement_range,
+                          int relative_caret_position) {
+    return false;
+  }
 
-    // View rotation types.
-    enum RotationType {
-        RotationType90Clockwise,
-        RotationType90Counterclockwise
-    };
-    // Whether the plugin can rotate the view of its content.
-    virtual bool canRotateView() { return false; }
-    // Rotates the plugin's view of its content.
-    virtual void rotateView(RotationType type) { }
+  // Confirms an ongoing composition; holds or moves selections accroding to
+  // selectionBehavior.
+  virtual bool FinishComposingText(
+      WebInputMethodController::ConfirmCompositionBehavior selection_behavior) {
+    return false;
+  }
 
-    virtual bool isPlaceholder() { return true; }
+  // Deletes the current selection plus the specified number of characters
+  // before and after the selection or caret.
+  virtual void ExtendSelectionAndDelete(int before, int after) {}
+  // Deletes text before and after the current cursor position, excluding the
+  // selection. The lengths are supplied in UTF-16 Code Unit, not in code points
+  // or in glyphs.
+  virtual void DeleteSurroundingText(int before, int after) {}
+  // Deletes text before and after the current cursor position, excluding the
+  // selection. The lengths are supplied in code points, not in UTF-16 Code Unit
+  // or in glyphs. Do nothing if there are one or more invalid surrogate pairs
+  // in the requested range.
+  virtual void DeleteSurroundingTextInCodePoints(int before, int after) {}
+  // If the given position is over a link, returns the absolute url.
+  // Otherwise an empty url is returned.
+  virtual WebURL LinkAtPosition(const WebPoint& position) const {
+    return WebURL();
+  }
 
-protected:
-    ~WebPlugin() { }
+  // Find interface.
+  // Start a new search.  The plugin should search for a little bit at a time so
+  // that it doesn't block the thread in case of a large document.  The results,
+  // along with the find's identifier, should be sent asynchronously to
+  // WebFrameClient's reportFindInPage* methods.
+  // Returns true if the search started, or false if the plugin doesn't support
+  // search.
+  virtual bool StartFind(const WebString& search_text,
+                         bool case_sensitive,
+                         int identifier) {
+    return false;
+  }
+  // Tells the plugin to jump forward or backward in the list of find results.
+  virtual void SelectFindResult(bool forward, int identifier) {}
+  // Tells the plugin that the user has stopped the find operation.
+  virtual void StopFind() {}
+
+  // View rotation types.
+  enum RotationType {
+    kRotationType90Clockwise,
+    kRotationType90Counterclockwise
+  };
+  // Whether the plugin can rotate the view of its content.
+  virtual bool CanRotateView() { return false; }
+  // Rotates the plugin's view of its content.
+  virtual void RotateView(RotationType type) {}
+
+  virtual bool IsPlaceholder() { return true; }
+
+ protected:
+  ~WebPlugin() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

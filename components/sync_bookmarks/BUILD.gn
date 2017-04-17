@@ -19,9 +19,8 @@ static_library("sync_bookmarks") {
     "//components/bookmarks/browser",
     "//components/favicon/core",
     "//components/history/core/browser",
-    "//components/sync_driver",
+    "//components/sync",
     "//components/undo",
-    "//sync",
     "//ui/gfx",
   ]
 }
@@ -40,9 +39,9 @@ source_set("unit_tests") {
     "//components/bookmarks/test",
     "//components/history/core/browser",
     "//components/prefs:test_support",
-    "//components/sync_driver",
-    "//components/sync_driver:test_support",
-    "//sync",
+    "//components/sync",
+    "//components/sync:test_support_driver",
+    "//components/sync:test_support_model",
     "//testing/gmock",
     "//testing/gtest",
   ]

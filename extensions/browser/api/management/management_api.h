@@ -16,6 +16,7 @@
 #include "extensions/browser/extension_event_histogram_value.h"
 #include "extensions/browser/extension_function.h"
 #include "extensions/browser/extension_registry_observer.h"
+#include "extensions/browser/preload_check.h"
 
 struct WebApplicationInfo;
 
@@ -23,17 +24,7 @@ namespace extensions {
 class ExtensionRegistry;
 class RequirementsChecker;
 
-class ManagementFunction : public SyncExtensionFunction {
- protected:
-  ~ManagementFunction() override {}
-};
-
-class AsyncManagementFunction : public AsyncExtensionFunction {
- protected:
-  ~AsyncManagementFunction() override {}
-};
-
-class ManagementGetAllFunction : public ManagementFunction {
+class ManagementGetAllFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.getAll", MANAGEMENT_GETALL)
 
@@ -41,10 +32,10 @@ class ManagementGetAllFunction : public ManagementFunction {
   ~ManagementGetAllFunction() override {}
 
   // ExtensionFunction:
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
-class ManagementGetFunction : public ManagementFunction {
+class ManagementGetFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.get", MANAGEMENT_GET)
 
@@ -52,10 +43,10 @@ class ManagementGetFunction : public ManagementFunction {
   ~ManagementGetFunction() override {}
 
   // ExtensionFunction:
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
-class ManagementGetSelfFunction : public ManagementFunction {
+class ManagementGetSelfFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.getSelf", MANAGEMENT_GETSELF)
 
@@ -63,10 +54,11 @@ class ManagementGetSelfFunction : public ManagementFunction {
   ~ManagementGetSelfFunction() override {}
 
   // ExtensionFunction:
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
-class ManagementGetPermissionWarningsByIdFunction : public ManagementFunction {
+class ManagementGetPermissionWarningsByIdFunction
+    : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.getPermissionWarningsById",
                              MANAGEMENT_GETPERMISSIONWARNINGSBYID)
@@ -75,11 +67,11 @@ class ManagementGetPermissionWarningsByIdFunction : public ManagementFunction {
   ~ManagementGetPermissionWarningsByIdFunction() override {}
 
   // ExtensionFunction:
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
 class ManagementGetPermissionWarningsByManifestFunction
-    : public AsyncExtensionFunction {
+    : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.getPermissionWarningsByManifest",
                              MANAGEMENT_GETPERMISSIONWARNINGSBYMANIFEST);
@@ -92,10 +84,10 @@ class ManagementGetPermissionWarningsByManifestFunction
   ~ManagementGetPermissionWarningsByManifestFunction() override {}
 
   // ExtensionFunction:
-  bool RunAsync() override;
+  ResponseAction Run() override;
 };
 
-class ManagementLaunchAppFunction : public ManagementFunction {
+class ManagementLaunchAppFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.launchApp", MANAGEMENT_LAUNCHAPP)
 
@@ -103,7 +95,7 @@ class ManagementLaunchAppFunction : public ManagementFunction {
   ~ManagementLaunchAppFunction() override {}
 
   // ExtensionFunction:
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
 class ManagementSetEnabledFunction : public UIThreadExtensionFunction {
@@ -121,7 +113,7 @@ class ManagementSetEnabledFunction : public UIThreadExtensionFunction {
  private:
   void OnInstallPromptDone(bool did_accept);
 
-  void OnRequirementsChecked(const std::vector<std::string>& requirements);
+  void OnRequirementsChecked(PreloadCheck::Errors errors);
 
   std::string extension_id_;
 
@@ -175,7 +167,7 @@ class ManagementUninstallSelfFunction : public ManagementUninstallFunctionBase {
   ResponseAction Run() override;
 };
 
-class ManagementCreateAppShortcutFunction : public AsyncManagementFunction {
+class ManagementCreateAppShortcutFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.createAppShortcut",
                              MANAGEMENT_CREATEAPPSHORTCUT);
@@ -189,10 +181,10 @@ class ManagementCreateAppShortcutFunction : public AsyncManagementFunction {
  protected:
   ~ManagementCreateAppShortcutFunction() override;
 
-  bool RunAsync() override;
+  ResponseAction Run() override;
 };
 
-class ManagementSetLaunchTypeFunction : public ManagementFunction {
+class ManagementSetLaunchTypeFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.setLaunchType",
                              MANAGEMENT_SETLAUNCHTYPE);
@@ -200,10 +192,10 @@ class ManagementSetLaunchTypeFunction : public ManagementFunction {
  protected:
   ~ManagementSetLaunchTypeFunction() override {}
 
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
-class ManagementGenerateAppForLinkFunction : public AsyncManagementFunction {
+class ManagementGenerateAppForLinkFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("management.generateAppForLink",
                              MANAGEMENT_GENERATEAPPFORLINK);
@@ -216,7 +208,7 @@ class ManagementGenerateAppForLinkFunction : public AsyncManagementFunction {
  protected:
   ~ManagementGenerateAppForLinkFunction() override;
 
-  bool RunAsync() override;
+  ResponseAction Run() override;
 
  private:
   std::unique_ptr<AppForLinkDelegate> app_for_link_delegate_;

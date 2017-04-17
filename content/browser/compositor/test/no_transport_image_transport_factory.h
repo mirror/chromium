@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "cc/surfaces/surface_manager.h"
 #include "content/browser/compositor/image_transport_factory.h"
 
 namespace cc {
@@ -29,8 +30,11 @@ class NoTransportImageTransportFactory : public ImageTransportFactory {
 
   // ImageTransportFactory implementation.
   ui::ContextFactory* GetContextFactory() override;
-  cc::SurfaceManager* GetSurfaceManager() override;
+  ui::ContextFactoryPrivate* GetContextFactoryPrivate() override;
   display_compositor::GLHelper* GetGLHelper() override;
+  FrameSinkManagerHost* GetFrameSinkManagerHost() override;
+  void SetGpuChannelEstablishFactory(
+      gpu::GpuChannelEstablishFactory* factory) override;
 #if defined(OS_MACOSX)
   void SetCompositorSuspendedForRecycle(ui::Compositor* compositor,
                                         bool suspended) override {}

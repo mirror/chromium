@@ -31,73 +31,93 @@
 #include "core/dom/SandboxFlags.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/Suborigin.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/StringHash.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebAddressSpace.h"
+#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebURLRequest.h"
-#include "wtf/HashSet.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/StringHash.h"
-#include "wtf/text/WTFString.h"
+
+#include <memory>
 
 namespace blink {
 
 class SecurityOrigin;
 class ContentSecurityPolicy;
-class KURL;
 
 class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
-    WTF_MAKE_NONCOPYABLE(SecurityContext);
-public:
-    DECLARE_VIRTUAL_TRACE();
+  WTF_MAKE_NONCOPYABLE(SecurityContext);
 
-    using InsecureNavigationsSet = HashSet<unsigned, WTF::AlreadyHashed>;
+ public:
+  DECLARE_VIRTUAL_TRACE();
 
-    SecurityOrigin* getSecurityOrigin() const { return m_securityOrigin.get(); }
-    ContentSecurityPolicy* contentSecurityPolicy() const { return m_contentSecurityPolicy.get(); }
+  using InsecureNavigationsSet = HashSet<unsigned, WTF::AlreadyHashed>;
 
-    // Explicitly override the security origin for this security context.
-    // Note: It is dangerous to change the security origin of a script context
-    //       that already contains content.
-    void setSecurityOrigin(PassRefPtr<SecurityOrigin>);
-    virtual void didUpdateSecurityOrigin() = 0;
+  SecurityOrigin* GetSecurityOrigin() const { return security_origin_.Get(); }
+  ContentSecurityPolicy* GetContentSecurityPolicy() const {
+    return content_security_policy_.Get();
+  }
 
-    SandboxFlags getSandboxFlags() const { return m_sandboxFlags; }
-    bool isSandboxed(SandboxFlags mask) const { return m_sandboxFlags & mask; }
-    virtual void enforceSandboxFlags(SandboxFlags mask);
+  // Explicitly override the security origin for this security context.
+  // Note: It is dangerous to change the security origin of a script context
+  //       that already contains content.
+  void SetSecurityOrigin(PassRefPtr<SecurityOrigin>);
+  virtual void DidUpdateSecurityOrigin() = 0;
 
-    void setAddressSpace(WebAddressSpace space) { m_addressSpace = space; }
-    WebAddressSpace addressSpace() const { return m_addressSpace; }
-    String addressSpaceForBindings() const;
+  SandboxFlags GetSandboxFlags() const { return sandbox_flags_; }
+  bool IsSandboxed(SandboxFlags mask) const { return sandbox_flags_ & mask; }
+  virtual void EnforceSandboxFlags(SandboxFlags mask);
 
-    void addInsecureNavigationUpgrade(unsigned hashedHost) { m_insecureNavigationsToUpgrade.add(hashedHost); }
-    InsecureNavigationsSet* insecureNavigationsToUpgrade() { return &m_insecureNavigationsToUpgrade; }
+  void SetAddressSpace(WebAddressSpace space) { address_space_ = space; }
+  WebAddressSpace AddressSpace() const { return address_space_; }
+  String addressSpaceForBindings() const;
 
-    virtual void setInsecureRequestPolicy(WebInsecureRequestPolicy policy) { m_insecureRequestPolicy = policy; }
-    WebInsecureRequestPolicy getInsecureRequestPolicy() const { return m_insecureRequestPolicy; }
+  void AddInsecureNavigationUpgrade(unsigned hashed_host) {
+    insecure_navigations_to_upgrade_.insert(hashed_host);
+  }
+  InsecureNavigationsSet* InsecureNavigationsToUpgrade() {
+    return &insecure_navigations_to_upgrade_;
+  }
 
-    void enforceSuborigin(const Suborigin&);
+  virtual void SetInsecureRequestPolicy(WebInsecureRequestPolicy policy) {
+    insecure_request_policy_ = policy;
+  }
+  WebInsecureRequestPolicy GetInsecureRequestPolicy() const {
+    return insecure_request_policy_;
+  }
 
-protected:
-    SecurityContext();
-    virtual ~SecurityContext();
+  void EnforceSuborigin(const Suborigin&);
 
-    void setContentSecurityPolicy(ContentSecurityPolicy*);
+  WebFeaturePolicy* GetFeaturePolicy() const { return feature_policy_.get(); }
+  void InitializeFeaturePolicy(const WebParsedFeaturePolicy& parsed_header,
+                               const WebParsedFeaturePolicy& container_policy,
+                               const WebFeaturePolicy* parent_feature_policy);
+  void UpdateFeaturePolicyOrigin();
 
-    void applySandboxFlags(SandboxFlags mask);
+ protected:
+  SecurityContext();
+  virtual ~SecurityContext();
 
-private:
-    RefPtr<SecurityOrigin> m_securityOrigin;
-    Member<ContentSecurityPolicy> m_contentSecurityPolicy;
+  void SetContentSecurityPolicy(ContentSecurityPolicy*);
 
-    SandboxFlags m_sandboxFlags;
+  void ApplySandboxFlags(SandboxFlags mask);
 
-    WebAddressSpace m_addressSpace;
-    WebInsecureRequestPolicy m_insecureRequestPolicy;
-    InsecureNavigationsSet m_insecureNavigationsToUpgrade;
+ private:
+  RefPtr<SecurityOrigin> security_origin_;
+  Member<ContentSecurityPolicy> content_security_policy_;
+  std::unique_ptr<WebFeaturePolicy> feature_policy_;
+
+  SandboxFlags sandbox_flags_;
+
+  WebAddressSpace address_space_;
+  WebInsecureRequestPolicy insecure_request_policy_;
+  InsecureNavigationsSet insecure_navigations_to_upgrade_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SecurityContext_h
+#endif  // SecurityContext_h

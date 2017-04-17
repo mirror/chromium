@@ -27,22 +27,17 @@
 
 namespace blink {
 
-PlatformSpeechSynthesisUtterance* PlatformSpeechSynthesisUtterance::create(PlatformSpeechSynthesisUtteranceClient* client)
-{
-    return new PlatformSpeechSynthesisUtterance(client);
+PlatformSpeechSynthesisUtterance* PlatformSpeechSynthesisUtterance::Create(
+    PlatformSpeechSynthesisUtteranceClient* client) {
+  return new PlatformSpeechSynthesisUtterance(client);
 }
 
-PlatformSpeechSynthesisUtterance::PlatformSpeechSynthesisUtterance(PlatformSpeechSynthesisUtteranceClient* client)
-    : m_client(client)
-    , m_volume(1.0f)
-    , m_rate(1.0f)
-    , m_pitch(1.0f)
-{
+PlatformSpeechSynthesisUtterance::PlatformSpeechSynthesisUtterance(
+    PlatformSpeechSynthesisUtteranceClient* client)
+    : client_(client), volume_(1.0f), rate_(1.0f), pitch_(1.0f) {}
+
+DEFINE_TRACE(PlatformSpeechSynthesisUtterance) {
+  visitor->Trace(client_);
 }
 
-DEFINE_TRACE(PlatformSpeechSynthesisUtterance)
-{
-    visitor->trace(m_client);
-}
-
-} // namespace blink
+}  // namespace blink

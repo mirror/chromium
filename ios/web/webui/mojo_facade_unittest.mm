@@ -6,18 +6,17 @@
 
 #include <memory>
 
-#include "base/message_loop/message_loop.h"
 #import "base/mac/scoped_nsobject.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
-#include "base/test/ios/wait_util.h"
+#import "base/test/ios/wait_util.h"
 #include "ios/web/public/test/web_test.h"
 #import "ios/web/public/web_state/js/crw_js_injection_evaluator.h"
 #include "ios/web/test/mojo_test.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "services/shell/public/cpp/identity.h"
-#include "services/shell/public/cpp/interface_factory.h"
-#include "services/shell/public/cpp/interface_registry.h"
+#include "services/service_manager/public/cpp/identity.h"
+#include "services/service_manager/public/cpp/interface_factory.h"
+#include "services/service_manager/public/cpp/interface_registry.h"
 #import "testing/gtest_mac.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 
@@ -45,13 +44,14 @@ id GetObject(const std::string& json) {
 }
 
 // Test mojo handler factory.
-class TestUIHandlerFactory : public shell::InterfaceFactory<TestUIHandlerMojo> {
+class TestUIHandlerFactory
+    : public service_manager::InterfaceFactory<TestUIHandlerMojo> {
  public:
   ~TestUIHandlerFactory() override {}
 
  private:
-  // shell::InterfaceFactory overrides.
-  void Create(const shell::Identity& remote_identity,
+  // service_manager::InterfaceFactory overrides.
+  void Create(const service_manager::Identity& remote_identity,
               mojo::InterfaceRequest<TestUIHandlerMojo> request) override {}
 };
 
@@ -61,7 +61,8 @@ class TestUIHandlerFactory : public shell::InterfaceFactory<TestUIHandlerMojo> {
 class MojoFacadeTest : public WebTest {
  protected:
   MojoFacadeTest() {
-    interface_registry_.reset(new shell::InterfaceRegistry(nullptr));
+    interface_registry_.reset(
+        new service_manager::InterfaceRegistry(std::string()));
     interface_registry_->AddInterface(&ui_handler_factory_);
     evaluator_.reset([[OCMockObject
         mockForProtocol:@protocol(CRWJSInjectionEvaluator)] retain]);
@@ -75,18 +76,18 @@ class MojoFacadeTest : public WebTest {
 
  private:
   TestUIHandlerFactory ui_handler_factory_;
-  std::unique_ptr<shell::InterfaceRegistry> interface_registry_;
+  std::unique_ptr<service_manager::InterfaceRegistry> interface_registry_;
   base::scoped_nsobject<OCMockObject> evaluator_;
   std::unique_ptr<MojoFacade> facade_;
 };
 
-// Tests connecting to existing service and closing the handle.
-TEST_F(MojoFacadeTest, ConnectToServiceAndCloseHandle) {
-  // Connect to the service.
+// Tests connecting to existing interface and closing the handle.
+TEST_F(MojoFacadeTest, GetInterfaceAndCloseHandle) {
+  // Bind to the interface.
   NSDictionary* connect = @{
-    @"name" : @"service_provider.connectToService",
+    @"name" : @"interface_provider.getInterface",
     @"args" : @{
-      @"serviceName" : @"::TestUIHandlerMojo",
+      @"interfaceName" : @"::TestUIHandlerMojo",
     },
   };
 
@@ -198,6 +199,18 @@ TEST_F(MojoFacadeTest, Watch) {
                                  callback_id, MOJO_RESULT_OK];
   [[[evaluator() expect] andDo:^(NSInvocation*) {
     callback_received = true;
+
+    // Cancel the watch immediately to ensure there are no additional
+    // notifications.
+    NSDictionary* cancel_watch = @{
+      @"name" : @"support.cancelWatch",
+      @"args" : @{
+        @"watchId" : @(watch_id),
+      },
+    };
+    std::string result_as_string =
+        facade()->HandleMojoMessage(GetJson(cancel_watch));
+    EXPECT_TRUE(result_as_string.empty());
   }] executeJavaScript:expected_script completionHandler:nil];
 
   // Write to the other end of the pipe.
@@ -216,9 +229,11 @@ TEST_F(MojoFacadeTest, Watch) {
   EXPECT_TRUE(base::StringToInt(result_as_string, &result));
   EXPECT_EQ(MOJO_RESULT_OK, static_cast<MojoResult>(result));
 
-  base::test::ios::WaitUntilCondition(^{
-    return callback_received;
-  }, base::MessageLoop::current(), base::TimeDelta());
+  base::test::ios::WaitUntilCondition(
+      ^{
+        return callback_received;
+      },
+      true, base::TimeDelta());
 }
 
 // Tests reading the message from the pipe.

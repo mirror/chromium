@@ -4,13 +4,14 @@
 
 #include "chrome/browser/permissions/permission_queue_controller.h"
 
+#include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
-#include "chrome/browser/geolocation/geolocation_infobar_delegate_android.h"
 #include "chrome/browser/infobars/infobar_service.h"
-#include "chrome/browser/media/midi_permission_infobar_delegate_android.h"
-#include "chrome/browser/media/protected_media_identifier_infobar_delegate_android.h"
-#include "chrome/browser/notifications/notification_permission_infobar_delegate.h"
+#include "chrome/browser/permissions/permission_decision_auto_blocker.h"
+#include "chrome/browser/permissions/permission_dialog_delegate.h"
+#include "chrome/browser/permissions/permission_infobar_delegate.h"
+#include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_request_id.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -27,10 +28,15 @@
 
 namespace {
 
-InfoBarService* GetInfoBarService(const PermissionRequestID& id) {
-  content::WebContents* web_contents = tab_util::GetWebContentsByFrameID(
+content::WebContents* GetWebContents(const PermissionRequestID& id) {
+  return tab_util::GetWebContentsByFrameID(
       id.render_process_id(), id.render_frame_id());
-  return web_contents ? InfoBarService::FromWebContents(web_contents) : NULL;
+}
+
+
+InfoBarService* GetInfoBarService(const PermissionRequestID& id) {
+  content::WebContents* web_contents = GetWebContents(id);
+  return web_contents ? InfoBarService::FromWebContents(web_contents) : nullptr;
 }
 
 bool ArePermissionRequestsForSameTab(
@@ -48,10 +54,11 @@ bool ArePermissionRequestsForSameTab(
 
 class PermissionQueueController::PendingInfobarRequest {
  public:
-  PendingInfobarRequest(content::PermissionType type,
+  PendingInfobarRequest(ContentSettingsType type,
                         const PermissionRequestID& id,
                         const GURL& requesting_frame,
                         const GURL& embedder,
+                        bool user_gesture,
                         Profile* profile,
                         const PermissionDecidedCallback& callback);
   ~PendingInfobarRequest();
@@ -59,40 +66,55 @@ class PermissionQueueController::PendingInfobarRequest {
   bool IsForPair(const GURL& requesting_frame,
                  const GURL& embedder) const;
 
+  PermissionRequestType request_type() const {
+    return PermissionUtil::GetRequestType(type_);
+  }
+
+  PermissionRequestGestureType gesture_type() const {
+    return PermissionUtil::GetGestureType(user_gesture_);
+  }
+
   const PermissionRequestID& id() const { return id_; }
   const GURL& requesting_frame() const { return requesting_frame_; }
+  bool has_gesture() const { return user_gesture_; }
   bool has_infobar() const { return !!infobar_; }
+  bool has_dialog() const { return has_dialog_; }
   infobars::InfoBar* infobar() { return infobar_; }
 
   void RunCallback(ContentSetting content_setting);
-  void CreateInfoBar(PermissionQueueController* controller);
+  void CreatePrompt(PermissionQueueController* controller, bool show_dialog);
 
  private:
-  content::PermissionType type_;
+  ContentSettingsType type_;
   PermissionRequestID id_;
   GURL requesting_frame_;
   GURL embedder_;
+  bool user_gesture_;
   Profile* profile_;
   PermissionDecidedCallback callback_;
   infobars::InfoBar* infobar_;
+  bool has_dialog_;
 
   // Purposefully do not disable copying, as this is stored in STL containers.
 };
 
 PermissionQueueController::PendingInfobarRequest::PendingInfobarRequest(
-    content::PermissionType type,
+    ContentSettingsType type,
     const PermissionRequestID& id,
     const GURL& requesting_frame,
     const GURL& embedder,
+    bool user_gesture,
     Profile* profile,
     const PermissionDecidedCallback& callback)
     : type_(type),
       id_(id),
       requesting_frame_(requesting_frame),
       embedder_(embedder),
+      user_gesture_(user_gesture),
       profile_(profile),
       callback_(callback),
-      infobar_(NULL) {}
+      infobar_(nullptr),
+      has_dialog_(false) {}
 
 PermissionQueueController::PendingInfobarRequest::~PendingInfobarRequest() {
 }
@@ -108,49 +130,38 @@ void PermissionQueueController::PendingInfobarRequest::RunCallback(
   callback_.Run(content_setting);
 }
 
-void PermissionQueueController::PendingInfobarRequest::CreateInfoBar(
-    PermissionQueueController* controller) {
+void PermissionQueueController::PendingInfobarRequest::CreatePrompt(
+    PermissionQueueController* controller,
+    bool show_dialog) {
   // Controller can be Unretained because the lifetime of the infobar
   // is tied to that of the queue controller. Before QueueController
   // is destroyed, all requests will be cancelled and so all delegates
   // will be destroyed.
-  PermissionInfobarDelegate::PermissionSetCallback callback =
-      base::Bind(&PermissionQueueController::OnPermissionSet,
-                 base::Unretained(controller),
-                 id_,
-                 requesting_frame_,
-                 embedder_);
-  switch (type_) {
-    case content::PermissionType::GEOLOCATION:
-      infobar_ = GeolocationInfoBarDelegateAndroid::Create(
-          GetInfoBarService(id_), requesting_frame_, profile_, callback);
-      break;
-#if defined(ENABLE_NOTIFICATIONS)
-    case content::PermissionType::NOTIFICATIONS:
-      infobar_ = NotificationPermissionInfobarDelegate::Create(
-          GetInfoBarService(id_), requesting_frame_, profile_, callback);
-      break;
-#endif  // ENABLE_NOTIFICATIONS
-    case content::PermissionType::MIDI_SYSEX:
-      infobar_ = MidiPermissionInfoBarDelegateAndroid::Create(
-          GetInfoBarService(id_), requesting_frame_, profile_, callback);
-      break;
-    case content::PermissionType::PROTECTED_MEDIA_IDENTIFIER:
-      infobar_ = ProtectedMediaIdentifierInfoBarDelegateAndroid::Create(
-          GetInfoBarService(id_), requesting_frame_, profile_, callback);
-      break;
-    default:
-      NOTREACHED();
-      break;
+  PermissionInfoBarDelegate::PermissionSetCallback callback = base::Bind(
+      &PermissionQueueController::OnPermissionSet, base::Unretained(controller),
+      id_, requesting_frame_, embedder_, user_gesture_);
+
+  if (show_dialog) {
+    // We should show a dialog prompt instead of an infobar. Since only one
+    // dialog can be shown at a time, the Java-side owns and manages the queue
+    // of prompts; the bookkeeping in this class will work as expected:
+    //   i. no pending request will ever have an infobar created for it.
+    //  ii. OnPermissionSet is still called when the user makes a decision.
+    has_dialog_ = true;
+    PermissionDialogDelegate::Create(GetWebContents(id_), type_,
+                                     requesting_frame_, user_gesture_, profile_,
+                                     callback);
+  } else {
+    infobar_ = PermissionInfoBarDelegate::Create(
+        GetInfoBarService(id_), type_, requesting_frame_, user_gesture_,
+        profile_, callback);
   }
 }
 
 PermissionQueueController::PermissionQueueController(
     Profile* profile,
-    content::PermissionType permission_type,
     ContentSettingsType content_settings_type)
     : profile_(profile),
-      permission_type_(permission_type),
       content_settings_type_(content_settings_type),
       in_shutdown_(false) {}
 
@@ -165,6 +176,7 @@ void PermissionQueueController::CreateInfoBarRequest(
     const PermissionRequestID& id,
     const GURL& requesting_frame,
     const GURL& embedder,
+    bool user_gesture,
     const PermissionDecidedCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -172,8 +184,9 @@ void PermissionQueueController::CreateInfoBarRequest(
       embedder.SchemeIs(content::kChromeUIScheme))
     return;
 
-  pending_infobar_requests_.push_back(PendingInfobarRequest(
-      permission_type_, id, requesting_frame, embedder, profile_, callback));
+  pending_infobar_requests_.push_back(
+      PendingInfobarRequest(content_settings_type_, id, requesting_frame,
+                            embedder, user_gesture, profile_, callback));
   if (!AlreadyShowingInfoBarForTab(id))
     ShowQueuedInfoBarForTab(id);
 }
@@ -196,28 +209,52 @@ void PermissionQueueController::CancelInfoBarRequest(
   }
 }
 
-void PermissionQueueController::OnPermissionSet(
-    const PermissionRequestID& id,
-    const GURL& requesting_frame,
-    const GURL& embedder,
-    bool update_content_setting,
-    bool allowed) {
+void PermissionQueueController::OnPermissionSet(const PermissionRequestID& id,
+                                                const GURL& requesting_frame,
+                                                const GURL& embedder,
+                                                bool user_gesture,
+                                                bool update_content_setting,
+                                                PermissionAction decision) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  PermissionRequestType request_type =
+      PermissionUtil::GetRequestType(content_settings_type_);
+  PermissionRequestGestureType gesture_type =
+      PermissionUtil::GetGestureType(user_gesture);
+  PermissionEmbargoStatus embargo_status =
+      PermissionEmbargoStatus::NOT_EMBARGOED;
+
+  switch (decision) {
+    case PermissionAction::GRANTED:
+      PermissionUmaUtil::PermissionGranted(content_settings_type_, gesture_type,
+                                           requesting_frame, profile_);
+      PermissionUmaUtil::RecordPermissionPromptAccepted(request_type,
+                                                        gesture_type);
+      break;
+    case PermissionAction::DENIED:
+      PermissionUmaUtil::PermissionDenied(content_settings_type_, gesture_type,
+                                          requesting_frame, profile_);
+      PermissionUmaUtil::RecordPermissionPromptDenied(request_type,
+                                                      gesture_type);
+      break;
+    case PermissionAction::DISMISSED:
+      PermissionUmaUtil::PermissionDismissed(
+          content_settings_type_, gesture_type, requesting_frame, profile_);
+      if (PermissionDecisionAutoBlocker::GetForProfile(profile_)
+              ->RecordDismissAndEmbargo(requesting_frame,
+                                        content_settings_type_)) {
+        embargo_status = PermissionEmbargoStatus::REPEATED_DISMISSALS;
+      }
+      break;
+    default:
+      NOTREACHED();
+  }
+  PermissionUmaUtil::RecordEmbargoStatus(embargo_status);
 
   // TODO(miguelg): move the permission persistence to
   // PermissionContextBase once all the types are moved there.
-  if (update_content_setting) {
-    UpdateContentSetting(requesting_frame, embedder, allowed);
-    if (allowed)
-      PermissionUmaUtil::PermissionGranted(permission_type_, requesting_frame,
-                                           profile_);
-    else
-      PermissionUmaUtil::PermissionDenied(permission_type_, requesting_frame,
-                                          profile_);
-  } else {
-    PermissionUmaUtil::PermissionDismissed(permission_type_, requesting_frame,
-                                           profile_);
-  }
+  if (update_content_setting)
+    UpdateContentSetting(requesting_frame, embedder, decision);
 
   // Cancel this request first, then notify listeners.  TODO(pkasting): Why
   // is this order important?
@@ -255,18 +292,22 @@ void PermissionQueueController::OnPermissionSet(
 
   // PermissionContextBase needs to know about the new ContentSetting value,
   // CONTENT_SETTING_DEFAULT being the value for nothing happened. The callers
-  // of ::OnPermissionSet passes { true, true } for allow, { true, false } for
-  // block and { false, * } for dismissed. The tuple being
-  // { update_content_setting, allowed }.
+  // of ::OnPermissionSet passes { bool, GRANTED } for allow, { bool, DENIED }
+  // for block and { false, DISMISSED } for dismissed. The tuple being
+  // { update_content_setting, decision }.
   ContentSetting content_setting = CONTENT_SETTING_DEFAULT;
-  if (update_content_setting) {
-    content_setting = allowed ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK;
-  }
+  if (decision == PermissionAction::GRANTED)
+    content_setting = CONTENT_SETTING_ALLOW;
+  else if (decision == PermissionAction::DENIED)
+    content_setting = CONTENT_SETTING_BLOCK;
+  else
+    DCHECK_EQ(PermissionAction::DISMISSED, decision);
 
   // Send out the permission notifications.
   for (PendingInfobarRequests::iterator i = requests_to_notify.begin();
-       i != requests_to_notify.end(); ++i)
+       i != requests_to_notify.end(); ++i) {
     i->RunCallback(content_setting);
+  }
 
   // Remove the pending requests in reverse order.
   for (int i = pending_requests_to_remove.size() - 1; i >= 0; --i)
@@ -305,8 +346,10 @@ bool PermissionQueueController::AlreadyShowingInfoBarForTab(
   for (PendingInfobarRequests::const_iterator i(
            pending_infobar_requests_.begin());
        i != pending_infobar_requests_.end(); ++i) {
-    if (ArePermissionRequestsForSameTab(i->id(), id) && i->has_infobar())
+    if (ArePermissionRequestsForSameTab(i->id(), id) &&
+        (i->has_infobar() || i->has_dialog())) {
       return true;
+    }
   }
   return false;
 }
@@ -333,8 +376,16 @@ void PermissionQueueController::ShowQueuedInfoBarForTab(
   for (PendingInfobarRequests::iterator i = pending_infobar_requests_.begin();
        i != pending_infobar_requests_.end(); ++i) {
     if (ArePermissionRequestsForSameTab(i->id(), id) && !i->has_infobar()) {
-      RegisterForInfoBarNotifications(infobar_service);
-      i->CreateInfoBar(this);
+      // When using modal permission prompts, Java controls the display queue,
+      // so infobar notifications are not relevant.
+      bool show_dialog =
+          PermissionDialogDelegate::ShouldShowDialog(i->has_gesture());
+      if (!show_dialog)
+        RegisterForInfoBarNotifications(infobar_service);
+
+      PermissionUmaUtil::RecordPermissionPromptShown(i->request_type(),
+                                                     i->gesture_type());
+      i->CreatePrompt(this, show_dialog);
       return;
     }
   }
@@ -380,7 +431,9 @@ void PermissionQueueController::UnregisterForInfoBarNotifications(
 void PermissionQueueController::UpdateContentSetting(
     const GURL& requesting_frame,
     const GURL& embedder,
-    bool allowed) {
+    PermissionAction decision) {
+  DCHECK(decision == PermissionAction::GRANTED ||
+         decision == PermissionAction::DENIED);
   if (requesting_frame.GetOrigin().SchemeIsFile()) {
     // Chrome can be launched with --disable-web-security which allows
     // geolocation requests from file:// URLs. We don't want to store these
@@ -388,11 +441,17 @@ void PermissionQueueController::UpdateContentSetting(
     return;
   }
 
-  ContentSetting content_setting =
-      allowed ? CONTENT_SETTING_ALLOW : CONTENT_SETTING_BLOCK;
+  ContentSetting content_setting = (decision == PermissionAction::GRANTED)
+                                       ? CONTENT_SETTING_ALLOW
+                                       : CONTENT_SETTING_BLOCK;
 
+  // TODO(timloh): Remove this logic when push and notification permissions
+  // are reconciled, see crbug.com/563297.
+  ContentSettingsType type_for_map = content_settings_type_;
+  if (type_for_map == CONTENT_SETTINGS_TYPE_PUSH_MESSAGING)
+    type_for_map = CONTENT_SETTINGS_TYPE_NOTIFICATIONS;
   HostContentSettingsMapFactory::GetForProfile(profile_)
       ->SetContentSettingDefaultScope(
           requesting_frame.GetOrigin(), embedder.GetOrigin(),
-          content_settings_type_, std::string(), content_setting);
+          type_for_map, std::string(), content_setting);
 }

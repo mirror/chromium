@@ -10,9 +10,13 @@
 #include "base/macros.h"
 #include "content/child/blink_platform_impl.h"
 
-namespace content {
+namespace blink {
+namespace scheduler {
+class WebThreadBase;
+}
+}
 
-class WebThreadImplForUtilityThread;
+namespace content {
 
 class UtilityBlinkPlatformImpl : public BlinkPlatformImpl {
  public:
@@ -20,10 +24,10 @@ class UtilityBlinkPlatformImpl : public BlinkPlatformImpl {
   ~UtilityBlinkPlatformImpl() override;
 
   // BlinkPlatformImpl implementation.
-  blink::WebThread* currentThread() override;
+  blink::WebThread* CurrentThread() override;
 
  private:
-  std::unique_ptr<WebThreadImplForUtilityThread> main_thread_;
+  std::unique_ptr<blink::scheduler::WebThreadBase> main_thread_;
 
   DISALLOW_COPY_AND_ASSIGN(UtilityBlinkPlatformImpl);
 };

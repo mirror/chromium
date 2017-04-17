@@ -27,87 +27,113 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "platform/graphics/StrokeData.h"
-#include "third_party/skia/include/effects/SkDashPathEffect.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "platform/graphics/paint/PaintFlags.h"
+#include "platform/wtf/PtrUtil.h"
+#include "third_party/skia/include/effects/SkDashPathEffect.h"
 
 namespace blink {
 
-static const int dashRatio = 3; // Ratio of the length of a dash to its width.
+void StrokeData::SetLineDash(const DashArray& dashes, float dash_offset) {
+  // FIXME: This is lifted directly off SkiaSupport, lines 49-74
+  // so it is not guaranteed to work correctly.
+  size_t dash_length = dashes.size();
+  if (!dash_length) {
+    // If no dash is set, revert to solid stroke
+    // FIXME: do we need to set NoStroke in some cases?
+    style_ = kSolidStroke;
+    dash_.reset();
+    return;
+  }
 
-void StrokeData::setLineDash(const DashArray& dashes, float dashOffset)
-{
-    // FIXME: This is lifted directly off SkiaSupport, lines 49-74
-    // so it is not guaranteed to work correctly.
-    size_t dashLength = dashes.size();
-    if (!dashLength) {
-        // If no dash is set, revert to solid stroke
-        // FIXME: do we need to set NoStroke in some cases?
-        m_style = SolidStroke;
-        m_dash.reset();
-        return;
+  size_t count = !(dash_length % 2) ? dash_length : dash_length * 2;
+  std::unique_ptr<SkScalar[]> intervals = WrapArrayUnique(new SkScalar[count]);
+
+  for (unsigned i = 0; i < count; i++)
+    intervals[i] = dashes[i % dash_length];
+
+  dash_ = SkDashPathEffect::Make(intervals.get(), count, dash_offset);
+}
+
+void StrokeData::SetupPaint(PaintFlags* flags, int length) const {
+  flags->setStyle(PaintFlags::kStroke_Style);
+  flags->setStrokeWidth(SkFloatToScalar(thickness_));
+  flags->setStrokeCap(line_cap_);
+  flags->setStrokeJoin(line_join_);
+  flags->setStrokeMiter(SkFloatToScalar(miter_limit_));
+
+  SetupPaintDashPathEffect(flags, length);
+}
+
+void StrokeData::SetupPaintDashPathEffect(PaintFlags* flags, int length) const {
+  if (dash_) {
+    flags->setPathEffect(dash_);
+  } else if (StrokeIsDashed(thickness_, style_)) {
+    float dash_length = thickness_;
+    float gap_length = dash_length;
+    if (style_ == kDashedStroke) {
+      dash_length *= StrokeData::DashLengthRatio(thickness_);
+      gap_length *= StrokeData::DashGapRatio(thickness_);
     }
-
-    size_t count = !(dashLength % 2) ? dashLength : dashLength * 2;
-    std::unique_ptr<SkScalar[]> intervals = wrapArrayUnique(new SkScalar[count]);
-
-    for (unsigned i = 0; i < count; i++)
-        intervals[i] = dashes[i % dashLength];
-
-    m_dash = SkDashPathEffect::Make(intervals.get(), count, dashOffset);
-}
-
-void StrokeData::setupPaint(SkPaint* paint, int length) const
-{
-    paint->setStyle(SkPaint::kStroke_Style);
-    paint->setStrokeWidth(SkFloatToScalar(m_thickness));
-    paint->setStrokeCap(m_lineCap);
-    paint->setStrokeJoin(m_lineJoin);
-    paint->setStrokeMiter(SkFloatToScalar(m_miterLimit));
-
-    setupPaintDashPathEffect(paint, length);
-}
-
-void StrokeData::setupPaintDashPathEffect(SkPaint* paint, int length) const
-{
-    float width = m_thickness;
-    if (m_dash) {
-        paint->setPathEffect(m_dash);
+    // Account for modification to effective length in
+    // GraphicsContext::adjustLineToPixelBoundaries
+    length -= 2 * thickness_;
+    if (length <= dash_length) {
+      // No space for dashes
+      flags->setPathEffect(0);
+    } else if (length <= 2 * dash_length + gap_length) {
+      // Exactly 2 dashes proportionally sized
+      float multiplier = length / (2 * dash_length + gap_length);
+      SkScalar intervals[2] = {dash_length * multiplier,
+                               gap_length * multiplier};
+      flags->setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
     } else {
-        switch (m_style) {
-        case NoStroke:
-        case SolidStroke:
-        case DoubleStroke:
-        case WavyStroke: // FIXME: https://code.google.com/p/chromium/issues/detail?id=229574
-            paint->setPathEffect(0);
-            return;
-        case DashedStroke:
-            width = dashRatio * width;
-            // Fall through.
-        case DottedStroke:
-            // Truncate the width, since we don't want fuzzy dots or dashes.
-            int dashLength = static_cast<int>(width);
-            // Subtract off the endcaps, since they're rendered separately.
-            int distance = length - 2 * static_cast<int>(m_thickness);
-            int phase = 1;
-            if (dashLength > 1) {
-                // Determine how many dashes or dots we should have.
-                int numDashes = distance / dashLength;
-                int remainder = distance % dashLength;
-                // Adjust the phase to center the dashes within the line.
-                if (numDashes % 2) {
-                    // Odd: shift right a full dash, minus half the remainder.
-                    phase = dashLength - remainder / 2;
-                } else {
-                    // Even: shift right half a dash, minus half the remainder.
-                    phase = (dashLength - remainder) / 2;
-                }
-            }
-            SkScalar dashLengthSk = SkIntToScalar(dashLength);
-            SkScalar intervals[2] = { dashLengthSk, dashLengthSk };
-            paint->setPathEffect(SkDashPathEffect::Make(intervals, 2, SkIntToScalar(phase)));
-        }
+      float gap = gap_length;
+      if (style_ == kDashedStroke)
+        gap = SelectBestDashGap(length, dash_length, gap_length);
+      SkScalar intervals[2] = {dash_length, gap};
+      flags->setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
     }
+  } else if (style_ == kDottedStroke) {
+    flags->setStrokeCap((PaintFlags::Cap)kRoundCap);
+    // Adjust the width to get equal dot spacing as much as possible.
+    float per_dot_length = thickness_ * 2;
+    if (length < per_dot_length) {
+      // Not enoguh space for 2 dots. Just draw 1 by giving a gap that is
+      // bigger than the length.
+      SkScalar intervals[2] = {0, per_dot_length};
+      flags->setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
+      return;
+    }
+
+    static const float kEpsilon = 1.0e-2f;
+    float gap = SelectBestDashGap(length, thickness_, thickness_);
+    SkScalar intervals[2] = {0, gap + thickness_ - kEpsilon};
+    flags->setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
+  } else {
+    // TODO(schenney): WavyStroke https://crbug.com/229574
+    flags->setPathEffect(0);
+  }
 }
 
-} // namespace blink
+bool StrokeData::StrokeIsDashed(float width, StrokeStyle style) {
+  return style == kDashedStroke || (style == kDottedStroke && width <= 3);
+}
+
+float StrokeData::SelectBestDashGap(float stroke_length,
+                                    float dash_length,
+                                    float gap_length) {
+  // Determine what number of dashes gives the minimum deviation from
+  // gapLength between dashes. Set the gap to that width.
+  float min_num_dashes =
+      floorf((stroke_length + gap_length) / (dash_length + gap_length));
+  float max_num_dashes = min_num_dashes + 1;
+  float min_gap =
+      (stroke_length - min_num_dashes * dash_length) / (min_num_dashes - 1);
+  float max_gap =
+      (stroke_length - max_num_dashes * dash_length) / (max_num_dashes - 1);
+  return fabs(min_gap - gap_length) < fabs(max_gap - gap_length) ? min_gap
+                                                                 : max_gap;
+}
+
+}  // namespace blink

@@ -26,253 +26,270 @@
 
 #include "core/dom/MessagePort.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/SerializedScriptValue.h"
 #include "bindings/core/v8/SerializedScriptValueFactory.h"
-#include "core/dom/CrossThreadTask.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/ExecutionContextTask.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
 #include "core/frame/LocalDOMWindow.h"
-#include "core/inspector/ConsoleMessage.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "platform/wtf/Atomics.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebString.h"
-#include "wtf/Functional.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/text/AtomicString.h"
-#include <memory>
 
 namespace blink {
 
-MessagePort* MessagePort::create(ExecutionContext& executionContext)
-{
-    MessagePort* port = new MessagePort(executionContext);
-    port->suspendIfNeeded();
-    return port;
+MessagePort* MessagePort::Create(ExecutionContext& execution_context) {
+  return new MessagePort(execution_context);
 }
 
-MessagePort::MessagePort(ExecutionContext& executionContext)
-    : ActiveScriptWrappable(this)
-    , ActiveDOMObject(&executionContext)
-    , m_started(false)
-    , m_closed(false)
-{
+MessagePort::MessagePort(ExecutionContext& execution_context)
+    : ContextLifecycleObserver(&execution_context),
+      pending_dispatch_task_(0),
+      started_(false),
+      closed_(false) {}
+
+MessagePort::~MessagePort() {
+  DCHECK(!started_ || !IsEntangled());
 }
 
-MessagePort::~MessagePort()
-{
-    DCHECK(!m_started || !isEntangled());
-    if (m_scriptStateForConversion)
-        m_scriptStateForConversion->disposePerContextData();
-}
+void MessagePort::postMessage(ScriptState* script_state,
+                              PassRefPtr<SerializedScriptValue> message,
+                              const MessagePortArray& ports,
+                              ExceptionState& exception_state) {
+  if (!IsEntangled())
+    return;
+  DCHECK(GetExecutionContext());
+  DCHECK(entangled_channel_);
 
-void MessagePort::postMessage(ExecutionContext* context, PassRefPtr<SerializedScriptValue> message, const MessagePortArray& ports, ExceptionState& exceptionState)
-{
-    if (!isEntangled())
-        return;
-    DCHECK(getExecutionContext());
-    DCHECK(m_entangledChannel);
-
-    // Make sure we aren't connected to any of the passed-in ports.
-    for (unsigned i = 0; i < ports.size(); ++i) {
-        if (ports[i] == this) {
-            exceptionState.throwDOMException(DataCloneError, "Port at index " + String::number(i) + " contains the source port.");
-            return;
-        }
+  // Make sure we aren't connected to any of the passed-in ports.
+  for (unsigned i = 0; i < ports.size(); ++i) {
+    if (ports[i] == this) {
+      exception_state.ThrowDOMException(
+          kDataCloneError,
+          "Port at index " + String::Number(i) + " contains the source port.");
+      return;
     }
-    std::unique_ptr<MessagePortChannelArray> channels = MessagePort::disentanglePorts(context, ports, exceptionState);
-    if (exceptionState.hadException())
-        return;
+  }
+  MessagePortChannelArray channels = MessagePort::DisentanglePorts(
+      ExecutionContext::From(script_state), ports, exception_state);
+  if (exception_state.HadException())
+    return;
 
-    if (message->containsTransferableArrayBuffer())
-        getExecutionContext()->addConsoleMessage(ConsoleMessage::create(JSMessageSource, WarningMessageLevel, "MessagePort cannot send an ArrayBuffer as a transferable object yet. See http://crbug.com/334408"));
-
-    WebString messageString = message->toWireString();
-    std::unique_ptr<WebMessagePortChannelArray> webChannels = toWebMessagePortChannelArray(std::move(channels));
-    m_entangledChannel->postMessage(messageString, webChannels.release());
+  WebString message_string = message->ToWireString();
+  WebMessagePortChannelArray web_channels =
+      ToWebMessagePortChannelArray(std::move(channels));
+  entangled_channel_->PostMessage(message_string, std::move(web_channels));
 }
 
 // static
-std::unique_ptr<WebMessagePortChannelArray> MessagePort::toWebMessagePortChannelArray(std::unique_ptr<MessagePortChannelArray> channels)
-{
-    std::unique_ptr<WebMessagePortChannelArray> webChannels;
-    if (channels && channels->size()) {
-        webChannels = wrapUnique(new WebMessagePortChannelArray(channels->size()));
-        for (size_t i = 0; i < channels->size(); ++i)
-            (*webChannels)[i] = (*channels)[i].release();
-    }
-    return webChannels;
+WebMessagePortChannelArray MessagePort::ToWebMessagePortChannelArray(
+    MessagePortChannelArray channels) {
+  WebMessagePortChannelArray web_channels(channels.size());
+  for (size_t i = 0; i < channels.size(); ++i)
+    web_channels[i] = std::move(channels[i]);
+  return web_channels;
 }
 
 // static
-MessagePortArray* MessagePort::toMessagePortArray(ExecutionContext* context, const WebMessagePortChannelArray& webChannels)
-{
-    std::unique_ptr<MessagePortChannelArray> channels = wrapUnique(new MessagePortChannelArray(webChannels.size()));
-    for (size_t i = 0; i < webChannels.size(); ++i)
-        (*channels)[i] = WebMessagePortChannelUniquePtr(webChannels[i]);
-    return MessagePort::entanglePorts(*context, std::move(channels));
+MessagePortArray* MessagePort::ToMessagePortArray(
+    ExecutionContext* context,
+    WebMessagePortChannelArray web_channels) {
+  MessagePortChannelArray channels(web_channels.size());
+  for (size_t i = 0; i < web_channels.size(); ++i)
+    channels[i] = std::move(web_channels[i]);
+  return MessagePort::EntanglePorts(*context, std::move(channels));
 }
 
-WebMessagePortChannelUniquePtr MessagePort::disentangle()
-{
-    DCHECK(m_entangledChannel);
-    m_entangledChannel->setClient(nullptr);
-    return std::move(m_entangledChannel);
+std::unique_ptr<WebMessagePortChannel> MessagePort::Disentangle() {
+  DCHECK(entangled_channel_);
+  entangled_channel_->SetClient(nullptr);
+  return std::move(entangled_channel_);
 }
 
 // Invoked to notify us that there are messages available for this port.
-// This code may be called from another thread, and so should not call any non-threadsafe APIs (i.e. should not call into the entangled channel or access mutable variables).
-void MessagePort::messageAvailable()
-{
-    DCHECK(getExecutionContext());
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&MessagePort::dispatchMessages, wrapCrossThreadWeakPersistent(this)));
+// This code may be called from another thread, and so should not call any
+// non-threadsafe APIs (i.e. should not call into the entangled channel or
+// access mutable variables).
+void MessagePort::MessageAvailable() {
+  // Don't post another task if there's an identical one pending.
+  if (AtomicTestAndSetToOne(&pending_dispatch_task_))
+    return;
+
+  DCHECK(GetExecutionContext());
+  // TODO(tzik): Use ParentThreadTaskRunners instead of ExecutionContext here to
+  // avoid touching foreign thread GCed object.
+  GetExecutionContext()->PostTask(
+      TaskType::kPostedMessage, BLINK_FROM_HERE,
+      CreateCrossThreadTask(&MessagePort::DispatchMessages,
+                            WrapCrossThreadWeakPersistent(this)));
 }
 
-void MessagePort::start()
-{
-    // Do nothing if we've been cloned or closed.
-    if (!isEntangled())
-        return;
+void MessagePort::start() {
+  // Do nothing if we've been cloned or closed.
+  if (!IsEntangled())
+    return;
 
-    DCHECK(getExecutionContext());
-    if (m_started)
-        return;
+  DCHECK(GetExecutionContext());
+  if (started_)
+    return;
 
-    m_entangledChannel->setClient(this);
-    m_started = true;
-    messageAvailable();
+  entangled_channel_->SetClient(this);
+  started_ = true;
+  MessageAvailable();
 }
 
-void MessagePort::close()
-{
-    if (isEntangled())
-        m_entangledChannel->setClient(nullptr);
-    m_closed = true;
+void MessagePort::close() {
+  if (IsEntangled())
+    entangled_channel_->SetClient(nullptr);
+  closed_ = true;
 }
 
-void MessagePort::entangle(WebMessagePortChannelUniquePtr remote)
-{
-    // Only invoked to set our initial entanglement.
-    DCHECK(!m_entangledChannel);
-    DCHECK(getExecutionContext());
+void MessagePort::Entangle(std::unique_ptr<WebMessagePortChannel> remote) {
+  // Only invoked to set our initial entanglement.
+  DCHECK(!entangled_channel_);
+  DCHECK(GetExecutionContext());
 
-    m_entangledChannel = std::move(remote);
+  entangled_channel_ = std::move(remote);
 }
 
-const AtomicString& MessagePort::interfaceName() const
-{
-    return EventTargetNames::MessagePort;
+const AtomicString& MessagePort::InterfaceName() const {
+  return EventTargetNames::MessagePort;
 }
 
-static bool tryGetMessageFrom(WebMessagePortChannel& webChannel, RefPtr<SerializedScriptValue>& message, std::unique_ptr<MessagePortChannelArray>& channels)
-{
-    WebString messageString;
-    WebMessagePortChannelArray webChannels;
-    if (!webChannel.tryGetMessage(&messageString, webChannels))
-        return false;
+static bool TryGetMessageFrom(WebMessagePortChannel& web_channel,
+                              RefPtr<SerializedScriptValue>& message,
+                              MessagePortChannelArray& channels) {
+  WebString message_string;
+  WebMessagePortChannelArray web_channels;
+  if (!web_channel.TryGetMessage(&message_string, web_channels))
+    return false;
 
-    if (webChannels.size()) {
-        channels = wrapUnique(new MessagePortChannelArray(webChannels.size()));
-        for (size_t i = 0; i < webChannels.size(); ++i)
-            (*channels)[i] = WebMessagePortChannelUniquePtr(webChannels[i]);
+  if (web_channels.size()) {
+    channels.Resize(web_channels.size());
+    for (size_t i = 0; i < web_channels.size(); ++i)
+      channels[i] = std::move(web_channels[i]);
+  }
+  message = SerializedScriptValue::Create(message_string);
+  return true;
+}
+
+bool MessagePort::TryGetMessage(RefPtr<SerializedScriptValue>& message,
+                                MessagePortChannelArray& channels) {
+  if (!entangled_channel_)
+    return false;
+  return TryGetMessageFrom(*entangled_channel_, message, channels);
+}
+
+void MessagePort::DispatchMessages() {
+  // Signal to |messageAvailable()| that there are no ongoing
+  // dispatches of messages. This can cause redundantly posted
+  // tasks, but safely avoids messages languishing.
+  ReleaseStore(&pending_dispatch_task_, 0);
+
+  // Messages for contexts that are not fully active get dispatched too, but
+  // JSAbstractEventListener::handleEvent() doesn't call handlers for these.
+  // The HTML5 spec specifies that any messages sent to a document that is not
+  // fully active should be dropped, so this behavior is OK.
+  if (!Started())
+    return;
+
+  while (true) {
+    // Because close() doesn't cancel any in flight calls to dispatchMessages(),
+    // and can be triggered by the onmessage event handler, we need to check if
+    // the port is still open before each dispatch.
+    if (closed_)
+      break;
+
+    // WorkerGlobalScope::close() in Worker onmessage handler should prevent
+    // the next message from dispatching.
+    if (GetExecutionContext()->IsWorkerGlobalScope() &&
+        ToWorkerGlobalScope(GetExecutionContext())->IsClosing()) {
+      break;
     }
-    message = SerializedScriptValue::create(messageString);
-    return true;
-}
-
-bool MessagePort::tryGetMessage(RefPtr<SerializedScriptValue>& message, std::unique_ptr<MessagePortChannelArray>& channels)
-{
-    if (!m_entangledChannel)
-        return false;
-    return tryGetMessageFrom(*m_entangledChannel, message, channels);
-}
-
-void MessagePort::dispatchMessages()
-{
-    // Because close() doesn't cancel any in flight calls to dispatchMessages() we need to check if the port is still open before dispatch.
-    if (m_closed)
-        return;
-
-    // Messages for contexts that are not fully active get dispatched too, but JSAbstractEventListener::handleEvent() doesn't call handlers for these.
-    // The HTML5 spec specifies that any messages sent to a document that is not fully active should be dropped, so this behavior is OK.
-    if (!started())
-        return;
 
     RefPtr<SerializedScriptValue> message;
-    std::unique_ptr<MessagePortChannelArray> channels;
-    while (tryGetMessage(message, channels)) {
-        // close() in Worker onmessage handler should prevent next message from dispatching.
-        if (getExecutionContext()->isWorkerGlobalScope() && toWorkerGlobalScope(getExecutionContext())->isClosing())
-            return;
+    MessagePortChannelArray channels;
+    if (!TryGetMessage(message, channels))
+      break;
 
-        MessagePortArray* ports = MessagePort::entanglePorts(*getExecutionContext(), std::move(channels));
-        Event* evt = MessageEvent::create(ports, message.release());
+    MessagePortArray* ports =
+        MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
+    Event* evt = MessageEvent::Create(ports, std::move(message));
 
-        dispatchEvent(evt);
+    DispatchEvent(evt);
+  }
+}
+
+bool MessagePort::HasPendingActivity() const {
+  // The spec says that entangled message ports should always be treated as if
+  // they have a strong reference.
+  // We'll also stipulate that the queue needs to be open (if the app drops its
+  // reference to the port before start()-ing it, then it's not really entangled
+  // as it's unreachable).
+  return started_ && IsEntangled();
+}
+
+MessagePortChannelArray MessagePort::DisentanglePorts(
+    ExecutionContext* context,
+    const MessagePortArray& ports,
+    ExceptionState& exception_state) {
+  if (!ports.size())
+    return MessagePortChannelArray();
+
+  HeapHashSet<Member<MessagePort>> visited;
+
+  // Walk the incoming array - if there are any duplicate ports, or null ports
+  // or cloned ports, throw an error (per section 8.3.3 of the HTML5 spec).
+  for (unsigned i = 0; i < ports.size(); ++i) {
+    MessagePort* port = ports[i];
+    if (!port || port->IsNeutered() || visited.Contains(port)) {
+      String type;
+      if (!port)
+        type = "null";
+      else if (port->IsNeutered())
+        type = "already neutered";
+      else
+        type = "a duplicate";
+      exception_state.ThrowDOMException(
+          kDataCloneError,
+          "Port at index " + String::Number(i) + " is " + type + ".");
+      return MessagePortChannelArray();
     }
+    visited.insert(port);
+  }
+
+  UseCounter::Count(context, UseCounter::kMessagePortsTransferred);
+
+  // Passed-in ports passed validity checks, so we can disentangle them.
+  MessagePortChannelArray port_array(ports.size());
+  for (unsigned i = 0; i < ports.size(); ++i)
+    port_array[i] = ports[i]->Disentangle();
+  return port_array;
 }
 
-bool MessagePort::hasPendingActivity() const
-{
-    // The spec says that entangled message ports should always be treated as if they have a strong reference.
-    // We'll also stipulate that the queue needs to be open (if the app drops its reference to the port before start()-ing it, then it's not really entangled as it's unreachable).
-    return m_started && isEntangled();
+MessagePortArray* MessagePort::EntanglePorts(ExecutionContext& context,
+                                             MessagePortChannelArray channels) {
+  // https://html.spec.whatwg.org/multipage/comms.html#message-ports
+  // |ports| should be an empty array, not null even when there is no ports.
+  MessagePortArray* port_array = new MessagePortArray(channels.size());
+  for (unsigned i = 0; i < channels.size(); ++i) {
+    MessagePort* port = MessagePort::Create(context);
+    port->Entangle(std::move(channels[i]));
+    (*port_array)[i] = port;
+  }
+  return port_array;
 }
 
-std::unique_ptr<MessagePortChannelArray> MessagePort::disentanglePorts(ExecutionContext* context, const MessagePortArray& ports, ExceptionState& exceptionState)
-{
-    if (!ports.size())
-        return nullptr;
-
-    HeapHashSet<Member<MessagePort>> visited;
-
-    // Walk the incoming array - if there are any duplicate ports, or null ports or cloned ports, throw an error (per section 8.3.3 of the HTML5 spec).
-    for (unsigned i = 0; i < ports.size(); ++i) {
-        MessagePort* port = ports[i];
-        if (!port || port->isNeutered() || visited.contains(port)) {
-            String type;
-            if (!port)
-                type = "null";
-            else if (port->isNeutered())
-                type = "already neutered";
-            else
-                type = "a duplicate";
-            exceptionState.throwDOMException(DataCloneError, "Port at index "  + String::number(i) + " is " + type + ".");
-            return nullptr;
-        }
-        visited.add(port);
-    }
-
-    UseCounter::count(context, UseCounter::MessagePortsTransferred);
-
-    // Passed-in ports passed validity checks, so we can disentangle them.
-    std::unique_ptr<MessagePortChannelArray> portArray = wrapUnique(new MessagePortChannelArray(ports.size()));
-    for (unsigned i = 0; i < ports.size(); ++i)
-        (*portArray)[i] = ports[i]->disentangle();
-    return portArray;
+DEFINE_TRACE(MessagePort) {
+  ContextLifecycleObserver::Trace(visitor);
+  EventTargetWithInlineData::Trace(visitor);
 }
 
-MessagePortArray* MessagePort::entanglePorts(ExecutionContext& context, std::unique_ptr<MessagePortChannelArray> channels)
-{
-    // https://html.spec.whatwg.org/multipage/comms.html#message-ports
-    // |ports| should be an empty array, not null even when there is no ports.
-    if (!channels || !channels->size())
-        return new MessagePortArray;
-
-    MessagePortArray* portArray = new MessagePortArray(channels->size());
-    for (unsigned i = 0; i < channels->size(); ++i) {
-        MessagePort* port = MessagePort::create(context);
-        port->entangle(std::move((*channels)[i]));
-        (*portArray)[i] = port;
-    }
-    return portArray;
-}
-
-DEFINE_TRACE(MessagePort)
-{
-    ActiveDOMObject::trace(visitor);
-    EventTargetWithInlineData::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

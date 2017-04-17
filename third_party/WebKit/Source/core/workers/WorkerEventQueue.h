@@ -28,38 +28,35 @@
 #define WorkerEventQueue_h
 
 #include "core/events/EventQueue.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
 class Event;
-class ExecutionContext;
+class WorkerGlobalScope;
 
 class WorkerEventQueue final : public EventQueue {
-public:
+ public:
+  static WorkerEventQueue* Create(WorkerGlobalScope*);
+  ~WorkerEventQueue() override;
+  DECLARE_TRACE();
 
-    static WorkerEventQueue* create(ExecutionContext*);
-    ~WorkerEventQueue() override;
-    DECLARE_TRACE();
+  // EventQueue
+  bool EnqueueEvent(Event*) override;
+  bool CancelEvent(Event*) override;
+  void Close() override;
 
-    // EventQueue
-    bool enqueueEvent(Event*) override;
-    bool cancelEvent(Event*) override;
-    void close() override;
+ private:
+  explicit WorkerEventQueue(WorkerGlobalScope*);
+  bool RemoveEvent(Event*);
+  void DispatchEvent(Event*);
 
-private:
-    explicit WorkerEventQueue(ExecutionContext*);
-    void removeEvent(Event*);
+  Member<WorkerGlobalScope> worker_global_scope_;
+  bool is_closed_;
 
-    Member<ExecutionContext> m_executionContext;
-    bool m_isClosed;
-
-    class EventDispatcherTask;
-    using EventTaskMap = HeapHashMap<Member<Event>, EventDispatcherTask*>;
-    EventTaskMap m_eventTaskMap;
+  HeapHashSet<Member<Event>> pending_events_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerEventQueue_h
+#endif  // WorkerEventQueue_h

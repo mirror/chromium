@@ -5,6 +5,7 @@
 #include <stddef.h>
 
 #include <memory>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/cancelable_callback.h"
@@ -19,9 +20,9 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/test_timeouts.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -39,6 +40,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/extensions/extension_process_policy.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -52,6 +54,7 @@
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
@@ -61,11 +64,14 @@
 #include "content/public/browser/worker_service.h"
 #include "content/public/browser/worker_service_observer.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/extension_registry_observer.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/notification_types.h"
+#include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/common/switches.h"
 #include "extensions/common/value_builder.h"
 #include "net/dns/mock_host_resolver.h"
@@ -74,7 +80,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_filter.h"
 #include "net/url_request/url_request_http_job.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/gl/gl_switches.h"
 #include "url/gurl.h"
@@ -85,6 +91,7 @@ using app_modal::NativeAppModalDialog;
 using content::BrowserThread;
 using content::DevToolsAgentHost;
 using content::NavigationController;
+using content::RenderFrameHost;
 using content::RenderViewHost;
 using content::WebContents;
 using content::WorkerService;
@@ -361,11 +368,6 @@ void DevToolsWindowBeforeUnloadObserver::BeforeUnloadFired(
 
 class DevToolsBeforeUnloadTest: public DevToolsSanityTest {
  public:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitch(
-        switches::kDisableHangMonitor);
-  }
-
   void CloseInspectedTab() {
     browser()->tab_strip_model()->CloseWebContentsAt(0,
         TabStripModel::CLOSE_NONE);
@@ -384,6 +386,9 @@ class DevToolsBeforeUnloadTest: public DevToolsSanityTest {
     ASSERT_TRUE(content::ExecuteScript(web_contents->GetRenderViewHost(),
         "window.addEventListener('beforeunload',"
         "function(event) { event.returnValue = 'Foo'; });"));
+    // Disable the hang monitor, otherwise there will be a race between the
+    // beforeunload dialog and the beforeunload hang timer.
+    web_contents->GetMainFrame()->DisableBeforeUnloadHangMonitorForTesting();
   }
 
   void RunBeforeUnloadSanityTest(bool is_docked,
@@ -456,11 +461,6 @@ class DevToolsBeforeUnloadTest: public DevToolsSanityTest {
   }
 };
 
-class DevToolsUnresponsiveBeforeUnloadTest: public DevToolsBeforeUnloadTest {
- public:
-  void SetUpCommandLine(base::CommandLine* command_line) override {}
-};
-
 void TimeoutCallback(const std::string& timeout_message) {
   ADD_FAILURE() << timeout_message;
   base::MessageLoop::current()->QuitWhenIdle();
@@ -489,28 +489,104 @@ class DevToolsExtensionTest : public DevToolsSanityTest,
         browser()->profile())->extension_service();
     extensions::ExtensionRegistry* registry =
         extensions::ExtensionRegistry::Get(browser()->profile());
-    size_t num_before = registry->enabled_extensions().size();
-    {
-      content::NotificationRegistrar registrar;
-      registrar.Add(this,
-                    extensions::NOTIFICATION_EXTENSION_LOADED_DEPRECATED,
-                    content::NotificationService::AllSources());
-      base::CancelableClosure timeout(
-          base::Bind(&TimeoutCallback, "Extension load timed out."));
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-          FROM_HERE, timeout.callback(), TestTimeouts::action_timeout());
-      extensions::UnpackedInstaller::Create(service)->Load(path);
-      content::RunMessageLoop();
-      timeout.Cancel();
-    }
-    size_t num_after = registry->enabled_extensions().size();
-    if (num_after != (num_before + 1))
-      return nullptr;
+    extensions::TestExtensionRegistryObserver observer(registry);
+    extensions::UnpackedInstaller::Create(service)->Load(path);
+    observer.WaitForExtensionLoaded();
 
     if (!WaitForExtensionViewsToLoad())
       return nullptr;
 
     return GetExtensionByPath(registry->enabled_extensions(), path);
+  }
+
+  // Loads a dynamically generated extension populated with a bunch of test
+  // pages. |name| is the extension name to use in the manifest.
+  // |devtools_page|, if non-empty, indicates which test page should be be
+  // listed as a devtools_page in the manifest.  If |devtools_page| is empty, a
+  // non-devtools extension is created instead. |panel_iframe_src| controls the
+  // src= attribute of the <iframe> element in the 'panel.html' test page.
+  const Extension* LoadExtensionForTest(const std::string& name,
+                                        const std::string& devtools_page,
+                                        const std::string& panel_iframe_src) {
+    test_extension_dirs_.push_back(
+        base::MakeUnique<extensions::TestExtensionDir>());
+    extensions::TestExtensionDir* dir = test_extension_dirs_.back().get();
+
+    extensions::DictionaryBuilder manifest;
+    manifest.Set("name", name)
+        .Set("version", "1")
+        .Set("manifest_version", 2)
+        // simple_test_page.html is currently the only page referenced outside
+        // of its own extension in the tests
+        .Set("web_accessible_resources",
+             extensions::ListBuilder().Append("simple_test_page.html").Build());
+
+    // If |devtools_page| isn't empty, make it a devtools extension in the
+    // manifest.
+    if (!devtools_page.empty())
+      manifest.Set("devtools_page", devtools_page);
+
+    dir->WriteManifest(manifest.ToJSON());
+
+    GURL http_frame_url =
+        embedded_test_server()->GetURL("a.com", "/popup_iframe.html");
+
+    // If this is a devtools extension, |devtools_page| will indicate which of
+    // these devtools_pages will end up being used.  Different tests use
+    // different devtools_pages.
+    dir->WriteFile(FILE_PATH_LITERAL("web_devtools_page.html"),
+                   "<html><body><iframe src='" + http_frame_url.spec() +
+                       "'></iframe></body></html>");
+
+    dir->WriteFile(FILE_PATH_LITERAL("simple_devtools_page.html"),
+                   "<html><body></body></html>");
+
+    dir->WriteFile(
+        FILE_PATH_LITERAL("panel_devtools_page.html"),
+        "<html><head><script "
+        "src='panel_devtools_page.js'></script></head><body></body></html>");
+
+    dir->WriteFile(FILE_PATH_LITERAL("panel_devtools_page.js"),
+                   "chrome.devtools.panels.create('iframe_panel',\n"
+                   "    null,\n"
+                   "    'panel.html',\n"
+                   "    function(panel) {\n"
+                   "      chrome.devtools.inspectedWindow.eval(\n"
+                   "        'console.log(\"PASS\")');\n"
+                   "    }\n"
+                   ");\n");
+
+    dir->WriteFile(FILE_PATH_LITERAL("sidebarpane_devtools_page.html"),
+                   "<html><head><script src='sidebarpane_devtools_page.js'>"
+                   "</script></head><body></body></html>");
+
+    dir->WriteFile(
+        FILE_PATH_LITERAL("sidebarpane_devtools_page.js"),
+        "chrome.devtools.panels.elements.createSidebarPane('iframe_pane',\n"
+        "    function(sidebar) {\n"
+        "      chrome.devtools.inspectedWindow.eval(\n"
+        "        'console.log(\"PASS\")');\n"
+        "      sidebar.setPage('panel.html');\n"
+        "    }\n"
+        ");\n");
+
+    dir->WriteFile(FILE_PATH_LITERAL("panel.html"),
+                   "<html><body><iframe src='" + panel_iframe_src +
+                       "'></iframe></body></html>");
+
+    dir->WriteFile(FILE_PATH_LITERAL("simple_test_page.html"),
+                   "<html><body>This is a test</body></html>");
+
+    GURL web_url = embedded_test_server()->GetURL("a.com", "/title3.html");
+
+    dir->WriteFile(FILE_PATH_LITERAL("multi_frame_page.html"),
+                   "<html><body><iframe src='about:blank'>"
+                   "</iframe><iframe src='data:text/html,foo'>"
+                   "</iframe><iframe src='" +
+                       web_url.spec() + "'></iframe></body></html>");
+
+    // Install the extension.
+    return LoadExtensionFromPath(dir->UnpackedPath());
   }
 
  private:
@@ -560,17 +636,13 @@ class DevToolsExtensionTest : public DevToolsSanityTest,
   void Observe(int type,
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override {
-    switch (type) {
-      case extensions::NOTIFICATION_EXTENSION_LOADED_DEPRECATED:
-      case extensions::NOTIFICATION_EXTENSION_HOST_DID_STOP_FIRST_LOAD:
-        base::MessageLoopForUI::current()->QuitWhenIdle();
-        break;
-      default:
-        NOTREACHED();
-        break;
-    }
+    DCHECK_EQ(extensions::NOTIFICATION_EXTENSION_HOST_DID_STOP_FIRST_LOAD,
+              type);
+    base::MessageLoopForUI::current()->QuitWhenIdle();
   }
 
+  std::vector<std::unique_ptr<extensions::TestExtensionDir>>
+      test_extension_dirs_;
   base::FilePath test_extensions_dir_;
 };
 
@@ -723,7 +795,8 @@ class WorkerDevToolsSanityTest : public InProcessBrowserTest {
 // we try to close them.
 IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest, TestDockedDevToolsClose) {
   RunBeforeUnloadSanityTest(true, base::Bind(
-      &DevToolsBeforeUnloadTest::CloseDevToolsWindowAsync, this), false);
+      &DevToolsBeforeUnloadTest::CloseDevToolsWindowAsync,
+      base::Unretained(this)), false);
 }
 
 // Tests that BeforeUnload event gets called on docked devtools if
@@ -731,7 +804,8 @@ IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest, TestDockedDevToolsClose) {
 IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
                        TestDockedDevToolsInspectedTabClose) {
   RunBeforeUnloadSanityTest(true, base::Bind(
-      &DevToolsBeforeUnloadTest::CloseInspectedTab, this));
+      &DevToolsBeforeUnloadTest::CloseInspectedTab,
+      base::Unretained(this)));
 }
 
 // Tests that BeforeUnload event gets called on docked devtools if
@@ -739,14 +813,16 @@ IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
 IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
                        TestDockedDevToolsInspectedBrowserClose) {
   RunBeforeUnloadSanityTest(true, base::Bind(
-      &DevToolsBeforeUnloadTest::CloseInspectedBrowser, this));
+      &DevToolsBeforeUnloadTest::CloseInspectedBrowser,
+      base::Unretained(this)));
 }
 
 // Tests that BeforeUnload event gets called on undocked devtools if
 // we try to close them.
 IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest, TestUndockedDevToolsClose) {
   RunBeforeUnloadSanityTest(false, base::Bind(
-      &DevToolsBeforeUnloadTest::CloseDevToolsWindowAsync, this), false);
+      &DevToolsBeforeUnloadTest::CloseDevToolsWindowAsync,
+      base::Unretained(this)), false);
 }
 
 // Tests that BeforeUnload event gets called on undocked devtools if
@@ -754,7 +830,8 @@ IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest, TestUndockedDevToolsClose) {
 IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
                        TestUndockedDevToolsInspectedTabClose) {
   RunBeforeUnloadSanityTest(false, base::Bind(
-      &DevToolsBeforeUnloadTest::CloseInspectedTab, this));
+      &DevToolsBeforeUnloadTest::CloseInspectedTab,
+      base::Unretained(this)));
 }
 
 // Tests that BeforeUnload event gets called on undocked devtools if
@@ -762,7 +839,8 @@ IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
 IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
                        TestUndockedDevToolsInspectedBrowserClose) {
   RunBeforeUnloadSanityTest(false, base::Bind(
-      &DevToolsBeforeUnloadTest::CloseInspectedBrowser, this));
+      &DevToolsBeforeUnloadTest::CloseInspectedBrowser,
+      base::Unretained(this)));
 }
 
 // Tests that BeforeUnload event gets called on undocked devtools if
@@ -777,7 +855,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
 // becomes unresponsive during beforeunload event interception.
 // @see http://crbug.com/322380
 // Disabled because of http://crbug.com/410327
-IN_PROC_BROWSER_TEST_F(DevToolsUnresponsiveBeforeUnloadTest,
+IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
                        DISABLED_TestUndockedDevToolsUnresponsive) {
   ASSERT_TRUE(spawned_test_server()->Start());
   LoadTestPage(kDebuggerTestPage);
@@ -813,7 +891,6 @@ IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
 
 // Tests that BeforeUnload event gets called on devtools that are opened
 // on another devtools.
-// Disabled because of http://crbug.com/497857
 IN_PROC_BROWSER_TEST_F(DevToolsBeforeUnloadTest,
                        TestDevToolsOnDevTools) {
   ASSERT_TRUE(spawned_test_server()->Start());
@@ -898,20 +975,518 @@ IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
   RunTest("waitForTestResultsInConsole", std::string());
 }
 
-// Tests a chrome.devtools extension panel that embeds an http:// iframe.
-IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest, DevToolsExtensionWithHttpIframe) {
+// Tests that http Iframes within the visible devtools panel for the devtools
+// extension are rendered in their own processes and not in the devtools process
+// or the extension's process.  This is tested because this is one of the
+// extension pages with devtools access
+// (https://developer.chrome.com/extensions/devtools).  Also tests that frames
+// with data URLs and about:blank URLs are rendered in the devtools process,
+// unless a web OOPIF navigates itself to about:blank, in which case it does not
+// end up back in the devtools process.  Also tests that when a web IFrame is
+// navigated back to a devtools extension page, it gets put back in the devtools
+// process.
+// http://crbug.com/570483
+IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
+                       HttpIframeInDevToolsExtensionPanel) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
-  // Our extension must load an URL from the test server, whose port is only
-  // known at runtime. So, to embed the URL, we must dynamically generate the
-  // extension, rather than loading it from static content.
+  // Install the dynamically-generated extension.
+  const Extension* extension =
+      LoadExtensionForTest("Devtools Extension", "panel_devtools_page.html",
+                           "/multi_frame_page.html");
+  ASSERT_TRUE(extension);
+
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+
+  // Wait for the extension's panel to finish loading -- it'll output 'PASS'
+  // when it's installed. waitForTestResultsInConsole waits until that 'PASS'.
+  RunTestFunction(window_, "waitForTestResultsInConsole");
+
+  // Now that we know the panel is loaded, switch to it.
+  SwitchToExtensionPanel(window_, extension, "iframe_panel");
+  content::WaitForLoadStop(main_web_contents());
+
+  std::vector<RenderFrameHost*> rfhs = main_web_contents()->GetAllFrames();
+  EXPECT_EQ(7U, rfhs.size());
+
+  // This test creates a page with the following frame tree:
+  // - DevTools
+  //   - devtools_page from DevTools extension
+  //   - Panel (DevTools extension)
+  //     - iframe (DevTools extension)
+  //       - about:blank
+  //       - data:
+  //       - web URL
+
+  RenderFrameHost* main_devtools_rfh = main_web_contents()->GetMainFrame();
+  RenderFrameHost* devtools_extension_devtools_page_rfh =
+      ChildFrameAt(main_devtools_rfh, 0);
+  RenderFrameHost* devtools_extension_panel_rfh =
+      ChildFrameAt(main_devtools_rfh, 1);
+  RenderFrameHost* panel_frame_rfh =
+      ChildFrameAt(devtools_extension_panel_rfh, 0);
+  RenderFrameHost* about_blank_frame_rfh = ChildFrameAt(panel_frame_rfh, 0);
+  RenderFrameHost* data_frame_rfh = ChildFrameAt(panel_frame_rfh, 1);
+  RenderFrameHost* web_frame_rfh = ChildFrameAt(panel_frame_rfh, 2);
+
+  GURL web_url = embedded_test_server()->GetURL("a.com", "/title3.html");
+  GURL about_blank_url = GURL(url::kAboutBlankURL);
+  GURL data_url = GURL("data:text/html,foo");
+
+  EXPECT_TRUE(main_devtools_rfh->GetLastCommittedURL().SchemeIs(
+      content::kChromeDevToolsScheme));
+  EXPECT_EQ(extension->GetResourceURL("/panel_devtools_page.html"),
+            devtools_extension_devtools_page_rfh->GetLastCommittedURL());
+  EXPECT_EQ(extension->GetResourceURL("/panel.html"),
+            devtools_extension_panel_rfh->GetLastCommittedURL());
+  EXPECT_EQ(extension->GetResourceURL("/multi_frame_page.html"),
+            panel_frame_rfh->GetLastCommittedURL());
+  EXPECT_EQ(about_blank_url, about_blank_frame_rfh->GetLastCommittedURL());
+  EXPECT_EQ(data_url, data_frame_rfh->GetLastCommittedURL());
+  EXPECT_EQ(web_url, web_frame_rfh->GetLastCommittedURL());
+
+  content::SiteInstance* devtools_instance =
+      main_devtools_rfh->GetSiteInstance();
+  EXPECT_TRUE(
+      devtools_instance->GetSiteURL().SchemeIs(content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_devtools_page_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance, devtools_extension_panel_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance, panel_frame_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance, about_blank_frame_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance, data_frame_rfh->GetSiteInstance());
+  EXPECT_EQ(web_url.host(),
+            web_frame_rfh->GetSiteInstance()->GetSiteURL().host());
+  EXPECT_NE(devtools_instance, web_frame_rfh->GetSiteInstance());
+
+  // Check that if the web iframe navigates itself to about:blank, it stays in
+  // the web SiteInstance.
+  std::string about_blank_javascript = "location.href='about:blank';";
+
+  content::TestNavigationManager web_about_blank_manager(main_web_contents(),
+                                                         about_blank_url);
+
+  ASSERT_TRUE(content::ExecuteScript(web_frame_rfh, about_blank_javascript));
+
+  web_about_blank_manager.WaitForNavigationFinished();
+
+  EXPECT_EQ(about_blank_url, web_frame_rfh->GetLastCommittedURL());
+  EXPECT_EQ(web_url.host(),
+            web_frame_rfh->GetSiteInstance()->GetSiteURL().host());
+  EXPECT_NE(devtools_instance, web_frame_rfh->GetSiteInstance());
+
+  // Check that if the web IFrame is navigated back to a devtools extension
+  // page, it gets put back in the devtools process.
+  GURL extension_simple_url =
+      extension->GetResourceURL("/simple_test_page.html");
+  std::string renavigation_javascript =
+      "location.href='" + extension_simple_url.spec() + "';";
+
+  content::TestNavigationManager renavigation_manager(main_web_contents(),
+                                                      extension_simple_url);
+
+  ASSERT_TRUE(content::ExecuteScript(web_frame_rfh, renavigation_javascript));
+
+  renavigation_manager.WaitForNavigationFinished();
+
+  // The old RFH is no longer valid after the renavigation, so we must get the
+  // new one.
+  RenderFrameHost* extension_simple_frame_rfh =
+      ChildFrameAt(panel_frame_rfh, 2);
+
+  EXPECT_EQ(extension_simple_url,
+            extension_simple_frame_rfh->GetLastCommittedURL());
+  EXPECT_EQ(devtools_instance, extension_simple_frame_rfh->GetSiteInstance());
+}
+
+// Tests that http Iframes within the sidebar pane page for the devtools
+// extension that is visible in the elements panel are rendered in their own
+// processes and not in the devtools process or the extension's process.  This
+// is tested because this is one of the extension pages with devtools access
+// (https://developer.chrome.com/extensions/devtools).  http://crbug.com/570483
+IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
+                       HttpIframeInDevToolsExtensionSideBarPane) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL web_url = embedded_test_server()->GetURL("a.com", "/title3.html");
+
+  // Install the dynamically-generated extension.
+  const Extension* extension = LoadExtensionForTest(
+      "Devtools Extension", "sidebarpane_devtools_page.html", web_url.spec());
+  ASSERT_TRUE(extension);
+
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+
+  // Wait for the extension's sidebarpane to finish loading -- it'll output
+  // 'PASS' when it's installed. waitForTestResultsInConsole waits until that
+  // 'PASS'.
+  RunTestFunction(window_, "waitForTestResultsInConsole");
+
+  // Now that we know the sidebarpane is loaded, switch to it.
+  content::TestNavigationManager web_manager(main_web_contents(), web_url);
+  SwitchToPanel(window_, "elements");
+  // This is a bit of a hack to switch to the sidebar pane in the elements panel
+  // that the Iframe has been added to.
+  SwitchToPanel(window_, "iframe_pane");
+  web_manager.WaitForNavigationFinished();
+
+  std::vector<RenderFrameHost*> rfhs = main_web_contents()->GetAllFrames();
+  EXPECT_EQ(4U, rfhs.size());
+
+  RenderFrameHost* main_devtools_rfh = main_web_contents()->GetMainFrame();
+  RenderFrameHost* devtools_extension_devtools_page_rfh =
+      ChildFrameAt(main_devtools_rfh, 0);
+  RenderFrameHost* devtools_sidebar_pane_extension_rfh =
+      ChildFrameAt(main_devtools_rfh, 1);
+  RenderFrameHost* http_iframe_rfh =
+      ChildFrameAt(devtools_sidebar_pane_extension_rfh, 0);
+
+  EXPECT_TRUE(main_devtools_rfh->GetLastCommittedURL().SchemeIs(
+      content::kChromeDevToolsScheme));
+  EXPECT_EQ(extension->GetResourceURL("/sidebarpane_devtools_page.html"),
+            devtools_extension_devtools_page_rfh->GetLastCommittedURL());
+  EXPECT_EQ(extension->GetResourceURL("/panel.html"),
+            devtools_sidebar_pane_extension_rfh->GetLastCommittedURL());
+  EXPECT_EQ(web_url, http_iframe_rfh->GetLastCommittedURL());
+
+  content::SiteInstance* devtools_instance =
+      main_devtools_rfh->GetSiteInstance();
+  EXPECT_TRUE(
+      devtools_instance->GetSiteURL().SchemeIs(content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_devtools_page_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance,
+            devtools_sidebar_pane_extension_rfh->GetSiteInstance());
+  EXPECT_EQ(web_url.host(),
+            http_iframe_rfh->GetSiteInstance()->GetSiteURL().host());
+  EXPECT_NE(devtools_instance, http_iframe_rfh->GetSiteInstance());
+}
+
+// Tests that http Iframes within the devtools background page, which is
+// different from the extension's background page, are rendered in their own
+// processes and not in the devtools process or the extension's process.  This
+// is tested because this is one of the extension pages with devtools access
+// (https://developer.chrome.com/extensions/devtools).  http://crbug.com/570483
+IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
+                       HttpIframeInDevToolsExtensionDevtools) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Install the dynamically-generated extension.
+  const Extension* extension =
+      LoadExtensionForTest("Devtools Extension", "web_devtools_page.html",
+                           "" /* panel_iframe_src */);
+  ASSERT_TRUE(extension);
+
+  // Wait for a 'DONE' message sent from popup_iframe.html, indicating that it
+  // loaded successfully.
+  content::DOMMessageQueue message_queue;
+  std::string message;
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+
+  while (true) {
+    ASSERT_TRUE(message_queue.WaitForMessage(&message));
+    if (message == "\"DONE\"")
+      break;
+  }
+
+  std::vector<RenderFrameHost*> rfhs = main_web_contents()->GetAllFrames();
+  EXPECT_EQ(3U, rfhs.size());
+
+  RenderFrameHost* main_devtools_rfh = main_web_contents()->GetMainFrame();
+  RenderFrameHost* devtools_extension_devtools_page_rfh =
+      ChildFrameAt(main_devtools_rfh, 0);
+  RenderFrameHost* http_iframe_rfh =
+      ChildFrameAt(devtools_extension_devtools_page_rfh, 0);
+
+  GURL web_url = embedded_test_server()->GetURL("a.com", "/popup_iframe.html");
+
+  EXPECT_TRUE(main_devtools_rfh->GetLastCommittedURL().SchemeIs(
+      content::kChromeDevToolsScheme));
+  EXPECT_EQ(extension->GetResourceURL("/web_devtools_page.html"),
+            devtools_extension_devtools_page_rfh->GetLastCommittedURL());
+  EXPECT_EQ(web_url, http_iframe_rfh->GetLastCommittedURL());
+
+  content::SiteInstance* devtools_instance =
+      main_devtools_rfh->GetSiteInstance();
+  EXPECT_TRUE(
+      devtools_instance->GetSiteURL().SchemeIs(content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_devtools_page_rfh->GetSiteInstance());
+  EXPECT_EQ(web_url.host(),
+            http_iframe_rfh->GetSiteInstance()->GetSiteURL().host());
+  EXPECT_NE(devtools_instance, http_iframe_rfh->GetSiteInstance());
+}
+
+// Tests that iframes to a non-devtools extension embedded in a devtools
+// extension will be isolated from devtools and the devtools extension.
+// http://crbug.com/570483
+IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
+                       NonDevToolsExtensionInDevToolsExtension) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Install the dynamically-generated non-devtools extension.
+  const Extension* non_devtools_extension =
+      LoadExtensionForTest("Non-DevTools Extension", "" /* devtools_page */,
+                           "" /* panel_iframe_src */);
+  ASSERT_TRUE(non_devtools_extension);
+
+  GURL non_dt_extension_test_url =
+      non_devtools_extension->GetResourceURL("/simple_test_page.html");
+
+  // Install the dynamically-generated devtools extension.
+  const Extension* devtools_extension =
+      LoadExtensionForTest("Devtools Extension", "panel_devtools_page.html",
+                           non_dt_extension_test_url.spec());
+  ASSERT_TRUE(devtools_extension);
+
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+
+  // Wait for the extension's panel to finish loading -- it'll output 'PASS'
+  // when it's installed. waitForTestResultsInConsole waits until that 'PASS'.
+  RunTestFunction(window_, "waitForTestResultsInConsole");
+
+  // Now that we know the panel is loaded, switch to it.
+  content::TestNavigationManager non_devtools_manager(
+      main_web_contents(), non_dt_extension_test_url);
+  SwitchToExtensionPanel(window_, devtools_extension, "iframe_panel");
+  non_devtools_manager.WaitForNavigationFinished();
+
+  std::vector<RenderFrameHost*> rfhs = main_web_contents()->GetAllFrames();
+  EXPECT_EQ(4U, rfhs.size());
+
+  RenderFrameHost* main_devtools_rfh = main_web_contents()->GetMainFrame();
+  RenderFrameHost* devtools_extension_devtools_page_rfh =
+      ChildFrameAt(main_devtools_rfh, 0);
+  RenderFrameHost* devtools_extension_panel_rfh =
+      ChildFrameAt(main_devtools_rfh, 1);
+  RenderFrameHost* non_devtools_extension_rfh =
+      ChildFrameAt(devtools_extension_panel_rfh, 0);
+
+  EXPECT_TRUE(main_devtools_rfh->GetLastCommittedURL().SchemeIs(
+      content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_extension->GetResourceURL("/panel_devtools_page.html"),
+            devtools_extension_devtools_page_rfh->GetLastCommittedURL());
+  EXPECT_EQ(devtools_extension->GetResourceURL("/panel.html"),
+            devtools_extension_panel_rfh->GetLastCommittedURL());
+  EXPECT_EQ(non_dt_extension_test_url,
+            non_devtools_extension_rfh->GetLastCommittedURL());
+
+  // simple_test_page.html's frame should be in |non_devtools_extension|'s
+  // process, not in devtools or |devtools_extension|'s process.
+  content::SiteInstance* devtools_instance =
+      main_devtools_rfh->GetSiteInstance();
+  EXPECT_TRUE(
+      devtools_instance->GetSiteURL().SchemeIs(content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_devtools_page_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance, devtools_extension_panel_rfh->GetSiteInstance());
+  EXPECT_EQ(non_dt_extension_test_url.GetOrigin(),
+            non_devtools_extension_rfh->GetSiteInstance()->GetSiteURL());
+  EXPECT_NE(devtools_instance, non_devtools_extension_rfh->GetSiteInstance());
+}
+
+// Tests that if a devtools extension's devtools panel page has a subframe to a
+// page for another devtools extension, the subframe is rendered in the devtools
+// process as well.  http://crbug.com/570483
+IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
+                       DevToolsExtensionInDevToolsExtension) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Install the dynamically-generated extension.
+  const Extension* devtools_b_extension =
+      LoadExtensionForTest("Devtools Extension B", "simple_devtools_page.html",
+                           "" /* panel_iframe_src */);
+  ASSERT_TRUE(devtools_b_extension);
+
+  GURL extension_b_page_url =
+      devtools_b_extension->GetResourceURL("/simple_test_page.html");
+
+  // Install another dynamically-generated extension.  This extension's
+  // panel.html's iframe will point to an extension b URL.
+  const Extension* devtools_a_extension =
+      LoadExtensionForTest("Devtools Extension A", "panel_devtools_page.html",
+                           extension_b_page_url.spec());
+  ASSERT_TRUE(devtools_a_extension);
+
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+
+  // Wait for the extension's panel to finish loading -- it'll output 'PASS'
+  // when it's installed. waitForTestResultsInConsole waits until that 'PASS'.
+  RunTestFunction(window_, "waitForTestResultsInConsole");
+
+  // Now that we know the panel is loaded, switch to it.
+  content::TestNavigationManager extension_b_manager(main_web_contents(),
+                                                     extension_b_page_url);
+  SwitchToExtensionPanel(window_, devtools_a_extension, "iframe_panel");
+  extension_b_manager.WaitForNavigationFinished();
+
+  std::vector<RenderFrameHost*> rfhs = main_web_contents()->GetAllFrames();
+  EXPECT_EQ(5U, rfhs.size());
+
+  RenderFrameHost* main_devtools_rfh = main_web_contents()->GetMainFrame();
+
+  RenderFrameHost* devtools_extension_a_devtools_rfh =
+      content::FrameMatchingPredicate(
+          main_web_contents(), base::Bind(&content::FrameHasSourceUrl,
+                                          devtools_a_extension->GetResourceURL(
+                                              "/panel_devtools_page.html")));
+  EXPECT_TRUE(devtools_extension_a_devtools_rfh);
+  RenderFrameHost* devtools_extension_b_devtools_rfh =
+      content::FrameMatchingPredicate(
+          main_web_contents(), base::Bind(&content::FrameHasSourceUrl,
+                                          devtools_b_extension->GetResourceURL(
+                                              "/simple_devtools_page.html")));
+  EXPECT_TRUE(devtools_extension_b_devtools_rfh);
+
+  RenderFrameHost* devtools_extension_a_panel_rfh =
+      ChildFrameAt(main_devtools_rfh, 2);
+  RenderFrameHost* devtools_extension_b_frame_rfh =
+      ChildFrameAt(devtools_extension_a_panel_rfh, 0);
+
+  EXPECT_TRUE(main_devtools_rfh->GetLastCommittedURL().SchemeIs(
+      content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_a_extension->GetResourceURL("/panel_devtools_page.html"),
+            devtools_extension_a_devtools_rfh->GetLastCommittedURL());
+  EXPECT_EQ(devtools_b_extension->GetResourceURL("/simple_devtools_page.html"),
+            devtools_extension_b_devtools_rfh->GetLastCommittedURL());
+  EXPECT_EQ(devtools_a_extension->GetResourceURL("/panel.html"),
+            devtools_extension_a_panel_rfh->GetLastCommittedURL());
+  EXPECT_EQ(extension_b_page_url,
+            devtools_extension_b_frame_rfh->GetLastCommittedURL());
+
+  // All frames should be in the devtools process.
+  content::SiteInstance* devtools_instance =
+      main_devtools_rfh->GetSiteInstance();
+  EXPECT_TRUE(
+      devtools_instance->GetSiteURL().SchemeIs(content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_a_devtools_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_b_devtools_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_a_panel_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_b_frame_rfh->GetSiteInstance());
+}
+
+// Tests that a devtools extension can still have subframes to itself in a
+// "devtools page" and that they will be rendered within the devtools process as
+// well, not in the extension process.  http://crbug.com/570483
+IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest, DevToolsExtensionInItself) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Install the dynamically-generated extension.
+  const Extension* extension =
+      LoadExtensionForTest("Devtools Extension", "panel_devtools_page.html",
+                           "/simple_test_page.html");
+  ASSERT_TRUE(extension);
+
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+
+  // Wait for the extension's panel to finish loading -- it'll output 'PASS'
+  // when it's installed. waitForTestResultsInConsole waits until that 'PASS'.
+  RunTestFunction(window_, "waitForTestResultsInConsole");
+
+  // Now that we know the panel is loaded, switch to it.
+  GURL extension_test_url = extension->GetResourceURL("/simple_test_page.html");
+  content::TestNavigationManager test_page_manager(main_web_contents(),
+                                                   extension_test_url);
+  SwitchToExtensionPanel(window_, extension, "iframe_panel");
+  test_page_manager.WaitForNavigationFinished();
+
+  std::vector<RenderFrameHost*> rfhs = main_web_contents()->GetAllFrames();
+  EXPECT_EQ(4U, rfhs.size());
+
+  RenderFrameHost* main_devtools_rfh = main_web_contents()->GetMainFrame();
+  RenderFrameHost* devtools_extension_devtools_page_rfh =
+      ChildFrameAt(main_devtools_rfh, 0);
+  RenderFrameHost* devtools_extension_panel_rfh =
+      ChildFrameAt(main_devtools_rfh, 1);
+  RenderFrameHost* devtools_extension_panel_frame_rfh =
+      ChildFrameAt(devtools_extension_panel_rfh, 0);
+
+  // All frames should be in the devtools process, including
+  // simple_test_page.html
+  EXPECT_TRUE(main_devtools_rfh->GetLastCommittedURL().SchemeIs(
+      content::kChromeDevToolsScheme));
+  EXPECT_EQ(extension->GetResourceURL("/panel_devtools_page.html"),
+            devtools_extension_devtools_page_rfh->GetLastCommittedURL());
+  EXPECT_EQ(extension->GetResourceURL("/panel.html"),
+            devtools_extension_panel_rfh->GetLastCommittedURL());
+  EXPECT_EQ(extension_test_url,
+            devtools_extension_panel_frame_rfh->GetLastCommittedURL());
+
+  content::SiteInstance* devtools_instance =
+      main_devtools_rfh->GetSiteInstance();
+  EXPECT_TRUE(
+      devtools_instance->GetSiteURL().SchemeIs(content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_devtools_page_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance, devtools_extension_panel_rfh->GetSiteInstance());
+  EXPECT_EQ(devtools_instance,
+            devtools_extension_panel_frame_rfh->GetSiteInstance());
+}
+
+// Tests that a devtools (not a devtools extension) Iframe can be injected into
+// devtools.  http://crbug.com/570483
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, DevtoolsInDevTools) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL devtools_url = GURL(chrome::kChromeUIDevToolsURL);
+
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+
+  std::string javascript =
+      "var devtoolsFrame = document.createElement('iframe');"
+      "document.body.appendChild(devtoolsFrame);"
+      "devtoolsFrame.src = '" +
+      devtools_url.spec() + "';";
+
+  RenderFrameHost* main_devtools_rfh = main_web_contents()->GetMainFrame();
+
+  content::TestNavigationManager manager(main_web_contents(), devtools_url);
+  ASSERT_TRUE(content::ExecuteScript(main_devtools_rfh, javascript));
+  manager.WaitForNavigationFinished();
+
+  std::vector<RenderFrameHost*> rfhs = main_web_contents()->GetAllFrames();
+  EXPECT_EQ(2U, rfhs.size());
+  RenderFrameHost* devtools_iframe_rfh = ChildFrameAt(main_devtools_rfh, 0);
+  EXPECT_TRUE(main_devtools_rfh->GetLastCommittedURL().SchemeIs(
+      content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_url, devtools_iframe_rfh->GetLastCommittedURL());
+  content::SiteInstance* devtools_instance =
+      main_devtools_rfh->GetSiteInstance();
+  EXPECT_TRUE(
+      devtools_instance->GetSiteURL().SchemeIs(content::kChromeDevToolsScheme));
+  EXPECT_EQ(devtools_instance, devtools_iframe_rfh->GetSiteInstance());
+
+  std::string message;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      devtools_iframe_rfh, "domAutomationController.send(document.origin)",
+      &message));
+  EXPECT_EQ(devtools_url.GetOrigin().spec(), message + "/");
+}
+
+// Some web features, when used from an extension, are subject to browser-side
+// security policy enforcement. Make sure they work properly from inside a
+// devtools extension.
+IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
+                       DevToolsExtensionSecurityPolicyGrants) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   std::unique_ptr<extensions::TestExtensionDir> dir(
       new extensions::TestExtensionDir());
 
   extensions::DictionaryBuilder manifest;
   dir->WriteManifest(extensions::DictionaryBuilder()
-                         .Set("name", "Devtools Panel w/ HTTP Iframe")
+                         .Set("name", "Devtools Panel")
                          .Set("version", "1")
+                         // Whitelist the script we stuff into the 'blob:' URL:
+                         .Set("content_security_policy",
+                              "script-src 'self' "
+                              "'sha256-95xJWHeV+"
+                              "1zjAKQufDVW0misgmR4gCjgpipP2LJ5iis='; "
+                              "object-src 'none'")
                          .Set("manifest_version", 2)
                          .Set("devtools_page", "devtools.html")
                          .ToJSON());
@@ -922,7 +1497,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest, DevToolsExtensionWithHttpIframe) {
 
   dir->WriteFile(
       FILE_PATH_LITERAL("devtools.js"),
-      "chrome.devtools.panels.create('iframe_panel',\n"
+      "chrome.devtools.panels.create('the_panel_name',\n"
       "    null,\n"
       "    'panel.html',\n"
       "    function(panel) {\n"
@@ -930,14 +1505,36 @@ IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest, DevToolsExtensionWithHttpIframe) {
       "    }\n"
       ");\n");
 
-  GURL http_iframe =
-      embedded_test_server()->GetURL("a.com", "/popup_iframe.html");
   dir->WriteFile(FILE_PATH_LITERAL("panel.html"),
-                 "<html><body>Extension panel.<iframe src='" +
-                     http_iframe.spec() + "'></iframe>");
-
+                 "<html><body>A panel."
+                 "<script src='blob_xhr.js'></script>"
+                 "<script src='blob_iframe.js'></script>"
+                 "</body></html>");
+  // Creating blobs from chrome-extension:// origins is only permitted if the
+  // process has been granted permission to commit 'chrome-extension' schemes.
+  dir->WriteFile(
+      FILE_PATH_LITERAL("blob_xhr.js"),
+      "var blob_url = URL.createObjectURL(new Blob(['xhr blob contents']));\n"
+      "var xhr = new XMLHttpRequest();\n"
+      "xhr.open('GET', blob_url, true);\n"
+      "xhr.onload = function (e) {\n"
+      "    domAutomationController.setAutomationId(0);\n"
+      "    domAutomationController.send(xhr.response);\n"
+      "};\n"
+      "xhr.send(null);\n");
+  dir->WriteFile(
+      FILE_PATH_LITERAL("blob_iframe.js"),
+      "var payload = `"
+      "<html><body>iframe blob contents"
+      "<script>"
+      "    domAutomationController.setAutomationId(0);"
+      "    domAutomationController.send(document.body.innerText);\n"
+      "</script></body></html>"
+      "`;"
+      "document.body.appendChild(document.createElement('iframe')).src ="
+      "    URL.createObjectURL(new Blob([payload], {type: 'text/html'}));");
   // Install the extension.
-  const Extension* extension = LoadExtensionFromPath(dir->unpacked_path());
+  const Extension* extension = LoadExtensionFromPath(dir->UnpackedPath());
   ASSERT_TRUE(extension);
 
   // Open a devtools window.
@@ -951,11 +1548,16 @@ IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest, DevToolsExtensionWithHttpIframe) {
   // see a 'DONE' message sent from popup_iframe.html, indicating that it
   // loaded successfully.
   content::DOMMessageQueue message_queue;
-  SwitchToExtensionPanel(window_, extension, "iframe_panel");
+  SwitchToExtensionPanel(window_, extension, "the_panel_name");
   std::string message;
   while (true) {
     ASSERT_TRUE(message_queue.WaitForMessage(&message));
-    if (message == "\"DONE\"")
+    if (message == "\"xhr blob contents\"")
+      break;
+  }
+  while (true) {
+    ASSERT_TRUE(message_queue.WaitForMessage(&message));
+    if (message == "\"iframe blob contents\"")
       break;
   }
 }
@@ -990,6 +1592,13 @@ IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
   RunTest("testContentScriptIsPresent", kPageWithContentScript);
 }
 
+// Tests that console selector shows correct context names.
+IN_PROC_BROWSER_TEST_F(DevToolsExtensionTest,
+                       TestConsoleContextNames) {
+  LoadExtension("simple_content_script");
+  RunTest("testConsoleContextNames", kPageWithContentScript);
+}
+
 // Tests that scripts are not duplicated after Scripts Panel switch.
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest,
                        TestNoScriptDuplicatesOnPanelSwitch) {
@@ -1014,6 +1623,22 @@ IN_PROC_BROWSER_TEST_F(DevToolsSanityTest,
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest,
                        MAYBE_TestPauseWhenScriptIsRunning) {
   RunTest("testPauseWhenScriptIsRunning", kPauseWhenScriptIsRunning);
+}
+
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestTempFileIncognito) {
+  GURL url("about:blank");
+  ui_test_utils::BrowserAddedObserver window_observer;
+  chrome::NewEmptyWindow(browser()->profile()->GetOffTheRecordProfile());
+  Browser* new_browser = window_observer.WaitForSingleNewBrowser();
+  ui_test_utils::NavigateToURL(new_browser, url);
+  DevToolsWindow* window = DevToolsWindowTesting::OpenDevToolsWindowSync(
+      new_browser->tab_strip_model()->GetWebContentsAt(0), false);
+  RunTestFunction(window, "testTempFile");
+  DevToolsWindowTesting::CloseDevToolsWindowSync(window);
+}
+
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestTempFile) {
+  RunTest("testTempFile", kDebuggerTestPage);
 }
 
 // Tests network timing.
@@ -1099,7 +1724,13 @@ IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestDevToolsExternalNavigation) {
 }
 
 // Tests that toolbox window is loaded when DevTools window is undocked.
-IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestToolboxLoadedUndocked) {
+// Crashes on Linux only.  https://crbug.com/702641
+#if defined(OS_LINUX)
+#define MAYBE_TestToolboxLoadedUndocked DISABLED_TestToolboxLoadedUndocked
+#else
+#define MAYBE_TestToolboxLoadedUndocked TestToolboxLoadedUndocked
+#endif
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, MAYBE_TestToolboxLoadedUndocked) {
   OpenDevToolsWindow(kDebuggerTestPage, false);
   ASSERT_TRUE(toolbox_web_contents());
   DevToolsWindow* on_self =
@@ -1185,7 +1816,7 @@ class DevToolsReattachAfterCrashTest : public DevToolsSanityTest {
     ui_test_utils::NavigateToURL(browser(), GURL(content::kChromeUICrashURL));
     crash_observer.Wait();
     content::TestNavigationObserver navigation_observer(GetInspectedTab(), 1);
-    chrome::Reload(browser(), CURRENT_TAB);
+    chrome::Reload(browser(), WindowOpenDisposition::CURRENT_TAB);
     navigation_observer.Wait();
   }
 };
@@ -1216,8 +1847,9 @@ IN_PROC_BROWSER_TEST_F(WorkerDevToolsSanityTest, InspectSharedWorker) {
   RunTest("testSharedWorker", kSharedWorkerTestPage, kSharedWorkerTestWorker);
 }
 
+// Flaky on multiple platforms. See http://crbug.com/432444
 IN_PROC_BROWSER_TEST_F(WorkerDevToolsSanityTest,
-                       PauseInSharedWorkerInitialization) {
+                       DISABLED_PauseInSharedWorkerInitialization) {
   ASSERT_TRUE(spawned_test_server()->Start());
   GURL url = spawned_test_server()->GetURL(kReloadSharedWorkerTestPage);
   ui_test_utils::NavigateToURL(browser(), url);
@@ -1300,9 +1932,9 @@ class DevToolsPixelOutputTests : public DevToolsSanityTest {
 };
 
 // This test enables switches::kUseGpuInTests which causes false positives
-// with MemorySanitizer.
+// with MemorySanitizer. This is also flakey on many configurations.
 #if defined(MEMORY_SANITIZER) || defined(ADDRESS_SANITIZER) || \
-    (defined(OS_CHROMEOS) && defined(OFFICIAL_BUILD))
+    defined(OS_WIN)|| (defined(OS_CHROMEOS) && defined(OFFICIAL_BUILD))
 #define MAYBE_TestScreenshotRecording DISABLED_TestScreenshotRecording
 #else
 #define MAYBE_TestScreenshotRecording TestScreenshotRecording
@@ -1314,25 +1946,21 @@ IN_PROC_BROWSER_TEST_F(DevToolsPixelOutputTests,
 
 // This test enables switches::kUseGpuInTests which causes false positives
 // with MemorySanitizer.
-#if defined(MEMORY_SANITIZER) || defined(ADDRESS_SANITIZER) || defined(OS_WIN)
-#define MAYBE_TestLatencyInfoInstrumentation \
-  DISABLED_TestLatencyInfoInstrumentation
-#else
-#define MAYBE_TestLatencyInfoInstrumentation TestLatencyInfoInstrumentation
-#endif
+// Flaky on multiple platforms https://crbug.com/624215
 IN_PROC_BROWSER_TEST_F(DevToolsPixelOutputTests,
-                       MAYBE_TestLatencyInfoInstrumentation) {
+                       DISABLED_TestLatencyInfoInstrumentation) {
   WebContents* web_contents = GetInspectedTab();
   OpenDevToolsWindow(kLatencyInfoTestPage, false);
   DispatchAndWait("startTimeline");
 
   for (int i = 0; i < 3; ++i) {
-    SimulateMouseEvent(web_contents, blink::WebInputEvent::MouseMove,
+    SimulateMouseEvent(web_contents, blink::WebInputEvent::kMouseMove,
                        gfx::Point(30, 60));
     DispatchInPageAndWait("waitForEvent", "mousemove");
   }
 
-  SimulateMouseClickAt(web_contents, 0, blink::WebPointerProperties::ButtonLeft,
+  SimulateMouseClickAt(web_contents, 0,
+                       blink::WebPointerProperties::Button::kLeft,
                        gfx::Point(30, 60));
   DispatchInPageAndWait("waitForEvent", "click");
 
@@ -1369,10 +1997,10 @@ class StaticURLDataSource : public content::URLDataSource {
       : source_(source), content_(content) {}
 
   std::string GetSource() const override { return source_; }
-  void StartDataRequest(const std::string& path,
-                        int render_process_id,
-                        int render_frame_id,
-                        const GotDataCallback& callback) override {
+  void StartDataRequest(
+      const std::string& path,
+      const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
+      const GotDataCallback& callback) override {
     std::string data(content_);
     callback.Run(base::RefCountedString::TakeString(&data));
   }
@@ -1409,16 +2037,9 @@ class MockWebUIProvider
 // This tests checks that window is correctly initialized when DevTools is
 // opened while navigation through history with forward and back actions.
 // (crbug.com/627407)
-// Flaky on Windows. http://crbug.com/628174#c4
-#if defined(OS_WIN)
-#define MAYBE_TestWindowInitializedOnNavigateBack \
-  DISABLED_TestWindowInitializedOnNavigateBack
-#else
-#define MAYBE_TestWindowInitializedOnNavigateBack \
-  TestWindowInitializedOnNavigateBack
-#endif
+// Flaky on Windows and ChromeOS. http://crbug.com/628174#c4
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest,
-                       MAYBE_TestWindowInitializedOnNavigateBack) {
+                       DISABLED_TestWindowInitializedOnNavigateBack) {
   TestChromeWebUIControllerFactory test_factory;
   MockWebUIProvider mock_provider("dummyurl",
                                   "<script>\n"
@@ -1435,9 +2056,14 @@ IN_PROC_BROWSER_TEST_F(DevToolsSanityTest,
   chrome::DuplicateTab(browser());
   chrome::SelectPreviousTab(browser());
   ui_test_utils::NavigateToURL(browser(), GURL("about:blank"));
-  chrome::GoBack(browser(), CURRENT_TAB);
+  chrome::GoBack(browser(), WindowOpenDisposition::CURRENT_TAB);
   RunTestFunction(window, "testWindowInitializedOnNavigateBack");
 
   DevToolsWindowTesting::CloseDevToolsWindowSync(window);
   content::WebUIControllerFactory::UnregisterFactoryForTesting(&test_factory);
+}
+
+// Tests scripts panel showing.
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestDevToolsSharedWorker) {
+  RunTest("testDevToolsSharedWorker", url::kAboutBlankURL);
 }

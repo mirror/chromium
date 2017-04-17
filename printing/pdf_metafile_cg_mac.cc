@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/strings/sys_string_conversions.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -87,13 +88,15 @@ bool PdfMetafileCg::Init() {
 }
 
 bool PdfMetafileCg::InitFromData(const void* src_buffer,
-                                 uint32_t src_buffer_size) {
+                                 size_t src_buffer_size) {
   DCHECK(!context_.get());
   DCHECK(!pdf_data_.get());
 
-  if (!src_buffer || src_buffer_size == 0) {
+  if (!src_buffer || !src_buffer_size)
     return false;
-  }
+
+  if (!base::IsValueInRangeForNumericType<CFIndex>(src_buffer_size))
+    return false;
 
   pdf_data_.reset(CFDataCreateMutable(kCFAllocatorDefault, src_buffer_size));
   CFDataAppendBytes(pdf_data_, static_cast<const UInt8*>(src_buffer),
@@ -154,10 +157,31 @@ bool PdfMetafileCg::FinishDocument() {
   return true;
 }
 
-bool PdfMetafileCg::RenderPage(unsigned int page_number,
+/* TODO(caryclark): The set up of PluginInstance::PrintPDFOutput may result in
+   rasterized output.  Even if that flow uses PdfMetafileCg::RenderPage,
+   the drawing of the PDF into the canvas may result in a rasterized output.
+   PDFMetafileSkia::RenderPage should be not implemented as shown and instead
+   should do something like the following CL in PluginInstance::PrintPDFOutput:
+   http://codereview.chromium.org/7200040/diff/1/webkit/plugins/ppapi/ppapi_plugin_instance.cc
+*/
+bool PdfMetafileCg::RenderPage(const std::vector<char>& src_buffer,
+                               unsigned int page_number,
                                CGContextRef context,
                                const CGRect rect,
-                               const MacRenderPageParams& params) const {
+                               const PdfMetafileCg::RenderPageParams& params) {
+  PdfMetafileCg metafile;
+  if (!metafile.InitFromData(src_buffer.data(), src_buffer.size())) {
+    LOG(ERROR) << "Unable to initialize PDF document from data";
+    return false;
+  }
+  return metafile.OnRenderPage(page_number, context, rect, params);
+}
+
+bool PdfMetafileCg::OnRenderPage(
+    unsigned int page_number,
+    CGContextRef context,
+    const CGRect rect,
+    const PdfMetafileCg::RenderPageParams& params) {
   CGPDFDocumentRef pdf_doc = GetPDFDocument();
   if (!pdf_doc) {
     LOG(ERROR) << "Unable to create PDF document from data";

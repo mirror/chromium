@@ -8,73 +8,64 @@
 #include "core/CoreExport.h"
 #include "core/dom/DOMArrayBufferView.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class CORE_EXPORT FlexibleArrayBufferView {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(FlexibleArrayBufferView);
-public:
-    FlexibleArrayBufferView()
-        : m_smallData(nullptr)
-        , m_smallLength(0)
-    {
-    }
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(FlexibleArrayBufferView);
 
-    void setFull(DOMArrayBufferView* full) { m_full = full; }
-    void setSmall(void* data, size_t length)
-    {
-        m_smallData = data;
-        m_smallLength = length;
-    }
+ public:
+  FlexibleArrayBufferView() : small_data_(nullptr), small_length_(0) {}
 
-    void clear()
-    {
-        m_full = nullptr;
-        m_smallData = nullptr;
-        m_smallLength = 0;
-    }
+  void SetFull(DOMArrayBufferView* full) { full_ = full; }
+  void SetSmall(void* data, size_t length) {
+    small_data_ = data;
+    small_length_ = length;
+  }
 
-    bool isEmpty() const { return !m_full && !m_smallData; }
-    bool isFull() const { return m_full; }
+  void Clear() {
+    full_ = nullptr;
+    small_data_ = nullptr;
+    small_length_ = 0;
+  }
 
-    DOMArrayBufferView* full() const
-    {
-        DCHECK(isFull());
-        return m_full;
-    }
+  bool IsEmpty() const { return !full_ && !small_data_; }
+  bool IsFull() const { return full_; }
 
-    // WARNING: The pointer returned by baseAddressMaybeOnStack() may point to
-    // temporary storage that is only valid during the life-time of the
-    // FlexibleArrayBufferView object.
-    void* baseAddressMaybeOnStack() const
-    {
-        DCHECK(!isEmpty());
-        return isFull() ? m_full->baseAddress() : m_smallData;
-    }
+  DOMArrayBufferView* Full() const {
+    DCHECK(IsFull());
+    return full_;
+  }
 
-    unsigned byteOffset() const
-    {
-        DCHECK(!isEmpty());
-        return isFull() ? m_full->byteOffset() : 0;
-    }
+  // WARNING: The pointer returned by baseAddressMaybeOnStack() may point to
+  // temporary storage that is only valid during the life-time of the
+  // FlexibleArrayBufferView object.
+  void* BaseAddressMaybeOnStack() const {
+    DCHECK(!IsEmpty());
+    return IsFull() ? full_->BaseAddress() : small_data_;
+  }
 
-    unsigned byteLength() const
-    {
-        DCHECK(!isEmpty());
-        return isFull() ? m_full->byteLength() : m_smallLength;
-    }
+  unsigned ByteOffset() const {
+    DCHECK(!IsEmpty());
+    return IsFull() ? full_->byteOffset() : 0;
+  }
 
-    operator bool() const { return !isEmpty(); }
+  unsigned ByteLength() const {
+    DCHECK(!IsEmpty());
+    return IsFull() ? full_->byteLength() : small_length_;
+  }
 
-private:
-    Member<DOMArrayBufferView> m_full;
+  operator bool() const { return !IsEmpty(); }
 
-    void* m_smallData;
-    size_t m_smallLength;
+ private:
+  Member<DOMArrayBufferView> full_;
+
+  void* small_data_;
+  size_t small_length_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FlexibleArrayBufferView_h
+#endif  // FlexibleArrayBufferView_h

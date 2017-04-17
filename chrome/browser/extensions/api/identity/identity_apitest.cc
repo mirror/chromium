@@ -10,7 +10,6 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
-#include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -19,10 +18,16 @@
 #include "chrome/browser/chromeos/login/users/mock_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
-#include "chrome/browser/chromeos/policy/stub_enterprise_install_attributes.h"
+#include "chrome/browser/chromeos/settings/stub_install_attributes.h"
 #include "extensions/common/extension_builder.h"
 #endif
 #include "chrome/browser/extensions/api/identity/identity_api.h"
+#include "chrome/browser/extensions/api/identity/identity_constants.h"
+#include "chrome/browser/extensions/api/identity/identity_get_accounts_function.h"
+#include "chrome/browser/extensions/api/identity/identity_get_auth_token_function.h"
+#include "chrome/browser/extensions/api/identity/identity_get_profile_user_info_function.h"
+#include "chrome/browser/extensions/api/identity/identity_launch_web_auth_flow_function.h"
+#include "chrome/browser/extensions/api/identity/identity_remove_cached_auth_token_function.h"
 #include "chrome/browser/extensions/component_loader.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -78,45 +83,6 @@ namespace utils = extension_function_test_utils;
 static const char kAccessToken[] = "auth_token";
 static const char kExtensionId[] = "ext_id";
 
-// This helps us be able to wait until an UIThreadExtensionFunction calls
-// SendResponse.
-class SendResponseDelegate
-    : public UIThreadExtensionFunction::DelegateForTests {
- public:
-  SendResponseDelegate() : should_post_quit_(false) {}
-
-  virtual ~SendResponseDelegate() {}
-
-  void set_should_post_quit(bool should_quit) {
-    should_post_quit_ = should_quit;
-  }
-
-  bool HasResponse() {
-    return response_.get() != NULL;
-  }
-
-  bool GetResponse() {
-    EXPECT_TRUE(HasResponse());
-    return *response_;
-  }
-
-  void OnSendResponse(UIThreadExtensionFunction* function,
-                      bool success,
-                      bool bad_message) override {
-    ASSERT_FALSE(bad_message);
-    ASSERT_FALSE(HasResponse());
-    response_.reset(new bool);
-    *response_ = success;
-    if (should_post_quit_) {
-      base::MessageLoopForUI::current()->QuitWhenIdle();
-    }
-  }
-
- private:
-  std::unique_ptr<bool> response_;
-  bool should_post_quit_;
-};
-
 class AsyncExtensionBrowserTest : public ExtensionBrowserTest {
  protected:
   // Asynchronous function runner allows tests to manipulate the browser window
@@ -124,8 +90,7 @@ class AsyncExtensionBrowserTest : public ExtensionBrowserTest {
   void RunFunctionAsync(
       UIThreadExtensionFunction* function,
       const std::string& args) {
-    response_delegate_.reset(new SendResponseDelegate);
-    function->set_test_delegate(response_delegate_.get());
+    response_delegate_.reset(new api_test_utils::SendResponseHelper(function));
     std::unique_ptr<base::ListValue> parsed_args(utils::ParseList(args));
     EXPECT_TRUE(parsed_args.get()) <<
         "Could not parse extension function arguments: " << args;
@@ -144,7 +109,8 @@ class AsyncExtensionBrowserTest : public ExtensionBrowserTest {
 
   std::string WaitForError(UIThreadExtensionFunction* function) {
     RunMessageLoopUntilResponse();
-    EXPECT_FALSE(function->GetResultList()) << "Did not expect a result";
+    CHECK(function->response_type());
+    EXPECT_EQ(ExtensionFunction::FAILED, *function->response_type());
     return function->GetError();
   }
 
@@ -162,16 +128,11 @@ class AsyncExtensionBrowserTest : public ExtensionBrowserTest {
 
  private:
   void RunMessageLoopUntilResponse() {
-    // If the RunAsync of |function| didn't already call SendResponse, run the
-    // message loop until they do.
-    if (!response_delegate_->HasResponse()) {
-      response_delegate_->set_should_post_quit(true);
-      content::RunMessageLoop();
-    }
-    EXPECT_TRUE(response_delegate_->HasResponse());
+    response_delegate_->WaitForResponse();
+    EXPECT_TRUE(response_delegate_->has_response());
   }
 
-  std::unique_ptr<SendResponseDelegate> response_delegate_;
+  std::unique_ptr<api_test_utils::SendResponseHelper> response_delegate_;
 };
 
 class TestHangOAuth2MintTokenFlow : public OAuth2MintTokenFlow {
@@ -313,7 +274,7 @@ class FakeGetAuthTokenFunction : public IdentityGetAuthTokenFunction {
 
   void set_mint_token_result(TestOAuth2MintTokenFlow::ResultType result_type) {
     set_mint_token_flow(
-        base::WrapUnique(new TestOAuth2MintTokenFlow(result_type, this)));
+        base::MakeUnique<TestOAuth2MintTokenFlow>(result_type, this));
   }
 
   void set_scope_ui_failure(GaiaWebAuthFlow::Failure failure) {
@@ -461,7 +422,7 @@ class IdentityGetAccountsFunctionTest : public ExtensionBrowserTest {
          it != results->end();
          ++it) {
       std::unique_ptr<api::identity::AccountInfo> info =
-          api::identity::AccountInfo::FromValue(**it);
+          api::identity::AccountInfo::FromValue(*it);
       if (info.get())
         result_ids.insert(info->id);
       else
@@ -493,11 +454,11 @@ class IdentityGetAccountsFunctionTest : public ExtensionBrowserTest {
     } else {
       for (const auto& result : *results) {
         std::unique_ptr<api::identity::AccountInfo> info =
-            api::identity::AccountInfo::FromValue(*result);
+            api::identity::AccountInfo::FromValue(result);
         if (info.get())
           msg << info->id << " ";
         else
-          msg << *result << "<-" << result->GetType() << " ";
+          msg << result << "<-" << result.GetType() << " ";
       }
     }
 
@@ -1235,7 +1196,7 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, InteractiveQueueShutdown) {
   EXPECT_FALSE(func->scope_ui_shown());
 
   // After the request is canceled, the function will complete.
-  func->OnShutdown();
+  func->Shutdown();
   EXPECT_EQ(std::string(errors::kCanceled), WaitForError(func.get()));
   EXPECT_FALSE(func->login_ui_shown());
   EXPECT_FALSE(func->scope_ui_shown());
@@ -1249,12 +1210,11 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, NoninteractiveShutdown) {
   scoped_refptr<FakeGetAuthTokenFunction> func(new FakeGetAuthTokenFunction());
   func->set_extension(extension.get());
 
-  func->set_mint_token_flow(
-      base::WrapUnique(new TestHangOAuth2MintTokenFlow()));
+  func->set_mint_token_flow(base::MakeUnique<TestHangOAuth2MintTokenFlow>());
   RunFunctionAsync(func.get(), "[{\"interactive\": false}]");
 
   // After the request is canceled, the function will complete.
-  func->OnShutdown();
+  func->Shutdown();
   EXPECT_EQ(std::string(errors::kCanceled), WaitForError(func.get()));
 }
 
@@ -1570,8 +1530,8 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, ScopesDefault) {
 
   const ExtensionTokenKey* token_key = func->GetExtensionTokenKeyForTest();
   EXPECT_EQ(2ul, token_key->scopes.size());
-  EXPECT_TRUE(ContainsKey(token_key->scopes, "scope1"));
-  EXPECT_TRUE(ContainsKey(token_key->scopes, "scope2"));
+  EXPECT_TRUE(base::ContainsKey(token_key->scopes, "scope1"));
+  EXPECT_TRUE(base::ContainsKey(token_key->scopes, "scope2"));
 }
 
 IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, ScopesEmpty) {
@@ -1599,7 +1559,7 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, ScopesEmail) {
 
   const ExtensionTokenKey* token_key = func->GetExtensionTokenKeyForTest();
   EXPECT_EQ(1ul, token_key->scopes.size());
-  EXPECT_TRUE(ContainsKey(token_key->scopes, "email"));
+  EXPECT_TRUE(base::ContainsKey(token_key->scopes, "email"));
 }
 
 IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, ScopesEmailFooBar) {
@@ -1616,9 +1576,9 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, ScopesEmailFooBar) {
 
   const ExtensionTokenKey* token_key = func->GetExtensionTokenKeyForTest();
   EXPECT_EQ(3ul, token_key->scopes.size());
-  EXPECT_TRUE(ContainsKey(token_key->scopes, "email"));
-  EXPECT_TRUE(ContainsKey(token_key->scopes, "foo"));
-  EXPECT_TRUE(ContainsKey(token_key->scopes, "bar"));
+  EXPECT_TRUE(base::ContainsKey(token_key->scopes, "email"));
+  EXPECT_TRUE(base::ContainsKey(token_key->scopes, "foo"));
+  EXPECT_TRUE(base::ContainsKey(token_key->scopes, "bar"));
 }
 
 
@@ -1640,10 +1600,9 @@ class GetAuthTokenFunctionPublicSessionTest : public GetAuthTokenFunctionTest {
 
     // Set up fake install attributes to make the device appeared as
     // enterprise-managed.
-     std::unique_ptr<policy::StubEnterpriseInstallAttributes> attributes(
-         new policy::StubEnterpriseInstallAttributes());
-     attributes->SetDomain("example.com");
-     attributes->SetRegistrationUser("user@example.com");
+     std::unique_ptr<chromeos::StubInstallAttributes> attributes
+         = base::MakeUnique<chromeos::StubInstallAttributes>();
+     attributes->SetCloudManaged("example.com", "fake-id");
      policy::BrowserPolicyConnectorChromeOS::SetInstallAttributesForTesting(
          attributes.release());
   }

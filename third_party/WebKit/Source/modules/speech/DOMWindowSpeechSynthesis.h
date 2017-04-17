@@ -26,7 +26,6 @@
 #ifndef DOMWindowSpeechSynthesis_h
 #define DOMWindowSpeechSynthesis_h
 
-#include "core/frame/DOMWindowProperty.h"
 #include "modules/ModulesExport.h"
 #include "modules/speech/SpeechSynthesis.h"
 #include "platform/Supplementable.h"
@@ -34,25 +33,29 @@
 
 namespace blink {
 
-class DOMWindow;
+class LocalDOMWindow;
+class ScriptState;
 
-class MODULES_EXPORT DOMWindowSpeechSynthesis final : public GarbageCollected<DOMWindowSpeechSynthesis>, public Supplement<LocalDOMWindow>, public DOMWindowProperty {
-    USING_GARBAGE_COLLECTED_MIXIN(DOMWindowSpeechSynthesis);
-public:
-    static SpeechSynthesis* speechSynthesis(DOMWindow&);
-    static DOMWindowSpeechSynthesis& from(LocalDOMWindow&);
+class MODULES_EXPORT DOMWindowSpeechSynthesis final
+    : public GarbageCollected<DOMWindowSpeechSynthesis>,
+      public Supplement<LocalDOMWindow> {
+  USING_GARBAGE_COLLECTED_MIXIN(DOMWindowSpeechSynthesis);
 
-    DECLARE_TRACE();
+ public:
+  static SpeechSynthesis* speechSynthesis(ScriptState*, LocalDOMWindow&);
+  static DOMWindowSpeechSynthesis& From(LocalDOMWindow&);
 
-private:
-    explicit DOMWindowSpeechSynthesis(LocalDOMWindow&);
+  DECLARE_TRACE();
 
-    SpeechSynthesis* speechSynthesis();
-    static const char* supplementName();
+ private:
+  explicit DOMWindowSpeechSynthesis(LocalDOMWindow&);
 
-    Member<SpeechSynthesis> m_speechSynthesis;
+  SpeechSynthesis* speechSynthesis(ScriptState*);
+  static const char* SupplementName();
+
+  Member<SpeechSynthesis> speech_synthesis_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMWindowSpeechSynthesis_h
+#endif  // DOMWindowSpeechSynthesis_h

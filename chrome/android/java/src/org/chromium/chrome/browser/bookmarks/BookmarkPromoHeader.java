@@ -11,13 +11,14 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninAndSyncView;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
-import org.chromium.sync.AndroidSyncSettings;
-import org.chromium.sync.AndroidSyncSettings.AndroidSyncSettingsObserver;
+import org.chromium.components.sync.AndroidSyncSettings;
+import org.chromium.components.sync.AndroidSyncSettings.AndroidSyncSettingsObserver;
 
 /**
  * Class that manages all the logic and UI behind the signin promo header in the bookmark
@@ -42,6 +43,8 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
             "enhanced_bookmark_signin_promo_show_count";
     // TODO(kkimlabs): Figure out the optimal number based on UMA data.
     private static final int MAX_SIGNIN_PROMO_SHOW_COUNT = 5;
+
+    private static boolean sShouldShowForTests;
 
     private Context mContext;
     private SigninManager mSignInManager;
@@ -86,7 +89,7 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
      * @return Whether it should be showing.
      */
     boolean shouldShow() {
-        return mShouldShow;
+        return mShouldShow || sShouldShowForTests;
     }
 
     /**
@@ -153,5 +156,13 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
     @Override
     public void onSignedOut() {
         updateShouldShow(true);
+    }
+
+    /**
+     * Forces the promo to show for testing purposes.
+     */
+    @VisibleForTesting
+    public static void setShouldShowForTests() {
+        sShouldShowForTests = true;
     }
 }

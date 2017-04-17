@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/stl_util.h"
 #include "base/task_runner_util.h"
@@ -17,10 +18,10 @@
 #include "chrome/browser/net/nss_context.h"
 #include "components/ownership/owner_key_util.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 #include "content/public/browser/browser_thread.h"
 #include "crypto/rsa_private_key.h"
 #include "crypto/signature_creator.h"
-#include "policy/proto/device_management_backend.pb.h"
 
 using ownership::OwnerKeyUtil;
 using ownership::PublicKey;
@@ -30,11 +31,7 @@ namespace em = enterprise_management;
 namespace chromeos {
 
 SessionManagerOperation::SessionManagerOperation(const Callback& callback)
-    : session_manager_client_(NULL),
-      callback_(callback),
-      force_key_load_(false),
-      is_loading_(false),
-      weak_factory_(this) {}
+    : callback_(callback), weak_factory_(this) {}
 
 SessionManagerOperation::~SessionManagerOperation() {}
 
@@ -50,7 +47,7 @@ void SessionManagerOperation::Start(
 
 void SessionManagerOperation::RestartLoad(bool key_changed) {
   if (key_changed)
-    public_key_ = NULL;
+    public_key_ = nullptr;
 
   if (!is_loading_)
     return;
@@ -66,8 +63,19 @@ void SessionManagerOperation::StartLoading() {
   if (is_loading_)
     return;
   is_loading_ = true;
-  EnsurePublicKey(base::Bind(&SessionManagerOperation::RetrieveDeviceSettings,
-                             weak_factory_.GetWeakPtr()));
+  if (cloud_validations_) {
+    EnsurePublicKey(base::Bind(&SessionManagerOperation::RetrieveDeviceSettings,
+                               weak_factory_.GetWeakPtr()));
+  } else {
+    RetrieveDeviceSettings();
+  }
+}
+
+void SessionManagerOperation::LoadImmediately() {
+  StorePublicKey(
+      base::Bind(&SessionManagerOperation::BlockingRetrieveDeviceSettings,
+                 weak_factory_.GetWeakPtr()),
+      LoadPublicKey(owner_key_util_, public_key_));
 }
 
 void SessionManagerOperation::ReportResult(
@@ -76,20 +84,17 @@ void SessionManagerOperation::ReportResult(
 }
 
 void SessionManagerOperation::EnsurePublicKey(const base::Closure& callback) {
-  if (force_key_load_ || !public_key_.get() || !public_key_->is_loaded()) {
+  if (force_key_load_ || !public_key_ || !public_key_->is_loaded()) {
     scoped_refptr<base::TaskRunner> task_runner =
         content::BrowserThread::GetBlockingPool()
             ->GetTaskRunnerWithShutdownBehavior(
                 base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
     base::PostTaskAndReplyWithResult(
-        task_runner.get(),
-        FROM_HERE,
-        base::Bind(&SessionManagerOperation::LoadPublicKey,
-                   owner_key_util_,
-                   public_key_),
+        task_runner.get(), FROM_HERE,
+        base::Bind(&SessionManagerOperation::LoadPublicKey, owner_key_util_,
+                   force_key_load_ ? nullptr : public_key_),
         base::Bind(&SessionManagerOperation::StorePublicKey,
-                   weak_factory_.GetWeakPtr(),
-                   callback));
+                   weak_factory_.GetWeakPtr(), callback));
   } else {
     callback.Run();
   }
@@ -102,7 +107,7 @@ scoped_refptr<PublicKey> SessionManagerOperation::LoadPublicKey(
   scoped_refptr<PublicKey> public_key(new PublicKey());
 
   // Keep already-existing public key.
-  if (current_key.get() && current_key->is_loaded()) {
+  if (current_key && current_key->is_loaded()) {
     public_key->data() = current_key->data();
   }
   if (!public_key->is_loaded() && util->IsPublicKeyPresent()) {
@@ -118,7 +123,7 @@ void SessionManagerOperation::StorePublicKey(const base::Closure& callback,
   force_key_load_ = false;
   public_key_ = new_key;
 
-  if (!public_key_.get() || !public_key_->is_loaded()) {
+  if (!public_key_ || !public_key_->is_loaded()) {
     ReportResult(DeviceSettingsService::STORE_KEY_UNAVAILABLE);
     return;
   }
@@ -130,6 +135,11 @@ void SessionManagerOperation::RetrieveDeviceSettings() {
   session_manager_client()->RetrieveDevicePolicy(
       base::Bind(&SessionManagerOperation::ValidateDeviceSettings,
                  weak_factory_.GetWeakPtr()));
+}
+
+void SessionManagerOperation::BlockingRetrieveDeviceSettings() {
+  ValidateDeviceSettings(
+      session_manager_client()->BlockingRetrieveDevicePolicy());
 }
 
 void SessionManagerOperation::ValidateDeviceSettings(
@@ -154,38 +164,53 @@ void SessionManagerOperation::ValidateDeviceSettings(
           pool->GetSequenceToken(),
           base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
 
-  policy::DeviceCloudPolicyValidator* validator =
-      policy::DeviceCloudPolicyValidator::Create(std::move(policy),
-                                                 background_task_runner);
+  std::unique_ptr<policy::DeviceCloudPolicyValidator> validator =
+      base::WrapUnique<policy::DeviceCloudPolicyValidator>(
+          policy::DeviceCloudPolicyValidator::Create(std::move(policy),
+                                                     background_task_runner));
 
-  // Policy auto-generated by session manager doesn't include a timestamp, so
-  // the timestamp shouldn't be verified in that case.
-  //
-  // Additionally, offline devices can get their clock set backwards in time
-  // under some hardware conditions; checking the timestamp now could likely
-  // find a value in the future, and prevent the user from signing-in or
-  // starting guest mode. Tlsdate will eventually fix the clock when the device
-  // is back online, but the network configuration may come from device ONC.
-  //
-  // To prevent all of these issues the timestamp is just not verified when
-  // loading the device policy from the cache. Note that the timestamp is still
-  // verified during enrollment and when a new policy is fetched from the
-  // server.
-  validator->ValidateAgainstCurrentPolicy(
-      policy_data_.get(),
-      policy::CloudPolicyValidatorBase::TIMESTAMP_NOT_REQUIRED,
-      policy::CloudPolicyValidatorBase::DM_TOKEN_NOT_REQUIRED);
+  if (cloud_validations_) {
+    // Policy auto-generated by session manager doesn't include a timestamp, so
+    // the timestamp shouldn't be verified in that case.
+    //
+    // Additionally, offline devices can get their clock set backwards in time
+    // under some hardware conditions; checking the timestamp now could likely
+    // find a value in the future, and prevent the user from signing-in or
+    // starting guest mode. Tlsdate will eventually fix the clock when the
+    // device is back online, but the network configuration may come from device
+    // ONC.
+    //
+    // To prevent all of these issues the timestamp is just not verified when
+    // loading the device policy from session manager. Note that the timestamp
+    // is still verified during enrollment and when a new policy is fetched from
+    // the server.
+    //
+    // The two *_NOT_REQUIRED options are necessary because both the DM token
+    // and the device id are empty for a user logging in on an actual Chrome OS
+    // device that is not enterprise-managed. Note for devs: The strings are not
+    // empty when you test Chrome with target_os = "chromeos" on Linux!
+    validator->ValidateAgainstCurrentPolicy(
+        policy_data_.get(),
+        policy::CloudPolicyValidatorBase::TIMESTAMP_NOT_VALIDATED,
+        policy::CloudPolicyValidatorBase::DM_TOKEN_NOT_REQUIRED,
+        policy::CloudPolicyValidatorBase::DEVICE_ID_NOT_REQUIRED);
+
+    // We don't check the DMServer verification key below, because the signing
+    // key is validated when it is installed.
+    validator->ValidateSignature(public_key_->as_string());
+  }
+
   validator->ValidatePolicyType(policy::dm_protocol::kChromeDevicePolicyType);
   validator->ValidatePayload();
-  // We don't check the DMServer verification key below, because the signing
-  // key is validated when it is installed.
-  validator->ValidateSignature(public_key_->as_string(),
-                               std::string(),  // No key validation check.
-                               std::string(),
-                               false);
-  validator->StartValidation(
-      base::Bind(&SessionManagerOperation::ReportValidatorStatus,
-                 weak_factory_.GetWeakPtr()));
+  if (force_immediate_load_) {
+    validator->RunValidation();
+    ReportValidatorStatus(validator.get());
+  } else {
+    // The Validator will delete itself once validation is complete.
+    validator.release()->StartValidation(
+        base::Bind(&SessionManagerOperation::ReportValidatorStatus,
+                   weak_factory_.GetWeakPtr()));
+  }
 }
 
 void SessionManagerOperation::ReportValidatorStatus(
@@ -209,13 +234,23 @@ void SessionManagerOperation::ReportValidatorStatus(
   ReportResult(status);
 }
 
-LoadSettingsOperation::LoadSettingsOperation(const Callback& callback)
-    : SessionManagerOperation(callback) {}
+LoadSettingsOperation::LoadSettingsOperation(bool force_key_load,
+                                             bool cloud_validations,
+                                             bool force_immediate_load,
+                                             const Callback& callback)
+    : SessionManagerOperation(callback) {
+  force_key_load_ = force_key_load;
+  cloud_validations_ = cloud_validations;
+  force_immediate_load_ = force_immediate_load;
+}
 
 LoadSettingsOperation::~LoadSettingsOperation() {}
 
 void LoadSettingsOperation::Run() {
-  StartLoading();
+  if (force_immediate_load_)
+    LoadImmediately();
+  else
+    StartLoading();
 }
 
 StoreSettingsOperation::StoreSettingsOperation(
@@ -223,7 +258,10 @@ StoreSettingsOperation::StoreSettingsOperation(
     std::unique_ptr<em::PolicyFetchResponse> policy)
     : SessionManagerOperation(callback),
       policy_(std::move(policy)),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  if (policy_->has_new_public_key())
+    force_key_load_ = true;
+}
 
 StoreSettingsOperation::~StoreSettingsOperation() {}
 

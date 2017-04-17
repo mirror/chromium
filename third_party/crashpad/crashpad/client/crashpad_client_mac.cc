@@ -121,6 +121,7 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
   static base::mac::ScopedMachSendRight InitialStart(
       const base::FilePath& handler,
       const base::FilePath& database,
+      const base::FilePath& metrics_dir,
       const std::string& url,
       const std::map<std::string, std::string>& annotations,
       const std::vector<std::string>& arguments,
@@ -159,6 +160,7 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
 
     if (!CommonStart(handler,
                      database,
+                     metrics_dir,
                      url,
                      annotations,
                      arguments,
@@ -170,7 +172,7 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
 
     if (handler_restarter &&
         handler_restarter->StartRestartThread(
-            handler, database, url, annotations, arguments)) {
+            handler, database, metrics_dir, url, annotations, arguments)) {
       // The thread owns the object now.
       ignore_result(handler_restarter.release());
     }
@@ -201,6 +203,7 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
     // be called again for another try.
     CommonStart(handler_,
                 database_,
+                metrics_dir_,
                 url_,
                 annotations_,
                 arguments_,
@@ -216,6 +219,7 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
       : NotifyServer::DefaultInterface(),
         handler_(),
         database_(),
+        metrics_dir_(),
         url_(),
         annotations_(),
         arguments_(),
@@ -244,6 +248,7 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
   //!     rendezvous with it via ChildPortHandshake.
   static bool CommonStart(const base::FilePath& handler,
                           const base::FilePath& database,
+                          const base::FilePath& metrics_dir,
                           const std::string& url,
                           const std::map<std::string, std::string>& annotations,
                           const std::vector<std::string>& arguments,
@@ -319,6 +324,9 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
     }
     if (!database.value().empty()) {
       argv.push_back(FormatArgumentString("database", database.value()));
+    }
+    if (!metrics_dir.value().empty()) {
+      argv.push_back(FormatArgumentString("metrics-dir", metrics_dir.value()));
     }
     if (!url.empty()) {
       argv.push_back(FormatArgumentString("url", url));
@@ -445,11 +453,13 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
 
   bool StartRestartThread(const base::FilePath& handler,
                           const base::FilePath& database,
+                          const base::FilePath& metrics_dir,
                           const std::string& url,
                           const std::map<std::string, std::string>& annotations,
                           const std::vector<std::string>& arguments) {
     handler_ = handler;
     database_ = database;
+    metrics_dir_ = metrics_dir;
     url_ = url;
     annotations_ = annotations;
     arguments_ = arguments;
@@ -501,6 +511,7 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
 
   base::FilePath handler_;
   base::FilePath database_;
+  base::FilePath metrics_dir_;
   std::string url_;
   std::map<std::string, std::string> annotations_;
   std::vector<std::string> arguments_;
@@ -512,8 +523,7 @@ class HandlerStarter final : public NotifyServer::DefaultInterface {
 
 }  // namespace
 
-CrashpadClient::CrashpadClient()
-    : exception_port_() {
+CrashpadClient::CrashpadClient() : exception_port_(MACH_PORT_NULL) {
 }
 
 CrashpadClient::~CrashpadClient() {
@@ -522,18 +532,19 @@ CrashpadClient::~CrashpadClient() {
 bool CrashpadClient::StartHandler(
     const base::FilePath& handler,
     const base::FilePath& database,
+    const base::FilePath& metrics_dir,
     const std::string& url,
     const std::map<std::string, std::string>& annotations,
     const std::vector<std::string>& arguments,
-    bool restartable) {
-  DCHECK(!exception_port_.is_valid());
-
+    bool restartable,
+    bool asynchronous_start) {
   // The “restartable” behavior can only be selected on OS X 10.10 and later. In
   // previous OS versions, if the initial client were to crash while attempting
   // to restart the handler, it would become an unkillable process.
   base::mac::ScopedMachSendRight exception_port(
       HandlerStarter::InitialStart(handler,
                                    database,
+                                   metrics_dir,
                                    url,
                                    annotations,
                                    arguments,
@@ -556,16 +567,44 @@ bool CrashpadClient::SetHandlerMachService(const std::string& service_name) {
   return true;
 }
 
-void CrashpadClient::SetHandlerMachPort(
+bool CrashpadClient::SetHandlerMachPort(
     base::mac::ScopedMachSendRight exception_port) {
+  DCHECK(!exception_port_.is_valid());
   DCHECK(exception_port.is_valid());
-  exception_port_ = std::move(exception_port);
+
+  if (!SetCrashExceptionPorts(exception_port.get())) {
+    return false;
+  }
+
+  exception_port_.swap(exception_port);
+  return true;
 }
 
-bool CrashpadClient::UseHandler() {
+base::mac::ScopedMachSendRight CrashpadClient::GetHandlerMachPort() const {
   DCHECK(exception_port_.is_valid());
 
-  return SetCrashExceptionPorts(exception_port_.get());
+  // For the purposes of this method, only return a port set by
+  // SetHandlerMachPort().
+  //
+  // It would be possible to use task_get_exception_ports() to look up the
+  // EXC_CRASH task exception port, but that’s probably not what users of this
+  // interface really want. If CrashpadClient is asked for the handler Mach
+  // port, it should only return a port that it knows about by virtue of having
+  // set it. It shouldn’t return any EXC_CRASH task exception port in effect if
+  // SetHandlerMachPort() was never called, and it shouldn’t return any
+  // EXC_CRASH task exception port that might be set by other code after
+  // SetHandlerMachPort() is called.
+  //
+  // The caller is accepting its own new ScopedMachSendRight, so increment the
+  // reference count of the underlying right.
+  kern_return_t kr = mach_port_mod_refs(
+      mach_task_self(), exception_port_.get(), MACH_PORT_RIGHT_SEND, 1);
+  if (kr != KERN_SUCCESS) {
+    MACH_LOG(ERROR, kr) << "mach_port_mod_refs";
+    return base::mac::ScopedMachSendRight(MACH_PORT_NULL);
+  }
+
+  return base::mac::ScopedMachSendRight(exception_port_.get());
 }
 
 // static

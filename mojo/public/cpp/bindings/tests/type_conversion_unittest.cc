@@ -23,8 +23,8 @@ struct RedmondNamedRegion {
   std::vector<RedmondRect> rects;
 };
 
-bool AreEqualRectArrays(const Array<test::RectPtr>& rects1,
-                        const Array<test::RectPtr>& rects2) {
+bool AreEqualRectArrays(const std::vector<test::RectPtr>& rects1,
+                        const std::vector<test::RectPtr>& rects2) {
   if (rects1.size() != rects2.size())
     return false;
 
@@ -44,12 +44,8 @@ bool AreEqualRectArrays(const Array<test::RectPtr>& rects1,
 template <>
 struct TypeConverter<test::RectPtr, RedmondRect> {
   static test::RectPtr Convert(const RedmondRect& input) {
-    test::RectPtr rect(test::Rect::New());
-    rect->x = input.left;
-    rect->y = input.top;
-    rect->width = input.right - input.left;
-    rect->height = input.bottom - input.top;
-    return rect;
+    return test::Rect::New(input.left, input.top, input.right - input.left,
+                           input.bottom - input.top);
   }
 };
 
@@ -68,10 +64,8 @@ struct TypeConverter<RedmondRect, test::RectPtr> {
 template <>
 struct TypeConverter<test::NamedRegionPtr, RedmondNamedRegion> {
   static test::NamedRegionPtr Convert(const RedmondNamedRegion& input) {
-    test::NamedRegionPtr region(test::NamedRegion::New());
-    region->name.emplace(input.name);
-    region->rects = Array<test::RectPtr>::From(input.rects).PassStorage();
-    return region;
+    return test::NamedRegion::New(
+        input.name, ConvertTo<std::vector<test::RectPtr>>(input.rects));
   }
 };
 
@@ -93,53 +87,8 @@ struct TypeConverter<RedmondNamedRegion, test::NamedRegionPtr> {
 namespace test {
 namespace {
 
-TEST(TypeConversionTest, String) {
-  const char kText[6] = "hello";
-
-  String a = std::string(kText);
-  String b(kText);
-  String c(static_cast<const char*>(kText));
-
-  EXPECT_EQ(std::string(kText), a.To<std::string>());
-  EXPECT_EQ(std::string(kText), b.To<std::string>());
-  EXPECT_EQ(std::string(kText), c.To<std::string>());
-}
-
-TEST(TypeConversionTest, String_Null) {
-  String a(nullptr);
-  EXPECT_TRUE(a.is_null());
-  EXPECT_EQ(std::string(), a.To<std::string>());
-
-  String b = String::From(static_cast<const char*>(nullptr));
-  EXPECT_TRUE(b.is_null());
-}
-
-TEST(TypeConversionTest, String_Empty) {
-  String a = "";
-  EXPECT_EQ(std::string(), a.To<std::string>());
-
-  String b = std::string();
-  EXPECT_FALSE(b.is_null());
-  EXPECT_EQ(std::string(), b.To<std::string>());
-}
-
-TEST(TypeConversionTest, StringWithEmbeddedNull) {
-  const std::string kText("hel\0lo", 6);
-
-  String a(kText);
-  EXPECT_EQ(kText, a.To<std::string>());
-
-  // Expect truncation:
-  String b(kText.c_str());
-  EXPECT_EQ(std::string("hel"), b.To<std::string>());
-}
-
 TEST(TypeConversionTest, CustomTypeConverter) {
-  RectPtr rect(Rect::New());
-  rect->x = 10;
-  rect->y = 20;
-  rect->width = 50;
-  rect->height = 45;
+  RectPtr rect(Rect::New(10, 20, 50, 45));
 
   RedmondRect rr = rect.To<RedmondRect>();
   EXPECT_EQ(10, rr.left);
@@ -155,9 +104,9 @@ TEST(TypeConversionTest, CustomTypeConverter) {
 }
 
 TEST(TypeConversionTest, CustomTypeConverter_Array_Null) {
-  Array<RectPtr> rects;
+  std::vector<RectPtr> rects;
 
-  std::vector<RedmondRect> redmond_rects = rects.To<std::vector<RedmondRect>>();
+  auto redmond_rects = ConvertTo<std::vector<RedmondRect>>(rects);
 
   EXPECT_TRUE(redmond_rects.empty());
 }
@@ -165,7 +114,7 @@ TEST(TypeConversionTest, CustomTypeConverter_Array_Null) {
 TEST(TypeConversionTest, CustomTypeConverter_Array) {
   const RedmondRect kBase = {10, 20, 30, 40};
 
-  Array<RectPtr> rects(10);
+  std::vector<RectPtr> rects(10);
   for (size_t i = 0; i < rects.size(); ++i) {
     RedmondRect rr = kBase;
     rr.left += static_cast<int32_t>(i);
@@ -173,9 +122,9 @@ TEST(TypeConversionTest, CustomTypeConverter_Array) {
     rects[i] = Rect::From(rr);
   }
 
-  std::vector<RedmondRect> redmond_rects = rects.To<std::vector<RedmondRect>>();
+  auto redmond_rects = ConvertTo<std::vector<RedmondRect>>(rects);
 
-  Array<RectPtr> rects2 = Array<RectPtr>::From(redmond_rects);
+  auto rects2 = ConvertTo<std::vector<RectPtr>>(redmond_rects);
   EXPECT_TRUE(AreEqualRectArrays(rects, rects2));
 }
 

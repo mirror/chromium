@@ -26,58 +26,61 @@
 #ifndef AXSpinButton_h
 #define AXSpinButton_h
 
-#include "core/html/shadow/SpinButtonElement.h"
+#include "core/html/forms/SpinButtonElement.h"
 #include "modules/accessibility/AXMockObject.h"
-
 
 namespace blink {
 
 class AXObjectCacheImpl;
 
 class AXSpinButton final : public AXMockObject {
-    WTF_MAKE_NONCOPYABLE(AXSpinButton);
+  WTF_MAKE_NONCOPYABLE(AXSpinButton);
 
-public:
-    static AXSpinButton* create(AXObjectCacheImpl&);
-    ~AXSpinButton() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static AXSpinButton* Create(AXObjectCacheImpl&);
+  ~AXSpinButton() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    void setSpinButtonElement(SpinButtonElement* spinButton) { m_spinButtonElement = spinButton; }
-    void step(int amount);
+  void SetSpinButtonElement(SpinButtonElement* spin_button) {
+    spin_button_element_ = spin_button;
+  }
+  void Step(int amount);
 
-private:
-    explicit AXSpinButton(AXObjectCacheImpl&);
+ private:
+  explicit AXSpinButton(AXObjectCacheImpl&);
 
-    AccessibilityRole roleValue() const override;
-    bool isSpinButton() const override { return true; }
-    bool isNativeSpinButton() const override { return true; }
-    void addChildren() override;
-    LayoutRect elementRect() const override;
-    void detach() override;
-    void detachFromParent() override;
+  AccessibilityRole RoleValue() const override;
+  bool IsSpinButton() const override { return true; }
+  bool IsNativeSpinButton() const override { return true; }
+  void AddChildren() override;
+  LayoutObject* LayoutObjectForRelativeBounds() const override;
+  void Detach() override;
+  void DetachFromParent() override;
 
-    Member<SpinButtonElement> m_spinButtonElement;
+  Member<SpinButtonElement> spin_button_element_;
 };
 
 class AXSpinButtonPart final : public AXMockObject {
-public:
-    static AXSpinButtonPart* create(AXObjectCacheImpl&);
-    ~AXSpinButtonPart() override { }
-    void setIsIncrementor(bool value) { m_isIncrementor = value; }
+ public:
+  static AXSpinButtonPart* Create(AXObjectCacheImpl&);
+  ~AXSpinButtonPart() override {}
+  void SetIsIncrementor(bool value) { is_incrementor_ = value; }
 
-private:
-    explicit AXSpinButtonPart(AXObjectCacheImpl&);
-    bool m_isIncrementor : 1;
+ private:
+  explicit AXSpinButtonPart(AXObjectCacheImpl&);
+  bool is_incrementor_ : 1;
 
-    bool press() const override;
-    AccessibilityRole roleValue() const override { return ButtonRole; }
-    bool isSpinButtonPart() const override { return true; }
-    LayoutRect elementRect() const override;
+  bool Press() override;
+  AccessibilityRole RoleValue() const override { return kButtonRole; }
+  bool IsSpinButtonPart() const override { return true; }
+  void GetRelativeBounds(AXObject** out_container,
+                         FloatRect& out_bounds_in_container,
+                         SkMatrix44& out_container_transform) const override;
 };
 
-DEFINE_AX_OBJECT_TYPE_CASTS(AXSpinButton, isNativeSpinButton());
-DEFINE_AX_OBJECT_TYPE_CASTS(AXSpinButtonPart, isSpinButtonPart());
+DEFINE_AX_OBJECT_TYPE_CASTS(AXSpinButton, IsNativeSpinButton());
+DEFINE_AX_OBJECT_TYPE_CASTS(AXSpinButtonPart, IsSpinButtonPart());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AXSpinButton_h
+#endif  // AXSpinButton_h

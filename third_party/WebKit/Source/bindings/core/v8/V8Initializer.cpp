@@ -25,18 +25,21 @@
 
 #include "bindings/core/v8/V8Initializer.h"
 
+#include <memory>
+
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/RejectedPromises.h"
 #include "bindings/core/v8/RetainedDOMInfo.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptValue.h"
+#include "bindings/core/v8/ScriptWrappableVisitor.h"
 #include "bindings/core/v8/SourceLocation.h"
+#include "bindings/core/v8/UseCounterCallback.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8DOMException.h"
 #include "bindings/core/v8/V8ErrorEvent.h"
 #include "bindings/core/v8/V8ErrorHandler.h"
 #include "bindings/core/v8/V8GCController.h"
-#include "bindings/core/v8/V8History.h"
 #include "bindings/core/v8/V8IdleTaskRunner.h"
 #include "bindings/core/v8/V8Location.h"
 #include "bindings/core/v8/V8PerContextData.h"
@@ -44,419 +47,543 @@
 #include "bindings/core/v8/V8Window.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/Document.h"
-#include "core/fetch/AccessControlStatus.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/TraceEvent.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/loader/fetch/AccessControlStatus.h"
+#include "platform/weborigin/SecurityViolationReportingPolicy.h"
+#include "platform/wtf/AddressSanitizer.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/WTFString.h"
+#include "platform/wtf/typed_arrays/ArrayBufferContents.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebScheduler.h"
 #include "public/platform/WebThread.h"
-#include "wtf/AddressSanitizer.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/WTFString.h"
-#include "wtf/typed_arrays/ArrayBufferContents.h"
-#include <memory>
-#include <v8-debug.h>
-#include <v8-profiler.h>
+#include "v8/include/v8-debug.h"
+#include "v8/include/v8-profiler.h"
 
 namespace blink {
 
-static Frame* findFrame(v8::Isolate* isolate, v8::Local<v8::Object> host, v8::Local<v8::Value> data)
-{
-    const WrapperTypeInfo* type = WrapperTypeInfo::unwrap(data);
+static Frame* FindFrame(v8::Isolate* isolate,
+                        v8::Local<v8::Object> host,
+                        v8::Local<v8::Value> data) {
+  const WrapperTypeInfo* type = WrapperTypeInfo::Unwrap(data);
 
-    if (V8Window::wrapperTypeInfo.equals(type)) {
-        v8::Local<v8::Object> windowWrapper = V8Window::findInstanceInPrototypeChain(host, isolate);
-        if (windowWrapper.IsEmpty())
-            return 0;
-        return V8Window::toImpl(windowWrapper)->frame();
-    }
+  if (V8Window::wrapperTypeInfo.Equals(type)) {
+    v8::Local<v8::Object> window_wrapper =
+        V8Window::findInstanceInPrototypeChain(host, isolate);
+    if (window_wrapper.IsEmpty())
+      return 0;
+    return V8Window::toImpl(window_wrapper)->GetFrame();
+  }
 
-    if (V8History::wrapperTypeInfo.equals(type))
-        return V8History::toImpl(host)->frame();
+  if (V8Location::wrapperTypeInfo.Equals(type))
+    return V8Location::toImpl(host)->GetFrame();
 
-    if (V8Location::wrapperTypeInfo.equals(type))
-        return V8Location::toImpl(host)->frame();
-
-    // This function can handle only those types listed above.
-    ASSERT_NOT_REACHED();
-    return 0;
+  // This function can handle only those types listed above.
+  ASSERT_NOT_REACHED();
+  return 0;
 }
 
-static void reportFatalErrorInMainThread(const char* location, const char* message)
-{
-    int memoryUsageMB = Platform::current()->actualMemoryUsageMB();
-    DVLOG(1) << "V8 error: " << message << " (" << location << ").  Current memory usage: " << memoryUsageMB << " MB";
-    CRASH();
+static void ReportFatalErrorInMainThread(const char* location,
+                                         const char* message) {
+  int memory_usage_mb = Platform::Current()->ActualMemoryUsageMB();
+  DVLOG(1) << "V8 error: " << message << " (" << location
+           << ").  Current memory usage: " << memory_usage_mb << " MB";
+  CRASH();
 }
 
-static void reportOOMErrorInMainThread(const char* location, bool isJsHeap)
-{
-    int memoryUsageMB = Platform::current()->actualMemoryUsageMB();
-    DVLOG(1) << "V8 " << (isJsHeap ? "javascript" : "process") << " OOM: (" << location << ").  Current memory usage: " << memoryUsageMB << " MB";
-    OOM_CRASH();
+static void ReportOOMErrorInMainThread(const char* location, bool is_js_heap) {
+  int memory_usage_mb = Platform::Current()->ActualMemoryUsageMB();
+  DVLOG(1) << "V8 " << (is_js_heap ? "javascript" : "process") << " OOM: ("
+           << location << ").  Current memory usage: " << memory_usage_mb
+           << " MB";
+  OOM_CRASH();
 }
 
-static String extractMessageForConsole(v8::Isolate* isolate, v8::Local<v8::Value> data)
-{
-    if (V8DOMWrapper::isWrapper(isolate, data)) {
-        v8::Local<v8::Object> obj = v8::Local<v8::Object>::Cast(data);
-        const WrapperTypeInfo* type = toWrapperTypeInfo(obj);
-        if (V8DOMException::wrapperTypeInfo.isSubclass(type)) {
-            DOMException* exception = V8DOMException::toImpl(obj);
-            if (exception && !exception->messageForConsole().isEmpty())
-                return exception->toStringForConsole();
-        }
+static String ExtractMessageForConsole(v8::Isolate* isolate,
+                                       v8::Local<v8::Value> data) {
+  if (V8DOMWrapper::IsWrapper(isolate, data)) {
+    v8::Local<v8::Object> obj = v8::Local<v8::Object>::Cast(data);
+    const WrapperTypeInfo* type = ToWrapperTypeInfo(obj);
+    if (V8DOMException::wrapperTypeInfo.IsSubclass(type)) {
+      DOMException* exception = V8DOMException::toImpl(obj);
+      if (exception && !exception->MessageForConsole().IsEmpty())
+        return exception->ToStringForConsole();
     }
-    return emptyString();
+  }
+  return g_empty_string;
 }
 
-static void messageHandlerInMainThread(v8::Local<v8::Message> message, v8::Local<v8::Value> data)
-{
-    ASSERT(isMainThread());
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+namespace {
+MessageLevel MessageLevelFromNonFatalErrorLevel(int error_level) {
+  MessageLevel level = kErrorMessageLevel;
+  switch (error_level) {
+    case v8::Isolate::kMessageDebug:
+      level = kVerboseMessageLevel;
+      break;
+    case v8::Isolate::kMessageLog:
+    case v8::Isolate::kMessageInfo:
+      level = kInfoMessageLevel;
+      break;
+    case v8::Isolate::kMessageWarning:
+      level = kWarningMessageLevel;
+      break;
+    case v8::Isolate::kMessageError:
+      level = kInfoMessageLevel;
+      break;
+    default:
+      NOTREACHED();
+  }
+  return level;
+}
 
-    if (isolate->GetEnteredContext().IsEmpty())
-        return;
+// NOTE: when editing this, please also edit the error messages we throw when
+// the size is exceeded (see uses of the constant), which use the human-friendly
+// "4KB" text.
+const size_t kWasmWireBytesLimit = 1 << 12;
 
-    // If called during context initialization, there will be no entered context.
-    ScriptState* scriptState = ScriptState::current(isolate);
-    if (!scriptState->contextIsValid())
-        return;
+}  // namespace
 
-    ExecutionContext* context = scriptState->getExecutionContext();
-    std::unique_ptr<SourceLocation> location = SourceLocation::fromMessage(isolate, message, context);
+void V8Initializer::MessageHandlerInMainThread(v8::Local<v8::Message> message,
+                                               v8::Local<v8::Value> data) {
+  ASSERT(IsMainThread());
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
-    AccessControlStatus accessControlStatus = NotSharableCrossOrigin;
-    if (message->IsOpaque())
-        accessControlStatus = OpaqueResource;
-    else if (message->IsSharedCrossOrigin())
-        accessControlStatus = SharableCrossOrigin;
+  if (isolate->GetEnteredContext().IsEmpty())
+    return;
 
-    ErrorEvent* event = ErrorEvent::create(toCoreStringWithNullCheck(message->Get()), std::move(location), &scriptState->world());
+  // If called during context initialization, there will be no entered context.
+  ScriptState* script_state = ScriptState::Current(isolate);
+  if (!script_state->ContextIsValid())
+    return;
 
-    String messageForConsole = extractMessageForConsole(isolate, data);
-    if (!messageForConsole.isEmpty())
-        event->setUnsanitizedMessage("Uncaught " + messageForConsole);
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  std::unique_ptr<SourceLocation> location =
+      SourceLocation::FromMessage(isolate, message, context);
 
-    // This method might be called while we're creating a new context. In this case, we
-    // avoid storing the exception object, as we can't create a wrapper during context creation.
-    // FIXME: Can we even get here during initialization now that we bail out when GetEntered returns an empty handle?
-    if (context->isDocument()) {
-        LocalFrame* frame = toDocument(context)->frame();
-        if (frame && frame->script().existingWindowProxy(scriptState->world())) {
-            V8ErrorHandler::storeExceptionOnErrorEventWrapper(scriptState, event, data, scriptState->context()->Global());
-        }
-    }
+  if (message->ErrorLevel() != v8::Isolate::kMessageError) {
+    context->AddConsoleMessage(ConsoleMessage::Create(
+        kJSMessageSource,
+        MessageLevelFromNonFatalErrorLevel(message->ErrorLevel()),
+        ToCoreStringWithNullCheck(message->Get()), std::move(location)));
+    return;
+  }
 
-    if (scriptState->world().isPrivateScriptIsolatedWorld()) {
-        // We allow a private script to dispatch error events even in a EventDispatchForbiddenScope scope.
-        // Without having this ability, it's hard to debug the private script because syntax errors
-        // in the private script are not reported to console (the private script just crashes silently).
-        // Allowing error events in private scripts is safe because error events don't propagate to
-        // other isolated worlds (which means that the error events won't fire any event listeners
-        // in user's scripts).
-        EventDispatchForbiddenScope::AllowUserAgentEvents allowUserAgentEvents;
-        context->reportException(event, accessControlStatus);
-    } else {
-        context->reportException(event, accessControlStatus);
-    }
+  AccessControlStatus access_control_status = kNotSharableCrossOrigin;
+  if (message->IsOpaque())
+    access_control_status = kOpaqueResource;
+  else if (message->IsSharedCrossOrigin())
+    access_control_status = kSharableCrossOrigin;
+
+  ErrorEvent* event =
+      ErrorEvent::Create(ToCoreStringWithNullCheck(message->Get()),
+                         std::move(location), &script_state->World());
+
+  String message_for_console = ExtractMessageForConsole(isolate, data);
+  if (!message_for_console.IsEmpty())
+    event->SetUnsanitizedMessage("Uncaught " + message_for_console);
+
+  V8ErrorHandler::StoreExceptionOnErrorEventWrapper(
+      script_state, event, data, script_state->GetContext()->Global());
+  context->DispatchErrorEvent(event, access_control_status);
 }
 
 namespace {
 
-static RejectedPromises& rejectedPromisesOnMainThread()
-{
-    ASSERT(isMainThread());
-    DEFINE_STATIC_LOCAL(RefPtr<RejectedPromises>, rejectedPromises, (RejectedPromises::create()));
-    return *rejectedPromises;
+static RejectedPromises& RejectedPromisesOnMainThread() {
+  ASSERT(IsMainThread());
+  DEFINE_STATIC_LOCAL(RefPtr<RejectedPromises>, rejected_promises,
+                      (RejectedPromises::Create()));
+  return *rejected_promises;
 }
 
-} // namespace
+}  // namespace
 
-void V8Initializer::reportRejectedPromisesOnMainThread()
-{
-    rejectedPromisesOnMainThread().processQueue();
+void V8Initializer::ReportRejectedPromisesOnMainThread() {
+  RejectedPromisesOnMainThread().ProcessQueue();
 }
 
-static void promiseRejectHandler(v8::PromiseRejectMessage data, RejectedPromises& rejectedPromises, ScriptState* scriptState)
-{
-    if (data.GetEvent() == v8::kPromiseHandlerAddedAfterReject) {
-        rejectedPromises.handlerAdded(data);
-        return;
-    }
+static void PromiseRejectHandler(v8::PromiseRejectMessage data,
+                                 RejectedPromises& rejected_promises,
+                                 ScriptState* script_state) {
+  if (data.GetEvent() == v8::kPromiseHandlerAddedAfterReject) {
+    rejected_promises.HandlerAdded(data);
+    return;
+  }
 
-    ASSERT(data.GetEvent() == v8::kPromiseRejectWithNoHandler);
+  ASSERT(data.GetEvent() == v8::kPromiseRejectWithNoHandler);
 
-    v8::Local<v8::Promise> promise = data.GetPromise();
-    v8::Isolate* isolate = promise->GetIsolate();
-    ExecutionContext* context = scriptState->getExecutionContext();
+  v8::Local<v8::Promise> promise = data.GetPromise();
+  v8::Isolate* isolate = promise->GetIsolate();
+  ExecutionContext* context = ExecutionContext::From(script_state);
 
-    v8::Local<v8::Value> exception = data.GetValue();
-    if (V8DOMWrapper::isWrapper(isolate, exception)) {
-        // Try to get the stack & location from a wrapped exception object (e.g. DOMException).
-        ASSERT(exception->IsObject());
-        auto privateError = V8PrivateProperty::getDOMExceptionError(isolate);
-        v8::Local<v8::Value> error = privateError.getOrUndefined(scriptState->context(), exception.As<v8::Object>());
-        if (!error->IsUndefined())
-            exception = error;
-    }
+  v8::Local<v8::Value> exception = data.GetValue();
+  if (V8DOMWrapper::IsWrapper(isolate, exception)) {
+    // Try to get the stack & location from a wrapped exception object (e.g.
+    // DOMException).
+    ASSERT(exception->IsObject());
+    auto private_error = V8PrivateProperty::GetDOMExceptionError(isolate);
+    v8::Local<v8::Value> error =
+        private_error.GetOrUndefined(exception.As<v8::Object>());
+    if (!error->IsUndefined())
+      exception = error;
+  }
 
-    String errorMessage;
-    AccessControlStatus corsStatus = NotSharableCrossOrigin;
-    std::unique_ptr<SourceLocation> location;
+  String error_message;
+  AccessControlStatus cors_status = kNotSharableCrossOrigin;
+  std::unique_ptr<SourceLocation> location;
 
-    v8::Local<v8::Message> message = v8::Exception::CreateMessage(isolate, exception);
-    if (!message.IsEmpty()) {
-        // message->Get() can be empty here. https://crbug.com/450330
-        errorMessage = toCoreStringWithNullCheck(message->Get());
-        location = SourceLocation::fromMessage(isolate, message, context);
-        if (message->IsSharedCrossOrigin())
-            corsStatus = SharableCrossOrigin;
-    } else {
-        location = SourceLocation::create(context->url().getString(), 0, 0, nullptr);
-    }
+  v8::Local<v8::Message> message =
+      v8::Exception::CreateMessage(isolate, exception);
+  if (!message.IsEmpty()) {
+    // message->Get() can be empty here. https://crbug.com/450330
+    error_message = ToCoreStringWithNullCheck(message->Get());
+    location = SourceLocation::FromMessage(isolate, message, context);
+    if (message->IsSharedCrossOrigin())
+      cors_status = kSharableCrossOrigin;
+  } else {
+    location =
+        SourceLocation::Create(context->Url().GetString(), 0, 0, nullptr);
+  }
 
-    String messageForConsole = extractMessageForConsole(isolate, data.GetValue());
-    if (!messageForConsole.isEmpty())
-        errorMessage = "Uncaught " + messageForConsole;
+  String message_for_console =
+      ExtractMessageForConsole(isolate, data.GetValue());
+  if (!message_for_console.IsEmpty())
+    error_message = "Uncaught " + message_for_console;
 
-    rejectedPromises.rejectedWithNoHandler(scriptState, data, errorMessage, std::move(location), corsStatus);
+  rejected_promises.RejectedWithNoHandler(script_state, data, error_message,
+                                          std::move(location), cors_status);
 }
 
-static void promiseRejectHandlerInMainThread(v8::PromiseRejectMessage data)
-{
-    ASSERT(isMainThread());
+static void PromiseRejectHandlerInMainThread(v8::PromiseRejectMessage data) {
+  ASSERT(IsMainThread());
 
-    v8::Local<v8::Promise> promise = data.GetPromise();
+  v8::Local<v8::Promise> promise = data.GetPromise();
 
-    v8::Isolate* isolate = promise->GetIsolate();
+  v8::Isolate* isolate = promise->GetIsolate();
 
-    // TODO(ikilpatrick): Remove this check, extensions tests that use
-    // extensions::ModuleSystemTest incorrectly don't have a valid script state.
-    LocalDOMWindow* window = currentDOMWindow(isolate);
-    if (!window || !window->isCurrentlyDisplayedInFrame())
-        return;
+  // TODO(ikilpatrick): Remove this check, extensions tests that use
+  // extensions::ModuleSystemTest incorrectly don't have a valid script state.
+  LocalDOMWindow* window = CurrentDOMWindow(isolate);
+  if (!window || !window->IsCurrentlyDisplayedInFrame())
+    return;
 
-    // Bail out if called during context initialization.
-    ScriptState* scriptState = ScriptState::current(isolate);
-    if (!scriptState->contextIsValid())
-        return;
+  // Bail out if called during context initialization.
+  ScriptState* script_state = ScriptState::Current(isolate);
+  if (!script_state->ContextIsValid())
+    return;
 
-    promiseRejectHandler(data, rejectedPromisesOnMainThread(), scriptState);
+  PromiseRejectHandler(data, RejectedPromisesOnMainThread(), script_state);
 }
 
-static void promiseRejectHandlerInWorker(v8::PromiseRejectMessage data)
-{
-    v8::Local<v8::Promise> promise = data.GetPromise();
+static void PromiseRejectHandlerInWorker(v8::PromiseRejectMessage data) {
+  v8::Local<v8::Promise> promise = data.GetPromise();
 
-    // Bail out if called during context initialization.
-    v8::Isolate* isolate = promise->GetIsolate();
-    ScriptState* scriptState = ScriptState::current(isolate);
-    if (!scriptState->contextIsValid())
-        return;
+  // Bail out if called during context initialization.
+  v8::Isolate* isolate = promise->GetIsolate();
+  ScriptState* script_state = ScriptState::Current(isolate);
+  if (!script_state->ContextIsValid())
+    return;
 
-    ExecutionContext* executionContext = scriptState->getExecutionContext();
-    if (!executionContext)
-        return;
+  ExecutionContext* execution_context = ExecutionContext::From(script_state);
+  if (!execution_context)
+    return;
 
-    ASSERT(executionContext->isWorkerGlobalScope());
-    WorkerOrWorkletScriptController* scriptController = toWorkerGlobalScope(executionContext)->scriptController();
-    ASSERT(scriptController);
+  ASSERT(execution_context->IsWorkerGlobalScope());
+  WorkerOrWorkletScriptController* script_controller =
+      ToWorkerGlobalScope(execution_context)->ScriptController();
+  ASSERT(script_controller);
 
-    promiseRejectHandler(data, *scriptController->getRejectedPromises(), scriptState);
+  PromiseRejectHandler(data, *script_controller->GetRejectedPromises(),
+                       script_state);
 }
 
-static void failedAccessCheckCallbackInMainThread(v8::Local<v8::Object> host, v8::AccessType type, v8::Local<v8::Value> data)
-{
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    Frame* target = findFrame(isolate, host, data);
-    if (!target)
-        return;
-    DOMWindow* targetWindow = target->domWindow();
-
-    // FIXME: We should modify V8 to pass in more contextual information (context, property, and object).
-    ExceptionState exceptionState(ExceptionState::UnknownContext, 0, 0, isolate->GetCurrentContext()->Global(), isolate);
-    exceptionState.throwSecurityError(targetWindow->sanitizedCrossDomainAccessErrorMessage(currentDOMWindow(isolate)), targetWindow->crossDomainAccessErrorMessage(currentDOMWindow(isolate)));
-    exceptionState.throwIfNeeded();
+static void FailedAccessCheckCallbackInMainThread(v8::Local<v8::Object> host,
+                                                  v8::AccessType type,
+                                                  v8::Local<v8::Value> data) {
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  Frame* target = FindFrame(isolate, host, data);
+  // FIXME: We should modify V8 to pass in more contextual information (context,
+  // property, and object).
+  BindingSecurity::FailedAccessCheckFor(isolate, target);
 }
 
-static bool codeGenerationCheckCallbackInMainThread(v8::Local<v8::Context> context)
-{
-    if (ExecutionContext* executionContext = toExecutionContext(context)) {
-        if (ContentSecurityPolicy* policy = toDocument(executionContext)->contentSecurityPolicy())
-            return policy->allowEval(ScriptState::from(context), ContentSecurityPolicy::SendReport, ContentSecurityPolicy::WillThrowException);
-    }
+static bool CodeGenerationCheckCallbackInMainThread(
+    v8::Local<v8::Context> context) {
+  if (ExecutionContext* execution_context = ToExecutionContext(context)) {
+    if (ContentSecurityPolicy* policy =
+            ToDocument(execution_context)->GetContentSecurityPolicy())
+      return policy->AllowEval(ScriptState::From(context),
+                               SecurityViolationReportingPolicy::kReport,
+                               ContentSecurityPolicy::kWillThrowException);
+  }
+  return false;
+}
+
+v8::Local<v8::Value> NewRangeException(v8::Isolate* isolate,
+                                       const char* message) {
+  return v8::Exception::RangeError(
+      v8::String::NewFromOneByte(isolate,
+                                 reinterpret_cast<const uint8_t*>(message),
+                                 v8::NewStringType::kNormal)
+          .ToLocalChecked());
+}
+
+void ThrowRangeException(v8::Isolate* isolate, const char* message) {
+  isolate->ThrowException(NewRangeException(isolate, message));
+}
+
+static bool WasmModuleOverride(
+    const v8::FunctionCallbackInfo<v8::Value>& args) {
+  // Return false if we want the base behavior to proceed.
+  if (!WTF::IsMainThread() || args.Length() < 1)
     return false;
+  v8::Local<v8::Value> source = args[0];
+  if ((source->IsArrayBuffer() &&
+       v8::Local<v8::ArrayBuffer>::Cast(source)->ByteLength() >
+           kWasmWireBytesLimit) ||
+      (source->IsArrayBufferView() &&
+       v8::Local<v8::ArrayBufferView>::Cast(source)->ByteLength() >
+           kWasmWireBytesLimit)) {
+    ThrowRangeException(args.GetIsolate(),
+                        "WebAssembly.Compile is disallowed on the main thread, "
+                        "if the buffer size is larger than 4KB. Use "
+                        "WebAssembly.compile, or compile on a worker thread.");
+    // Return true because we injected new behavior and we do not
+    // want the default behavior.
+    return true;
+  }
+  return false;
 }
 
-static void initializeV8Common(v8::Isolate* isolate)
-{
-    isolate->AddGCPrologueCallback(V8GCController::gcPrologue);
-    isolate->AddGCEpilogueCallback(V8GCController::gcEpilogue);
-    if (RuntimeEnabledFeatures::traceWrappablesEnabled()) {
-        std::unique_ptr<ScriptWrappableVisitor> visitor(new ScriptWrappableVisitor(isolate));
-        isolate->SetEmbedderHeapTracer(visitor.get());
-        V8PerIsolateData::from(isolate)->setScriptWrappableVisitor(std::move(visitor));
-    }
+static bool WasmInstanceOverride(
+    const v8::FunctionCallbackInfo<v8::Value>& args) {
+  // Return false if we want the base behavior to proceed.
+  if (!WTF::IsMainThread() || args.Length() < 1)
+    return false;
+  v8::Local<v8::Value> source = args[0];
+  if (!source->IsWebAssemblyCompiledModule())
+    return false;
 
-    v8::Debug::SetLiveEditEnabled(isolate, false);
+  v8::Local<v8::WasmCompiledModule> module =
+      v8::Local<v8::WasmCompiledModule>::Cast(source);
+  if (static_cast<size_t>(module->GetWasmWireBytes()->Length()) >
+      kWasmWireBytesLimit) {
+    ThrowRangeException(
+        args.GetIsolate(),
+        "WebAssembly.Instance is disallowed on the main thread, "
+        "if the buffer size is larger than 4KB. Use "
+        "WebAssembly.instantiate.");
+    return true;
+  }
+  return false;
+}
 
-    isolate->SetMicrotasksPolicy(v8::MicrotasksPolicy::kScoped);
+static void InitializeV8Common(v8::Isolate* isolate) {
+  isolate->AddGCPrologueCallback(V8GCController::GcPrologue);
+  isolate->AddGCEpilogueCallback(V8GCController::GcEpilogue);
+  std::unique_ptr<ScriptWrappableVisitor> visitor(
+      new ScriptWrappableVisitor(isolate));
+  V8PerIsolateData::From(isolate)->SetScriptWrappableVisitor(
+      std::move(visitor));
+  isolate->SetEmbedderHeapTracer(
+      V8PerIsolateData::From(isolate)->GetScriptWrappableVisitor());
+
+  isolate->SetMicrotasksPolicy(v8::MicrotasksPolicy::kScoped);
+
+  isolate->SetUseCounterCallback(&UseCounterCallback);
+  isolate->SetWasmModuleCallback(WasmModuleOverride);
+  isolate->SetWasmInstanceCallback(WasmInstanceOverride);
 }
 
 namespace {
 
 class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
-    // Allocate() methods return null to signal allocation failure to V8, which should respond by throwing
-    // a RangeError, per http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
-    void* Allocate(size_t size) override
-    {
-        void* data;
-        WTF::ArrayBufferContents::allocateMemoryOrNull(size, WTF::ArrayBufferContents::ZeroInitialize, data);
-        return data;
-    }
+  // Allocate() methods return null to signal allocation failure to V8, which
+  // should respond by throwing a RangeError, per
+  // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
+  void* Allocate(size_t size) override {
+    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
+        size, WTF::ArrayBufferContents::kZeroInitialize);
+  }
 
-    void* AllocateUninitialized(size_t size) override
-    {
-        void* data;
-        WTF::ArrayBufferContents::allocateMemoryOrNull(size, WTF::ArrayBufferContents::DontInitialize, data);
-        return data;
-    }
+  void* AllocateUninitialized(size_t size) override {
+    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
+        size, WTF::ArrayBufferContents::kDontInitialize);
+  }
 
-    void Free(void* data, size_t size) override
-    {
-        WTF::ArrayBufferContents::freeMemory(data, size);
-    }
+  void Free(void* data, size_t size) override {
+    WTF::ArrayBufferContents::FreeMemory(data);
+  }
 };
 
-} // namespace
+}  // namespace
 
-static void adjustAmountOfExternalAllocatedMemory(int64_t size)
-{
-#if ENABLE(ASSERT)
-    static int64_t totalSize = 0;
-    totalSize += size;
-    DCHECK_GE(totalSize, 0);
+static void AdjustAmountOfExternalAllocatedMemory(int64_t diff) {
+#if DCHECK_IS_ON()
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(int64_t, process_total, new int64_t(0));
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, mutex, new Mutex);
+  {
+    MutexLocker locker(mutex);
+
+    process_total += diff;
+    DCHECK_GE(process_total, 0)
+        << "total amount = " << process_total << ", diff = " << diff;
+  }
 #endif
 
-    v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(size);
+  v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(diff);
 }
 
-void V8Initializer::initializeMainThread()
-{
-    ASSERT(isMainThread());
+void V8Initializer::InitializeMainThread() {
+  ASSERT(IsMainThread());
 
-    WTF::ArrayBufferContents::initialize(adjustAmountOfExternalAllocatedMemory);
+  WTF::ArrayBufferContents::Initialize(AdjustAmountOfExternalAllocatedMemory);
 
-    DEFINE_STATIC_LOCAL(ArrayBufferAllocator, arrayBufferAllocator, ());
-    auto v8ExtrasMode = RuntimeEnabledFeatures::experimentalV8ExtrasEnabled() ? gin::IsolateHolder::kStableAndExperimentalV8Extras : gin::IsolateHolder::kStableV8Extras;
-    gin::IsolateHolder::Initialize(gin::IsolateHolder::kNonStrictMode, v8ExtrasMode, &arrayBufferAllocator);
+  DEFINE_STATIC_LOCAL(ArrayBufferAllocator, array_buffer_allocator, ());
+  auto v8_extras_mode = RuntimeEnabledFeatures::experimentalV8ExtrasEnabled()
+                            ? gin::IsolateHolder::kStableAndExperimentalV8Extras
+                            : gin::IsolateHolder::kStableV8Extras;
+  gin::IsolateHolder::Initialize(gin::IsolateHolder::kNonStrictMode,
+                                 v8_extras_mode, &array_buffer_allocator);
 
-    v8::Isolate* isolate = V8PerIsolateData::initialize();
+  // NOTE: Some threads (namely utility threads) don't have a scheduler.
+  WebScheduler* scheduler = Platform::Current()->CurrentThread()->Scheduler();
+  // When timer task runner is used for PerIsolateData, GC tasks are getting
+  // throttled and memory usage goes up. For now we're using loading task queue
+  // to prevent this.
+  // TODO(altimin): Consider switching to timerTaskRunner here.
+  v8::Isolate* isolate = V8PerIsolateData::Initialize(
+      scheduler ? scheduler->LoadingTaskRunner()
+                : Platform::Current()->CurrentThread()->GetWebTaskRunner());
 
-    initializeV8Common(isolate);
+  InitializeV8Common(isolate);
 
-    isolate->SetOOMErrorHandler(reportOOMErrorInMainThread);
-    isolate->SetFatalErrorHandler(reportFatalErrorInMainThread);
-    isolate->AddMessageListener(messageHandlerInMainThread);
-    isolate->SetFailedAccessCheckCallbackFunction(failedAccessCheckCallbackInMainThread);
-    isolate->SetAllowCodeGenerationFromStringsCallback(codeGenerationCheckCallbackInMainThread);
+  isolate->SetOOMErrorHandler(ReportOOMErrorInMainThread);
+  isolate->SetFatalErrorHandler(ReportFatalErrorInMainThread);
+  isolate->AddMessageListenerWithErrorLevel(
+      MessageHandlerInMainThread,
+      v8::Isolate::kMessageError | v8::Isolate::kMessageWarning |
+          v8::Isolate::kMessageInfo | v8::Isolate::kMessageDebug |
+          v8::Isolate::kMessageLog);
+  isolate->SetFailedAccessCheckCallbackFunction(
+      FailedAccessCheckCallbackInMainThread);
+  isolate->SetAllowCodeGenerationFromStringsCallback(
+      CodeGenerationCheckCallbackInMainThread);
+  if (RuntimeEnabledFeatures::v8IdleTasksEnabled()) {
+    V8PerIsolateData::EnableIdleTasks(
+        isolate, WTF::MakeUnique<V8IdleTaskRunner>(scheduler));
+  }
 
-    if (RuntimeEnabledFeatures::v8IdleTasksEnabled()) {
-        WebScheduler* scheduler = Platform::current()->currentThread()->scheduler();
-        V8PerIsolateData::enableIdleTasks(isolate, wrapUnique(new V8IdleTaskRunner(scheduler)));
-    }
+  isolate->SetPromiseRejectCallback(PromiseRejectHandlerInMainThread);
 
-    isolate->SetPromiseRejectCallback(promiseRejectHandlerInMainThread);
+  if (v8::HeapProfiler* profiler = isolate->GetHeapProfiler()) {
+    profiler->SetWrapperClassInfoProvider(
+        WrapperTypeInfo::kNodeClassId, &RetainedDOMInfo::CreateRetainedDOMInfo);
+    profiler->SetGetRetainerInfosCallback(&V8GCController::GetRetainerInfos);
+  }
 
-    if (v8::HeapProfiler* profiler = isolate->GetHeapProfiler())
-        profiler->SetWrapperClassInfoProvider(WrapperTypeInfo::NodeClassId, &RetainedDOMInfo::createRetainedDOMInfo);
+  ASSERT(ThreadState::MainThreadState());
+  ThreadState::MainThreadState()->RegisterTraceDOMWrappers(
+      isolate, V8GCController::TraceDOMWrappers,
+      ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque,
+      ScriptWrappableVisitor::PerformCleanup);
 
-    ASSERT(ThreadState::mainThreadState());
-    ThreadState::mainThreadState()->addInterruptor(wrapUnique(new V8IsolateInterruptor(isolate)));
-    if (RuntimeEnabledFeatures::traceWrappablesEnabled()) {
-        ThreadState::mainThreadState()->registerTraceDOMWrappers(isolate,
-            V8GCController::traceDOMWrappers,
-            ScriptWrappableVisitor::invalidateDeadObjectsInMarkingDeque);
-    } else {
-        ThreadState::mainThreadState()->registerTraceDOMWrappers(isolate,
-            V8GCController::traceDOMWrappers,
-            nullptr);
-    }
-
-    V8PerIsolateData::from(isolate)->setThreadDebugger(wrapUnique(new MainThreadDebugger(isolate)));
+  V8PerIsolateData::From(isolate)->SetThreadDebugger(
+      WTF::MakeUnique<MainThreadDebugger>(isolate));
 }
 
-void V8Initializer::shutdownMainThread()
-{
-    ASSERT(isMainThread());
-    v8::Isolate* isolate = V8PerIsolateData::mainThreadIsolate();
-    V8PerIsolateData::willBeDestroyed(isolate);
-    V8PerIsolateData::destroy(isolate);
+static void ReportFatalErrorInWorker(const char* location,
+                                     const char* message) {
+  // FIXME: We temporarily deal with V8 internal error situations such as
+  // out-of-memory by crashing the worker.
+  CRASH();
 }
 
-static void reportFatalErrorInWorker(const char* location, const char* message)
-{
-    // FIXME: We temporarily deal with V8 internal error situations such as out-of-memory by crashing the worker.
-    CRASH();
+static void MessageHandlerInWorker(v8::Local<v8::Message> message,
+                                   v8::Local<v8::Value> data) {
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
+
+  // During the frame teardown, there may not be a valid context.
+  ScriptState* script_state = ScriptState::Current(isolate);
+  if (!script_state->ContextIsValid())
+    return;
+
+  // Exceptions that occur in error handler should be ignored since in that case
+  // WorkerGlobalScope::dispatchErrorEvent will send the exception to the worker
+  // object.
+  if (per_isolate_data->IsReportingException())
+    return;
+
+  per_isolate_data->SetReportingException(true);
+
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  std::unique_ptr<SourceLocation> location =
+      SourceLocation::FromMessage(isolate, message, context);
+
+  if (message->ErrorLevel() != v8::Isolate::kMessageError) {
+    context->AddConsoleMessage(ConsoleMessage::Create(
+        kJSMessageSource,
+        MessageLevelFromNonFatalErrorLevel(message->ErrorLevel()),
+        ToCoreStringWithNullCheck(message->Get()), std::move(location)));
+    return;
+  }
+
+  ErrorEvent* event =
+      ErrorEvent::Create(ToCoreStringWithNullCheck(message->Get()),
+                         std::move(location), &script_state->World());
+
+  AccessControlStatus cors_status = message->IsSharedCrossOrigin()
+                                        ? kSharableCrossOrigin
+                                        : kNotSharableCrossOrigin;
+
+  // If execution termination has been triggered as part of constructing
+  // the error event from the v8::Message, quietly leave.
+  if (!isolate->IsExecutionTerminating()) {
+    V8ErrorHandler::StoreExceptionOnErrorEventWrapper(
+        script_state, event, data, script_state->GetContext()->Global());
+    ExecutionContext::From(script_state)
+        ->DispatchErrorEvent(event, cors_status);
+  }
+
+  per_isolate_data->SetReportingException(false);
 }
 
-static void messageHandlerInWorker(v8::Local<v8::Message> message, v8::Local<v8::Value> data)
-{
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    V8PerIsolateData* perIsolateData = V8PerIsolateData::from(isolate);
-
-    // During the frame teardown, there may not be a valid context.
-    ScriptState* scriptState = ScriptState::current(isolate);
-    if (!scriptState->contextIsValid())
-        return;
-
-    // Exceptions that occur in error handler should be ignored since in that case
-    // WorkerGlobalScope::reportException will send the exception to the worker object.
-    if (perIsolateData->isReportingException())
-        return;
-
-    perIsolateData->setReportingException(true);
-
-    ExecutionContext* context = scriptState->getExecutionContext();
-    std::unique_ptr<SourceLocation> location = SourceLocation::fromMessage(isolate, message, context);
-    ErrorEvent* event = ErrorEvent::create(toCoreStringWithNullCheck(message->Get()), std::move(location), &scriptState->world());
-
-    AccessControlStatus corsStatus = message->IsSharedCrossOrigin() ? SharableCrossOrigin : NotSharableCrossOrigin;
-
-    // If execution termination has been triggered as part of constructing
-    // the error event from the v8::Message, quietly leave.
-    if (!isolate->IsExecutionTerminating()) {
-        V8ErrorHandler::storeExceptionOnErrorEventWrapper(scriptState, event, data, scriptState->context()->Global());
-        scriptState->getExecutionContext()->reportException(event, corsStatus);
-    }
-
-    perIsolateData->setReportingException(false);
-}
-
+// Stack size for workers is limited to 500KB because default stack size for
+// secondary threads is 512KB on Mac OS X. See GetDefaultThreadStackSize() in
+// base/threading/platform_thread_mac.mm for details.
 static const int kWorkerMaxStackSize = 500 * 1024;
 
-// This function uses a local stack variable to determine the isolate's stack limit. AddressSanitizer may
-// relocate that local variable to a fake stack, which may lead to problems during JavaScript execution.
-// Therefore we disable AddressSanitizer for V8Initializer::initializeWorker().
+// This function uses a local stack variable to determine the isolate's stack
+// limit. AddressSanitizer may relocate that local variable to a fake stack,
+// which may lead to problems during JavaScript execution.  Therefore we disable
+// AddressSanitizer for V8Initializer::initializeWorker().
 NO_SANITIZE_ADDRESS
-void V8Initializer::initializeWorker(v8::Isolate* isolate)
-{
-    initializeV8Common(isolate);
+void V8Initializer::InitializeWorker(v8::Isolate* isolate) {
+  InitializeV8Common(isolate);
 
-    isolate->AddMessageListener(messageHandlerInWorker);
-    isolate->SetFatalErrorHandler(reportFatalErrorInWorker);
+  isolate->AddMessageListenerWithErrorLevel(
+      MessageHandlerInWorker,
+      v8::Isolate::kMessageError | v8::Isolate::kMessageWarning |
+          v8::Isolate::kMessageInfo | v8::Isolate::kMessageDebug |
+          v8::Isolate::kMessageLog);
+  isolate->SetFatalErrorHandler(ReportFatalErrorInWorker);
 
-    uint32_t here;
-    isolate->SetStackLimit(reinterpret_cast<uintptr_t>(&here - kWorkerMaxStackSize / sizeof(uint32_t*)));
-    isolate->SetPromiseRejectCallback(promiseRejectHandlerInWorker);
+  uint32_t here;
+  isolate->SetStackLimit(reinterpret_cast<uintptr_t>(&here) -
+                         kWorkerMaxStackSize);
+  isolate->SetPromiseRejectCallback(PromiseRejectHandlerInWorker);
 }
 
-} // namespace blink
+}  // namespace blink

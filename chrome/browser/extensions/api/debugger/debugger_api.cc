@@ -26,7 +26,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/devtools/devtools_target_impl.h"
+#include "chrome/browser/devtools/chrome_devtools_manager_delegate.h"
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
 #include "chrome/browser/extensions/api/debugger/debugger_api_constants.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -341,13 +341,23 @@ ExtensionDevToolsClientHost::ExtensionDevToolsClientHost(
   // Attach to debugger and tell it we are ready.
   agent_host_->AttachClient(this);
 
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           ::switches::kSilentDebuggerExtensionAPI)) {
-    infobar_ = ExtensionDevToolsInfoBar::Create(
-        extension_id, extension_name, this,
-        base::Bind(&ExtensionDevToolsClientHost::InfoBarDismissed,
-                   base::Unretained(this)));
+    return;
   }
+
+  // We allow policy-installed extensions to circumvent the normal
+  // infobar warning. See crbug.com/693621.
+  const Extension* extension =
+      ExtensionRegistry::Get(profile)->enabled_extensions().GetByID(
+          extension_id);
+  if (extension && Manifest::IsPolicyLocation(extension->location()))
+    return;
+
+  infobar_ = ExtensionDevToolsInfoBar::Create(
+      extension_id, extension_name, this,
+      base::Bind(&ExtensionDevToolsClientHost::InfoBarDismissed,
+                 base::Unretained(this)));
 }
 
 ExtensionDevToolsClientHost::~ExtensionDevToolsClientHost() {
@@ -381,8 +391,8 @@ void ExtensionDevToolsClientHost::SendMessageToBackend(
   protocol_request.SetInteger("id", request_id);
   protocol_request.SetString("method", method);
   if (command_params) {
-    protocol_request.Set("params",
-                         command_params->additional_properties.DeepCopy());
+    protocol_request.Set(
+        "params", command_params->additional_properties.CreateDeepCopy());
   }
 
   std::string json_args;
@@ -432,7 +442,7 @@ void ExtensionDevToolsClientHost::DispatchProtocolMessage(
     return;
 
   std::unique_ptr<base::Value> result = base::JSONReader::Read(message);
-  if (!result || !result->IsType(base::Value::TYPE_DICTIONARY))
+  if (!result || !result->IsType(base::Value::Type::DICTIONARY))
     return;
   base::DictionaryValue* dictionary =
       static_cast<base::DictionaryValue*>(result.get());
@@ -673,33 +683,36 @@ const char kTargetTitleField[] = "title";
 const char kTargetAttachedField[] = "attached";
 const char kTargetUrlField[] = "url";
 const char kTargetFaviconUrlField[] = "faviconUrl";
-const char kTargetTypePage[] = "page";
-const char kTargetTypeBackgroundPage[] = "background_page";
-const char kTargetTypeWorker[] = "worker";
-const char kTargetTypeOther[] = "other";
 const char kTargetTabIdField[] = "tabId";
 const char kTargetExtensionIdField[] = "extensionId";
+const char kTargetTypeWorker[] = "worker";
 
-base::Value* SerializeTarget(const DevToolsTargetImpl& target) {
-  base::DictionaryValue* dictionary = new base::DictionaryValue();
+std::unique_ptr<base::DictionaryValue> SerializeTarget(
+    scoped_refptr<DevToolsAgentHost> host) {
+  std::unique_ptr<base::DictionaryValue> dictionary(
+      new base::DictionaryValue());
+  dictionary->SetString(kTargetIdField, host->GetId());
+  dictionary->SetString(kTargetTitleField, host->GetTitle());
+  dictionary->SetBoolean(kTargetAttachedField, host->IsAttached());
+  dictionary->SetString(kTargetUrlField, host->GetURL().spec());
 
-  dictionary->SetString(kTargetIdField, target.GetId());
-  dictionary->SetString(kTargetTitleField, target.GetTitle());
-  dictionary->SetBoolean(kTargetAttachedField, target.IsAttached());
-  dictionary->SetString(kTargetUrlField, target.GetURL().spec());
-
-  std::string type = target.GetType();
-  if (type == kTargetTypePage) {
-    dictionary->SetInteger(kTargetTabIdField, target.GetTabId());
-  } else if (type == kTargetTypeBackgroundPage) {
-    dictionary->SetString(kTargetExtensionIdField, target.GetExtensionId());
-  } else if (type != kTargetTypeWorker) {
-    // DevToolsTargetImpl may support more types than the debugger API.
-    type = kTargetTypeOther;
+  std::string type = host->GetType();
+  if (type == DevToolsAgentHost::kTypePage) {
+    int tab_id =
+        extensions::ExtensionTabUtil::GetTabId(host->GetWebContents());
+    dictionary->SetInteger(kTargetTabIdField, tab_id);
+  } else if (type == ChromeDevToolsManagerDelegate::kTypeBackgroundPage) {
+    dictionary->SetString(kTargetExtensionIdField, host->GetURL().host());
   }
+
+  if (type == DevToolsAgentHost::kTypeServiceWorker ||
+      type == DevToolsAgentHost::kTypeSharedWorker) {
+    type = kTargetTypeWorker;
+  }
+
   dictionary->SetString(kTargetTypeField, type);
 
-  GURL favicon_url = target.GetFaviconURL();
+  GURL favicon_url = host->GetFaviconURL();
   if (favicon_url.is_valid())
     dictionary->SetString(kTargetFaviconUrlField, favicon_url.spec());
 
@@ -715,7 +728,7 @@ DebuggerGetTargetsFunction::~DebuggerGetTargetsFunction() {
 }
 
 bool DebuggerGetTargetsFunction::RunAsync() {
-  std::vector<DevToolsTargetImpl*> list = DevToolsTargetImpl::EnumerateAll();
+  content::DevToolsAgentHost::List list = DevToolsAgentHost::GetOrCreateAll();
   content::BrowserThread::PostTask(
       content::BrowserThread::UI,
       FROM_HERE,
@@ -724,11 +737,10 @@ bool DebuggerGetTargetsFunction::RunAsync() {
 }
 
 void DebuggerGetTargetsFunction::SendTargetList(
-    const std::vector<DevToolsTargetImpl*>& target_list) {
+    const content::DevToolsAgentHost::List& target_list) {
   std::unique_ptr<base::ListValue> result(new base::ListValue());
   for (size_t i = 0; i < target_list.size(); ++i)
-    result->Append(SerializeTarget(*target_list[i]));
-  STLDeleteContainerPointers(target_list.begin(), target_list.end());
+    result->Append(SerializeTarget(target_list[i]));
   SetResult(std::move(result));
   SendResponse(true);
 }

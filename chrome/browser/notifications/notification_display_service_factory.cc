@@ -11,10 +11,11 @@
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/chrome_switches.h"
+#include "chrome/common/chrome_features.h"
+#include "chrome/common/features.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 
-#if defined(OS_ANDROID) || defined(OS_MACOSX)
+#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 #include "chrome/browser/notifications/native_notification_display_service.h"
 #endif
 
@@ -39,23 +40,25 @@ NotificationDisplayServiceFactory::NotificationDisplayServiceFactory()
 // Selection of the implementation works as follows:
 //   - Android always uses the NativeNotificationDisplayService.
 //   - Mac uses the MessageCenterDisplayService by default, but can use the
-//     NativeNotificationDisplayService by using the chrome://flags or the
-//     --enable-native-notifications command line flag.
+//     NativeNotificationDisplayService by using the chrome://flags or via
+//     the --enable-features=NativeNotifications command line flag.
 //   - All other platforms always use the MessageCenterDisplayService.
 KeyedService* NotificationDisplayServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
+#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 #if defined(OS_ANDROID)
   return new NativeNotificationDisplayService(
       Profile::FromBrowserContext(context),
       g_browser_process->notification_platform_bridge());
-#elif defined(OS_MACOSX)
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableNativeNotifications)) {
+#else   // defined(OS_ANDROID)
+  if (base::FeatureList::IsEnabled(features::kNativeNotifications) &&
+      g_browser_process->notification_platform_bridge()) {
     return new NativeNotificationDisplayService(
         Profile::FromBrowserContext(context),
         g_browser_process->notification_platform_bridge());
   }
-#endif
+#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
   return new MessageCenterDisplayService(
       Profile::FromBrowserContext(context),
       g_browser_process->notification_ui_manager());

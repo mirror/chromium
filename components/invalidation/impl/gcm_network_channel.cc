@@ -19,7 +19,9 @@
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/invalidation/impl/gcm_network_channel_delegate.h"
 #include "google_apis/gaia/google_service_auth_error.h"
+#include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
 
@@ -121,8 +123,10 @@ GCMNetworkChannel::GCMNetworkChannel(
       diagnostic_info_(this),
       weak_factory_(this) {
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
-  delegate_->Initialize(base::Bind(&GCMNetworkChannel::OnConnectionStateChanged,
-                                   weak_factory_.GetWeakPtr()));
+  delegate_->Initialize(
+      base::Bind(&GCMNetworkChannel::OnConnectionStateChanged,
+                 weak_factory_.GetWeakPtr()),
+      base::Bind(&GCMNetworkChannel::OnStoreReset, weak_factory_.GetWeakPtr()));
   Register();
 }
 
@@ -194,7 +198,7 @@ void GCMNetworkChannel::OnGetTokenComplete(
     const GoogleServiceAuthError& error,
     const std::string& token) {
   DCHECK(CalledOnValidThread());
-  if (cached_message_.empty()) {
+  if (cached_message_.empty() || registration_id_.empty()) {
     // Nothing to do.
     return;
   }
@@ -215,11 +219,50 @@ void GCMNetworkChannel::OnGetTokenComplete(
   access_token_ = token;
 
   DVLOG(2) << "Got access token, sending message";
-  fetcher_ = net::URLFetcher::Create(BuildUrl(registration_id_),
-                                     net::URLFetcher::POST, this);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("invalidation_service", R"(
+        semantics {
+          sender: "Invalidation service"
+          description:
+            "Chromium uses cacheinvalidation library to receive push "
+            "notifications from the server about sync items (bookmarks, "
+            "passwords, preferences, etc.) modified on other clients. It uses "
+            "GCMClient to receive incoming messages. This request is used for "
+            "client-to-server communications."
+          trigger:
+            "The first message is sent to register client with the server on "
+            "Chromium startup. It is then sent periodically to confirm that "
+            "the client is still online. After receiving notification about "
+            "server changes, the client sends this request to acknowledge that "
+            "the notification is processed."
+          data:
+            "Different in each use case:\n"
+            "- Initial registration: Doesn't contain user data.\n"
+            "- Updating the set of subscriptions: Contains server generated "
+            "client_token and ObjectIds identifying subscriptions. ObjectId "
+            "is not unique to user.\n"
+            "- Invalidation acknowledgement: Contains client_token, ObjectId "
+            "and server version for corresponding subscription. Version is not "
+            "related to sync data, it is an internal concept of invalidations "
+            "protocol."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting: "This feature cannot be disabled."
+          policy_exception_justification:
+            "Not implemented. Disabling InvalidationService might break "
+            "features that depend on it. It makes sense to control top level "
+            "features that use InvalidationService."
+        })");
+  fetcher_ =
+      net::URLFetcher::Create(BuildUrl(registration_id_), net::URLFetcher::POST,
+                              this, traffic_annotation);
   data_use_measurement::DataUseUserData::AttachToFetcher(
       fetcher_.get(), data_use_measurement::DataUseUserData::INVALIDATION);
   fetcher_->SetRequestContext(request_context_getter_.get());
+  fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
+                         net::LOAD_DO_NOT_SAVE_COOKIES);
   const std::string auth_header("Authorization: Bearer " + access_token_);
   fetcher_->AddExtraRequestHeader(auth_header);
   if (!echo_token_.empty()) {
@@ -300,6 +343,11 @@ void GCMNetworkChannel::OnIncomingMessage(const std::string& message,
 
 void GCMNetworkChannel::OnConnectionStateChanged(bool online) {
   UpdateGcmChannelState(online);
+}
+
+void GCMNetworkChannel::OnStoreReset() {
+  // TODO(crbug.com/661660): Tell server the registration ID is no longer valid.
+  registration_id_.clear();
 }
 
 void GCMNetworkChannel::OnNetworkChanged(

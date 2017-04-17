@@ -15,6 +15,7 @@
 #include "content/browser/browser_process_sub_thread.h"
 #include "content/public/browser/browser_main_runner.h"
 #include "media/audio/audio_manager.h"
+#include "services/resource_coordinator/memory/coordinator/coordinator_impl.h"
 
 #if defined(USE_AURA)
 namespace aura {
@@ -26,16 +27,21 @@ namespace base {
 class CommandLine;
 class FilePath;
 class HighResolutionTimerManager;
+class MemoryPressureMonitor;
 class MessageLoop;
 class PowerMonitor;
 class SystemMonitor;
-class MemoryPressureMonitor;
 namespace trace_event {
 class TraceEventSystemStatsMonitor;
 }  // namespace trace_event
 }  // namespace base
 
+namespace discardable_memory {
+class DiscardableSharedMemoryManager;
+}
+
 namespace media {
+class AudioSystem;
 #if defined(OS_WIN)
 class SystemMessageWindowWin;
 #elif defined(OS_LINUX) && defined(USE_UDEV)
@@ -45,14 +51,11 @@ class UserInputMonitor;
 #if defined(OS_MACOSX)
 class DeviceMonitorMac;
 #endif
-namespace midi {
-class MidiManager;
-}  // namespace midi
 }  // namespace media
 
-namespace memory_coordinator {
-class MemoryCoordinator;
-}  // namespace memory_coordinator
+namespace midi {
+class MidiService;
+}  // namespace midi
 
 namespace mojo {
 namespace edk {
@@ -65,28 +68,33 @@ class NetworkChangeNotifier;
 }  // namespace net
 
 #if defined(USE_OZONE)
-namespace ui {
+namespace gfx {
 class ClientNativePixmapFactory;
-}  // namespace ui
+}  // namespace gfx
 #endif
 
 namespace content {
+class AudioManagerThread;
 class BrowserMainParts;
 class BrowserOnlineStateObserver;
 class BrowserThreadImpl;
 class LoaderDelegateImpl;
 class MediaStreamManager;
-class MojoShellContext;
 class ResourceDispatcherHostImpl;
+class SaveFileManager;
+class ServiceManagerContext;
 class SpeechRecognitionManagerImpl;
 class StartupTaskRunner;
-class TimeZoneMonitor;
 struct MainFunctionParams;
 
 #if defined(OS_ANDROID)
 class ScreenOrientationDelegate;
-#elif defined(OS_WIN)
-class ScreenOrientationDelegate;
+#endif
+
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+namespace internal {
+class GpuDataManagerVisualProxy;
+}
 #endif
 
 // Implements the main browser loop stages called from BrowserMainRunner.
@@ -111,6 +119,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   void PreMainMessageLoopStart();
   void MainMessageLoopStart();
   void PostMainMessageLoopStart();
+  void PreShutdown();
 
   // Create and start running the tasks we need to complete startup. Note that
   // this can be called more than once (currently only on Android) if we get a
@@ -128,13 +137,18 @@ class CONTENT_EXPORT BrowserMainLoop {
   int GetResultCode() const { return result_code_; }
 
   media::AudioManager* audio_manager() const { return audio_manager_.get(); }
+  media::AudioSystem* audio_system() const { return audio_system_.get(); }
   MediaStreamManager* media_stream_manager() const {
     return media_stream_manager_.get();
   }
   media::UserInputMonitor* user_input_monitor() const {
     return user_input_monitor_.get();
   }
-  media::midi::MidiManager* midi_manager() const { return midi_manager_.get(); }
+  discardable_memory::DiscardableSharedMemoryManager*
+  discardable_shared_memory_manager() const {
+    return discardable_shared_memory_manager_.get();
+  }
+  midi::MidiService* midi_service() const { return midi_service_.get(); }
   base::Thread* indexed_db_thread() const { return indexed_db_thread_.get(); }
 
   bool is_tracing_startup_for_duration() const {
@@ -146,10 +160,6 @@ class CONTENT_EXPORT BrowserMainLoop {
   }
 
   void StopStartupTracingTimer();
-
-  memory_coordinator::MemoryCoordinator* memory_coordinator() const {
-    return memory_coordinator_.get();
-  }
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   media::DeviceMonitorMac* device_monitor_mac() const {
@@ -175,6 +185,7 @@ class CONTENT_EXPORT BrowserMainLoop {
 
   void MainMessageLoopRun();
 
+  void InitializeMojo();
   base::FilePath GetStartupTraceFileName(
       const base::CommandLine& command_line) const;
   void InitStartupTracingForDuration(const base::CommandLine& command_line);
@@ -182,6 +193,8 @@ class CONTENT_EXPORT BrowserMainLoop {
 
   void CreateAudioManager();
   bool UsingInProcessGpu() const;
+
+  void InitializeMemoryManagementComponent();
 
   // Quick reference for initialization order:
   // Constructor
@@ -225,10 +238,6 @@ class CONTENT_EXPORT BrowserMainLoop {
   std::unique_ptr<aura::Env> env_;
 #endif
 
-#if defined(OS_WIN)
-  std::unique_ptr<ScreenOrientationDelegate> screen_orientation_delegate_;
-#endif
-
 #if defined(OS_ANDROID)
   // Android implementation of ScreenOrientationDelegate
   std::unique_ptr<ScreenOrientationDelegate> screen_orientation_delegate_;
@@ -257,9 +266,15 @@ class CONTENT_EXPORT BrowserMainLoop {
   // Members initialized in |PreCreateThreads()| -------------------------------
   // Torn down in ShutdownThreadsAndCleanUp.
   std::unique_ptr<base::MemoryPressureMonitor> memory_pressure_monitor_;
-  std::unique_ptr<memory_coordinator::MemoryCoordinator> memory_coordinator_;
+#if defined(USE_X11) && !(OS_CHROMEOS)
+  std::unique_ptr<internal::GpuDataManagerVisualProxy>
+      gpu_data_manager_visual_proxy_;
+#endif
 
   // Members initialized in |CreateThreads()| ----------------------------------
+  // Note: some |*_thread_| members below may never be initialized when
+  // redirection to TaskScheduler is enabled. (ref.
+  // ContentBrowserClient::RedirectNonUINonIOBrowserThreadsToTaskScheduler()).
   std::unique_ptr<BrowserProcessSubThread> db_thread_;
   std::unique_ptr<BrowserProcessSubThread> file_user_blocking_thread_;
   std::unique_ptr<BrowserProcessSubThread> file_thread_;
@@ -269,16 +284,19 @@ class CONTENT_EXPORT BrowserMainLoop {
 
   // Members initialized in |BrowserThreadsStarted()| --------------------------
   std::unique_ptr<base::Thread> indexed_db_thread_;
-  std::unique_ptr<MojoShellContext> mojo_shell_context_;
+  std::unique_ptr<ServiceManagerContext> service_manager_context_;
   std::unique_ptr<mojo::edk::ScopedIPCSupport> mojo_ipc_support_;
 
   // |user_input_monitor_| has to outlive |audio_manager_|, so declared first.
   std::unique_ptr<media::UserInputMonitor> user_input_monitor_;
   // AudioThread needs to outlive |audio_manager_|.
-  std::unique_ptr<base::Thread> audio_thread_;
+  std::unique_ptr<AudioManagerThread> audio_thread_;
   media::ScopedAudioManagerPtr audio_manager_;
+  // Calls to |audio_system_| must not be posted to the audio thread if it
+  // differs from the UI one. See http://crbug.com/705455.
+  std::unique_ptr<media::AudioSystem> audio_system_;
 
-  std::unique_ptr<media::midi::MidiManager> midi_manager_;
+  std::unique_ptr<midi::MidiService> midi_service_;
 
 #if defined(OS_WIN)
   std::unique_ptr<media::SystemMessageWindowWin> system_message_window_;
@@ -288,14 +306,18 @@ class CONTENT_EXPORT BrowserMainLoop {
   std::unique_ptr<media::DeviceMonitorMac> device_monitor_mac_;
 #endif
 #if defined(USE_OZONE)
-  std::unique_ptr<ui::ClientNativePixmapFactory> client_native_pixmap_factory_;
+  std::unique_ptr<gfx::ClientNativePixmapFactory> client_native_pixmap_factory_;
 #endif
 
   std::unique_ptr<LoaderDelegateImpl> loader_delegate_;
   std::unique_ptr<ResourceDispatcherHostImpl> resource_dispatcher_host_;
   std::unique_ptr<MediaStreamManager> media_stream_manager_;
   std::unique_ptr<SpeechRecognitionManagerImpl> speech_recognition_manager_;
-  std::unique_ptr<TimeZoneMonitor> time_zone_monitor_;
+  std::unique_ptr<discardable_memory::DiscardableSharedMemoryManager>
+      discardable_shared_memory_manager_;
+  scoped_refptr<SaveFileManager> save_file_manager_;
+  std::unique_ptr<memory_instrumentation::CoordinatorImpl>
+      memory_instrumentation_coordinator_;
 
   // DO NOT add members here. Add them to the right categories above.
 

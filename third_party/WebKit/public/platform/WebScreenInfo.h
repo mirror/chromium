@@ -32,77 +32,79 @@
 #define WebScreenInfo_h
 
 #include "WebRect.h"
+#include "public/platform/ShapeProperties.h"
 #include "public/platform/modules/screen_orientation/WebScreenOrientationType.h"
+#include "ui/gfx/icc_profile.h"
 
 namespace blink {
 
 struct WebScreenInfo {
-    // Device scale factor. Specifies the ratio between physical and logical
-    // pixels.
-    float deviceScaleFactor;
+  // Device scale factor. Specifies the ratio between physical and logical
+  // pixels.
+  float device_scale_factor = 1.f;
 
-    // The screen depth in bits per pixel
-    int depth;
+  // The ICC profile of the output display.
+  gfx::ICCProfile icc_profile;
 
-    // The bits per colour component. This assumes that the colours are balanced
-    // equally.
-    int depthPerComponent;
+  // The screen depth in bits per pixel
+  int depth = 0;
 
-    // This can be true for black and white printers
-    bool isMonochrome;
+  // The bits per colour component. This assumes that the colours are balanced
+  // equally.
+  int depth_per_component = 0;
 
-    // This is set from the rcMonitor member of MONITORINFOEX, to whit:
-    //   "A RECT structure that specifies the display monitor rectangle,
-    //   expressed in virtual-screen coordinates. Note that if the monitor
-    //   is not the primary display monitor, some of the rectangle's
-    //   coordinates may be negative values."
-    WebRect rect;
+  // This can be true for black and white printers
+  bool is_monochrome = false;
 
-    // This is set from the rcWork member of MONITORINFOEX, to whit:
-    //   "A RECT structure that specifies the work area rectangle of the
-    //   display monitor that can be used by applications, expressed in
-    //   virtual-screen coordinates. Windows uses this rectangle to
-    //   maximize an application on the monitor. The rest of the area in
-    //   rcMonitor contains system windows such as the task bar and side
-    //   bars. Note that if the monitor is not the primary display monitor,
-    //   some of the rectangle's coordinates may be negative values".
-    WebRect availableRect;
+  // This is set from the rcMonitor member of MONITORINFOEX, to whit:
+  //   "A RECT structure that specifies the display monitor rectangle,
+  //   expressed in virtual-screen coordinates. Note that if the monitor
+  //   is not the primary display monitor, some of the rectangle's
+  //   coordinates may be negative values."
+  WebRect rect;
 
-    // This is the orientation 'type' or 'name', as in landscape-primary or
-    // portrait-secondary for examples.
-    // See WebScreenOrientationType.h for the full list.
-    WebScreenOrientationType orientationType;
+  // This is set from the rcWork member of MONITORINFOEX, to whit:
+  //   "A RECT structure that specifies the work area rectangle of the
+  //   display monitor that can be used by applications, expressed in
+  //   virtual-screen coordinates. Windows uses this rectangle to
+  //   maximize an application on the monitor. The rest of the area in
+  //   rcMonitor contains system windows such as the task bar and side
+  //   bars. Note that if the monitor is not the primary display monitor,
+  //   some of the rectangle's coordinates may be negative values".
+  WebRect available_rect;
 
-    // This is the orientation angle of the displayed content in degrees.
-    // It is the opposite of the physical rotation.
-    uint16_t orientationAngle;
+  // This is the orientation 'type' or 'name', as in landscape-primary or
+  // portrait-secondary for examples.
+  // See WebScreenOrientationType.h for the full list.
+  WebScreenOrientationType orientation_type = kWebScreenOrientationUndefined;
 
-    WebScreenInfo()
-        : deviceScaleFactor(1)
-        , depth(0)
-        , depthPerComponent(0)
-        , isMonochrome(false)
-        , orientationType(WebScreenOrientationUndefined)
-        , orientationAngle(0) { }
+  // This is the orientation angle of the displayed content in degrees.
+  // It is the opposite of the physical rotation.
+  uint16_t orientation_angle = 0;
 
-    bool operator==(const WebScreenInfo& other) const
-    {
-        return this->deviceScaleFactor == other.deviceScaleFactor
-            && this->depth == other.depth
-            && this->depthPerComponent == other.depthPerComponent
-            && this->isMonochrome == other.isMonochrome
-            && this->rect == other.rect
-            && this->availableRect == other.availableRect
-            && this->orientationType == other.orientationType
-            && this->orientationAngle == other.orientationAngle;
-    }
+  // This is the shape of display.
+  DisplayShape display_shape = kDisplayShapeRect;
 
-    bool operator!=(const WebScreenInfo& other) const
-    {
-        return !this->operator==(other);
-    }
+  WebScreenInfo() = default;
+
+  bool operator==(const WebScreenInfo& other) const {
+    return this->device_scale_factor == other.device_scale_factor &&
+           this->icc_profile == other.icc_profile &&
+           this->depth == other.depth &&
+           this->depth_per_component == other.depth_per_component &&
+           this->is_monochrome == other.is_monochrome &&
+           this->rect == other.rect &&
+           this->available_rect == other.available_rect &&
+           this->orientation_type == other.orientation_type &&
+           this->orientation_angle == other.orientation_angle &&
+           this->display_shape == other.display_shape;
+  }
+
+  bool operator!=(const WebScreenInfo& other) const {
+    return !this->operator==(other);
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

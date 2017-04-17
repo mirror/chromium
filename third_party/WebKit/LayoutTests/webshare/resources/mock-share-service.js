@@ -2,17 +2,19 @@
 
 let mockShareService = loadMojoModules(
     'mockShareService',
-    ['mojo/public/js/router',
+    ['mojo/public/js/bindings',
      'third_party/WebKit/public/platform/modules/webshare/webshare.mojom',
     ]).then(mojo => {
-  let [router, webshare] = mojo.modules;
+  let [bindings, webshare] = mojo.modules;
 
-  class MockShareService extends webshare.ShareService.stubClass {
-    constructor(serviceRegistry) {
-      super();
-      serviceRegistry.addServiceOverrideForTesting(
+  class MockShareService {
+    constructor(interfaceProvider) {
+      this.webshare_ = webshare;
+      this.bindingSet_ = new bindings.BindingSet(webshare.ShareService);
+
+      interfaceProvider.addInterfaceOverrideForTesting(
           webshare.ShareService.name,
-          handle => this.connect_(handle));
+          handle => this.bindingSet_.addBinding(this, handle));
     }
 
     // Returns a Promise that gets rejected if the test should fail.
@@ -23,12 +25,7 @@ let mockShareService = loadMojoModules(
       return new Promise((resolve, reject) => {this.reject_ = reject});
     }
 
-    connect_(handle) {
-      this.router_ = new router.Router(handle);
-      this.router_.setIncomingReceiver(this);
-    }
-
-    share(title, text) {
+    share(title, text, url) {
       let callback = null;
       let result = new Promise(resolve => {callback = resolve;});
 
@@ -37,11 +34,12 @@ let mockShareService = loadMojoModules(
         return result;
       }
 
-      let expectedTitle, expectedText, error;
-      [expectedTitle, expectedText, error] = this.shareResultQueue_.shift();
+      let [expectedTitle, expectedText, expectedUrl, error] =
+          this.shareResultQueue_.shift();
       try {
         assert_equals(title, expectedTitle);
         assert_equals(text, expectedText);
+        assert_equals(url.url, expectedUrl);
       } catch (e) {
         this.reject_(e);
         return result;
@@ -51,16 +49,30 @@ let mockShareService = loadMojoModules(
       return result;
     }
 
-    pushShareResult(expectedTitle, expectedText, result) {
-      this.shareResultQueue_.push([expectedTitle, expectedText, result]);
+    pushShareResult(expectedTitle, expectedText, expectedUrl, result) {
+      this.shareResultQueue_.push(
+          [expectedTitle, expectedText, expectedUrl, result]);
     }
   }
-  return new MockShareService(mojo.frameServiceRegistry);
+  return new MockShareService(mojo.frameInterfaces);
 });
 
 function share_test(func, name, properties) {
   promise_test(t => mockShareService.then(mock => {
     let mockPromise = mock.init_();
-    return Promise.race([func(t, mock), mockPromise]);
+    return Promise.race([func(t, mock.webshare_, mock), mockPromise]);
   }), name, properties);
+}
+
+// Copied from resources/bluetooth/bluetooth-helpers.js.
+function callWithKeyDown(functionCalledOnKeyPress) {
+  return new Promise(resolve => {
+    function onKeyPress() {
+      document.removeEventListener('keypress', onKeyPress, false);
+      resolve(functionCalledOnKeyPress());
+    }
+    document.addEventListener('keypress', onKeyPress, false);
+
+    eventSender.keyDown(' ', []);
+  });
 }

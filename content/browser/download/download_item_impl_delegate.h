@@ -13,6 +13,7 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_item.h"
+#include "content/public/browser/download_manager_delegate.h"
 #include "content/public/browser/download_url_parameters.h"
 
 namespace content {
@@ -25,13 +26,6 @@ class BrowserContext;
 // be left unimplemented.
 class CONTENT_EXPORT DownloadItemImplDelegate {
  public:
-  typedef base::Callback<void(
-      const base::FilePath&,            // Target path
-      DownloadItem::TargetDisposition,  // overwrite/uniquify target
-      DownloadDangerType,
-      const base::FilePath&             // Intermediate file path
-                              )> DownloadTargetCallback;
-
   // The boolean argument indicates whether or not the download was
   // actually opened.
   typedef base::Callback<void(bool)> ShouldOpenDownloadCallback;
@@ -70,8 +64,11 @@ class CONTENT_EXPORT DownloadItemImplDelegate {
   virtual void CheckForFileRemoval(DownloadItemImpl* download_item);
 
   // Return a GUID string used for identifying the application to the system AV
-  // function for scanning downloaded files. If an empty or invalid GUID string
-  // is returned, no client identification will be given to the AV function.
+  // function for scanning downloaded files. If no GUID is provided or if the
+  // provided GUID is invalid, then the appropriate quarantining will be
+  // performed manually without passing the download to the system AV function.
+  //
+  // This GUID is only used on Windows.
   virtual std::string GetApplicationClientIdForFileScanning() const;
 
   // Called when an interrupted download is resumed.

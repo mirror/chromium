@@ -26,28 +26,22 @@
 namespace blink {
 
 inline CDATASection::CDATASection(Document& document, const String& data)
-    : Text(document, data, CreateText)
-{
+    : Text(document, data, kCreateText) {}
+
+CDATASection* CDATASection::Create(Document& document, const String& data) {
+  return new CDATASection(document, data);
 }
 
-CDATASection* CDATASection::create(Document& document, const String& data)
-{
-    return new CDATASection(document, data);
+String CDATASection::nodeName() const {
+  return "#cdata-section";
 }
 
-String CDATASection::nodeName() const
-{
-    return "#cdata-section";
+Node::NodeType CDATASection::getNodeType() const {
+  return kCdataSectionNode;
 }
 
-Node::NodeType CDATASection::getNodeType() const
-{
-    return CDATA_SECTION_NODE;
+Text* CDATASection::CloneWithData(const String& data) {
+  return Create(GetDocument(), data);
 }
 
-Text* CDATASection::cloneWithData(const String& data)
-{
-    return create(document(), data);
-}
-
-} // namespace blink
+}  // namespace blink

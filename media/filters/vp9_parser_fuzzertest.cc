@@ -9,6 +9,16 @@
 #include "media/filters/ivf_parser.h"
 #include "media/filters/vp9_parser.h"
 
+struct Environment {
+  Environment() {
+    // Disable noisy logging as per "libFuzzer in Chrome" documentation:
+    // testing/libfuzzer/getting_started.md#Disable-noisy-error-message-logging.
+    logging::SetMinLogLevel(logging::LOG_FATAL);
+  }
+};
+
+Environment* env = new Environment();
+
 // Entry point for LibFuzzer.
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   const uint8_t* ivf_payload = nullptr;
@@ -21,7 +31,8 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
   // Parse until the end of stream/unsupported stream/error in stream is found.
   while (ivf_parser.ParseNextFrame(&ivf_frame_header, &ivf_payload)) {
-    media::Vp9Parser vp9_parser;
+    // TODO(kcwu): fuzzing with parsing_compressed_header=true.
+    media::Vp9Parser vp9_parser(false);
     media::Vp9FrameHeader vp9_frame_header;
     vp9_parser.SetStream(ivf_payload, ivf_frame_header.frame_size);
     while (vp9_parser.ParseNextFrame(&vp9_frame_header) ==

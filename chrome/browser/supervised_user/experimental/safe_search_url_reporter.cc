@@ -11,6 +11,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_manager_base.h"
@@ -18,6 +19,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
 #include "url/gurl.h"
@@ -82,8 +84,7 @@ std::unique_ptr<SafeSearchURLReporter> SafeSearchURLReporter::CreateWithProfile(
 
 void SafeSearchURLReporter::ReportUrl(const GURL& url,
                                       const SuccessCallback& callback) {
-  reports_.push_back(
-      base::WrapUnique(new Report(url, callback, url_fetcher_id_)));
+  reports_.push_back(base::MakeUnique<Report>(url, callback, url_fetcher_id_));
   StartFetching(reports_.back().get());
 }
 
@@ -108,9 +109,38 @@ void SafeSearchURLReporter::OnGetTokenSuccess(
 
   (*it)->access_token = access_token;
 
-  (*it)->url_fetcher = URLFetcher::Create((*it)->url_fetcher_id, GURL(kApiUrl),
-                                          URLFetcher::POST, this);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("safe_search_url_reporter", R"(
+        semantics {
+          sender: "Supervised Users"
+          description: "Reports a URL wrongfully flagged by SafeSearch."
+          trigger: "Initiated by the user."
+          data:
+            "The request is authenticated with an OAuth2 access token "
+            "identifying the Google account and contains the URL that was "
+            "wrongfully flagged."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "This feature cannot be disabled by settings and is only enabled "
+            "for child accounts. If sign-in is restricted to accounts from a "
+            "managed domain, those accounts are not going to be child accounts."
+          chrome_policy {
+            RestrictSigninToPattern {
+              policy_options {mode: MANDATORY}
+              RestrictSigninToPattern: "*@manageddomain.com"
+            }
+          }
+        })");
+  (*it)->url_fetcher =
+      URLFetcher::Create((*it)->url_fetcher_id, GURL(kApiUrl), URLFetcher::POST,
+                         this, traffic_annotation);
 
+  data_use_measurement::DataUseUserData::AttachToFetcher(
+      (*it)->url_fetcher.get(),
+      data_use_measurement::DataUseUserData::SUPERVISED_USER);
   (*it)->url_fetcher->SetRequestContext(context_);
   (*it)->url_fetcher->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
                                    net::LOAD_DO_NOT_SAVE_COOKIES);
@@ -119,7 +149,7 @@ void SafeSearchURLReporter::OnGetTokenSuccess(
       base::StringPrintf(kAuthorizationHeaderFormat, access_token.c_str()));
 
   base::DictionaryValue dict;
-  dict.SetStringWithoutPathExpansion(kUrlKey, (*it)->url.spec().c_str());
+  dict.SetStringWithoutPathExpansion(kUrlKey, (*it)->url.spec());
 
   std::string body;
   base::JSONWriter::Write(dict, &body);

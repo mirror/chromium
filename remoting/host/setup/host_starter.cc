@@ -14,8 +14,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "google_apis/google_api_keys.h"
+#include "remoting/base/oauth_helper.h"
 #include "remoting/host/pin_hash.h"
-#include "remoting/host/setup/oauth_helper.h"
 
 namespace {
 const int kMaxGetTokensRetries = 3;
@@ -43,9 +43,9 @@ std::unique_ptr<HostStarter> HostStarter::Create(
     const std::string& chromoting_hosts_url,
     net::URLRequestContextGetter* url_request_context_getter) {
   return base::WrapUnique(new HostStarter(
-      base::WrapUnique(new gaia::GaiaOAuthClient(url_request_context_getter)),
-      base::WrapUnique(new remoting::ServiceClient(chromoting_hosts_url,
-                                                   url_request_context_getter)),
+      base::MakeUnique<gaia::GaiaOAuthClient>(url_request_context_getter),
+      base::MakeUnique<remoting::ServiceClient>(chromoting_hosts_url,
+                                                url_request_context_getter),
       remoting::DaemonController::Create()));
 }
 

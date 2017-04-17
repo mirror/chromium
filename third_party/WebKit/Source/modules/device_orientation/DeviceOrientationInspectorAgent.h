@@ -8,38 +8,37 @@
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/protocol/DeviceOrientation.h"
 #include "modules/ModulesExport.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
 class DeviceOrientationController;
-class Page;
+class InspectedFrames;
 
+class MODULES_EXPORT DeviceOrientationInspectorAgent final
+    : public InspectorBaseAgent<protocol::DeviceOrientation::Metainfo> {
+  WTF_MAKE_NONCOPYABLE(DeviceOrientationInspectorAgent);
 
-class MODULES_EXPORT DeviceOrientationInspectorAgent final : public InspectorBaseAgent<protocol::DeviceOrientation::Metainfo> {
-    WTF_MAKE_NONCOPYABLE(DeviceOrientationInspectorAgent);
-public:
-    static DeviceOrientationInspectorAgent* create(Page*);
+ public:
+  explicit DeviceOrientationInspectorAgent(InspectedFrames*);
+  ~DeviceOrientationInspectorAgent() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    ~DeviceOrientationInspectorAgent() override;
-    DECLARE_VIRTUAL_TRACE();
+  // Protocol methods.
+  protocol::Response setDeviceOrientationOverride(double,
+                                                  double,
+                                                  double) override;
+  protocol::Response clearDeviceOrientationOverride() override;
 
-    // Protocol methods.
-    void setDeviceOrientationOverride(ErrorString*, double, double, double) override;
-    void clearDeviceOrientationOverride(ErrorString*) override;
+  protocol::Response disable() override;
+  void Restore() override;
+  void DidCommitLoadForLocalFrame(LocalFrame*) override;
 
-    // Inspector Controller API.
-    void disable(ErrorString*) override;
-    void restore() override;
-    void didCommitLoadForLocalFrame(LocalFrame*) override;
+ private:
+  DeviceOrientationController* Controller();
 
-private:
-    explicit DeviceOrientationInspectorAgent(Page&);
-    DeviceOrientationController& controller();
-    Member<Page> m_page;
+  Member<InspectedFrames> inspected_frames_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-
-#endif // !defined(DeviceOrientationInspectorAgent_h)
+#endif  // !defined(DeviceOrientationInspectorAgent_h)

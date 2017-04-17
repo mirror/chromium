@@ -48,8 +48,7 @@ class AlternateNavInfoBarDelegate : public infobars::InfoBarDelegate {
   // InfoBarDelegate:
   Type GetInfoBarType() const override;
   infobars::InfoBarDelegate::InfoBarIdentifier GetIdentifier() const override;
-  int GetIconId() const override;
-  gfx::VectorIconId GetVectorIconId() const override;
+  const gfx::VectorIcon& GetVectorIcon() const override;
 
   Profile* profile_;
   const base::string16 text_;

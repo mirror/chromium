@@ -4,6 +4,7 @@
 
 #include "net/spdy/buffered_spdy_framer.h"
 
+#include <algorithm>
 #include <utility>
 
 #include "base/logging.h"
@@ -16,7 +17,7 @@ namespace {
 
 class TestBufferedSpdyVisitor : public BufferedSpdyFramerVisitorInterface {
  public:
-  explicit TestBufferedSpdyVisitor()
+  TestBufferedSpdyVisitor()
       : buffered_spdy_framer_(),
         error_count_(0),
         setting_count_(0),
@@ -27,13 +28,13 @@ class TestBufferedSpdyVisitor : public BufferedSpdyFramerVisitorInterface {
         header_stream_id_(static_cast<SpdyStreamId>(-1)),
         promised_stream_id_(static_cast<SpdyStreamId>(-1)) {}
 
-  void OnError(SpdyFramer::SpdyError error_code) override {
-    VLOG(1) << "SpdyFramer Error: " << error_code;
+  void OnError(SpdyFramer::SpdyFramerError spdy_framer_error) override {
+    VLOG(1) << "SpdyFramer Error: " << spdy_framer_error;
     error_count_++;
   }
 
   void OnStreamError(SpdyStreamId stream_id,
-                     const std::string& description) override {
+                     const SpdyString& description) override {
     VLOG(1) << "SpdyFramer Error on stream: " << stream_id << " "
             << description;
     error_count_++;
@@ -72,23 +73,22 @@ class TestBufferedSpdyVisitor : public BufferedSpdyFramerVisitorInterface {
     LOG(FATAL) << "Unexpected OnStreamPadding call.";
   }
 
-  void OnSettings(bool clear_persisted) override {}
+  void OnSettings() override {}
 
-  void OnSetting(SpdySettingsIds id, uint8_t flags, uint32_t value) override {
+  void OnSetting(SpdySettingsIds id, uint32_t value) override {
     setting_count_++;
   }
 
   void OnPing(SpdyPingId unique_id, bool is_ack) override {}
 
-  void OnRstStream(SpdyStreamId stream_id,
-                   SpdyRstStreamStatus status) override {}
+  void OnRstStream(SpdyStreamId stream_id, SpdyErrorCode error_code) override {}
 
   void OnGoAway(SpdyStreamId last_accepted_stream_id,
-                SpdyGoAwayStatus status,
-                base::StringPiece debug_data) override {
+                SpdyErrorCode error_code,
+                SpdyStringPiece debug_data) override {
     goaway_count_++;
     goaway_last_accepted_stream_id_ = last_accepted_stream_id;
-    goaway_status_ = status;
+    goaway_error_code_ = error_code;
     goaway_debug_data_.assign(debug_data.data(), debug_data.size());
   }
 
@@ -113,7 +113,7 @@ class TestBufferedSpdyVisitor : public BufferedSpdyFramerVisitorInterface {
   }
 
   void OnAltSvc(SpdyStreamId stream_id,
-                base::StringPiece origin,
+                SpdyStringPiece origin,
                 const SpdyAltSvcWireFormat::AlternativeServiceVector&
                     altsvc_vector) override {
     altsvc_count_++;
@@ -122,17 +122,18 @@ class TestBufferedSpdyVisitor : public BufferedSpdyFramerVisitorInterface {
     altsvc_vector_ = altsvc_vector;
   }
 
-  bool OnUnknownFrame(SpdyStreamId stream_id, int frame_type) override {
+  bool OnUnknownFrame(SpdyStreamId stream_id, uint8_t frame_type) override {
     return true;
   }
 
   // Convenience function which runs a framer simulation with particular input.
-  void SimulateInFramer(const unsigned char* input, size_t size) {
+  void SimulateInFramer(const SpdySerializedFrame& frame) {
+    const char* input_ptr = frame.data();
+    size_t input_remaining = frame.size();
     buffered_spdy_framer_.set_visitor(this);
-    size_t input_remaining = size;
-    const char* input_ptr = reinterpret_cast<const char*>(input);
     while (input_remaining > 0 &&
-           buffered_spdy_framer_.error_code() == SpdyFramer::SPDY_NO_ERROR) {
+           buffered_spdy_framer_.spdy_framer_error() ==
+               SpdyFramer::SPDY_NO_ERROR) {
       // To make the tests more interesting, we feed random (amd small) chunks
       // into the framer.  This simulates getting strange-sized reads from
       // the socket.
@@ -165,12 +166,12 @@ class TestBufferedSpdyVisitor : public BufferedSpdyFramerVisitorInterface {
 
   // OnGoAway parameters.
   SpdyStreamId goaway_last_accepted_stream_id_;
-  SpdyGoAwayStatus goaway_status_;
-  std::string goaway_debug_data_;
+  SpdyErrorCode goaway_error_code_;
+  SpdyString goaway_debug_data_;
 
   // OnAltSvc parameters.
   SpdyStreamId altsvc_stream_id_;
-  std::string altsvc_origin_;
+  SpdyString altsvc_origin_;
   SpdyAltSvcWireFormat::AlternativeServiceVector altsvc_vector_;
 };
 
@@ -179,36 +180,29 @@ class TestBufferedSpdyVisitor : public BufferedSpdyFramerVisitorInterface {
 class BufferedSpdyFramerTest : public PlatformTest {};
 
 TEST_F(BufferedSpdyFramerTest, OnSetting) {
-  SpdyFramer framer(HTTP2);
+  SpdyFramer framer(SpdyFramer::ENABLE_COMPRESSION);
   SpdySettingsIR settings_ir;
-  settings_ir.AddSetting(SETTINGS_INITIAL_WINDOW_SIZE, false, false, 2);
-  settings_ir.AddSetting(SETTINGS_MAX_CONCURRENT_STREAMS, false, false, 3);
+  settings_ir.AddSetting(SETTINGS_INITIAL_WINDOW_SIZE, 2);
+  settings_ir.AddSetting(SETTINGS_MAX_CONCURRENT_STREAMS, 3);
   SpdySerializedFrame control_frame(framer.SerializeSettings(settings_ir));
   TestBufferedSpdyVisitor visitor;
 
-  visitor.SimulateInFramer(
-      reinterpret_cast<unsigned char*>(control_frame.data()),
-      control_frame.size());
+  visitor.SimulateInFramer(control_frame);
   EXPECT_EQ(0, visitor.error_count_);
   EXPECT_EQ(2, visitor.setting_count_);
 }
 
 TEST_F(BufferedSpdyFramerTest, HeaderListTooLarge) {
   SpdyHeaderBlock headers;
-  std::string long_header_value(256 * 1024, 'x');
+  SpdyString long_header_value(256 * 1024, 'x');
   headers["foo"] = long_header_value;
+  SpdyHeadersIR headers_ir(/*stream_id=*/1, std::move(headers));
+
   BufferedSpdyFramer framer;
-  std::unique_ptr<SpdySerializedFrame> control_frame(
-      framer.CreateHeaders(1,  // stream_id
-                           CONTROL_FLAG_NONE,
-                           255,  // weight
-                           std::move(headers)));
-  EXPECT_TRUE(control_frame);
+  SpdySerializedFrame control_frame = framer.SerializeFrame(headers_ir);
 
   TestBufferedSpdyVisitor visitor;
-  visitor.SimulateInFramer(
-      reinterpret_cast<unsigned char*>(control_frame.get()->data()),
-      control_frame.get()->size());
+  visitor.SimulateInFramer(control_frame);
 
   EXPECT_EQ(1, visitor.error_count_);
   EXPECT_EQ(0, visitor.headers_frame_count_);
@@ -216,22 +210,40 @@ TEST_F(BufferedSpdyFramerTest, HeaderListTooLarge) {
   EXPECT_EQ(SpdyHeaderBlock(), visitor.headers_);
 }
 
+TEST_F(BufferedSpdyFramerTest, ValidHeadersAfterInvalidHeaders) {
+  SpdyHeaderBlock headers;
+  headers["invalid"] = "\r\n\r\n";
+
+  SpdyHeaderBlock headers2;
+  headers["alpha"] = "beta";
+
+  SpdyTestUtil spdy_test_util;
+  SpdySerializedFrame headers_frame(
+      spdy_test_util.ConstructSpdyReply(1, std::move(headers)));
+  SpdySerializedFrame headers_frame2(
+      spdy_test_util.ConstructSpdyReply(2, std::move(headers2)));
+
+  TestBufferedSpdyVisitor visitor;
+  visitor.SimulateInFramer(headers_frame);
+  EXPECT_EQ(1, visitor.error_count_);
+  EXPECT_EQ(0, visitor.headers_frame_count_);
+
+  visitor.SimulateInFramer(headers_frame2);
+  EXPECT_EQ(1, visitor.error_count_);
+  EXPECT_EQ(1, visitor.headers_frame_count_);
+}
+
 TEST_F(BufferedSpdyFramerTest, ReadHeadersHeaderBlock) {
   SpdyHeaderBlock headers;
   headers["alpha"] = "beta";
   headers["gamma"] = "delta";
+  SpdyHeadersIR headers_ir(/*stream_id=*/1, headers.Clone());
+
   BufferedSpdyFramer framer;
-  std::unique_ptr<SpdySerializedFrame> control_frame(
-      framer.CreateHeaders(1,  // stream_id
-                           CONTROL_FLAG_NONE,
-                           255,  // weight
-                           headers.Clone()));
-  EXPECT_TRUE(control_frame.get() != NULL);
+  SpdySerializedFrame control_frame = framer.SerializeFrame(headers_ir);
 
   TestBufferedSpdyVisitor visitor;
-  visitor.SimulateInFramer(
-      reinterpret_cast<unsigned char*>(control_frame.get()->data()),
-      control_frame.get()->size());
+  visitor.SimulateInFramer(control_frame);
   EXPECT_EQ(0, visitor.error_count_);
   EXPECT_EQ(1, visitor.headers_frame_count_);
   EXPECT_EQ(0, visitor.push_promise_frame_count_);
@@ -243,14 +255,12 @@ TEST_F(BufferedSpdyFramerTest, ReadPushPromiseHeaderBlock) {
   headers["alpha"] = "beta";
   headers["gamma"] = "delta";
   BufferedSpdyFramer framer;
-  std::unique_ptr<SpdySerializedFrame> control_frame(
-      framer.CreatePushPromise(1, 2, headers.Clone()));
-  EXPECT_TRUE(control_frame.get() != NULL);
+  SpdyPushPromiseIR push_promise_ir(/*stream_id=*/1, /*promised_stream_id=*/2,
+                                    headers.Clone());
+  SpdySerializedFrame control_frame = framer.SerializeFrame(push_promise_ir);
 
   TestBufferedSpdyVisitor visitor;
-  visitor.SimulateInFramer(
-      reinterpret_cast<unsigned char*>(control_frame.get()->data()),
-      control_frame.get()->size());
+  visitor.SimulateInFramer(control_frame);
   EXPECT_EQ(0, visitor.error_count_);
   EXPECT_EQ(0, visitor.headers_frame_count_);
   EXPECT_EQ(1, visitor.push_promise_frame_count_);
@@ -260,41 +270,60 @@ TEST_F(BufferedSpdyFramerTest, ReadPushPromiseHeaderBlock) {
 }
 
 TEST_F(BufferedSpdyFramerTest, GoAwayDebugData) {
+  SpdyGoAwayIR go_ir(/*last_accepted_stream_id=*/2, ERROR_CODE_FRAME_SIZE_ERROR,
+                     "foo");
   BufferedSpdyFramer framer;
-  std::unique_ptr<SpdySerializedFrame> goaway_frame(
-      framer.CreateGoAway(2u, GOAWAY_FRAME_SIZE_ERROR, "foo"));
+  SpdySerializedFrame goaway_frame = framer.SerializeFrame(go_ir);
 
   TestBufferedSpdyVisitor visitor;
-  visitor.SimulateInFramer(
-      reinterpret_cast<unsigned char*>(goaway_frame.get()->data()),
-      goaway_frame.get()->size());
+  visitor.SimulateInFramer(goaway_frame);
   EXPECT_EQ(0, visitor.error_count_);
   EXPECT_EQ(1, visitor.goaway_count_);
   EXPECT_EQ(2u, visitor.goaway_last_accepted_stream_id_);
-  EXPECT_EQ(GOAWAY_FRAME_SIZE_ERROR, visitor.goaway_status_);
+  EXPECT_EQ(ERROR_CODE_FRAME_SIZE_ERROR, visitor.goaway_error_code_);
   EXPECT_EQ("foo", visitor.goaway_debug_data_);
 }
 
-TEST_F(BufferedSpdyFramerTest, OnAltSvc) {
-  const SpdyStreamId altsvc_stream_id(1);
-  const char altsvc_origin[] = "https://www.example.org";
+// ALTSVC frame on stream 0 must have an origin.
+TEST_F(BufferedSpdyFramerTest, OnAltSvcOnStreamZero) {
+  const SpdyStreamId altsvc_stream_id(0);
   SpdyAltSvcIR altsvc_ir(altsvc_stream_id);
   SpdyAltSvcWireFormat::AlternativeService alternative_service(
       "quic", "alternative.example.org", 443, 86400,
       SpdyAltSvcWireFormat::VersionVector());
   altsvc_ir.add_altsvc(alternative_service);
+  const char altsvc_origin[] = "https://www.example.org";
   altsvc_ir.set_origin(altsvc_origin);
   BufferedSpdyFramer framer;
   SpdySerializedFrame altsvc_frame(framer.SerializeFrame(altsvc_ir));
 
   TestBufferedSpdyVisitor visitor;
-  visitor.SimulateInFramer(
-      reinterpret_cast<unsigned char*>(altsvc_frame.data()),
-      altsvc_frame.size());
+  visitor.SimulateInFramer(altsvc_frame);
   EXPECT_EQ(0, visitor.error_count_);
   EXPECT_EQ(1, visitor.altsvc_count_);
   EXPECT_EQ(altsvc_stream_id, visitor.altsvc_stream_id_);
   EXPECT_EQ(altsvc_origin, visitor.altsvc_origin_);
+  ASSERT_EQ(1u, visitor.altsvc_vector_.size());
+  EXPECT_EQ(alternative_service, visitor.altsvc_vector_[0]);
+}
+
+// ALTSVC frame on a non-zero stream must not have an origin.
+TEST_F(BufferedSpdyFramerTest, OnAltSvcOnNonzeroStream) {
+  const SpdyStreamId altsvc_stream_id(1);
+  SpdyAltSvcIR altsvc_ir(altsvc_stream_id);
+  SpdyAltSvcWireFormat::AlternativeService alternative_service(
+      "quic", "alternative.example.org", 443, 86400,
+      SpdyAltSvcWireFormat::VersionVector());
+  altsvc_ir.add_altsvc(alternative_service);
+  BufferedSpdyFramer framer;
+  SpdySerializedFrame altsvc_frame(framer.SerializeFrame(altsvc_ir));
+
+  TestBufferedSpdyVisitor visitor;
+  visitor.SimulateInFramer(altsvc_frame);
+  EXPECT_EQ(0, visitor.error_count_);
+  EXPECT_EQ(1, visitor.altsvc_count_);
+  EXPECT_EQ(altsvc_stream_id, visitor.altsvc_stream_id_);
+  EXPECT_TRUE(visitor.altsvc_origin_.empty());
   ASSERT_EQ(1u, visitor.altsvc_vector_.size());
   EXPECT_EQ(alternative_service, visitor.altsvc_vector_[0]);
 }

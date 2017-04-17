@@ -5,18 +5,27 @@
 #ifndef ASH_WM_SCREEN_DIMMER_H_
 #define ASH_WM_SCREEN_DIMMER_H_
 
-#include "ash/ash_export.h"
-#include "ash/common/shell_observer.h"
-#include "base/compiler_specific.h"
-#include "base/macros.h"
-#include "ui/aura/window_observer.h"
+#include <memory>
+#include <vector>
 
-namespace ui {
-class Layer;
+#include "ash/ash_export.h"
+#include "ash/shell_observer.h"
+#include "base/macros.h"
+
+namespace aura {
+class Window;
 }
 
 namespace ash {
-class DimWindow;
+
+class WindowDimmer;
+
+template <typename UserData>
+class WindowUserData;
+
+namespace test {
+class ScreenDimmerTest;
+}
 
 // ScreenDimmer displays a partially-opaque layer above everything
 // else in the given container window to darken the display.  It shouldn't be
@@ -25,16 +34,15 @@ class DimWindow;
 // briefly dim the screen (e.g. to indicate to the user that we're
 // about to suspend a machine that lacks an internal backlight that
 // can be adjusted).
-class ASH_EXPORT ScreenDimmer : ShellObserver {
+class ASH_EXPORT ScreenDimmer : public ShellObserver {
  public:
-  // Creates a screen dimmer for the containers given by |container_id|.
-  // It's owned by the container in the primary root window and will be
-  // destroyed when the container is destroyed.
-  static ScreenDimmer* GetForContainer(int container_id);
+  // Indicates the container ScreenDimmer operates on.
+  enum class Container {
+    ROOT,
+    LOCK_SCREEN,
+  };
 
-  // Creates a dimmer a root window level. This is used for suspend animation.
-  static ScreenDimmer* GetForRoot();
-
+  explicit ScreenDimmer(Container container);
   ~ScreenDimmer() override;
 
   // Dim or undim the layers.
@@ -48,9 +56,11 @@ class ASH_EXPORT ScreenDimmer : ShellObserver {
   static ScreenDimmer* FindForTest(int container_id);
 
  private:
-  static aura::Window* FindContainer(int container_id);
+  friend class test::ScreenDimmerTest;
 
-  explicit ScreenDimmer(int container_id);
+  // Returns the aura::Windows (one per display) that correspond to
+  // |container_|.
+  std::vector<aura::Window*> GetAllContainers();
 
   // ShellObserver:
   void OnRootWindowAdded(WmWindow* root_window) override;
@@ -59,12 +69,14 @@ class ASH_EXPORT ScreenDimmer : ShellObserver {
   // if necessary. (Used when a new display is connected)
   void Update(bool should_dim);
 
-  int container_id_;
-  float target_opacity_;
+  const Container container_;
 
   // Are we currently dimming the screen?
   bool is_dimming_;
   bool at_bottom_;
+
+  // Owns the WindowDimmers.
+  std::unique_ptr<WindowUserData<WindowDimmer>> window_dimmers_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenDimmer);
 };

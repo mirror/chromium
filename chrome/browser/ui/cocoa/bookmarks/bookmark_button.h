@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_BUTTON_H_
+#define CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_BUTTON_H_
+
 #import <Cocoa/Cocoa.h>
 #include <vector>
 #import "chrome/browser/ui/cocoa/draggable_button.h"
@@ -214,10 +217,12 @@ class BookmarkNode;
   BOOL dragPending_;
   BOOL acceptsTrackIn_;
   NSTrackingArea* area_;
+  NSColor* backgroundColor_;
 }
 
 @property(assign, nonatomic) NSObject<BookmarkButtonDelegate>* delegate;
 @property(assign, nonatomic) BOOL acceptsTrackIn;
+@property(retain, nonatomic) NSColor* backgroundColor;
 
 // Return the bookmark node associated with this button, or NULL.
 - (const bookmarks::BookmarkNode*)bookmarkNode;
@@ -237,12 +242,12 @@ class BookmarkNode;
 // http://crbug.com/35967
 - (BOOL)isEmpty;
 
-// Turn on or off pulsing of a bookmark button.
+// Stick or unstick the pulse of a bookmark button.
 // Triggered by the bookmark bubble.
-- (void)setIsContinuousPulsing:(BOOL)flag;
+- (void)setPulseIsStuckOn:(BOOL)flag;
 
-// Return continuous pulse state.
-- (BOOL)isContinuousPulsing;
+// Return pulse sticky state.
+- (BOOL)isPulseStuckOn;
 
 // Return the location in screen coordinates where the remove animation should
 // be displayed.
@@ -259,3 +264,4 @@ class BookmarkNode;
 - (void)beginDrag:(NSEvent*)event;
 @end
 
+#endif  // CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_BUTTON_H_

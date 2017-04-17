@@ -6,61 +6,61 @@
 #define StyleChangeReason_h
 
 #include "core/dom/QualifiedName.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class QualifiedName;
 
 namespace StyleChangeReason {
-extern const char ActiveStylesheetsUpdate[];
-extern const char Animation[];
-extern const char Attribute[];
-extern const char CleanupPlaceholderStyles[];
-extern const char CompositorProxy[];
-extern const char ControlValue[];
-extern const char Control[];
-extern const char DeclarativeContent[];
-extern const char DesignMode[];
-extern const char Drag[];
-extern const char FontSizeChange[];
-extern const char Fonts[];
-extern const char FullScreen[];
-extern const char Inline[];
-extern const char InlineCSSStyleMutated[];
-extern const char Inspector[];
-extern const char Language[];
-extern const char LinkColorChange[];
-extern const char PlatformColorChange[];
-extern const char PropagateInheritChangeToDistributedNodes[];
-extern const char PseudoClass[];
-extern const char SVGContainerSizeChange[];
-extern const char SVGCursor[];
-extern const char SVGFilterLayerUpdate[];
-extern const char Settings[];
-extern const char Shadow[];
-extern const char SiblingSelector[];
-extern const char StyleInvalidator[];
-extern const char StyleSheetChange[];
-extern const char Validate[];
-extern const char ViewportUnits[];
-extern const char VisitedLink[];
-extern const char VisuallyOrdered[];
-extern const char WritingModeChange[];
-extern const char Zoom[];
-} // namespace StyleChangeReason
+extern const char kActiveStylesheetsUpdate[];
+extern const char kAnimation[];
+extern const char kAttribute[];
+extern const char kCleanupPlaceholderStyles[];
+extern const char kCompositorProxy[];
+extern const char kControlValue[];
+extern const char kControl[];
+extern const char kDeclarativeContent[];
+extern const char kDesignMode[];
+extern const char kFontSizeChange[];
+extern const char kFonts[];
+extern const char kFullScreen[];
+extern const char kInline[];
+extern const char kInlineCSSStyleMutated[];
+extern const char kInspector[];
+extern const char kLanguage[];
+extern const char kLinkColorChange[];
+extern const char kPlatformColorChange[];
+extern const char kPropagateInheritChangeToDistributedNodes[];
+extern const char kPropertyRegistration[];
+extern const char kPropertyUnregistration[];
+extern const char kPseudoClass[];
+extern const char kSVGContainerSizeChange[];
+extern const char kSVGCursor[];
+extern const char kSettings[];
+extern const char kShadow[];
+extern const char kStyleInvalidator[];
+extern const char kStyleSheetChange[];
+extern const char kViewportUnits[];
+extern const char kVisitedLink[];
+extern const char kVisuallyOrdered[];
+extern const char kWritingModeChange[];
+extern const char kZoom[];
+}  // namespace StyleChangeReason
 typedef const char StyleChangeReasonString[];
 
 namespace StyleChangeExtraData {
-extern const AtomicString& Active;
-extern const AtomicString& Disabled;
-extern const AtomicString& Focus;
-extern const AtomicString& Hover;
-extern const AtomicString& Past;
-extern const AtomicString& Unresolved;
+extern const AtomicString& g_active;
+extern const AtomicString& g_disabled;
+extern const AtomicString& g_drag;
+extern const AtomicString& g_focus;
+extern const AtomicString& g_focus_within;
+extern const AtomicString& g_hover;
+extern const AtomicString& g_past;
+extern const AtomicString& g_unresolved;
 
-void init();
+void Init();
 }
 
 // |StyleChangeReasonForTracing| is used to trace the reason a
@@ -69,41 +69,42 @@ void init();
 // |StyleChangeReasonForTracing| is strictly only for the tracing purpose as
 // described above. Blink logic must not depend on this value.
 class StyleChangeReasonForTracing {
-    DISALLOW_NEW();
-public:
-    static StyleChangeReasonForTracing create(StyleChangeReasonString reasonString)
-    {
-        return StyleChangeReasonForTracing(reasonString, nullAtom);
-    }
+  DISALLOW_NEW();
 
-    static StyleChangeReasonForTracing createWithExtraData(StyleChangeReasonString reasonString, const AtomicString& extraData)
-    {
-        return StyleChangeReasonForTracing(reasonString, extraData);
-    }
+ public:
+  static StyleChangeReasonForTracing Create(
+      StyleChangeReasonString reason_string) {
+    return StyleChangeReasonForTracing(reason_string, g_null_atom);
+  }
 
-    static StyleChangeReasonForTracing fromAttribute(const QualifiedName& attributeName)
-    {
-        return StyleChangeReasonForTracing(StyleChangeReason::Attribute, attributeName.localName());
-    }
+  static StyleChangeReasonForTracing CreateWithExtraData(
+      StyleChangeReasonString reason_string,
+      const AtomicString& extra_data) {
+    return StyleChangeReasonForTracing(reason_string, extra_data);
+  }
 
-    String reasonString() const { return String(m_reason); }
-    const AtomicString& getExtraData() const { return m_extraData; }
+  static StyleChangeReasonForTracing FromAttribute(
+      const QualifiedName& attribute_name) {
+    return StyleChangeReasonForTracing(StyleChangeReason::kAttribute,
+                                       attribute_name.LocalName());
+  }
 
-private:
-    StyleChangeReasonForTracing(StyleChangeReasonString reasonString, const AtomicString& extraData)
-        : m_reason(reasonString)
-        , m_extraData(extraData)
-    {
-    }
+  String ReasonString() const { return String(reason_); }
+  const AtomicString& GetExtraData() const { return extra_data_; }
 
-    // disable comparisons
-    void operator==(const StyleChangeReasonForTracing&) const { }
-    void operator!=(const StyleChangeReasonForTracing&) const { }
+ private:
+  StyleChangeReasonForTracing(StyleChangeReasonString reason_string,
+                              const AtomicString& extra_data)
+      : reason_(reason_string), extra_data_(extra_data) {}
 
-    const char* m_reason;
-    AtomicString m_extraData;
+  // disable comparisons
+  void operator==(const StyleChangeReasonForTracing&) const {}
+  void operator!=(const StyleChangeReasonForTracing&) const {}
+
+  const char* reason_;
+  AtomicString extra_data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleChangeReason_h
+#endif  // StyleChangeReason_h

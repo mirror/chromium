@@ -6,30 +6,31 @@
 #define CanvasMetrics_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT CanvasMetrics {
-    STATIC_ONLY(CanvasMetrics);
-public:
-    enum CanvasContextUsage {
-        CanvasCreated = 0,
-        GPUAccelerated2DCanvasImageBufferCreated = 1,
-        DisplayList2DCanvasImageBufferCreated = 2,
-        Unaccelerated2DCanvasImageBufferCreated = 3,
-        Accelerated2DCanvasGPUContextLost = 4,
-        Unaccelerated2DCanvasImageBufferCreationFailed = 5,
-        GPUAccelerated2DCanvasImageBufferCreationFailed = 6,
-        DisplayList2DCanvasFallbackToRaster = 7,
-        GPUAccelerated2DCanvasDeferralDisabled = 8,
-        GPUAccelerated2DCanvasSurfaceCreationFailed = 9,
-        NumberOfUsages
-    };
+  STATIC_ONLY(CanvasMetrics);
 
-    static void countCanvasContextUsage(const CanvasContextUsage);
+ public:
+  enum CanvasContextUsage {
+    kCanvasCreated = 0,
+    kGPUAccelerated2DCanvasImageBufferCreated = 1,
+    kDisplayList2DCanvasImageBufferCreated = 2,
+    kUnaccelerated2DCanvasImageBufferCreated = 3,
+    kAccelerated2DCanvasGPUContextLost = 4,
+    kUnaccelerated2DCanvasImageBufferCreationFailed = 5,
+    kGPUAccelerated2DCanvasImageBufferCreationFailed = 6,
+    kDisplayList2DCanvasFallbackToRaster = 7,
+    kGPUAccelerated2DCanvasDeferralDisabled = 8,
+    kGPUAccelerated2DCanvasSurfaceCreationFailed = 9,
+    kNumberOfUsages
+  };
+
+  static void CountCanvasContextUsage(const CanvasContextUsage);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CanvasMetrics_h
+#endif  // CanvasMetrics_h

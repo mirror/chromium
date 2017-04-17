@@ -24,21 +24,20 @@ class MediaRouterFactory : public BrowserContextKeyedServiceFactory {
  public:
   static MediaRouter* GetApiForBrowserContext(content::BrowserContext* context);
 
+  static MediaRouterFactory* GetInstance();
+
  protected:
   // We override the shutdown method for the factory to give the Media Router a
   // chance to remove incognito media routes.
   void BrowserContextShutdown(content::BrowserContext* context) override;
 
  private:
-  friend struct base::DefaultLazyInstanceTraits<MediaRouterFactory>;
+  friend struct base::LazyInstanceTraitsBase<MediaRouterFactory>;
   FRIEND_TEST_ALL_PREFIXES(MediaRouterFactoryTest,
                            IncognitoBrowserContextShutdown);
 
   MediaRouterFactory();
   ~MediaRouterFactory() override;
-
-  // Exposed for testing.
-  static MediaRouterFactory* GetMediaRouterFactoryForTest();
 
   // BrowserContextKeyedServiceFactory interface.
   content::BrowserContext* GetBrowserContextToUse(

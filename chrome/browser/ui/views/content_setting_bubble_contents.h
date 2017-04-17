@@ -10,17 +10,18 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/strings/string16.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/media_stream_request.h"
 #include "ui/base/models/combobox_model.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/button/button.h"
+#include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/combobox/combobox_listener.h"
 #include "ui/views/controls/link_listener.h"
 
 class ContentSettingBubbleModel;
-class Profile;
 
 namespace chrome {
 class ContentSettingBubbleViewsBridge;
@@ -28,6 +29,7 @@ class ContentSettingBubbleViewsBridge;
 
 namespace views {
 class RadioButton;
+class LabelButton;
 }
 
 // ContentSettingBubbleContents is used when the user turns on different kinds
@@ -93,9 +95,8 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   typedef std::map<views::Link*, int> ListItemLinks;
 
   // content::WebContentsObserver:
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override;
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
 
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
@@ -116,6 +117,8 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   RadioGroup radio_group_;
   views::Link* custom_link_;
   views::Link* manage_link_;
+  views::LabelButton* manage_button_;
+  views::Checkbox* manage_checkbox_;
   views::Link* learn_more_link_;
 
   // Combobox models the bubble owns.

@@ -32,39 +32,40 @@
 namespace blink {
 
 class AnimationEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static AnimationEvent* create()
-    {
-        return new AnimationEvent;
-    }
-    static AnimationEvent* create(const AtomicString& type, const String& animationName, double elapsedTime)
-    {
-        return new AnimationEvent(type, animationName, elapsedTime);
-    }
-    static AnimationEvent* create(const AtomicString& type, const AnimationEventInit& initializer)
-    {
-        return new AnimationEvent(type, initializer);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~AnimationEvent() override;
+ public:
+  static AnimationEvent* Create() { return new AnimationEvent; }
+  static AnimationEvent* Create(const AtomicString& type,
+                                const String& animation_name,
+                                double elapsed_time) {
+    return new AnimationEvent(type, animation_name, elapsed_time);
+  }
+  static AnimationEvent* Create(const AtomicString& type,
+                                const AnimationEventInit& initializer) {
+    return new AnimationEvent(type, initializer);
+  }
 
-    const String& animationName() const;
-    double elapsedTime() const;
+  ~AnimationEvent() override;
 
-    const AtomicString& interfaceName() const override;
+  const String& animationName() const;
+  double elapsedTime() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-private:
-    AnimationEvent();
-    AnimationEvent(const AtomicString& type, const String& animationName, double elapsedTime);
-    AnimationEvent(const AtomicString&, const AnimationEventInit&);
+  DECLARE_VIRTUAL_TRACE();
 
-    String m_animationName;
-    double m_elapsedTime;
+ private:
+  AnimationEvent();
+  AnimationEvent(const AtomicString& type,
+                 const String& animation_name,
+                 double elapsed_time);
+  AnimationEvent(const AtomicString&, const AnimationEventInit&);
+
+  String animation_name_;
+  double elapsed_time_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AnimationEvent_h
+#endif  // AnimationEvent_h

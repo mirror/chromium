@@ -36,7 +36,7 @@
 #include "core/dom/AttributeCollection.h"
 #include "core/dom/SpaceSplitString.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -47,65 +47,76 @@ class UniqueElementData;
 // ElementData represents very common, but not necessarily unique to an element,
 // data such as attributes, inline style, and parsed class names and ids.
 class ElementData : public GarbageCollectedFinalized<ElementData> {
-public:
-    // Override GarbageCollectedFinalized's finalizeGarbageCollectedObject to
-    // dispatch to the correct subclass destructor.
-    void finalizeGarbageCollectedObject();
+ public:
+  // Override GarbageCollectedFinalized's finalizeGarbageCollectedObject to
+  // dispatch to the correct subclass destructor.
+  void FinalizeGarbageCollectedObject();
 
-    void clearClass() const { m_classNames.clear(); }
-    void setClass(const AtomicString& className, bool shouldFoldCase) const { m_classNames.set(shouldFoldCase ? className.lowerASCII() : className , SpaceSplitString::ShouldNotFoldCase); }
-    const SpaceSplitString& classNames() const { return m_classNames; }
+  void ClearClass() const { class_names_.Clear(); }
+  void SetClass(const AtomicString& class_name, bool should_fold_case) const {
+    class_names_.Set(should_fold_case ? class_name.LowerASCII() : class_name,
+                     SpaceSplitString::kShouldNotFoldCase);
+  }
+  const SpaceSplitString& ClassNames() const { return class_names_; }
 
-    const AtomicString& idForStyleResolution() const { return m_idForStyleResolution; }
-    void setIdForStyleResolution(const AtomicString& newId) const { m_idForStyleResolution = newId; }
+  const AtomicString& IdForStyleResolution() const {
+    return id_for_style_resolution_;
+  }
+  void SetIdForStyleResolution(const AtomicString& new_id) const {
+    id_for_style_resolution_ = new_id;
+  }
 
-    const StylePropertySet* inlineStyle() const { return m_inlineStyle.get(); }
+  const StylePropertySet* InlineStyle() const { return inline_style_.Get(); }
 
-    const StylePropertySet* presentationAttributeStyle() const;
+  const StylePropertySet* PresentationAttributeStyle() const;
 
-    AttributeCollection attributes() const;
+  AttributeCollection Attributes() const;
 
-    bool hasID() const { return !m_idForStyleResolution.isNull(); }
-    bool hasClass() const { return !m_classNames.isNull(); }
+  bool HasID() const { return !id_for_style_resolution_.IsNull(); }
+  bool HasClass() const { return !class_names_.IsNull(); }
 
-    bool isEquivalent(const ElementData* other) const;
+  bool IsEquivalent(const ElementData* other) const;
 
-    bool isUnique() const { return m_isUnique; }
+  bool IsUnique() const { return is_unique_; }
 
-    DECLARE_TRACE_AFTER_DISPATCH();
-    DECLARE_TRACE();
+  DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE();
 
-protected:
-    ElementData();
-    explicit ElementData(unsigned arraySize);
-    ElementData(const ElementData&, bool isUnique);
+ protected:
+  ElementData();
+  explicit ElementData(unsigned array_size);
+  ElementData(const ElementData&, bool is_unique);
 
-    // Keep the type in a bitfield instead of using virtual destructors to avoid adding a vtable.
-    unsigned m_isUnique : 1;
-    unsigned m_arraySize : 28;
-    mutable unsigned m_presentationAttributeStyleIsDirty : 1;
-    mutable unsigned m_styleAttributeIsDirty : 1;
-    mutable unsigned m_animatedSVGAttributesAreDirty : 1;
+  // Keep the type in a bitfield instead of using virtual destructors to avoid
+  // adding a vtable.
+  unsigned is_unique_ : 1;
+  unsigned array_size_ : 28;
+  mutable unsigned presentation_attribute_style_is_dirty_ : 1;
+  mutable unsigned style_attribute_is_dirty_ : 1;
+  mutable unsigned animated_svg_attributes_are_dirty_ : 1;
 
-    mutable Member<StylePropertySet> m_inlineStyle;
-    mutable SpaceSplitString m_classNames;
-    mutable AtomicString m_idForStyleResolution;
+  mutable Member<StylePropertySet> inline_style_;
+  mutable SpaceSplitString class_names_;
+  mutable AtomicString id_for_style_resolution_;
 
-private:
-    friend class Element;
-    friend class ShareableElementData;
-    friend class UniqueElementData;
-    friend class SVGElement;
+ private:
+  friend class Element;
+  friend class ShareableElementData;
+  friend class UniqueElementData;
+  friend class SVGElement;
 
-    UniqueElementData* makeUniqueCopy() const;
+  UniqueElementData* MakeUniqueCopy() const;
 };
 
-#define DEFINE_ELEMENT_DATA_TYPE_CASTS(thisType,  pointerPredicate, referencePredicate) \
-    DEFINE_TYPE_CASTS(thisType, ElementData, data, pointerPredicate, referencePredicate)
+#define DEFINE_ELEMENT_DATA_TYPE_CASTS(thisType, pointerPredicate, \
+                                       referencePredicate)         \
+  DEFINE_TYPE_CASTS(thisType, ElementData, data, pointerPredicate, \
+                    referencePredicate)
 
 #if COMPILER(MSVC)
 #pragma warning(push)
-#pragma warning(disable: 4200) // Disable "zero-sized array in struct/union" warning
+#pragma warning( \
+    disable : 4200)  // Disable "zero-sized array in struct/union" warning
 #endif
 
 // SharableElementData is managed by ElementDataCache and is produced by
@@ -113,31 +124,32 @@ private:
 // is a memory optimization since it's very common for many elements to have
 // duplicate sets of attributes (ex. the same classes).
 class ShareableElementData final : public ElementData {
-public:
-    static ShareableElementData* createWithAttributes(const Vector<Attribute>&);
+ public:
+  static ShareableElementData* CreateWithAttributes(const Vector<Attribute>&);
 
-    explicit ShareableElementData(const Vector<Attribute>&);
-    explicit ShareableElementData(const UniqueElementData&);
-    ~ShareableElementData();
+  explicit ShareableElementData(const Vector<Attribute>&);
+  explicit ShareableElementData(const UniqueElementData&);
+  ~ShareableElementData();
 
-    DEFINE_INLINE_TRACE_AFTER_DISPATCH() { ElementData::traceAfterDispatch(visitor); }
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
+    ElementData::TraceAfterDispatch(visitor);
+  }
 
-    // Add support for placement new as ShareableElementData is not allocated
-    // with a fixed size. Instead the allocated memory size is computed based on
-    // the number of attributes. This requires us to use ThreadHeap::allocate directly
-    // with the computed size and subsequently call placement new with the
-    // allocated memory address.
-    void* operator new(std::size_t, void* location)
-    {
-        return location;
-    }
+  // Add support for placement new as ShareableElementData is not allocated
+  // with a fixed size. Instead the allocated memory size is computed based on
+  // the number of attributes. This requires us to use ThreadHeap::allocate
+  // directly with the computed size and subsequently call placement new with
+  // the allocated memory address.
+  void* operator new(std::size_t, void* location) { return location; }
 
-    AttributeCollection attributes() const;
+  AttributeCollection Attributes() const;
 
-    Attribute m_attributeArray[0];
+  Attribute attribute_array_[0];
 };
 
-DEFINE_ELEMENT_DATA_TYPE_CASTS(ShareableElementData, !data->isUnique(), !data.isUnique());
+DEFINE_ELEMENT_DATA_TYPE_CASTS(ShareableElementData,
+                               !data->IsUnique(),
+                               !data.IsUnique());
 
 #if COMPILER(MSVC)
 #pragma warning(pop)
@@ -150,58 +162,56 @@ DEFINE_ELEMENT_DATA_TYPE_CASTS(ShareableElementData, !data->isUnique(), !data.is
 // doesn't require a UniqueElementData as all elements with the same style
 // attribute will have the same inline style.
 class UniqueElementData final : public ElementData {
-public:
-    static UniqueElementData* create();
-    ShareableElementData* makeShareableCopy() const;
+ public:
+  static UniqueElementData* Create();
+  ShareableElementData* MakeShareableCopy() const;
 
-    MutableAttributeCollection attributes();
-    AttributeCollection attributes() const;
+  MutableAttributeCollection Attributes();
+  AttributeCollection Attributes() const;
 
-    UniqueElementData();
-    explicit UniqueElementData(const ShareableElementData&);
-    explicit UniqueElementData(const UniqueElementData&);
+  UniqueElementData();
+  explicit UniqueElementData(const ShareableElementData&);
+  explicit UniqueElementData(const UniqueElementData&);
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-    // FIXME: We might want to support sharing element data for elements with
-    // presentation attribute style. Lots of table cells likely have the same
-    // attributes. Most modern pages don't use presentation attributes though
-    // so this might not make sense.
-    mutable Member<StylePropertySet> m_presentationAttributeStyle;
-    AttributeVector m_attributeVector;
+  // FIXME: We might want to support sharing element data for elements with
+  // presentation attribute style. Lots of table cells likely have the same
+  // attributes. Most modern pages don't use presentation attributes though
+  // so this might not make sense.
+  mutable Member<StylePropertySet> presentation_attribute_style_;
+  AttributeVector attribute_vector_;
 };
 
-DEFINE_ELEMENT_DATA_TYPE_CASTS(UniqueElementData, data->isUnique(), data.isUnique());
+DEFINE_ELEMENT_DATA_TYPE_CASTS(UniqueElementData,
+                               data->IsUnique(),
+                               data.IsUnique());
 
-inline const StylePropertySet* ElementData::presentationAttributeStyle() const
-{
-    if (!m_isUnique)
-        return 0;
-    return toUniqueElementData(this)->m_presentationAttributeStyle.get();
+inline const StylePropertySet* ElementData::PresentationAttributeStyle() const {
+  if (!is_unique_)
+    return 0;
+  return ToUniqueElementData(this)->presentation_attribute_style_.Get();
 }
 
-inline AttributeCollection ElementData::attributes() const
-{
-    if (isUnique())
-        return toUniqueElementData(this)->attributes();
-    return toShareableElementData(this)->attributes();
+inline AttributeCollection ElementData::Attributes() const {
+  if (IsUnique())
+    return ToUniqueElementData(this)->Attributes();
+  return ToShareableElementData(this)->Attributes();
 }
 
-inline AttributeCollection ShareableElementData::attributes() const
-{
-    return AttributeCollection(m_attributeArray, m_arraySize);
+inline AttributeCollection ShareableElementData::Attributes() const {
+  return AttributeCollection(attribute_array_, array_size_);
 }
 
-inline AttributeCollection UniqueElementData::attributes() const
-{
-    return AttributeCollection(m_attributeVector.data(), m_attributeVector.size());
+inline AttributeCollection UniqueElementData::Attributes() const {
+  return AttributeCollection(attribute_vector_.Data(),
+                             attribute_vector_.size());
 }
 
-inline MutableAttributeCollection UniqueElementData::attributes()
-{
-    return MutableAttributeCollection(m_attributeVector);
+inline MutableAttributeCollection UniqueElementData::Attributes() {
+  return MutableAttributeCollection(attribute_vector_);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ElementData_h
+#endif  // ElementData_h

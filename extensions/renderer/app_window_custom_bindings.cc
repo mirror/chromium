@@ -11,8 +11,8 @@
 #include "content/public/renderer/render_view.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/switches.h"
+#include "extensions/grit/extensions_renderer_resources.h"
 #include "extensions/renderer/script_context.h"
-#include "grit/extensions_renderer_resources.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -24,10 +24,6 @@ AppWindowCustomBindings::AppWindowCustomBindings(ScriptContext* context)
     : ObjectBackedNativeHandler(context) {
   RouteFunction("GetFrame", base::Bind(&AppWindowCustomBindings::GetFrame,
                                        base::Unretained(this)));
-
-  RouteFunction("GetWindowControlsHtmlTemplate",
-      base::Bind(&AppWindowCustomBindings::GetWindowControlsHtmlTemplate,
-                 base::Unretained(this)));
 }
 
 void AppWindowCustomBindings::GetFrame(
@@ -57,26 +53,8 @@ void AppWindowCustomBindings::GetFrame(
   }
 
   v8::Local<v8::Value> window =
-      app_frame->GetWebFrame()->mainWorldScriptContext()->Global();
+      app_frame->GetWebFrame()->MainWorldScriptContext()->Global();
   args.GetReturnValue().Set(window);
-}
-
-void AppWindowCustomBindings::GetWindowControlsHtmlTemplate(
-    const v8::FunctionCallbackInfo<v8::Value>& args) {
-  CHECK_EQ(args.Length(), 0);
-
-  v8::Local<v8::Value> result = v8::String::Empty(args.GetIsolate());
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAppWindowControls)) {
-    base::StringValue value(
-        ResourceBundle::GetSharedInstance()
-            .GetRawDataResource(IDR_WINDOW_CONTROLS_TEMPLATE_HTML)
-            .as_string());
-    std::unique_ptr<content::V8ValueConverter> converter(
-        content::V8ValueConverter::create());
-    result = converter->ToV8Value(&value, context()->v8_context());
-  }
-  args.GetReturnValue().Set(result);
 }
 
 }  // namespace extensions

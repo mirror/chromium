@@ -24,23 +24,11 @@
 #include "gpu/ipc/client/gpu_memory_buffer_impl_shared_memory.h"
 #include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gfx/gpu_memory_buffer_tracing.h"
 #include "ui/gl/gl_switches.h"
 
 namespace content {
 namespace {
-
-void HostCreateGpuMemoryBuffer(
-    gpu::SurfaceHandle surface_handle,
-    GpuProcessHost* host,
-    gfx::GpuMemoryBufferId id,
-    const gfx::Size& size,
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage,
-    int client_id,
-    const BrowserGpuMemoryBufferManager::CreateCallback& callback) {
-  host->CreateGpuMemoryBuffer(id, size, format, usage, client_id,
-                              surface_handle, callback);
-}
 
 void GpuMemoryBufferDeleted(
     scoped_refptr<base::SingleThreadTaskRunner> destruction_task_runner,
@@ -48,70 +36,6 @@ void GpuMemoryBufferDeleted(
     const gpu::SyncToken& sync_token) {
   destruction_task_runner->PostTask(
       FROM_HERE, base::Bind(destruction_callback, sync_token));
-}
-
-bool IsNativeGpuMemoryBufferFactoryConfigurationSupported(
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage) {
-  switch (gpu::GetNativeGpuMemoryBufferType()) {
-    case gfx::SHARED_MEMORY_BUFFER:
-      return false;
-    case gfx::IO_SURFACE_BUFFER:
-    case gfx::SURFACE_TEXTURE_BUFFER:
-    case gfx::OZONE_NATIVE_PIXMAP:
-      return gpu::IsNativeGpuMemoryBufferConfigurationSupported(format, usage);
-    default:
-      NOTREACHED();
-      return false;
-  }
-}
-
-GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
-  GpuMemoryBufferConfigurationSet configurations;
-
-  if (BrowserGpuMemoryBufferManager::IsNativeGpuMemoryBuffersEnabled()) {
-    const gfx::BufferFormat kNativeFormats[] = {
-        gfx::BufferFormat::R_8,       gfx::BufferFormat::BGR_565,
-        gfx::BufferFormat::RGBA_4444, gfx::BufferFormat::RGBA_8888,
-        gfx::BufferFormat::BGRA_8888, gfx::BufferFormat::UYVY_422,
-        gfx::BufferFormat::YVU_420,   gfx::BufferFormat::YUV_420_BIPLANAR};
-    const gfx::BufferUsage kNativeUsages[] = {
-        gfx::BufferUsage::GPU_READ, gfx::BufferUsage::SCANOUT,
-        gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-        gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT};
-    for (auto& format : kNativeFormats) {
-      for (auto& usage : kNativeUsages) {
-        if (IsNativeGpuMemoryBufferFactoryConfigurationSupported(format, usage))
-          configurations.insert(std::make_pair(format, usage));
-      }
-    }
-  }
-
-#if defined(USE_OZONE) || defined(OS_MACOSX)
-  // Disable native buffers only when using Mesa.
-  bool force_native_gpu_read_write_formats =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kUseGL) != gl::kGLImplementationOSMesaName;
-#else
-  bool force_native_gpu_read_write_formats = false;
-#endif
-  if (force_native_gpu_read_write_formats) {
-    const gfx::BufferFormat kGPUReadWriteFormats[] = {
-        gfx::BufferFormat::BGR_565,   gfx::BufferFormat::RGBA_8888,
-        gfx::BufferFormat::RGBX_8888, gfx::BufferFormat::BGRA_8888,
-        gfx::BufferFormat::BGRX_8888, gfx::BufferFormat::UYVY_422,
-        gfx::BufferFormat::YVU_420,   gfx::BufferFormat::YUV_420_BIPLANAR};
-    const gfx::BufferUsage kGPUReadWriteUsages[] = {
-        gfx::BufferUsage::GPU_READ, gfx::BufferUsage::SCANOUT};
-    for (auto& format : kGPUReadWriteFormats) {
-      for (auto& usage : kGPUReadWriteUsages) {
-        if (IsNativeGpuMemoryBufferFactoryConfigurationSupported(format, usage))
-          configurations.insert(std::make_pair(format, usage));
-      }
-    }
-  }
-
-  return configurations;
 }
 
 BrowserGpuMemoryBufferManager* g_gpu_memory_buffer_manager = nullptr;
@@ -141,30 +65,12 @@ struct BrowserGpuMemoryBufferManager::CreateGpuMemoryBufferRequest {
   std::unique_ptr<gfx::GpuMemoryBuffer> result;
 };
 
-struct BrowserGpuMemoryBufferManager::CreateGpuMemoryBufferFromHandleRequest
-    : public CreateGpuMemoryBufferRequest {
-  CreateGpuMemoryBufferFromHandleRequest(
-      const gfx::GpuMemoryBufferHandle& handle,
-      const gfx::Size& size,
-      gfx::BufferFormat format,
-      int client_id)
-      : CreateGpuMemoryBufferRequest(size,
-                                     format,
-                                     gfx::BufferUsage::GPU_READ,
-                                     client_id,
-                                     gpu::kNullSurfaceHandle),
-        handle(handle) {}
-  ~CreateGpuMemoryBufferFromHandleRequest() {}
-  gfx::GpuMemoryBufferHandle handle;
-};
-
 BrowserGpuMemoryBufferManager::BrowserGpuMemoryBufferManager(
     int gpu_client_id,
     uint64_t gpu_client_tracing_id)
-    : native_configurations_(GetNativeGpuMemoryBufferConfigurations()),
+    : native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
       gpu_client_id_(gpu_client_id),
-      gpu_client_tracing_id_(gpu_client_tracing_id),
-      gpu_host_id_(0) {
+      gpu_client_tracing_id_(gpu_client_tracing_id) {
   DCHECK(!g_gpu_memory_buffer_manager);
   g_gpu_memory_buffer_manager = this;
 }
@@ -178,56 +84,8 @@ BrowserGpuMemoryBufferManager* BrowserGpuMemoryBufferManager::current() {
   return g_gpu_memory_buffer_manager;
 }
 
-// static
-bool BrowserGpuMemoryBufferManager::IsNativeGpuMemoryBuffersEnabled() {
-  // Disable native buffers when using Mesa.
-  if (base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kUseGL) == gl::kGLImplementationOSMesaName) {
-    return false;
-  }
-
-#if defined(OS_MACOSX)
-  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kDisableNativeGpuMemoryBuffers);
-#else
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kEnableNativeGpuMemoryBuffers);
-#endif
-}
-
-// static
-uint32_t BrowserGpuMemoryBufferManager::GetImageTextureTarget(
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage) {
-  GpuMemoryBufferConfigurationSet native_configurations =
-      GetNativeGpuMemoryBufferConfigurations();
-  if (native_configurations.find(std::make_pair(format, usage)) ==
-      native_configurations.end()) {
-    return GL_TEXTURE_2D;
-  }
-
-  switch (gpu::GetNativeGpuMemoryBufferType()) {
-    case gfx::SURFACE_TEXTURE_BUFFER:
-    case gfx::OZONE_NATIVE_PIXMAP:
-      // GPU memory buffers that are shared with the GL using EGLImages
-      // require TEXTURE_EXTERNAL_OES.
-      return GL_TEXTURE_EXTERNAL_OES;
-    case gfx::IO_SURFACE_BUFFER:
-      // IOSurface backed images require GL_TEXTURE_RECTANGLE_ARB.
-      return GL_TEXTURE_RECTANGLE_ARB;
-    case gfx::SHARED_MEMORY_BUFFER:
-      return GL_TEXTURE_2D;
-    case gfx::EMPTY_BUFFER:
-      NOTREACHED();
-      return GL_TEXTURE_2D;
-  }
-
-  NOTREACHED();
-  return GL_TEXTURE_2D;
-}
-
 std::unique_ptr<gfx::GpuMemoryBuffer>
-BrowserGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
+BrowserGpuMemoryBufferManager::CreateGpuMemoryBuffer(
     const gfx::Size& size,
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
@@ -235,46 +93,19 @@ BrowserGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
   return AllocateGpuMemoryBufferForSurface(size, format, usage, surface_handle);
 }
 
-std::unique_ptr<gfx::GpuMemoryBuffer>
-BrowserGpuMemoryBufferManager::CreateGpuMemoryBufferFromHandle(
-    const gfx::GpuMemoryBufferHandle& handle,
-    const gfx::Size& size,
-    gfx::BufferFormat format) {
-  DCHECK(!BrowserThread::CurrentlyOn(BrowserThread::IO));
-
-  CreateGpuMemoryBufferFromHandleRequest request(handle, size, format,
-                                                 gpu_client_id_);
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::Bind(&BrowserGpuMemoryBufferManager::
-                     HandleCreateGpuMemoryBufferFromHandleOnIO,
-                 base::Unretained(this),  // Safe as we wait for result below.
-                 base::Unretained(&request)));
-
-  // We're blocking the UI thread, which is generally undesirable.
-  TRACE_EVENT0(
-      "browser",
-      "BrowserGpuMemoryBufferManager::CreateGpuMemoryBufferFromHandle");
-  base::ThreadRestrictions::ScopedAllowWait allow_wait;
-  request.event.Wait();
-  return std::move(request.result);
-}
-
 void BrowserGpuMemoryBufferManager::AllocateGpuMemoryBufferForChildProcess(
     gfx::GpuMemoryBufferId id,
     const gfx::Size& size,
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
-    base::ProcessHandle child_process_handle,
     int child_client_id,
     const AllocationCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   // Use service side allocation for native configurations.
   if (IsNativeGpuMemoryBufferConfiguration(format, usage)) {
-    CreateGpuMemoryBufferOnIO(
-        base::Bind(&HostCreateGpuMemoryBuffer, gpu::kNullSurfaceHandle), id,
-        size, format, usage, child_client_id, false, callback);
+    CreateGpuMemoryBufferOnIO(id, size, format, usage, gpu::kNullSurfaceHandle,
+                              child_client_id, callback);
     return;
   }
 
@@ -298,14 +129,8 @@ void BrowserGpuMemoryBufferManager::AllocateGpuMemoryBufferForChildProcess(
     return;
   }
 
-  callback.Run(gpu::GpuMemoryBufferImplSharedMemory::AllocateForChildProcess(
-      id, size, format, child_process_handle));
-}
-
-gfx::GpuMemoryBuffer*
-BrowserGpuMemoryBufferManager::GpuMemoryBufferFromClientBuffer(
-    ClientBuffer buffer) {
-  return gpu::GpuMemoryBufferImpl::FromClientBuffer(buffer);
+  callback.Run(gpu::GpuMemoryBufferImplSharedMemory::CreateGpuMemoryBuffer(
+      id, size, format));
 }
 
 void BrowserGpuMemoryBufferManager::SetDestructionSyncToken(
@@ -360,7 +185,6 @@ bool BrowserGpuMemoryBufferManager::OnMemoryDump(
 
 void BrowserGpuMemoryBufferManager::ChildProcessDeletedGpuMemoryBuffer(
     gfx::GpuMemoryBufferId id,
-    base::ProcessHandle child_process_handle,
     int child_client_id,
     const gpu::SyncToken& sync_token) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -369,7 +193,6 @@ void BrowserGpuMemoryBufferManager::ChildProcessDeletedGpuMemoryBuffer(
 }
 
 void BrowserGpuMemoryBufferManager::ProcessRemoved(
-    base::ProcessHandle process_handle,
     int client_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
@@ -436,9 +259,8 @@ void BrowserGpuMemoryBufferManager::HandleCreateGpuMemoryBufferOnIO(
     // Note: Unretained is safe as this is only used for synchronous allocation
     // from a non-IO thread.
     CreateGpuMemoryBufferOnIO(
-        base::Bind(&HostCreateGpuMemoryBuffer, request->surface_handle), new_id,
-        request->size, request->format, request->usage, request->client_id,
-        false,
+        new_id, request->size, request->format, request->usage,
+        request->surface_handle, request->client_id,
         base::Bind(
             &BrowserGpuMemoryBufferManager::HandleGpuMemoryBufferCreatedOnIO,
             base::Unretained(this), base::Unretained(request)));
@@ -460,33 +282,6 @@ void BrowserGpuMemoryBufferManager::HandleCreateGpuMemoryBufferOnIO(
   // destroyed.
   request->result = gpu::GpuMemoryBufferImplSharedMemory::Create(
       new_id, request->size, request->format,
-      base::Bind(
-          &GpuMemoryBufferDeleted,
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
-          base::Bind(&BrowserGpuMemoryBufferManager::DestroyGpuMemoryBufferOnIO,
-                     base::Unretained(this), new_id, request->client_id)));
-  request->event.Signal();
-}
-
-void BrowserGpuMemoryBufferManager::HandleCreateGpuMemoryBufferFromHandleOnIO(
-    CreateGpuMemoryBufferFromHandleRequest* request) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  gfx::GpuMemoryBufferId new_id = content::GetNextGenericSharedMemoryId();
-
-  BufferMap& buffers = clients_[request->client_id];
-  auto insert_result = buffers.insert(std::make_pair(
-      new_id, BufferInfo(request->size, request->handle.type,
-                         request->format, request->usage, 0)));
-  DCHECK(insert_result.second);
-
-  gfx::GpuMemoryBufferHandle handle = request->handle;
-  handle.id = new_id;
-
-  // Note: Unretained is safe as IO thread is stopped before manager is
-  // destroyed.
-  request->result = gpu::GpuMemoryBufferImpl::CreateFromHandle(
-      handle, request->size, request->format, request->usage,
       base::Bind(
           &GpuMemoryBufferDeleted,
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
@@ -519,40 +314,14 @@ void BrowserGpuMemoryBufferManager::HandleGpuMemoryBufferCreatedOnIO(
 }
 
 void BrowserGpuMemoryBufferManager::CreateGpuMemoryBufferOnIO(
-    const CreateDelegate& create_delegate,
     gfx::GpuMemoryBufferId id,
     const gfx::Size& size,
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
+    gpu::SurfaceHandle surface_handle,
     int client_id,
-    bool reused_gpu_process,
     const CreateCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  GpuProcessHost* host = GpuProcessHost::FromID(gpu_host_id_);
-  if (!host) {
-    host = GpuProcessHost::Get(GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED,
-                               CAUSE_FOR_GPU_LAUNCH_GPU_MEMORY_BUFFER_ALLOCATE);
-    if (!host) {
-      LOG(ERROR) << "Failed to launch GPU process.";
-      callback.Run(gfx::GpuMemoryBufferHandle());
-      return;
-    }
-    gpu_host_id_ = host->host_id();
-    reused_gpu_process = false;
-  } else {
-    if (reused_gpu_process) {
-      // We come here if we retried to create the buffer because of a failure
-      // in GpuMemoryBufferCreatedOnIO, but we ended up with the same process
-      // ID, meaning the failure was not because of a channel error, but
-      // another reason. So fail now.
-      LOG(ERROR) << "Failed to create GpuMemoryBuffer.";
-      callback.Run(gfx::GpuMemoryBufferHandle());
-      return;
-    }
-    reused_gpu_process = true;
-  }
-
   BufferMap& buffers = clients_[client_id];
 
   // Note: Handling of cases where the client is removed before the allocation
@@ -567,23 +336,24 @@ void BrowserGpuMemoryBufferManager::CreateGpuMemoryBufferOnIO(
     return;
   }
 
+  GpuProcessHost* host = GpuProcessHost::Get();
   // Note: Unretained is safe as IO thread is stopped before manager is
   // destroyed.
-  create_delegate.Run(
-      host, id, size, format, usage, client_id,
+  host->CreateGpuMemoryBuffer(
+      id, size, format, usage, client_id, surface_handle,
       base::Bind(&BrowserGpuMemoryBufferManager::GpuMemoryBufferCreatedOnIO,
-                 base::Unretained(this), create_delegate, id, client_id,
-                 gpu_host_id_, reused_gpu_process, callback));
+                 base::Unretained(this), id, surface_handle, client_id,
+                 host->host_id(), callback));
 }
 
 void BrowserGpuMemoryBufferManager::GpuMemoryBufferCreatedOnIO(
-    const CreateDelegate& create_delegate,
     gfx::GpuMemoryBufferId id,
+    gpu::SurfaceHandle surface_handle,
     int client_id,
     int gpu_host_id,
-    bool reused_gpu_process,
     const CreateCallback& callback,
-    const gfx::GpuMemoryBufferHandle& handle) {
+    const gfx::GpuMemoryBufferHandle& handle,
+    GpuProcessHost::BufferCreationStatus status) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   ClientMap::iterator client_it = clients_.find(client_id);
@@ -611,20 +381,17 @@ void BrowserGpuMemoryBufferManager::GpuMemoryBufferCreatedOnIO(
   if (!valid_handle) {
     // If we failed after re-using the GPU process, it may have died in the
     // mean time. Retry to have a chance to create a fresh GPU process.
-    if (handle.is_null() && reused_gpu_process) {
+    if (handle.is_null() &&
+        status == GpuProcessHost::BufferCreationStatus::GPU_HOST_INVALID) {
       DVLOG(1) << "Failed to create buffer through existing GPU process. "
                   "Trying to restart GPU process.";
-      // If the GPU process has already been restarted, retry without failure
-      // when GPU process host ID already exists.
-      if (gpu_host_id != gpu_host_id_)
-        reused_gpu_process = false;
       gfx::Size size = buffer_it->second.size;
       gfx::BufferFormat format = buffer_it->second.format;
       gfx::BufferUsage usage = buffer_it->second.usage;
       // Remove the buffer entry and call CreateGpuMemoryBufferOnIO again.
       buffers.erase(buffer_it);
-      CreateGpuMemoryBufferOnIO(create_delegate, id, size, format, usage,
-                                client_id, reused_gpu_process, callback);
+      CreateGpuMemoryBufferOnIO(id, size, format, usage, surface_handle,
+                                client_id, callback);
     } else {
       // Remove the buffer entry and run the allocation callback with an empty
       // handle to indicate failure.

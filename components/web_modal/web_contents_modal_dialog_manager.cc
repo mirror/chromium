@@ -7,8 +7,7 @@
 #include <utility>
 
 #include "components/web_modal/web_contents_modal_dialog_manager_delegate.h"
-#include "content/public/browser/navigation_details.h"
-#include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
@@ -33,12 +32,6 @@ void WebContentsModalDialogManager::SetDelegate(
     // Delegate can be NULL on Views/Win32 during tab drag.
     (*it)->manager->HostChanged(d ? d->GetWebContentsModalDialogHost() : NULL);
   }
-}
-
-void WebContentsModalDialogManager::ShowModalDialog(gfx::NativeWindow dialog) {
-  std::unique_ptr<SingleWebContentsDialogManager> mgr(
-      CreateNativeWebModalManager(dialog, this));
-  ShowDialogWithManager(dialog, std::move(mgr));
 }
 
 // TODO(gbillock): Maybe "ShowBubbleWithManager"?
@@ -143,12 +136,14 @@ void WebContentsModalDialogManager::CloseAllDialogs() {
   closing_all_dialogs_ = false;
 }
 
-void WebContentsModalDialogManager::DidNavigateMainFrame(
-    const content::LoadCommittedDetails& details,
-    const content::FrameNavigateParams& params) {
+void WebContentsModalDialogManager::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() || !navigation_handle->HasCommitted())
+    return;
+
   // Close constrained windows if necessary.
   if (!net::registry_controlled_domains::SameDomainOrHost(
-          details.previous_url, details.entry->GetURL(),
+          navigation_handle->GetPreviousURL(), navigation_handle->GetURL(),
           net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES))
     CloseAllDialogs();
 }

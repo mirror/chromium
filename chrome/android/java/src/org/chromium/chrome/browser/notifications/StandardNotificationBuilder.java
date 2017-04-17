@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.notifications;
 
 import android.app.Notification;
 import android.content.Context;
+import android.os.Build;
 
 /**
  * Builds a notification using the standard Notification.BigTextStyle layout.
@@ -14,6 +15,7 @@ public class StandardNotificationBuilder extends NotificationBuilderBase {
     private final Context mContext;
 
     public StandardNotificationBuilder(Context context) {
+        super(context.getResources());
         mContext = context;
     }
 
@@ -21,12 +23,30 @@ public class StandardNotificationBuilder extends NotificationBuilderBase {
     public Notification build() {
         // Note: this is not a NotificationCompat builder so be mindful of the
         // API level of methods you call on the builder.
-        Notification.Builder builder = new Notification.Builder(mContext);
+        // TODO(crbug.com/697104) We should probably use a Compat builder.
+        ChromeNotificationBuilder builder =
+                NotificationBuilderFactory.createChromeNotificationBuilder(
+                        false /* preferCompat */, ChannelsInitializer.CHANNEL_ID_SITES);
+
         builder.setContentTitle(mTitle);
-        builder.setContentText(mBody).setStyle(new Notification.BigTextStyle().bigText(mBody));
+        builder.setContentText(mBody);
         builder.setSubText(mOrigin);
         builder.setTicker(mTickerText);
-        builder.setLargeIcon(mLargeIcon);
+        if (mImage != null) {
+            Notification.BigPictureStyle style =
+                    new Notification.BigPictureStyle().bigPicture(mImage);
+            if (Build.VERSION.CODENAME.equals("N")
+                    || Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                // Android N doesn't show content text when expanded, so duplicate body text as a
+                // summary for the big picture.
+                style.setSummaryText(mBody);
+            }
+            builder.setStyle(style);
+        } else {
+            // If there is no image, let the body text wrap only multiple lines when expanded.
+            builder.setStyle(new Notification.BigTextStyle().bigText(mBody));
+        }
+        builder.setLargeIcon(getNormalizedLargeIcon());
         setSmallIconOnBuilder(builder, mSmallIconId, mSmallIconBitmap);
         builder.setContentIntent(mContentIntent);
         builder.setDeleteIntent(mDeleteIntent);
@@ -40,6 +60,11 @@ public class StandardNotificationBuilder extends NotificationBuilderBase {
         builder.setVibrate(mVibratePattern);
         builder.setWhen(mTimestamp);
         builder.setOnlyAlertOnce(!mRenotify);
+        setGroupOnBuilder(builder, mOrigin);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Public versions only supported since L, and createPublicNotification requires L+.
+            builder.setPublicVersion(createPublicNotification(mContext));
+        }
         return builder.build();
     }
 }

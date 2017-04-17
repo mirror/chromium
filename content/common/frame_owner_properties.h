@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/platform/modules/permissions/WebPermissionType.h"
+#include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
 
 namespace content {
@@ -19,22 +19,29 @@ namespace content {
 struct CONTENT_EXPORT FrameOwnerProperties {
   FrameOwnerProperties();
   FrameOwnerProperties(const FrameOwnerProperties& other);
-  explicit FrameOwnerProperties(
-      const blink::WebFrameOwnerProperties& web_frame_owner_properties);
   ~FrameOwnerProperties();
-
-  blink::WebFrameOwnerProperties ToWebFrameOwnerProperties() const;
 
   bool operator==(const FrameOwnerProperties& other) const;
   bool operator!=(const FrameOwnerProperties& other) const {
     return !(*this == other);
   }
 
+  std::string name;  // browsing context container's name
   blink::WebFrameOwnerProperties::ScrollingMode scrolling_mode;
   int margin_width;
   int margin_height;
   bool allow_fullscreen;
-  std::vector<blink::WebPermissionType> delegated_permissions;
+  bool allow_payment_request;
+  bool is_display_none;
+
+  // An experimental attribute to be used by a parent frame to enforce CSP on a
+  // subframe. This is different from replicated CSP headers kept in
+  // FrameReplicationState that keep track of CSP headers currently in effect
+  // for a frame. See https://crbug.com/647588 and
+  // https://www.w3.org/TR/csp-embedded-enforcement/#required-csp
+  std::string required_csp;
+
+  std::vector<blink::WebFeaturePolicyFeature> allowed_features;
 };
 
 }  // namespace content

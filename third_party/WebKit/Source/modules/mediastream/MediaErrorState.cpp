@@ -35,100 +35,91 @@
 
 namespace blink {
 
-MediaErrorState::MediaErrorState()
-    : m_errorType(NoError)
-    , m_code(0)
-{
+MediaErrorState::MediaErrorState() : error_type_(kNoError), code_(0) {}
+
+void MediaErrorState::ThrowTypeError(const String& message) {
+  error_type_ = kTypeError;
+  message_ = message;
 }
 
-void MediaErrorState::throwTypeError(const String& message)
-{
-    m_errorType = TypeError;
-    m_message = message;
+void MediaErrorState::ThrowDOMException(ExceptionCode code,
+                                        const String& message) {
+  error_type_ = kDOMException;
+  code_ = code;
+  message_ = message;
 }
 
-void MediaErrorState::throwDOMException(const ExceptionCode& code, const String& message)
-{
-    m_errorType = DOMException;
-    m_code = code;
-    m_message = message;
+void MediaErrorState::ThrowConstraintError(const String& message,
+                                           const String& constraint) {
+  error_type_ = kConstraintError;
+  message_ = message;
+  constraint_ = constraint;
 }
 
-void MediaErrorState::throwConstraintError(const String& message, const String& constraint)
-{
-    m_errorType = ConstraintError;
-    m_message = message;
-    m_constraint = constraint;
+void MediaErrorState::Reset() {
+  error_type_ = kNoError;
 }
 
-void MediaErrorState::reset()
-{
-    m_errorType = NoError;
+bool MediaErrorState::HadException() {
+  return error_type_ != kNoError;
 }
 
-bool MediaErrorState::hadException()
-{
-    return m_errorType != NoError;
+bool MediaErrorState::CanGenerateException() {
+  return error_type_ == kTypeError || error_type_ == kDOMException;
 }
 
-bool MediaErrorState::canGenerateException()
-{
-    return m_errorType == TypeError || m_errorType == DOMException;
-}
-
-void MediaErrorState::raiseException(ExceptionState& target)
-{
-    switch (m_errorType) {
-    case NoError:
-        NOTREACHED();
-        break;
-    case TypeError:
-        target.throwTypeError(m_message);
-        break;
-    case DOMException:
-        target.throwDOMException(m_code, m_message);
-        break;
-    case ConstraintError:
-        // This is for the cases where we can't pass back a
-        // NavigatorUserMediaError.
-        // So far, we have this in the constructor of RTCPeerConnection,
-        // which is due to be deprecated.
-        // TODO(hta): Remove this code. https://crbug.com/576581
-        target.throwDOMException(NotSupportedError, "Unsatisfiable constraint " + m_constraint);
-        break;
+void MediaErrorState::RaiseException(ExceptionState& target) {
+  switch (error_type_) {
+    case kNoError:
+      NOTREACHED();
+      break;
+    case kTypeError:
+      target.ThrowTypeError(message_);
+      break;
+    case kDOMException:
+      target.ThrowDOMException(code_, message_);
+      break;
+    case kConstraintError:
+      // This is for the cases where we can't pass back a
+      // NavigatorUserMediaError.
+      // So far, we have this in the constructor of RTCPeerConnection,
+      // which is due to be deprecated.
+      // TODO(hta): Remove this code. https://crbug.com/576581
+      target.ThrowDOMException(kNotSupportedError,
+                               "Unsatisfiable constraint " + constraint_);
+      break;
     default:
-        NOTREACHED();
-    }
+      NOTREACHED();
+  }
 }
 
-String MediaErrorState::getErrorMessage()
-{
-    switch (m_errorType) {
-    case NoError:
-        NOTREACHED();
-        break;
-    case TypeError:
-    case DOMException:
-        return m_message;
-    case ConstraintError:
-        // This is for the cases where we can't pass back a
-        // NavigatorUserMediaError.
-        // So far, we have this in the constructor of RTCPeerConnection,
-        // which is due to be deprecated.
-        // TODO(hta): Remove this code. https://crbug.com/576581
-        return "Unsatisfiable constraint " + m_constraint;
+String MediaErrorState::GetErrorMessage() {
+  switch (error_type_) {
+    case kNoError:
+      NOTREACHED();
+      break;
+    case kTypeError:
+    case kDOMException:
+      return message_;
+    case kConstraintError:
+      // This is for the cases where we can't pass back a
+      // NavigatorUserMediaError.
+      // So far, we have this in the constructor of RTCPeerConnection,
+      // which is due to be deprecated.
+      // TODO(hta): Remove this code. https://crbug.com/576581
+      return "Unsatisfiable constraint " + constraint_;
     default:
-        NOTREACHED();
-    }
+      NOTREACHED();
+  }
 
-    return String();
+  return String();
 }
 
-NavigatorUserMediaError* MediaErrorState::createError()
-{
-    DCHECK(m_errorType == ConstraintError);
-    return NavigatorUserMediaError::create(NavigatorUserMediaError::NameConstraintNotSatisfied, m_message, m_constraint);
+NavigatorUserMediaError* MediaErrorState::CreateError() {
+  DCHECK(error_type_ == kConstraintError);
+  return NavigatorUserMediaError::Create(
+      NavigatorUserMediaError::kNameConstraintNotSatisfied, message_,
+      constraint_);
 }
 
-
-} // namespace blink
+}  // namespace blink

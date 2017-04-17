@@ -12,13 +12,13 @@ function test()
     function step1()
     {
         InspectorTest.queryScripts(function(script) { step2({ data: script }) });
-        InspectorTest.debuggerModel.addEventListener(WebInspector.DebuggerModel.Events.ParsedScriptSource, step2);
+        InspectorTest.debuggerModel.addEventListener(SDK.DebuggerModel.Events.ParsedScriptSource, step2);
     }
 
     function step2(event)
     {
         var script = event.data;
-        if (script.sourceURL !== InspectorTest.resourceTreeModel.inspectedPageURL())
+        if (script.sourceURL !== InspectorTest.mainTarget.inspectedURL())
             return;
         scripts.push(script);
         if (scripts.length === 6)

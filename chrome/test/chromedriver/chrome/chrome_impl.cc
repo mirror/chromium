@@ -10,6 +10,7 @@
 #include "chrome/test/chromedriver/chrome/devtools_client.h"
 #include "chrome/test/chromedriver/chrome/devtools_event_listener.h"
 #include "chrome/test/chromedriver/chrome/devtools_http_client.h"
+#include "chrome/test/chromedriver/chrome/page_load_strategy.h"
 #include "chrome/test/chromedriver/chrome/status.h"
 #include "chrome/test/chromedriver/chrome/web_view_impl.h"
 #include "chrome/test/chromedriver/net/port_server.h"
@@ -36,12 +37,41 @@ bool ChromeImpl::HasCrashedWebView() {
   return false;
 }
 
-Status ChromeImpl::GetWebViewIds(std::list<std::string>* web_view_ids) {
+Status ChromeImpl::GetWebViewIdForFirstTab(std::string* web_view_id,
+                                           bool w3c_compliant) {
   WebViewsInfo views_info;
   Status status = devtools_http_client_->GetWebViewsInfo(&views_info);
   if (status.IsError())
     return status;
+  UpdateWebViews(views_info, w3c_compliant);
+  for (size_t i = 0; i < views_info.GetSize(); ++i) {
+    const WebViewInfo& view = views_info.Get(i);
+    if (view.type == WebViewInfo::kPage) {
+      *web_view_id = view.id;
+      return Status(kOk);
+    }
+  }
+  return Status(kUnknownError, "unable to discover open window in chrome");
+}
 
+Status ChromeImpl::GetWebViewIds(std::list<std::string>* web_view_ids,
+                                 bool w3c_compliant) {
+  WebViewsInfo views_info;
+  Status status = devtools_http_client_->GetWebViewsInfo(&views_info);
+  if (status.IsError())
+    return status;
+  UpdateWebViews(views_info, w3c_compliant);
+  std::list<std::string> web_view_ids_tmp;
+  for (WebViewList::const_iterator web_view_iter = web_views_.begin();
+       web_view_iter != web_views_.end(); ++web_view_iter) {
+    web_view_ids_tmp.push_back((*web_view_iter)->GetId());
+  }
+  web_view_ids->swap(web_view_ids_tmp);
+  return Status(kOk);
+}
+
+void ChromeImpl::UpdateWebViews(const WebViewsInfo& views_info,
+                                bool w3c_compliant) {
   // Check if some web views are closed (or in the case of background pages,
   // become inactive).
   WebViewList::iterator it = web_views_.begin();
@@ -70,26 +100,17 @@ Status ChromeImpl::GetWebViewIds(std::list<std::string>* web_view_ids) {
       if (!found) {
         std::unique_ptr<DevToolsClient> client(
             devtools_http_client_->CreateClient(view.id));
-        for (ScopedVector<DevToolsEventListener>::const_iterator listener =
-                 devtools_event_listeners_.begin();
-             listener != devtools_event_listeners_.end(); ++listener) {
-          client->AddListener(*listener);
-          // OnConnected will fire when DevToolsClient connects later.
-        }
+        for (const auto& listener : devtools_event_listeners_)
+          client->AddListener(listener.get());
+        // OnConnected will fire when DevToolsClient connects later.
+        CHECK(!page_load_strategy_.empty());
         web_views_.push_back(make_linked_ptr(new WebViewImpl(
-            view.id, devtools_http_client_->browser_info(), std::move(client),
-            devtools_http_client_->device_metrics())));
+            view.id, w3c_compliant, devtools_http_client_->browser_info(),
+            std::move(client), devtools_http_client_->device_metrics(),
+            page_load_strategy_)));
       }
     }
   }
-
-  std::list<std::string> web_view_ids_tmp;
-  for (WebViewList::const_iterator web_view_iter = web_views_.begin();
-       web_view_iter != web_views_.end(); ++web_view_iter) {
-    web_view_ids_tmp.push_back((*web_view_iter)->GetId());
-  }
-  web_view_ids->swap(web_view_ids_tmp);
-  return Status(kOk);
 }
 
 Status ChromeImpl::GetWebViewById(const std::string& id, WebView** web_view) {
@@ -129,6 +150,11 @@ bool ChromeImpl::HasTouchScreen() const {
   return false;
 }
 
+std::string ChromeImpl::page_load_strategy() const {
+  CHECK(!page_load_strategy_.empty());
+  return page_load_strategy_;
+}
+
 Status ChromeImpl::Quit() {
   Status status = QuitImpl();
   if (status.IsOk())
@@ -136,14 +162,15 @@ Status ChromeImpl::Quit() {
   return status;
 }
 
-ChromeImpl::ChromeImpl(
-    std::unique_ptr<DevToolsHttpClient> http_client,
-    std::unique_ptr<DevToolsClient> websocket_client,
-    ScopedVector<DevToolsEventListener>& devtools_event_listeners,
-    std::unique_ptr<PortReservation> port_reservation)
+ChromeImpl::ChromeImpl(std::unique_ptr<DevToolsHttpClient> http_client,
+                       std::unique_ptr<DevToolsClient> websocket_client,
+                       std::vector<std::unique_ptr<DevToolsEventListener>>
+                           devtools_event_listeners,
+                       std::unique_ptr<PortReservation> port_reservation,
+                       std::string page_load_strategy)
     : quit_(false),
       devtools_http_client_(std::move(http_client)),
       devtools_websocket_client_(std::move(websocket_client)),
-      port_reservation_(std::move(port_reservation)) {
-  devtools_event_listeners_.swap(devtools_event_listeners);
-}
+      devtools_event_listeners_(std::move(devtools_event_listeners)),
+      port_reservation_(std::move(port_reservation)),
+      page_load_strategy_(page_load_strategy) {}

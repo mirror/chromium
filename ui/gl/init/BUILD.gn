@@ -13,12 +13,11 @@ component("init") {
 
   sources = [
     "gl_factory.cc",
+    "gl_factory.h",
     "gl_init_export.h",
     "gl_initializer.h",
   ]
   defines = [ "GL_INIT_IMPLEMENTATION" ]
-
-  include_dirs = [ "//third_party/swiftshader/include" ]
 
   deps = [
     "//base",
@@ -42,6 +41,7 @@ component("init") {
 
     libs = [ "dwmapi.lib" ]
     ldflags = [ "/DELAYLOAD:dwmapi.dll" ]
+    deps += [ "//ui/gl:gl_features" ]
   } else if (is_mac) {
     sources += [
       "gl_factory_mac.cc",
@@ -55,13 +55,15 @@ component("init") {
       "gl_initializer_x11.cc",
     ]
 
-    deps += [ "//ui/gfx/x" ]
+    deps += [
+      "//ui/gfx/x",
+      "//ui/gl:gl_features",
+    ]
   } else if (use_ozone) {
     sources += [
       "gl_factory_ozone.cc",
       "gl_initializer_ozone.cc",
-      "gl_surface_ozone.cc",
-      "gl_surface_ozone.h",
+      "ozone_util.h",
     ]
 
     deps += [ "//ui/ozone" ]

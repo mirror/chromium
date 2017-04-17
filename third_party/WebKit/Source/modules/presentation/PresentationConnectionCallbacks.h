@@ -6,36 +6,43 @@
 #define PresentationConnectionCallbacks_h
 
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebCallbacks.h"
-#include "wtf/Noncopyable.h"
+#include "public/platform/modules/presentation/WebPresentationConnectionCallbacks.h"
 
 namespace blink {
 
+class PresentationConnection;
 class PresentationRequest;
 class ScriptPromiseResolver;
-class WebPresentationConnectionClient;
 struct WebPresentationError;
+struct WebPresentationInfo;
 
 // PresentationConnectionCallbacks extends WebCallbacks to resolve the
 // underlying promise depending on the result passed to the callback. It takes
 // the PresentationRequest object that originated the call in its constructor
 // and will pass it to the created PresentationConnection.
 class PresentationConnectionCallbacks final
-    : public WebCallbacks<std::unique_ptr<WebPresentationConnectionClient>, const WebPresentationError&> {
-public:
-    PresentationConnectionCallbacks(ScriptPromiseResolver*, PresentationRequest*);
-    ~PresentationConnectionCallbacks() override = default;
+    : public WebPresentationConnectionCallbacks {
+ public:
+  PresentationConnectionCallbacks(ScriptPromiseResolver*, PresentationRequest*);
+  ~PresentationConnectionCallbacks() override = default;
 
-    void onSuccess(std::unique_ptr<WebPresentationConnectionClient>) override;
-    void onError(const WebPresentationError&) override;
+  // WebCallbacks implementation
+  void OnSuccess(const WebPresentationInfo&) override;
+  void OnError(const WebPresentationError&) override;
 
-private:
-    Persistent<ScriptPromiseResolver> m_resolver;
-    Persistent<PresentationRequest> m_request;
+  // WebPresentationConnectionCallbacks implementation
+  WebPresentationConnection* GetConnection() override;
 
-    WTF_MAKE_NONCOPYABLE(PresentationConnectionCallbacks);
+ private:
+  Persistent<ScriptPromiseResolver> resolver_;
+  Persistent<PresentationRequest> request_;
+  WeakPersistent<PresentationConnection> connection_;
+
+  WTF_MAKE_NONCOPYABLE(PresentationConnectionCallbacks);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PresentationConnectionCallbacks_h
+#endif  // PresentationConnectionCallbacks_h

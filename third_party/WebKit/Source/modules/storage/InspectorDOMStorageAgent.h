@@ -33,8 +33,8 @@
 #include "core/inspector/protocol/DOMStorage.h"
 #include "modules/ModulesExport.h"
 #include "modules/storage/StorageArea.h"
-#include "wtf/HashMap.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -42,43 +42,58 @@ class LocalFrame;
 class Page;
 class StorageArea;
 
-namespace protocol {
-class DictionaryValue;
-}
+class MODULES_EXPORT InspectorDOMStorageAgent final
+    : public InspectorBaseAgent<protocol::DOMStorage::Metainfo> {
+ public:
+  static InspectorDOMStorageAgent* Create(Page* page) {
+    return new InspectorDOMStorageAgent(page);
+  }
 
+  ~InspectorDOMStorageAgent() override;
+  DECLARE_VIRTUAL_TRACE();
 
-class MODULES_EXPORT InspectorDOMStorageAgent final : public InspectorBaseAgent<protocol::DOMStorage::Metainfo> {
-public:
-    static InspectorDOMStorageAgent* create(Page* page)
-    {
-        return new InspectorDOMStorageAgent(page);
-    }
+  void DidDispatchDOMStorageEvent(const String& key,
+                                  const String& old_value,
+                                  const String& new_value,
+                                  StorageType,
+                                  SecurityOrigin*);
 
-    ~InspectorDOMStorageAgent() override;
-    DECLARE_VIRTUAL_TRACE();
+ private:
+  explicit InspectorDOMStorageAgent(Page*);
 
-    void didDispatchDOMStorageEvent(const String& key, const String& oldValue, const String& newValue, StorageType, SecurityOrigin*);
+  // InspectorBaseAgent overrides.
+  void Restore() override;
 
-private:
-    explicit InspectorDOMStorageAgent(Page*);
+  // protocol::Dispatcher::DOMStorageCommandHandler overrides.
+  protocol::Response enable() override;
+  protocol::Response disable() override;
+  protocol::Response clear(
+      std::unique_ptr<protocol::DOMStorage::StorageId>) override;
 
-    // InspectorBaseAgent overrides.
-    void restore() override;
+  protocol::Response getDOMStorageItems(
+      std::unique_ptr<protocol::DOMStorage::StorageId>,
+      std::unique_ptr<protocol::Array<protocol::Array<String>>>* entries)
+      override;
+  protocol::Response setDOMStorageItem(
+      std::unique_ptr<protocol::DOMStorage::StorageId>,
+      const String& key,
+      const String& value) override;
+  protocol::Response removeDOMStorageItem(
+      std::unique_ptr<protocol::DOMStorage::StorageId>,
+      const String& key) override;
 
-    // protocol::Dispatcher::DOMStorageCommandHandler overrides.
-    void enable(ErrorString*) override;
-    void disable(ErrorString*) override;
-    void getDOMStorageItems(ErrorString*, std::unique_ptr<protocol::DOMStorage::StorageId> in_storageId, std::unique_ptr<protocol::Array<protocol::Array<String>>>* out_entries) override;
-    void setDOMStorageItem(ErrorString*, std::unique_ptr<protocol::DOMStorage::StorageId> in_storageId, const String& in_key, const String& in_value) override;
-    void removeDOMStorageItem(ErrorString*, std::unique_ptr<protocol::DOMStorage::StorageId> in_storageId, const String& in_key) override;
+  protocol::Response FindStorageArea(
+      std::unique_ptr<protocol::DOMStorage::StorageId>,
+      LocalFrame*&,
+      StorageArea*&);
+  std::unique_ptr<protocol::DOMStorage::StorageId> GetStorageId(
+      SecurityOrigin*,
+      bool is_local_storage);
 
-    StorageArea* findStorageArea(ErrorString*, std::unique_ptr<protocol::DOMStorage::StorageId>, LocalFrame*&);
-    std::unique_ptr<protocol::DOMStorage::StorageId> storageId(SecurityOrigin*, bool isLocalStorage);
-
-    Member<Page> m_page;
-    bool m_isEnabled;
+  Member<Page> page_;
+  bool is_enabled_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // !defined(InspectorDOMStorageAgent_h)
+#endif  // !defined(InspectorDOMStorageAgent_h)

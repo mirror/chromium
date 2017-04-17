@@ -16,7 +16,7 @@
 #include "content/public/browser/web_contents.h"
 #include "ipc/ipc_message.h"
 #include "ui/accessibility/ax_enums.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/events/event.h"
 #include "ui/views/controls/native/native_view_host.h"
 #include "ui/views/focus/focus_manager.h"
@@ -214,8 +214,8 @@ void WebView::AboutToRequestFocusFromTabTraversal(bool reverse) {
     web_contents()->FocusThroughTabTraversal(reverse);
 }
 
-void WebView::GetAccessibleState(ui::AXViewState* state) {
-  state->role = ui::AX_ROLE_WEB_VIEW;
+void WebView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  node_data->role = ui::AX_ROLE_WEB_VIEW;
 }
 
 gfx::NativeViewAccessible WebView::GetNativeViewAccessible() {
@@ -271,8 +271,7 @@ void WebView::RenderViewDeleted(content::RenderViewHost* render_view_host) {
 
 void WebView::RenderViewHostChanged(content::RenderViewHost* old_host,
                                     content::RenderViewHost* new_host) {
-  FocusManager* const focus_manager = GetFocusManager();
-  if (focus_manager && focus_manager->GetFocusedView() == this)
+  if (HasFocus())
     OnFocus();
   NotifyAccessibilityWebContentsChanged();
 }
@@ -310,9 +309,7 @@ void WebView::DidDetachInterstitialPage() {
 }
 
 void WebView::OnWebContentsFocused() {
-  FocusManager* focus_manager = GetFocusManager();
-  if (focus_manager)
-    focus_manager->SetFocusedView(this);
+  RequestFocus();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -333,11 +330,9 @@ void WebView::AttachWebContents() {
 
   holder_->Attach(view_to_attach);
 
-  // The view will not be focused automatically when it is attached, so we need
-  // to pass on focus to it if the FocusManager thinks the view is focused. Note
-  // that not every Widget has a focus manager.
-  FocusManager* const focus_manager = GetFocusManager();
-  if (focus_manager && focus_manager->GetFocusedView() == this)
+  // The WebContents is not focused automatically when attached, so we need to
+  // tell the WebContents it has focus if this has focus.
+  if (HasFocus())
     OnFocus();
 
   OnWebContentsAttached();

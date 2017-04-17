@@ -30,13 +30,14 @@
 
 #include "public/web/WebNode.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeList.h"
 #include "core/dom/StaticNodeList.h"
 #include "core/dom/TagCollection.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/events/Event.h"
@@ -46,225 +47,174 @@
 #include "core/layout/LayoutPart.h"
 #include "modules/accessibility/AXObject.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
-#include "platform/Widget.h"
+#include "platform/FrameViewBase.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebString.h"
-#include "public/platform/WebSuspendableTask.h"
 #include "public/web/WebAXObject.h"
 #include "public/web/WebDOMEvent.h"
 #include "public/web/WebDocument.h"
 #include "public/web/WebElement.h"
 #include "public/web/WebElementCollection.h"
 #include "public/web/WebPluginContainer.h"
-#include "web/FrameLoaderClientImpl.h"
+#include "web/LocalFrameClientImpl.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebPluginContainerImpl.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
-namespace {
-
-class NodeDispatchSimulatedClickTask: public SuspendableTask {
-    WTF_MAKE_NONCOPYABLE(NodeDispatchSimulatedClickTask);
-public:
-    NodeDispatchSimulatedClickTask(const WebPrivatePtr<Node>& node)
-    {
-        m_node = node;
-    }
-
-    ~NodeDispatchSimulatedClickTask()
-    {
-        m_node.reset();
-    }
-
-    void run() override
-    {
-        m_node->dispatchSimulatedClick(nullptr);
-    }
-private:
-    WebPrivatePtr<Node> m_node;
-};
-
-} // namespace
-
-void WebNode::reset()
-{
-    m_private.reset();
+void WebNode::Reset() {
+  private_.Reset();
 }
 
-void WebNode::assign(const WebNode& other)
-{
-    m_private = other.m_private;
+void WebNode::Assign(const WebNode& other) {
+  private_ = other.private_;
 }
 
-bool WebNode::equals(const WebNode& n) const
-{
-    return m_private.get() == n.m_private.get();
+bool WebNode::Equals(const WebNode& n) const {
+  return private_.Get() == n.private_.Get();
 }
 
-bool WebNode::lessThan(const WebNode& n) const
-{
-    return m_private.get() < n.m_private.get();
+bool WebNode::LessThan(const WebNode& n) const {
+  return private_.Get() < n.private_.Get();
 }
 
-WebNode WebNode::parentNode() const
-{
-    return WebNode(const_cast<ContainerNode*>(m_private->parentNode()));
+WebNode WebNode::ParentNode() const {
+  return WebNode(const_cast<ContainerNode*>(private_->parentNode()));
 }
 
-WebString WebNode::nodeValue() const
-{
-    return m_private->nodeValue();
+WebString WebNode::NodeValue() const {
+  return private_->nodeValue();
 }
 
-WebDocument WebNode::document() const
-{
-    return WebDocument(&m_private->document());
+WebDocument WebNode::GetDocument() const {
+  return WebDocument(&private_->GetDocument());
 }
 
-WebNode WebNode::firstChild() const
-{
-    return WebNode(m_private->firstChild());
+WebNode WebNode::FirstChild() const {
+  return WebNode(private_->firstChild());
 }
 
-WebNode WebNode::lastChild() const
-{
-    return WebNode(m_private->lastChild());
+WebNode WebNode::LastChild() const {
+  return WebNode(private_->lastChild());
 }
 
-WebNode WebNode::previousSibling() const
-{
-    return WebNode(m_private->previousSibling());
+WebNode WebNode::PreviousSibling() const {
+  return WebNode(private_->previousSibling());
 }
 
-WebNode WebNode::nextSibling() const
-{
-    return WebNode(m_private->nextSibling());
+WebNode WebNode::NextSibling() const {
+  return WebNode(private_->nextSibling());
 }
 
-bool WebNode::hasChildNodes() const
-{
-    return m_private->hasChildren();
+bool WebNode::IsLink() const {
+  return private_->IsLink();
 }
 
-bool WebNode::isLink() const
-{
-    return m_private->isLink();
+bool WebNode::IsTextNode() const {
+  return private_->IsTextNode();
 }
 
-bool WebNode::isTextNode() const
-{
-    return m_private->isTextNode();
+bool WebNode::IsCommentNode() const {
+  return private_->getNodeType() == Node::kCommentNode;
 }
 
-bool WebNode::isCommentNode() const
-{
-    return m_private->getNodeType() == Node::COMMENT_NODE;
+bool WebNode::IsFocusable() const {
+  if (!private_->IsElementNode())
+    return false;
+  private_->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  return ToElement(private_.Get())->IsFocusable();
 }
 
-bool WebNode::isFocusable() const
-{
-    if (!m_private->isElementNode())
-        return false;
-    m_private->document().updateStyleAndLayoutIgnorePendingStylesheets();
-    return toElement(m_private.get())->isFocusable();
+bool WebNode::IsContentEditable() const {
+  private_->GetDocument().UpdateStyleAndLayoutTree();
+  return HasEditableStyle(*private_);
 }
 
-bool WebNode::isContentEditable() const
-{
-    return blink::isContentEditable(*m_private);
+bool WebNode::IsInsideFocusableElementOrARIAWidget() const {
+  return AXObject::IsInsideFocusableElementOrARIAWidget(
+      *this->ConstUnwrap<Node>());
 }
 
-bool WebNode::isInsideFocusableElementOrARIAWidget() const
-{
-    return AXObject::isInsideFocusableElementOrARIAWidget(*this->constUnwrap<Node>());
+bool WebNode::IsElementNode() const {
+  return private_->IsElementNode();
 }
 
-bool WebNode::isElementNode() const
-{
-    return m_private->isElementNode();
+bool WebNode::IsDocumentNode() const {
+  return private_->IsDocumentNode();
 }
 
-bool WebNode::isDocumentNode() const
-{
-    return m_private->isDocumentNode();
+bool WebNode::IsDocumentTypeNode() const {
+  return private_->getNodeType() == Node::kDocumentTypeNode;
 }
 
-bool WebNode::isDocumentTypeNode() const
-{
-    return m_private->getNodeType() == Node::DOCUMENT_TYPE_NODE;
+void WebNode::SimulateClick() {
+  TaskRunnerHelper::Get(TaskType::kUserInteraction,
+                        private_->GetExecutionContext())
+      ->PostTask(
+          FROM_HERE,
+          WTF::Bind(&Node::DispatchSimulatedClick,
+                    WrapWeakPersistent(private_.Get()), nullptr, kSendNoEvents,
+                    SimulatedClickCreationScope::kFromUserAgent));
 }
 
-void WebNode::simulateClick()
-{
-    m_private->getExecutionContext()->postSuspendableTask(wrapUnique(new NodeDispatchSimulatedClickTask(m_private)));
+WebElementCollection WebNode::GetElementsByHTMLTagName(
+    const WebString& tag) const {
+  if (private_->IsContainerNode())
+    return WebElementCollection(
+        ToContainerNode(private_.Get())
+            ->getElementsByTagNameNS(HTMLNames::xhtmlNamespaceURI, tag));
+  return WebElementCollection();
 }
 
-WebElementCollection WebNode::getElementsByHTMLTagName(const WebString& tag) const
-{
-    if (m_private->isContainerNode())
-        return WebElementCollection(toContainerNode(m_private.get())->getElementsByTagNameNS(HTMLNames::xhtmlNamespaceURI, tag));
-    return WebElementCollection();
+WebElement WebNode::QuerySelector(const WebString& selector) const {
+  if (!private_->IsContainerNode())
+    return WebElement();
+  return ToContainerNode(private_.Get())
+      ->QuerySelector(selector, IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-WebElement WebNode::querySelector(const WebString& selector) const
-{
-    if (!m_private->isContainerNode())
-        return WebElement();
-    return toContainerNode(m_private.get())->querySelector(selector, IGNORE_EXCEPTION);
+bool WebNode::Focused() const {
+  return private_->IsFocused();
 }
 
-bool WebNode::focused() const
-{
-    return m_private->focused();
-}
-
-WebPluginContainer* WebNode::pluginContainerFromNode(const Node* node)
-{
-    if (!node)
-        return nullptr;
-
-    if (!isHTMLObjectElement(node) && !isHTMLEmbedElement(node))
-        return nullptr;
-
-    LayoutObject* object = node->layoutObject();
-    if (object && object->isLayoutPart()) {
-        Widget* widget = toLayoutPart(object)->widget();
-        if (widget && widget->isPluginContainer())
-            return toWebPluginContainerImpl(widget);
-    }
-
+WebPluginContainer* WebNode::PluginContainerFromNode(const Node* node) {
+  if (!node)
     return nullptr;
+
+  if (!isHTMLObjectElement(node) && !isHTMLEmbedElement(node))
+    return nullptr;
+
+  LayoutObject* object = node->GetLayoutObject();
+  if (object && object->IsLayoutPart()) {
+    PluginView* plugin = ToLayoutPart(object)->Plugin();
+    if (plugin && plugin->IsPluginContainer())
+      return ToWebPluginContainerImpl(plugin);
+  }
+
+  return nullptr;
 }
 
-WebPluginContainer* WebNode::pluginContainer() const
-{
-    return pluginContainerFromNode(constUnwrap<Node>());
+WebPluginContainer* WebNode::PluginContainer() const {
+  return PluginContainerFromNode(ConstUnwrap<Node>());
 }
 
-WebAXObject WebNode::accessibilityObject()
-{
-    WebDocument webDocument = document();
-    const Document* doc = document().constUnwrap<Document>();
-    AXObjectCacheImpl* cache = toAXObjectCacheImpl(doc->existingAXObjectCache());
-    Node* node = unwrap<Node>();
-    return cache ? WebAXObject(cache->get(node)) : WebAXObject();
+WebAXObject WebNode::AccessibilityObject() {
+  WebDocument web_document = GetDocument();
+  const Document* doc = GetDocument().ConstUnwrap<Document>();
+  AXObjectCacheImpl* cache = ToAXObjectCacheImpl(doc->ExistingAXObjectCache());
+  Node* node = Unwrap<Node>();
+  return cache ? WebAXObject(cache->Get(node)) : WebAXObject();
 }
 
-WebNode::WebNode(Node* node)
-    : m_private(node)
-{
+WebNode::WebNode(Node* node) : private_(node) {}
+
+WebNode& WebNode::operator=(Node* node) {
+  private_ = node;
+  return *this;
 }
 
-WebNode& WebNode::operator=(Node* node)
-{
-    m_private = node;
-    return *this;
+WebNode::operator Node*() const {
+  return private_.Get();
 }
 
-WebNode::operator Node*() const
-{
-    return m_private.get();
-}
-
-} // namespace blink
+}  // namespace blink

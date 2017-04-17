@@ -5,7 +5,6 @@
 #include "net/cert/cert_verify_proc_ios.h"
 
 #include <CommonCrypto/CommonDigest.h>
-#include <Security/Security.h>
 
 #include "base/logging.h"
 #include "base/mac/scoped_cftyperef.h"
@@ -105,12 +104,6 @@ int BuildAndEvaluateSecTrustRef(CFArrayRef cert_array,
 void GetCertChainInfo(CFArrayRef cert_chain, CertVerifyResult* verify_result) {
   DCHECK_LT(0, CFArrayGetCount(cert_chain));
 
-  verify_result->has_md2 = false;
-  verify_result->has_md4 = false;
-  verify_result->has_md5 = false;
-  verify_result->has_sha1 = false;
-  verify_result->has_sha1_leaf = false;
-
   SecCertificateRef verified_cert = nullptr;
   std::vector<SecCertificateRef> verified_chain;
   for (CFIndex i = 0, count = CFArrayGetCount(cert_chain); i < count; ++i) {
@@ -123,14 +116,16 @@ void GetCertChainInfo(CFArrayRef cert_chain, CertVerifyResult* verify_result) {
     }
 
     std::string der_bytes;
-    if (!X509Certificate::GetDEREncoded(chain_cert, &der_bytes))
+    if (!X509Certificate::GetDEREncoded(chain_cert, &der_bytes)) {
+      verify_result->cert_status |= CERT_STATUS_INVALID;
       return;
-    const uint8_t* bytes = reinterpret_cast<const uint8_t*>(der_bytes.data());
-    ScopedX509 x509_cert(d2i_X509(NULL, &bytes, der_bytes.size()));
+    }
 
     base::StringPiece spki_bytes;
-    if (!asn1::ExtractSPKIFromDERCert(der_bytes, &spki_bytes))
-      continue;
+    if (!asn1::ExtractSPKIFromDERCert(der_bytes, &spki_bytes)) {
+      verify_result->cert_status |= CERT_STATUS_INVALID;
+      return;
+    }
 
     HashValue sha1(HASH_VALUE_SHA1);
     CC_SHA1(spki_bytes.data(), spki_bytes.size(), sha1.data());
@@ -145,32 +140,24 @@ void GetCertChainInfo(CFArrayRef cert_chain, CertVerifyResult* verify_result) {
         i == count - 1) {
       continue;
     }
-
-    int sig_alg = OBJ_obj2nid(x509_cert->sig_alg->algorithm);
-    if (sig_alg == NID_md2WithRSAEncryption) {
-      verify_result->has_md2 = true;
-    } else if (sig_alg == NID_md4WithRSAEncryption) {
-      verify_result->has_md4 = true;
-    } else if (sig_alg == NID_md5WithRSAEncryption ||
-               sig_alg == NID_md5WithRSA) {
-      verify_result->has_md5 = true;
-    } else if (sig_alg == NID_sha1WithRSAEncryption ||
-               sig_alg == NID_dsaWithSHA || sig_alg == NID_dsaWithSHA1 ||
-               sig_alg == NID_dsaWithSHA1_2 || sig_alg == NID_sha1WithRSA ||
-               sig_alg == NID_ecdsa_with_SHA1) {
-      verify_result->has_sha1 = true;
-      if (i == 0)
-        verify_result->has_sha1_leaf = true;
-    }
   }
   if (!verified_cert) {
     NOTREACHED();
+    verify_result->cert_status |= CERT_STATUS_INVALID;
     return;
   }
 
-  verify_result->verified_cert =
+  scoped_refptr<X509Certificate> verified_cert_with_chain =
       X509Certificate::CreateFromHandle(verified_cert, verified_chain);
+  if (verified_cert_with_chain)
+    verify_result->verified_cert = std::move(verified_cert_with_chain);
+  else
+    verify_result->cert_status |= CERT_STATUS_INVALID;
 }
+
+}  // namespace
+
+CertVerifyProcIOS::CertVerifyProcIOS() {}
 
 // The iOS APIs don't expose an API-stable set of reasons for certificate
 // validation failures. However, internally, the reason is tracked, and it's
@@ -184,9 +171,11 @@ void GetCertChainInfo(CFArrayRef cert_chain, CertVerifyResult* verify_result) {
 //
 // TODO(rsleevi): https://crbug.com/601915 - Use a less brittle solution when
 // possible.
-CertStatus GetFailureFromTrustProperties(CFArrayRef properties) {
+// static
+CertStatus CertVerifyProcIOS::GetCertFailureStatusFromTrust(SecTrustRef trust) {
   CertStatus reason = 0;
 
+  base::ScopedCFTypeRef<CFArrayRef> properties(SecTrustCopyProperties(trust));
   if (!properties)
     return CERT_STATUS_INVALID;
 
@@ -207,6 +196,11 @@ CertStatus GetFailureFromTrustProperties(CFArrayRef properties) {
       CFSTR("One or more certificates is using a weak key size.");
   ScopedCFTypeRef<CFStringRef> weak_error(CFBundleCopyLocalizedString(
       bundle, weak_string, weak_string, CFSTR("SecCertificate")));
+  CFStringRef hostname_mismatch_string = CFSTR("Hostname mismatch.");
+  ScopedCFTypeRef<CFStringRef> hostname_mismatch_error(
+      CFBundleCopyLocalizedString(bundle, hostname_mismatch_string,
+                                  hostname_mismatch_string,
+                                  CFSTR("SecCertificate")));
 
   for (CFIndex i = 0; i < properties_length; ++i) {
     CFDictionaryRef dict = reinterpret_cast<CFDictionaryRef>(
@@ -220,6 +214,8 @@ CertStatus GetFailureFromTrustProperties(CFArrayRef properties) {
       reason |= CERT_STATUS_AUTHORITY_INVALID;
     } else if (CFEqual(error, weak_error)) {
       reason |= CERT_STATUS_WEAK_KEY;
+    } else if (CFEqual(error, hostname_mismatch_error)) {
+      reason |= CERT_STATUS_COMMON_NAME_INVALID;
     } else {
       reason |= CERT_STATUS_INVALID;
     }
@@ -228,12 +224,6 @@ CertStatus GetFailureFromTrustProperties(CFArrayRef properties) {
   return reason;
 }
 
-}  // namespace
-
-CertVerifyProcIOS::CertVerifyProcIOS() {}
-
-CertVerifyProcIOS::~CertVerifyProcIOS() {}
-
 bool CertVerifyProcIOS::SupportsAdditionalTrustAnchors() const {
   return false;
 }
@@ -241,6 +231,8 @@ bool CertVerifyProcIOS::SupportsAdditionalTrustAnchors() const {
 bool CertVerifyProcIOS::SupportsOCSPStapling() const {
   return false;
 }
+
+CertVerifyProcIOS::~CertVerifyProcIOS() = default;
 
 int CertVerifyProcIOS::VerifyInternal(
     X509Certificate* cert,
@@ -278,18 +270,14 @@ int CertVerifyProcIOS::VerifyInternal(
       verify_result->cert_status |= CERT_STATUS_AUTHORITY_INVALID;
       break;
     default:
-      CFArrayRef properties = SecTrustCopyProperties(trust_ref);
-      verify_result->cert_status |= GetFailureFromTrustProperties(properties);
+      verify_result->cert_status |= GetCertFailureStatusFromTrust(trust_ref);
   }
 
   GetCertChainInfo(final_chain, verify_result);
 
-  // Perform hostname verification independent of SecTrustEvaluate.
-  if (!verify_result->verified_cert->VerifyNameMatch(
-          hostname, &verify_result->common_name_fallback_used)) {
-    verify_result->cert_status |= CERT_STATUS_COMMON_NAME_INVALID;
-  }
-
+  // iOS lacks the ability to distinguish built-in versus non-built-in roots,
+  // so opt to 'fail open' of any restrictive policies that apply to built-in
+  // roots.
   verify_result->is_issued_by_known_root = false;
 
   if (IsCertStatusError(verify_result->cert_status))

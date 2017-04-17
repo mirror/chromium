@@ -29,117 +29,118 @@
 
 namespace blink {
 
-PlatformSpeechSynthesizerMock* PlatformSpeechSynthesizerMock::create(PlatformSpeechSynthesizerClient* client)
-{
-    PlatformSpeechSynthesizerMock* synthesizer = new PlatformSpeechSynthesizerMock(client);
-    synthesizer->initializeVoiceList();
-    client->voicesDidChange();
-    return synthesizer;
+PlatformSpeechSynthesizerMock* PlatformSpeechSynthesizerMock::Create(
+    PlatformSpeechSynthesizerClient* client) {
+  PlatformSpeechSynthesizerMock* synthesizer =
+      new PlatformSpeechSynthesizerMock(client);
+  synthesizer->InitializeVoiceList();
+  client->VoicesDidChange();
+  return synthesizer;
 }
 
-PlatformSpeechSynthesizerMock::PlatformSpeechSynthesizerMock(PlatformSpeechSynthesizerClient* client)
-    : PlatformSpeechSynthesizer(client)
-    , m_speakingErrorOccurredTimer(this, &PlatformSpeechSynthesizerMock::speakingErrorOccurred)
-    , m_speakingFinishedTimer(this, &PlatformSpeechSynthesizerMock::speakingFinished)
-{
+PlatformSpeechSynthesizerMock::PlatformSpeechSynthesizerMock(
+    PlatformSpeechSynthesizerClient* client)
+    : PlatformSpeechSynthesizer(client),
+      speaking_error_occurred_timer_(
+          this,
+          &PlatformSpeechSynthesizerMock::SpeakingErrorOccurred),
+      speaking_finished_timer_(
+          this,
+          &PlatformSpeechSynthesizerMock::SpeakingFinished) {}
+
+PlatformSpeechSynthesizerMock::~PlatformSpeechSynthesizerMock() {}
+
+void PlatformSpeechSynthesizerMock::SpeakingErrorOccurred(TimerBase*) {
+  ASSERT(current_utterance_);
+
+  Client()->SpeakingErrorOccurred(current_utterance_);
+  SpeakNext();
 }
 
-PlatformSpeechSynthesizerMock::~PlatformSpeechSynthesizerMock()
-{
+void PlatformSpeechSynthesizerMock::SpeakingFinished(TimerBase*) {
+  ASSERT(current_utterance_);
+  Client()->DidFinishSpeaking(current_utterance_);
+  SpeakNext();
 }
 
-void PlatformSpeechSynthesizerMock::speakingErrorOccurred(Timer<PlatformSpeechSynthesizerMock>*)
-{
-    ASSERT(m_currentUtterance);
+void PlatformSpeechSynthesizerMock::SpeakNext() {
+  if (speaking_error_occurred_timer_.IsActive())
+    return;
 
-    client()->speakingErrorOccurred(m_currentUtterance);
-    speakNext();
+  if (queued_utterances_.IsEmpty()) {
+    current_utterance_ = nullptr;
+    return;
+  }
+  current_utterance_ = queued_utterances_.TakeFirst();
+  SpeakNow();
 }
 
-void PlatformSpeechSynthesizerMock::speakingFinished(Timer<PlatformSpeechSynthesizerMock>*)
-{
-    ASSERT(m_currentUtterance);
-    client()->didFinishSpeaking(m_currentUtterance);
-    speakNext();
+void PlatformSpeechSynthesizerMock::InitializeVoiceList() {
+  voice_list_.Clear();
+  voice_list_.push_back(PlatformSpeechSynthesisVoice::Create(
+      String("mock.voice.bruce"), String("bruce"), String("en-US"), true,
+      true));
+  voice_list_.push_back(PlatformSpeechSynthesisVoice::Create(
+      String("mock.voice.clark"), String("clark"), String("en-US"), true,
+      false));
+  voice_list_.push_back(PlatformSpeechSynthesisVoice::Create(
+      String("mock.voice.logan"), String("logan"), String("fr-CA"), true,
+      true));
 }
 
-void PlatformSpeechSynthesizerMock::speakNext()
-{
-    if (m_speakingErrorOccurredTimer.isActive())
-        return;
-
-    if (m_queuedUtterances.isEmpty()) {
-        m_currentUtterance = nullptr;
-        return;
-    }
-    m_currentUtterance = m_queuedUtterances.takeFirst();
-    speakNow();
+void PlatformSpeechSynthesizerMock::Speak(
+    PlatformSpeechSynthesisUtterance* utterance) {
+  if (!current_utterance_) {
+    current_utterance_ = utterance;
+    SpeakNow();
+    return;
+  }
+  queued_utterances_.push_back(utterance);
 }
 
-void PlatformSpeechSynthesizerMock::initializeVoiceList()
-{
-    m_voiceList.clear();
-    m_voiceList.append(PlatformSpeechSynthesisVoice::create(String("mock.voice.bruce"), String("bruce"), String("en-US"), true, true));
-    m_voiceList.append(PlatformSpeechSynthesisVoice::create(String("mock.voice.clark"), String("clark"), String("en-US"), true, false));
-    m_voiceList.append(PlatformSpeechSynthesisVoice::create(String("mock.voice.logan"), String("logan"), String("fr-CA"), true, true));
+void PlatformSpeechSynthesizerMock::SpeakNow() {
+  ASSERT(current_utterance_);
+  Client()->DidStartSpeaking(current_utterance_);
+
+  // Fire a fake word and then sentence boundary event.
+  Client()->BoundaryEventOccurred(current_utterance_, kSpeechWordBoundary, 0);
+  Client()->BoundaryEventOccurred(current_utterance_, kSpeechSentenceBoundary,
+                                  current_utterance_->GetText().length());
+
+  // Give the fake speech job some time so that pause and other functions have
+  // time to be called.
+  speaking_finished_timer_.StartOneShot(.1, BLINK_FROM_HERE);
 }
 
-void PlatformSpeechSynthesizerMock::speak(PlatformSpeechSynthesisUtterance* utterance)
-{
-    if (!m_currentUtterance) {
-        m_currentUtterance = utterance;
-        speakNow();
-        return;
-    }
-    m_queuedUtterances.append(utterance);
+void PlatformSpeechSynthesizerMock::Cancel() {
+  if (!current_utterance_)
+    return;
+
+  // Per spec, removes all queued utterances.
+  queued_utterances_.Clear();
+
+  speaking_finished_timer_.Stop();
+  speaking_error_occurred_timer_.StartOneShot(.1, BLINK_FROM_HERE);
 }
 
-void PlatformSpeechSynthesizerMock::speakNow()
-{
-    ASSERT(m_currentUtterance);
-    client()->didStartSpeaking(m_currentUtterance);
+void PlatformSpeechSynthesizerMock::Pause() {
+  if (!current_utterance_)
+    return;
 
-    // Fire a fake word and then sentence boundary event.
-    client()->boundaryEventOccurred(m_currentUtterance, SpeechWordBoundary, 0);
-    client()->boundaryEventOccurred(m_currentUtterance, SpeechSentenceBoundary, m_currentUtterance->text().length());
-
-    // Give the fake speech job some time so that pause and other functions have time to be called.
-    m_speakingFinishedTimer.startOneShot(.1, BLINK_FROM_HERE);
+  Client()->DidPauseSpeaking(current_utterance_);
 }
 
-void PlatformSpeechSynthesizerMock::cancel()
-{
-    if (!m_currentUtterance)
-        return;
+void PlatformSpeechSynthesizerMock::Resume() {
+  if (!current_utterance_)
+    return;
 
-    // Per spec, removes all queued utterances.
-    m_queuedUtterances.clear();
-
-    m_speakingFinishedTimer.stop();
-    m_speakingErrorOccurredTimer.startOneShot(.1, BLINK_FROM_HERE);
+  Client()->DidResumeSpeaking(current_utterance_);
 }
 
-void PlatformSpeechSynthesizerMock::pause()
-{
-    if (!m_currentUtterance)
-        return;
-
-    client()->didPauseSpeaking(m_currentUtterance);
+DEFINE_TRACE(PlatformSpeechSynthesizerMock) {
+  visitor->Trace(current_utterance_);
+  visitor->Trace(queued_utterances_);
+  PlatformSpeechSynthesizer::Trace(visitor);
 }
 
-void PlatformSpeechSynthesizerMock::resume()
-{
-    if (!m_currentUtterance)
-        return;
-
-    client()->didResumeSpeaking(m_currentUtterance);
-}
-
-DEFINE_TRACE(PlatformSpeechSynthesizerMock)
-{
-    visitor->trace(m_currentUtterance);
-    visitor->trace(m_queuedUtterances);
-    PlatformSpeechSynthesizer::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

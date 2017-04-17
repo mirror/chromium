@@ -35,17 +35,17 @@ namespace media {
 
 namespace {
 
-cdm::SessionType ToCdmSessionType(MediaKeys::SessionType session_type) {
+cdm::SessionType ToCdmSessionType(CdmSessionType session_type) {
   switch (session_type) {
-    case MediaKeys::TEMPORARY_SESSION:
+    case CdmSessionType::TEMPORARY_SESSION:
       return cdm::kTemporary;
-    case MediaKeys::PERSISTENT_LICENSE_SESSION:
+    case CdmSessionType::PERSISTENT_LICENSE_SESSION:
       return cdm::kPersistentLicense;
-    case MediaKeys::PERSISTENT_RELEASE_MESSAGE_SESSION:
+    case CdmSessionType::PERSISTENT_RELEASE_MESSAGE_SESSION:
       return cdm::kPersistentKeyRelease;
   }
 
-  NOTREACHED() << "Unexpected SessionType " << session_type;
+  NOTREACHED() << "Unexpected session type: " << static_cast<int>(session_type);
   return cdm::kTemporary;
 }
 
@@ -65,40 +65,41 @@ cdm::InitDataType ToCdmInitDataType(EmeInitDataType init_data_type) {
   return cdm::kKeyIds;
 }
 
-MediaKeys::Exception ToMediaExceptionType(cdm::Error error) {
+CdmPromise::Exception ToMediaExceptionType(cdm::Error error) {
   switch (error) {
     case cdm::kNotSupportedError:
-      return MediaKeys::NOT_SUPPORTED_ERROR;
+      return CdmPromise::NOT_SUPPORTED_ERROR;
     case cdm::kInvalidStateError:
-      return MediaKeys::INVALID_STATE_ERROR;
+      return CdmPromise::INVALID_STATE_ERROR;
     case cdm::kInvalidAccessError:
-      return MediaKeys::INVALID_ACCESS_ERROR;
+      return CdmPromise::INVALID_ACCESS_ERROR;
     case cdm::kQuotaExceededError:
-      return MediaKeys::QUOTA_EXCEEDED_ERROR;
+      return CdmPromise::QUOTA_EXCEEDED_ERROR;
     case cdm::kUnknownError:
-      return MediaKeys::UNKNOWN_ERROR;
+      return CdmPromise::UNKNOWN_ERROR;
     case cdm::kClientError:
-      return MediaKeys::CLIENT_ERROR;
+      return CdmPromise::CLIENT_ERROR;
     case cdm::kOutputError:
-      return MediaKeys::OUTPUT_ERROR;
+      return CdmPromise::OUTPUT_ERROR;
   }
 
   NOTREACHED() << "Unexpected cdm::Error " << error;
-  return MediaKeys::UNKNOWN_ERROR;
+  return CdmPromise::UNKNOWN_ERROR;
 }
 
-MediaKeys::MessageType ToMediaMessageType(cdm::MessageType message_type) {
+ContentDecryptionModule::MessageType ToMediaMessageType(
+    cdm::MessageType message_type) {
   switch (message_type) {
     case cdm::kLicenseRequest:
-      return MediaKeys::LICENSE_REQUEST;
+      return ContentDecryptionModule::LICENSE_REQUEST;
     case cdm::kLicenseRenewal:
-      return MediaKeys::LICENSE_RENEWAL;
+      return ContentDecryptionModule::LICENSE_RENEWAL;
     case cdm::kLicenseRelease:
-      return MediaKeys::LICENSE_RELEASE;
+      return ContentDecryptionModule::LICENSE_RELEASE;
   }
 
   NOTREACHED() << "Unexpected cdm::MessageType " << message_type;
-  return MediaKeys::LICENSE_REQUEST;
+  return ContentDecryptionModule::LICENSE_REQUEST;
 }
 
 CdmKeyInformation::KeyStatus ToCdmKeyInformationKeyStatus(
@@ -307,9 +308,8 @@ void* GetCdmHost(int host_interface_version, void* user_data) {
       // Current version is supported.
       IsSupportedCdmHostVersion(cdm::Host_8::kVersion) &&
       // Include all previous supported versions (if any) here.
-      IsSupportedCdmHostVersion(cdm::Host_7::kVersion) &&
       // One older than the oldest supported version is not supported.
-      !IsSupportedCdmHostVersion(cdm::Host_7::kVersion - 1));
+      !IsSupportedCdmHostVersion(cdm::Host_8::kVersion - 1));
   DCHECK(IsSupportedCdmHostVersion(host_interface_version));
 
   CdmAdapter* cdm_adapter = static_cast<CdmAdapter*>(user_data);
@@ -317,8 +317,6 @@ void* GetCdmHost(int host_interface_version, void* user_data) {
   switch (host_interface_version) {
     case cdm::Host_8::kVersion:
       return static_cast<cdm::Host_8*>(cdm_adapter);
-    case cdm::Host_7::kVersion:
-      return static_cast<cdm::Host_7*>(cdm_adapter);
     default:
       NOTREACHED() << "Unexpected host interface version "
                    << host_interface_version;
@@ -337,21 +335,19 @@ void CdmAdapter::Create(
     const CreateCdmFileIOCB& create_cdm_file_io_cb,
     const SessionMessageCB& session_message_cb,
     const SessionClosedCB& session_closed_cb,
-    const LegacySessionErrorCB& legacy_session_error_cb,
     const SessionKeysChangeCB& session_keys_change_cb,
     const SessionExpirationUpdateCB& session_expiration_update_cb,
     const CdmCreatedCB& cdm_created_cb) {
   DCHECK(!key_system.empty());
   DCHECK(!session_message_cb.is_null());
   DCHECK(!session_closed_cb.is_null());
-  DCHECK(!legacy_session_error_cb.is_null());
   DCHECK(!session_keys_change_cb.is_null());
   DCHECK(!session_expiration_update_cb.is_null());
 
   scoped_refptr<CdmAdapter> cdm = new CdmAdapter(
       key_system, cdm_config, std::move(allocator), create_cdm_file_io_cb,
-      session_message_cb, session_closed_cb, legacy_session_error_cb,
-      session_keys_change_cb, session_expiration_update_cb);
+      session_message_cb, session_closed_cb, session_keys_change_cb,
+      session_expiration_update_cb);
 
   // |cdm| ownership passed to the promise.
   std::unique_ptr<CdmInitializedPromise> cdm_created_promise(
@@ -367,14 +363,12 @@ CdmAdapter::CdmAdapter(
     const CreateCdmFileIOCB& create_cdm_file_io_cb,
     const SessionMessageCB& session_message_cb,
     const SessionClosedCB& session_closed_cb,
-    const LegacySessionErrorCB& legacy_session_error_cb,
     const SessionKeysChangeCB& session_keys_change_cb,
     const SessionExpirationUpdateCB& session_expiration_update_cb)
     : key_system_(key_system),
       cdm_config_(cdm_config),
       session_message_cb_(session_message_cb),
       session_closed_cb_(session_closed_cb),
-      legacy_session_error_cb_(legacy_session_error_cb),
       session_keys_change_cb_(session_keys_change_cb),
       session_expiration_update_cb_(session_expiration_update_cb),
       audio_samples_per_second_(0),
@@ -382,11 +376,11 @@ CdmAdapter::CdmAdapter(
       allocator_(std::move(allocator)),
       create_cdm_file_io_cb_(create_cdm_file_io_cb),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      pool_(new AudioBufferMemoryPool()),
       weak_factory_(this) {
   DCHECK(!key_system_.empty());
   DCHECK(!session_message_cb_.is_null());
   DCHECK(!session_closed_cb_.is_null());
-  DCHECK(!legacy_session_error_cb_.is_null());
   DCHECK(!session_keys_change_cb_.is_null());
   DCHECK(!session_expiration_update_cb_.is_null());
   DCHECK(allocator_);
@@ -428,7 +422,7 @@ void CdmAdapter::Initialize(const base::FilePath& cdm_path,
                             std::unique_ptr<media::SimpleCdmPromise> promise) {
   cdm_.reset(CreateCdmInstance(key_system_, cdm_path));
   if (!cdm_) {
-    promise->reject(MediaKeys::INVALID_ACCESS_ERROR, 0,
+    promise->reject(CdmPromise::INVALID_ACCESS_ERROR, 0,
                     "Unable to create CDM.");
     return;
   }
@@ -445,7 +439,7 @@ void CdmAdapter::SetServerCertificate(
 
   if (certificate.size() < limits::kMinCertificateLength ||
       certificate.size() > limits::kMaxCertificateLength) {
-    promise->reject(MediaKeys::INVALID_ACCESS_ERROR, 0,
+    promise->reject(CdmPromise::INVALID_ACCESS_ERROR, 0,
                     "Incorrect certificate.");
     return;
   }
@@ -456,7 +450,7 @@ void CdmAdapter::SetServerCertificate(
 }
 
 void CdmAdapter::CreateSessionAndGenerateRequest(
-    SessionType session_type,
+    CdmSessionType session_type,
     EmeInitDataType init_data_type,
     const std::vector<uint8_t>& init_data,
     std::unique_ptr<NewSessionCdmPromise> promise) {
@@ -468,7 +462,7 @@ void CdmAdapter::CreateSessionAndGenerateRequest(
       ToCdmInitDataType(init_data_type), init_data.data(), init_data.size());
 }
 
-void CdmAdapter::LoadSession(SessionType session_type,
+void CdmAdapter::LoadSession(CdmSessionType session_type,
                              const std::string& session_id,
                              std::unique_ptr<NewSessionCdmPromise> promise) {
   DCHECK(task_runner_->BelongsToCurrentThread());
@@ -772,23 +766,14 @@ void CdmAdapter::OnSessionMessage(const char* session_id,
                                   const char* legacy_destination_url,
                                   uint32_t legacy_destination_url_size) {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  DCHECK(legacy_destination_url_size == 0 ||
-         message_type != cdm::MessageType::kLicenseRequest);
-
-  GURL verified_gurl =
-      GURL(std::string(legacy_destination_url, legacy_destination_url_size));
-  if (!verified_gurl.is_valid()) {
-    DLOG(WARNING) << "SessionMessage legacy_destination_url is invalid : "
-                  << verified_gurl.possibly_invalid_spec();
-    verified_gurl = GURL::EmptyGURL();  // Replace invalid destination_url.
-  }
+  // |legacy_destination_url| is obsolete and will be removed as part of
+  // https://crbug.com/570216.
 
   const uint8_t* message_ptr = reinterpret_cast<const uint8_t*>(message);
   session_message_cb_.Run(
       std::string(session_id, session_id_size),
       ToMediaMessageType(message_type),
-      std::vector<uint8_t>(message_ptr, message_ptr + message_size),
-      verified_gurl);
+      std::vector<uint8_t>(message_ptr, message_ptr + message_size));
 }
 
 void CdmAdapter::OnSessionKeysChange(const char* session_id,
@@ -843,10 +828,7 @@ void CdmAdapter::OnLegacySessionError(const char* session_id,
                                       const char* error_message,
                                       uint32_t error_message_size) {
   DCHECK(task_runner_->BelongsToCurrentThread());
-
-  legacy_session_error_cb_.Run(std::string(session_id, session_id_size),
-                               ToMediaExceptionType(error), system_code,
-                               std::string(error_message, error_message_size));
+  // Obsolete and will be removed as part of https://crbug.com/570216.
 }
 
 void CdmAdapter::SendPlatformChallenge(const char* service_id,
@@ -955,7 +937,7 @@ bool CdmAdapter::AudioFramesDataToAudioFrames(
     scoped_refptr<media::AudioBuffer> frame = media::AudioBuffer::CopyFrom(
         sample_format, audio_channel_layout_, audio_channel_count,
         audio_samples_per_second_, frame_count, &channel_ptrs[0],
-        base::TimeDelta::FromMicroseconds(timestamp));
+        base::TimeDelta::FromMicroseconds(timestamp), pool_);
     result_frames->push_back(frame);
 
     data += frame_size;

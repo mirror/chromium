@@ -4,10 +4,10 @@
 
 #include "base/macros.h"
 #include "components/leveldb/leveldb_app.h"
-#include "mojo/public/c/system/main.h"
-#include "services/shell/public/cpp/service_runner.h"
+#include "services/service_manager/public/c/main.h"
+#include "services/service_manager/public/cpp/service_runner.h"
 
-MojoResult MojoMain(MojoHandle application_request) {
-  shell::ServiceRunner runner(new leveldb::LevelDBApp());
+MojoResult ServiceMain(MojoHandle application_request) {
+  service_manager::ServiceRunner runner(new leveldb::LevelDBApp());
   return runner.Run(application_request);
 }

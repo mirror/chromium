@@ -5,26 +5,35 @@
 #ifndef CompositorFilterKeyframe_h
 #define CompositorFilterKeyframe_h
 
+#include "cc/animation/keyframed_animation_curve.h"
 #include "platform/PlatformExport.h"
+#include "platform/animation/CompositorKeyframe.h"
 #include "platform/graphics/CompositorFilterOperations.h"
-#include <memory>
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT CompositorFilterKeyframe {
-public:
-    CompositorFilterKeyframe(double time, std::unique_ptr<CompositorFilterOperations>);
-    ~CompositorFilterKeyframe();
+class TimingFunction;
 
-    double time() const { return m_time; }
+class PLATFORM_EXPORT CompositorFilterKeyframe : public CompositorKeyframe {
+  WTF_MAKE_NONCOPYABLE(CompositorFilterKeyframe);
 
-    const CompositorFilterOperations& value() const { return *m_value.get(); }
+ public:
+  CompositorFilterKeyframe(double time,
+                           CompositorFilterOperations value,
+                           const TimingFunction&);
+  ~CompositorFilterKeyframe();
 
-private:
-    double m_time;
-    std::unique_ptr<CompositorFilterOperations> m_value;
+  std::unique_ptr<cc::FilterKeyframe> CloneToCC() const;
+
+  // CompositorKeyframe implementation.
+  double Time() const override;
+  const cc::TimingFunction* CcTimingFunction() const override;
+
+ private:
+  std::unique_ptr<cc::FilterKeyframe> filter_keyframe_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorFilterKeyframe_h
+#endif  // CompositorFilterKeyframe_h

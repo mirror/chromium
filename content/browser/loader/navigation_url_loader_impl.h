@@ -19,20 +19,25 @@ struct RedirectInfo;
 
 namespace content {
 
+class AppCacheNavigationHandle;
 class NavigationURLLoaderImplCore;
 class NavigationData;
-class ServiceWorkerContextWrapper;
+class ServiceWorkerNavigationHandle;
 class StreamHandle;
+struct GlobalRequestID;
 struct ResourceResponse;
+struct SSLStatus;
 
 class NavigationURLLoaderImpl : public NavigationURLLoader {
  public:
   // The caller is responsible for ensuring that |delegate| outlives the loader.
-  NavigationURLLoaderImpl(
-      BrowserContext* browser_context,
-      std::unique_ptr<NavigationRequestInfo> request_info,
-      ServiceWorkerContextWrapper* service_worker_context_wrapper,
-      NavigationURLLoaderDelegate* delegate);
+  NavigationURLLoaderImpl(ResourceContext* resource_context,
+                          StoragePartition* storage_partition,
+                          std::unique_ptr<NavigationRequestInfo> request_info,
+                          std::unique_ptr<NavigationUIData> navigation_ui_data,
+                          ServiceWorkerNavigationHandle* service_worker_handle,
+                          AppCacheNavigationHandle* appcache_handle,
+                          NavigationURLLoaderDelegate* delegate);
   ~NavigationURLLoaderImpl() override;
 
   // NavigationURLLoader implementation.
@@ -49,7 +54,11 @@ class NavigationURLLoaderImpl : public NavigationURLLoader {
   // Notifies the delegate that the response has started.
   void NotifyResponseStarted(const scoped_refptr<ResourceResponse>& response,
                              std::unique_ptr<StreamHandle> body,
-                             std::unique_ptr<NavigationData> navigation_data);
+                             const SSLStatus& ssl_status,
+                             std::unique_ptr<NavigationData> navigation_data,
+                             const GlobalRequestID& request_id,
+                             bool is_download,
+                             bool is_stream);
 
   // Notifies the delegate the request failed to return a response.
   void NotifyRequestFailed(bool in_cache, int net_error);
@@ -58,14 +67,10 @@ class NavigationURLLoaderImpl : public NavigationURLLoader {
   // potential first network request is about to be made.
   void NotifyRequestStarted(base::TimeTicks timestamp);
 
-  // Notifies the delegate that a ServiceWorker was found for this navigation.
-  void NotifyServiceWorkerEncountered();
-
   NavigationURLLoaderDelegate* delegate_;
 
-  // |core_| is deleted on the IO thread in a subsequent task when the
-  // NavigationURLLoaderImpl goes out of scope.
-  NavigationURLLoaderImplCore* core_;
+  // |core_| is owned by this and the NavigationResourceHandler.
+  scoped_refptr<NavigationURLLoaderImplCore> core_;
 
   base::WeakPtrFactory<NavigationURLLoaderImpl> weak_factory_;
 

@@ -30,121 +30,154 @@
 #ifndef ShapeOutsideInfo_h
 #define ShapeOutsideInfo_h
 
-#include "core/layout/api/LineLayoutBlockFlow.h"
+#include <memory>
 #include "core/layout/shapes/Shape.h"
-#include "core/style/ComputedStyle.h"
 #include "core/style/ShapeValue.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/LayoutSize.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 class LayoutBox;
+class LineLayoutBlockFlow;
 class FloatingObject;
 
 class ShapeOutsideDeltas final {
-    DISALLOW_NEW();
-public:
-    ShapeOutsideDeltas()
-        : m_lineOverlapsShape(false)
-        , m_isValid(false)
-    {
-    }
+  DISALLOW_NEW();
 
-    ShapeOutsideDeltas(LayoutUnit leftMarginBoxDelta, LayoutUnit rightMarginBoxDelta, bool lineOverlapsShape, LayoutUnit borderBoxLineTop, LayoutUnit lineHeight)
-        : m_leftMarginBoxDelta(leftMarginBoxDelta)
-        , m_rightMarginBoxDelta(rightMarginBoxDelta)
-        , m_borderBoxLineTop(borderBoxLineTop)
-        , m_lineHeight(lineHeight)
-        , m_lineOverlapsShape(lineOverlapsShape)
-        , m_isValid(true)
-    {
-    }
+ public:
+  ShapeOutsideDeltas() : line_overlaps_shape_(false), is_valid_(false) {}
 
-    bool isForLine(LayoutUnit borderBoxLineTop, LayoutUnit lineHeight)
-    {
-        return m_isValid && m_borderBoxLineTop == borderBoxLineTop && m_lineHeight == lineHeight;
-    }
+  ShapeOutsideDeltas(LayoutUnit left_margin_box_delta,
+                     LayoutUnit right_margin_box_delta,
+                     bool line_overlaps_shape,
+                     LayoutUnit border_box_line_top,
+                     LayoutUnit line_height)
+      : left_margin_box_delta_(left_margin_box_delta),
+        right_margin_box_delta_(right_margin_box_delta),
+        border_box_line_top_(border_box_line_top),
+        line_height_(line_height),
+        line_overlaps_shape_(line_overlaps_shape),
+        is_valid_(true) {}
 
-    bool isValid() { return m_isValid; }
-    LayoutUnit leftMarginBoxDelta() { ASSERT(m_isValid); return m_leftMarginBoxDelta; }
-    LayoutUnit rightMarginBoxDelta() { ASSERT(m_isValid); return m_rightMarginBoxDelta; }
-    bool lineOverlapsShape() { ASSERT(m_isValid); return m_lineOverlapsShape; }
+  bool IsForLine(LayoutUnit border_box_line_top, LayoutUnit line_height) {
+    return is_valid_ && border_box_line_top_ == border_box_line_top &&
+           line_height_ == line_height;
+  }
 
-private:
-    LayoutUnit m_leftMarginBoxDelta;
-    LayoutUnit m_rightMarginBoxDelta;
-    LayoutUnit m_borderBoxLineTop;
-    LayoutUnit m_lineHeight;
-    bool m_lineOverlapsShape : 1;
-    bool m_isValid : 1;
+  bool IsValid() { return is_valid_; }
+  LayoutUnit LeftMarginBoxDelta() {
+    DCHECK(is_valid_);
+    return left_margin_box_delta_;
+  }
+  LayoutUnit RightMarginBoxDelta() {
+    DCHECK(is_valid_);
+    return right_margin_box_delta_;
+  }
+  bool LineOverlapsShape() {
+    DCHECK(is_valid_);
+    return line_overlaps_shape_;
+  }
+
+ private:
+  LayoutUnit left_margin_box_delta_;
+  LayoutUnit right_margin_box_delta_;
+  LayoutUnit border_box_line_top_;
+  LayoutUnit line_height_;
+  bool line_overlaps_shape_ : 1;
+  bool is_valid_ : 1;
 };
 
 class ShapeOutsideInfo final {
-    USING_FAST_MALLOC(ShapeOutsideInfo);
-public:
-    void setReferenceBoxLogicalSize(LayoutSize);
+  USING_FAST_MALLOC(ShapeOutsideInfo);
 
-    LayoutUnit shapeLogicalTop() const { return computedShape().shapeMarginLogicalBoundingBox().y() + logicalTopOffset(); }
-    LayoutUnit shapeLogicalBottom() const { return computedShape().shapeMarginLogicalBoundingBox().maxY() + logicalTopOffset(); }
-    LayoutUnit shapeLogicalLeft() const { return computedShape().shapeMarginLogicalBoundingBox().x() + logicalLeftOffset(); }
-    LayoutUnit shapeLogicalRight() const { return computedShape().shapeMarginLogicalBoundingBox().maxX() + logicalLeftOffset(); }
-    LayoutUnit shapeLogicalWidth() const { return computedShape().shapeMarginLogicalBoundingBox().width(); }
-    LayoutUnit shapeLogicalHeight() const { return computedShape().shapeMarginLogicalBoundingBox().height(); }
+ public:
+  void SetReferenceBoxLogicalSize(LayoutSize);
 
-    static std::unique_ptr<ShapeOutsideInfo> createInfo(const LayoutBox& layoutBox) { return wrapUnique(new ShapeOutsideInfo(layoutBox)); }
-    static bool isEnabledFor(const LayoutBox&);
+  LayoutUnit ShapeLogicalTop() const {
+    return ComputedShape().ShapeMarginLogicalBoundingBox().Y() +
+           LogicalTopOffset();
+  }
+  LayoutUnit ShapeLogicalBottom() const {
+    return ComputedShape().ShapeMarginLogicalBoundingBox().MaxY() +
+           LogicalTopOffset();
+  }
+  LayoutUnit ShapeLogicalLeft() const {
+    return ComputedShape().ShapeMarginLogicalBoundingBox().X() +
+           LogicalLeftOffset();
+  }
+  LayoutUnit ShapeLogicalRight() const {
+    return ComputedShape().ShapeMarginLogicalBoundingBox().MaxX() +
+           LogicalLeftOffset();
+  }
+  LayoutUnit ShapeLogicalWidth() const {
+    return ComputedShape().ShapeMarginLogicalBoundingBox().Width();
+  }
+  LayoutUnit ShapeLogicalHeight() const {
+    return ComputedShape().ShapeMarginLogicalBoundingBox().Height();
+  }
 
-    ShapeOutsideDeltas computeDeltasForContainingBlockLine(const LineLayoutBlockFlow&, const FloatingObject&, LayoutUnit lineTop, LayoutUnit lineHeight);
+  static std::unique_ptr<ShapeOutsideInfo> CreateInfo(
+      const LayoutBox& layout_box) {
+    return WTF::WrapUnique(new ShapeOutsideInfo(layout_box));
+  }
+  static bool IsEnabledFor(const LayoutBox&);
 
-    static ShapeOutsideInfo& ensureInfo(const LayoutBox& key)
-    {
-        InfoMap& infoMap = ShapeOutsideInfo::infoMap();
-        if (ShapeOutsideInfo* info = infoMap.get(&key))
-            return *info;
-        InfoMap::AddResult result = infoMap.add(&key, ShapeOutsideInfo::createInfo(key));
-        return *result.storedValue->value;
-    }
-    static void removeInfo(const LayoutBox& key) { infoMap().remove(&key); }
-    static ShapeOutsideInfo* info(const LayoutBox& key) { return infoMap().get(&key); }
+  ShapeOutsideDeltas ComputeDeltasForContainingBlockLine(
+      const LineLayoutBlockFlow&,
+      const FloatingObject&,
+      LayoutUnit line_top,
+      LayoutUnit line_height);
 
-    void markShapeAsDirty() { m_shape.reset(); }
-    bool isShapeDirty() { return !m_shape.get(); }
-    LayoutSize shapeSize() const { return m_referenceBoxLogicalSize; }
-    bool isComputingShape() const { return m_isComputingShape; }
+  static ShapeOutsideInfo& EnsureInfo(const LayoutBox& key) {
+    InfoMap& info_map = ShapeOutsideInfo::GetInfoMap();
+    if (ShapeOutsideInfo* info = info_map.at(&key))
+      return *info;
+    InfoMap::AddResult result =
+        info_map.insert(&key, ShapeOutsideInfo::CreateInfo(key));
+    return *result.stored_value->value;
+  }
+  static void RemoveInfo(const LayoutBox& key) { GetInfoMap().erase(&key); }
+  static ShapeOutsideInfo* Info(const LayoutBox& key) {
+    return GetInfoMap().at(&key);
+  }
 
-    LayoutRect computedShapePhysicalBoundingBox() const;
-    FloatPoint shapeToLayoutObjectPoint(FloatPoint) const;
-    FloatSize shapeToLayoutObjectSize(FloatSize) const;
-    const Shape& computedShape() const;
+  void MarkShapeAsDirty() { shape_.reset(); }
+  bool IsShapeDirty() { return !shape_.get(); }
+  LayoutSize ShapeSize() const { return reference_box_logical_size_; }
+  bool IsComputingShape() const { return is_computing_shape_; }
 
-protected:
-    ShapeOutsideInfo(const LayoutBox& layoutBox)
-        : m_layoutBox(layoutBox)
-        , m_isComputingShape(false)
-    { }
+  LayoutRect ComputedShapePhysicalBoundingBox() const;
+  FloatPoint ShapeToLayoutObjectPoint(FloatPoint) const;
+  FloatSize ShapeToLayoutObjectSize(FloatSize) const;
+  const Shape& ComputedShape() const;
 
-private:
-    std::unique_ptr<Shape> createShapeForImage(StyleImage*, float shapeImageThreshold, WritingMode, float margin) const;
+ protected:
+  ShapeOutsideInfo(const LayoutBox& layout_box)
+      : layout_box_(layout_box), is_computing_shape_(false) {}
 
-    LayoutUnit logicalTopOffset() const;
-    LayoutUnit logicalLeftOffset() const;
+ private:
+  std::unique_ptr<Shape> CreateShapeForImage(StyleImage*,
+                                             float shape_image_threshold,
+                                             WritingMode,
+                                             float margin) const;
 
-    typedef HashMap<const LayoutBox*, std::unique_ptr<ShapeOutsideInfo>> InfoMap;
-    static InfoMap& infoMap()
-    {
-        DEFINE_STATIC_LOCAL(InfoMap, staticInfoMap, ());
-        return staticInfoMap;
-    }
+  LayoutUnit LogicalTopOffset() const;
+  LayoutUnit LogicalLeftOffset() const;
 
-    const LayoutBox& m_layoutBox;
-    mutable std::unique_ptr<Shape> m_shape;
-    LayoutSize m_referenceBoxLogicalSize;
-    ShapeOutsideDeltas m_shapeOutsideDeltas;
-    mutable bool m_isComputingShape;
+  typedef HashMap<const LayoutBox*, std::unique_ptr<ShapeOutsideInfo>> InfoMap;
+  static InfoMap& GetInfoMap() {
+    DEFINE_STATIC_LOCAL(InfoMap, static_info_map, ());
+    return static_info_map;
+  }
+
+  const LayoutBox& layout_box_;
+  mutable std::unique_ptr<Shape> shape_;
+  LayoutSize reference_box_logical_size_;
+  ShapeOutsideDeltas shape_outside_deltas_;
+  mutable bool is_computing_shape_;
 };
 
-} // namespace blink
+}  // namespace blink
 #endif

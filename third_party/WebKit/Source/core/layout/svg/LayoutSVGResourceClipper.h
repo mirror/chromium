@@ -22,56 +22,70 @@
 
 #include "core/layout/svg/LayoutSVGResourceContainer.h"
 #include "core/svg/SVGClipPathElement.h"
-
-class SkPicture;
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
 class LayoutSVGResourceClipper final : public LayoutSVGResourceContainer {
-public:
-    explicit LayoutSVGResourceClipper(SVGClipPathElement*);
-    ~LayoutSVGResourceClipper() override;
+ public:
+  explicit LayoutSVGResourceClipper(SVGClipPathElement*);
+  ~LayoutSVGResourceClipper() override;
 
-    const char* name() const override { return "LayoutSVGResourceClipper"; }
+  const char* GetName() const override { return "LayoutSVGResourceClipper"; }
 
-    void removeAllClientsFromCache(bool markForInvalidation = true) override;
-    void removeClientFromCache(LayoutObject*, bool markForInvalidation = true) override;
+  void RemoveAllClientsFromCache(bool mark_for_invalidation = true) override;
+  void RemoveClientFromCache(LayoutObject*,
+                             bool mark_for_invalidation = true) override;
 
-    FloatRect resourceBoundingBox(const LayoutObject*);
+  FloatRect ResourceBoundingBox(const FloatRect& reference_box);
 
-    static const LayoutSVGResourceType s_resourceType = ClipperResourceType;
-    LayoutSVGResourceType resourceType() const override { return s_resourceType; }
+  static const LayoutSVGResourceType kResourceType = kClipperResourceType;
+  LayoutSVGResourceType ResourceType() const override { return kResourceType; }
 
-    bool hitTestClipContent(const FloatRect&, const FloatPoint&);
+  bool HitTestClipContent(const FloatRect&, const FloatPoint&);
 
-    SVGUnitTypes::SVGUnitType clipPathUnits() const { return toSVGClipPathElement(element())->clipPathUnits()->currentValue()->enumValue(); }
+  SVGUnitTypes::SVGUnitType ClipPathUnits() const {
+    return toSVGClipPathElement(GetElement())
+        ->clipPathUnits()
+        ->CurrentValue()
+        ->EnumValue();
+  }
 
-    bool asPath(const AffineTransform&, const FloatRect& referenceBox, Path&);
-    PassRefPtr<const SkPicture> createContentPicture();
+  bool AsPath(const AffineTransform&, const FloatRect& reference_box, Path&);
+  sk_sp<const PaintRecord> CreatePaintRecord();
 
-    bool hasCycle() { return m_inClipExpansion; }
-    void beginClipExpansion() { ASSERT(!m_inClipExpansion); m_inClipExpansion = true; }
-    void endClipExpansion() { ASSERT(m_inClipExpansion); m_inClipExpansion = false; }
-private:
-    void calculateLocalClipBounds();
+  bool HasCycle() { return in_clip_expansion_; }
+  void BeginClipExpansion() {
+    DCHECK(!in_clip_expansion_);
+    in_clip_expansion_ = true;
+  }
+  void EndClipExpansion() {
+    DCHECK(in_clip_expansion_);
+    in_clip_expansion_ = false;
+  }
 
-    // Return true if the clip path was calculated or a cached value is available.
-    bool calculateClipContentPathIfNeeded();
+ private:
+  void CalculateLocalClipBounds();
 
-    // Cache of the clip path when using path clipping.
-    Path m_clipContentPath;
+  // Return true if the clip path was calculated or a cached value is available.
+  bool CalculateClipContentPathIfNeeded();
 
-    // Cache of the clip path picture when falling back to masking for clipping.
-    RefPtr<const SkPicture> m_clipContentPicture;
+  // Cache of the clip path when using path clipping.
+  Path clip_content_path_;
 
-    FloatRect m_localClipBounds;
+  // Cache of the clip path paint record when falling back to masking for
+  // clipping.
+  sk_sp<const PaintRecord> cached_paint_record_;
 
-    // Reference cycle detection.
-    bool m_inClipExpansion;
+  FloatRect local_clip_bounds_;
+
+  // Reference cycle detection.
+  bool in_clip_expansion_;
 };
 
-DEFINE_LAYOUT_SVG_RESOURCE_TYPE_CASTS(LayoutSVGResourceClipper, ClipperResourceType);
+DEFINE_LAYOUT_SVG_RESOURCE_TYPE_CASTS(LayoutSVGResourceClipper,
+                                      kClipperResourceType);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

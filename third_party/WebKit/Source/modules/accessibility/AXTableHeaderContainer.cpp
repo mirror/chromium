@@ -32,54 +32,40 @@
 
 namespace blink {
 
-AXTableHeaderContainer::AXTableHeaderContainer(AXObjectCacheImpl& axObjectCache)
-    : AXMockObject(axObjectCache)
-{
+AXTableHeaderContainer::AXTableHeaderContainer(
+    AXObjectCacheImpl& ax_object_cache)
+    : AXMockObject(ax_object_cache) {}
+
+AXTableHeaderContainer::~AXTableHeaderContainer() {}
+
+AXTableHeaderContainer* AXTableHeaderContainer::Create(
+    AXObjectCacheImpl& ax_object_cache) {
+  return new AXTableHeaderContainer(ax_object_cache);
 }
 
-AXTableHeaderContainer::~AXTableHeaderContainer()
-{
-}
-
-AXTableHeaderContainer* AXTableHeaderContainer::create(AXObjectCacheImpl& axObjectCache)
-{
-    return new AXTableHeaderContainer(axObjectCache);
-}
-
-LayoutRect AXTableHeaderContainer::elementRect() const
-{
-    // this will be filled in when addChildren is called
-    return m_headerRect;
-}
-
-bool AXTableHeaderContainer::computeAccessibilityIsIgnored(IgnoredReasons* ignoredReasons) const
-{
-    if (!m_parent)
-        return true;
-
-    if (!m_parent->accessibilityIsIgnored())
-        return false;
-
-    if (ignoredReasons)
-        m_parent->computeAccessibilityIsIgnored(ignoredReasons);
-
+bool AXTableHeaderContainer::ComputeAccessibilityIsIgnored(
+    IgnoredReasons* ignored_reasons) const {
+  if (!parent_)
     return true;
+
+  if (!parent_->AccessibilityIsIgnored())
+    return false;
+
+  if (ignored_reasons)
+    parent_->ComputeAccessibilityIsIgnored(ignored_reasons);
+
+  return true;
 }
 
-void AXTableHeaderContainer::addChildren()
-{
-    ASSERT(!isDetached());
-    ASSERT(!m_haveChildren);
+void AXTableHeaderContainer::AddChildren() {
+  DCHECK(!IsDetached());
+  DCHECK(!have_children_);
 
-    m_haveChildren = true;
-    if (!m_parent || !m_parent->isAXTable())
-        return;
+  have_children_ = true;
+  if (!parent_ || !parent_->IsAXTable())
+    return;
 
-    toAXTable(m_parent)->columnHeaders(m_children);
-
-    unsigned length = m_children.size();
-    for (unsigned k = 0; k < length; ++k)
-        m_headerRect.unite(m_children[k]->elementRect());
+  ToAXTable(parent_)->ColumnHeaders(children_);
 }
 
-} // namespace blink
+}  // namespace blink

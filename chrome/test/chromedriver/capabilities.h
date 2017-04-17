@@ -142,6 +142,10 @@ struct Capabilities {
   // If set, enable minidump for chrome crashes and save to this directory.
   std::string minidump_path;
 
+  std::string page_load_strategy;
+
+  std::string unexpected_alert_behaviour;
+
   bool network_emulation_enabled;
 
   PerfLoggingPrefs perf_logging_prefs;
@@ -151,6 +155,8 @@ struct Capabilities {
   Switches switches;
 
   std::set<WebViewInfo::Type> window_types;
+
+  bool use_automation_extension;
 };
 
 #endif  // CHROME_TEST_CHROMEDRIVER_CAPABILITIES_H_

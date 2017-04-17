@@ -47,17 +47,17 @@ class ManagedBookmarkService;
 // Used as a maximum width for buttons on the bar.
 const CGFloat kDefaultBookmarkWidth = 150.0;
 
-// Horizontal frame inset for buttons in the bookmark bar.
-CGFloat BookmarkHorizontalPadding();
-
-// Vertical frame inset for buttons in the bookmark bar.
-CGFloat BookmarkVerticalPadding();
+// Right margin before the last button in the bookmark bar.
+const CGFloat kBookmarkRightMargin = 8.0;
 
 // Left margin before the first button in the bookmark bar.
-CGFloat BookmarkLeftMargin();
+const CGFloat kBookmarkLeftMargin = 8.0;
 
-// Right margin before the last button in the bookmark bar.
-CGFloat BookmarkRightMargin();
+// Vertical frame inset for buttons in the bookmark bar.
+const CGFloat kBookmarkVerticalPadding = 4.0;
+
+// Horizontal frame inset for buttons in the bookmark bar.
+const CGFloat kBookmarkHorizontalPadding = 4.0;
 
 // Used as a min/max width for buttons on menus (not on the bar).
 const CGFloat kBookmarkMenuButtonMinimumWidth = 100.0;
@@ -183,13 +183,6 @@ willAnimateFromState:(BookmarkBar::State)oldState
   // Our initial view width, which is applied in awakeFromNib.
   CGFloat initialWidth_;
 
-  // BookmarkNodes have a 64bit id.  NSMenuItems have a 32bit tag used
-  // to represent the bookmark node they refer to.  This map provides
-  // a mapping from one to the other, so we can properly identify the
-  // node from the item.  When adding items in, we start with seedId_.
-  int32_t seedId_;
-  std::map<int32_t, int64_t> menuTagMap_;
-
   // Our bookmark buttons, ordered from L-->R.
   base::scoped_nsobject<NSMutableArray> buttons_;
 
@@ -229,8 +222,9 @@ willAnimateFromState:(BookmarkBar::State)oldState
   // a click outside the bounds of the window.
   id exitEventTap_;
 
-  IBOutlet BookmarkBarView* buttonView_;  // Contains 'no items' text fields.
-  IBOutlet BookmarkButton* offTheSideButton_;  // aka the chevron.
+  base::scoped_nsobject<BookmarkBarView>
+      buttonView_;  // Contains 'no items' text fields.
+  base::scoped_nsobject<BookmarkButton> offTheSideButton_;  // aka the chevron.
 
   NSRect originalNoItemsRect_;  // Original, pre-resized field rect.
   NSRect originalImportBookmarksRect_;  // Original, pre-resized field rect.
@@ -294,10 +288,10 @@ willAnimateFromState:(BookmarkBar::State)oldState
   base::scoped_nsobject<BookmarkContextMenuCocoaController>
       contextMenuController_;
 
-  // Weak pointer to the pulsed button for the currently pulsing node. We need
-  // to store this as it may not be possible to determine the pulsing button if
-  // the pulsing node is deleted. Nil if there is no pulsing node.
-  BookmarkButton* pulsingButton_;
+  // The pulsed button for the currently pulsing node. We need to store this as
+  // it may not be possible to determine the pulsing button if the pulsing node
+  // is deleted. Nil if there is no pulsing node.
+  base::scoped_nsobject<BookmarkButton> pulsingButton_;
 
   // Specifically watch the currently pulsing node. This lets us stop pulsing
   // when anything happens to the node. Null if there is no pulsing node.
@@ -362,10 +356,8 @@ willAnimateFromState:(BookmarkBar::State)oldState
 // shouldn't be shown.
 - (CGFloat)toolbarDividerOpacity;
 
-// Updates the sizes and positions of the subviews.
-// TODO(viettrungluu): I'm not convinced this should be public, but I currently
-// need it for animations. Try not to propagate its use.
-- (void)layoutSubviews;
+// Set the size of the view and perform layout.
+- (void)layoutToFrame:(NSRect)frame;
 
 // Called by our view when it is moved to a window.
 - (void)viewDidMoveToWindow;
@@ -393,12 +385,12 @@ willAnimateFromState:(BookmarkBar::State)oldState
 
 // Actions for manipulating bookmarks.
 // Open a normal bookmark or folder from a button, ...
-- (IBAction)openBookmark:(id)sender;
-- (IBAction)openBookmarkFolderFromButton:(id)sender;
+- (void)openBookmark:(id)sender;
+- (void)openBookmarkFolderFromButton:(id)sender;
 // From the "off the side" button, ...
-- (IBAction)openOffTheSideFolderFromButton:(id)sender;
+- (void)openOffTheSideFolderFromButton:(id)sender;
 // Import bookmarks from another browser.
-- (IBAction)importBookmarks:(id)sender;
+- (void)importBookmarks:(id)sender;
 
 // Returns the app page shortcut button.
 - (NSButton*)appsPageShortcutButton;
@@ -415,7 +407,6 @@ willAnimateFromState:(BookmarkBar::State)oldState
 // the rest of Chromium.  Internal to BookmarkBarController.
 @interface BookmarkBarController(BridgeRedirect)
 - (void)loaded:(bookmarks::BookmarkModel*)model;
-- (void)beingDeleted:(bookmarks::BookmarkModel*)model;
 - (void)nodeAdded:(bookmarks::BookmarkModel*)model
            parent:(const bookmarks::BookmarkNode*)oldParent index:(int)index;
 - (void)nodeChanged:(bookmarks::BookmarkModel*)model
@@ -454,16 +445,12 @@ willAnimateFromState:(BookmarkBar::State)oldState
 - (NSRect)frameForBookmarkButtonFromCell:(NSCell*)cell xOffset:(int*)xOffset;
 - (void)checkForBookmarkButtonGrowth:(NSButton*)button;
 - (void)frameDidChange;
-- (int64_t)nodeIdFromMenuTag:(int32_t)tag;
-- (int32_t)menuTagFromNodeId:(int64_t)menuid;
 - (void)updateTheme:(const ui::ThemeProvider*)themeProvider;
 - (BookmarkButton*)buttonForDroppingOnAtPoint:(NSPoint)point;
 - (BOOL)isEventAnExitEvent:(NSEvent*)event;
 - (BOOL)shrinkOrHideView:(NSView*)view forMaxX:(CGFloat)maxViewX;
 - (void)unhighlightBookmark:(const bookmarks::BookmarkNode*)node;
 
-// The following are for testing purposes only and are not used internally.
-- (NSMenu *)menuForFolderNode:(const bookmarks::BookmarkNode*)node;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_BAR_CONTROLLER_H_

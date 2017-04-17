@@ -28,24 +28,26 @@
 
 #include "platform/ContextMenuItem.h"
 #include "platform/PlatformExport.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT ContextMenu {
-    WTF_MAKE_NONCOPYABLE(ContextMenu); USING_FAST_MALLOC(ContextMenu);
-public:
-    ContextMenu() { }
-    const ContextMenuItem* itemWithAction(unsigned) const;
-    const Vector<ContextMenuItem>& items() const { return m_items; }
-    void appendItem(const ContextMenuItem& item) { m_items.append(item); }
-    void removeLastItem() { m_items.removeLast(); }
+  WTF_MAKE_NONCOPYABLE(ContextMenu);
+  USING_FAST_MALLOC(ContextMenu);
 
-private:
-    Vector<ContextMenuItem> m_items;
+ public:
+  ContextMenu() {}
+  const ContextMenuItem* ItemWithAction(unsigned) const;
+  const Vector<ContextMenuItem>& Items() const { return items_; }
+  void AppendItem(const ContextMenuItem& item) { items_.push_back(item); }
+  void RemoveLastItem() { items_.pop_back(); }
+
+ private:
+  Vector<ContextMenuItem> items_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ContextMenu_h
+#endif  // ContextMenu_h

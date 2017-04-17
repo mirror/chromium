@@ -12,8 +12,8 @@
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_button.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_folder_target.h"
-#include "chrome/browser/ui/cocoa/cocoa_profile_test.h"
-#import "chrome/browser/ui/cocoa/cocoa_test_helper.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
+#import "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #import "chrome/browser/ui/cocoa/url_drop_target.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/bookmark_model.h"
@@ -35,7 +35,7 @@ const NSPoint kPoint = {10, 10};
 }  // namespace
 
 // Fake DraggingInfo, fake BookmarkBarController, fake NSPasteboard...
-@interface FakeBookmarkDraggingInfo : NSObject {
+@interface FakeBookmarkDraggingInfo : BookmarkBarController {
  @public
   BOOL dragButtonToPong_;
   BOOL dragButtonToShouldCopy_;
@@ -46,14 +46,14 @@ const NSPoint kPoint = {10, 10};
   // Only mock one type of drag data at a time.
   NSString* dragDataType_;
   BookmarkButton* button_;  // weak
-  BookmarkModel* bookmarkModel_;  // weak
+  BookmarkModel* stubbedBookmarkModel_;  // weak
   id draggingSource_;
 }
 @property (nonatomic) BOOL dropIndicatorShown;
 @property (nonatomic) BOOL draggingEnteredCalled;
 @property (nonatomic, copy) NSString* dragDataType;
 @property (nonatomic, assign) BookmarkButton* button;
-@property (nonatomic, assign) BookmarkModel* bookmarkModel;
+
 @end
 
 @implementation FakeBookmarkDraggingInfo
@@ -62,7 +62,6 @@ const NSPoint kPoint = {10, 10};
 @synthesize draggingEnteredCalled = draggingEnteredCalled_;
 @synthesize dragDataType = dragDataType_;
 @synthesize button = button_;
-@synthesize bookmarkModel = bookmarkModel_;
 
 - (id)init {
   if ((self = [super init])) {
@@ -130,6 +129,18 @@ const NSPoint kPoint = {10, 10};
 }
 
 // Fake a controller for callback ponging
+
+- (void)viewDidLoad {
+  // no-op
+}
+
+- (void)setBookmarkModel:(BookmarkModel*)model {
+  stubbedBookmarkModel_ = model;
+}
+
+- (BookmarkModel*)bookmarkModel {
+  return stubbedBookmarkModel_;
+}
 
 - (BOOL)dragButton:(BookmarkButton*)button to:(NSPoint)point copy:(BOOL)copy {
   dragButtonToPong_ = YES;
@@ -223,7 +234,7 @@ TEST_F(BookmarkBarViewTest, BookmarkButtonDragAndDrop) {
   [info reset];
 
   BookmarkModel* bookmark_model =
-      BookmarkModelFactory::GetForProfile(profile());
+      BookmarkModelFactory::GetForBrowserContext(profile());
   const BookmarkNode* node =
       bookmark_model->AddURL(bookmark_model->bookmark_bar_node(),
                              0,
@@ -264,7 +275,7 @@ TEST_F(BookmarkBarViewTest, BookmarkButtonDragAndDropAcrossProfiles) {
   other_profile->CreateBookmarkModel(true);
 
   BookmarkModel* bookmark_model =
-      BookmarkModelFactory::GetForProfile(profile());
+      BookmarkModelFactory::GetForBrowserContext(profile());
   bookmarks::test::WaitForBookmarkModelToLoad(bookmark_model);
 
   const BookmarkNode* node =
@@ -285,7 +296,8 @@ TEST_F(BookmarkBarViewTest, BookmarkButtonDragAndDropAcrossProfiles) {
   [info setDragDataType:ui::ClipboardUtil::UTIForPasteboardType(
                             kBookmarkButtonDragType)];
   [info setButton:dragged_button.get()];
-  [info setBookmarkModel:BookmarkModelFactory::GetForProfile(other_profile)];
+  [info setBookmarkModel:BookmarkModelFactory::GetForBrowserContext(
+                             other_profile)];
   EXPECT_EQ([view_ draggingEntered:(id)info.get()], NSDragOperationMove);
   EXPECT_TRUE([view_ performDragOperation:(id)info.get()]);
   EXPECT_TRUE([info dragButtonToPong]);

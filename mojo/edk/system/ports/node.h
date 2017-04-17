@@ -44,10 +44,16 @@ struct PortStatus {
   bool peer_closed;
 };
 
+class MessageFilter;
 class NodeDelegate;
 
 class Node {
  public:
+  enum class ShutdownPolicy {
+    DONT_ALLOW_LOCAL_PORTS,
+    ALLOW_LOCAL_PORTS,
+  };
+
   // Does not take ownership of the delegate.
   Node(const NodeName& name, NodeDelegate* delegate);
   ~Node();
@@ -59,9 +65,11 @@ class Node {
   // method may be called again after AcceptMessage to check if the Node is now
   // ready to be destroyed.
   //
-  // If |allow_local_ports| is |true|, this will only return |false| when there
-  // are transient ports referring to other nodes.
-  bool CanShutdownCleanly(bool allow_local_ports);
+  // If |policy| is set to |ShutdownPolicy::ALLOW_LOCAL_PORTS|, this will return
+  // |true| even if some ports remain alive, as long as none of them are proxies
+  // to another node.
+  bool CanShutdownCleanly(
+      ShutdownPolicy policy = ShutdownPolicy::DONT_ALLOW_LOCAL_PORTS);
 
   // Lookup the named port.
   int GetPort(const PortName& port_name, PortRef* port_ref);
@@ -82,8 +90,7 @@ class Node {
   int CreatePortPair(PortRef* port0_ref, PortRef* port1_ref);
 
   // User data associated with the port.
-  int SetUserData(const PortRef& port_ref,
-                  const scoped_refptr<UserData>& user_data);
+  int SetUserData(const PortRef& port_ref, scoped_refptr<UserData> user_data);
   int GetUserData(const PortRef& port_ref,
                   scoped_refptr<UserData>* user_data);
 
@@ -100,15 +107,15 @@ class Node {
   // indicate that this port's peer has closed. In such cases GetMessage may
   // be called until it yields a null message, indicating that no more messages
   // may be read from the port.
-  int GetMessage(const PortRef& port_ref, ScopedMessage* message);
-
-  // Like GetMessage, but the caller may optionally supply a selector function
-  // that decides whether or not to return the message. If |selector| is a
-  // nullptr, then GetMessageIf acts just like GetMessage. The |selector| may
-  // not call any Node methods.
-  int GetMessageIf(const PortRef& port_ref,
-                   std::function<bool(const Message&)> selector,
-                   ScopedMessage* message);
+  //
+  // If |filter| is non-null, the next available message is returned only if it
+  // is matched by the filter. If the provided filter does not match the next
+  // available message, GetMessage() behaves as if there is no message
+  // available. Ownership of |filter| is not taken, and it must outlive the
+  // extent of this call.
+  int GetMessage(const PortRef& port_ref,
+                 ScopedMessage* message,
+                 MessageFilter* filter);
 
   // Sends a message from the specified port to its peer. Note that the message
   // notification may arrive synchronously (via PortStatusChanged() on the
@@ -156,8 +163,7 @@ class Node {
   int OnObserveClosure(const PortName& port_name, uint64_t last_sequence_num);
   int OnMergePort(const PortName& port_name, const MergePortEventData& event);
 
-  int AddPortWithName(const PortName& port_name,
-                      const scoped_refptr<Port>& port);
+  int AddPortWithName(const PortName& port_name, scoped_refptr<Port> port);
   void ErasePort(const PortName& port_name);
   void ErasePort_Locked(const PortName& port_name);
   scoped_refptr<Port> GetPort(const PortName& port_name);

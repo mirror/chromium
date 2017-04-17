@@ -22,6 +22,7 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
                           ResourceProvider* resource_provider,
                           bool use_distance_field_text,
                           int gpu_rasterization_msaa_sample_count,
+                          ResourceFormat preferred_tile_format,
                           bool async_worker_context_enabled);
   ~GpuRasterBufferProvider() override;
 
@@ -35,6 +36,11 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
   ResourceFormat GetResourceFormat(bool must_support_alpha) const override;
   bool IsResourceSwizzleRequired(bool must_support_alpha) const override;
   bool CanPartialRasterIntoProvidedResource() const override;
+  bool IsResourceReadyToDraw(ResourceId id) const override;
+  uint64_t SetReadyToDrawCallback(
+      const ResourceProvider::ResourceIdArray& resource_ids,
+      const base::Closure& callback,
+      uint64_t pending_callback_id) const override;
   void Shutdown() override;
 
   void PlaybackOnWorkerThread(
@@ -45,7 +51,7 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
       const gfx::Rect& raster_full_rect,
       const gfx::Rect& raster_dirty_rect,
       uint64_t new_content_id,
-      float scale,
+      const gfx::AxisTransform2d& transform,
       const RasterSource::PlaybackSettings& playback_settings);
 
  private:
@@ -64,7 +70,7 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
         const gfx::Rect& raster_full_rect,
         const gfx::Rect& raster_dirty_rect,
         uint64_t new_content_id,
-        float scale,
+        const gfx::AxisTransform2d& transform,
         const RasterSource::PlaybackSettings& playback_settings) override;
 
     void set_sync_token(const gpu::SyncToken& sync_token) {
@@ -86,6 +92,7 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
   ResourceProvider* const resource_provider_;
   const bool use_distance_field_text_;
   const int msaa_sample_count_;
+  const ResourceFormat preferred_tile_format_;
   const bool async_worker_context_enabled_;
 
   std::set<RasterBufferImpl*> pending_raster_buffers_;

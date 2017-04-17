@@ -1,8 +1,31 @@
 var initialize_BreakpointManagerTest = function() {
 
-InspectorTest.uiSourceCodes = {};
+InspectorTest.createWorkspace = function()
+{
+    InspectorTest.testTargetManager = new SDK.TargetManager();
+    InspectorTest.testWorkspace = new Workspace.Workspace();
+    InspectorTest.testNetworkProjectManager = new Bindings.NetworkProjectManager(InspectorTest.testTargetManager, InspectorTest.testWorkspace);
+    InspectorTest.testDebuggerWorkspaceBinding = new Bindings.DebuggerWorkspaceBinding(InspectorTest.testTargetManager, InspectorTest.testWorkspace);
+}
 
-InspectorTest.dumpTargetIds = false;
+InspectorTest.createMockTarget = function(id)
+{
+    var capabilities = SDK.Target.Capability.AllForTests;
+    var target = InspectorTest.testTargetManager.createTarget("mock-target-id-" + id, "mock-target-" + id, capabilities & (~SDK.Target.Capability.JS), (params) => new SDK.StubConnection(params), null);
+    InspectorTest.testNetworkProject = Bindings.NetworkProject.forTarget(target);
+    target._capabilitiesMask = capabilities;
+    target._inspectedURL = InspectorTest.mainTarget.inspectedURL();
+    target.resourceTreeModel = target.model(SDK.ResourceTreeModel);
+    target.resourceTreeModel._cachedResourcesProcessed = true;
+    target.resourceTreeModel._frameAttached("42", 0);
+    target.runtimeModel = /** @type {!SDK.RuntimeModel} */ (target.model(SDK.RuntimeModel));
+    target.debuggerModel = new InspectorTest.DebuggerModelMock(target);
+    target._modelByConstructor.set(SDK.DebuggerModel, target.debuggerModel);
+    InspectorTest.testTargetManager.modelAdded(target, SDK.DebuggerModel, target.debuggerModel);
+    return target;
+}
+
+InspectorTest.uiSourceCodes = {};
 
 InspectorTest.initializeDefaultMappingOnTarget = function(target)
 {
@@ -14,10 +37,9 @@ InspectorTest.initializeDefaultMappingOnTarget = function(target)
 
         uiLocationToRawLocation: function(uiSourceCode, lineNumber)
         {
-            var networkURL = InspectorTest.testNetworkMapping.networkURL(uiSourceCode);
-            if (!InspectorTest.uiSourceCodes[networkURL])
+            if (!InspectorTest.uiSourceCodes[uiSourceCode.url()])
                 return null;
-            return new WebInspector.DebuggerModel.Location(target.debuggerModel, networkURL, lineNumber, 0);
+            return new SDK.DebuggerModel.Location(target.debuggerModel, uiSourceCode.url(), lineNumber, 0);
         },
 
         isIdentity: function()
@@ -28,62 +50,62 @@ InspectorTest.initializeDefaultMappingOnTarget = function(target)
     target.defaultMapping = defaultMapping;
 }
 
-InspectorTest.dumpTarget = function(targetAware)
-{
-    return InspectorTest.dumpTargetIds ?  "target " + targetAware.target().id() + " " : "";
-}
+InspectorTest.DebuggerModelMock = class extends SDK.SDKModel {
+    sourceMapManager() {
+        return this._sourceMapManager;
+    }
 
-InspectorTest.DebuggerModelMock = function(target)
-{
-    WebInspector.SDKModel.call(this, WebInspector.DebuggerModel, target);
-    this._breakpointResolvedEventTarget = new WebInspector.Object();
-    this._scripts = {};
-    this._breakpoints = {};
-    this._debuggerWorkspaceBinding = InspectorTest.testDebuggerWorkspaceBinding;
-}
+    constructor(target)
+    {
+        super(target);
+        this._sourceMapManager = new SDK.SourceMapManager();
+        this._target = target;
+        this._breakpointResolvedEventTarget = new Common.Object();
+        this._scripts = {};
+        this._breakpoints = {};
+        this._debuggerWorkspaceBinding = InspectorTest.testDebuggerWorkspaceBinding;
+    }
 
-InspectorTest.DebuggerModelMock.prototype = {
-    target: function()
+    target()
     {
         return this._target;
-    },
+    }
 
-    _targetDisposed: function() { },
+    runtimeModel()
+    {
+        return this._target.runtimeModel;
+    }
 
-    debuggerEnabled: function()
+    setBeforePausedCallback(callback) { }
+
+    debuggerEnabled()
     {
         return true;
-    },
+    }
 
-    scriptsForSourceURL: function(url)
+    scriptsForSourceURL(url)
     {
         var script = this._scriptForURL(url);
         return script ? [script] : [];
-    },
+    }
 
-    _addScript: function(scriptId, url)
+    _addScript(scriptId, url)
     {
-        var script = new WebInspector.Script(this, scriptId, url);
+        var script = new SDK.Script(this, scriptId, url);
         this._scripts[scriptId] = script;
-        this._debuggerWorkspaceBinding._targetToData.get(this._target)._parsedScriptSource({data: script});
-    },
+        this._debuggerWorkspaceBinding._debuggerModelToData.get(this)._parsedScriptSource({data: script});
+    }
 
-    _registerScript: function(script)
-    {
-        this._scripts[script.scriptId] = script;
-        this._debuggerWorkspaceBinding._targetToData.get(this._target)._parsedScriptSource({data: script});
-    },
-
-    _scriptForURL: function(url)
+    _scriptForURL(url)
     {
         for (var scriptId in this._scripts) {
             var script = this._scripts[scriptId];
             if (script.sourceURL === url)
                 return script;
         }
-    },
+    }
 
-    _scheduleSetBeakpointCallback: function(callback, breakpointId, locations)
+    _scheduleSetBeakpointCallback(callback, breakpointId, locations)
     {
         setTimeout(innerCallback.bind(this), 0);
 
@@ -97,16 +119,16 @@ InspectorTest.DebuggerModelMock.prototype = {
                 savedCallback();
             }
         }
-    },
+    }
 
-    createRawLocation: function(script, line, column)
+    createRawLocation(script, line, column)
     {
-        return new WebInspector.DebuggerModel.Location(this, script.scriptId, line, column);
-    },
+        return new SDK.DebuggerModel.Location(this, script.scriptId, line, column);
+    }
 
-    setBreakpointByURL: function(url, lineNumber, columnNumber, condition, callback)
+    setBreakpointByURL(url, lineNumber, columnNumber, condition, callback)
     {
-        InspectorTest.addResult("    " + InspectorTest.dumpTarget(this) + "debuggerModel.setBreakpoint(" + [url, lineNumber, condition].join(":") + ")");
+        InspectorTest.addResult("    debuggerModel.setBreakpoint(" + [url, lineNumber, condition].join(":") + ")");
 
         var breakpointId = url + ":" + lineNumber;
         if (this._breakpoints[breakpointId]) {
@@ -120,7 +142,7 @@ InspectorTest.DebuggerModelMock.prototype = {
             return;
         }
         if (lineNumber >= 1000) {
-            var shiftedLocation = new WebInspector.DebuggerModel.Location(this, url, lineNumber + 10, columnNumber);
+            var shiftedLocation = new SDK.DebuggerModel.Location(this, url, lineNumber + 10, columnNumber);
             this._scheduleSetBeakpointCallback(callback, breakpointId, [shiftedLocation]);
             return;
         }
@@ -128,75 +150,73 @@ InspectorTest.DebuggerModelMock.prototype = {
         var locations = [];
         var script = this._scriptForURL(url);
         if (script) {
-            var location = new WebInspector.DebuggerModel.Location(this, script.scriptId, lineNumber, 0);
+            var location = new SDK.DebuggerModel.Location(this, script.scriptId, lineNumber, 0);
             locations.push(location);
         }
 
         this._scheduleSetBeakpointCallback(callback, breakpointId, locations);
-    },
+    }
 
-    removeBreakpoint: function(breakpointId, callback)
+    removeBreakpoint(breakpointId, callback)
     {
-        InspectorTest.addResult("    " + InspectorTest.dumpTarget(this) + "debuggerModel.removeBreakpoint(" + breakpointId + ")");
+        InspectorTest.addResult("    debuggerModel.removeBreakpoint(" + breakpointId + ")");
         delete this._breakpoints[breakpointId];
         if (callback)
             setTimeout(callback, 0);
-    },
+    }
 
-    setBreakpointsActive: function() { },
+    setBreakpointsActive() { }
 
-    scriptForId: function(scriptId)
+    scriptForId(scriptId)
     {
         return this._scripts[scriptId];
-    },
+    }
 
-    reset: function()
+    reset()
     {
         InspectorTest.addResult("  Resetting debugger.");
         this._scripts = {};
-        this._debuggerWorkspaceBinding._reset(this._target);
-    },
+        this._debuggerWorkspaceBinding._reset(this);
+    }
 
-    pushSourceMapping: function(sourceMapping)
+    pushSourceMapping(sourceMapping)
     {
         for (var scriptId in this._scripts)
             this._debuggerWorkspaceBinding.pushSourceMapping(this._scripts[scriptId], sourceMapping);
-    },
+    }
 
-    disableSourceMapping: function(sourceMapping)
+    disableSourceMapping(sourceMapping)
     {
         sourceMapping._disabled = true;
         for (var scriptId in this._scripts)
             this._debuggerWorkspaceBinding.updateLocations(this._scripts[scriptId]);
-    },
+    }
 
-    addBreakpointListener: function(breakpointId, listener, thisObject)
+    addBreakpointListener(breakpointId, listener, thisObject)
     {
         this._breakpointResolvedEventTarget.addEventListener(breakpointId, listener, thisObject)
-    },
+    }
 
-    removeBreakpointListener: function(breakpointId, listener, thisObject)
+    removeBreakpointListener(breakpointId, listener, thisObject)
     {
         this._breakpointResolvedEventTarget.removeEventListener(breakpointId, listener, thisObject);
-    },
+    }
 
-    _breakpointResolved: function(breakpointId, location)
+    _breakpointResolved(breakpointId, location)
     {
         this._breakpointResolvedEventTarget.dispatchEventToListeners(breakpointId, location);
-    },
-
-    __proto__: WebInspector.Object.prototype
-}
+    }
+};
 
 InspectorTest.setupLiveLocationSniffers = function()
 {
-    InspectorTest.addSniffer(WebInspector.DebuggerWorkspaceBinding.prototype, "createLiveLocation", function(rawLocation)
+    InspectorTest.addSniffer(Bindings.DebuggerWorkspaceBinding.prototype, "createLiveLocation", function(rawLocation)
     {
-        InspectorTest.addResult("    Location created: " + InspectorTest.dumpTarget(rawLocation) + rawLocation.scriptId + ":" + rawLocation.lineNumber);
+        InspectorTest.addResult("    Location created: " + rawLocation.scriptId + ":" + rawLocation.lineNumber);
     }, true);
-    InspectorTest.addSniffer(WebInspector.DebuggerWorkspaceBinding.Location.prototype, "dispose", function()
+    InspectorTest.addSniffer(Bindings.DebuggerWorkspaceBinding.Location.prototype, "dispose", function()
     {
-        InspectorTest.addResult("    Location disposed: " + InspectorTest.dumpTarget(this._rawLocation) + this._rawLocation.scriptId + ":" + this._rawLocation.lineNumber);
+        InspectorTest.addResult("    Location disposed: " + this._rawLocation.scriptId + ":" + this._rawLocation.lineNumber);
     }, true);
 }
 
@@ -204,12 +224,11 @@ InspectorTest.addScript = function(target, breakpointManager, url)
 {
     target.debuggerModel._addScript(url, url);
     InspectorTest.addResult("  Adding script: " + url);
-    var uiSourceCodes = breakpointManager._workspace.uiSourceCodesForProjectType(WebInspector.projectTypes.Debugger);
+    var uiSourceCodes = breakpointManager._workspace.uiSourceCodesForProjectType(Workspace.projectTypes.Debugger);
     for (var i = 0; i < uiSourceCodes.length; ++i) {
         var uiSourceCode = uiSourceCodes[i];
-        var networkURL = InspectorTest.testNetworkMapping.networkURL(uiSourceCode);
-        if (networkURL === url) {
-            breakpointManager._debuggerWorkspaceBinding.setSourceMapping(target, uiSourceCode, breakpointManager.defaultMapping);
+        if (uiSourceCode.url() === url) {
+            breakpointManager._debuggerWorkspaceBinding.setSourceMapping(target.debuggerModel, uiSourceCode, breakpointManager.defaultMapping);
             InspectorTest.uiSourceCodes[url] = uiSourceCode;
             return uiSourceCode;
         }
@@ -221,12 +240,20 @@ InspectorTest.addUISourceCode = function(target, breakpointManager, url, doNotSe
     if (!doNotAddScript)
         InspectorTest.addScript(target, breakpointManager, url);
     InspectorTest.addResult("  Adding UISourceCode: " + url);
-    var contentProvider = WebInspector.StaticContentProvider.fromString(url, WebInspector.resourceTypes.Script, "");
-    var binding = breakpointManager._debuggerWorkspaceBinding;
-    var uiSourceCode = InspectorTest.testNetworkProject.addFile(contentProvider, null);
+
+    // Add resource to get UISourceCode.
+    var uiSourceCode = InspectorTest.testWorkspace.uiSourceCodeForURL(url);
+    if (uiSourceCode)
+        uiSourceCode.project().removeFile(url);
+    var resource = new SDK.Resource(target, null, url, url, '', '', Common.resourceTypes.Document, 'text/html', null, null);
+    InspectorTest.testNetworkProject._addResource(resource);
+    uiSourceCode = InspectorTest.testWorkspace.uiSourceCodeForURL(url);
+
+    //var contentProvider = Common.StaticContentProvider.fromString(url, Common.resourceTypes.Script, "");
+    //var uiSourceCode = InspectorTest.testNetworkProject.addFile(contentProvider, null);
     InspectorTest.uiSourceCodes[url] = uiSourceCode;
     if (!doNotSetSourceMapping) {
-        breakpointManager._debuggerWorkspaceBinding.setSourceMapping(target, uiSourceCode, breakpointManager.defaultMapping);
+        breakpointManager._debuggerWorkspaceBinding.setSourceMapping(target.debuggerModel, uiSourceCode, breakpointManager.defaultMapping);
         breakpointManager._debuggerWorkspaceBinding.updateLocations(target.debuggerModel.scriptForId(url));
     }
     return uiSourceCode;
@@ -235,8 +262,8 @@ InspectorTest.addUISourceCode = function(target, breakpointManager, url, doNotSe
 InspectorTest.createBreakpointManager = function(targetManager, debuggerWorkspaceBinding, persistentBreakpoints)
 {
     InspectorTest._pendingBreakpointUpdates = 0;
-    InspectorTest.addSniffer(WebInspector.BreakpointManager.TargetBreakpoint.prototype, "_updateInDebugger", updateInDebugger, true);
-    InspectorTest.addSniffer(WebInspector.BreakpointManager.TargetBreakpoint.prototype, "_didUpdateInDebugger", didUpdateInDebugger, true);
+    InspectorTest.addSniffer(Bindings.BreakpointManager.ModelBreakpoint.prototype, "_updateInDebugger", updateInDebugger, true);
+    InspectorTest.addSniffer(Bindings.BreakpointManager.ModelBreakpoint.prototype, "_didUpdateInDebugger", didUpdateInDebugger, true);
 
     function updateInDebugger()
     {
@@ -275,10 +302,10 @@ InspectorTest.createBreakpointManager = function(targetManager, debuggerWorkspac
             mappingForManager = targets[i].defaultMapping;
     }
 
-    var breakpointManager = new WebInspector.BreakpointManager(setting, debuggerWorkspaceBinding._workspace, debuggerWorkspaceBinding._networkMapping, targetManager, debuggerWorkspaceBinding);
+    var breakpointManager = new Bindings.BreakpointManager(setting, debuggerWorkspaceBinding._workspace, targetManager, debuggerWorkspaceBinding);
     breakpointManager.defaultMapping = mappingForManager;
-    breakpointManager.addEventListener(WebInspector.BreakpointManager.Events.BreakpointAdded, breakpointAdded);
-    breakpointManager.addEventListener(WebInspector.BreakpointManager.Events.BreakpointRemoved, breakpointRemoved);
+    breakpointManager.addEventListener(Bindings.BreakpointManager.Events.BreakpointAdded, breakpointAdded);
+    breakpointManager.addEventListener(Bindings.BreakpointManager.Events.BreakpointRemoved, breakpointRemoved);
     InspectorTest.addResult("  Created breakpoints manager");
     InspectorTest.dumpBreakpointStorage(breakpointManager);
     return breakpointManager;
@@ -303,7 +330,7 @@ InspectorTest.dumpBreakpointStorage = function(breakpointManager)
     var breakpoints = breakpointManager._storage._setting.get();
     InspectorTest.addResult("  Dumping Storage");
     for (var i = 0; i < breakpoints.length; ++i)
-        InspectorTest.addResult("    " + breakpoints[i].sourceFileId + ":" + breakpoints[i].lineNumber  + " enabled:" + breakpoints[i].enabled + " condition:" + breakpoints[i].condition);
+        InspectorTest.addResult("    " + breakpoints[i].url + ":" + breakpoints[i].lineNumber  + " enabled:" + breakpoints[i].enabled + " condition:" + breakpoints[i].condition);
 }
 
 InspectorTest.dumpBreakpointLocations = function(breakpointManager)
@@ -318,8 +345,7 @@ InspectorTest.dumpBreakpointLocations = function(breakpointManager)
         locations.sort(function(a, b) {
             return a.lineNumber - b.lineNumber;
         });
-        var networkURL = InspectorTest.testNetworkMapping.networkURL(uiSourceCode);
-        InspectorTest.addResult("    UISourceCode (url='" + networkURL + "', uri='" + uiSourceCode.url() + "')");
+        InspectorTest.addResult("    UISourceCode (url='" + uiSourceCode.url() + "', uri='" + uiSourceCode.url() + "')");
         for (var i = 0; i < locations.length; ++i)
             InspectorTest.addResult("      Location: (" + locations[i].lineNumber + ", " + locations[i].columnNumber + ")");
     }

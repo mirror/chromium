@@ -19,6 +19,20 @@ class PickleIterator;
 
 namespace autofill {
 
+// The flags describing form field properties.
+enum FieldPropertiesFlags {
+  NO_FLAGS = 0u,
+  USER_TYPED = 1u << 0,
+  AUTOFILLED = 1u << 1,
+  HAD_FOCUS = 1u << 2,
+  // Use this flag, if some error occurred in flags processing.
+  ERROR_OCCURRED = 1u << 3
+};
+
+// FieldPropertiesMask is used to contain combinations of FieldPropertiesFlags
+// values.
+typedef uint32_t FieldPropertiesMask;
+
 // Stores information about a field in a form.
 struct FormFieldData {
   // Copied to components/autofill/ios/browser/resources/autofill_controller.js.
@@ -55,6 +69,7 @@ struct FormFieldData {
   // serializing functions (in the .cc file) and the constructor.
   base::string16 label;
   base::string16 name;
+  base::string16 id;
   base::string16 value;
   std::string form_control_type;
   std::string autocomplete_attribute;
@@ -71,6 +86,7 @@ struct FormFieldData {
   bool should_autocomplete;
   RoleAttribute role;
   base::i18n::TextDirection text_direction;
+  FieldPropertiesMask properties_mask;
 
   // For the HTML snippet |<option value="US">United States</option>|, the
   // value is "US" and the contents are "United States".
@@ -88,12 +104,6 @@ bool DeserializeFormFieldData(base::PickleIterator* pickle_iterator,
 // So we can compare FormFieldDatas with EXPECT_EQ().
 std::ostream& operator<<(std::ostream& os, const FormFieldData& field);
 
-bool IsCheckable(const FormFieldData::CheckStatus& check_status);
-bool IsChecked(const FormFieldData::CheckStatus& check_status);
-void SetCheckStatus(FormFieldData* form_field_data,
-                    bool isCheckable,
-                    bool isChecked);
-
 // Prefer to use this macro in place of |EXPECT_EQ()| for comparing
 // |FormFieldData|s in test code.
 #define EXPECT_FORM_FIELD_DATA_EQUALS(expected, actual)                        \
@@ -108,6 +118,8 @@ void SetCheckStatus(FormFieldData* form_field_data,
     EXPECT_EQ(expected.css_classes, actual.css_classes);                       \
     EXPECT_EQ(expected.is_autofilled, actual.is_autofilled);                   \
     EXPECT_EQ(expected.check_status, actual.check_status);                     \
+    EXPECT_EQ(expected.properties_mask, actual.properties_mask);               \
+    EXPECT_EQ(expected.id, actual.id);                                         \
   } while (0)
 
 }  // namespace autofill

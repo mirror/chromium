@@ -21,31 +21,33 @@
 
 namespace blink {
 
-CSSValueList* createBorderImageValue(CSSValue* image, CSSValue* imageSlice,
-    CSSValue* borderSlice, CSSValue* outset, CSSValue* repeat)
-{
-    CSSValueList* list = CSSValueList::createSpaceSeparated();
-    if (image)
-        list->append(*image);
+CSSValueList* CreateBorderImageValue(CSSValue* image,
+                                     CSSValue* image_slice,
+                                     CSSValue* border_slice,
+                                     CSSValue* outset,
+                                     CSSValue* repeat) {
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  if (image)
+    list->Append(*image);
 
-    if (borderSlice || outset) {
-        CSSValueList* listSlash = CSSValueList::createSlashSeparated();
-        if (imageSlice)
-            listSlash->append(*imageSlice);
+  if (border_slice || outset) {
+    CSSValueList* list_slash = CSSValueList::CreateSlashSeparated();
+    if (image_slice)
+      list_slash->Append(*image_slice);
 
-        if (borderSlice)
-            listSlash->append(*borderSlice);
+    if (border_slice)
+      list_slash->Append(*border_slice);
 
-        if (outset)
-            listSlash->append(*outset);
+    if (outset)
+      list_slash->Append(*outset);
 
-        list->append(*listSlash);
-    } else if (imageSlice) {
-        list->append(*imageSlice);
-    }
-    if (repeat)
-        list->append(*repeat);
-    return list;
+    list->Append(*list_slash);
+  } else if (image_slice) {
+    list->Append(*image_slice);
+  }
+  if (repeat)
+    list->Append(*repeat);
+  return list;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -28,7 +28,7 @@
 
 #include "core/CoreExport.h"
 #include "core/html/parser/HTMLParserOptions.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -37,62 +37,39 @@ class HTMLTokenizer;
 class HTMLTreeBuilder;
 
 class CORE_EXPORT HTMLTreeBuilderSimulator {
-    USING_FAST_MALLOC(HTMLTreeBuilderSimulator);
-private:
-    enum Namespace {
-        HTML,
-        SVG,
-        MathML
-    };
+  USING_FAST_MALLOC(HTMLTreeBuilderSimulator);
 
-    struct StateFlags {
-        unsigned ns : 2; // Namespace
-        unsigned isHTMLIntegrationPoint : 1;
+ private:
+  enum Namespace { HTML, SVG, kMathML };
 
-        bool operator==(const StateFlags& other) const
-        {
-            return ns == other.ns && isHTMLIntegrationPoint == other.isHTMLIntegrationPoint;
-        }
-    };
+ public:
+  enum SimulatedToken {
+    kScriptStart,
+    kScriptEnd,
+    kLink,
+    kStyleEnd,
+    kOtherToken
+  };
 
-public:
-    enum SimulatedToken {
-        ScriptStart,
-        ScriptEnd,
-        OtherToken
-    };
+  typedef Vector<Namespace, 1> State;
 
-    // The state of the tree builder simulator is an abbreviated stack
-    // of open elements that only contains entries for namespace
-    // changes, or elements which may change whether the current node
-    // is a HTML integration point.
-    typedef Vector<StateFlags, 1> State;
+  explicit HTMLTreeBuilderSimulator(const HTMLParserOptions&);
 
-    explicit HTMLTreeBuilderSimulator(const HTMLParserOptions&);
+  static State StateFor(HTMLTreeBuilder*);
 
-    static State stateFor(HTMLTreeBuilder*);
+  const State& GetState() const { return namespace_stack_; }
+  void SetState(const State& state) { namespace_stack_ = state; }
 
-    const State& state() const { return m_stack; }
-    void setState(const State& state) { m_stack = state; }
+  SimulatedToken Simulate(const CompactHTMLToken&, HTMLTokenizer*);
 
-    SimulatedToken simulate(const CompactHTMLToken&, HTMLTokenizer*);
+ private:
+  bool InForeignContent() const { return namespace_stack_.back() != HTML; }
 
-private:
-    bool inForeignContent() const { return currentNamespace() != HTML; }
-    Namespace currentNamespace() const { return static_cast<Namespace>(m_stack.last().ns); }
-    bool stackContainsNamespace(Namespace namespaceOfInterest) const
-    {
-        for (const auto& entry : m_stack) {
-            if (static_cast<Namespace>(entry.ns) == namespaceOfInterest)
-                return true;
-        }
-        return false;
-    }
-
-    HTMLParserOptions m_options;
-    State m_stack;
+  HTMLParserOptions options_;
+  State namespace_stack_;
+  bool in_select_insertion_mode_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

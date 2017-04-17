@@ -4,7 +4,8 @@
 
 #include "cc/layers/picture_image_layer.h"
 
-#include "cc/playback/display_item.h"
+#include "cc/animation/animation_host.h"
+#include "cc/paint/display_item.h"
 #include "cc/test/fake_layer_tree_host.h"
 #include "cc/test/skia_common.h"
 #include "cc/test/test_task_graph_runner.h"
@@ -21,8 +22,9 @@ TEST(PictureImageLayerTest, PaintContentsToDisplayList) {
   scoped_refptr<PictureImageLayer> layer = PictureImageLayer::Create();
   FakeLayerTreeHostClient client;
   TestTaskGraphRunner task_graph_runner;
-  std::unique_ptr<FakeLayerTreeHost> host =
-      FakeLayerTreeHost::Create(&client, &task_graph_runner);
+  auto animation_host = AnimationHost::CreateForTesting(ThreadInstance::MAIN);
+  std::unique_ptr<FakeLayerTreeHost> host = FakeLayerTreeHost::Create(
+      &client, &task_graph_runner, animation_host.get());
   layer->SetLayerTreeHost(host.get());
   gfx::Rect layer_rect(200, 200);
 
@@ -35,8 +37,8 @@ TEST(PictureImageLayerTest, PaintContentsToDisplayList) {
   image_canvas->clear(SK_ColorRED);
   SkPaint blue_paint;
   blue_paint.setColor(SK_ColorBLUE);
-  image_canvas->drawRectCoords(0.f, 0.f, 100.f, 100.f, blue_paint);
-  image_canvas->drawRectCoords(100.f, 100.f, 200.f, 200.f, blue_paint);
+  image_canvas->drawRect(SkRect::MakeWH(100, 100), blue_paint);
+  image_canvas->drawRect(SkRect::MakeLTRB(100, 100, 200, 200), blue_paint);
 
   layer->SetImage(image_surface->makeImageSnapshot());
   layer->SetBounds(gfx::Size(layer_rect.width(), layer_rect.height()));

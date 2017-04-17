@@ -27,32 +27,39 @@
 
 #include "core/style/BorderData.h"
 #include "platform/LengthBox.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
-class StyleSurroundData : public RefCounted<StyleSurroundData> {
-public:
-    static PassRefPtr<StyleSurroundData> create() { return adoptRef(new StyleSurroundData); }
-    PassRefPtr<StyleSurroundData> copy() const { return adoptRef(new StyleSurroundData(*this)); }
+// TODO(sashab): Move this into a private class on ComputedStyle, and remove
+// all methods on it, merging them into copy/creation methods on ComputedStyle
+// instead. Keep the allocation logic, only allocating a new object if needed.
+class CORE_EXPORT StyleSurroundData : public RefCounted<StyleSurroundData> {
+ public:
+  static PassRefPtr<StyleSurroundData> Create() {
+    return AdoptRef(new StyleSurroundData);
+  }
+  PassRefPtr<StyleSurroundData> Copy() const {
+    return AdoptRef(new StyleSurroundData(*this));
+  }
 
-    bool operator==(const StyleSurroundData&) const;
-    bool operator!=(const StyleSurroundData& o) const
-    {
-        return !(*this == o);
-    }
+  bool operator==(const StyleSurroundData&) const;
+  bool operator!=(const StyleSurroundData& o) const { return !(*this == o); }
 
-    LengthBox offset;
-    LengthBox margin;
-    LengthBox padding;
-    BorderData border;
+  Length left_;
+  Length right_;
+  Length top_;
+  Length bottom_;
+  LengthBox margin_;
+  LengthBox padding_;
+  BorderData border_;
 
-private:
-    StyleSurroundData();
-    StyleSurroundData(const StyleSurroundData&);
+ private:
+  StyleSurroundData();
+  StyleSurroundData(const StyleSurroundData&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleSurroundData_h
+#endif  // StyleSurroundData_h

@@ -22,8 +22,10 @@ InspectorTest.setUpTestSuite = function(next)
     {
         InspectorTest.containerText = text;
 
-        for (var key in WebInspector.DOMModel.Events) {
-            var eventName = WebInspector.DOMModel.Events[key];
+        for (var key in SDK.DOMModel.Events) {
+            var eventName = SDK.DOMModel.Events[key];
+            if (eventName === SDK.DOMModel.Events.MarkersChanged || eventName === SDK.DOMModel.Events.DOMMutated)
+                continue;
             InspectorTest.domModel.addEventListener(eventName, InspectorTest.recordEvent.bind(InspectorTest, eventName));
         }
 
@@ -33,7 +35,7 @@ InspectorTest.setUpTestSuite = function(next)
 
 InspectorTest.recordEvent = function(eventName, event)
 {
-    if (!event.data || event.type === WebInspector.DOMModel.Events.MarkersChanged || event.type === WebInspector.DOMModel.Events.DOMMutated)
+    if (!event.data)
         return;
     var node = event.data.node || event.data;
     var parent = event.data.parent;
@@ -41,7 +43,7 @@ InspectorTest.recordEvent = function(eventName, event)
         if (currentNode.getAttribute("id") === "output")
             return;
     }
-    InspectorTest.events.push("Event " + eventName + ": " + node.nodeName());
+    InspectorTest.events.push("Event " + eventName.toString() + ": " + node.nodeName());
 }
 
 InspectorTest.patchOuterHTML = function(pattern, replacement, next)

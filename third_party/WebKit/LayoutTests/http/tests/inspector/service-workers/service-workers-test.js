@@ -2,17 +2,17 @@ var initialize_ServiceWorkersTest = function() {
 
 InspectorTest.registerServiceWorker = function(script, scope)
 {
-    return InspectorTest.invokePageFunctionPromise("registerServiceWorker", [script, scope]);
+    return InspectorTest.callFunctionInPageAsync("registerServiceWorker", [ script, scope ]);
 }
 
 InspectorTest.unregisterServiceWorker = function(scope)
 {
-    return InspectorTest.invokePageFunctionPromise("unregisterServiceWorker", [scope]);
+    return InspectorTest.callFunctionInPageAsync("unregisterServiceWorker", [ scope ]);
 }
 
 InspectorTest.postToServiceWorker = function(scope, message)
 {
-    return InspectorTest.invokePageFunctionPromise("postToServiceWorker", [scope, message]);
+    return InspectorTest.evaluateInPagePromise("postToServiceWorker(\"" + scope + "\",\"" + message + "\")");
 }
 
 InspectorTest.waitForServiceWorker = function(callback)
@@ -22,7 +22,7 @@ InspectorTest.waitForServiceWorker = function(callback)
         return InspectorTest.isDedicatedWorker(target) && InspectorTest.isServiceWorker(target.parentTarget());
     }
 
-    WebInspector.targetManager.observeTargets({
+    SDK.targetManager.observeTargets({
         targetAdded: function(target)
         {
             if (isRightTarget(target) && callback) {
@@ -36,7 +36,7 @@ InspectorTest.waitForServiceWorker = function(callback)
 
 InspectorTest.dumpServiceWorkersView = function()
 {
-    var swView = WebInspector.panels.resources.visibleView;
+    var swView = UI.panels.resources.visibleView;
     return swView._reportView._sectionList.childTextNodes().map(function(node) { return node.textContent.replace(/Received.*/, "Received").replace(/#\d+/, "#N"); }).join("\n");
 }
 
@@ -52,30 +52,21 @@ InspectorTest.deleteServiceWorkerRegistration = function(scope)
 
 var registrations = {};
 
-function registerServiceWorker(resolve, reject, script, scope)
+function registerServiceWorker(script, scope)
 {
-    navigator.serviceWorker.register(script, {scope: scope})
-        .then(function(reg) {
-            registrations[scope] = reg;
-            resolve();
-        }, reject);
+    return navigator.serviceWorker.register(script, {scope: scope})
+        .then((reg) => registrations[scope] = reg);
 }
 
-function postToServiceWorker(resolve, reject, scope, message)
+function postToServiceWorker(scope, message)
 {
     registrations[scope].active.postMessage(message);
-    resolve();
 }
 
-function unregisterServiceWorker(resolve, reject, scope)
+function unregisterServiceWorker(scope)
 {
     var registration = registrations[scope];
-    if (!registration) {
-        reject("ServiceWorker for " + scope + " is not registered");
-        return;
-    }
-    registration.unregister().then(function() {
-            delete registrations[scope];
-            resolve();
-        }, reject);
+    if (!registration)
+        return Promise.reject("ServiceWorker for " + scope + " is not registered");
+    return registration.unregister().then(() => delete registrations[scope]);
 }

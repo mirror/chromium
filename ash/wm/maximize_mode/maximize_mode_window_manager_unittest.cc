@@ -2,42 +2,44 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/common/wm/maximize_mode/maximize_mode_window_manager.h"
+#include "ash/wm/maximize_mode/maximize_mode_window_manager.h"
 
 #include <string>
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
-#include "ash/common/wm/mru_window_tracker.h"
-#include "ash/common/wm/overview/window_selector_controller.h"
-#include "ash/common/wm/switchable_windows.h"
-#include "ash/common/wm/window_state.h"
-#include "ash/common/wm/wm_event.h"
-#include "ash/common/wm_shell.h"
+#include "ash/ash_switches.h"
+#include "ash/public/cpp/config.h"
 #include "ash/root_window_controller.h"
 #include "ash/screen_util.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/shell_test_api.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/overview/window_selector_controller.h"
+#include "ash/wm/switchable_windows.h"
 #include "ash/wm/window_properties.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
+#include "ash/wm/window_state_observer.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm/wm_event.h"
+#include "ash/wm_window.h"
+#include "base/command_line.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
+#include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/test/test_windows.h"
 #include "ui/aura/window.h"
 #include "ui/base/hit_test.h"
 #include "ui/events/test/event_generator.h"
+#include "ui/views/widget/widget.h"
 
 namespace ash {
-
-// TODO(skuhne): These tests are failing on Widows because maximized is there
-// differently handled. Fix this!
-#if !defined(OS_WIN)
 
 class MaximizeModeWindowManagerTest : public test::AshTestBase {
  public:
@@ -84,21 +86,21 @@ class MaximizeModeWindowManagerTest : public test::AshTestBase {
   // Create the Maximized mode window manager.
   MaximizeModeWindowManager* CreateMaximizeModeWindowManager() {
     EXPECT_FALSE(maximize_mode_window_manager());
-    WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+    Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
         true);
     return maximize_mode_window_manager();
   }
 
   // Destroy the maximized mode window manager.
   void DestroyMaximizeModeWindowManager() {
-    WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+    Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
         false);
     EXPECT_FALSE(maximize_mode_window_manager());
   }
 
   // Get the maximze window manager.
   MaximizeModeWindowManager* maximize_mode_window_manager() {
-    return WmShell::Get()
+    return Shell::Get()
         ->maximize_mode_controller()
         ->maximize_mode_window_manager_.get();
   }
@@ -132,9 +134,10 @@ class MaximizeModeWindowManagerTest : public test::AshTestBase {
     }
     aura::Window* window = aura::test::CreateTestWindowWithDelegateAndType(
         delegate, type, 0, bounds, NULL);
-    window->SetProperty(aura::client::kCanMaximizeKey, can_maximize);
-    if (!can_resize)
-      window->SetProperty(aura::client::kCanResizeKey, false);
+    int32_t behavior = ui::mojom::kResizeBehaviorNone;
+    behavior |= can_resize ? ui::mojom::kResizeBehaviorCanResize : 0;
+    behavior |= can_maximize ? ui::mojom::kResizeBehaviorCanMaximize : 0;
+    window->SetProperty(aura::client::kResizeBehaviorKey, behavior);
     aura::Window* container = Shell::GetContainer(
         Shell::GetPrimaryRootWindow(), wm::kSwitchableWindowContainerIds[0]);
     container->AddChild(window);
@@ -256,8 +259,8 @@ TEST_F(MaximizeModeWindowManagerTest, GoingToMaximizedWithModalDialogPresent) {
   EXPECT_EQ(rect3.ToString(), w3->bounds().ToString());
 
   // Enable system modal dialog, and make sure both shelves are still hidden.
-  WmShell::Get()->SimulateModalWindowOpenForTesting(true);
-  EXPECT_TRUE(WmShell::Get()->IsSystemModalWindowOpen());
+  ShellPort::Get()->SimulateModalWindowOpenForTesting(true);
+  EXPECT_TRUE(ShellPort::Get()->IsSystemModalWindowOpen());
 
   // Create the manager and make sure that all qualifying windows were detected
   // and changed.
@@ -768,8 +771,8 @@ TEST_F(MaximizeModeWindowManagerTest, ModeChangeKeepsMRUOrder) {
 
   // The windows should be in the reverse order of creation in the MRU list.
   {
-    aura::Window::Windows windows = WmWindowAura::ToAuraWindows(
-        WmShell::Get()->mru_window_tracker()->BuildMruWindowList());
+    aura::Window::Windows windows = WmWindow::ToAuraWindows(
+        Shell::Get()->mru_window_tracker()->BuildMruWindowList());
 
     EXPECT_EQ(w1.get(), windows[4]);
     EXPECT_EQ(w2.get(), windows[3]);
@@ -783,8 +786,8 @@ TEST_F(MaximizeModeWindowManagerTest, ModeChangeKeepsMRUOrder) {
   ASSERT_TRUE(manager);
   EXPECT_EQ(5, manager->GetNumberOfManagedWindows());
   {
-    aura::Window::Windows windows = WmWindowAura::ToAuraWindows(
-        WmShell::Get()->mru_window_tracker()->BuildMruWindowList());
+    aura::Window::Windows windows = WmWindow::ToAuraWindows(
+        Shell::Get()->mru_window_tracker()->BuildMruWindowList());
     // We do not test maximization here again since that was done already.
     EXPECT_EQ(w1.get(), windows[4]);
     EXPECT_EQ(w2.get(), windows[3]);
@@ -796,8 +799,8 @@ TEST_F(MaximizeModeWindowManagerTest, ModeChangeKeepsMRUOrder) {
   // Destroying should still keep the order.
   DestroyMaximizeModeWindowManager();
   {
-    aura::Window::Windows windows = WmWindowAura::ToAuraWindows(
-        WmShell::Get()->mru_window_tracker()->BuildMruWindowList());
+    aura::Window::Windows windows = WmWindow::ToAuraWindows(
+        Shell::Get()->mru_window_tracker()->BuildMruWindowList());
     // We do not test maximization here again since that was done already.
     EXPECT_EQ(w1.get(), windows[4]);
     EXPECT_EQ(w2.get(), windows[3]);
@@ -831,7 +834,7 @@ TEST_F(MaximizeModeWindowManagerTest, TestMinimize) {
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(window.get());
   EXPECT_EQ(rect.ToString(), window->bounds().ToString());
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       true);
   EXPECT_TRUE(window_state->IsMaximized());
   EXPECT_FALSE(window_state->IsMinimized());
@@ -847,7 +850,7 @@ TEST_F(MaximizeModeWindowManagerTest, TestMinimize) {
   EXPECT_FALSE(window_state->IsMinimized());
   EXPECT_TRUE(window->IsVisible());
 
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       false);
   EXPECT_FALSE(window_state->IsMaximized());
   EXPECT_FALSE(window_state->IsMinimized());
@@ -863,7 +866,7 @@ TEST_F(MaximizeModeWindowManagerTest, KeepFullScreenModeOn) {
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
 
-  Shelf* shelf = Shelf::ForPrimaryDisplay();
+  WmShelf* shelf = GetPrimaryShelf();
 
   // Allow the shelf to hide.
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
@@ -1058,7 +1061,7 @@ TEST_F(MaximizeModeWindowManagerTest, MinimizePreservedAfterLeavingFullscreen) {
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
 
-  Shelf* shelf = Shelf::ForPrimaryDisplay();
+  WmShelf* shelf = GetPrimaryShelf();
 
   // Allow the shelf to hide and enter full screen.
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
@@ -1085,7 +1088,7 @@ TEST_F(MaximizeModeWindowManagerTest, AllowFullScreenMode) {
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
 
-  Shelf* shelf = Shelf::ForPrimaryDisplay();
+  WmShelf* shelf = GetPrimaryShelf();
 
   // Allow the shelf to hide.
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
@@ -1233,7 +1236,7 @@ TEST_F(MaximizeModeWindowManagerTest, TryToDesktopSizeDragUnmaximizable) {
 
   // 2. Check that turning on the manager will stop allowing the window from
   // dragging.
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       true);
   gfx::Rect center_bounds(window->bounds());
   EXPECT_NE(rect.origin().ToString(), center_bounds.origin().ToString());
@@ -1245,7 +1248,7 @@ TEST_F(MaximizeModeWindowManagerTest, TryToDesktopSizeDragUnmaximizable) {
   generator.ReleaseLeftButton();
   EXPECT_EQ(center_bounds.x(), window->bounds().x());
   EXPECT_EQ(center_bounds.y(), window->bounds().y());
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       false);
 
   // 3. Releasing the mazimize manager again will restore the window to its
@@ -1273,14 +1276,14 @@ TEST_F(MaximizeModeWindowManagerTest, ExitsOverview) {
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect2));
 
   WindowSelectorController* window_selector_controller =
-      WmShell::Get()->window_selector_controller();
-  window_selector_controller->ToggleOverview();
+      Shell::Get()->window_selector_controller();
+  ASSERT_TRUE(window_selector_controller->ToggleOverview());
   ASSERT_TRUE(window_selector_controller->IsSelecting());
   MaximizeModeWindowManager* manager = CreateMaximizeModeWindowManager();
   ASSERT_TRUE(manager);
   EXPECT_FALSE(window_selector_controller->IsSelecting());
 
-  window_selector_controller->ToggleOverview();
+  ASSERT_TRUE(window_selector_controller->ToggleOverview());
   ASSERT_TRUE(window_selector_controller->IsSelecting());
   // Destroy the manager again and check that the windows return to their
   // previous state.
@@ -1290,6 +1293,10 @@ TEST_F(MaximizeModeWindowManagerTest, ExitsOverview) {
 
 // Test that an edge swipe from the top will end full screen mode.
 TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromTop) {
+  // TODO: investigate failure. http://crbug.com/698093.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
@@ -1330,6 +1337,10 @@ TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromTop) {
 
 // Test that an edge swipe from the bottom will end full screen mode.
 TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromBottom) {
+  // TODO: investigate failure. http://crbug.com/698093.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
@@ -1364,6 +1375,10 @@ TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromBottom) {
 
 // Test that an edge touch press at the top will end full screen mode.
 TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtTop) {
+  // TODO: investigate failure. http://crbug.com/698093.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
@@ -1400,6 +1415,10 @@ TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtTop) {
 
 // Test that an edge touch press at the bottom will end full screen mode.
 TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtBottom) {
+  // TODO: investigate failure. http://crbug.com/698093.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
@@ -1569,23 +1588,120 @@ TEST_F(MaximizeModeWindowManagerTest, AlwaysOnTopWindows) {
   EXPECT_TRUE(wm::GetWindowState(w2.get())->can_be_dragged());
 }
 
-// Tests that docked windows are not maximized, and not tracked.
-TEST_F(MaximizeModeWindowManagerTest, DontMaximizeDockedWindows) {
+// Tests that windows that can control maximized bounds are not maximized
+// and not tracked.
+TEST_F(MaximizeModeWindowManagerTest, DontMaximizeClientManagedWindows) {
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> window(
       CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
 
-  wm::WMEvent dock_event(wm::WM_EVENT_DOCK);
-  wm::GetWindowState(window.get())->OnWMEvent(&dock_event);
-  EXPECT_TRUE(wm::GetWindowState(window.get())->IsDocked());
-  EXPECT_FALSE(wm::GetWindowState(window.get())->IsMaximized());
+  wm::GetWindowState(window.get())->set_allow_set_bounds_direct(true);
 
   MaximizeModeWindowManager* manager = CreateMaximizeModeWindowManager();
-  EXPECT_TRUE(wm::GetWindowState(window.get())->IsDocked());
   EXPECT_FALSE(wm::GetWindowState(window.get())->IsMaximized());
   EXPECT_EQ(0, manager->GetNumberOfManagedWindows());
 }
 
-#endif  // OS_WIN
+namespace {
+
+class TestObserver : public wm::WindowStateObserver {
+ public:
+  TestObserver(){};
+  ~TestObserver() override{};
+
+  // wm::WindowStateObserver:
+  void OnPreWindowStateTypeChange(wm::WindowState* window_state,
+                                  wm::WindowStateType old_type) override {
+    pre_count_++;
+    last_old_state_ = old_type;
+  }
+
+  void OnPostWindowStateTypeChange(wm::WindowState* window_state,
+                                   wm::WindowStateType old_type) override {
+    post_count_++;
+    EXPECT_EQ(last_old_state_, old_type);
+  }
+
+  int GetPreCountAndReset() {
+    int r = pre_count_;
+    pre_count_ = 0;
+    return r;
+  }
+
+  int GetPostCountAndReset() {
+    int r = post_count_;
+    post_count_ = 0;
+    return r;
+  }
+
+  wm::WindowStateType GetLastOldStateAndReset() {
+    wm::WindowStateType r = last_old_state_;
+    last_old_state_ = wm::WINDOW_STATE_TYPE_DEFAULT;
+    return r;
+  }
+
+ private:
+  int pre_count_ = 0;
+  int post_count_ = 0;
+  wm::WindowStateType last_old_state_ = wm::WINDOW_STATE_TYPE_DEFAULT;
+
+  DISALLOW_COPY_AND_ASSIGN(TestObserver);
+};
+
+}  // namespace
+
+TEST_F(MaximizeModeWindowManagerTest, StateTyepChange) {
+  TestObserver observer;
+  gfx::Rect rect(10, 10, 200, 50);
+  std::unique_ptr<aura::Window> window(
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
+
+  CreateMaximizeModeWindowManager();
+
+  wm::WindowState* window_state = wm::GetWindowState(window.get());
+  window_state->AddObserver(&observer);
+
+  window->Show();
+  EXPECT_TRUE(window_state->IsMaximized());
+  EXPECT_EQ(0, observer.GetPreCountAndReset());
+  EXPECT_EQ(0, observer.GetPostCountAndReset());
+
+  // Window is already in maximized mode.
+  wm::WMEvent maximize_event(wm::WM_EVENT_MAXIMIZE);
+  window_state->OnWMEvent(&maximize_event);
+  EXPECT_EQ(0, observer.GetPreCountAndReset());
+  EXPECT_EQ(0, observer.GetPostCountAndReset());
+
+  wm::WMEvent fullscreen_event(wm::WM_EVENT_FULLSCREEN);
+  window_state->OnWMEvent(&fullscreen_event);
+  EXPECT_EQ(1, observer.GetPreCountAndReset());
+  EXPECT_EQ(1, observer.GetPostCountAndReset());
+  EXPECT_EQ(wm::WINDOW_STATE_TYPE_MAXIMIZED,
+            observer.GetLastOldStateAndReset());
+
+  window_state->OnWMEvent(&maximize_event);
+  EXPECT_EQ(1, observer.GetPreCountAndReset());
+  EXPECT_EQ(1, observer.GetPostCountAndReset());
+  EXPECT_EQ(wm::WINDOW_STATE_TYPE_FULLSCREEN,
+            observer.GetLastOldStateAndReset());
+
+  wm::WMEvent minimize_event(wm::WM_EVENT_MINIMIZE);
+  window_state->OnWMEvent(&minimize_event);
+  EXPECT_EQ(1, observer.GetPreCountAndReset());
+  EXPECT_EQ(1, observer.GetPostCountAndReset());
+  EXPECT_EQ(wm::WINDOW_STATE_TYPE_MAXIMIZED,
+            observer.GetLastOldStateAndReset());
+
+  wm::WMEvent restore_event(wm::WM_EVENT_NORMAL);
+  window_state->OnWMEvent(&restore_event);
+  EXPECT_EQ(1, observer.GetPreCountAndReset());
+  EXPECT_EQ(1, observer.GetPostCountAndReset());
+  EXPECT_EQ(wm::WINDOW_STATE_TYPE_MINIMIZED,
+            observer.GetLastOldStateAndReset());
+
+  window_state->RemoveObserver(&observer);
+
+  DestroyMaximizeModeWindowManager();
+}
 
 }  // namespace ash

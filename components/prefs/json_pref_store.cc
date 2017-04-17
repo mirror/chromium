@@ -22,6 +22,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/task_runner_util.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/time/default_clock.h"
 #include "base/values.h"
@@ -88,7 +89,7 @@ PersistentPrefStore::PrefReadError HandleReadErrors(
                            : PersistentPrefStore::PREF_READ_ERROR_JSON_PARSE;
     }
   }
-  if (!value->IsType(base::Value::TYPE_DICTIONARY))
+  if (!value->IsType(base::Value::Type::DICTIONARY))
     return PersistentPrefStore::PREF_READ_ERROR_JSON_TYPE;
   return PersistentPrefStore::PREF_READ_ERROR_NONE;
 }
@@ -110,13 +111,7 @@ void RecordJsonDataSizeHistogram(const base::FilePath& path, size_t size) {
 }
 
 std::unique_ptr<JsonPrefStore::ReadResult> ReadPrefsFromDisk(
-    const base::FilePath& path,
-    const base::FilePath& alternate_path) {
-  if (!base::PathExists(path) && !alternate_path.empty() &&
-      base::PathExists(alternate_path)) {
-    base::Move(alternate_path, path);
-  }
-
+    const base::FilePath& path) {
   int error_code;
   std::string error_msg;
   std::unique_ptr<JsonPrefStore::ReadResult> read_result(
@@ -150,18 +145,7 @@ JsonPrefStore::JsonPrefStore(
     const base::FilePath& pref_filename,
     const scoped_refptr<base::SequencedTaskRunner>& sequenced_task_runner,
     std::unique_ptr<PrefFilter> pref_filter)
-    : JsonPrefStore(pref_filename,
-                    base::FilePath(),
-                    sequenced_task_runner,
-                    std::move(pref_filter)) {}
-
-JsonPrefStore::JsonPrefStore(
-    const base::FilePath& pref_filename,
-    const base::FilePath& pref_alternate_filename,
-    const scoped_refptr<base::SequencedTaskRunner>& sequenced_task_runner,
-    std::unique_ptr<PrefFilter> pref_filter)
     : path_(pref_filename),
-      alternate_path_(pref_alternate_filename),
       sequenced_task_runner_(sequenced_task_runner),
       prefs_(new base::DictionaryValue()),
       read_only_(false),
@@ -171,6 +155,7 @@ JsonPrefStore::JsonPrefStore(
       filtering_in_progress_(false),
       pending_lossy_write_(false),
       read_error_(PREF_READ_ERROR_NONE),
+      has_pending_write_reply_(false),
       write_count_histogram_(writer_.commit_interval(), path_) {
   DCHECK(!path_.empty());
 }
@@ -186,6 +171,10 @@ bool JsonPrefStore::GetValue(const std::string& key,
   if (result)
     *result = tmp;
   return true;
+}
+
+std::unique_ptr<base::DictionaryValue> JsonPrefStore::GetValues() const {
+  return prefs_->CreateDeepCopy();
 }
 
 void JsonPrefStore::AddObserver(PrefStore::Observer* observer) {
@@ -277,7 +266,7 @@ PersistentPrefStore::PrefReadError JsonPrefStore::GetReadError() const {
 PersistentPrefStore::PrefReadError JsonPrefStore::ReadPrefs() {
   DCHECK(CalledOnValidThread());
 
-  OnFileRead(ReadPrefsFromDisk(path_, alternate_path_));
+  OnFileRead(ReadPrefsFromDisk(path_));
   return filtering_in_progress_ ? PREF_READ_ERROR_ASYNCHRONOUS_TASK_INCOMPLETE
                                 : read_error_;
 }
@@ -290,9 +279,8 @@ void JsonPrefStore::ReadPrefsAsync(ReadErrorDelegate* error_delegate) {
 
   // Weakly binds the read task so that it doesn't kick in during shutdown.
   base::PostTaskAndReplyWithResult(
-      sequenced_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&ReadPrefsFromDisk, path_, alternate_path_),
+      sequenced_task_runner_.get(), FROM_HERE,
+      base::Bind(&ReadPrefsFromDisk, path_),
       base::Bind(&JsonPrefStore::OnFileRead, AsWeakPtr()));
 }
 
@@ -318,16 +306,78 @@ void JsonPrefStore::ReportValueChanged(const std::string& key, uint32_t flags) {
   if (pref_filter_)
     pref_filter_->FilterUpdate(key);
 
-  FOR_EACH_OBSERVER(PrefStore::Observer, observers_, OnPrefValueChanged(key));
+  for (PrefStore::Observer& observer : observers_)
+    observer.OnPrefValueChanged(key);
 
   ScheduleWrite(flags);
 }
 
-void JsonPrefStore::RegisterOnNextSuccessfulWriteCallback(
-    const base::Closure& on_next_successful_write) {
+void JsonPrefStore::RunOrScheduleNextSuccessfulWriteCallback(
+    bool write_success) {
   DCHECK(CalledOnValidThread());
 
-  writer_.RegisterOnNextSuccessfulWriteCallback(on_next_successful_write);
+  has_pending_write_reply_ = false;
+  if (!on_next_successful_write_reply_.is_null()) {
+    base::Closure on_successful_write =
+        std::move(on_next_successful_write_reply_);
+    if (write_success) {
+      on_successful_write.Run();
+    } else {
+      RegisterOnNextSuccessfulWriteReply(on_successful_write);
+    }
+  }
+}
+
+// static
+void JsonPrefStore::PostWriteCallback(
+    const base::Callback<void(bool success)>& on_next_write_callback,
+    const base::Callback<void(bool success)>& on_next_write_reply,
+    scoped_refptr<base::SequencedTaskRunner> reply_task_runner,
+    bool write_success) {
+  if (!on_next_write_callback.is_null())
+    on_next_write_callback.Run(write_success);
+
+  // We can't run |on_next_write_reply| on the current thread. Bounce back to
+  // the |reply_task_runner| which is the correct sequenced thread.
+  reply_task_runner->PostTask(FROM_HERE,
+                              base::Bind(on_next_write_reply, write_success));
+}
+
+void JsonPrefStore::RegisterOnNextSuccessfulWriteReply(
+    const base::Closure& on_next_successful_write_reply) {
+  DCHECK(CalledOnValidThread());
+  DCHECK(on_next_successful_write_reply_.is_null());
+
+  on_next_successful_write_reply_ = on_next_successful_write_reply;
+
+  // If there are pending callbacks, avoid erasing them; the reply will be used
+  // as we set |on_next_successful_write_reply_|. Otherwise, setup a reply with
+  // an empty callback.
+  if (!has_pending_write_reply_) {
+    has_pending_write_reply_ = true;
+    writer_.RegisterOnNextWriteCallbacks(
+        base::Closure(),
+        base::Bind(
+            &PostWriteCallback, base::Callback<void(bool success)>(),
+            base::Bind(&JsonPrefStore::RunOrScheduleNextSuccessfulWriteCallback,
+                       AsWeakPtr()),
+            base::SequencedTaskRunnerHandle::Get()));
+  }
+}
+
+void JsonPrefStore::RegisterOnNextWriteSynchronousCallbacks(
+    OnWriteCallbackPair callbacks) {
+  DCHECK(CalledOnValidThread());
+
+  has_pending_write_reply_ = true;
+
+  writer_.RegisterOnNextWriteCallbacks(
+      callbacks.first,
+      base::Bind(
+          &PostWriteCallback, callbacks.second,
+          base::Bind(&JsonPrefStore::RunOrScheduleNextSuccessfulWriteCallback,
+                     AsWeakPtr()),
+          base::SequencedTaskRunnerHandle::Get()));
 }
 
 void JsonPrefStore::ClearMutableValues() {
@@ -401,8 +451,12 @@ bool JsonPrefStore::SerializeData(std::string* output) {
 
   write_count_histogram_.RecordWriteOccured();
 
-  if (pref_filter_)
-    pref_filter_->FilterSerializeData(prefs_.get());
+  if (pref_filter_) {
+    OnWriteCallbackPair callbacks =
+        pref_filter_->FilterSerializeData(prefs_.get());
+    if (!callbacks.first.is_null() || !callbacks.second.is_null())
+      RegisterOnNextWriteSynchronousCallbacks(callbacks);
+  }
 
   JSONStringValueSerializer serializer(output);
   // Not pretty-printing prefs shrinks pref file size by ~30%. To obtain
@@ -421,9 +475,8 @@ void JsonPrefStore::FinalizeFileRead(
   filtering_in_progress_ = false;
 
   if (!initialization_successful) {
-    FOR_EACH_OBSERVER(PrefStore::Observer,
-                      observers_,
-                      OnInitializationCompleted(false));
+    for (PrefStore::Observer& observer : observers_)
+      observer.OnInitializationCompleted(false);
     return;
   }
 
@@ -437,9 +490,8 @@ void JsonPrefStore::FinalizeFileRead(
   if (error_delegate_ && read_error_ != PREF_READ_ERROR_NONE)
     error_delegate_->OnError(read_error_);
 
-  FOR_EACH_OBSERVER(PrefStore::Observer,
-                    observers_,
-                    OnInitializationCompleted(true));
+  for (PrefStore::Observer& observer : observers_)
+    observer.OnInitializationCompleted(true);
 
   return;
 }

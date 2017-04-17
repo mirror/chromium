@@ -7,7 +7,6 @@ package org.chromium.content.browser.test.util;
 import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import android.graphics.Rect;
-import android.test.ActivityInstrumentationTestCase2;
 import android.util.JsonReader;
 
 import junit.framework.Assert;
@@ -100,8 +99,7 @@ public class DOMUtils {
      * @param webContents The WebContents in which the media element lives.
      * @param id The element's id to check.
      */
-    public static void waitForMediaPlay(final WebContents webContents, final String id)
-            throws InterruptedException {
+    public static void waitForMediaPlay(final WebContents webContents, final String id) {
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -125,8 +123,7 @@ public class DOMUtils {
      * @param webContents The WebContents in which the media element lives.
      * @param id The element's id to check.
      */
-    public static void waitForMediaPauseBeforeEnd(final WebContents webContents, final String id)
-            throws InterruptedException {
+    public static void waitForMediaPauseBeforeEnd(final WebContents webContents, final String id) {
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -227,26 +224,23 @@ public class DOMUtils {
 
     /**
      * Click a DOM node by its id, scrolling it into view first.
-     * @param activityTestCase The ActivityInstrumentationTestCase2 to instrument.
      * @param viewCore The ContentViewCore in which the node lives.
      * @param nodeId The id of the node.
      */
-    public static void clickNode(ActivityInstrumentationTestCase2 activityTestCase,
-            final ContentViewCore viewCore, String nodeId)
+    public static boolean clickNode(final ContentViewCore viewCore, String nodeId)
             throws InterruptedException, TimeoutException {
         scrollNodeIntoView(viewCore.getWebContents(), nodeId);
         int[] clickTarget = getClickTargetForNode(viewCore, nodeId);
-        TouchCommon.singleClickView(viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
+        return TouchCommon.singleClickView(
+                viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
     }
 
     /**
      * Click a DOM node returned by JS code, scrolling it into view first.
-     * @param activityTestCase The ActivityInstrumentationTestCase2 to instrument.
      * @param viewCore The ContentViewCore in which the node lives.
      * @param jsCode The JS code to find the node.
      */
-    public static void clickNodeByJs(ActivityInstrumentationTestCase2 activityTestCase,
-            final ContentViewCore viewCore, String jsCode)
+    public static void clickNodeByJs(final ContentViewCore viewCore, String jsCode)
             throws InterruptedException, TimeoutException {
         scrollNodeIntoViewByJs(viewCore.getWebContents(), jsCode);
         int[] clickTarget = getClickTargetForNodeByJs(viewCore, jsCode);
@@ -254,29 +248,37 @@ public class DOMUtils {
     }
 
     /**
+     * Click a given rect in the page. Does not move the rect into view.
+     * @param viewCore The ContentViewCore in which the node lives.
+     * @param rect The rect to click.
+     */
+    public static boolean clickRect(final ContentViewCore viewCore, Rect rect)
+            throws InterruptedException, TimeoutException {
+        int[] clickTarget = getClickTargetForBounds(viewCore, rect);
+        return TouchCommon.singleClickView(
+                viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
+    }
+
+    /**
      * Long-press a DOM node by its id, scrolling it into view first.
-     * @param activityTestCase The ActivityInstrumentationTestCase2 to instrument.
      * @param viewCore The ContentViewCore in which the node lives.
      * @param nodeId The id of the node.
      */
-    public static void longPressNode(ActivityInstrumentationTestCase2 activityTestCase,
-            final ContentViewCore viewCore, String nodeId)
+    public static void longPressNode(final ContentViewCore viewCore, String nodeId)
             throws InterruptedException, TimeoutException {
         scrollNodeIntoView(viewCore.getWebContents(), nodeId);
         String jsCode = "document.getElementById('" + nodeId + "')";
-        longPressNodeByJs(activityTestCase, viewCore, jsCode);
+        longPressNodeByJs(viewCore, jsCode);
     }
 
     /**
      * Long-press a DOM node by its id.
      * <p>Note that content view should be located in the current position for a foreseeable
      * amount of time because this involves sleep to simulate touch to long press transition.
-     * @param activityTestCase The ActivityInstrumentationTestCase2 to instrument.
      * @param viewCore The ContentViewCore in which the node lives.
      * @param nodeId The id of the node.
      */
-    public static void longPressNodeByJs(ActivityInstrumentationTestCase2 activityTestCase,
-            final ContentViewCore viewCore, String jsCode)
+    public static void longPressNodeByJs(final ContentViewCore viewCore, String jsCode)
             throws InterruptedException, TimeoutException {
         int[] clickTarget = getClickTargetForNodeByJs(viewCore, jsCode);
         TouchCommon.longPressView(viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
@@ -344,8 +346,7 @@ public class DOMUtils {
      * @param nodeId The id of the node.
      */
     public static void waitForNonZeroNodeBounds(final WebContents webContents,
-            final String nodeId)
-            throws InterruptedException {
+            final String nodeId) {
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -462,11 +463,12 @@ public class DOMUtils {
      * @return the click target of the node in the form of a [ x, y ] array.
      */
     private static int[] getClickTargetForBounds(ContentViewCore viewCore, Rect bounds) {
-        int topControlsLayoutHeight = viewCore.doTopControlsShrinkBlinkSize()
-                ? viewCore.getTopControlsHeightPix() : 0;
+        int browserControlsLayoutHeight = viewCore.doBrowserControlsShrinkBlinkSize()
+                ? viewCore.getTopControlsHeightPix()
+                : 0;
         int clickX = (int) viewCore.getRenderCoordinates().fromLocalCssToPix(bounds.exactCenterX());
         int clickY = (int) viewCore.getRenderCoordinates().fromLocalCssToPix(bounds.exactCenterY())
-                + topControlsLayoutHeight;
+                + browserControlsLayoutHeight;
         return new int[] { clickX, clickY };
     }
 

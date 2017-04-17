@@ -4,7 +4,6 @@
 
 #include "chrome/browser/printing/cloud_print/privet_confirm_api_flow.h"
 
-#include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "chrome/browser/printing/cloud_print/gcd_api_flow.h"
 #include "chrome/browser/printing/cloud_print/gcd_constants.h"
@@ -14,15 +13,6 @@
 #include "net/base/url_util.h"
 
 namespace cloud_print {
-
-namespace {
-
-GURL GetConfirmFlowUrl(const std::string& token) {
-  return net::AppendQueryParameter(
-      cloud_devices::GetCloudPrintRelativeURL("confirm"), "token", token);
-}
-
-}  // namespace
 
 PrivetConfirmApiCallFlow::PrivetConfirmApiCallFlow(
     const std::string& token,
@@ -40,25 +30,22 @@ void PrivetConfirmApiCallFlow::OnGCDApiFlowError(GCDApiFlow::Status status) {
 void PrivetConfirmApiCallFlow::OnGCDApiFlowComplete(
     const base::DictionaryValue& value) {
   bool success = false;
-
   if (!value.GetBoolean(cloud_print::kSuccessValue, &success)) {
     callback_.Run(GCDApiFlow::ERROR_MALFORMED_RESPONSE);
     return;
   }
 
-  if (success) {
-    callback_.Run(GCDApiFlow::SUCCESS);
-  } else {
-    callback_.Run(GCDApiFlow::ERROR_FROM_SERVER);
-  }
-}
-
-net::URLFetcher::RequestType PrivetConfirmApiCallFlow::GetRequestType() {
-  return net::URLFetcher::GET;
+  callback_.Run(success ? GCDApiFlow::SUCCESS : GCDApiFlow::ERROR_FROM_SERVER);
 }
 
 GURL PrivetConfirmApiCallFlow::GetURL() {
-  return GetConfirmFlowUrl(token_);
+  return net::AppendQueryParameter(
+      cloud_devices::GetCloudPrintRelativeURL("confirm"), "token", token_);
+}
+
+GCDApiFlow::Request::NetworkTrafficAnnotation
+PrivetConfirmApiCallFlow::GetNetworkTrafficAnnotationType() {
+  return TYPE_PRIVET_REGISTER;
 }
 
 }  // namespace cloud_print

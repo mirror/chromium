@@ -33,7 +33,7 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -41,30 +41,34 @@ class Document;
 class PagePopup;
 class PagePopupClient;
 
-class PagePopupController final : public GarbageCollected<PagePopupController>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static PagePopupController* create(PagePopup&, PagePopupClient*);
-    void setValueAndClosePopup(int numValue, const String& stringValue);
-    void setValue(const String&);
-    void closePopup();
-    void selectFontsFromOwnerDocument(Document* targetDocument);
-    String localizeNumberString(const String&);
-    String formatMonth(int year, int zeroBaseMonth);
-    String formatShortMonth(int year, int zeroBaseMonth);
-    String formatWeek(int year, int weekNumber, const String& localizedStartDate);
-    void clearPagePopupClient();
-    void setWindowRect(int x, int y, int width, int height);
+class PagePopupController final : public GarbageCollected<PagePopupController>,
+                                  public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_TRACE() { }
+ public:
+  static PagePopupController* Create(PagePopup&, PagePopupClient*);
+  void setValueAndClosePopup(int num_value, const String& string_value);
+  void setValue(const String&);
+  void closePopup();
+  void selectFontsFromOwnerDocument(Document* target_document);
+  String localizeNumberString(const String&);
+  String formatMonth(int year, int zero_base_month);
+  String formatShortMonth(int year, int zero_base_month);
+  String formatWeek(int year,
+                    int week_number,
+                    const String& localized_start_date);
+  void ClearPagePopupClient();
+  void setWindowRect(int x, int y, int width, int height);
 
-private:
-    PagePopupController(PagePopup&, PagePopupClient*);
+  DEFINE_INLINE_TRACE() {}
 
-    PagePopup& m_popup;
-    PagePopupClient* m_popupClient;
+ private:
+  PagePopupController(PagePopup&, PagePopupClient*);
+
+  PagePopup& popup_;
+  PagePopupClient* popup_client_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PagePopupController_h
+#endif  // PagePopupController_h

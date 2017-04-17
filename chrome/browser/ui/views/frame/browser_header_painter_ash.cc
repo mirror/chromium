@@ -4,29 +4,26 @@
 
 #include "chrome/browser/ui/views/frame/browser_header_painter_ash.h"
 
-#include "ash/common/ash_layout_constants.h"
+#include "ash/ash_layout_constants.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/header_painter_util.h"
-#include "base/logging.h"  // DCHECK
+#include "ash/resources/vector_icons/vector_icons.h"
+#include "base/logging.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
 #include "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
-#include "grit/ash_resources.h"
-#include "grit/theme_resources.h"
 #include "third_party/skia/include/core/SkCanvas.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
-#include "ui/base/material_design/material_design_controller.h"
-#include "ui/base/resource/resource_bundle.h"
-#include "ui/base/theme_provider.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/skia_util.h"
-#include "ui/gfx/vector_icons_public.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
@@ -34,8 +31,11 @@
 using views::Widget;
 
 namespace {
+
 // Color for the window title text.
-const SkColor kWindowTitleTextColor = SkColorSetRGB(40, 40, 40);
+const SkColor kNormalWindowTitleTextColor = SkColorSetRGB(40, 40, 40);
+const SkColor kIncognitoWindowTitleTextColor = SK_ColorWHITE;
+
 // Duration of crossfade animation for activating and deactivating frame.
 const int kActivationCrossfadeDurationMs = 200;
 
@@ -61,54 +61,41 @@ SkPath MakeRoundRectPath(const gfx::Rect& bounds,
 void PaintFrameImagesInRoundRect(gfx::Canvas* canvas,
                                  const gfx::ImageSkia& frame_image,
                                  const gfx::ImageSkia& frame_overlay_image,
-                                 const SkPaint& paint,
+                                 int alpha,
+                                 SkColor background_color,
                                  const gfx::Rect& bounds,
                                  int corner_radius,
                                  int image_inset_x) {
   SkPath frame_path = MakeRoundRectPath(bounds, corner_radius, corner_radius);
-  // If |paint| is using an unusual SkXfermode::Mode (this is the case while
-  // crossfading), we must create a new canvas to overlay |frame_image| and
-  // |frame_overlay_image| using |normal_mode| and then paint the result
-  // using the unusual mode. We try to avoid this because creating a new
-  // browser-width canvas is expensive.
-  SkXfermode::Mode normal_mode;
-  SkXfermode::AsMode(nullptr, &normal_mode);
-  bool fast_path = (frame_overlay_image.isNull() ||
-      SkXfermode::IsMode(paint.getXfermode(), normal_mode));
-  if (fast_path) {
-    if (frame_image.isNull()) {
-      canvas->DrawPath(frame_path, paint);
-    } else {
-      canvas->DrawImageInPath(frame_image, -image_inset_x, 0, frame_path,
-                              paint);
-    }
+  bool antialias = corner_radius > 0;
 
-    if (!frame_overlay_image.isNull()) {
-      // Adjust |bounds| such that |frame_overlay_image| is not tiled.
-      gfx::Rect overlay_bounds = bounds;
-      overlay_bounds.Intersect(
-          gfx::Rect(bounds.origin(), frame_overlay_image.size()));
-      int top_left_corner_radius = corner_radius;
-      int top_right_corner_radius = corner_radius;
-      if (overlay_bounds.width() < bounds.width() - corner_radius)
-        top_right_corner_radius = 0;
-      canvas->DrawImageInPath(
-          frame_overlay_image, 0, 0,
-          MakeRoundRectPath(overlay_bounds, top_left_corner_radius,
-                            top_right_corner_radius),
-          paint);
-    }
+  gfx::ScopedCanvas scoped_save(canvas);
+  canvas->ClipPath(frame_path, antialias);
+
+  cc::PaintFlags flags;
+  flags.setBlendMode(SkBlendMode::kPlus);
+  flags.setAntiAlias(antialias);
+
+  if (frame_image.isNull() && frame_overlay_image.isNull()) {
+    flags.setColor(background_color);
+    canvas->DrawRect(bounds, flags);
+  } else if (frame_overlay_image.isNull()) {
+    flags.setAlpha(alpha);
+    canvas->TileImageInt(frame_image, image_inset_x, 0, 0, 0, bounds.width(),
+                         bounds.height(), 1.0f, &flags);
   } else {
-    gfx::Canvas temporary_canvas(bounds.size(), canvas->image_scale(), false);
+    flags.setAlpha(alpha);
+    canvas->SaveLayerWithFlags(flags);
+
     if (frame_image.isNull()) {
-      temporary_canvas.DrawColor(paint.getColor());
+      canvas->DrawColor(background_color);
     } else {
-      temporary_canvas.TileImageInt(frame_image, image_inset_x, 0, 0, 0,
-                                    bounds.width(), bounds.height());
+      canvas->TileImageInt(frame_image, image_inset_x, 0, 0, 0, bounds.width(),
+                           bounds.height());
     }
-    temporary_canvas.DrawImageInt(frame_overlay_image, 0, 0);
-    canvas->DrawImageInPath(gfx::ImageSkia(temporary_canvas.ExtractImageRep()),
-                            0, 0, frame_path, paint);
+    canvas->DrawImageInt(frame_overlay_image, 0, 0);
+
+    canvas->Restore();
   }
 }
 
@@ -188,12 +175,6 @@ void BrowserHeaderPainterAsh::PaintHeader(gfx::Canvas* canvas, Mode mode) {
   PaintFrameImages(canvas, false);
   PaintFrameImages(canvas, true);
 
-  if (!ui::MaterialDesignController::IsModeMaterial() &&
-      !frame_->IsMaximized() &&
-      !frame_->IsFullscreen()) {
-    PaintHighlightForRestoredWindow(canvas);
-  }
-
   if (frame_->widget_delegate() &&
       frame_->widget_delegate()->ShouldShowWindowTitle()) {
     PaintTitleBar(canvas);
@@ -266,65 +247,18 @@ void BrowserHeaderPainterAsh::PaintFrameImages(gfx::Canvas* canvas,
   if (alpha == 0)
     return;
 
-  int corner_radius =
-      (frame_->IsMaximized() || frame_->IsFullscreen())
-          ? 0
-          : ash::HeaderPainterUtil::GetTopCornerRadiusWhenRestored();
-
   gfx::ImageSkia frame_image = view_->GetFrameImage(active);
   gfx::ImageSkia frame_overlay_image = view_->GetFrameOverlayImage(active);
+  SkColor background_color = SkColorSetA(view_->GetFrameColor(active), alpha);
 
-  SkPaint paint;
-  paint.setXfermodeMode(SkXfermode::kPlus_Mode);
-  paint.setAlpha(alpha);
-  paint.setColor(SkColorSetA(view_->GetFrameColor(active), alpha));
+  int corner_radius = 0;
+  if (!frame_->IsMaximized() && !frame_->IsFullscreen())
+    corner_radius = ash::HeaderPainterUtil::GetTopCornerRadiusWhenRestored();
+
   PaintFrameImagesInRoundRect(
-      canvas, frame_image, frame_overlay_image, paint, GetPaintedBounds(),
-      corner_radius, ash::HeaderPainterUtil::GetThemeBackgroundXInset());
-}
-
-void BrowserHeaderPainterAsh::PaintHighlightForRestoredWindow(
-    gfx::Canvas* canvas) {
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  gfx::ImageSkia top_left_corner = *rb.GetImageSkiaNamed(
-      IDR_ASH_BROWSER_WINDOW_HEADER_SHADE_TOP_LEFT);
-  gfx::ImageSkia top_right_corner = *rb.GetImageSkiaNamed(
-      IDR_ASH_BROWSER_WINDOW_HEADER_SHADE_TOP_RIGHT);
-  gfx::ImageSkia top_edge = *rb.GetImageSkiaNamed(
-      IDR_ASH_BROWSER_WINDOW_HEADER_SHADE_TOP);
-  gfx::ImageSkia left_edge = *rb.GetImageSkiaNamed(
-      IDR_ASH_BROWSER_WINDOW_HEADER_SHADE_LEFT);
-  gfx::ImageSkia right_edge = *rb.GetImageSkiaNamed(
-      IDR_ASH_BROWSER_WINDOW_HEADER_SHADE_RIGHT);
-
-  int top_left_width = top_left_corner.width();
-  int top_left_height = top_left_corner.height();
-  canvas->DrawImageInt(top_left_corner, 0, 0);
-
-  int top_right_width = top_right_corner.width();
-  int top_right_height = top_right_corner.height();
-  canvas->DrawImageInt(top_right_corner,
-                       view_->width() - top_right_width,
-                       0);
-
-  canvas->TileImageInt(
-      top_edge,
-      top_left_width,
-      0,
-      view_->width() - top_left_width - top_right_width,
-      top_edge.height());
-
-  canvas->TileImageInt(left_edge,
-                       0,
-                       top_left_height,
-                       left_edge.width(),
-                       painted_height_ - top_left_height);
-
-  canvas->TileImageInt(right_edge,
-                       view_->width() - right_edge.width(),
-                       top_right_height,
-                       right_edge.width(),
-                       painted_height_ - top_right_height);
+      canvas, frame_image, frame_overlay_image, alpha, background_color,
+      GetPaintedBounds(), corner_radius,
+      ash::HeaderPainterUtil::GetThemeBackgroundXInset());
 }
 
 void BrowserHeaderPainterAsh::PaintTitleBar(gfx::Canvas* canvas) {
@@ -333,35 +267,34 @@ void BrowserHeaderPainterAsh::PaintTitleBar(gfx::Canvas* canvas) {
   title_bounds.set_x(view_->GetMirroredXForRect(title_bounds));
   canvas->DrawStringRectWithFlags(frame_->widget_delegate()->GetWindowTitle(),
                                   BrowserFrame::GetTitleFontList(),
-                                  kWindowTitleTextColor,
+                                  is_incognito_ ? kIncognitoWindowTitleTextColor
+                                                : kNormalWindowTitleTextColor,
                                   title_bounds,
                                   gfx::Canvas::NO_SUBPIXEL_RENDERING);
 }
 
 void BrowserHeaderPainterAsh::UpdateCaptionButtons() {
-  caption_button_container_->SetButtonImage(
-      ash::CAPTION_BUTTON_ICON_MINIMIZE,
-      gfx::VectorIconId::WINDOW_CONTROL_MINIMIZE);
-  caption_button_container_->SetButtonImage(
-      ash::CAPTION_BUTTON_ICON_CLOSE, gfx::VectorIconId::WINDOW_CONTROL_CLOSE);
+  caption_button_container_->SetButtonImage(ash::CAPTION_BUTTON_ICON_MINIMIZE,
+                                            ash::kWindowControlMinimizeIcon);
+  caption_button_container_->SetButtonImage(ash::CAPTION_BUTTON_ICON_CLOSE,
+                                            ash::kWindowControlCloseIcon);
   caption_button_container_->SetButtonImage(
       ash::CAPTION_BUTTON_ICON_LEFT_SNAPPED,
-      gfx::VectorIconId::WINDOW_CONTROL_LEFT_SNAPPED);
+      ash::kWindowControlLeftSnappedIcon);
   caption_button_container_->SetButtonImage(
       ash::CAPTION_BUTTON_ICON_RIGHT_SNAPPED,
-      gfx::VectorIconId::WINDOW_CONTROL_RIGHT_SNAPPED);
+      ash::kWindowControlRightSnappedIcon);
 
-  gfx::VectorIconId size_icon_id = gfx::VectorIconId::WINDOW_CONTROL_MAXIMIZE;
+  const gfx::VectorIcon* size_icon = &ash::kWindowControlMaximizeIcon;
   gfx::Size button_size(
       GetAshLayoutSize(AshLayoutSize::BROWSER_RESTORED_CAPTION_BUTTON));
   if (frame_->IsMaximized() || frame_->IsFullscreen()) {
-    size_icon_id = gfx::VectorIconId::WINDOW_CONTROL_RESTORE;
+    size_icon = &ash::kWindowControlRestoreIcon;
     button_size =
         GetAshLayoutSize(AshLayoutSize::BROWSER_MAXIMIZED_CAPTION_BUTTON);
   }
   caption_button_container_->SetButtonImage(
-      ash::CAPTION_BUTTON_ICON_MAXIMIZE_RESTORE,
-      size_icon_id);
+      ash::CAPTION_BUTTON_ICON_MAXIMIZE_RESTORE, *size_icon);
   caption_button_container_->SetButtonSize(button_size);
 }
 

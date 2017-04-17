@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_MOCK_SESSION_MANAGER_CLIENT_H_
 
 #include <string>
+#include <vector>
 
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/dbus/session_manager_client.h"
@@ -25,7 +26,10 @@ class MockSessionManagerClient : public SessionManagerClient {
   MOCK_CONST_METHOD1(HasObserver, bool(const Observer*));
   MOCK_CONST_METHOD0(IsScreenLocked, bool(void));
   MOCK_METHOD0(EmitLoginPromptVisible, void(void));
-  MOCK_METHOD1(RestartJob, void(const std::vector<std::string>&));
+  MOCK_METHOD3(RestartJob,
+               void(int,
+                    const std::vector<std::string>&,
+                    const VoidDBusMethodCallback&));
   MOCK_METHOD1(StartSession, void(const cryptohome::Identification&));
   MOCK_METHOD0(StopSession, void(void));
   MOCK_METHOD0(NotifySupervisedUserCreationStarted, void(void));
@@ -36,6 +40,7 @@ class MockSessionManagerClient : public SessionManagerClient {
   MOCK_METHOD0(NotifyLockScreenDismissed, void(void));
   MOCK_METHOD1(RetrieveActiveSessions, void(const ActiveSessionsCallback&));
   MOCK_METHOD1(RetrieveDevicePolicy, void(const RetrievePolicyCallback&));
+  MOCK_METHOD0(BlockingRetrieveDevicePolicy, std::string(void));
   MOCK_METHOD2(RetrievePolicyForUser,
                void(const cryptohome::Identification&,
                     const RetrievePolicyCallback&));
@@ -44,6 +49,8 @@ class MockSessionManagerClient : public SessionManagerClient {
   MOCK_METHOD2(RetrieveDeviceLocalAccountPolicy,
                void(const std::string&,
                     const RetrievePolicyCallback&));
+  MOCK_METHOD1(BlockingRetrieveDeviceLocalAccountPolicy,
+               std::string(const std::string&));
   MOCK_METHOD2(StoreDevicePolicy,
                void(const std::string&,
                     const StorePolicyCallback&));
@@ -55,14 +62,22 @@ class MockSessionManagerClient : public SessionManagerClient {
                void(const std::string&,
                     const std::string&,
                     const StorePolicyCallback&));
+  MOCK_CONST_METHOD0(SupportsRestartToApplyUserFlags, bool());
   MOCK_METHOD2(SetFlagsForUser,
                void(const cryptohome::Identification&,
                     const std::vector<std::string>&));
   MOCK_METHOD1(GetServerBackedStateKeys, void(const StateKeysCallback&));
   MOCK_METHOD1(CheckArcAvailability, void(const ArcCallback&));
-  MOCK_METHOD2(StartArcInstance,
-               void(const cryptohome::Identification&, const ArcCallback&));
+  MOCK_METHOD3(StartArcInstance,
+               void(const cryptohome::Identification&,
+                    bool,
+                    const StartArcInstanceCallback&));
   MOCK_METHOD1(StopArcInstance, void(const ArcCallback&));
+  MOCK_METHOD2(SetArcCpuRestriction,
+               void(login_manager::ContainerCpuRestrictionState,
+                    const ArcCallback&));
+  MOCK_METHOD2(EmitArcBooted,
+               void(const cryptohome::Identification&, const ArcCallback&));
   MOCK_METHOD1(GetArcStartTime, void(const GetArcStartTimeCallback&));
   MOCK_METHOD2(RemoveArcData,
                void(const cryptohome::Identification&, const ArcCallback&));

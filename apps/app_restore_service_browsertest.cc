@@ -7,7 +7,7 @@
 #include "apps/saved_files_service.h"
 #include "chrome/browser/apps/app_browsertest_util.h"
 #include "chrome/browser/extensions/api/file_system/file_system_api.h"
-#include "chrome/browser/profiles/profile.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/extension_prefs.h"
@@ -50,8 +50,8 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, RunningAppsAreRecorded) {
   extension_prefs->SetExtensionRunning(extension->id(), true);
 
   ExtensionTestMessageListener restart_listener("onRestarted", false);
-  apps::AppRestoreServiceFactory::GetForProfile(browser()->profile())->
-      HandleStartup(true);
+  apps::AppRestoreServiceFactory::GetForBrowserContext(browser()->profile())
+      ->HandleStartup(true);
   restart_listener.WaitUntilSatisfied();
 }
 
@@ -117,13 +117,13 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, FileAccessIsSavedToPrefs) {
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
   base::FilePath temp_file;
-  ASSERT_TRUE(base::CreateTemporaryFileInDir(temp_directory.path(),
-                                             &temp_file));
+  ASSERT_TRUE(
+      base::CreateTemporaryFileInDir(temp_directory.GetPath(), &temp_file));
 
   FileSystemChooseEntryFunction::SkipPickerAndAlwaysSelectPathForTest(
       &temp_file);
   FileSystemChooseEntryFunction::RegisterTempExternalFileSystemForTest(
-      "temp", temp_directory.path());
+      "temp", temp_directory.GetPath());
 
   const Extension* extension = LoadAndLaunchPlatformApp(
       "file_access_saved_to_prefs_test", "fileWritten");
@@ -157,13 +157,13 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MAYBE_FileAccessIsRestored) {
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
   base::FilePath temp_file;
-  ASSERT_TRUE(base::CreateTemporaryFileInDir(temp_directory.path(),
-                                             &temp_file));
+  ASSERT_TRUE(
+      base::CreateTemporaryFileInDir(temp_directory.GetPath(), &temp_file));
 
   FileSystemChooseEntryFunction::SkipPickerAndAlwaysSelectPathForTest(
       &temp_file);
   FileSystemChooseEntryFunction::RegisterTempExternalFileSystemForTest(
-      "temp", temp_directory.path());
+      "temp", temp_directory.GetPath());
 
   ExtensionTestMessageListener access_ok_listener(
       "restartedFileAccessOK", false);
@@ -188,8 +188,8 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MAYBE_FileAccessIsRestored) {
         extension->id(), it->id, it->path, it->is_directory);
   }
 
-  apps::AppRestoreServiceFactory::GetForProfile(browser()->profile())->
-      HandleStartup(true);
+  apps::AppRestoreServiceFactory::GetForBrowserContext(browser()->profile())
+      ->HandleStartup(true);
 
   access_ok_listener.WaitUntilSatisfied();
 }

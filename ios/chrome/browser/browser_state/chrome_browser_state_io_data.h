@@ -42,7 +42,6 @@ enum class ChromeBrowserStateType;
 }
 
 namespace net {
-class CertVerifier;
 class ChannelIDService;
 class CookieStore;
 class HttpServerProperties;
@@ -50,7 +49,6 @@ class HttpTransactionFactory;
 class ProxyConfigService;
 class ProxyService;
 class ReportSender;
-class ServerBoundCertService;
 class SSLConfigService;
 class TransportSecurityPersister;
 class TransportSecurityState;
@@ -183,7 +181,6 @@ class ChromeBrowserStateIOData {
 
   std::unique_ptr<net::URLRequestJobFactory> SetUpJobFactoryDefaults(
       std::unique_ptr<net::URLRequestJobFactoryImpl> job_factory,
-      URLRequestInterceptorScopedVector request_interceptors,
       net::NetworkDelegate* network_delegate) const;
 
   // Called when the ChromeBrowserState is destroyed. |context_getters| must

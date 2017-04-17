@@ -41,6 +41,27 @@ class BluetoothTestBase : public testing::Test {
  public:
   enum class Call { EXPECTED, NOT_EXPECTED };
 
+  // List of devices that can be simulated with
+  // SimulateConnectedLowEnergyDevice().
+  // GENERIC_DEVICE:
+  //   - Name:     kTestDeviceName
+  //   - Address:  kTestPeripheralUUID1
+  //   - Services: [ kTestUUIDGenericAccess ]
+  // HEART_RATE_DEVICE:
+  //   - Name:     kTestDeviceName
+  //   - Address:  kTestPeripheralUUID2
+  //   - Services: [ kTestUUIDGenericAccess, kTestUUIDHeartRate]
+  enum class ConnectedDeviceType {
+    GENERIC_DEVICE,
+    HEART_RATE_DEVICE,
+  };
+
+  enum class NotifyValueState {
+    NONE,
+    NOTIFY,
+    INDICATE,
+  };
+
   static const std::string kTestAdapterName;
   static const std::string kTestAdapterAddress;
 
@@ -51,10 +72,39 @@ class BluetoothTestBase : public testing::Test {
   static const std::string kTestDeviceAddress2;
   static const std::string kTestDeviceAddress3;
 
+  // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.device.bluetooth.test
+  enum class TestRSSI {
+    LOWEST = -81,
+    LOWER = -61,
+    LOW = -41,
+    MEDIUM = -21,
+    HIGH = -1,
+  };
+
+  // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.device.bluetooth.test
+  enum class TestTxPower {
+    LOWEST = -40,
+    LOWER = -20,
+  };
+
+  // Services
   static const std::string kTestUUIDGenericAccess;
   static const std::string kTestUUIDGenericAttribute;
   static const std::string kTestUUIDImmediateAlert;
   static const std::string kTestUUIDLinkLoss;
+  static const std::string kTestUUIDHeartRate;
+  // Characteristics
+  // The following three characteristics are for kTestUUIDGenericAccess.
+  static const std::string kTestUUIDDeviceName;
+  static const std::string kTestUUIDAppearance;
+  static const std::string kTestUUIDReconnectionAddress;
+  // This characteristic is for kTestUUIDHeartRate.
+  static const std::string kTestUUIDHeartRateMeasurement;
+  // Descriptors
+  static const std::string kTestUUIDCharacteristicUserDescription;
+  static const std::string kTestUUIDClientCharacteristicConfiguration;
+  static const std::string kTestUUIDServerCharacteristicConfiguration;
+  static const std::string kTestUUIDCharacteristicPresentationFormat;
 
   BluetoothTestBase();
   ~BluetoothTestBase() override;
@@ -93,24 +143,70 @@ class BluetoothTestBase : public testing::Test {
   virtual bool DenyPermission();
 
   // Create a fake Low Energy device and discover it.
+  // |device_ordinal| with the same device address stands for the same fake
+  // device with different properties.
+  // For example:
+  // SimulateLowEnergyDevice(2); << First call will create a device with address
+  // kTestDeviceAddress1
+  // SimulateLowEnergyDevice(3); << Second call will update changes to the
+  // device of address kTestDeviceAddress1.
+  //
   // |device_ordinal| selects between multiple fake device data sets to produce:
-  //   1: kTestDeviceName with advertised UUIDs kTestUUIDGenericAccess,
-  //      kTestUUIDGenericAttribute and address kTestDeviceAddress1.
-  //   2: kTestDeviceName with advertised UUIDs kTestUUIDImmediateAlert,
-  //      kTestUUIDLinkLoss and address kTestDeviceAddress1.
-  //   3: kTestDeviceNameEmpty with no advertised UUIDs and address
-  //      kTestDeviceAddress1.
-  //   4: kTestDeviceNameEmpty with no advertised UUIDs and address
-  //      kTestDeviceAddress2.
-  //   5: Device with no name, with no advertised UUIDs and address
-  //      kTestDeviceAddress1.
-  //   6: kTestDeviceName with no advertised UUIDs and address
-  //      kTestDeviceAddress2, but which also supports BR/EDR.
+  //   1: Name: kTestDeviceName
+  //      Address:           kTestDeviceAddress1
+  //      RSSI:              kTestRSSI1
+  //      Advertised UUIDs: {kTestUUIDGenericAccess, kTestUUIDGenericAttribute}
+  //      Service Data:     {kTestUUIDHeartRate: [1]}
+  //      Tx Power:          kTestTxPower1
+  //   2: Name: kTestDeviceName
+  //      Address:           kTestDeviceAddress1
+  //      RSSI:              kTestRSSI2
+  //      Advertised UUIDs: {kTestUUIDImmediateAlert, kTestUUIDLinkLoss}
+  //      Service Data:     {kTestUUIDHeartRate: [],
+  //                         kTestUUIDImmediateAlert: [0, 2]}
+  //      Tx Power:          kTestTxPower2
+  //   3: Name:    kTestDeviceNameEmpty
+  //      Address: kTestDeviceAddress1
+  //      RSSI:    kTestRSSI3
+  //      No Advertised UUIDs
+  //      No Service Data
+  //      No Tx Power
+  //   4: Name:    kTestDeviceNameEmpty
+  //      Address: kTestDeviceAddress2
+  //      RSSI:    kTestRSSI4
+  //      No Advertised UUIDs
+  //      No Service Data
+  //      No Tx Power
+  //   5: No name device
+  //      Address: kTestDeviceAddress1
+  //      RSSI:    kTestRSSI5
+  //      No Advertised UUIDs
+  //      No Service Data
+  //      No Tx Power
+  //   6: Name:    kTestDeviceName
+  //      Address: kTestDeviceAddress2
+  //      RSSI:    kTestRSSI1,
+  //      No Advertised UUIDs
+  //      No Service Data
+  //      No Tx Power
+  //      Supports BR/EDR and LE.
   virtual BluetoothDevice* SimulateLowEnergyDevice(int device_ordinal);
+
+  // Simulates a connected low energy device. Used before starting a low energy
+  // discovey session.
+  virtual void SimulateConnectedLowEnergyDevice(
+      ConnectedDeviceType device_ordinal){};
 
   // Create a fake classic device and discover it. The device will have
   // name kTestDeviceName, no advertised UUIDs and address kTestDeviceAddress3.
   virtual BluetoothDevice* SimulateClassicDevice();
+
+  // Remembers |device|'s platform specific object to be used in a
+  // subsequent call to methods such as SimulateGattServicesDiscovered that
+  // accept a nullptr value to select this remembered characteristic. This
+  // enables tests where the platform attempts to reference device
+  // objects after the Chrome objects have been deleted, e.g. with DeleteDevice.
+  virtual void RememberDeviceForSubsequentAction(BluetoothDevice* device) {}
 
   // Simulates success of implementation details of CreateGattConnection.
   virtual void SimulateGattConnection(BluetoothDevice* device) {}
@@ -128,6 +224,9 @@ class BluetoothTestBase : public testing::Test {
   virtual void SimulateGattServicesDiscovered(
       BluetoothDevice* device,
       const std::vector<std::string>& uuids) {}
+
+  // Simulates a GATT Services changed event.
+  virtual void SimulateGattServicesChanged(BluetoothDevice* device) {}
 
   // Simulates remove of a |service|.
   virtual void SimulateGattServiceRemoved(BluetoothRemoteGattService* service) {
@@ -174,6 +273,21 @@ class BluetoothTestBase : public testing::Test {
   // descriptor provided to RememberCharacteristicForSubsequentAction &
   // RememberCCCDescriptorForSubsequentAction.
   virtual void SimulateGattNotifySessionStartError(
+      BluetoothRemoteGattCharacteristic* characteristic,
+      BluetoothRemoteGattService::GattErrorCode error_code) {}
+
+  // Simulates a Characteristic Stop Notify completed.
+  // If |characteristic| is null, acts upon the characteristic & CCC
+  // descriptor provided to RememberCharacteristicForSubsequentAction &
+  // RememberCCCDescriptorForSubsequentAction.
+  virtual void SimulateGattNotifySessionStopped(
+      BluetoothRemoteGattCharacteristic* characteristic) {}
+
+  // Simulates a Characteristic Stop Notify error.
+  // If |characteristic| is null, acts upon the characteristic & CCC
+  // descriptor provided to RememberCharacteristicForSubsequentAction &
+  // RememberCCCDescriptorForSubsequentAction.
+  virtual void SimulateGattNotifySessionStopError(
       BluetoothRemoteGattCharacteristic* characteristic,
       BluetoothRemoteGattService::GattErrorCode error_code) {}
 
@@ -314,6 +428,15 @@ class BluetoothTestBase : public testing::Test {
   virtual void SimulateGattDescriptorWriteWillFailSynchronouslyOnce(
       BluetoothRemoteGattDescriptor* descriptor) {}
 
+  // Tests that functions to change the notify value have been called |attempts|
+  // times.
+  virtual void ExpectedChangeNotifyValueAttempts(int attempts);
+
+  // Tests that the notify value is |expected_value_state|. The default
+  // implementation checks that the correct value has been written to the CCC
+  // Descriptor.
+  virtual void ExpectedNotifyValue(NotifyValueState expected_value_state);
+
   // Returns a list of local GATT services registered with the adapter.
   virtual std::vector<BluetoothLocalGattService*> RegisteredGattServices();
 
@@ -328,6 +451,11 @@ class BluetoothTestBase : public testing::Test {
                               std::unique_ptr<BluetoothGattConnection>);
   void NotifyCallback(Call expected,
                       std::unique_ptr<BluetoothGattNotifySession>);
+  void NotifyCheckForPrecedingCalls(
+      int num_of_preceding_calls,
+      std::unique_ptr<BluetoothGattNotifySession>);
+  void StopNotifyCallback(Call expected);
+  void StopNotifyCheckForPrecedingCalls(int num_of_preceding_calls);
   void ReadValueCallback(Call expected, const std::vector<uint8_t>& value);
   void ErrorCallback(Call expected);
   void ConnectErrorCallback(Call expected,
@@ -352,6 +480,10 @@ class BluetoothTestBase : public testing::Test {
       Call expected);
   BluetoothRemoteGattCharacteristic::NotifySessionCallback GetNotifyCallback(
       Call expected);
+  BluetoothRemoteGattCharacteristic::NotifySessionCallback
+  GetNotifyCheckForPrecedingCalls(int num_of_preceding_calls);
+  base::Closure GetStopNotifyCallback(Call expected);
+  base::Closure GetStopNotifyCheckForPrecedingCalls(int num_of_preceding_calls);
   BluetoothRemoteGattCharacteristic::ValueCallback GetReadValueCallback(
       Call expected);
   BluetoothAdapter::ErrorCallback GetErrorCallback(Call expected);
@@ -369,7 +501,7 @@ class BluetoothTestBase : public testing::Test {
       bool error_in_reentrant);
 
   // Reset all event count members to 0.
-  void ResetEventCounts();
+  virtual void ResetEventCounts();
 
   void RemoveTimedOutDevices();
 
@@ -378,11 +510,11 @@ class BluetoothTestBase : public testing::Test {
   base::MessageLoop message_loop_;
 
   scoped_refptr<BluetoothAdapter> adapter_;
-  ScopedVector<BluetoothDiscoverySession> discovery_sessions_;
-  ScopedVector<BluetoothGattConnection> gatt_connections_;
+  std::vector<std::unique_ptr<BluetoothDiscoverySession>> discovery_sessions_;
+  std::vector<std::unique_ptr<BluetoothGattConnection>> gatt_connections_;
   enum BluetoothDevice::ConnectErrorCode last_connect_error_code_ =
       BluetoothDevice::ERROR_UNKNOWN;
-  ScopedVector<BluetoothGattNotifySession> notify_sessions_;
+  std::vector<std::unique_ptr<BluetoothGattNotifySession>> notify_sessions_;
   std::vector<uint8_t> last_read_value_;
   std::vector<uint8_t> last_write_value_;
   BluetoothRemoteGattService::GattErrorCode last_gatt_error_code_;

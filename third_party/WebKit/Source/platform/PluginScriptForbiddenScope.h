@@ -6,8 +6,8 @@
 #define PluginScriptForbiddenScope_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -39,15 +39,16 @@ namespace blink {
 // those usages, with the eventual goal that Frame detach will never have to run
 // a nested message loop.
 class PLATFORM_EXPORT PluginScriptForbiddenScope final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(PluginScriptForbiddenScope);
-public:
-    PluginScriptForbiddenScope();
-    ~PluginScriptForbiddenScope();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(PluginScriptForbiddenScope);
 
-    static bool isForbidden();
+ public:
+  PluginScriptForbiddenScope();
+  ~PluginScriptForbiddenScope();
+
+  static bool IsForbidden();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PluginScriptForbiddenScope_h
+#endif  // PluginScriptForbiddenScope_h

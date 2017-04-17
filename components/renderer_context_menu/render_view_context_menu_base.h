@@ -11,15 +11,16 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/observer_list.h"
 #include "base/strings/string16.h"
 #include "components/renderer_context_menu/context_menu_content_type.h"
 #include "components/renderer_context_menu/render_view_context_menu_observer.h"
 #include "components/renderer_context_menu/render_view_context_menu_proxy.h"
 #include "content/public/common/context_menu_params.h"
+#include "ppapi/features/features.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/base/window_open_disposition.h"
@@ -27,15 +28,6 @@
 namespace content {
 class RenderFrameHost;
 class WebContents;
-}
-
-namespace gfx {
-class Point;
-}
-
-namespace blink {
-struct WebMediaPlayerAction;
-struct WebPluginAction;
 }
 
 class RenderViewContextMenuBase : public ui::SimpleMenuModel::Delegate,
@@ -144,14 +136,12 @@ class RenderViewContextMenuBase : public ui::SimpleMenuModel::Delegate,
   // Increments histogram value for visible context menu item specified by |id|.
   virtual void RecordShownItem(int id) = 0;
 
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
   virtual void HandleAuthorizeAllPlugins() = 0;
 #endif
 
   // Subclasses should send notification.
   virtual void NotifyMenuShown() = 0;
-  virtual void NotifyURLOpened(const GURL& url,
-                               content::WebContents* new_contents) = 0;
 
   // TODO(oshima): Remove this.
   virtual void AppendPlatformEditableItems() {}
@@ -163,7 +153,8 @@ class RenderViewContextMenuBase : public ui::SimpleMenuModel::Delegate,
   bool IsCustomItemEnabled(int id) const;
 
   // Opens the specified URL string in a new tab.
-  void OpenURL(const GURL& url, const GURL& referrer,
+  void OpenURL(const GURL& url,
+               const GURL& referrer,
                WindowOpenDisposition disposition,
                ui::PageTransition transition);
 
@@ -172,7 +163,8 @@ class RenderViewContextMenuBase : public ui::SimpleMenuModel::Delegate,
                                const GURL& referrer,
                                WindowOpenDisposition disposition,
                                ui::PageTransition transition,
-                               const std::string& extra_headers);
+                               const std::string& extra_headers,
+                               bool started_from_context_menu);
 
   content::ContextMenuParams params_;
   content::WebContents* const source_web_contents_;
@@ -182,6 +174,9 @@ class RenderViewContextMenuBase : public ui::SimpleMenuModel::Delegate,
 
   // Renderer's frame id.
   const int render_frame_id_;
+
+  // The RenderFrameHost's IDs.
+  const int render_process_id_;
 
   // Our observers.
   mutable base::ObserverList<RenderViewContextMenuObserver> observers_;
@@ -195,12 +190,9 @@ class RenderViewContextMenuBase : public ui::SimpleMenuModel::Delegate,
  private:
   bool AppendCustomItems();
 
-  // The RenderFrameHost's IDs.
-  const int render_process_id_;
-
   std::unique_ptr<ToolkitDelegate> toolkit_delegate_;
 
-  ScopedVector<ui::SimpleMenuModel> custom_submenus_;
+  std::vector<std::unique_ptr<ui::SimpleMenuModel>> custom_submenus_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderViewContextMenuBase);
 };

@@ -4,48 +4,47 @@
 
 #include "SmallCapsIterator.h"
 
-#include "wtf/PtrUtil.h"
 #include <unicode/utypes.h>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-SmallCapsIterator::SmallCapsIterator(const UChar* buffer, unsigned bufferSize)
-    : m_utf16Iterator(wrapUnique(new UTF16TextIterator(buffer, bufferSize)))
-    , m_bufferSize(bufferSize)
-    , m_nextUChar32(0)
-    , m_atEnd(bufferSize == 0)
-    , m_currentSmallCapsBehavior(SmallCapsInvalid)
-{
-}
+SmallCapsIterator::SmallCapsIterator(const UChar* buffer, unsigned buffer_size)
+    : utf16_iterator_(WTF::MakeUnique<UTF16TextIterator>(buffer, buffer_size)),
+      buffer_size_(buffer_size),
+      next_u_char32_(0),
+      at_end_(buffer_size == 0),
+      current_small_caps_behavior_(kSmallCapsInvalid) {}
 
-bool SmallCapsIterator::consume(unsigned *capsLimit, SmallCapsBehavior* smallCapsBehavior)
-{
-    if (m_atEnd)
-        return false;
+bool SmallCapsIterator::Consume(unsigned* caps_limit,
+                                SmallCapsBehavior* small_caps_behavior) {
+  if (at_end_)
+    return false;
 
-    while (m_utf16Iterator->consume(m_nextUChar32)) {
-        m_previousSmallCapsBehavior = m_currentSmallCapsBehavior;
-        // Skipping over combining marks, as these combine with the small-caps
-        // uppercased text as well and we do not need to split by their
-        // individual case-ness.
-        if (!u_getCombiningClass(m_nextUChar32)) {
-            m_currentSmallCapsBehavior = u_hasBinaryProperty(m_nextUChar32, UCHAR_CHANGES_WHEN_UPPERCASED)
-                ? SmallCapsUppercaseNeeded
-                : SmallCapsSameCase;
-        }
-
-        if (m_previousSmallCapsBehavior != m_currentSmallCapsBehavior
-            && m_previousSmallCapsBehavior != SmallCapsInvalid) {
-            *capsLimit = m_utf16Iterator->offset();
-            *smallCapsBehavior = m_previousSmallCapsBehavior;
-            return true;
-        }
-        m_utf16Iterator->advance();
+  while (utf16_iterator_->Consume(next_u_char32_)) {
+    previous_small_caps_behavior_ = current_small_caps_behavior_;
+    // Skipping over combining marks, as these combine with the small-caps
+    // uppercased text as well and we do not need to split by their
+    // individual case-ness.
+    if (!u_getCombiningClass(next_u_char32_)) {
+      current_small_caps_behavior_ =
+          u_hasBinaryProperty(next_u_char32_, UCHAR_CHANGES_WHEN_UPPERCASED)
+              ? kSmallCapsUppercaseNeeded
+              : kSmallCapsSameCase;
     }
-    *capsLimit = m_bufferSize;
-    *smallCapsBehavior = m_currentSmallCapsBehavior;
-    m_atEnd = true;
-    return true;
+
+    if (previous_small_caps_behavior_ != current_small_caps_behavior_ &&
+        previous_small_caps_behavior_ != kSmallCapsInvalid) {
+      *caps_limit = utf16_iterator_->Offset();
+      *small_caps_behavior = previous_small_caps_behavior_;
+      return true;
+    }
+    utf16_iterator_->Advance();
+  }
+  *caps_limit = buffer_size_;
+  *small_caps_behavior = current_small_caps_behavior_;
+  at_end_ = true;
+  return true;
 }
 
-} // namespace blink
+}  // namespace blink

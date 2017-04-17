@@ -20,9 +20,9 @@
 #ifndef SVGResourcesCycleSolver_h
 #define SVGResourcesCycleSolver_h
 
-#include "wtf/Allocator.h"
-#include "wtf/HashSet.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -31,27 +31,28 @@ class LayoutSVGResourceContainer;
 class SVGResources;
 
 class SVGResourcesCycleSolver {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(SVGResourcesCycleSolver);
-public:
-    SVGResourcesCycleSolver(LayoutObject*, SVGResources*);
-    ~SVGResourcesCycleSolver();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(SVGResourcesCycleSolver);
 
-    void resolveCycles();
+ public:
+  SVGResourcesCycleSolver(LayoutObject*, SVGResources*);
+  ~SVGResourcesCycleSolver();
 
-    typedef HashSet<LayoutSVGResourceContainer*> ResourceSet;
+  void ResolveCycles();
 
-private:
-    bool resourceContainsCycles(LayoutSVGResourceContainer*);
-    void breakCycle(LayoutSVGResourceContainer*);
+  typedef HashSet<LayoutSVGResourceContainer*> ResourceSet;
 
-    LayoutObject* m_layoutObject;
-    SVGResources* m_resources;
+ private:
+  bool ResourceContainsCycles(LayoutSVGResourceContainer*);
+  void BreakCycle(LayoutSVGResourceContainer*);
 
-    ResourceSet m_activeResources;
-    ResourceSet m_dagCache;
+  LayoutObject* layout_object_;
+  SVGResources* resources_;
+
+  ResourceSet active_resources_;
+  ResourceSet dag_cache_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

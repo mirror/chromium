@@ -22,7 +22,6 @@
 #define SVGLineElement_h
 
 #include "core/SVGNames.h"
-#include "core/svg/SVGAnimatedBoolean.h"
 #include "core/svg/SVGAnimatedLength.h"
 #include "core/svg/SVGGeometryElement.h"
 #include "platform/heap/Handle.h"
@@ -30,32 +29,33 @@
 namespace blink {
 
 class SVGLineElement final : public SVGGeometryElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGLineElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    Path asPath() const override;
+ public:
+  DECLARE_NODE_FACTORY(SVGLineElement);
 
-    SVGAnimatedLength* x1() const { return m_x1.get(); }
-    SVGAnimatedLength* y1() const { return m_y1.get(); }
-    SVGAnimatedLength* x2() const { return m_x2.get(); }
-    SVGAnimatedLength* y2() const { return m_y2.get(); }
+  Path AsPath() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedLength* x1() const { return x1_.Get(); }
+  SVGAnimatedLength* y1() const { return y1_.Get(); }
+  SVGAnimatedLength* x2() const { return x2_.Get(); }
+  SVGAnimatedLength* y2() const { return y2_.Get(); }
 
-private:
-    explicit SVGLineElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    void svgAttributeChanged(const QualifiedName&) override;
+ private:
+  explicit SVGLineElement(Document&);
 
-    bool selfHasRelativeLengths() const override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    Member<SVGAnimatedLength> m_x1;
-    Member<SVGAnimatedLength> m_y1;
-    Member<SVGAnimatedLength> m_x2;
-    Member<SVGAnimatedLength> m_y2;
+  bool SelfHasRelativeLengths() const override;
+
+  Member<SVGAnimatedLength> x1_;
+  Member<SVGAnimatedLength> y1_;
+  Member<SVGAnimatedLength> x2_;
+  Member<SVGAnimatedLength> y2_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGLineElement_h
+#endif  // SVGLineElement_h

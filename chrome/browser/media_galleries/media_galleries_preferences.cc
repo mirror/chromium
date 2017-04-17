@@ -13,6 +13,7 @@
 #include "base/callback.h"
 #include "base/i18n/time_formatting.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/stl_util.h"
 #include "base/strings/string16.h"
@@ -284,9 +285,9 @@ bool PopulateGalleryPrefInfoFromDictionary(
   return true;
 }
 
-base::DictionaryValue* CreateGalleryPrefInfoDictionary(
+std::unique_ptr<base::DictionaryValue> CreateGalleryPrefInfoDictionary(
     const MediaGalleryPrefInfo& gallery) {
-  base::DictionaryValue* dict = new base::DictionaryValue();
+  auto dict = base::MakeUnique<base::DictionaryValue>();
   dict->SetString(kMediaGalleriesPrefIdKey,
                   base::Uint64ToString(gallery.pref_id));
   dict->SetString(kMediaGalleriesDeviceIdKey, gallery.device_id);
@@ -620,7 +621,7 @@ bool MediaGalleriesPreferences::UpdateDeviceIDForSingletonType(
        iter != list->end(); ++iter) {
     // All of these calls should succeed, but preferences file can be corrupt.
     base::DictionaryValue* dict;
-    if (!(*iter)->GetAsDictionary(&dict))
+    if (!iter->GetAsDictionary(&dict))
       continue;
     std::string this_device_id;
     if (!dict->GetString(kMediaGalleriesDeviceIdKey, &this_device_id))
@@ -637,9 +638,8 @@ bool MediaGalleriesPreferences::UpdateDeviceIDForSingletonType(
       InitFromPrefs();
       MediaGalleryPrefId pref_id;
       if (GetPrefId(*dict, &pref_id)) {
-        FOR_EACH_OBSERVER(GalleryChangeObserver,
-                          gallery_change_observers_,
-                          OnGalleryInfoUpdated(this, pref_id));
+        for (auto& observer : gallery_change_observers_)
+          observer.OnGalleryInfoUpdated(this, pref_id);
       }
       return true;
     }
@@ -713,7 +713,7 @@ void MediaGalleriesPreferences::InitFromPrefs() {
     for (base::ListValue::const_iterator it = list->begin();
          it != list->end(); ++it) {
       const base::DictionaryValue* dict = NULL;
-      if (!(*it)->GetAsDictionary(&dict))
+      if (!it->GetAsDictionary(&dict))
         continue;
 
       MediaGalleryPrefInfo gallery_info;
@@ -826,7 +826,7 @@ base::FilePath MediaGalleriesPreferences::LookUpGalleryPathForExtension(
   DCHECK(IsInitialized());
   DCHECK(extension);
   if (!include_unpermitted_galleries &&
-      !ContainsKey(GalleriesForExtension(*extension), gallery_id))
+      !base::ContainsKey(GalleriesForExtension(*extension), gallery_id))
     return base::FilePath();
 
   MediaGalleriesPrefInfoMap::const_iterator it =
@@ -957,13 +957,11 @@ MediaGalleryPrefId MediaGalleriesPreferences::AddOrUpdateGalleryInternal(
         new ListPrefUpdate(prefs, prefs::kMediaGalleriesRememberedGalleries));
     base::ListValue* list = update->Get();
 
-    for (base::ListValue::const_iterator list_iter = list->begin();
-         list_iter != list->end();
-         ++list_iter) {
+    for (base::ListValue::iterator list_iter = list->begin();
+         list_iter != list->end(); ++list_iter) {
       base::DictionaryValue* dict;
       MediaGalleryPrefId iter_id;
-      if ((*list_iter)->GetAsDictionary(&dict) &&
-          GetPrefId(*dict, &iter_id) &&
+      if (list_iter->GetAsDictionary(&dict) && GetPrefId(*dict, &iter_id) &&
           *pref_id_it == iter_id) {
         if (update_gallery_type)
           dict->SetString(kMediaGalleriesTypeKey, TypeToStringValue(new_type));
@@ -996,8 +994,8 @@ MediaGalleryPrefId MediaGalleriesPreferences::AddOrUpdateGalleryInternal(
     update.reset();
 
     InitFromPrefs();
-    FOR_EACH_OBSERVER(GalleryChangeObserver, gallery_change_observers_,
-                      OnGalleryInfoUpdated(this, *pref_id_it));
+    for (auto& observer : gallery_change_observers_)
+      observer.OnGalleryInfoUpdated(this, *pref_id_it);
     return *pref_id_it;
   }
 
@@ -1028,9 +1026,8 @@ MediaGalleryPrefId MediaGalleriesPreferences::AddOrUpdateGalleryInternal(
     list->Append(CreateGalleryPrefInfoDictionary(gallery_info));
   }
   InitFromPrefs();
-  FOR_EACH_OBSERVER(GalleryChangeObserver,
-                    gallery_change_observers_,
-                    OnGalleryAdded(this, gallery_info.pref_id));
+  for (auto& observer : gallery_change_observers_)
+    observer.OnGalleryAdded(this, gallery_info.pref_id);
 
   return gallery_info.pref_id;
 }
@@ -1059,7 +1056,7 @@ void MediaGalleriesPreferences::UpdateDefaultGalleriesPaths() {
     base::DictionaryValue* dict;
     MediaGalleryPrefId pref_id;
 
-    if (!((*iter)->GetAsDictionary(&dict) && GetPrefId(*dict, &pref_id)))
+    if (!(iter->GetAsDictionary(&dict) && GetPrefId(*dict, &pref_id)))
       continue;
 
     std::string default_gallery_type_string;
@@ -1104,9 +1101,8 @@ void MediaGalleriesPreferences::UpdateDefaultGalleriesPaths() {
   for (std::vector<MediaGalleryPrefId>::iterator iter = pref_ids.begin();
        iter != pref_ids.end();
        ++iter) {
-    FOR_EACH_OBSERVER(GalleryChangeObserver,
-                      gallery_change_observers_,
-                      OnGalleryInfoUpdated(this, *iter));
+    for (auto& observer : gallery_change_observers_)
+      observer.OnGalleryInfoUpdated(this, *iter);
   }
 }
 
@@ -1150,14 +1146,14 @@ void MediaGalleriesPreferences::EraseOrBlacklistGalleryById(
       new ListPrefUpdate(prefs, prefs::kMediaGalleriesRememberedGalleries));
   base::ListValue* list = update->Get();
 
-  if (!ContainsKey(known_galleries_, id))
+  if (!base::ContainsKey(known_galleries_, id))
     return;
 
   for (base::ListValue::iterator iter = list->begin();
        iter != list->end(); ++iter) {
     base::DictionaryValue* dict;
     MediaGalleryPrefId iter_id;
-    if ((*iter)->GetAsDictionary(&dict) && GetPrefId(*dict, &iter_id) &&
+    if (iter->GetAsDictionary(&dict) && GetPrefId(*dict, &iter_id) &&
         id == iter_id) {
       RemoveGalleryPermissionsFromPrefs(id);
       MediaGalleryPrefInfo::Type type;
@@ -1180,9 +1176,8 @@ void MediaGalleriesPreferences::EraseOrBlacklistGalleryById(
       update.reset(NULL);  // commits the update.
 
       InitFromPrefs();
-      FOR_EACH_OBSERVER(GalleryChangeObserver,
-                        gallery_change_observers_,
-                        OnGalleryRemoved(this, id));
+      for (auto& observer : gallery_change_observers_)
+        observer.OnGalleryRemoved(this, id);
       return;
     }
   }
@@ -1191,7 +1186,7 @@ void MediaGalleriesPreferences::EraseOrBlacklistGalleryById(
 bool MediaGalleriesPreferences::NonAutoGalleryHasPermission(
     MediaGalleryPrefId id) const {
   DCHECK(IsInitialized());
-  DCHECK(!ContainsKey(known_galleries_, id) ||
+  DCHECK(!base::ContainsKey(known_galleries_, id) ||
          known_galleries_.find(id)->second.type !=
              MediaGalleryPrefInfo::kAutoDetected);
   ExtensionPrefs* prefs = GetExtensionPrefs();
@@ -1284,14 +1279,13 @@ bool MediaGalleriesPreferences::SetGalleryPermissionForExtension(
     if (!SetGalleryPermissionInPrefs(extension.id(), pref_id, has_permission))
       return false;
   }
-  if (has_permission)
-    FOR_EACH_OBSERVER(GalleryChangeObserver,
-                      gallery_change_observers_,
-                      OnPermissionAdded(this, extension.id(), pref_id));
-  else
-    FOR_EACH_OBSERVER(GalleryChangeObserver,
-                      gallery_change_observers_,
-                      OnPermissionRemoved(this, extension.id(), pref_id));
+  if (has_permission) {
+    for (auto& observer : gallery_change_observers_)
+      observer.OnPermissionAdded(this, extension.id(), pref_id);
+  } else {
+    for (auto& observer : gallery_change_observers_)
+      observer.OnPermissionRemoved(this, extension.id(), pref_id);
+  }
   return true;
 }
 
@@ -1337,7 +1331,7 @@ bool MediaGalleriesPreferences::SetGalleryPermissionInPrefs(
     for (base::ListValue::iterator iter = permissions->begin();
          iter != permissions->end(); ++iter) {
       base::DictionaryValue* dict = NULL;
-      if (!(*iter)->GetAsDictionary(&dict))
+      if (!iter->GetAsDictionary(&dict))
         continue;
       MediaGalleryPermission perm;
       if (!GetMediaGalleryPermissionFromDictionary(dict, &perm))
@@ -1374,7 +1368,7 @@ bool MediaGalleriesPreferences::UnsetGalleryPermissionInPrefs(
   for (base::ListValue::iterator iter = permissions->begin();
        iter != permissions->end(); ++iter) {
     const base::DictionaryValue* dict = NULL;
-    if (!(*iter)->GetAsDictionary(&dict))
+    if (!iter->GetAsDictionary(&dict))
       continue;
     MediaGalleryPermission perm;
     if (!GetMediaGalleryPermissionFromDictionary(dict, &perm))
@@ -1401,8 +1395,8 @@ MediaGalleriesPreferences::GetGalleryPermissionsFromPrefs(
 
   for (base::ListValue::const_iterator iter = permissions->begin();
        iter != permissions->end(); ++iter) {
-    base::DictionaryValue* dict = NULL;
-    if (!(*iter)->GetAsDictionary(&dict))
+    const base::DictionaryValue* dict = NULL;
+    if (!iter->GetAsDictionary(&dict))
       continue;
     MediaGalleryPermission perm;
     if (!GetMediaGalleryPermissionFromDictionary(dict, &perm))

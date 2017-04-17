@@ -68,6 +68,7 @@ IndexedDBInternalsUI::IndexedDBInternalsUI(WebUI* web_ui)
   source->AddResourcePath("indexeddb_internals.css",
                           IDR_INDEXED_DB_INTERNALS_CSS);
   source->SetDefaultResource(IDR_INDEXED_DB_INTERNALS_HTML);
+  source->UseGzip(std::unordered_set<std::string>());
 
   BrowserContext* browser_context =
       web_ui->GetWebContents()->GetBrowserContext();
@@ -125,7 +126,7 @@ void IndexedDBInternalsUI::OnOriginsReady(
     const base::FilePath& path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   web_ui()->CallJavascriptFunctionUnsafe("indexeddb.onOriginsReady", *origins,
-                                         base::StringValue(path.value()));
+                                         base::Value(path.value()));
 }
 
 static void FindContext(const base::FilePath& partition_path,
@@ -231,8 +232,7 @@ void IndexedDBInternalsUI::DownloadOriginDataOnIndexedDBThread(
   // has completed.
   base::FilePath temp_path = temp_dir.Take();
 
-  std::string origin_id =
-      storage::GetIdentifierFromOrigin(GURL(origin.Serialize()));
+  std::string origin_id = storage::GetIdentifierFromOrigin(origin.GetURL());
   base::FilePath zip_path =
       temp_path.AppendASCII(origin_id).AddExtension(FILE_PATH_LITERAL("zip"));
 
@@ -270,9 +270,9 @@ void IndexedDBInternalsUI::OnForcedClose(const base::FilePath& partition_path,
                                          const Origin& origin,
                                          size_t connection_count) {
   web_ui()->CallJavascriptFunctionUnsafe(
-      "indexeddb.onForcedClose", base::StringValue(partition_path.value()),
-      base::StringValue(origin.Serialize()),
-      base::FundamentalValue(static_cast<double>(connection_count)));
+      "indexeddb.onForcedClose", base::Value(partition_path.value()),
+      base::Value(origin.Serialize()),
+      base::Value(static_cast<double>(connection_count)));
 }
 
 void IndexedDBInternalsUI::OnDownloadDataReady(
@@ -292,7 +292,7 @@ void IndexedDBInternalsUI::OnDownloadDataReady(
 
   const GURL referrer(web_ui()->GetWebContents()->GetLastCommittedURL());
   dl_params->set_referrer(content::Referrer::SanitizeForRequest(
-      url, content::Referrer(referrer, blink::WebReferrerPolicyDefault)));
+      url, content::Referrer(referrer, blink::kWebReferrerPolicyDefault)));
 
   // This is how to watch for the download to finish: first wait for it
   // to start, then attach a DownloadItem::Observer to observe the
@@ -358,10 +358,9 @@ void IndexedDBInternalsUI::OnDownloadStarted(
 
   item->AddObserver(new FileDeleter(temp_path));
   web_ui()->CallJavascriptFunctionUnsafe(
-      "indexeddb.onOriginDownloadReady",
-      base::StringValue(partition_path.value()),
-      base::StringValue(origin.Serialize()),
-      base::FundamentalValue(static_cast<double>(connection_count)));
+      "indexeddb.onOriginDownloadReady", base::Value(partition_path.value()),
+      base::Value(origin.Serialize()),
+      base::Value(static_cast<double>(connection_count)));
 }
 
 }  // namespace content

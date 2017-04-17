@@ -5,65 +5,66 @@
 #ifndef BackspaceStateMachine_h
 #define BackspaceStateMachine_h
 
+#include <iosfwd>
 #include "core/CoreExport.h"
 #include "core/editing/state_machines/TextSegmentationMachineState.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/Unicode.h"
-#include <iosfwd>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/Unicode.h"
 
 namespace blink {
 
 class CORE_EXPORT BackspaceStateMachine {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(BackspaceStateMachine);
-public:
-    BackspaceStateMachine();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(BackspaceStateMachine);
 
-    // Prepares by feeding preceding text.
-    // This method must not be called after feedFollowingCodeUnit().
-    TextSegmentationMachineState feedPrecedingCodeUnit(UChar codeUnit);
+ public:
+  BackspaceStateMachine();
 
-    // Tells the end of preceding text to the state machine.
-    TextSegmentationMachineState tellEndOfPrecedingText();
+  // Prepares by feeding preceding text.
+  // This method must not be called after feedFollowingCodeUnit().
+  TextSegmentationMachineState FeedPrecedingCodeUnit(UChar code_unit);
 
-    // Find boundary offset by feeding following text.
-    // This method must be called after feedPrecedingCodeUnit() returns
-    // NeedsFollowingCodeUnit.
-    TextSegmentationMachineState feedFollowingCodeUnit(UChar codeUnit);
+  // Tells the end of preceding text to the state machine.
+  TextSegmentationMachineState TellEndOfPrecedingText();
 
-    // Returns the next boundary offset. This method finalizes the state machine
-    // if it is not finished.
-    int finalizeAndGetBoundaryOffset();
+  // Find boundary offset by feeding following text.
+  // This method must be called after feedPrecedingCodeUnit() returns
+  // NeedsFollowingCodeUnit.
+  TextSegmentationMachineState FeedFollowingCodeUnit(UChar code_unit);
 
-    // Resets the internal state to the initial state.
-    void reset();
+  // Returns the next boundary offset. This method finalizes the state machine
+  // if it is not finished.
+  int FinalizeAndGetBoundaryOffset();
 
-private:
-    enum class BackspaceState;
-    friend std::ostream& operator<<(std::ostream&, BackspaceState);
+  // Resets the internal state to the initial state.
+  void Reset();
 
-    // Updates the internal state to the |newState| then return
-    // InternalState::NeedMoreCodeUnit.
-    TextSegmentationMachineState moveToNextState(BackspaceState newState);
+ private:
+  enum class BackspaceState;
+  friend std::ostream& operator<<(std::ostream&, BackspaceState);
 
-    // Update the internal state to BackspaceState::Finished, then return
-    // MachineState::Finished.
-    TextSegmentationMachineState finish();
+  // Updates the internal state to the |newState| then return
+  // InternalState::NeedMoreCodeUnit.
+  TextSegmentationMachineState MoveToNextState(BackspaceState new_state);
 
-    // Used for composing supplementary code point with surrogate pairs.
-    UChar m_trailSurrogate = 0;
+  // Update the internal state to BackspaceState::Finished, then return
+  // MachineState::Finished.
+  TextSegmentationMachineState Finish();
 
-    // The number of code units to be deleted.
-    int m_codeUnitsToBeDeleted = 0;
+  // Used for composing supplementary code point with surrogate pairs.
+  UChar trail_surrogate_ = 0;
 
-    // The length of the previously seen variation selector.
-    int m_lastSeenVSCodeUnits = 0;
+  // The number of code units to be deleted.
+  int code_units_to_be_deleted_ = 0;
 
-    // The internal state.
-    BackspaceState m_state;
+  // The length of the previously seen variation selector.
+  int last_seen_vs_code_units_ = 0;
+
+  // The internal state.
+  BackspaceState state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

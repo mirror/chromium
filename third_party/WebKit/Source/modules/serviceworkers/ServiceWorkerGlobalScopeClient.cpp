@@ -35,21 +35,23 @@
 
 namespace blink {
 
-const char* ServiceWorkerGlobalScopeClient::supplementName()
-{
-    return "ServiceWorkerGlobalScopeClient";
+const char* ServiceWorkerGlobalScopeClient::SupplementName() {
+  return "ServiceWorkerGlobalScopeClient";
 }
 
-ServiceWorkerGlobalScopeClient* ServiceWorkerGlobalScopeClient::from(ExecutionContext* context)
-{
-    WorkerClients* clients = toWorkerGlobalScope(context)->clients();
-    ASSERT(clients);
-    return static_cast<ServiceWorkerGlobalScopeClient*>(Supplement<WorkerClients>::from(clients, supplementName()));
+ServiceWorkerGlobalScopeClient* ServiceWorkerGlobalScopeClient::From(
+    ExecutionContext* context) {
+  WorkerClients* clients = ToWorkerGlobalScope(context)->Clients();
+  ASSERT(clients);
+  return static_cast<ServiceWorkerGlobalScopeClient*>(
+      Supplement<WorkerClients>::From(clients, SupplementName()));
 }
 
-void provideServiceWorkerGlobalScopeClientToWorker(WorkerClients* clients, ServiceWorkerGlobalScopeClient* client)
-{
-    clients->provideSupplement(ServiceWorkerGlobalScopeClient::supplementName(), client);
+void ProvideServiceWorkerGlobalScopeClientToWorker(
+    WorkerClients* clients,
+    ServiceWorkerGlobalScopeClient* client) {
+  clients->ProvideSupplement(ServiceWorkerGlobalScopeClient::SupplementName(),
+                             client);
 }
 
-} // namespace blink
+}  // namespace blink

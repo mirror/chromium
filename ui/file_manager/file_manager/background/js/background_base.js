@@ -12,12 +12,6 @@ var LaunchHandler;
  */
 function BackgroundBase() {
   /**
-   * Map of all currently open app windows. The key is an app ID.
-   * @type {Object<chrome.app.window.AppWindow>}
-   */
-  this.appWindows = {};
-
-  /**
    * Map of all currently open file dialogs. The key is an app ID.
    * @type {!Object<!Window>}
    */
@@ -44,20 +38,6 @@ function BackgroundBase() {
 }
 
 /**
- * Gets similar windows, it means with the same initial url.
- * @param {string} url URL that the obtained windows have.
- * @return {Array<chrome.app.window.AppWindow>} List of similar windows.
- */
-BackgroundBase.prototype.getSimilarWindows = function(url) {
-  var result = [];
-  for (var appID in this.appWindows) {
-    if (this.appWindows[appID].contentWindow.appInitialURL === url)
-      result.push(this.appWindows[appID]);
-  }
-  return result;
-};
-
-/**
  * Called when an app is launched.
  *
  * @param {!Object} launchData Launch data. See the manual of chrome.app.runtime
@@ -72,7 +52,7 @@ BackgroundBase.prototype.onLaunched_ = function(launchData) {
     // Volume list needs to be initialized (more precisely,
     // chrome.fileSystem.requestFileSystem needs to be called to grant access)
     // before resolveIsolatedEntries().
-    return VolumeManager.getInstance();
+    return volumeManagerFactory.getInstance();
   }).then(function() {
     var isolatedEntries = launchData.items.map(function(item) {
       return item.entry;

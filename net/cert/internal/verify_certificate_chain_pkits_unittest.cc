@@ -8,6 +8,7 @@
 #include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store.h"
 #include "net/der/input.h"
+#include "third_party/boringssl/src/include/openssl/pool.h"
 
 // Disable tests that require DSA signatures (DSA signatures are intentionally
 // unsupported). Custom versions of the DSA tests are defined below which expect
@@ -56,26 +57,36 @@ class VerifyCertificateChainPkitsTestDelegate {
     // PKITS lists chains from trust anchor to target, VerifyCertificateChain
     // takes them starting with the target and not including the trust anchor.
     std::vector<scoped_refptr<net::ParsedCertificate>> input_chain;
+    CertErrors parsing_errors;
     for (auto i = cert_ders.rbegin(); i != cert_ders.rend(); ++i) {
       if (!net::ParsedCertificate::CreateAndAddToVector(
-              reinterpret_cast<const uint8_t*>(i->data()), i->size(),
-              net::ParsedCertificate::DataSource::EXTERNAL_REFERENCE, {},
-              &input_chain)) {
-        ADD_FAILURE() << "cert failed to parse";
+              bssl::UniquePtr<CRYPTO_BUFFER>(
+                  CRYPTO_BUFFER_new(reinterpret_cast<const uint8_t*>(i->data()),
+                                    i->size(), nullptr)),
+              {}, &input_chain, &parsing_errors)) {
+        ADD_FAILURE() << "Cert failed to parse:\n"
+                      << parsing_errors.ToDebugString();
         return false;
       }
     }
 
-    TrustStore trust_store;
-    trust_store.AddTrustedCertificate(input_chain.back());
+    scoped_refptr<TrustAnchor> trust_anchor =
+        TrustAnchor::CreateFromCertificateNoConstraints(input_chain.back());
+    input_chain.pop_back();
 
     SimpleSignaturePolicy signature_policy(1024);
 
     // Run all tests at the time the PKITS was published.
     der::GeneralizedTime time = {2011, 4, 15, 0, 0, 0};
 
-    return VerifyCertificateChainAssumingTrustedRoot(input_chain, trust_store,
-                                                     &signature_policy, time);
+    CertPathErrors path_errors;
+    bool result = VerifyCertificateChain(input_chain, trust_anchor.get(),
+                                         &signature_policy, time,
+                                         KeyPurpose::ANY_EKU, &path_errors);
+
+    //  TODO(crbug.com/634443): Test errors on failure?
+    EXPECT_EQ(result, !path_errors.ContainsHighSeverityErrors());
+    return result;
   }
 };
 

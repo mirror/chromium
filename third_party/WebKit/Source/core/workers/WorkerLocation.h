@@ -31,34 +31,34 @@
 #include "core/dom/DOMURLUtilsReadOnly.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class WorkerLocation final : public GarbageCollectedFinalized<WorkerLocation>, public ScriptWrappable, public DOMURLUtilsReadOnly {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static WorkerLocation* create(const KURL& url)
-    {
-        return new WorkerLocation(url);
-    }
+class WorkerLocation final : public GarbageCollectedFinalized<WorkerLocation>,
+                             public ScriptWrappable,
+                             public DOMURLUtilsReadOnly {
+  DEFINE_WRAPPERTYPEINFO();
 
-    KURL url() const override { return m_url; }
-    String input() const override
-    {
-        NOTREACHED();
-        return String();
-    }
+ public:
+  static WorkerLocation* Create(const KURL& url) {
+    return new WorkerLocation(url);
+  }
 
-    DEFINE_INLINE_TRACE() { }
+  KURL Url() const override { return url_; }
+  String Input() const override {
+    NOTREACHED();
+    return String();
+  }
 
-private:
-    explicit WorkerLocation(const KURL& url)
-        : m_url(url) { }
+  DEFINE_INLINE_TRACE() {}
 
-    KURL m_url;
+ private:
+  explicit WorkerLocation(const KURL& url) : url_(url) {}
+
+  KURL url_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerLocation_h
+#endif  // WorkerLocation_h

@@ -23,7 +23,7 @@
 #include "components/policy/core/common/policy_service_impl.h"
 #include "components/policy/core/common/schema.h"
 #include "components/policy/core/common/schema_registry.h"
-#include "policy/policy_constants.h"
+#include "components/policy/policy_constants.h"
 #include "remoting/host/dns_blackhole_checker.h"
 #include "remoting/host/third_party_auth_config.h"
 #include "remoting/protocol/port_range.h"
@@ -195,6 +195,8 @@ PolicyWatcher::PolicyWatcher(
   default_values_->SetBoolean(key::kRemoteAccessHostAllowRelayedConnection,
                               true);
   default_values_->SetString(key::kRemoteAccessHostUdpPortRange, "");
+  default_values_->SetBoolean(
+      key::kRemoteAccessHostAllowUiAccessForRemoteAssistance, false);
 }
 
 PolicyWatcher::~PolicyWatcher() {
@@ -386,6 +388,11 @@ std::unique_ptr<PolicyWatcher> PolicyWatcher::Create(
 
   return PolicyWatcher::CreateFromPolicyLoader(std::move(policy_loader));
 #endif  // !(OS_CHROMEOS)
+}
+
+std::unique_ptr<PolicyWatcher> PolicyWatcher::CreateFromPolicyLoaderForTesting(
+    std::unique_ptr<policy::AsyncPolicyLoader> async_policy_loader) {
+  return CreateFromPolicyLoader(std::move(async_policy_loader));
 }
 
 }  // namespace remoting

@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Apple Inc. All rights
+ * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,62 +30,67 @@
 #include "base/macros.h"
 #include "core/editing/FrameSelection.h"
 #include "platform/LayoutUnit.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class SelectionModifier {
-    STACK_ALLOCATED();
-public:
-    using EAlteration = FrameSelection::EAlteration;
-    using VerticalDirection = FrameSelection::VerticalDirection;
+  STACK_ALLOCATED();
 
-    // |frame| is used for providing settings.
-    SelectionModifier(const LocalFrame& /* frame */, const VisibleSelection&, LayoutUnit);
-    SelectionModifier(const LocalFrame&, const VisibleSelection&);
+ public:
+  using EAlteration = FrameSelection::EAlteration;
+  using VerticalDirection = FrameSelection::VerticalDirection;
 
-    LayoutUnit xPosForVerticalArrowNavigation() const { return m_xPosForVerticalArrowNavigation; }
-    const VisibleSelection& selection() const { return m_selection; }
+  // |frame| is used for providing settings.
+  SelectionModifier(const LocalFrame& /* frame */,
+                    const VisibleSelection&,
+                    LayoutUnit);
+  SelectionModifier(const LocalFrame&, const VisibleSelection&);
 
-    bool modify(EAlteration, SelectionDirection, TextGranularity);
-    bool modifyWithPageGranularity(EAlteration, unsigned verticalDistance, VerticalDirection);
+  LayoutUnit XPosForVerticalArrowNavigation() const {
+    return x_pos_for_vertical_arrow_navigation_;
+  }
+  const VisibleSelection& Selection() const { return selection_; }
 
-    DECLARE_VIRTUAL_TRACE();
+  bool Modify(EAlteration, SelectionDirection, TextGranularity);
+  bool ModifyWithPageGranularity(EAlteration,
+                                 unsigned vertical_distance,
+                                 VerticalDirection);
 
-private:
-    // TODO(yosin): We should move |EPositionType| to "SelectionModifier.cpp",
-    // it is only used for implementing |modify()|.
-    // TODO(yosin) We should use capitalized name for |EPositionType|.
-    enum EPositionType { START, END, BASE, EXTENT }; // NOLINT
+ private:
+  // TODO(yosin): We should move |EPositionType| to "SelectionModifier.cpp",
+  // it is only used for implementing |modify()|.
+  // TODO(yosin) We should use capitalized name for |EPositionType|.
+  enum EPositionType { START, END, BASE, EXTENT };  // NOLINT
 
-    LocalFrame* frame() const { return m_frame; }
+  LocalFrame* GetFrame() const { return frame_; }
 
-    TextDirection directionOfEnclosingBlock() const;
-    TextDirection directionOfSelection() const;
-    VisiblePosition positionForPlatform(bool isGetStart) const;
-    VisiblePosition startForPlatform() const;
-    VisiblePosition endForPlatform() const;
-    LayoutUnit lineDirectionPointForBlockDirectionNavigation(EPositionType);
-    VisiblePosition modifyExtendingRight(TextGranularity);
-    VisiblePosition modifyExtendingForward(TextGranularity);
-    VisiblePosition modifyMovingRight(TextGranularity);
-    VisiblePosition modifyMovingForward(TextGranularity);
-    VisiblePosition modifyExtendingLeft(TextGranularity);
-    VisiblePosition modifyExtendingBackward(TextGranularity);
-    VisiblePosition modifyMovingLeft(TextGranularity);
-    VisiblePosition modifyMovingBackward(TextGranularity);
-    VisiblePosition nextWordPositionForPlatform(const VisiblePosition&);
-    void willBeModified(EAlteration, SelectionDirection);
+  static bool ShouldAlwaysUseDirectionalSelection(LocalFrame*);
+  TextDirection DirectionOfEnclosingBlock() const;
+  TextDirection DirectionOfSelection() const;
+  VisiblePosition PositionForPlatform(bool is_get_start) const;
+  VisiblePosition StartForPlatform() const;
+  VisiblePosition EndForPlatform() const;
+  LayoutUnit LineDirectionPointForBlockDirectionNavigation(EPositionType);
+  VisiblePosition ModifyExtendingRight(TextGranularity);
+  VisiblePosition ModifyExtendingForward(TextGranularity);
+  VisiblePosition ModifyMovingRight(TextGranularity);
+  VisiblePosition ModifyMovingForward(TextGranularity);
+  VisiblePosition ModifyExtendingLeft(TextGranularity);
+  VisiblePosition ModifyExtendingBackward(TextGranularity);
+  VisiblePosition ModifyMovingLeft(TextGranularity);
+  VisiblePosition ModifyMovingBackward(TextGranularity);
+  VisiblePosition NextWordPositionForPlatform(const VisiblePosition&);
 
-    Member<LocalFrame> m_frame;
-    VisibleSelection m_selection;
-    LayoutUnit m_xPosForVerticalArrowNavigation;
+  Member<LocalFrame> frame_;
+  VisibleSelection selection_;
+  LayoutUnit x_pos_for_vertical_arrow_navigation_;
 
-    DISALLOW_COPY_AND_ASSIGN(SelectionModifier);
+  DISALLOW_COPY_AND_ASSIGN(SelectionModifier);
 };
 
 LayoutUnit NoXPosForVerticalArrowNavigation();
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SelectionModifier_h
+#endif  // SelectionModifier_h

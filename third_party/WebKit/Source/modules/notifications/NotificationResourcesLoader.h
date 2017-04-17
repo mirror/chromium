@@ -5,16 +5,16 @@
 #ifndef NotificationResourcesLoader_h
 #define NotificationResourcesLoader_h
 
+#include <memory>
 #include "modules/ModulesExport.h"
 #include "modules/notifications/NotificationImageLoader.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/heap/ThreadState.h"
+#include "platform/wtf/Functional.h"
+#include "platform/wtf/Vector.h"
 #include "third_party/skia/include/core/SkBitmap.h"
-#include "wtf/Functional.h"
-#include "wtf/Vector.h"
-#include <memory>
 
 namespace blink {
 
@@ -24,53 +24,60 @@ struct WebNotificationResources;
 
 // Fetches the resources specified in a given WebNotificationData. Uses a
 // callback to notify the caller when all fetches have finished.
-class MODULES_EXPORT NotificationResourcesLoader final : public GarbageCollectedFinalized<NotificationResourcesLoader> {
-    USING_PRE_FINALIZER(NotificationResourcesLoader, stop);
-public:
-    // Called when all fetches have finished. Passes a pointer to the
-    // NotificationResourcesLoader so callers that use multiple loaders can use
-    // the same function to handle the callbacks.
-    using CompletionCallback = Function<void(NotificationResourcesLoader*)>;
+class MODULES_EXPORT NotificationResourcesLoader final
+    : public GarbageCollectedFinalized<NotificationResourcesLoader> {
+  USING_PRE_FINALIZER(NotificationResourcesLoader, Stop);
 
-    explicit NotificationResourcesLoader(std::unique_ptr<CompletionCallback>);
-    ~NotificationResourcesLoader();
+ public:
+  // Called when all fetches have finished. Passes a pointer to the
+  // NotificationResourcesLoader so callers that use multiple loaders can use
+  // the same function to handle the callbacks.
+  using CompletionCallback = Function<void(NotificationResourcesLoader*)>;
 
-    // Starts fetching the resources specified in the given WebNotificationData.
-    // If all the urls for the resources are empty or invalid,
-    // |m_completionCallback| will be run synchronously, otherwise it will be
-    // run asynchronously when all fetches have finished. Should not be called
-    // more than once.
-    void start(ExecutionContext*, const WebNotificationData&);
+  explicit NotificationResourcesLoader(std::unique_ptr<CompletionCallback>);
+  ~NotificationResourcesLoader();
 
-    // Returns a new WebNotificationResources populated with the resources that
-    // have been fetched.
-    std::unique_ptr<WebNotificationResources> getResources() const;
+  // Starts fetching the resources specified in the given WebNotificationData.
+  // If all the urls for the resources are empty or invalid,
+  // |m_completionCallback| will be run synchronously, otherwise it will be
+  // run asynchronously when all fetches have finished. Should not be called
+  // more than once.
+  void Start(ExecutionContext*, const WebNotificationData&);
 
-    // Stops every loader in |m_imageLoaders|. This is also used as the
-    // pre-finalizer.
-    void stop();
+  // Returns a new WebNotificationResources populated with the resources that
+  // have been fetched.
+  std::unique_ptr<WebNotificationResources> GetResources() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  // Stops every loader in |m_imageLoaders|. This is also used as the
+  // pre-finalizer.
+  void Stop();
 
-private:
-    void loadImage(ExecutionContext*, const KURL&, std::unique_ptr<NotificationImageLoader::ImageCallback>);
-    void didLoadIcon(const SkBitmap& image);
-    void didLoadBadge(const SkBitmap& image);
-    void didLoadActionIcon(size_t actionIndex, const SkBitmap& image);
+  DECLARE_VIRTUAL_TRACE();
 
-    // Decrements |m_pendingRequestCount| and runs |m_completionCallback| if
-    // there are no more pending requests.
-    void didFinishRequest();
+ private:
+  void LoadImage(ExecutionContext*,
+                 NotificationImageLoader::Type,
+                 const KURL&,
+                 std::unique_ptr<NotificationImageLoader::ImageCallback>);
+  void DidLoadImage(const SkBitmap& image);
+  void DidLoadIcon(const SkBitmap& image);
+  void DidLoadBadge(const SkBitmap& image);
+  void DidLoadActionIcon(size_t action_index, const SkBitmap& image);
 
-    bool m_started;
-    std::unique_ptr<CompletionCallback> m_completionCallback;
-    int m_pendingRequestCount;
-    HeapVector<Member<NotificationImageLoader>> m_imageLoaders;
-    SkBitmap m_icon;
-    SkBitmap m_badge;
-    Vector<SkBitmap> m_actionIcons;
+  // Decrements |m_pendingRequestCount| and runs |m_completionCallback| if
+  // there are no more pending requests.
+  void DidFinishRequest();
+
+  bool started_;
+  std::unique_ptr<CompletionCallback> completion_callback_;
+  int pending_request_count_;
+  HeapVector<Member<NotificationImageLoader>> image_loaders_;
+  SkBitmap image_;
+  SkBitmap icon_;
+  SkBitmap badge_;
+  Vector<SkBitmap> action_icons_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NotificationResourcesLoader_h
+#endif  // NotificationResourcesLoader_h

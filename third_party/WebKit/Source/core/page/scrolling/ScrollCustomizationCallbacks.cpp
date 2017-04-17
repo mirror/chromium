@@ -8,35 +8,36 @@
 
 namespace blink {
 
-void ScrollCustomizationCallbacks::setDistributeScroll(Element* element, ScrollStateCallback* scrollStateCallback)
-{
-    m_distributeScrollCallbacks.set(element, scrollStateCallback);
+void ScrollCustomizationCallbacks::SetDistributeScroll(
+    Element* element,
+    ScrollStateCallback* scroll_state_callback) {
+  distribute_scroll_callbacks_.Set(element, scroll_state_callback);
 }
 
-ScrollStateCallback* ScrollCustomizationCallbacks::getDistributeScroll(Element* element)
-{
-    auto it = m_distributeScrollCallbacks.find(element);
-    if (it == m_distributeScrollCallbacks.end())
-        return nullptr;
-    return it->value.get();
+ScrollStateCallback* ScrollCustomizationCallbacks::GetDistributeScroll(
+    Element* element) {
+  auto it = distribute_scroll_callbacks_.Find(element);
+  if (it == distribute_scroll_callbacks_.end())
+    return nullptr;
+  return it->value.Get();
 }
 
-void ScrollCustomizationCallbacks::setApplyScroll(Element* element, ScrollStateCallback* scrollStateCallback)
-{
-    m_applyScrollCallbacks.set(element, scrollStateCallback);
+void ScrollCustomizationCallbacks::SetApplyScroll(
+    Element* element,
+    ScrollStateCallback* scroll_state_callback) {
+  apply_scroll_callbacks_.Set(element, scroll_state_callback);
 }
 
-void ScrollCustomizationCallbacks::removeApplyScroll(Element* element)
-{
-    m_applyScrollCallbacks.remove(element);
+void ScrollCustomizationCallbacks::RemoveApplyScroll(Element* element) {
+  apply_scroll_callbacks_.erase(element);
 }
 
-ScrollStateCallback* ScrollCustomizationCallbacks::getApplyScroll(Element* element)
-{
-    auto it = m_applyScrollCallbacks.find(element);
-    if (it == m_applyScrollCallbacks.end())
-        return nullptr;
-    return it->value.get();
+ScrollStateCallback* ScrollCustomizationCallbacks::GetApplyScroll(
+    Element* element) {
+  auto it = apply_scroll_callbacks_.Find(element);
+  if (it == apply_scroll_callbacks_.end())
+    return nullptr;
+  return it->value.Get();
 }
 
-} // namespace blink
+}  // namespace blink

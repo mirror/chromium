@@ -7,13 +7,14 @@
 #include <stdint.h>
 
 #include <memory>
+#include <string>
 #include <utility>
-#include <vector>
 
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -21,8 +22,8 @@
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/policy/core/common/cloud/policy_builder.h"
 #include "components/policy/core/common/policy_switches.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 #include "crypto/rsa_private_key.h"
-#include "policy/proto/device_management_backend.pb.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -45,10 +46,12 @@ class CloudPolicyValidatorTest : public testing::Test {
       : timestamp_(base::Time::UnixEpoch() +
                    base::TimeDelta::FromMilliseconds(
                        PolicyBuilder::kFakeTimestamp)),
-        timestamp_option_(CloudPolicyValidatorBase::TIMESTAMP_REQUIRED),
-        ignore_missing_dm_token_(CloudPolicyValidatorBase::DM_TOKEN_REQUIRED),
+        timestamp_option_(CloudPolicyValidatorBase::TIMESTAMP_FULLY_VALIDATED),
+        dm_token_option_(CloudPolicyValidatorBase::DM_TOKEN_REQUIRED),
+        device_id_option_(CloudPolicyValidatorBase::DEVICE_ID_REQUIRED),
         allow_key_rotation_(true),
         existing_dm_token_(PolicyBuilder::kFakeToken),
+        existing_device_id_(PolicyBuilder::kFakeDeviceId),
         owning_domain_(PolicyBuilder::kFakeDomain),
         cached_key_signature_(PolicyBuilder::GetTestSigningKeySignature()) {
     policy_.SetDefaultNewSigningKey();
@@ -72,22 +75,14 @@ class CloudPolicyValidatorTest : public testing::Test {
     validator.release()->StartValidation(
         base::Bind(&CloudPolicyValidatorTest::ValidationCompletion,
                    base::Unretained(this)));
-    loop_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
     Mock::VerifyAndClearExpectations(this);
   }
 
   std::unique_ptr<UserCloudPolicyValidator> CreateValidator(
       std::unique_ptr<em::PolicyFetchResponse> policy_response) {
-    std::vector<uint8_t> public_key_bytes;
-    EXPECT_TRUE(
-        PolicyBuilder::CreateTestSigningKey()->ExportPublicKey(
-            &public_key_bytes));
-
-    // Convert from bytes to string format (which is what ValidateSignature()
-    // takes).
-    std::string public_key =
-        std::string(reinterpret_cast<const char*>(public_key_bytes.data()),
-                    public_key_bytes.size());
+    std::string public_key = PolicyBuilder::GetPublicTestKeyAsString();
+    EXPECT_FALSE(public_key.empty());
 
     UserCloudPolicyValidator* validator = UserCloudPolicyValidator::Create(
         std::move(policy_response), base::ThreadTaskRunnerHandle::Get());
@@ -96,19 +91,19 @@ class CloudPolicyValidatorTest : public testing::Test {
     validator->ValidateUsername(PolicyBuilder::kFakeUsername, true);
     if (!owning_domain_.empty())
       validator->ValidateDomain(owning_domain_);
-    validator->ValidateDMToken(existing_dm_token_, ignore_missing_dm_token_);
+    validator->ValidateDMToken(existing_dm_token_, dm_token_option_);
+    validator->ValidateDeviceId(existing_device_id_, device_id_option_);
     validator->ValidatePolicyType(dm_protocol::kChromeUserPolicyType);
     validator->ValidatePayload();
     validator->ValidateCachedKey(public_key,
                                  cached_key_signature_,
-                                 GetPolicyVerificationKey(),
                                  owning_domain_);
-    validator->ValidateSignature(public_key,
-                                 GetPolicyVerificationKey(),
-                                 owning_domain_,
-                                 allow_key_rotation_);
-    if (allow_key_rotation_)
-      validator->ValidateInitialKey(GetPolicyVerificationKey(), owning_domain_);
+    if (allow_key_rotation_) {
+      validator->ValidateSignatureAllowingRotation(public_key, owning_domain_);
+      validator->ValidateInitialKey(owning_domain_);
+    } else {
+      validator->ValidateSignature(public_key);
+    }
     return base::WrapUnique(validator);
   }
 
@@ -126,10 +121,12 @@ class CloudPolicyValidatorTest : public testing::Test {
   base::MessageLoopForUI loop_;
   base::Time timestamp_;
   CloudPolicyValidatorBase::ValidateTimestampOption timestamp_option_;
-  CloudPolicyValidatorBase::ValidateDMTokenOption ignore_missing_dm_token_;
+  CloudPolicyValidatorBase::ValidateDMTokenOption dm_token_option_;
+  CloudPolicyValidatorBase::ValidateDeviceIdOption device_id_option_;
   std::string signing_key_;
   bool allow_key_rotation_;
   std::string existing_dm_token_;
+  std::string existing_device_id_;
   std::string owning_domain_;
   std::string cached_key_signature_;
 
@@ -162,7 +159,20 @@ TEST_F(CloudPolicyValidatorTest, SuccessfulRunValidationWithNoExistingDMToken) {
 TEST_F(CloudPolicyValidatorTest, SuccessfulRunValidationWithNoDMTokens) {
   existing_dm_token_.clear();
   policy_.policy_data().clear_request_token();
-  ignore_missing_dm_token_ = CloudPolicyValidatorBase::DM_TOKEN_NOT_REQUIRED;
+  dm_token_option_ = CloudPolicyValidatorBase::DM_TOKEN_NOT_REQUIRED;
+  Validate(Invoke(this, &CloudPolicyValidatorTest::CheckSuccessfulValidation));
+}
+
+TEST_F(CloudPolicyValidatorTest,
+       SuccessfulRunValidationWithNoExistingDeviceId) {
+  existing_device_id_.clear();
+  Validate(Invoke(this, &CloudPolicyValidatorTest::CheckSuccessfulValidation));
+}
+
+TEST_F(CloudPolicyValidatorTest, SuccessfulRunValidationWithNoDeviceId) {
+  existing_device_id_.clear();
+  policy_.policy_data().clear_device_id();
+  device_id_option_ = CloudPolicyValidatorBase::DEVICE_ID_NOT_REQUIRED;
   Validate(Invoke(this, &CloudPolicyValidatorTest::CheckSuccessfulValidation));
 }
 
@@ -188,7 +198,7 @@ TEST_F(CloudPolicyValidatorTest, ErrorNoTimestamp) {
 }
 
 TEST_F(CloudPolicyValidatorTest, IgnoreMissingTimestamp) {
-  timestamp_option_ = CloudPolicyValidatorBase::TIMESTAMP_NOT_REQUIRED;
+  timestamp_option_ = CloudPolicyValidatorBase::TIMESTAMP_NOT_VALIDATED;
   policy_.policy_data().clear_timestamp();
   Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_OK));
 }
@@ -216,30 +226,56 @@ TEST_F(CloudPolicyValidatorTest, IgnoreErrorTimestampFromTheFuture) {
   Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_OK));
 }
 
-TEST_F(CloudPolicyValidatorTest, ErrorNoRequestToken) {
+TEST_F(CloudPolicyValidatorTest, ErrorNoDMToken) {
   policy_.policy_data().clear_request_token();
-  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_WRONG_TOKEN));
+  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_BAD_DM_TOKEN));
 }
 
-TEST_F(CloudPolicyValidatorTest, ErrorNoRequestTokenNotRequired) {
-  // Even though DMTokens are not required, if the existing policy has a token,
+TEST_F(CloudPolicyValidatorTest, ErrorNoDMTokenNotRequired) {
+  // Even though DM tokens are not required, if the existing policy has a token,
   // we should still generate an error if the new policy has none.
   policy_.policy_data().clear_request_token();
-  ignore_missing_dm_token_ = CloudPolicyValidatorBase::DM_TOKEN_NOT_REQUIRED;
-  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_WRONG_TOKEN));
+  dm_token_option_ = CloudPolicyValidatorBase::DM_TOKEN_NOT_REQUIRED;
+  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_BAD_DM_TOKEN));
 }
 
-TEST_F(CloudPolicyValidatorTest, ErrorNoRequestTokenNoTokenPassed) {
+TEST_F(CloudPolicyValidatorTest, ErrorNoDMTokenNoTokenPassed) {
   // Mimic the first fetch of policy (no existing DM token) - should still
-  // complain about not having any DMToken.
+  // complain about not having any DM token.
   existing_dm_token_.clear();
   policy_.policy_data().clear_request_token();
-  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_WRONG_TOKEN));
+  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_BAD_DM_TOKEN));
 }
 
-TEST_F(CloudPolicyValidatorTest, ErrorInvalidRequestToken) {
+TEST_F(CloudPolicyValidatorTest, ErrorInvalidDMToken) {
   policy_.policy_data().set_request_token("invalid");
-  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_WRONG_TOKEN));
+  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_BAD_DM_TOKEN));
+}
+
+TEST_F(CloudPolicyValidatorTest, ErrorNoDeviceId) {
+  policy_.policy_data().clear_device_id();
+  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_BAD_DEVICE_ID));
+}
+
+TEST_F(CloudPolicyValidatorTest, ErrorNoDeviceIdNotRequired) {
+  // Even though device ids are not required, if the existing policy has a
+  // device id, we should still generate an error if the new policy has none.
+  policy_.policy_data().clear_device_id();
+  device_id_option_ = CloudPolicyValidatorBase::DEVICE_ID_NOT_REQUIRED;
+  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_BAD_DEVICE_ID));
+}
+
+TEST_F(CloudPolicyValidatorTest, ErrorNoDeviceIdNoDeviceIdPassed) {
+  // Mimic the first fetch of policy (no existing device id) - should still
+  // complain about not having any device id.
+  existing_device_id_.clear();
+  policy_.policy_data().clear_device_id();
+  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_BAD_DEVICE_ID));
+}
+
+TEST_F(CloudPolicyValidatorTest, ErrorInvalidDeviceId) {
+  policy_.policy_data().set_device_id("invalid");
+  Validate(CheckStatus(CloudPolicyValidatorBase::VALIDATION_BAD_DEVICE_ID));
 }
 
 TEST_F(CloudPolicyValidatorTest, ErrorNoPolicyValue) {
@@ -324,7 +360,8 @@ TEST_F(CloudPolicyValidatorTest, ErrorInvalidPublicKeySignature) {
 // (http://crbug.com/328038).
 TEST_F(CloudPolicyValidatorTest, ErrorInvalidPublicKeyVerificationSignature) {
   policy_.Build();
-  policy_.policy().set_new_public_key_verification_signature("invalid");
+  policy_.policy().set_new_public_key_verification_signature_deprecated(
+      "invalid");
   ValidatePolicy(CheckStatus(
       CloudPolicyValidatorBase::VALIDATION_BAD_KEY_VERIFICATION_SIGNATURE),
                  policy_.GetCopy());

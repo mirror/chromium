@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
+#include "mojo/public/cpp/system/data_pipe.h"
 
 namespace net {
 struct RedirectInfo;
@@ -19,7 +20,9 @@ namespace content {
 
 class NavigationData;
 class StreamHandle;
+struct GlobalRequestID;
 struct ResourceResponse;
+struct SSLStatus;
 
 // PlzNavigate: The delegate interface to NavigationURLLoader.
 class CONTENT_EXPORT NavigationURLLoaderDelegate {
@@ -33,10 +36,17 @@ class CONTENT_EXPORT NavigationURLLoaderDelegate {
   // Called when the request receives its response. No further calls will be
   // made to the delegate. The response body is returned as a stream in
   // |body_stream|. |navigation_data| is passed to the NavigationHandle.
+  // If --enable-network-service, then |consumer_handle| will be used,
+  // otherwise |body_stream|. Only one of these will ever be non-null.
   virtual void OnResponseStarted(
       const scoped_refptr<ResourceResponse>& response,
       std::unique_ptr<StreamHandle> body_stream,
-      std::unique_ptr<NavigationData> navigation_data) = 0;
+      mojo::ScopedDataPipeConsumerHandle consumer_handle,
+      const SSLStatus& ssl_status,
+      std::unique_ptr<NavigationData> navigation_data,
+      const GlobalRequestID& request_id,
+      bool is_download,
+      bool is_stream) = 0;
 
   // Called if the request fails before receving a response. |net_error| is a
   // network error code for the failure. |has_stale_copy_in_cache| is true if
@@ -48,9 +58,6 @@ class CONTENT_EXPORT NavigationURLLoaderDelegate {
   // against the pre-PlzNavigate codepath which didn't start the network request
   // until after the renderer was initialized.
   virtual void OnRequestStarted(base::TimeTicks timestamp) = 0;
-
-  // Called when a ServiceWorker was found for the navigation.
-  virtual void OnServiceWorkerEncountered() = 0;
 
  protected:
   NavigationURLLoaderDelegate() {}

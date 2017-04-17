@@ -123,13 +123,6 @@ void BlobURLRequestJob::GetResponseInfo(net::HttpResponseInfo* info) {
     *info = *response_info_;
 }
 
-int BlobURLRequestJob::GetResponseCode() const {
-  if (!response_info_)
-    return -1;
-
-  return response_info_->headers->response_code();
-}
-
 void BlobURLRequestJob::SetExtraRequestHeaders(
     const net::HttpRequestHeaders& headers) {
   std::string range_header;
@@ -167,6 +160,10 @@ void BlobURLRequestJob::DidStart() {
   // If the blob data is not present, bail out.
   if (!blob_handle_) {
     NotifyFailure(net::ERR_FILE_NOT_FOUND);
+    return;
+  }
+  if (blob_reader_->net_error()) {
+    NotifyFailure(blob_reader_->net_error());
     return;
   }
 
@@ -261,10 +258,16 @@ void BlobURLRequestJob::NotifyFailure(int error_code) {
     case net::ERR_REQUEST_RANGE_NOT_SATISFIABLE:
       status_code = net::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE;
       break;
+    case net::ERR_INVALID_ARGUMENT:
+      status_code = net::HTTP_BAD_REQUEST;
+      break;
+    case net::ERR_CACHE_READ_FAILURE:
+    case net::ERR_CACHE_CHECKSUM_READ_FAILURE:
+    case net::ERR_UNEXPECTED:
     case net::ERR_FAILED:
       break;
     default:
-      DCHECK(false);
+      DCHECK(false) << "Error code not supported: " << error_code;
       break;
   }
   HeadersCompleted(status_code);

@@ -12,16 +12,10 @@ GEN_INCLUDE(['settings_page_browsertest.js']);
 /**
  * @constructor
  * @extends {SettingsPageBrowserTest}
- *
- * @param {string} pageId 'basic' or 'advanced'.
- * @param {!Array<string>} subPages
-*/
-function SettingsSubPageBrowserTest(pageId, subPages) {
-  /** @type {string} */
-  this.pageId = pageId;
-
+ */
+function SettingsSubPageBrowserTest() {
   /** @type {!Array<string>} */
-  this.subPages = subPages;
+  this.subPages = [];
 }
 
 SettingsSubPageBrowserTest.prototype = {
@@ -36,27 +30,16 @@ SettingsSubPageBrowserTest.prototype = {
     settingsHidePagesByDefaultForTest = true;
   },
 
-  /** @override */
-  setUp: function() {
-    SettingsPageBrowserTest.prototype.setUp.call(this);
-    // Explicitly hide all of the pages (not strictly required but is more
-    // clear than relying on undefined -> hidden).
-    this.hideSubPages_();
-  },
-
   /*
-   * This will hide all subpages in |this.subPages|. Note: any existing subpages
-   * not listed in |this.subPages| will be shown.
+   * Checks all subpages are hidden first.
+   * @private
    */
-  hideSubPages_: function() {
-    var page = this.getPage(this.pageId);
-    var visibility = {};
-    this.subPages.forEach(function(subPage) {
-      visibility[subPage] = false;
-    });
+  verifySubPagesHidden_: function() {
+    var page = this.basicPage;
     assertEquals(0, Object.keys(page.pageVisibility).length);
-    page.pageVisibility = visibility;
-    // Ensure all pages are hidden.
+
+    // Ensure all pages are still hidden after the dom-ifs compute their |if|.
+    Polymer.dom.flush();
     var sections = page.shadowRoot.querySelectorAll('settings-section');
     assertTrue(!!sections);
     assertEquals(0, sections.length);
@@ -69,89 +52,95 @@ SettingsSubPageBrowserTest.prototype = {
    * @param {Node} page
    * @param {string} subpage
    */
-  testPage: function(page, subPage) {
+  testSubPage: function(page, subPage) {
     Polymer.dom.flush();
-    expectFalse(!!this.getSection(page, subPage));
+    assertFalse(!!this.getSection(page, subPage));
     var startTime = window.performance.now();
     page.set('pageVisibility.' + subPage, true);
     Polymer.dom.flush();
     var dtime = window.performance.now() - startTime;
     console.log('Page: ' + subPage + ' Load time: ' + dtime.toFixed(0) + ' ms');
-    expectTrue(!!this.getSection(page, subPage));
+    assertTrue(!!this.getSection(page, subPage));
     // Hide the page so that it doesn't interfere with other subPages.
     page.set('pageVisibility.' + subPage, false);
     Polymer.dom.flush();
   },
 
   testSubPages: function() {
-    Polymer.dom.flush();
-    var page = this.getPage(this.pageId);
     this.subPages.forEach(function(subPage) {
-      if (this.includePage(subPage))
-        test(subPage, this.testPage.bind(this, page, subPage));
+      test(subPage, function() {
+        this.testSubPage(this.basicPage, subPage);
+      }.bind(this));
     }.bind(this));
-  },
-
-  /**
-   * @param {string} id
-   * @return {boolean}
-   */
-  includePage: function(id) {
-    if (cr.isChromeOS)
-      return id != 'people' && id != 'defaultBrowser';
-    return id != 'internet' && id != 'users' && id != 'device' &&
-           id != 'dateTime' && id != 'bluetooth' && id != 'a11y';
   },
 };
 
 /** @constructor @extends {SettingsSubPageBrowserTest} */
 function SettingsBasicSubPageBrowserTest() {
-  var subPages = [
+  SettingsSubPageBrowserTest.call(this, 'basic');
+
+  /** @override */
+  this.subPages = [
     'people',
-    'internet',
     'appearance',
     'onStartup',
     'search',
-    'defaultBrowser',
-    'device'
   ];
-
-  SettingsSubPageBrowserTest.call(this, 'basic', subPages);
+  if (cr.isChromeOS)
+    this.subPages.push('internet', 'bluetooth', 'device');
+  else
+    this.subPages.push('defaultBrowser');
 }
 
 SettingsBasicSubPageBrowserTest.prototype = {
   __proto__: SettingsSubPageBrowserTest.prototype,
 };
 
-TEST_F('SettingsBasicSubPageBrowserTest', 'SubPages', function() {
+// Failing on ChromiumOS dbg. https://crbug.com/709442
+GEN('#if defined(OS_CHROMEOS) && !defined(NDEBUG)');
+GEN('#define MAYBE_SubPages DISABLED_SubPages');
+GEN('#else');
+GEN('#define MAYBE_SubPages SubPages');
+GEN('#endif');
+TEST_F('SettingsBasicSubPageBrowserTest', 'MAYBE_SubPages', function() {
+  suiteSetup(this.verifySubPagesHidden_.bind(this));
   suite('Basic', this.testSubPages.bind(this));
   mocha.run();
 });
 
 /** @constructor @extends {SettingsSubPageBrowserTest} */
 function SettingsAdvancedSubPageBrowserTest() {
-  var subPages = [
-    'dateTime',
+  // "Advanced" sections live in the settings-basic-page.
+  SettingsSubPageBrowserTest.call(this, 'basic');
+
+  /** @override */
+  this.subPages = [
     'privacy',
-    'bluetooth',
     'passwordsAndForms',
     'languages',
     'downloads',
+    'printing',
+    'a11y',
     'reset',
-    'a11y'
   ];
-
-  SettingsSubPageBrowserTest.call(this, 'advanced', subPages);
+  if (cr.isChromeOS)
+    this.subPages.push('dateTime');
+  else
+    this.subPages.push('system');
 };
 
 SettingsAdvancedSubPageBrowserTest.prototype = {
   __proto__: SettingsSubPageBrowserTest.prototype,
 
   /** @override */
-  browsePreload: 'chrome://md-settings/advanced',
+  setUp: function() {
+    this.toggleAdvanced();
+    SettingsSubPageBrowserTest.prototype.setUp.call(this);
+  },
 };
 
 TEST_F('SettingsAdvancedSubPageBrowserTest', 'SubPages', function() {
+  suiteSetup(this.verifySubPagesHidden_.bind(this));
   suite('Advanced', this.testSubPages.bind(this));
   mocha.run();
 });

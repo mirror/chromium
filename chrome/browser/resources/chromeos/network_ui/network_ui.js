@@ -5,6 +5,24 @@
 var NetworkUI = (function() {
   'use strict';
 
+  CrOncStrings = {
+    OncTypeCellular: loadTimeData.getString('OncTypeCellular'),
+    OncTypeEthernet: loadTimeData.getString('OncTypeEthernet'),
+    OncTypeVPN: loadTimeData.getString('OncTypeVPN'),
+    OncTypeWiFi: loadTimeData.getString('OncTypeWiFi'),
+    OncTypeWiMAX: loadTimeData.getString('OncTypeWiMAX'),
+    networkDisabled: loadTimeData.getString('networkDisabled'),
+    networkListItemConnected:
+        loadTimeData.getString('networkListItemConnected'),
+    networkListItemConnecting:
+        loadTimeData.getString('networkListItemConnecting'),
+    networkListItemConnectingTo:
+        loadTimeData.getString('networkListItemConnectingTo'),
+    networkListItemNotConnected:
+        loadTimeData.getString('networkListItemNotConnected'),
+    vpnNameTemplate: loadTimeData.getString('vpnNameTemplate'),
+  };
+
   // Properties to display in the network state table. Each entry can be either
   // a single state field or an array of state fields. If more than one is
   // specified then the first non empty value is used.
@@ -314,6 +332,16 @@ var NetworkUI = (function() {
   };
 
   /**
+   * Requests the global policy dictionary and updates the page.
+   */
+  var requestGlobalPolicy = function() {
+    chrome.networkingPrivate.getGlobalPolicy(function(policy) {
+      document.querySelector('#global-policy').textContent =
+          JSON.stringify(policy, null, '\t');
+    });
+  };
+
+  /**
    * Sets refresh rate if the interval is found in the url.
    */
   var setRefresh = function() {
@@ -323,12 +351,22 @@ var NetworkUI = (function() {
   };
 
   /**
-   * Gets network information from WebUI.
+   * Gets network information from WebUI and sets custom items.
    */
   document.addEventListener('DOMContentLoaded', function() {
+    let select = document.querySelector('cr-network-select');
+    select.customItems = [
+      {customItemName: 'Add WiFi', polymerIcon: 'cr:add', customData: 'WiFi'},
+      {customItemName: 'Add VPN', polymerIcon: 'cr:add', customData: 'VPN'}
+    ];
     $('refresh').onclick = requestNetworks;
     setRefresh();
     requestNetworks();
+    requestGlobalPolicy();
+  });
+
+  document.addEventListener('custom-item-selected', function(event) {
+    chrome.send('addNetwork', [event.detail.customData]);
   });
 
   return {

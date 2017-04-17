@@ -13,12 +13,13 @@
 test_with_window(w => {
   let document = w.document;
   let element = document.createElement('a-a');
+  let error = new Error('expected');
 
   let constructorCount = 0;
   w.customElements.define('a-a', class extends w.HTMLElement {
     constructor() {
       constructorCount++;
-      throw new Error();
+      throw error;
     }
     connectedCallback() {
       assert_unreached('connectedCallback should not be invoked if constructor threw');
@@ -30,12 +31,21 @@ test_with_window(w => {
   // Set element's custom element state to "failed".
   // https://html.spec.whatwg.org/multipage/scripting.html#upgrades
   let container = document.body;
-  container.appendChild(element);
+  assert_reports(w, error, () => container.appendChild(element));
   assert_equals(constructorCount, 1, 'constructor should be invoked once');
 
   // "failed" is not "defined"
   // https://dom.spec.whatwg.org/#concept-element-defined
   assert_false(element.matches(':defined'));
+
+  // "failed" element should implement HTMLUnknownElement only in "creating an element for a token"
+  // https://html.spec.whatwg.org/#create-an-element-for-the-token
+  assert_equals(Object.getPrototypeOf(element), w.HTMLElement.prototype);
+
+  // 2. If element's custom element state is "failed", then abort these steps.
+  // https://html.spec.whatwg.org/multipage/scripting.html#upgrades
+  container.appendChild(element);
+  assert_equals(constructorCount, 1, 'constructor should be invoked once');
 });
 </script>
 </body>

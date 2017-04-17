@@ -2,10 +2,12 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 2004-2005 Allan Sandfeld Jensen (kde@carewolf.com)
  * Copyright (C) 2006, 2007 Nicholas Shanks (webkit@nickshanks.com)
- * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2007 Alexey Proskuryakov <ap@webkit.org>
  * Copyright (C) 2007, 2008 Eric Seidel <eric@webkit.org>
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (c) 2011, Code Aurora Forum. All rights reserved.
  * Copyright (C) Research In Motion Limited 2011. All rights reserved.
  * Copyright (C) 2012 Google Inc. All rights reserved.
@@ -38,101 +40,105 @@
 
 namespace blink {
 
-static inline const AtomicString& linkAttribute(const Element& element)
-{
-    DCHECK(element.isLink());
-    if (element.isHTMLElement())
-        return element.fastGetAttribute(HTMLNames::hrefAttr);
-    DCHECK(element.isSVGElement());
-    return SVGURIReference::legacyHrefString(toSVGElement(element));
+static inline const AtomicString& LinkAttribute(const Element& element) {
+  DCHECK(element.IsLink());
+  if (element.IsHTMLElement())
+    return element.FastGetAttribute(HTMLNames::hrefAttr);
+  DCHECK(element.IsSVGElement());
+  return SVGURIReference::LegacyHrefString(ToSVGElement(element));
 }
 
-static inline LinkHash linkHashForElement(const Element& element, const AtomicString& attribute = AtomicString())
-{
-    DCHECK(attribute.isNull() || linkAttribute(element) == attribute);
-    if (isHTMLAnchorElement(element))
-        return toHTMLAnchorElement(element).visitedLinkHash();
-    return visitedLinkHash(element.document().baseURL(), attribute.isNull() ? linkAttribute(element) : attribute);
+static inline LinkHash LinkHashForElement(
+    const Element& element,
+    const AtomicString& attribute = AtomicString()) {
+  DCHECK(attribute.IsNull() || LinkAttribute(element) == attribute);
+  if (isHTMLAnchorElement(element))
+    return toHTMLAnchorElement(element).VisitedLinkHash();
+  return VisitedLinkHash(
+      element.GetDocument().BaseURL(),
+      attribute.IsNull() ? LinkAttribute(element) : attribute);
 }
 
 VisitedLinkState::VisitedLinkState(const Document& document)
-    : m_document(document)
-{
-}
+    : document_(document) {}
 
-static void invalidateStyleForAllLinksRecursively(Node& rootNode, bool invalidateVisitedLinkHashes)
-{
-    for (Node& node : NodeTraversal::startsAt(rootNode)) {
-        if (node.isLink()) {
-            if (invalidateVisitedLinkHashes && isHTMLAnchorElement(node))
-                toHTMLAnchorElement(node).invalidateCachedVisitedLinkHash();
-            toElement(node).pseudoStateChanged(CSSSelector::PseudoLink);
-            toElement(node).pseudoStateChanged(CSSSelector::PseudoVisited);
-            toElement(node).pseudoStateChanged(CSSSelector::PseudoAnyLink);
-        }
-        if (isShadowHost(&node)) {
-            for (ShadowRoot* root = node.youngestShadowRoot(); root; root = root->olderShadowRoot())
-                invalidateStyleForAllLinksRecursively(*root, invalidateVisitedLinkHashes);
-        }
+static void InvalidateStyleForAllLinksRecursively(
+    Node& root_node,
+    bool invalidate_visited_link_hashes) {
+  for (Node& node : NodeTraversal::StartsAt(root_node)) {
+    if (node.IsLink()) {
+      if (invalidate_visited_link_hashes && isHTMLAnchorElement(node))
+        toHTMLAnchorElement(node).InvalidateCachedVisitedLinkHash();
+      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoLink);
+      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoVisited);
+      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoAnyLink);
     }
-}
-
-void VisitedLinkState::invalidateStyleForAllLinks(bool invalidateVisitedLinkHashes)
-{
-    if (!m_linksCheckedForVisitedState.isEmpty() && document().firstChild())
-        invalidateStyleForAllLinksRecursively(*document().firstChild(), invalidateVisitedLinkHashes);
-}
-
-static void invalidateStyleForLinkRecursively(Node& rootNode, LinkHash linkHash)
-{
-    for (Node& node : NodeTraversal::startsAt(rootNode)) {
-        if (node.isLink() && linkHashForElement(toElement(node)) == linkHash) {
-            toElement(node).pseudoStateChanged(CSSSelector::PseudoLink);
-            toElement(node).pseudoStateChanged(CSSSelector::PseudoVisited);
-            toElement(node).pseudoStateChanged(CSSSelector::PseudoAnyLink);
-        }
-        if (isShadowHost(&node))
-            for (ShadowRoot* root = node.youngestShadowRoot(); root; root = root->olderShadowRoot())
-                invalidateStyleForLinkRecursively(*root, linkHash);
+    if (IsShadowHost(&node)) {
+      for (ShadowRoot* root = node.YoungestShadowRoot(); root;
+           root = root->OlderShadowRoot())
+        InvalidateStyleForAllLinksRecursively(*root,
+                                              invalidate_visited_link_hashes);
     }
+  }
 }
 
-void VisitedLinkState::invalidateStyleForLink(LinkHash linkHash)
-{
-    if (m_linksCheckedForVisitedState.contains(linkHash) && document().firstChild())
-        invalidateStyleForLinkRecursively(*document().firstChild(), linkHash);
+void VisitedLinkState::InvalidateStyleForAllLinks(
+    bool invalidate_visited_link_hashes) {
+  if (!links_checked_for_visited_state_.IsEmpty() && GetDocument().FirstChild())
+    InvalidateStyleForAllLinksRecursively(*GetDocument().FirstChild(),
+                                          invalidate_visited_link_hashes);
 }
 
-EInsideLink VisitedLinkState::determineLinkStateSlowCase(const Element& element)
-{
-    DCHECK(element.isLink());
-    DCHECK(document().isActive());
-    DCHECK(document() == element.document());
-
-    const AtomicString& attribute = linkAttribute(element);
-
-    if (attribute.isNull())
-        return NotInsideLink; // This can happen for <img usemap>
-
-    // An empty attribute refers to the document itself which is always
-    // visited. It is useful to check this explicitly so that visited
-    // links can be tested in platform independent manner, without
-    // explicit support in the test harness.
-    if (attribute.isEmpty())
-        return InsideVisitedLink;
-
-    if (LinkHash hash = linkHashForElement(element, attribute)) {
-        m_linksCheckedForVisitedState.add(hash);
-        if (Platform::current()->isLinkVisited(hash))
-            return InsideVisitedLink;
+static void InvalidateStyleForLinkRecursively(Node& root_node,
+                                              LinkHash link_hash) {
+  for (Node& node : NodeTraversal::StartsAt(root_node)) {
+    if (node.IsLink() && LinkHashForElement(ToElement(node)) == link_hash) {
+      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoLink);
+      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoVisited);
+      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoAnyLink);
     }
-
-    return InsideUnvisitedLink;
+    if (IsShadowHost(&node))
+      for (ShadowRoot* root = node.YoungestShadowRoot(); root;
+           root = root->OlderShadowRoot())
+        InvalidateStyleForLinkRecursively(*root, link_hash);
+  }
 }
 
-DEFINE_TRACE(VisitedLinkState)
-{
-    visitor->trace(m_document);
+void VisitedLinkState::InvalidateStyleForLink(LinkHash link_hash) {
+  if (links_checked_for_visited_state_.Contains(link_hash) &&
+      GetDocument().FirstChild())
+    InvalidateStyleForLinkRecursively(*GetDocument().FirstChild(), link_hash);
 }
 
-} // namespace blink
+EInsideLink VisitedLinkState::DetermineLinkStateSlowCase(
+    const Element& element) {
+  DCHECK(element.IsLink());
+  DCHECK(GetDocument().IsActive());
+  DCHECK(GetDocument() == element.GetDocument());
+
+  const AtomicString& attribute = LinkAttribute(element);
+
+  if (attribute.IsNull())
+    return EInsideLink::kNotInsideLink;  // This can happen for <img usemap>
+
+  // An empty attribute refers to the document itself which is always
+  // visited. It is useful to check this explicitly so that visited
+  // links can be tested in platform independent manner, without
+  // explicit support in the test harness.
+  if (attribute.IsEmpty())
+    return EInsideLink::kInsideVisitedLink;
+
+  if (LinkHash hash = LinkHashForElement(element, attribute)) {
+    links_checked_for_visited_state_.insert(hash);
+    if (Platform::Current()->IsLinkVisited(hash))
+      return EInsideLink::kInsideVisitedLink;
+  }
+
+  return EInsideLink::kInsideUnvisitedLink;
+}
+
+DEFINE_TRACE(VisitedLinkState) {
+  visitor->Trace(document_);
+}
+
+}  // namespace blink

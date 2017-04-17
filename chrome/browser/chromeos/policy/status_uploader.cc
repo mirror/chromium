@@ -5,14 +5,15 @@
 #include "chrome/browser/chromeos/policy/status_uploader.h"
 
 #include <algorithm>
+#include <string>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/chromeos/logging.h"
 #include "base/location.h"
 #include "base/sequenced_task_runner.h"
 #include "base/sys_info.h"
+#include "base/syslog_logging.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/policy/device_status_collector.h"
 #include "chromeos/settings/cros_settings_names.h"
@@ -23,6 +24,8 @@
 #include "content/public/browser/media_request_state.h"
 #include "content/public/common/media_stream_request.h"
 #include "ui/base/user_activity/user_activity_detector.h"
+
+namespace em = enterprise_management;
 
 namespace {
 // Minimum delay between two consecutive uploads
@@ -82,12 +85,24 @@ StatusUploader::~StatusUploader() {
   MediaCaptureDevicesDispatcher::GetInstance()->RemoveObserver(this);
 }
 
-void StatusUploader::ScheduleNextStatusUpload() {
+void StatusUploader::ScheduleNextStatusUpload(bool immediately) {
+  // Don't schedule a new status upload if there's a status upload in progress
+  // (it will be scheduled once the current one completes).
+  if (status_upload_in_progress_) {
+    SYSLOG(INFO) << "In the middle of a status upload, not scheduling the next "
+                 << "one until this one finishes.";
+    return;
+  }
+
   // Calculate when to fire off the next update (if it should have already
   // happened, this yields a TimeDelta of kMinUploadScheduleDelayMs).
   base::TimeDelta delay = std::max(
       (last_upload_ + upload_frequency_) - base::Time::NowFromSystemTime(),
       base::TimeDelta::FromMilliseconds(kMinUploadScheduleDelayMs));
+  // If we want an immediate status upload, set delay to 0.
+  if (immediately)
+    delay = base::TimeDelta();
+
   upload_callback_.Reset(base::Bind(&StatusUploader::UploadStatus,
                                     base::Unretained(this)));
   task_runner_->PostDelayedTask(FROM_HERE, upload_callback_.callback(), delay);
@@ -109,9 +124,9 @@ void StatusUploader::RefreshUploadFrequency() {
   // want to use the last trusted value).
   int frequency;
   if (settings->GetInteger(chromeos::kReportUploadFrequency, &frequency)) {
-    CHROMEOS_SYSLOG(WARNING) << "Changing status upload frequency from "
-                             << upload_frequency_ << " to "
-                             << base::TimeDelta::FromMilliseconds(frequency);
+    SYSLOG(INFO) << "Changing status upload frequency from "
+                 << upload_frequency_ << " to "
+                 << base::TimeDelta::FromMilliseconds(frequency);
     upload_frequency_ = base::TimeDelta::FromMilliseconds(
         std::max(kMinUploadDelayMs, frequency));
   }
@@ -129,8 +144,7 @@ bool StatusUploader::IsSessionDataUploadAllowed() {
   std::unique_ptr<DeviceLocalAccount> account =
       collector_->GetAutoLaunchedKioskSessionInfo();
   if (!account) {
-    CHROMEOS_SYSLOG(WARNING)
-        << "Not a kiosk session, data upload is not allowed.";
+    SYSLOG(WARNING) << "Not a kiosk session, data upload is not allowed.";
     return false;
   }
 
@@ -140,19 +154,17 @@ bool StatusUploader::IsSessionDataUploadAllowed() {
   std::string last_activity_name =
       ui::UserActivityDetector::Get()->last_activity_name();
   if (!last_activity_time.is_null()) {
-    CHROMEOS_SYSLOG(WARNING)
-        << "User input " << last_activity_name << " detected "
-        << (base::TimeTicks::Now() - last_activity_time) << " ago ("
-        << (base::SysInfo::Uptime() -
-            (base::TimeTicks::Now() - last_activity_time))
-        << " after last boot), data upload is not allowed.";
+    SYSLOG(WARNING) << "User input " << last_activity_name << " detected "
+                    << (base::TimeTicks::Now() - last_activity_time) << " ago ("
+                    << (base::SysInfo::Uptime() -
+                        (base::TimeTicks::Now() - last_activity_time))
+                    << " after last boot), data upload is not allowed.";
     return false;
   }
 
   // Screenshot is allowed as long as we have not captured media.
   if (has_captured_media_) {
-    CHROMEOS_SYSLOG(WARNING)
-        << "Media has been captured, data upload is not allowed.";
+    SYSLOG(WARNING) << "Media has been captured, data upload is not allowed.";
     return false;
   } else {
     return true;
@@ -173,28 +185,36 @@ void StatusUploader::OnRequestUpdate(int render_process_id,
   }
 }
 
+void StatusUploader::ScheduleNextStatusUploadImmediately() {
+  ScheduleNextStatusUpload(true);
+}
+
 void StatusUploader::UploadStatus() {
-  enterprise_management::DeviceStatusReportRequest device_status;
-  bool have_device_status = collector_->GetDeviceStatus(&device_status);
-  enterprise_management::SessionStatusReportRequest session_status;
-  bool have_session_status = collector_->GetDeviceSessionStatus(
-      &session_status);
+  status_upload_in_progress_ = true;
+  // Gather status in the background.
+  collector_->GetDeviceAndSessionStatusAsync(base::Bind(
+      &StatusUploader::OnStatusReceived, weak_factory_.GetWeakPtr()));
+}
+
+void StatusUploader::OnStatusReceived(
+    std::unique_ptr<em::DeviceStatusReportRequest> device_status,
+    std::unique_ptr<em::SessionStatusReportRequest> session_status) {
+  bool have_device_status = device_status != nullptr;
+  bool have_session_status = session_status != nullptr;
   if (!have_device_status && !have_session_status) {
-    CHROMEOS_SYSLOG(WARNING)
-        << "Skipping status upload because no data to upload";
+    SYSLOG(INFO) << "Skipping status upload because no data to upload";
     // Don't have any status to upload - just set our timer for next time.
     last_upload_ = base::Time::NowFromSystemTime();
+    status_upload_in_progress_ = false;
     ScheduleNextStatusUpload();
     return;
   }
 
-  CHROMEOS_SYSLOG(WARNING) << "Starting status upload: have_device_status = "
-                           << have_device_status;
-  client_->UploadDeviceStatus(
-      have_device_status ? &device_status : nullptr,
-      have_session_status ? &session_status : nullptr,
-      base::Bind(&StatusUploader::OnUploadCompleted,
-                 weak_factory_.GetWeakPtr()));
+  SYSLOG(INFO) << "Starting status upload: have_device_status = "
+               << have_device_status;
+  client_->UploadDeviceStatus(device_status.get(), session_status.get(),
+                              base::Bind(&StatusUploader::OnUploadCompleted,
+                                         weak_factory_.GetWeakPtr()));
 }
 
 void StatusUploader::OnUploadCompleted(bool success) {
@@ -202,10 +222,13 @@ void StatusUploader::OnUploadCompleted(bool success) {
   // or not (we don't change the time of the next upload based on whether this
   // upload succeeded or not - if a status upload fails, we just skip it and
   // wait until it's time to try again.
-  CHROMEOS_SYSLOG_IF(ERROR, !success) << "Error uploading status: "
-                                      << client_->status();
-  CHROMEOS_SYSLOG_IF(WARNING, success) << "Status upload successful";
+  if (success) {
+    SYSLOG(INFO) << "Status upload successful";
+  } else {
+    SYSLOG(ERROR) << "Error uploading status: " << client_->status();
+  }
   last_upload_ = base::Time::NowFromSystemTime();
+  status_upload_in_progress_ = false;
 
   // If the upload was successful, tell the collector so it can clear its cache
   // of pending items.

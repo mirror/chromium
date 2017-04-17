@@ -7,7 +7,7 @@
 
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "content/public/common/referrer.h"
-#include "third_party/WebKit/public/web/WebWindowFeatures.h"
+#include "third_party/WebKit/public/web/window_features.mojom.h"
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
 
@@ -19,20 +19,20 @@ class BlockedWindowParams {
  public:
   BlockedWindowParams(const GURL& target_url,
                       const content::Referrer& referrer,
+                      const std::string& frame_name_,
                       WindowOpenDisposition disposition,
-                      const blink::WebWindowFeatures& features,
+                      const blink::mojom::WindowFeatures& features,
                       bool user_gesture,
                       bool opener_suppressed,
                       int render_process_id,
                       int opener_render_frame_id);
   BlockedWindowParams(const BlockedWindowParams& other);
+  ~BlockedWindowParams();
 
   chrome::NavigateParams CreateNavigateParams(
       content::WebContents* web_contents) const;
 
-  blink::WebWindowFeatures features() const {
-    return features_;
-  }
+  blink::mojom::WindowFeatures features() const { return features_; }
 
   int opener_render_frame_id() const {
     return opener_render_frame_id_;
@@ -49,8 +49,9 @@ class BlockedWindowParams {
  private:
   GURL target_url_;
   content::Referrer referrer_;
+  std::string frame_name_;
   WindowOpenDisposition disposition_;
-  blink::WebWindowFeatures features_;
+  blink::mojom::WindowFeatures features_;
   bool user_gesture_;
   bool opener_suppressed_;
   int render_process_id_;

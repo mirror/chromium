@@ -19,7 +19,6 @@
 #include "base/id_map.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/memory/scoped_vector.h"
 #include "base/posix/safe_strerror.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -35,8 +34,6 @@
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
-#include "grit/components_strings.h"
-#include "net/base/crypto_module.h"
 #include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
 #include "net/der/input.h"
@@ -88,15 +85,14 @@ struct DictionaryIdComparator {
   explicit DictionaryIdComparator(icu::Collator* collator)
       : collator_(collator) {}
 
-  bool operator()(const std::unique_ptr<base::Value>& a,
-                  const std::unique_ptr<base::Value>& b) const {
-    DCHECK(a->GetType() == base::Value::TYPE_DICTIONARY);
-    DCHECK(b->GetType() == base::Value::TYPE_DICTIONARY);
+  bool operator()(const base::Value& a, const base::Value& b) const {
+    DCHECK(a.GetType() == base::Value::Type::DICTIONARY);
+    DCHECK(b.GetType() == base::Value::Type::DICTIONARY);
     const base::DictionaryValue* a_dict;
-    bool a_is_dictionary = a->GetAsDictionary(&a_dict);
+    bool a_is_dictionary = a.GetAsDictionary(&a_dict);
     DCHECK(a_is_dictionary);
     const base::DictionaryValue* b_dict;
-    bool b_is_dictionary = b->GetAsDictionary(&b_dict);
+    bool b_is_dictionary = b.GetAsDictionary(&b_dict);
     DCHECK(b_is_dictionary);
     base::string16 a_str;
     base::string16 b_str;
@@ -209,7 +205,7 @@ class CertIdMap {
   typedef std::map<net::X509Certificate*, int32_t> CertMap;
 
   // Creates an ID for cert and looks up the cert for an ID.
-  IDMap<net::X509Certificate> id_map_;
+  IDMap<net::X509Certificate*> id_map_;
 
   // Finds the ID for a cert.
   CertMap cert_map_;
@@ -461,7 +457,7 @@ void CertificatesHandler::FileSelectionCanceled(void* params) {
     case IMPORT_SERVER_FILE_SELECTED:
     case IMPORT_CA_FILE_SELECTED:
       ImportExportCleanup();
-      RejectCallback(*base::Value::CreateNullValue());
+      RejectCallback(base::Value());
       break;
     default:
       NOTREACHED();
@@ -544,7 +540,7 @@ void CertificatesHandler::HandleEditCATrust(const base::ListValue* args) {
         l10n_util::GetStringUTF8(
             IDS_SETTINGS_CERTIFICATE_MANAGER_UNKNOWN_ERROR));
   } else {
-    ResolveCallback(*base::Value::CreateNullValue());
+    ResolveCallback(base::Value());
   }
 }
 
@@ -576,7 +572,7 @@ void CertificatesHandler::HandleExportPersonal(const base::ListValue* args) {
 void CertificatesHandler::ExportPersonalFileSelected(
     const base::FilePath& path) {
   file_path_ = path;
-  ResolveCallback(*base::Value::CreateNullValue());
+  ResolveCallback(base::Value());
 }
 
 void CertificatesHandler::HandleExportPersonalPasswordSelected(
@@ -630,7 +626,7 @@ void CertificatesHandler::ExportPersonalFileWritten(const int* write_errno,
             IDS_SETTINGS_CERTIFICATE_MANAGER_WRITE_ERROR_FORMAT,
             UTF8ToUTF16(base::safe_strerror(*write_errno))));
   } else {
-    ResolveCallback(*base::Value::CreateNullValue());
+    ResolveCallback(base::Value());
   }
 }
 
@@ -681,7 +677,7 @@ void CertificatesHandler::ImportPersonalFileRead(const int* read_errno,
   file_data_ = *data;
 
   if (CouldBePFX(file_data_)) {
-    ResolveCallback(base::FundamentalValue(true));
+    ResolveCallback(base::Value(true));
     return;
   }
 
@@ -694,7 +690,7 @@ void CertificatesHandler::ImportPersonalFileRead(const int* read_errno,
   int string_id;
   switch (result) {
     case net::OK:
-      ResolveCallback(base::FundamentalValue(false));
+      ResolveCallback(base::Value(false));
       return;
     case net::ERR_NO_PRIVATE_KEY_FOR_CERT:
       string_id = IDS_SETTINGS_CERTIFICATE_MANAGER_IMPORT_MISSING_KEY;
@@ -719,15 +715,15 @@ void CertificatesHandler::HandleImportPersonalPasswordSelected(
   CHECK(args->GetString(1, &password_));
 
   if (use_hardware_backed_) {
-    module_ = certificate_manager_model_->cert_db()->GetPrivateModule();
+    slot_ = certificate_manager_model_->cert_db()->GetPrivateSlot();
   } else {
-    module_ = certificate_manager_model_->cert_db()->GetPublicModule();
+    slot_ = certificate_manager_model_->cert_db()->GetPublicSlot();
   }
 
-  net::CryptoModuleList modules;
-  modules.push_back(module_);
+  std::vector<crypto::ScopedPK11Slot> modules;
+  modules.push_back(crypto::ScopedPK11Slot(PK11_ReferenceSlot(slot_.get())));
   chrome::UnlockSlotsIfNecessary(
-      modules, chrome::kCryptoModulePasswordCertImport,
+      std::move(modules), chrome::kCryptoModulePasswordCertImport,
       net::HostPortPair(),  // unused.
       GetParentWindow(),
       base::Bind(&CertificatesHandler::ImportPersonalSlotUnlocked,
@@ -741,12 +737,12 @@ void CertificatesHandler::ImportPersonalSlotUnlocked() {
   // for Chrome OS when the "Import and Bind" option is chosen.
   bool is_extractable = !use_hardware_backed_;
   int result = certificate_manager_model_->ImportFromPKCS12(
-      module_.get(), file_data_, password_, is_extractable);
+      slot_.get(), file_data_, password_, is_extractable);
   ImportExportCleanup();
   int string_id;
   switch (result) {
     case net::OK:
-      ResolveCallback(*base::Value::CreateNullValue());
+      ResolveCallback(base::Value());
       return;
     case net::ERR_PKCS12_IMPORT_BAD_PASSWORD:
       // TODO(mattm): if the error was a bad password, we should reshow the
@@ -783,7 +779,7 @@ void CertificatesHandler::ImportExportCleanup() {
   file_data_.clear();
   use_hardware_backed_ = false;
   selected_cert_list_.clear();
-  module_ = NULL;
+  slot_.reset();
   tracker_.TryCancelAll();
 
   // There may be pending file dialogs, we need to tell them that we've gone
@@ -853,7 +849,7 @@ void CertificatesHandler::ImportServerFileRead(const int* read_errno,
             IDS_SETTINGS_CERTIFICATE_MANAGER_SERVER_IMPORT_ERROR_TITLE),
         not_imported);
   } else {
-    ResolveCallback(*base::Value::CreateNullValue());
+    ResolveCallback(base::Value());
   }
   ImportExportCleanup();
 }
@@ -908,7 +904,7 @@ void CertificatesHandler::ImportCAFileRead(const int* read_errno,
 
   // TODO(mattm): check here if root_cert is not a CA cert and show error.
 
-  base::StringValue cert_name(root_cert->subject().GetDisplayName());
+  base::Value cert_name(root_cert->subject().GetDisplayName());
   ResolveCallback(cert_name);
 }
 
@@ -945,7 +941,7 @@ void CertificatesHandler::HandleImportCATrustSelected(
             IDS_SETTINGS_CERTIFICATE_MANAGER_CA_IMPORT_ERROR_TITLE),
         not_imported);
   } else {
-    ResolveCallback(*base::Value::CreateNullValue());
+    ResolveCallback(base::Value());
   }
   ImportExportCleanup();
 }
@@ -975,7 +971,7 @@ void CertificatesHandler::HandleDeleteCertificate(const base::ListValue* args) {
         l10n_util::GetStringUTF8(
             IDS_SETTINGS_CERTIFICATE_MANAGER_UNKNOWN_ERROR));
   } else {
-    ResolveCallback(*base::Value::CreateNullValue());
+    ResolveCallback(base::Value());
   }
 }
 
@@ -986,12 +982,12 @@ void CertificatesHandler::OnCertificateManagerModelCreated(
 }
 
 void CertificatesHandler::CertificateManagerModelReady() {
-  base::FundamentalValue user_db_available_value(
+  base::Value user_db_available_value(
       certificate_manager_model_->is_user_db_available());
-  base::FundamentalValue tpm_available_value(
+  base::Value tpm_available_value(
       certificate_manager_model_->is_tpm_available());
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("certificates-model-ready"),
+                         base::Value("certificates-model-ready"),
                          user_db_available_value, tpm_available_value);
   certificate_manager_model_->Refresh();
 }
@@ -1038,7 +1034,7 @@ void CertificatesHandler::PopulateTree(
 
   {
     std::unique_ptr<base::ListValue> nodes =
-        base::WrapUnique(new base::ListValue());
+        base::MakeUnique<base::ListValue>();
     for (CertificateManagerModel::OrgGroupingMap::iterator i = map.begin();
          i != map.end(); ++i) {
       // Populate first level (org name).
@@ -1047,7 +1043,7 @@ void CertificatesHandler::PopulateTree(
       dict->SetString(kNameField, i->first);
 
       // Populate second level (certs).
-      base::ListValue* subnodes = new base::ListValue;
+      auto subnodes = base::MakeUnique<base::ListValue>();
       for (net::CertificateList::const_iterator org_cert_it = i->second.begin();
            org_cert_it != i->second.end(); ++org_cert_it) {
         std::unique_ptr<base::DictionaryValue> cert_dict(
@@ -1079,26 +1075,26 @@ void CertificatesHandler::PopulateTree(
       }
       std::sort(subnodes->begin(), subnodes->end(), comparator);
 
-      dict->Set(kSubnodesField, subnodes);
+      dict->Set(kSubnodesField, std::move(subnodes));
       nodes->Append(std::move(dict));
     }
     std::sort(nodes->begin(), nodes->end(), comparator);
 
     CallJavascriptFunction("cr.webUIListenerCallback",
-                           base::StringValue("certificates-changed"),
-                           base::StringValue(tab_name), *nodes);
+                           base::Value("certificates-changed"),
+                           base::Value(tab_name), *nodes);
   }
 }
 
 void CertificatesHandler::ResolveCallback(const base::Value& response) {
   DCHECK(!webui_callback_id_.empty());
-  ResolveJavascriptCallback(base::StringValue(webui_callback_id_), response);
+  ResolveJavascriptCallback(base::Value(webui_callback_id_), response);
   webui_callback_id_.clear();
 }
 
 void CertificatesHandler::RejectCallback(const base::Value& response) {
   DCHECK(!webui_callback_id_.empty());
-  RejectJavascriptCallback(base::StringValue(webui_callback_id_), response);
+  RejectJavascriptCallback(base::Value(webui_callback_id_), response);
   webui_callback_id_.clear();
 }
 
@@ -1125,7 +1121,7 @@ void CertificatesHandler::RejectCallbackWithImportError(
         IDS_SETTINGS_CERTIFICATE_MANAGER_IMPORT_SOME_NOT_IMPORTED);
 
   std::unique_ptr<base::ListValue> cert_error_list =
-      base::WrapUnique(new base::ListValue());
+      base::MakeUnique<base::ListValue>();
   for (size_t i = 0; i < not_imported.size(); ++i) {
     const net::NSSCertDatabase::ImportCertFailure& failure = not_imported[i];
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);

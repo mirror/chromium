@@ -8,7 +8,8 @@
 
 #include "base/files/file_path.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
@@ -21,7 +22,6 @@
 #include "chrome/installer/util/google_update_settings.h"
 #include "components/profile_metrics/counts.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/user_metrics.h"
 
 namespace {
 
@@ -335,7 +335,8 @@ void ProfileMetrics::LogProfileDeleteUser(ProfileDelete metric) {
   UMA_HISTOGRAM_ENUMERATION("Profile.DeleteProfileAction", metric,
                             NUM_DELETE_PROFILE_METRICS);
   if (metric != DELETE_PROFILE_USER_MANAGER_SHOW_WARNING &&
-      metric != DELETE_PROFILE_SETTINGS_SHOW_WARNING) {
+      metric != DELETE_PROFILE_SETTINGS_SHOW_WARNING &&
+      metric != DELETE_PROFILE_ABORTED) {
     // If a user was actually deleted, update the net user count.
     UMA_HISTOGRAM_ENUMERATION("Profile.NetUserCount", PROFILE_DELETED,
                               NUM_PROFILE_NET_METRICS);
@@ -535,7 +536,7 @@ void ProfileMetrics::LogProfileLaunch(Profile* profile) {
                             NUM_PROFILE_TYPE_METRICS);
 
   if (profile->IsSupervised()) {
-    content::RecordAction(
+    base::RecordAction(
         base::UserMetricsAction("ManagedMode_NewManagedUserWindow"));
   }
 }

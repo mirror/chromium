@@ -26,6 +26,7 @@
 #include "device/usb/mojo/mock_permission_provider.h"
 #include "device/usb/mojo/type_converters.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/io_buffer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -64,23 +65,6 @@ void ExpectOpenAndThen(OpenDeviceError expected,
   continuation.Run();
 }
 
-void ExpectDeviceInfoAndThen(const std::string& guid,
-                             uint16_t vendor_id,
-                             uint16_t product_id,
-                             const std::string& manufacturer_name,
-                             const std::string& product_name,
-                             const std::string& serial_number,
-                             const base::Closure& continuation,
-                             DeviceInfoPtr device_info) {
-  EXPECT_EQ(guid, device_info->guid);
-  EXPECT_EQ(vendor_id, device_info->vendor_id);
-  EXPECT_EQ(product_id, device_info->product_id);
-  EXPECT_EQ(manufacturer_name, device_info->manufacturer_name);
-  EXPECT_EQ(product_name, device_info->product_name);
-  EXPECT_EQ(serial_number, device_info->serial_number);
-  continuation.Run();
-}
-
 void ExpectResultAndThen(bool expected_result,
                          const base::Closure& continuation,
                          bool actual_result) {
@@ -88,15 +72,17 @@ void ExpectResultAndThen(bool expected_result,
   continuation.Run();
 }
 
-void ExpectTransferInAndThen(TransferStatus expected_status,
-                             const std::vector<uint8_t>& expected_bytes,
-                             const base::Closure& continuation,
-                             TransferStatus actual_status,
-                             mojo::Array<uint8_t> actual_bytes) {
+void ExpectTransferInAndThen(
+    TransferStatus expected_status,
+    const std::vector<uint8_t>& expected_bytes,
+    const base::Closure& continuation,
+    TransferStatus actual_status,
+    const base::Optional<std::vector<uint8_t>>& actual_bytes) {
   EXPECT_EQ(expected_status, actual_status);
-  ASSERT_EQ(expected_bytes.size(), actual_bytes.size());
-  for (size_t i = 0; i < actual_bytes.size(); ++i) {
-    EXPECT_EQ(expected_bytes[i], actual_bytes[i])
+  ASSERT_TRUE(actual_bytes);
+  ASSERT_EQ(expected_bytes.size(), actual_bytes->size());
+  for (size_t i = 0; i < actual_bytes->size(); ++i) {
+    EXPECT_EQ(expected_bytes[i], (*actual_bytes)[i])
         << "Contents differ at index: " << i;
   }
   continuation.Run();
@@ -104,7 +90,7 @@ void ExpectTransferInAndThen(TransferStatus expected_status,
 
 void ExpectPacketsOutAndThen(const std::vector<uint32_t>& expected_packets,
                              const base::Closure& continuation,
-                             mojo::Array<IsochronousPacketPtr> actual_packets) {
+                             std::vector<IsochronousPacketPtr> actual_packets) {
   ASSERT_EQ(expected_packets.size(), actual_packets.size());
   for (size_t i = 0; i < expected_packets.size(); ++i) {
     EXPECT_EQ(expected_packets[i], actual_packets[i]->transferred_length)
@@ -115,11 +101,12 @@ void ExpectPacketsOutAndThen(const std::vector<uint32_t>& expected_packets,
   continuation.Run();
 }
 
-void ExpectPacketsInAndThen(const std::vector<uint8_t>& expected_bytes,
-                            const std::vector<uint32_t>& expected_packets,
-                            const base::Closure& continuation,
-                            mojo::Array<uint8_t> actual_bytes,
-                            mojo::Array<IsochronousPacketPtr> actual_packets) {
+void ExpectPacketsInAndThen(
+    const std::vector<uint8_t>& expected_bytes,
+    const std::vector<uint32_t>& expected_packets,
+    const base::Closure& continuation,
+    const base::Optional<std::vector<uint8_t>>& actual_bytes,
+    std::vector<IsochronousPacketPtr> actual_packets) {
   ASSERT_EQ(expected_packets.size(), actual_packets.size());
   for (size_t i = 0; i < expected_packets.size(); ++i) {
     EXPECT_EQ(expected_packets[i], actual_packets[i]->transferred_length)
@@ -127,9 +114,10 @@ void ExpectPacketsInAndThen(const std::vector<uint8_t>& expected_bytes,
     EXPECT_EQ(TransferStatus::COMPLETED, actual_packets[i]->status)
         << "Packet at index " << i << " not completed.";
   }
-  ASSERT_EQ(expected_bytes.size(), actual_bytes.size());
-  for (size_t i = 0; i < expected_bytes.size(); ++i) {
-    EXPECT_EQ(expected_bytes[i], actual_bytes[i])
+  ASSERT_TRUE(actual_bytes);
+  ASSERT_EQ(expected_bytes.size(), actual_bytes->size());
+  for (size_t i = 0; i < actual_bytes->size(); ++i) {
+    EXPECT_EQ(expected_bytes[i], (*actual_bytes)[i])
         << "Contents differ at index: " << i;
   }
   continuation.Run();
@@ -151,6 +139,8 @@ class USBDeviceImplTest : public testing::Test {
 
   ~USBDeviceImplTest() override {}
 
+  void TearDown() override { base::RunLoop().RunUntilIdle(); }
+
  protected:
   MockPermissionProvider& permission_provider() { return permission_provider_; }
   MockUsbDevice& mock_device() { return *mock_device_.get(); }
@@ -171,10 +161,8 @@ class USBDeviceImplTest : public testing::Test {
     mock_handle_ = new MockUsbDeviceHandle(mock_device_.get());
 
     DevicePtr proxy;
-    new DeviceImpl(
-        mock_device_,
-        DeviceInfo::From(static_cast<const UsbDevice&>(*mock_device_)),
-        permission_provider_.GetWeakPtr(), mojo::GetProxy(&proxy));
+    DeviceImpl::Create(mock_device_, permission_provider_.GetWeakPtr(),
+                       mojo::MakeRequest(&proxy));
 
     // Set up mock handle calls to respond based on mock device configs
     // established by the test.
@@ -212,7 +200,7 @@ class USBDeviceImplTest : public testing::Test {
 
   void AddMockConfig(const ConfigBuilder& builder) {
     const UsbConfigDescriptor& config = builder.config();
-    DCHECK(!ContainsKey(mock_configs_, config.configuration_value));
+    DCHECK(!base::ContainsKey(mock_configs_, config.configuration_value));
     mock_configs_.insert(std::make_pair(config.configuration_value, config));
     mock_device_->AddMockConfig(config);
   }
@@ -277,7 +265,7 @@ class USBDeviceImplTest : public testing::Test {
 
   void ReleaseInterface(uint8_t interface_number,
                         const UsbDeviceHandle::ResultCallback& callback) {
-    if (ContainsKey(claimed_interfaces_, interface_number)) {
+    if (base::ContainsKey(claimed_interfaces_, interface_number)) {
       claimed_interfaces_.erase(interface_number);
       callback.Run(true);
     } else {
@@ -492,19 +480,6 @@ TEST_F(USBDeviceImplTest, Close) {
   }
 
   EXPECT_FALSE(is_device_open());
-}
-
-// Test that the information returned via the Device::GetDeviceInfo matches that
-// of the underlying device.
-TEST_F(USBDeviceImplTest, GetDeviceInfo) {
-  DevicePtr device =
-      GetMockDeviceProxy(0x1234, 0x5678, "ACME", "Frobinator", "ABCDEF");
-
-  base::RunLoop loop;
-  device->GetDeviceInfo(base::Bind(&ExpectDeviceInfoAndThen,
-                                   mock_device().guid(), 0x1234, 0x5678, "ACME",
-                                   "Frobinator", "ABCDEF", loop.QuitClosure()));
-  loop.Run();
 }
 
 TEST_F(USBDeviceImplTest, SetInvalidConfiguration) {
@@ -770,7 +745,7 @@ TEST_F(USBDeviceImplTest, ControlTransfer) {
     params->index = 7;
     base::RunLoop loop;
     device->ControlTransferOut(
-        std::move(params), mojo::Array<uint8_t>::From(fake_data), 0,
+        std::move(params), fake_data, 0,
         base::Bind(&ExpectTransferStatusAndThen, TransferStatus::COMPLETED,
                    loop.QuitClosure()));
     loop.Run();
@@ -809,7 +784,7 @@ TEST_F(USBDeviceImplTest, GenericTransfer) {
   {
     base::RunLoop loop;
     device->GenericTransferOut(
-        1, mojo::Array<uint8_t>::From(fake_outbound_data), 0,
+        1, fake_outbound_data, 0,
         base::Bind(&ExpectTransferStatusAndThen, TransferStatus::COMPLETED,
                    loop.QuitClosure()));
     loop.Run();
@@ -872,8 +847,7 @@ TEST_F(USBDeviceImplTest, IsochronousTransfer) {
   {
     base::RunLoop loop;
     device->IsochronousTransferOut(
-        1, mojo::Array<uint8_t>::From(fake_outbound_data),
-        mojo::Array<uint32_t>::From(fake_packet_lengths), 0,
+        1, fake_outbound_data, fake_packet_lengths, 0,
         base::Bind(&ExpectPacketsOutAndThen, expected_transferred_lengths,
                    loop.QuitClosure()));
     loop.Run();
@@ -885,7 +859,7 @@ TEST_F(USBDeviceImplTest, IsochronousTransfer) {
   {
     base::RunLoop loop;
     device->IsochronousTransferIn(
-        1, mojo::Array<uint32_t>::From(fake_packet_lengths), 0,
+        1, fake_packet_lengths, 0,
         base::Bind(&ExpectPacketsInAndThen, fake_inbound_data,
                    expected_transferred_lengths, loop.QuitClosure()));
     loop.Run();

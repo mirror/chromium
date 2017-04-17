@@ -23,6 +23,14 @@ class SyncControlVSyncProvider : public gfx::VSyncProvider {
 
   void GetVSyncParameters(const UpdateVSyncCallback& callback) override;
 
+  static constexpr bool IsSupported() {
+#if defined(OS_LINUX)
+    return true;
+#else
+    return false;
+#endif  // defined(OS_LINUX)
+  }
+
  protected:
   virtual bool GetSyncValues(int64_t* system_time,
                              int64_t* media_stream_counter,
@@ -42,7 +50,7 @@ class SyncControlVSyncProvider : public gfx::VSyncProvider {
   // from configuration change (monitor reconfiguration, moving windows
   // between monitors, suspend and resume, etc.).
   std::queue<base::TimeDelta> last_computed_intervals_;
-#endif
+#endif  // defined(OS_LINUX)
 
   DISALLOW_COPY_AND_ASSIGN(SyncControlVSyncProvider);
 };

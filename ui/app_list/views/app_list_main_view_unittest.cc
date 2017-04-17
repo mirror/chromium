@@ -86,7 +86,7 @@ class AppListMainViewTest : public views::ViewsTestBase {
     // NULL on Windows, and not needed for tests. It is only used to determine
     // the scale factor for preloading icons.
     main_view_ = new AppListMainView(delegate_.get());
-    main_view_->SetPaintToLayer(true);
+    main_view_->SetPaintToLayer();
     main_view_->model()->SetFoldersEnabled(true);
     search_box_view_ = new SearchBoxView(main_view_, delegate_.get());
     main_view_->Init(nullptr, 0, search_box_view_);
@@ -147,7 +147,7 @@ class AppListMainViewTest : public views::ViewsTestBase {
     DCHECK(view);
 
     gfx::Point translated =
-        gfx::PointAtOffsetFromOrigin(point - view->bounds().origin());
+        gfx::PointAtOffsetFromOrigin(point - view->origin());
     ui::MouseEvent pressed_event(ui::ET_MOUSE_PRESSED, translated, point,
                                  ui::EventTimeForNow(), 0, 0);
     grid_view->InitiateDrag(view, pointer, pressed_event);
@@ -161,7 +161,7 @@ class AppListMainViewTest : public views::ViewsTestBase {
                           const gfx::Point& point) {
     DCHECK(drag_view);
     gfx::Point translated =
-        gfx::PointAtOffsetFromOrigin(point - drag_view->bounds().origin());
+        gfx::PointAtOffsetFromOrigin(point - drag_view->origin());
     ui::MouseEvent drag_event(ui::ET_MOUSE_DRAGGED, translated, point,
                               ui::EventTimeForNow(), 0, 0);
     grid_view->UpdateDragFromItem(pointer, drag_event);
@@ -207,10 +207,6 @@ class AppListMainViewTest : public views::ViewsTestBase {
     base::RunLoop().RunUntilIdle();
     EXPECT_TRUE(FolderView()->visible());
 
-#if defined(OS_WIN)
-    AppsGridViewTestApi folder_grid_view_test_api(FolderGridView());
-    folder_grid_view_test_api.DisableSynchronousDrag();
-#endif
     return folder_item_view;
   }
 
@@ -279,11 +275,9 @@ TEST_F(AppListMainViewTest, MouseHoverToHighlight) {
   AppListItemView* item0 = RootViewModel()->view_at(0);
   AppListItemView* item1 = RootViewModel()->view_at(1);
 
-  // If experimental launcher, switch to All Apps page
-  if (app_list::switches::IsExperimentalAppListEnabled()) {
-    GetContentsView()->SetActiveState(AppListModel::STATE_APPS);
-    GetContentsView()->Layout();
-  }
+  // Switch to All Apps page.
+  GetContentsView()->SetActiveState(AppListModel::STATE_APPS);
+  GetContentsView()->Layout();
 
   generator.MoveMouseTo(item0->GetBoundsInScreen().CenterPoint());
   EXPECT_TRUE(item0->is_highlighted());
@@ -298,15 +292,8 @@ TEST_F(AppListMainViewTest, MouseHoverToHighlight) {
   EXPECT_FALSE(item1->is_highlighted());
 }
 
-// No touch on desktop Mac. Tracked in http://crbug.com/445520.
-#if defined(OS_MACOSX) && !defined(USE_AURA)
-#define MAYBE_TapGestureToHighlight DISABLED_TapGestureToHighlight
-#else
-#define MAYBE_TapGestureToHighlight TapGestureToHighlight
-#endif
-
 // Tests that tap gesture on app item highlights it
-TEST_F(AppListMainViewTest, MAYBE_TapGestureToHighlight) {
+TEST_F(AppListMainViewTest, TapGestureToHighlight) {
   delegate_->GetTestModel()->PopulateApps(1);
   main_widget_->Show();
 
@@ -314,11 +301,9 @@ TEST_F(AppListMainViewTest, MAYBE_TapGestureToHighlight) {
                                      main_widget_->GetNativeWindow());
   AppListItemView* item = RootViewModel()->view_at(0);
 
-  // If experimental launcher, switch to All Apps page
-  if (app_list::switches::IsExperimentalAppListEnabled()) {
-    GetContentsView()->SetActiveState(AppListModel::STATE_APPS);
-    GetContentsView()->Layout();
-  }
+  // Switch to All Apps page.
+  GetContentsView()->SetActiveState(AppListModel::STATE_APPS);
+  GetContentsView()->Layout();
 
   generator.set_current_location(item->GetBoundsInScreen().CenterPoint());
   generator.PressTouch();

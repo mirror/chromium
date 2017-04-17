@@ -34,6 +34,20 @@ function logToConsole()
     }
     console.log(arrayWithManyProperties);
 
+    console.log("Array with gaps and overflow");
+    var arrayWithGapsAndOverflow = [];
+    for (var i = 0; i < 101; i++) {
+        arrayWithGapsAndOverflow[57 * i + 32] = i;
+    }
+    console.log(arrayWithGapsAndOverflow);
+
+    console.log("Array with gaps without overflow");
+    var arrayWithGapsWithoutOverflow = [];
+    for (var i = 0; i < 99; i++) {
+        arrayWithGapsWithoutOverflow[57 * i + 32] = i;
+    }
+    console.log(arrayWithGapsWithoutOverflow);
+
     console.log("Object with proto");
     var objectWithProto = { d: 1 };
     objectWithProto.__proto__ = object;
@@ -76,9 +90,16 @@ function logToConsole()
 
 function test()
 {
-    InspectorTest.evaluateInPage("logToConsole()", callback);
+    InspectorTest.evaluateInPage("logToConsole()", step2);
 
-    function callback()
+    function step2()
+    {
+        InspectorTest.dumpConsoleMessages(false, true);
+        InspectorTest.addResult("Expanded all messages");
+        InspectorTest.expandConsoleMessages(step3);
+    }
+
+    function step3()
     {
         InspectorTest.dumpConsoleMessages(false, true);
         InspectorTest.completeTest();

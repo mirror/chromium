@@ -30,255 +30,286 @@
 
 #include "platform/image-decoders/jpeg/JPEGImageDecoder.h"
 
+#include <memory>
 #include "platform/SharedBuffer.h"
 #include "platform/image-decoders/ImageAnimation.h"
 #include "platform/image-decoders/ImageDecoderTestHelpers.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/typed_arrays/ArrayBuffer.h"
 #include "public/platform/WebData.h"
 #include "public/platform/WebSize.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/typed_arrays/ArrayBuffer.h"
-#include <memory>
 
 namespace blink {
 
-static const size_t LargeEnoughSize = 1000 * 1000;
+static const size_t kLargeEnoughSize = 1000 * 1000;
 
 namespace {
 
-std::unique_ptr<ImageDecoder> createDecoder(size_t maxDecodedBytes)
-{
-    return wrapUnique(new JPEGImageDecoder(ImageDecoder::AlphaNotPremultiplied, ImageDecoder::GammaAndColorProfileApplied, maxDecodedBytes));
+std::unique_ptr<ImageDecoder> CreateDecoder(size_t max_decoded_bytes) {
+  return WTF::WrapUnique(new JPEGImageDecoder(
+      ImageDecoder::kAlphaNotPremultiplied,
+      ColorBehavior::TransformToTargetForTesting(), max_decoded_bytes));
 }
 
-std::unique_ptr<ImageDecoder> createDecoder()
-{
-    return createDecoder(ImageDecoder::noDecodedImageByteLimit);
+std::unique_ptr<ImageDecoder> CreateDecoder() {
+  return CreateDecoder(ImageDecoder::kNoDecodedImageByteLimit);
 }
 
-} // anonymous namespace
+}  // anonymous namespace
 
-void downsample(size_t maxDecodedBytes, unsigned* outputWidth, unsigned* outputHeight, const char* imageFilePath)
-{
-    RefPtr<SharedBuffer> data = readFile(imageFilePath);
-    ASSERT_TRUE(data);
+void Downsample(size_t max_decoded_bytes,
+                unsigned* output_width,
+                unsigned* output_height,
+                const char* image_file_path) {
+  RefPtr<SharedBuffer> data = ReadFile(image_file_path);
+  ASSERT_TRUE(data);
 
-    std::unique_ptr<ImageDecoder> decoder = createDecoder(maxDecodedBytes);
-    decoder->setData(data.get(), true);
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder(max_decoded_bytes);
+  decoder->SetData(data.Get(), true);
 
-    ImageFrame* frame = decoder->frameBufferAtIndex(0);
-    ASSERT_TRUE(frame);
-    *outputWidth = frame->bitmap().width();
-    *outputHeight = frame->bitmap().height();
-    EXPECT_EQ(IntSize(*outputWidth, *outputHeight), decoder->decodedSize());
+  ImageFrame* frame = decoder->FrameBufferAtIndex(0);
+  ASSERT_TRUE(frame);
+  *output_width = frame->Bitmap().width();
+  *output_height = frame->Bitmap().height();
+  EXPECT_EQ(IntSize(*output_width, *output_height), decoder->DecodedSize());
 }
 
-void readYUV(size_t maxDecodedBytes, unsigned* outputYWidth, unsigned* outputYHeight, unsigned* outputUVWidth, unsigned* outputUVHeight, const char* imageFilePath)
-{
-    RefPtr<SharedBuffer> data = readFile(imageFilePath);
-    ASSERT_TRUE(data);
+void ReadYUV(size_t max_decoded_bytes,
+             unsigned* output_y_width,
+             unsigned* output_y_height,
+             unsigned* output_uv_width,
+             unsigned* output_uv_height,
+             const char* image_file_path) {
+  RefPtr<SharedBuffer> data = ReadFile(image_file_path);
+  ASSERT_TRUE(data);
 
-    std::unique_ptr<ImageDecoder> decoder = createDecoder(maxDecodedBytes);
-    decoder->setData(data.get(), true);
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder(max_decoded_bytes);
+  decoder->SetData(data.Get(), true);
 
-    // Setting a dummy ImagePlanes object signals to the decoder that we want to do YUV decoding.
-    std::unique_ptr<ImagePlanes> dummyImagePlanes = wrapUnique(new ImagePlanes());
-    decoder->setImagePlanes(std::move(dummyImagePlanes));
+  // Setting a dummy ImagePlanes object signals to the decoder that we want to
+  // do YUV decoding.
+  std::unique_ptr<ImagePlanes> dummy_image_planes =
+      WTF::MakeUnique<ImagePlanes>();
+  decoder->SetImagePlanes(std::move(dummy_image_planes));
 
-    bool sizeIsAvailable = decoder->isSizeAvailable();
-    ASSERT_TRUE(sizeIsAvailable);
+  bool size_is_available = decoder->IsSizeAvailable();
+  ASSERT_TRUE(size_is_available);
 
-    IntSize size = decoder->decodedSize();
-    IntSize ySize = decoder->decodedYUVSize(0);
-    IntSize uSize = decoder->decodedYUVSize(1);
-    IntSize vSize = decoder->decodedYUVSize(2);
+  IntSize size = decoder->DecodedSize();
+  IntSize y_size = decoder->DecodedYUVSize(0);
+  IntSize u_size = decoder->DecodedYUVSize(1);
+  IntSize v_size = decoder->DecodedYUVSize(2);
 
-    ASSERT_TRUE(size.width() == ySize.width());
-    ASSERT_TRUE(size.height() == ySize.height());
-    ASSERT_TRUE(uSize.width() == vSize.width());
-    ASSERT_TRUE(uSize.height() == vSize.height());
+  ASSERT_TRUE(size.Width() == y_size.Width());
+  ASSERT_TRUE(size.Height() == y_size.Height());
+  ASSERT_TRUE(u_size.Width() == v_size.Width());
+  ASSERT_TRUE(u_size.Height() == v_size.Height());
 
-    *outputYWidth = ySize.width();
-    *outputYHeight = ySize.height();
-    *outputUVWidth = uSize.width();
-    *outputUVHeight = uSize.height();
+  *output_y_width = y_size.Width();
+  *output_y_height = y_size.Height();
+  *output_uv_width = u_size.Width();
+  *output_uv_height = u_size.Height();
 
-    size_t rowBytes[3];
-    rowBytes[0] = decoder->decodedYUVWidthBytes(0);
-    rowBytes[1] = decoder->decodedYUVWidthBytes(1);
-    rowBytes[2] = decoder->decodedYUVWidthBytes(2);
+  size_t row_bytes[3];
+  row_bytes[0] = decoder->DecodedYUVWidthBytes(0);
+  row_bytes[1] = decoder->DecodedYUVWidthBytes(1);
+  row_bytes[2] = decoder->DecodedYUVWidthBytes(2);
 
-    RefPtr<ArrayBuffer> buffer(ArrayBuffer::create(rowBytes[0] * ySize.height() + rowBytes[1] * uSize.height() + rowBytes[2] * vSize.height(), 1));
-    void* planes[3];
-    planes[0] = buffer->data();
-    planes[1] = ((char*) planes[0]) + rowBytes[0] * ySize.height();
-    planes[2] = ((char*) planes[1]) + rowBytes[1] * uSize.height();
+  RefPtr<ArrayBuffer> buffer(ArrayBuffer::Create(
+      row_bytes[0] * y_size.Height() + row_bytes[1] * u_size.Height() +
+          row_bytes[2] * v_size.Height(),
+      1));
+  void* planes[3];
+  planes[0] = buffer->Data();
+  planes[1] = ((char*)planes[0]) + row_bytes[0] * y_size.Height();
+  planes[2] = ((char*)planes[1]) + row_bytes[1] * u_size.Height();
 
-    std::unique_ptr<ImagePlanes> imagePlanes = wrapUnique(new ImagePlanes(planes, rowBytes));
-    decoder->setImagePlanes(std::move(imagePlanes));
+  std::unique_ptr<ImagePlanes> image_planes =
+      WTF::MakeUnique<ImagePlanes>(planes, row_bytes);
+  decoder->SetImagePlanes(std::move(image_planes));
 
-    ASSERT_TRUE(decoder->decodeToYUV());
+  ASSERT_TRUE(decoder->DecodeToYUV());
 }
 
 // Tests failure on a too big image.
-TEST(JPEGImageDecoderTest, tooBig)
-{
-    std::unique_ptr<ImageDecoder> decoder = createDecoder(100);
-    EXPECT_FALSE(decoder->setSize(10000, 10000));
-    EXPECT_TRUE(decoder->failed());
+TEST(JPEGImageDecoderTest, tooBig) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder(100);
+  EXPECT_FALSE(decoder->SetSize(10000, 10000));
+  EXPECT_TRUE(decoder->Failed());
 }
 
-// Tests that JPEG decoder can downsample image whose width and height are multiple of 8,
-// to ensure we compute the correct decodedSize and pass correct parameters to libjpeg to
-// output image with the expected size.
-TEST(JPEGImageDecoderTest, downsampleImageSizeMultipleOf8)
-{
-    const char* jpegFile = "/LayoutTests/fast/images/resources/lenna.jpg"; // 256x256
-    unsigned outputWidth, outputHeight;
+// Tests that the JPEG decoder can downsample image whose width and height are
+// multiples of 8, to ensure we compute the correct decodedSize and pass correct
+// parameters to libjpeg to output the image with the expected size.
+TEST(JPEGImageDecoderTest, downsampleImageSizeMultipleOf8) {
+  const char* jpeg_file = "/LayoutTests/images/resources/lenna.jpg";  // 256x256
+  unsigned output_width, output_height;
 
-    // 1/8 downsample.
-    downsample(40 * 40 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(32u, outputWidth);
-    EXPECT_EQ(32u, outputHeight);
+  // 1/8 downsample.
+  Downsample(40 * 40 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(32u, output_width);
+  EXPECT_EQ(32u, output_height);
 
-    // 2/8 downsample.
-    downsample(70 * 70 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(64u, outputWidth);
-    EXPECT_EQ(64u, outputHeight);
+  // 2/8 downsample.
+  Downsample(70 * 70 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(64u, output_width);
+  EXPECT_EQ(64u, output_height);
 
-    // 3/8 downsample.
-    downsample(100 * 100 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(96u, outputWidth);
-    EXPECT_EQ(96u, outputHeight);
+  // 3/8 downsample.
+  Downsample(100 * 100 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(96u, output_width);
+  EXPECT_EQ(96u, output_height);
 
-    // 4/8 downsample.
-    downsample(130 * 130 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(128u, outputWidth);
-    EXPECT_EQ(128u, outputHeight);
+  // 4/8 downsample.
+  Downsample(130 * 130 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(128u, output_width);
+  EXPECT_EQ(128u, output_height);
 
-    // 5/8 downsample.
-    downsample(170 * 170 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(160u, outputWidth);
-    EXPECT_EQ(160u, outputHeight);
+  // 5/8 downsample.
+  Downsample(170 * 170 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(160u, output_width);
+  EXPECT_EQ(160u, output_height);
 
-    // 6/8 downsample.
-    downsample(200 * 200 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(192u, outputWidth);
-    EXPECT_EQ(192u, outputHeight);
+  // 6/8 downsample.
+  Downsample(200 * 200 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(192u, output_width);
+  EXPECT_EQ(192u, output_height);
 
-    // 7/8 downsample.
-    downsample(230 * 230 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(224u, outputWidth);
-    EXPECT_EQ(224u, outputHeight);
+  // 7/8 downsample.
+  Downsample(230 * 230 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(224u, output_width);
+  EXPECT_EQ(224u, output_height);
 }
 
-// Tests that JPEG decoder can downsample image whose width and height are not multiple of 8.
-// Ensures that we round decodedSize and scale_num using the same algorithm as that of libjpeg.
-TEST(JPEGImageDecoderTest, downsampleImageSizeNotMultipleOf8)
-{
-    const char* jpegFile = "/LayoutTests/fast/images/resources/icc-v2-gbr.jpg"; // 275x207
-    unsigned outputWidth, outputHeight;
+// Tests that JPEG decoder can downsample image whose width and height are not
+// multiple of 8. Ensures that we round using the same algorithm as libjpeg.
+TEST(JPEGImageDecoderTest, downsampleImageSizeNotMultipleOf8) {
+  const char* jpeg_file =
+      "/LayoutTests/images/resources/icc-v2-gbr.jpg";  // 275x207
+  unsigned output_width, output_height;
 
-    // 1/8 downsample.
-    downsample(40 * 40 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(35u, outputWidth);
-    EXPECT_EQ(26u, outputHeight);
+  // 1/8 downsample.
+  Downsample(40 * 40 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(35u, output_width);
+  EXPECT_EQ(26u, output_height);
 
-    // 2/8 downsample.
-    downsample(70 * 70 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(69u, outputWidth);
-    EXPECT_EQ(52u, outputHeight);
+  // 2/8 downsample.
+  Downsample(70 * 70 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(69u, output_width);
+  EXPECT_EQ(52u, output_height);
 
-    // 3/8 downsample.
-    downsample(100 * 100 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(104u, outputWidth);
-    EXPECT_EQ(78u, outputHeight);
+  // 3/8 downsample.
+  Downsample(100 * 100 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(104u, output_width);
+  EXPECT_EQ(78u, output_height);
 
-    // 4/8 downsample.
-    downsample(130 * 130 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(138u, outputWidth);
-    EXPECT_EQ(104u, outputHeight);
+  // 4/8 downsample.
+  Downsample(130 * 130 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(138u, output_width);
+  EXPECT_EQ(104u, output_height);
 
-    // 5/8 downsample.
-    downsample(170 * 170 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(172u, outputWidth);
-    EXPECT_EQ(130u, outputHeight);
+  // 5/8 downsample.
+  Downsample(170 * 170 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(172u, output_width);
+  EXPECT_EQ(130u, output_height);
 
-    // 6/8 downsample.
-    downsample(200 * 200 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(207u, outputWidth);
-    EXPECT_EQ(156u, outputHeight);
+  // 6/8 downsample.
+  Downsample(200 * 200 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(207u, output_width);
+  EXPECT_EQ(156u, output_height);
 
-    // 7/8 downsample.
-    downsample(230 * 230 * 4, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(241u, outputWidth);
-    EXPECT_EQ(182u, outputHeight);
+  // 7/8 downsample.
+  Downsample(230 * 230 * 4, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(241u, output_width);
+  EXPECT_EQ(182u, output_height);
 }
 
 // Tests that upsampling is not allowed.
-TEST(JPEGImageDecoderTest, upsample)
-{
-    const char* jpegFile = "/LayoutTests/fast/images/resources/lenna.jpg"; // 256x256
-    unsigned outputWidth, outputHeight;
-    downsample(LargeEnoughSize, &outputWidth, &outputHeight, jpegFile);
-    EXPECT_EQ(256u, outputWidth);
-    EXPECT_EQ(256u, outputHeight);
+TEST(JPEGImageDecoderTest, upsample) {
+  const char* jpeg_file = "/LayoutTests/images/resources/lenna.jpg";  // 256x256
+  unsigned output_width, output_height;
+  Downsample(kLargeEnoughSize, &output_width, &output_height, jpeg_file);
+  EXPECT_EQ(256u, output_width);
+  EXPECT_EQ(256u, output_height);
 }
 
-TEST(JPEGImageDecoderTest, yuv)
-{
-    const char* jpegFile = "/LayoutTests/fast/images/resources/lenna.jpg"; // 256x256, YUV 4:2:0
-    unsigned outputYWidth, outputYHeight, outputUVWidth, outputUVHeight;
-    readYUV(LargeEnoughSize, &outputYWidth, &outputYHeight, &outputUVWidth, &outputUVHeight, jpegFile);
-    EXPECT_EQ(256u, outputYWidth);
-    EXPECT_EQ(256u, outputYHeight);
-    EXPECT_EQ(128u, outputUVWidth);
-    EXPECT_EQ(128u, outputUVHeight);
+TEST(JPEGImageDecoderTest, yuv) {
+  const char* jpeg_file =
+      "/LayoutTests/images/resources/lenna.jpg";  // 256x256, YUV 4:2:0
+  unsigned output_y_width, output_y_height, output_uv_width, output_uv_height;
+  ReadYUV(kLargeEnoughSize, &output_y_width, &output_y_height, &output_uv_width,
+          &output_uv_height, jpeg_file);
+  EXPECT_EQ(256u, output_y_width);
+  EXPECT_EQ(256u, output_y_height);
+  EXPECT_EQ(128u, output_uv_width);
+  EXPECT_EQ(128u, output_uv_height);
 
-    const char* jpegFileImageSizeNotMultipleOf8 = "/LayoutTests/fast/images/resources/cropped_mandrill.jpg"; // 439x154
-    readYUV(LargeEnoughSize, &outputYWidth, &outputYHeight, &outputUVWidth, &outputUVHeight, jpegFileImageSizeNotMultipleOf8);
-    EXPECT_EQ(439u, outputYWidth);
-    EXPECT_EQ(154u, outputYHeight);
-    EXPECT_EQ(220u, outputUVWidth);
-    EXPECT_EQ(77u, outputUVHeight);
+  const char* jpeg_file_image_size_not_multiple_of8 =
+      "/LayoutTests/images/resources/cropped_mandrill.jpg";  // 439x154
+  ReadYUV(kLargeEnoughSize, &output_y_width, &output_y_height, &output_uv_width,
+          &output_uv_height, jpeg_file_image_size_not_multiple_of8);
+  EXPECT_EQ(439u, output_y_width);
+  EXPECT_EQ(154u, output_y_height);
+  EXPECT_EQ(220u, output_uv_width);
+  EXPECT_EQ(77u, output_uv_height);
 
-    // Make sure we revert to RGBA decoding when we're about to downscale,
-    // which can occur on memory-constrained android devices.
-    RefPtr<SharedBuffer> data = readFile(jpegFile);
-    ASSERT_TRUE(data);
+  // Make sure we revert to RGBA decoding when we're about to downscale,
+  // which can occur on memory-constrained android devices.
+  RefPtr<SharedBuffer> data = ReadFile(jpeg_file);
+  ASSERT_TRUE(data);
 
-    std::unique_ptr<ImageDecoder> decoder = createDecoder(230 * 230 * 4);
-    decoder->setData(data.get(), true);
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder(230 * 230 * 4);
+  decoder->SetData(data.Get(), true);
 
-    std::unique_ptr<ImagePlanes> imagePlanes = wrapUnique(new ImagePlanes());
-    decoder->setImagePlanes(std::move(imagePlanes));
-    ASSERT_TRUE(decoder->isSizeAvailable());
-    ASSERT_FALSE(decoder->canDecodeToYUV());
+  std::unique_ptr<ImagePlanes> image_planes = WTF::MakeUnique<ImagePlanes>();
+  decoder->SetImagePlanes(std::move(image_planes));
+  ASSERT_TRUE(decoder->IsSizeAvailable());
+  ASSERT_FALSE(decoder->CanDecodeToYUV());
 }
 
-TEST(JPEGImageDecoderTest, byteByByteBaselineJPEGWithColorProfileAndRestartMarkers)
-{
-    testByteByByteDecode(&createDecoder, "/LayoutTests/fast/images/resources/small-square-with-colorspin-profile.jpg", 1u, cAnimationNone);
+TEST(JPEGImageDecoderTest,
+     byteByByteBaselineJPEGWithColorProfileAndRestartMarkers) {
+  TestByteByByteDecode(&CreateDecoder,
+                       "/LayoutTests/images/resources/"
+                       "small-square-with-colorspin-profile.jpg",
+                       1u, kCAnimationNone);
 }
 
-TEST(JPEGImageDecoderTest, byteByByteProgressiveJPEG)
-{
-    testByteByByteDecode(&createDecoder, "/LayoutTests/fast/images/resources/bug106024.jpg", 1u, cAnimationNone);
+TEST(JPEGImageDecoderTest, byteByByteProgressiveJPEG) {
+  TestByteByByteDecode(&CreateDecoder,
+                       "/LayoutTests/images/resources/bug106024.jpg", 1u,
+                       kCAnimationNone);
 }
 
-TEST(JPEGImageDecoderTest, byteByByteRGBJPEGWithAdobeMarkers)
-{
-    testByteByByteDecode(&createDecoder, "/LayoutTests/fast/images/resources/rgb-jpeg-with-adobe-marker-only.jpg", 1u, cAnimationNone);
+TEST(JPEGImageDecoderTest, byteByByteRGBJPEGWithAdobeMarkers) {
+  TestByteByByteDecode(
+      &CreateDecoder,
+      "/LayoutTests/images/resources/rgb-jpeg-with-adobe-marker-only.jpg", 1u,
+      kCAnimationNone);
 }
 
 // This test verifies that calling SharedBuffer::mergeSegmentsIntoBuffer() does
 // not break JPEG decoding at a critical point: in between a call to decode the
 // size (when JPEGImageDecoder stops while it may still have input data to
 // read) and a call to do a full decode.
-TEST(JPEGImageDecoderTest, mergeBuffer)
-{
-    const char* jpegFile = "/LayoutTests/fast/images/resources/lenna.jpg";
-    testMergeBuffer(&createDecoder, jpegFile);
+TEST(JPEGImageDecoderTest, mergeBuffer) {
+  const char* jpeg_file = "/LayoutTests/images/resources/lenna.jpg";
+  TestMergeBuffer(&CreateDecoder, jpeg_file);
 }
 
-} // namespace blink
+// This tests decoding a JPEG with many progressive scans.  Decoding should
+// fail, but not hang (crbug.com/642462).
+TEST(JPEGImageDecoderTest, manyProgressiveScans) {
+  RefPtr<SharedBuffer> test_data =
+      ReadFile(kDecodersTestingDir, "many-progressive-scans.jpg");
+  ASSERT_TRUE(test_data.Get());
+
+  std::unique_ptr<ImageDecoder> test_decoder = CreateDecoder();
+  test_decoder->SetData(test_data.Get(), true);
+  EXPECT_EQ(1u, test_decoder->FrameCount());
+  ASSERT_TRUE(test_decoder->FrameBufferAtIndex(0));
+  EXPECT_TRUE(test_decoder->Failed());
+}
+
+}  // namespace blink

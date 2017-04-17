@@ -6,12 +6,14 @@
 
 #include <string.h>
 
+#include <algorithm>
+
 #include "base/logging.h"
-#include "base/macros.h"
+#include "base/memory/ptr_util.h"
 
 namespace {
 
-const float EPSILON = 4.0f / 32768.0f;
+const float kEpsilon = 4.0f / 32768.0f;
 
 }  // namespace
 
@@ -39,7 +41,7 @@ AudioRepetitionDetector::AudioRepetitionDetector(
 
   max_look_back_ms_ = temp.back();
   for (int look_back : temp)
-    states_.push_back(new State(look_back));
+    states_.push_back(base::MakeUnique<State>(look_back));
 }
 
 AudioRepetitionDetector::~AudioRepetitionDetector() {
@@ -69,7 +71,7 @@ void AudioRepetitionDetector::Detect(const float* data, size_t num_frames,
   AddFramesToBuffer(data, num_frames);
 
   for (size_t idx = num_frames; idx > 0; --idx, data += num_channels) {
-    for (State* state : states_) {
+    for (const auto& state : states_) {
       // Look back position depends on the sample rate. It is rounded down to
       // the closest integer.
       const size_t look_back_frames =
@@ -80,7 +82,7 @@ void AudioRepetitionDetector::Detect(const float* data, size_t num_frames,
       if (Equal(data, look_back_frames + idx)) {
         if (!state->reported()) {
           state->Increment(data, num_channels);
-          if (HasValidReport(state)) {
+          if (HasValidReport(state.get())) {
             repetition_callback_.Run(state->look_back_ms());
             state->set_reported(true);
           }
@@ -121,7 +123,7 @@ bool AudioRepetitionDetector::State::EqualsConstant(const float* frame,
   DCHECK(is_constant_);
   for (size_t channel = 0; channel < num_channels; ++channel) {
     const float diff = frame[channel] - constant_[channel];
-    if (diff < -EPSILON || diff > EPSILON)
+    if (diff < -kEpsilon || diff > kEpsilon)
       return false;
   }
   return true;
@@ -137,7 +139,7 @@ void AudioRepetitionDetector::Reset(size_t num_channels, int sample_rate) {
       (max_look_back_ms_ * sample_rate_ + 999) / 1000 + max_frames_;
 
   audio_buffer_.resize(buffer_size_frames_ * num_channels_);
-  for (State* state : states_)
+  for (const auto& state : states_)
     state->Reset();
 }
 
@@ -163,13 +165,9 @@ bool AudioRepetitionDetector::Equal(const float* frame,
   DCHECK(processing_thread_checker_.CalledOnValidThread());
   const size_t look_back_index =
       (buffer_end_index_ + buffer_size_frames_ - look_back_frames) %
-      buffer_size_frames_ ;
-  auto it = audio_buffer_.begin() + look_back_index * num_channels_;
-  for (size_t channel = 0; channel < num_channels_; ++channel, ++frame, ++it) {
-    if (*frame != *it)
-      return false;
-  }
-  return true;
+      buffer_size_frames_;
+  const float* buffer = &audio_buffer_[look_back_index * num_channels_];
+  return memcmp(buffer, frame, num_channels_ * sizeof(audio_buffer_[0])) == 0;
 }
 
 bool AudioRepetitionDetector::HasValidReport(const State* state) const {

@@ -16,17 +16,8 @@
 #include "content/common/content_export.h"
 #include "net/base/load_states.h"
 #include "third_party/WebKit/public/web/WebPopupType.h"
-#include "ui/base/window_open_disposition.h"
 
 class GURL;
-class SkBitmap;
-struct ViewHostMsg_CreateWindow_Params;
-struct FrameHostMsg_DidCommitProvisionalLoad_Params;
-
-namespace base {
-class ListValue;
-class TimeTicks;
-}
 
 namespace IPC {
 class Message;
@@ -40,21 +31,14 @@ class Size;
 namespace content {
 
 class BrowserContext;
-class CrossSiteTransferringRequest;
 class FrameTree;
-class PageState;
 class RenderViewHost;
+class RenderViewHostImpl;
 class RenderViewHostDelegateView;
 class SessionStorageNamespace;
 class SiteInstance;
 class WebContents;
-class WebContentsImpl;
-struct FileChooserParams;
-struct GlobalRequestID;
-struct NativeWebKeyboardEvent;
-struct Referrer;
 struct RendererPreferences;
-struct WebPreferences;
 
 //
 // RenderViewHostDelegate
@@ -74,7 +58,7 @@ class CONTENT_EXPORT RenderViewHostDelegate {
   virtual RenderViewHostDelegateView* GetDelegateView();
 
   // This is used to give the delegate a chance to filter IPC messages.
-  virtual bool OnMessageReceived(RenderViewHost* render_view_host,
+  virtual bool OnMessageReceived(RenderViewHostImpl* render_view_host,
                                  const IPC::Message& message);
 
   // Return this object cast to a WebContents, if it is one. If the object is
@@ -99,11 +83,6 @@ class CONTENT_EXPORT RenderViewHostDelegate {
   // The RenderView is going to be deleted. This is called when each
   // RenderView is going to be destroyed
   virtual void RenderViewDeleted(RenderViewHost* render_view_host) {}
-
-  // The state for the page changed and should be updated.
-  virtual void UpdateState(RenderViewHost* render_view_host,
-                           int32_t page_id,
-                           const PageState& state) {}
 
   // The destination URL has changed should be updated.
   virtual void UpdateTargetURL(RenderViewHost* render_view_host,
@@ -136,43 +115,12 @@ class CONTENT_EXPORT RenderViewHostDelegate {
   // refocus on the modal dialog, flash title etc).
   virtual void OnIgnoredUIEvent() {}
 
-  // Notification that the RenderViewHost's load state changed.
-  virtual void LoadStateChanged(const GURL& url,
-                                const net::LoadStateWithParam& load_state,
-                                uint64_t upload_position,
-                                uint64_t upload_size) {}
-
   // The page wants the hosting window to activate itself (it called the
   // JavaScript window.focus() method).
   virtual void Activate() {}
 
   // The contents' preferred size changed.
   virtual void UpdatePreferredSize(const gfx::Size& pref_size) {}
-
-  // The page is trying to open a new page (e.g. a popup window). The window
-  // should be created associated with the given |route_id| in the process of
-  // |source_site_instance|, but it should not be shown yet. That
-  // should happen in response to ShowCreatedWindow.
-  // |params.window_container_type| describes the type of RenderViewHost
-  // container that is requested -- in particular, the window.open call may
-  // have specified 'background' and 'persistent' in the feature string.
-  //
-  // The passed |params.frame_name| parameter is the name parameter that was
-  // passed to window.open(), and will be empty if none was passed.
-  //
-  // Note: this is not called "CreateWindow" because that will clash with
-  // the Windows function which is actually a #define.
-  //
-  // TODO(alexmos): This should be moved to RenderFrameHostDelegate, and the
-  // corresponding IPC message should be sent by the RenderFrame creating the
-  // new window.
-  virtual void CreateNewWindow(
-      SiteInstance* source_site_instance,
-      int32_t route_id,
-      int32_t main_frame_route_id,
-      int32_t main_frame_widget_route_id,
-      const ViewHostMsg_CreateWindow_Params& params,
-      SessionStorageNamespace* session_storage_namespace) {}
 
   // The page is trying to open a new widget (e.g. a select popup). The
   // widget should be created associated with the given |route_id| in the
@@ -187,17 +135,6 @@ class CONTENT_EXPORT RenderViewHostDelegate {
   // Creates a full screen RenderWidget. Similar to above.
   virtual void CreateNewFullscreenWidget(int32_t render_process_id,
                                          int32_t route_id) {}
-
-  // Show a previously created page with the specified disposition and bounds.
-  // The window is identified by the route_id passed to CreateNewWindow.
-  //
-  // Note: this is not called "ShowWindow" because that will clash with
-  // the Windows function which is actually a #define.
-  virtual void ShowCreatedWindow(int process_id,
-                                 int route_id,
-                                 WindowOpenDisposition disposition,
-                                 const gfx::Rect& initial_rect,
-                                 bool user_gesture) {}
 
   // Show the newly created widget with the specified bounds.
   // The widget is identified by the route_id passed to CreateNewWidget.
@@ -242,6 +179,18 @@ class CONTENT_EXPORT RenderViewHostDelegate {
   // Whether the user agent is overridden using the Chrome for Android "Request
   // Desktop Site" feature.
   virtual bool IsOverridingUserAgent();
+
+  virtual bool IsJavaScriptDialogShowing() const;
+
+  // If a timer for an unresponsive renderer fires, whether it should be
+  // ignored.
+  virtual bool ShouldIgnoreUnresponsiveRenderer();
+
+  // Whether download UI should be hidden.
+  virtual bool HideDownloadUI() const;
+
+  // Whether the WebContents as a persistent video.
+  virtual bool HasPersistentVideo() const;
 
  protected:
   virtual ~RenderViewHostDelegate() {}

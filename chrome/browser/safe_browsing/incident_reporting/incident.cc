@@ -8,7 +8,7 @@
 
 #include "base/logging.h"
 #include "base/time/time.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 
 namespace safe_browsing {
 
@@ -17,10 +17,6 @@ Incident::~Incident() {
 
 std::unique_ptr<ClientIncidentReport_IncidentData> Incident::TakePayload() {
   return std::move(payload_);
-}
-
-MinimumProfileConsent Incident::GetMinimumProfileConsent() const {
-  return MinimumProfileConsent::SAFE_BROWSING_ENABLED;
 }
 
 Incident::Incident() : payload_(new ClientIncidentReport_IncidentData) {

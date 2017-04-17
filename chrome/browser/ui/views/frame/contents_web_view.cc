@@ -98,15 +98,14 @@ void ContentsWebView::CloneWebContentsLayer() {
 #if defined(USE_AURA)
   // We don't need to clone the layers on non-Aura (Mac), because closing an
   // NSWindow does not animate.
-  cloned_layer_tree_ =
-      wm::RecreateLayers(web_contents()->GetNativeView(), nullptr);
+  cloned_layer_tree_ = wm::RecreateLayers(web_contents()->GetNativeView());
 #endif
   if (!cloned_layer_tree_ || !cloned_layer_tree_->root()) {
     cloned_layer_tree_.reset();
     return;
   }
 
-  SetPaintToLayer(true);
+  SetPaintToLayer();
   set_layer_owner_delegate(this);
 
   // The cloned layer is in a different coordinate system them our layer (which
@@ -121,7 +120,7 @@ void ContentsWebView::CloneWebContentsLayer() {
 
 void ContentsWebView::DestroyClonedLayer() {
   cloned_layer_tree_.reset();
-  SetPaintToLayer(false);
+  DestroyLayer();
   set_layer_owner_delegate(nullptr);
 }
 

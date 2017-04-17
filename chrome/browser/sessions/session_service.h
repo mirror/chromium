@@ -11,7 +11,6 @@
 #include "base/callback.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/memory/weak_ptr.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "base/time/time.h"
@@ -32,7 +31,6 @@
 class Profile;
 
 namespace content {
-class NavigationEntry;
 class WebContents;
 }  // namespace content
 
@@ -244,7 +242,7 @@ class SessionService : public sessions::BaseSessionServiceDelegate,
 
   // Removes unrestorable windows from the previous windows list.
   void RemoveUnusedRestoreWindows(
-      std::vector<sessions::SessionWindow*>* window_list);
+      std::vector<std::unique_ptr<sessions::SessionWindow>>* window_list);
 
   // Implementation of RestoreIfNecessary. If |browser| is non-null and we need
   // to restore, the tabs are added to it, otherwise a new browser is created.
@@ -261,8 +259,9 @@ class SessionService : public sessions::BaseSessionServiceDelegate,
   void OnBrowserSetLastActive(Browser* browser) override;
 
   // Converts |commands| to SessionWindows and notifies the callback.
-  void OnGotSessionCommands(const sessions::GetLastSessionCallback& callback,
-                            ScopedVector<sessions::SessionCommand> commands);
+  void OnGotSessionCommands(
+      const sessions::GetLastSessionCallback& callback,
+      std::vector<std::unique_ptr<sessions::SessionCommand>> commands);
 
   // Adds commands to commands that will recreate the state of the specified
   // tab. This adds at most kMaxNavigationCountToPersist navigations (in each
@@ -326,12 +325,6 @@ class SessionService : public sessions::BaseSessionServiceDelegate,
   void RecordSessionUpdateHistogramData(int type,
     base::TimeTicks* last_updated_time);
 
-  // Helper methods to record the histogram data
-  void RecordUpdatedTabClosed(base::TimeDelta delta, bool use_long_period);
-  void RecordUpdatedNavListPruned(base::TimeDelta delta, bool use_long_period);
-  void RecordUpdatedNavEntryCommit(base::TimeDelta delta, bool use_long_period);
-  void RecordUpdatedSaveTime(base::TimeDelta delta, bool use_long_period);
-
   // Deletes session data if no windows are open for the current profile.
   void MaybeDeleteSessionOnlyData();
 
@@ -387,17 +380,6 @@ class SessionService : public sessions::BaseSessionServiceDelegate,
   // is made the last session. See description above class for details on
   // current/last session.
   bool move_on_new_browser_;
-
-  // Used for reporting frequency of session altering operations.
-  base::TimeTicks last_updated_tab_closed_time_;
-  base::TimeTicks last_updated_nav_list_pruned_time_;
-  base::TimeTicks last_updated_nav_entry_commit_time_;
-  base::TimeTicks last_updated_save_time_;
-
-  // Constants used in calculating histogram data.
-  const base::TimeDelta save_delay_in_millis_;
-  const base::TimeDelta save_delay_in_mins_;
-  const base::TimeDelta save_delay_in_hrs_;
 
   // For browser_tests, since we want to simulate the browser shutting down
   // without quitting.

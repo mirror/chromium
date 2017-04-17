@@ -79,6 +79,24 @@ class TabManager::WebContentsData
   // Sets/clears the auto-discardable state of the tab.
   void SetAutoDiscardableState(bool state);
 
+  // Sets the current purge state.
+  // TODO(tasak): remove this after the logic is moved into
+  // MemoryCoordinator.
+  void set_is_purged(bool state) { is_purged_ = state; }
+
+  // Returns the current state of purge.
+  // TODO(tasak): remove this after the logic is moved into
+  // MemoryCoordinator.
+  bool is_purged() const { return is_purged_; }
+
+  // Sets the time to purge after the tab is backgrounded.
+  void set_time_to_purge(const base::TimeDelta& time_to_purge) {
+    time_to_purge_ = time_to_purge;
+  }
+
+  // Returns the time to first purge after the tab is backgrounded.
+  base::TimeDelta time_to_purge() const { return time_to_purge_; }
+
  private:
   // Needed to access tab_data_.
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, CopyState);
@@ -120,6 +138,12 @@ class TabManager::WebContentsData
   // Pointer to a test clock. If this is set, NowTicks() returns the value of
   // this test clock. Otherwise it returns the system clock's value.
   base::TickClock* test_tick_clock_;
+
+  // The time to purge after the tab is backgrounded.
+  base::TimeDelta time_to_purge_;
+
+  // True if the tab has been purged.
+  bool is_purged_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsData);
 };

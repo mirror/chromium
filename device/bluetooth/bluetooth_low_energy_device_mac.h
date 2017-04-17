@@ -27,19 +27,15 @@
 namespace device {
 
 class BluetoothAdapterMac;
-class BluetoothLowEnergyDiscoverManagerMac;
 class BluetoothRemoteGattServiceMac;
+class BluetoothRemoteGattDescriptorMac;
 
 class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
     : public BluetoothDeviceMac {
  public:
   BluetoothLowEnergyDeviceMac(BluetoothAdapterMac* adapter,
-                              CBPeripheral* peripheral,
-                              NSDictionary* advertisement_data,
-                              int rssi);
+                              CBPeripheral* peripheral);
   ~BluetoothLowEnergyDeviceMac() override;
-
-  int GetRSSI() const;
 
   // BluetoothDevice overrides.
   std::string GetIdentifier() const override;
@@ -56,9 +52,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
   bool IsGattConnected() const override;
   bool IsConnectable() const override;
   bool IsConnecting() const override;
-  BluetoothDevice::UUIDList GetUUIDs() const override;
-  int16_t GetInquiryRSSI() const override;
-  int16_t GetInquiryTxPower() const override;
   bool ExpectingPinCode() const override;
   bool ExpectingPasskey() const override;
   bool ExpectingConfirmation() const override;
@@ -97,9 +90,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
   void DidWriteValue(CBCharacteristic* characteristic, NSError* error);
   void DidUpdateNotificationState(CBCharacteristic* characteristic,
                                   NSError* error);
-
-  // Updates information about the device.
-  virtual void Update(NSDictionary* advertisement_data, int rssi);
+  void DidDiscoverDescriptors(CBCharacteristic* characteristic, NSError* error);
+  void DidUpdateValueForDescriptor(CBDescriptor* cb_descriptor, NSError* error);
+  void DidWriteValueForDescriptor(CBDescriptor* descriptor, NSError* error);
 
   static std::string GetPeripheralIdentifier(CBPeripheral* peripheral);
 
@@ -117,6 +110,12 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
   friend class BluetoothTestMac;
   friend class BluetoothRemoteGattServiceMac;
 
+  // Calls the macOS to discover primary services.
+  void DiscoverPrimaryServices();
+
+  // Sends notification if this device is ready with all services discovered.
+  void SendNotificationIfDiscoveryComplete();
+
   // Returns the Bluetooth adapter.
   BluetoothAdapterMac* GetMacAdapter();
 
@@ -127,8 +126,12 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
   BluetoothRemoteGattServiceMac* GetBluetoothRemoteGattService(
       CBService* service) const;
 
+  // Returns BluetoothRemoteGattDescriptorMac based on the CBDescriptor.
+  BluetoothRemoteGattDescriptorMac* GetBluetoothRemoteGattDescriptor(
+      CBDescriptor* cb_descriptor) const;
+
   // Callback used when the CoreBluetooth Peripheral is disconnected.
-  void DidDisconnectPeripheral(BluetoothDevice::ConnectErrorCode error_code);
+  void DidDisconnectPeripheral(NSError* error);
 
   // CoreBluetooth data structure.
   base::scoped_nsobject<CBPeripheral> peripheral_;
@@ -136,9 +139,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
   // Objective-C delegate for the CBPeripheral.
   base::scoped_nsobject<BluetoothLowEnergyPeripheralDelegate>
       peripheral_delegate_;
-
-  // RSSI value.
-  int rssi_;
 
   // Whether the device is connectable.
   bool connectable_;
@@ -150,11 +150,18 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
   // identifier.
   std::string hash_address_;
 
-  // The services (identified by UUIDs) that this device provides.
-  std::set<BluetoothUUID> advertised_uuids_;
+  // Increases each time -[CBPeripheral discoverServices:] is called, and
+  // decreases each time DidDiscoverPrimaryServices() is called. Once the
+  // value is set to 0, characteristics and properties are discovered.
+  int discovery_pending_count_;
 
   DISALLOW_COPY_AND_ASSIGN(BluetoothLowEnergyDeviceMac);
 };
+
+// Stream operator for logging.
+DEVICE_BLUETOOTH_EXPORT std::ostream& operator<<(
+    std::ostream& out,
+    const BluetoothLowEnergyDeviceMac& device);
 
 }  // namespace device
 

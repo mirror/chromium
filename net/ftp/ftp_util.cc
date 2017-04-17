@@ -9,6 +9,7 @@
 
 #include "base/i18n/case_conversion.h"
 #include "base/i18n/char_iterator.h"
+#include "base/i18n/unicodestring.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
@@ -45,12 +46,12 @@ std::string FtpUtil::UnixFilePathToVMS(const std::string& unix_path) {
     // It's an absolute path.
 
     if (tokens.empty()) {
-      DCHECK_EQ(1U, unix_path.length());
+      // It's just "/" or a series of slashes, which all mean the same thing.
       return "[]";
     }
 
     if (tokens.size() == 1)
-      return unix_path.substr(1);  // Drop the leading slash.
+      return tokens.front();  // Return without leading slashes.
 
     std::string result(tokens[0] + ":[");
     if (tokens.size() == 2) {
@@ -175,8 +176,8 @@ class AbbreviatedMonthsMap {
           format_symbols.getShortMonths(months_count);
 
       for (int32_t month = 0; month < months_count; month++) {
-        base::string16 month_name(months[month].getBuffer(),
-                            static_cast<size_t>(months[month].length()));
+        base::string16 month_name(
+            base::i18n::UnicodeStringToString16(months[month]));
 
         // Ignore the case of the month names. The simplest way to handle that
         // is to make everything lowercase.
@@ -272,7 +273,7 @@ bool FtpUtil::LsDateListingToTime(const base::string16& month,
 
     // Guess the year.
     base::Time::Exploded current_exploded;
-    current_time.LocalExplode(&current_exploded);
+    current_time.UTCExplode(&current_exploded);
 
     // If it's not possible for the parsed date to be in the current year,
     // use the previous year.
@@ -285,9 +286,8 @@ bool FtpUtil::LsDateListingToTime(const base::string16& month,
     }
   }
 
-  // We don't know the time zone of the listing, so just use local time.
-  *result = base::Time::FromLocalExploded(time_exploded);
-  return true;
+  // We don't know the time zone of the listing, so just use UTC.
+  return base::Time::FromUTCExploded(time_exploded, result);
 }
 
 // static
@@ -348,9 +348,8 @@ bool FtpUtil::WindowsDateListingToTime(const base::string16& date,
     }
   }
 
-  // We don't know the time zone of the server, so just use local time.
-  *result = base::Time::FromLocalExploded(time_exploded);
-  return true;
+  // We don't know the time zone of the server, so just use UTC.
+  return base::Time::FromUTCExploded(time_exploded, result);
 }
 
 // static

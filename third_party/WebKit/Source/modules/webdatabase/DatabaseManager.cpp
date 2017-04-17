@@ -29,189 +29,203 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/ExecutionContextTask.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/probe/CoreProbes.h"
 #include "modules/webdatabase/Database.h"
 #include "modules/webdatabase/DatabaseCallback.h"
 #include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webdatabase/DatabaseContext.h"
 #include "modules/webdatabase/DatabaseTask.h"
 #include "modules/webdatabase/DatabaseTracker.h"
-#include "platform/Logging.h"
+#include "modules/webdatabase/StorageLog.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebTraceLocation.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
-static DatabaseManager* s_databaseManager;
+static DatabaseManager* g_database_manager;
 
-DatabaseManager& DatabaseManager::manager()
-{
-    DCHECK(isMainThread());
-    if (!s_databaseManager)
-        s_databaseManager = new DatabaseManager();
-    return *s_databaseManager;
-}
-
-void DatabaseManager::terminateDatabaseThread()
-{
-    DCHECK(isMainThread());
-    if (!s_databaseManager)
-        return;
-    for (const Member<DatabaseContext>& context : s_databaseManager->m_contextMap.values())
-        context->stopDatabases();
+DatabaseManager& DatabaseManager::Manager() {
+  DCHECK(IsMainThread());
+  if (!g_database_manager)
+    g_database_manager = new DatabaseManager();
+  return *g_database_manager;
 }
 
 DatabaseManager::DatabaseManager()
-#if ENABLE(ASSERT)
-    : m_databaseContextRegisteredCount(0)
-    , m_databaseContextInstanceCount(0)
-#endif
 {
 }
 
-DatabaseManager::~DatabaseManager()
-{
-}
+DatabaseManager::~DatabaseManager() {}
 
 // This is just for ignoring DatabaseCallback::handleEvent()'s return value.
-static void databaseCallbackHandleEvent(DatabaseCallback* callback, Database* database)
-{
-    callback->handleEvent(database);
+static void DatabaseCallbackHandleEvent(DatabaseCallback* callback,
+                                        Database* database) {
+  probe::AsyncTask async_task(database->GetExecutionContext(), callback);
+  callback->handleEvent(database);
 }
 
-DatabaseContext* DatabaseManager::existingDatabaseContextFor(ExecutionContext* context)
-{
-    ASSERT(m_databaseContextRegisteredCount >= 0);
-    ASSERT(m_databaseContextInstanceCount >= 0);
-    ASSERT(m_databaseContextRegisteredCount <= m_databaseContextInstanceCount);
-    return m_contextMap.get(context);
+DatabaseContext* DatabaseManager::ExistingDatabaseContextFor(
+    ExecutionContext* context) {
+#if DCHECK_IS_ON()
+  DCHECK_GE(database_context_registered_count_, 0);
+  DCHECK_GE(database_context_instance_count_, 0);
+  DCHECK_LE(database_context_registered_count_,
+            database_context_instance_count_);
+#endif
+  return context_map_.at(context);
 }
 
-DatabaseContext* DatabaseManager::databaseContextFor(ExecutionContext* context)
-{
-    if (DatabaseContext* databaseContext = existingDatabaseContextFor(context))
-        return databaseContext;
-    return DatabaseContext::create(context);
+DatabaseContext* DatabaseManager::DatabaseContextFor(
+    ExecutionContext* context) {
+  if (DatabaseContext* database_context = ExistingDatabaseContextFor(context))
+    return database_context;
+  return DatabaseContext::Create(context);
 }
 
-void DatabaseManager::registerDatabaseContext(DatabaseContext* databaseContext)
-{
-    ExecutionContext* context = databaseContext->getExecutionContext();
-    m_contextMap.set(context, databaseContext);
-#if ENABLE(ASSERT)
-    m_databaseContextRegisteredCount++;
+void DatabaseManager::RegisterDatabaseContext(
+    DatabaseContext* database_context) {
+  ExecutionContext* context = database_context->GetExecutionContext();
+  context_map_.Set(context, database_context);
+#if DCHECK_IS_ON()
+  database_context_registered_count_++;
 #endif
 }
 
-void DatabaseManager::unregisterDatabaseContext(DatabaseContext* databaseContext)
-{
-    ExecutionContext* context = databaseContext->getExecutionContext();
-    ASSERT(m_contextMap.get(context));
-#if ENABLE(ASSERT)
-    m_databaseContextRegisteredCount--;
+void DatabaseManager::UnregisterDatabaseContext(
+    DatabaseContext* database_context) {
+  ExecutionContext* context = database_context->GetExecutionContext();
+  DCHECK(context_map_.at(context));
+#if DCHECK_IS_ON()
+  database_context_registered_count_--;
 #endif
-    m_contextMap.remove(context);
+  context_map_.erase(context);
 }
 
-#if ENABLE(ASSERT)
-void DatabaseManager::didConstructDatabaseContext()
-{
-    m_databaseContextInstanceCount++;
+#if DCHECK_IS_ON()
+void DatabaseManager::DidConstructDatabaseContext() {
+  database_context_instance_count_++;
 }
 
-void DatabaseManager::didDestructDatabaseContext()
-{
-    m_databaseContextInstanceCount--;
-    ASSERT(m_databaseContextRegisteredCount <= m_databaseContextInstanceCount);
+void DatabaseManager::DidDestructDatabaseContext() {
+  database_context_instance_count_--;
+  DCHECK_LE(database_context_registered_count_,
+            database_context_instance_count_);
 }
 #endif
 
-void DatabaseManager::throwExceptionForDatabaseError(DatabaseError error, const String& errorMessage, ExceptionState& exceptionState)
-{
-    switch (error) {
-    case DatabaseError::None:
-        return;
-    case DatabaseError::GenericSecurityError:
-        exceptionState.throwSecurityError(errorMessage);
-        return;
-    case DatabaseError::InvalidDatabaseState:
-        exceptionState.throwDOMException(InvalidStateError, errorMessage);
-        return;
+void DatabaseManager::ThrowExceptionForDatabaseError(
+    DatabaseError error,
+    const String& error_message,
+    ExceptionState& exception_state) {
+  switch (error) {
+    case DatabaseError::kNone:
+      return;
+    case DatabaseError::kGenericSecurityError:
+      exception_state.ThrowSecurityError(error_message);
+      return;
+    case DatabaseError::kInvalidDatabaseState:
+      exception_state.ThrowDOMException(kInvalidStateError, error_message);
+      return;
     default:
-        ASSERT_NOT_REACHED();
-    }
+      NOTREACHED();
+  }
 }
 
-static void logOpenDatabaseError(ExecutionContext* context, const String& name)
-{
-    WTF_LOG(StorageAPI, "Database %s for origin %s not allowed to be established", name.ascii().data(),
-        context->getSecurityOrigin()->toString().ascii().data());
+static void LogOpenDatabaseError(ExecutionContext* context,
+                                 const String& name) {
+  STORAGE_DVLOG(1) << "Database " << name << " for origin "
+                   << context->GetSecurityOrigin()->ToString()
+                   << " not allowed to be established";
 }
 
-Database* DatabaseManager::openDatabaseInternal(ExecutionContext* context,
-    const String& name, const String& expectedVersion, const String& displayName,
-    unsigned estimatedSize, bool setVersionInNewDatabase, DatabaseError& error, String& errorMessage)
-{
-    ASSERT(error == DatabaseError::None);
+Database* DatabaseManager::OpenDatabaseInternal(
+    ExecutionContext* context,
+    const String& name,
+    const String& expected_version,
+    const String& display_name,
+    unsigned estimated_size,
+    bool set_version_in_new_database,
+    DatabaseError& error,
+    String& error_message) {
+  DCHECK_EQ(error, DatabaseError::kNone);
 
-    DatabaseContext* backendContext = databaseContextFor(context)->backend();
-    if (DatabaseTracker::tracker().canEstablishDatabase(backendContext, name, displayName, estimatedSize, error)) {
-        Database* backend = new Database(backendContext, name, expectedVersion, displayName, estimatedSize);
-        if (backend->openAndVerifyVersion(setVersionInNewDatabase, error, errorMessage))
-            return backend;
-    }
+  DatabaseContext* backend_context = DatabaseContextFor(context)->Backend();
+  if (DatabaseTracker::Tracker().CanEstablishDatabase(
+          backend_context, name, display_name, estimated_size, error)) {
+    Database* backend = new Database(backend_context, name, expected_version,
+                                     display_name, estimated_size);
+    if (backend->OpenAndVerifyVersion(set_version_in_new_database, error,
+                                      error_message))
+      return backend;
+  }
 
-    ASSERT(error != DatabaseError::None);
-    switch (error) {
-    case DatabaseError::GenericSecurityError:
-        logOpenDatabaseError(context, name);
-        return nullptr;
+  DCHECK_NE(error, DatabaseError::kNone);
+  switch (error) {
+    case DatabaseError::kGenericSecurityError:
+      LogOpenDatabaseError(context, name);
+      return nullptr;
 
-    case DatabaseError::InvalidDatabaseState:
-        logErrorMessage(context, errorMessage);
-        return nullptr;
+    case DatabaseError::kInvalidDatabaseState:
+      LogErrorMessage(context, error_message);
+      return nullptr;
 
     default:
-        ASSERT_NOT_REACHED();
-    }
+      NOTREACHED();
+  }
+  return nullptr;
+}
+
+Database* DatabaseManager::OpenDatabase(ExecutionContext* context,
+                                        const String& name,
+                                        const String& expected_version,
+                                        const String& display_name,
+                                        unsigned estimated_size,
+                                        DatabaseCallback* creation_callback,
+                                        DatabaseError& error,
+                                        String& error_message) {
+  DCHECK_EQ(error, DatabaseError::kNone);
+
+  bool set_version_in_new_database = !creation_callback;
+  Database* database = OpenDatabaseInternal(
+      context, name, expected_version, display_name, estimated_size,
+      set_version_in_new_database, error, error_message);
+  if (!database)
     return nullptr;
+
+  DatabaseContextFor(context)->SetHasOpenDatabases();
+  DatabaseClient::From(context)->DidOpenDatabase(
+      database, context->GetSecurityOrigin()->Host(), name, expected_version);
+
+  if (database->IsNew() && creation_callback) {
+    STORAGE_DVLOG(1) << "Scheduling DatabaseCreationCallbackTask for database "
+                     << database;
+    probe::AsyncTaskScheduled(database->GetExecutionContext(), "openDatabase",
+                              creation_callback);
+    TaskRunnerHelper::Get(TaskType::kDatabaseAccess,
+                          database->GetExecutionContext())
+        ->PostTask(BLINK_FROM_HERE, WTF::Bind(&DatabaseCallbackHandleEvent,
+                                              WrapPersistent(creation_callback),
+                                              WrapPersistent(database)));
+  }
+
+  DCHECK(database);
+  return database;
 }
 
-Database* DatabaseManager::openDatabase(ExecutionContext* context,
-    const String& name, const String& expectedVersion, const String& displayName,
-    unsigned estimatedSize, DatabaseCallback* creationCallback,
-    DatabaseError& error, String& errorMessage)
-{
-    ASSERT(error == DatabaseError::None);
-
-    bool setVersionInNewDatabase = !creationCallback;
-    Database* database = openDatabaseInternal(context, name,
-        expectedVersion, displayName, estimatedSize, setVersionInNewDatabase, error, errorMessage);
-    if (!database)
-        return nullptr;
-
-    databaseContextFor(context)->setHasOpenDatabases();
-    DatabaseClient::from(context)->didOpenDatabase(database, context->getSecurityOrigin()->host(), name, expectedVersion);
-
-    if (database->isNew() && creationCallback) {
-        WTF_LOG(StorageAPI, "Scheduling DatabaseCreationCallbackTask for database %p\n", database);
-        database->getExecutionContext()->postTask(BLINK_FROM_HERE, createSameThreadTask(&databaseCallbackHandleEvent, wrapPersistent(creationCallback), wrapPersistent(database)), "openDatabase");
-    }
-
-    ASSERT(database);
-    return database;
+String DatabaseManager::FullPathForDatabase(SecurityOrigin* origin,
+                                            const String& name,
+                                            bool create_if_does_not_exist) {
+  return DatabaseTracker::Tracker().FullPathForDatabase(
+      origin, name, create_if_does_not_exist);
 }
 
-String DatabaseManager::fullPathForDatabase(SecurityOrigin* origin, const String& name, bool createIfDoesNotExist)
-{
-    return DatabaseTracker::tracker().fullPathForDatabase(origin, name, createIfDoesNotExist);
+void DatabaseManager::LogErrorMessage(ExecutionContext* context,
+                                      const String& message) {
+  context->AddConsoleMessage(ConsoleMessage::Create(
+      kStorageMessageSource, kErrorMessageLevel, message));
 }
 
-void DatabaseManager::logErrorMessage(ExecutionContext* context, const String& message)
-{
-    context->addConsoleMessage(ConsoleMessage::create(StorageMessageSource, ErrorMessageLevel, message));
-}
-
-} // namespace blink
+}  // namespace blink

@@ -10,12 +10,12 @@
 
 #include "base/values.h"
 
-using base::BinaryValue;
+using base::Value;
 
 namespace {
 
 std::unique_ptr<base::ListValue> CopyBinaryValueToIntegerList(
-    const BinaryValue* input) {
+    const Value* input) {
   std::unique_ptr<base::ListValue> output(new base::ListValue());
   const char* input_buffer = input->GetBuffer();
   for (size_t i = 0; i < input->GetSize(); i++) {
@@ -26,22 +26,20 @@ std::unique_ptr<base::ListValue> CopyBinaryValueToIntegerList(
 
 }  // namespace
 
-bool IdltestSendArrayBufferFunction::RunSync() {
-  BinaryValue* input = NULL;
+ExtensionFunction::ResponseAction IdltestSendArrayBufferFunction::Run() {
+  Value* input = NULL;
   EXTENSION_FUNCTION_VALIDATE(args_ != NULL && args_->GetBinary(0, &input));
-  SetResult(CopyBinaryValueToIntegerList(input));
-  return true;
+  return RespondNow(OneArgument(CopyBinaryValueToIntegerList(input)));
 }
 
-bool IdltestSendArrayBufferViewFunction::RunSync() {
-  BinaryValue* input = NULL;
+ExtensionFunction::ResponseAction IdltestSendArrayBufferViewFunction::Run() {
+  Value* input = NULL;
   EXTENSION_FUNCTION_VALIDATE(args_ != NULL && args_->GetBinary(0, &input));
-  SetResult(CopyBinaryValueToIntegerList(input));
-  return true;
+  return RespondNow(OneArgument(CopyBinaryValueToIntegerList(input)));
 }
 
-bool IdltestGetArrayBufferFunction::RunSync() {
+ExtensionFunction::ResponseAction IdltestGetArrayBufferFunction::Run() {
   std::string hello = "hello world";
-  SetResult(BinaryValue::CreateWithCopiedBuffer(hello.c_str(), hello.size()));
-  return true;
+  return RespondNow(
+      OneArgument(Value::CreateWithCopiedBuffer(hello.c_str(), hello.size())));
 }

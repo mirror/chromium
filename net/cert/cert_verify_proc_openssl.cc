@@ -4,15 +4,12 @@
 
 #include "net/cert/cert_verify_proc_openssl.h"
 
-#include <openssl/x509v3.h>
-
 #include <string>
 #include <vector>
 
 #include "base/logging.h"
 #include "base/sha1.h"
 #include "crypto/openssl_util.h"
-#include "crypto/scoped_openssl_types.h"
 #include "crypto/sha2.h"
 #include "net/base/net_errors.h"
 #include "net/cert/asn1_util.h"
@@ -21,6 +18,7 @@
 #include "net/cert/cert_verify_result.h"
 #include "net/cert/test_root_certs.h"
 #include "net/cert/x509_certificate.h"
+#include "third_party/boringssl/src/include/openssl/x509v3.h"
 
 namespace net {
 
@@ -90,11 +88,9 @@ CertStatus MapCertErrorToCertStatus(int err) {
   }
 }
 
-// sk_X509_free is a function-style macro, so can't be used as a template
-// param directly.
-void sk_X509_free_fn(STACK_OF(X509)* st) {
-  sk_X509_free(st);
-}
+struct ShallowX509StackDeleter {
+  void operator()(STACK_OF(X509) * st) const { sk_X509_free(st); }
+};
 
 void GetCertChainInfo(X509_STORE_CTX* store_ctx,
                       CertVerifyResult* verify_result) {
@@ -108,34 +104,17 @@ void GetCertChainInfo(X509_STORE_CTX* store_ctx,
     } else {
       verified_chain.push_back(cert);
     }
-
-    // Only check the algorithm status for certificates that are not in the
-    // trust store.
-    if (i < static_cast<size_t>(store_ctx->last_untrusted)) {
-      int sig_alg = OBJ_obj2nid(cert->sig_alg->algorithm);
-      if (sig_alg == NID_md2WithRSAEncryption) {
-        verify_result->has_md2 = true;
-      } else if (sig_alg == NID_md4WithRSAEncryption) {
-        verify_result->has_md4 = true;
-      } else if (sig_alg == NID_md5WithRSAEncryption ||
-                 sig_alg == NID_md5WithRSA) {
-        verify_result->has_md5 = true;
-      } else if (sig_alg == NID_sha1WithRSAEncryption ||
-                 sig_alg == NID_dsaWithSHA || sig_alg == NID_dsaWithSHA1 ||
-                 sig_alg == NID_dsaWithSHA1_2 || sig_alg == NID_sha1WithRSA ||
-                 sig_alg == NID_ecdsa_with_SHA1) {
-        verify_result->has_sha1 = true;
-        if (i == 0)
-          verify_result->has_sha1_leaf = true;
-      }
-    }
   }
 
   // Set verify_result->verified_cert and
   // verify_result->is_issued_by_known_root.
   if (verified_cert) {
-    verify_result->verified_cert =
+    scoped_refptr<X509Certificate> verified_cert_with_chain =
         X509Certificate::CreateFromHandle(verified_cert, verified_chain);
+    if (verified_cert_with_chain)
+      verify_result->verified_cert = std::move(verified_cert_with_chain);
+    else
+      verify_result->cert_status |= CERT_STATUS_INVALID;
 
     // For OpenSSL builds, only certificates used for unit tests are treated
     // as not issued by known roots. The only way to determine whether a
@@ -206,15 +185,9 @@ int CertVerifyProcOpenSSL::VerifyInternal(
     CertVerifyResult* verify_result) {
   crypto::EnsureOpenSSLInit();
 
-  if (!cert->VerifyNameMatch(hostname,
-                             &verify_result->common_name_fallback_used)) {
-    verify_result->cert_status |= CERT_STATUS_COMMON_NAME_INVALID;
-  }
+  bssl::UniquePtr<X509_STORE_CTX> ctx(X509_STORE_CTX_new());
 
-  crypto::ScopedOpenSSL<X509_STORE_CTX, X509_STORE_CTX_free> ctx(
-      X509_STORE_CTX_new());
-
-  crypto::ScopedOpenSSL<STACK_OF(X509), sk_X509_free_fn> intermediates(
+  std::unique_ptr<STACK_OF(X509), ShallowX509StackDeleter> intermediates(
       sk_X509_new_null());
   if (!intermediates.get())
     return ERR_OUT_OF_MEMORY;
@@ -245,6 +218,7 @@ int CertVerifyProcOpenSSL::VerifyInternal(
 
   GetCertChainInfo(ctx.get(), verify_result);
   AppendPublicKeyHashes(ctx.get(), &verify_result->public_key_hashes);
+
   if (IsCertStatusError(verify_result->cert_status))
     return MapCertStatusToNetError(verify_result->cert_status);
 

@@ -6,17 +6,10 @@
 
 namespace installer {
 namespace master_preferences {
-  const char kChrome[] = "chrome";
-  const char kCreateAllShortcuts[] = "create_all_shortcuts";
   const char kDisableLogging[] = "disable_logging";
   const char kDistroDict[] = "distribution";
-  const char kDistroImportBookmarksPref[] = "import_bookmarks";
   const char kDistroImportBookmarksFromFilePref[] =
       "import_bookmarks_from_file";
-  const char kDistroImportHistoryPref[] = "import_history";
-  const char kDistroImportHomePagePref[] = "import_home_page";
-  const char kDistroImportSearchPref[] = "import_search_engine";
-  const char kDistroPingDelay[] = "ping_delay";
   const char kDistroSuppressDefaultBrowserPromptPref[] =
       "suppress_default_browser_prompt_for_version";
   const char kDistroSuppressFirstRunBubble[] = "suppress_first_run_bubble";
@@ -37,7 +30,6 @@ namespace master_preferences {
       "suppress_first_run_default_browser_prompt";
   const char kMsi[] = "msi";
   const char kMsiProductId[] = "msi_product_id";
-  const char kMultiInstall[] = "multi_install";
   const char kRequireEula[] = "require_eula";
   const char kSystemLevel[] = "system_level";
   const char kVerboseLogging[] = "verbose_logging";

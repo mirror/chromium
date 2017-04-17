@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/compiler_specific.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/test_mock_time_task_runner.h"
@@ -103,7 +104,7 @@ void SessionLengthLimiterTest::TearDown() {
 void SessionLengthLimiterTest::SetSessionUserActivitySeenPref(
     bool user_activity_seen) {
   local_state_.SetUserPref(prefs::kSessionUserActivitySeen,
-                           new base::FundamentalValue(user_activity_seen));
+                           base::MakeUnique<base::Value>(user_activity_seen));
 }
 
 void SessionLengthLimiterTest::ClearSessionUserActivitySeenPref() {
@@ -121,10 +122,9 @@ bool SessionLengthLimiterTest::GetSessionUserActivitySeenPref() {
 
 void SessionLengthLimiterTest::SetSessionStartTimePref(
     const base::TimeTicks& session_start_time) {
-  local_state_.SetUserPref(
-      prefs::kSessionStartTime,
-      new base::StringValue(
-          base::Int64ToString(session_start_time.ToInternalValue())));
+  local_state_.SetUserPref(prefs::kSessionStartTime,
+                           base::MakeUnique<base::Value>(base::Int64ToString(
+                               session_start_time.ToInternalValue())));
 }
 
 void SessionLengthLimiterTest::ClearSessionStartTimePref() {
@@ -144,8 +144,8 @@ base::TimeTicks SessionLengthLimiterTest::GetSessionStartTimePref() {
 void SessionLengthLimiterTest::SetSessionLengthLimitPref(
     const base::TimeDelta& session_length_limit) {
   local_state_.SetUserPref(prefs::kSessionLengthLimit,
-      new base::FundamentalValue(
-          static_cast<int>(session_length_limit.InMilliseconds())));
+                           base::MakeUnique<base::Value>(static_cast<int>(
+                               session_length_limit.InMilliseconds())));
   UpdateSessionStartTimeIfWaitingForUserActivity();
 }
 
@@ -159,7 +159,7 @@ void SessionLengthLimiterTest::SetWaitForInitialUserActivityPref(
   UpdateSessionStartTimeIfWaitingForUserActivity();
   local_state_.SetUserPref(
       prefs::kSessionWaitForInitialUserActivity,
-      new base::FundamentalValue(wait_for_initial_user_activity));
+      base::MakeUnique<base::Value>(wait_for_initial_user_activity));
 }
 
 void SessionLengthLimiterTest::SimulateUserActivity() {

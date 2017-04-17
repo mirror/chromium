@@ -5,85 +5,73 @@
 #include "public/platform/WebCredential.h"
 
 #include "platform/credentialmanager/PlatformCredential.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebFederatedCredential.h"
 #include "public/platform/WebPasswordCredential.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
-std::unique_ptr<WebCredential> WebCredential::create(PlatformCredential* credential)
-{
-    if (credential->isPassword()) {
-        return wrapUnique(new WebPasswordCredential(credential));
-    }
+std::unique_ptr<WebCredential> WebCredential::Create(
+    PlatformCredential* credential) {
+  if (credential->IsPassword()) {
+    return WTF::MakeUnique<WebPasswordCredential>(credential);
+  }
 
-    if (credential->isFederated()) {
-        return wrapUnique(new WebFederatedCredential(credential));
-    }
+  if (credential->IsFederated()) {
+    return WTF::MakeUnique<WebFederatedCredential>(credential);
+  }
 
-    ASSERT_NOT_REACHED();
-    return nullptr;
+  NOTREACHED();
+  return nullptr;
 }
 
-WebCredential::WebCredential(const WebString& id, const WebString& name, const WebURL& iconURL)
-    : m_platformCredential(PlatformCredential::create(id, name, iconURL))
-{
+WebCredential::WebCredential(const WebString& id,
+                             const WebString& name,
+                             const WebURL& icon_url)
+    : platform_credential_(PlatformCredential::Create(id, name, icon_url)) {}
+
+WebCredential::WebCredential(const WebCredential& other) {
+  Assign(other);
 }
 
-WebCredential::WebCredential(const WebCredential& other)
-{
-    assign(other);
-}
-
-void WebCredential::assign(const WebCredential& other)
-{
-    m_platformCredential = other.m_platformCredential;
+void WebCredential::Assign(const WebCredential& other) {
+  platform_credential_ = other.platform_credential_;
 }
 
 WebCredential::WebCredential(PlatformCredential* credential)
-    : m_platformCredential(credential)
-{
+    : platform_credential_(credential) {}
+
+WebCredential& WebCredential::operator=(PlatformCredential* credential) {
+  platform_credential_ = credential;
+  return *this;
 }
 
-WebCredential& WebCredential::operator=(PlatformCredential* credential)
-{
-    m_platformCredential = credential;
-    return *this;
+void WebCredential::Reset() {
+  platform_credential_.Reset();
 }
 
-void WebCredential::reset()
-{
-    m_platformCredential.reset();
+WebString WebCredential::Id() const {
+  return platform_credential_->Id();
 }
 
-WebString WebCredential::id() const
-{
-    return m_platformCredential->id();
+WebString WebCredential::GetName() const {
+  return platform_credential_->GetName();
 }
 
-WebString WebCredential::name() const
-{
-    return m_platformCredential->name();
+WebURL WebCredential::GetIconURL() const {
+  return platform_credential_->GetIconURL();
 }
 
-WebURL WebCredential::iconURL() const
-{
-    return m_platformCredential->iconURL();
+WebString WebCredential::GetType() const {
+  return platform_credential_->GetType();
 }
 
-WebString WebCredential::type() const
-{
-    return m_platformCredential->type();
+bool WebCredential::IsPasswordCredential() const {
+  return platform_credential_->IsPassword();
 }
 
-bool WebCredential::isPasswordCredential() const
-{
-    return m_platformCredential->isPassword();
+bool WebCredential::IsFederatedCredential() const {
+  return platform_credential_->IsFederated();
 }
 
-bool WebCredential::isFederatedCredential() const
-{
-    return m_platformCredential->isFederated();
-}
-
-} // namespace blink
+}  // namespace blink

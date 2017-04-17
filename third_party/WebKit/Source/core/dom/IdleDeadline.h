@@ -10,35 +10,33 @@
 
 namespace blink {
 
-class IdleDeadline : public GarbageCollected<IdleDeadline>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    enum class CallbackType {
-        CalledWhenIdle,
-        CalledByTimeout
-    };
+class CORE_EXPORT IdleDeadline : public GarbageCollected<IdleDeadline>,
+                                 public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static IdleDeadline* create(double deadlineSeconds, CallbackType callbackType)
-    {
-        return new IdleDeadline(deadlineSeconds, callbackType);
-    }
+ public:
+  enum class CallbackType { kCalledWhenIdle, kCalledByTimeout };
 
-    DEFINE_INLINE_TRACE() { }
+  static IdleDeadline* Create(double deadline_seconds,
+                              CallbackType callback_type) {
+    return new IdleDeadline(deadline_seconds, callback_type);
+  }
 
-    double timeRemaining() const;
+  DEFINE_INLINE_TRACE() {}
 
-    bool didTimeout() const
-    {
-        return m_callbackType == CallbackType::CalledByTimeout;
-    }
+  double timeRemaining() const;
 
-private:
-    IdleDeadline(double deadlineSeconds, CallbackType);
+  bool didTimeout() const {
+    return callback_type_ == CallbackType::kCalledByTimeout;
+  }
 
-    double m_deadlineSeconds;
-    CallbackType m_callbackType;
+ private:
+  IdleDeadline(double deadline_seconds, CallbackType);
+
+  double deadline_seconds_;
+  CallbackType callback_type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IdleDeadline_h
+#endif  // IdleDeadline_h

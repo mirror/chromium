@@ -31,19 +31,9 @@ class ContinueWindowAura : public ContinueWindow {
   DISALLOW_COPY_AND_ASSIGN(ContinueWindowAura);
 };
 
-ContinueWindowAura::ContinueWindowAura() {
-  message_box_.reset(new MessageBox(
-      l10n_util::GetStringUTF16(IDS_MODE_IT2ME),           // title
-      l10n_util::GetStringUTF16(IDS_CONTINUE_PROMPT),      // dialog label
-      l10n_util::GetStringUTF16(IDS_CONTINUE_BUTTON),      // ok label
-      l10n_util::GetStringUTF16(IDS_STOP_SHARING_BUTTON),  // cancel label
-      base::Bind(&ContinueWindowAura::OnMessageBoxResult,
-                 base::Unretained(this))));
-}
+ContinueWindowAura::ContinueWindowAura() {}
 
-ContinueWindowAura::~ContinueWindowAura() {
-  message_box_->Hide();
-}
+ContinueWindowAura::~ContinueWindowAura() {}
 
 void ContinueWindowAura::OnMessageBoxResult(MessageBox::Result result) {
   if (result == MessageBox::OK) {
@@ -54,18 +44,24 @@ void ContinueWindowAura::OnMessageBoxResult(MessageBox::Result result) {
 }
 
 void ContinueWindowAura::ShowUi() {
-  message_box_->Show();
+  message_box_ = base::MakeUnique<MessageBox>(
+      l10n_util::GetStringUTF16(IDS_MODE_IT2ME),           // title
+      l10n_util::GetStringUTF16(IDS_CONTINUE_PROMPT),      // dialog label
+      l10n_util::GetStringUTF16(IDS_CONTINUE_BUTTON),      // ok label
+      l10n_util::GetStringUTF16(IDS_STOP_SHARING_BUTTON),  // cancel label
+      base::Bind(&ContinueWindowAura::OnMessageBoxResult,
+                 base::Unretained(this)));
 }
 
 void ContinueWindowAura::HideUi() {
-  message_box_->Hide();
+  message_box_.reset();
 }
 
 }  // namespace
 
 // static
 std::unique_ptr<HostWindow> HostWindow::CreateContinueWindow() {
-  return base::WrapUnique(new ContinueWindowAura());
+  return base::MakeUnique<ContinueWindowAura>();
 }
 
 }  // namespace remoting

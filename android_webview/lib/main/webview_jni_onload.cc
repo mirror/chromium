@@ -11,8 +11,6 @@
 #include "base/android/jni_registrar.h"
 #include "base/android/library_loader/library_loader_hooks.h"
 #include "base/bind.h"
-#include "components/external_video_surface/component_jni_registrar.h"
-#include "components/navigation_interception/component_jni_registrar.h"
 #include "components/web_contents_delegate_android/component_jni_registrar.h"
 #include "content/public/app/content_jni_onload.h"
 #include "content/public/app/content_main.h"
@@ -24,17 +22,16 @@ namespace {
 
 static base::android::RegistrationMethod
     kWebViewDependencyRegisteredMethods[] = {
-#if defined(VIDEO_HOLE)
-    { "ExternalVideoSurfaceContainer",
-        external_video_surface::RegisterExternalVideoSurfaceJni },
-#endif
-    { "NavigationInterception",
-        navigation_interception::RegisterNavigationInterceptionJni },
     { "WebContentsDelegateAndroid",
         web_contents_delegate_android::RegisterWebContentsDelegateAndroidJni },
 };
 
-bool RegisterJNI(JNIEnv* env) {
+}  // namespace
+
+bool OnJNIOnLoadRegisterJNI(JNIEnv* env) {
+  if (!content::android::OnJNIOnLoadRegisterJNI(env))
+    return false;
+
   // Register JNI for components we depend on.
   if (!RegisterNativeMethods(
           env,
@@ -46,7 +43,10 @@ bool RegisterJNI(JNIEnv* env) {
   return true;
 }
 
-bool Init() {
+bool OnJNIOnLoadInit() {
+  if (!content::android::OnJNIOnLoadInit())
+    return false;
+
   base::android::SetVersionNumber(PRODUCT_VERSION);
   content::SetContentMainDelegate(new android_webview::AwMainDelegate());
 
@@ -55,20 +55,6 @@ bool Init() {
   // this). It's safe to call this multiple times.
   url::Initialize();
   return true;
-}
-
-}  // namespace
-
-bool OnJNIOnLoadRegisterJNI(JavaVM* vm) {
-  std::vector<base::android::RegisterCallback> register_callbacks;
-  register_callbacks.push_back(base::Bind(&RegisterJNI));
-  return content::android::OnJNIOnLoadRegisterJNI(vm, register_callbacks);
-}
-
-bool OnJNIOnLoadInit() {
-  std::vector<base::android::InitCallback> init_callbacks;
-  init_callbacks.push_back(base::Bind(&Init));
-  return content::android::OnJNIOnLoadInit(init_callbacks);
 }
 
 }  // android_webview

@@ -30,42 +30,40 @@
 
 namespace blink {
 
-CustomEvent::CustomEvent()
-{
+CustomEvent::CustomEvent() {}
+
+CustomEvent::CustomEvent(const AtomicString& type,
+                         const CustomEventInit& initializer)
+    : Event(type, initializer) {}
+
+CustomEvent::~CustomEvent() {}
+
+void CustomEvent::initCustomEvent(const AtomicString& type,
+                                  bool can_bubble,
+                                  bool cancelable,
+                                  const ScriptValue&) {
+  initEvent(type, can_bubble, cancelable);
 }
 
-CustomEvent::CustomEvent(const AtomicString& type, const CustomEventInit& initializer)
-    : Event(type, initializer)
-{
+void CustomEvent::initCustomEvent(
+    const AtomicString& type,
+    bool can_bubble,
+    bool cancelable,
+    PassRefPtr<SerializedScriptValue> serialized_detail) {
+  if (IsBeingDispatched())
+    return;
+
+  initEvent(type, can_bubble, cancelable);
+
+  serialized_detail_ = std::move(serialized_detail);
 }
 
-CustomEvent::~CustomEvent()
-{
+const AtomicString& CustomEvent::InterfaceName() const {
+  return EventNames::CustomEvent;
 }
 
-void CustomEvent::initCustomEvent(const AtomicString& type, bool canBubble, bool cancelable, const ScriptValue&)
-{
-    initEvent(type, canBubble, cancelable);
+DEFINE_TRACE(CustomEvent) {
+  Event::Trace(visitor);
 }
 
-void CustomEvent::initCustomEvent(const AtomicString& type, bool canBubble, bool cancelable, PassRefPtr<SerializedScriptValue> serializedDetail)
-{
-    if (isBeingDispatched())
-        return;
-
-    initEvent(type, canBubble, cancelable);
-
-    m_serializedDetail = serializedDetail;
-}
-
-const AtomicString& CustomEvent::interfaceName() const
-{
-    return EventNames::CustomEvent;
-}
-
-DEFINE_TRACE(CustomEvent)
-{
-    Event::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

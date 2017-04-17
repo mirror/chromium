@@ -9,7 +9,7 @@
 #include "components/google/core/browser/google_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/security_interstitials/core/metrics_helper.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 
@@ -19,19 +19,17 @@ const char kBoxChecked[] = "boxchecked";
 const char kDisplayCheckBox[] = "displaycheckbox";
 const char kOptInLink[] = "optInLink";
 const char kPrivacyLinkHtml[] =
-    "<a id=\"privacy-link\" href=\"\" onclick=\"sendCommand(%d); "
+    "<a id=\"privacy-link\" href=\"#\" onclick=\"sendCommand(%d); "
     "return false;\" onmousedown=\"return false;\">%s</a>";
 
-ControllerClient::ControllerClient() {}
+ControllerClient::ControllerClient(
+    std::unique_ptr<MetricsHelper> metrics_helper)
+    : metrics_helper_(std::move(metrics_helper)) {}
+
 ControllerClient::~ControllerClient() {}
 
 MetricsHelper* ControllerClient::metrics_helper() const {
   return metrics_helper_.get();
-}
-
-void ControllerClient::set_metrics_helper(
-    std::unique_ptr<MetricsHelper> metrics_helper) {
-  metrics_helper_ = std::move(metrics_helper);
 }
 
 void ControllerClient::SetReportingPreference(bool report) {
@@ -48,6 +46,15 @@ void ControllerClient::OpenExtendedReportingPrivacyPolicy() {
   privacy_url =
       google_util::AppendGoogleLocaleParam(privacy_url, GetApplicationLocale());
   OpenUrlInCurrentTab(privacy_url);
+}
+
+void ControllerClient::OpenExtendedReportingWhitepaper() {
+  metrics_helper_->RecordUserInteraction(MetricsHelper::SHOW_WHITEPAPER);
+  GURL whitepaper_url(
+      l10n_util::GetStringUTF8(IDS_SAFE_BROWSING_WHITEPAPER_URL));
+  whitepaper_url = google_util::AppendGoogleLocaleParam(whitepaper_url,
+                                                        GetApplicationLocale());
+  OpenUrlInCurrentTab(whitepaper_url);
 }
 
 }  // namespace security_interstitials

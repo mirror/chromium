@@ -6,10 +6,12 @@
 
 #include <stddef.h>
 
+#include <memory>
+#include <vector>
+
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/memory/ptr_util.h"
-#include "base/memory/scoped_vector.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "content/browser/browser_thread_impl.h"
@@ -28,7 +30,7 @@
 #include "content/public/common/url_utils.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_context.h"
-#include "content/public/test/test_browser_thread.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "content/test/test_content_browser_client.h"
 #include "content/test/test_content_client.h"
@@ -95,12 +97,7 @@ class SiteInstanceTestBrowserClient : public TestContentBrowserClient {
 
 class SiteInstanceTest : public testing::Test {
  public:
-  SiteInstanceTest()
-      : ui_thread_(BrowserThread::UI, &message_loop_),
-        file_user_blocking_thread_(BrowserThread::FILE_USER_BLOCKING,
-                                   &message_loop_),
-        io_thread_(BrowserThread::IO, &message_loop_),
-        old_browser_client_(nullptr) {}
+  SiteInstanceTest() : old_browser_client_(nullptr) {}
 
   void SetUp() override {
     old_browser_client_ = SetBrowserClientForTesting(&browser_client_);
@@ -122,32 +119,28 @@ class SiteInstanceTest : public testing::Test {
     // calls StoragePartitionImplMap::PostCreateInitialization(), which posts
     // a task to the IO thread to create the AppCacheDatabase. Since the
     // message loop is not running, the AppCacheDatabase ends up getting
-    // created when DrainMessageLoops() gets called at the end of a test case.
+    // created when DrainMessageLoop() gets called at the end of a test case.
     // Immediately after, the test case ends and the AppCacheDatabase gets
-    // scheduled for deletion. Here, call DrainMessageLoops() again so the
+    // scheduled for deletion. Here, call DrainMessageLoop() again so the
     // AppCacheDatabase actually gets deleted.
-    DrainMessageLoops();
+    DrainMessageLoop();
   }
 
   void set_privileged_process_id(int process_id) {
     browser_client_.set_privileged_process_id(process_id);
   }
 
-  void DrainMessageLoops() {
+  void DrainMessageLoop() {
     // We don't just do this in TearDown() because we create TestBrowserContext
     // objects in each test, which will be destructed before
     // TearDown() is called.
     base::RunLoop().RunUntilIdle();
-    message_loop_.RunUntilIdle();
   }
 
   SiteInstanceTestBrowserClient* browser_client() { return &browser_client_; }
 
  private:
-  base::MessageLoopForUI message_loop_;
-  TestBrowserThread ui_thread_;
-  TestBrowserThread file_user_blocking_thread_;
-  TestBrowserThread io_thread_;
+  TestBrowserThreadBundle test_browser_thread_bundle_;
 
   SiteInstanceTestBrowserClient browser_client_;
   ContentBrowserClient* old_browser_client_;
@@ -166,7 +159,7 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
   EXPECT_EQ(0, browser_client()->GetAndClearSiteInstanceDeleteCount());
 
   NavigationEntryImpl* e1 = new NavigationEntryImpl(
-      instance, 0, url, Referrer(), base::string16(), ui::PAGE_TRANSITION_LINK,
+      instance, url, Referrer(), base::string16(), ui::PAGE_TRANSITION_LINK,
       false);
 
   // Redundantly setting e1's SiteInstance shouldn't affect the ref count.
@@ -176,7 +169,7 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
 
   // Add a second reference
   NavigationEntryImpl* e2 = new NavigationEntryImpl(
-      instance, 0, url, Referrer(), base::string16(), ui::PAGE_TRANSITION_LINK,
+      instance, url, Referrer(), base::string16(), ui::PAGE_TRANSITION_LINK,
       false);
 
   instance = nullptr;
@@ -206,7 +199,7 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
 
   // Make sure that we flush any messages related to the above WebContentsImpl
   // destruction.
-  DrainMessageLoops();
+  DrainMessageLoop();
 
   EXPECT_EQ(1, browser_client()->GetAndClearSiteInstanceDeleteCount());
   EXPECT_EQ(1, browser_client()->GetAndClearBrowsingInstanceDeleteCount());
@@ -221,7 +214,7 @@ TEST_F(SiteInstanceTest, CloneNavigationEntry) {
 
   std::unique_ptr<NavigationEntryImpl> e1 =
       base::WrapUnique(new NavigationEntryImpl(
-          SiteInstanceImpl::Create(nullptr), 0, url, Referrer(),
+          SiteInstanceImpl::Create(nullptr), url, Referrer(),
           base::string16(), ui::PAGE_TRANSITION_LINK, false));
 
   // Clone the entry.
@@ -244,7 +237,7 @@ TEST_F(SiteInstanceTest, CloneNavigationEntry) {
   EXPECT_EQ(1, browser_client()->GetAndClearSiteInstanceDeleteCount());
   EXPECT_EQ(1, browser_client()->GetAndClearBrowsingInstanceDeleteCount());
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test to ensure GetProcess returns and creates processes correctly.
@@ -264,7 +257,7 @@ TEST_F(SiteInstanceTest, GetProcess) {
   EXPECT_TRUE(host2.get() != nullptr);
   EXPECT_NE(host1.get(), host2.get());
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test to ensure SetSite and site() work properly.
@@ -278,7 +271,7 @@ TEST_F(SiteInstanceTest, SetSite) {
 
   EXPECT_TRUE(instance->HasSite());
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test to ensure GetSiteForURL properly returns sites for URLs.
@@ -381,7 +374,7 @@ TEST_F(SiteInstanceTest, GetSiteForURL) {
   site_url = SiteInstanceImpl::GetSiteForURL(nullptr, test_url);
   EXPECT_EQ(test_url, site_url);
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test of distinguishing URLs from different sites.  Most of this logic is
@@ -422,7 +415,7 @@ TEST_F(SiteInstanceTest, IsSameWebSite) {
   EXPECT_FALSE(SiteInstance::IsSameWebSite(nullptr, url_blank, url_foo_https));
   EXPECT_FALSE(SiteInstance::IsSameWebSite(nullptr, url_blank, url_foo_port));
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test to ensure that there is only one SiteInstance per site in a given
@@ -494,7 +487,7 @@ TEST_F(SiteInstanceTest, OneSiteInstancePerSite) {
   // browsing_instances will be deleted when their SiteInstances are deleted.
   // The processes will be unregistered when the RPH scoped_ptrs go away.
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test to ensure that there is only one RenderProcessHost per site for an
@@ -574,7 +567,7 @@ TEST_F(SiteInstanceTest, OneSiteInstancePerSiteInBrowserContext) {
   // browsing_instances will be deleted when their SiteInstances are deleted.
   // The processes will be unregistered when the RPH scoped_ptrs go away.
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 static scoped_refptr<SiteInstanceImpl> CreateSiteInstance(
@@ -601,9 +594,10 @@ TEST_F(SiteInstanceTest, ProcessSharingByType) {
 
   // Make a bunch of mock renderers so that we hit the limit.
   std::unique_ptr<TestBrowserContext> browser_context(new TestBrowserContext());
-  ScopedVector<MockRenderProcessHost> hosts;
+  std::vector<std::unique_ptr<MockRenderProcessHost>> hosts;
   for (size_t i = 0; i < kMaxRendererProcessCount; ++i)
-    hosts.push_back(new MockRenderProcessHost(browser_context.get()));
+    hosts.push_back(
+        base::MakeUnique<MockRenderProcessHost>(browser_context.get()));
 
   // Create some extension instances and make sure they share a process.
   scoped_refptr<SiteInstanceImpl> extension1_instance(
@@ -636,11 +630,11 @@ TEST_F(SiteInstanceTest, ProcessSharingByType) {
   EXPECT_NE(extension1_instance->GetProcess(), webui1_instance->GetProcess());
 
   for (size_t i = 0; i < kMaxRendererProcessCount; ++i) {
-    EXPECT_NE(extension1_instance->GetProcess(), hosts[i]);
-    EXPECT_NE(webui1_instance->GetProcess(), hosts[i]);
+    EXPECT_NE(extension1_instance->GetProcess(), hosts[i].get());
+    EXPECT_NE(webui1_instance->GetProcess(), hosts[i].get());
   }
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 
   // Disable the process limit override.
   RenderProcessHost::SetMaxRendererProcessCount(0u);
@@ -702,7 +696,7 @@ TEST_F(SiteInstanceTest, HasWrongProcessForURL) {
   EXPECT_TRUE(
       webui_instance2->HasWrongProcessForURL(GURL("http://google.com")));
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test to ensure that HasWrongProcessForURL behaves properly even when
@@ -734,7 +728,7 @@ TEST_F(SiteInstanceTest, HasWrongProcessForURLInSitePerProcess) {
 
   EXPECT_TRUE(instance->HasWrongProcessForURL(GURL("chrome://gpu")));
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test that we do not reuse a process in process-per-site mode if it has the
@@ -774,7 +768,7 @@ TEST_F(SiteInstanceTest, ProcessPerSiteWithWrongBindings) {
   EXPECT_TRUE(instance2->HasProcess());
   EXPECT_NE(host.get(), host2.get());
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 // Test that we do not register processes with empty sites for process-per-site
@@ -795,7 +789,7 @@ TEST_F(SiteInstanceTest, NoProcessPerSiteForEmptySite) {
   EXPECT_FALSE(RenderProcessHostImpl::GetProcessHostForSite(
       browser_context.get(), GURL()));
 
-  DrainMessageLoops();
+  DrainMessageLoop();
 }
 
 TEST_F(SiteInstanceTest, DefaultSubframeSiteInstance) {
@@ -814,8 +808,8 @@ TEST_F(SiteInstanceTest, DefaultSubframeSiteInstance) {
 
   EXPECT_NE(main_instance, subframe_instance);
   EXPECT_EQ(subframe_instance, main_instance->GetDefaultSubframeSiteInstance());
-  EXPECT_FALSE(main_instance->is_default_subframe_site_instance());
-  EXPECT_TRUE(subframe_instance->is_default_subframe_site_instance());
+  EXPECT_FALSE(main_instance->IsDefaultSubframeSiteInstance());
+  EXPECT_TRUE(subframe_instance->IsDefaultSubframeSiteInstance());
 
   EXPECT_EQ(0, browser_client()->GetAndClearSiteInstanceDeleteCount());
   EXPECT_EQ(0, browser_client()->GetAndClearBrowsingInstanceDeleteCount());
@@ -829,8 +823,8 @@ TEST_F(SiteInstanceTest, DefaultSubframeSiteInstance) {
   // SiteInstance with a different ID from the original.
   subframe_instance = main_instance->GetDefaultSubframeSiteInstance();
   EXPECT_NE(subframe_instance->GetId(), subframe_instance_id);
-  EXPECT_FALSE(main_instance->is_default_subframe_site_instance());
-  EXPECT_TRUE(subframe_instance->is_default_subframe_site_instance());
+  EXPECT_FALSE(main_instance->IsDefaultSubframeSiteInstance());
+  EXPECT_TRUE(subframe_instance->IsDefaultSubframeSiteInstance());
   EXPECT_EQ(subframe_instance->GetDefaultSubframeSiteInstance(),
             subframe_instance);
   EXPECT_EQ(0, browser_client()->GetAndClearSiteInstanceDeleteCount());

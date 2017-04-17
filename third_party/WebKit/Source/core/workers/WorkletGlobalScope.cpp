@@ -4,83 +4,88 @@
 
 #include "core/workers/WorkletGlobalScope.h"
 
+#include <memory>
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
-#include "core/inspector/InspectorInstrumentation.h"
 #include "core/inspector/MainThreadDebugger.h"
-#include <memory>
+#include "core/probe/CoreProbes.h"
 
 namespace blink {
 
-WorkletGlobalScope::WorkletGlobalScope(const KURL& url, const String& userAgent, PassRefPtr<SecurityOrigin> securityOrigin, v8::Isolate* isolate)
-    : m_url(url)
-    , m_userAgent(userAgent)
-    , m_scriptController(WorkerOrWorkletScriptController::create(this, isolate))
-{
-    setSecurityOrigin(securityOrigin);
+WorkletGlobalScope::WorkletGlobalScope(
+    const KURL& url,
+    const String& user_agent,
+    PassRefPtr<SecurityOrigin> security_origin,
+    v8::Isolate* isolate)
+    : url_(url),
+      user_agent_(user_agent),
+      script_controller_(
+          WorkerOrWorkletScriptController::Create(this, isolate)) {
+  SetSecurityOrigin(std::move(security_origin));
 }
 
-WorkletGlobalScope::~WorkletGlobalScope()
-{
+WorkletGlobalScope::~WorkletGlobalScope() {}
+
+void WorkletGlobalScope::Dispose() {
+  DCHECK(script_controller_);
+  script_controller_->Dispose();
+  script_controller_.Clear();
 }
 
-void WorkletGlobalScope::dispose()
-{
-    stopActiveDOMObjects();
-
-    DCHECK(m_scriptController);
-    m_scriptController->willScheduleExecutionTermination();
-    m_scriptController->dispose();
-    m_scriptController.clear();
+v8::Local<v8::Object> WorkletGlobalScope::Wrap(
+    v8::Isolate*,
+    v8::Local<v8::Object> creation_context) {
+  LOG(FATAL) << "WorkletGlobalScope must never be wrapped with wrap method. "
+                "The global object of ECMAScript environment is used as the "
+                "wrapper.";
+  return v8::Local<v8::Object>();
 }
 
-v8::Local<v8::Object> WorkletGlobalScope::wrap(v8::Isolate*, v8::Local<v8::Object> creationContext)
-{
-    // WorkletGlobalScope must never be wrapped with wrap method. The global
-    // object of ECMAScript environment is used as the wrapper.
-    RELEASE_NOTREACHED();
-    return v8::Local<v8::Object>();
+v8::Local<v8::Object> WorkletGlobalScope::AssociateWithWrapper(
+    v8::Isolate*,
+    const WrapperTypeInfo*,
+    v8::Local<v8::Object> wrapper) {
+  LOG(FATAL) << "WorkletGlobalScope must never be wrapped with wrap method. "
+                "The global object of ECMAScript environment is used as the "
+                "wrapper.";
+  return v8::Local<v8::Object>();
 }
 
-v8::Local<v8::Object> WorkletGlobalScope::associateWithWrapper(v8::Isolate*, const WrapperTypeInfo*, v8::Local<v8::Object> wrapper)
-{
-    RELEASE_NOTREACHED(); // Same as wrap method.
-    return v8::Local<v8::Object>();
+void WorkletGlobalScope::DisableEval(const String& error_message) {
+  script_controller_->DisableEval(error_message);
 }
 
-void WorkletGlobalScope::disableEval(const String& errorMessage)
-{
-    m_scriptController->disableEval(errorMessage);
+bool WorkletGlobalScope::IsJSExecutionForbidden() const {
+  return script_controller_->IsExecutionForbidden();
 }
 
-bool WorkletGlobalScope::isSecureContext(String& errorMessage, const SecureContextCheck privilegeContextCheck) const
-{
-    // Until there are APIs that are available in worklets and that
-    // require a privileged context test that checks ancestors, just do
-    // a simple check here.
-    if (getSecurityOrigin()->isPotentiallyTrustworthy())
-        return true;
-    errorMessage = getSecurityOrigin()->isPotentiallyTrustworthyErrorMessage();
-    return false;
+bool WorkletGlobalScope::IsSecureContext(
+    String& error_message,
+    const SecureContextCheck privilege_context_check) const {
+  // Until there are APIs that are available in worklets and that
+  // require a privileged context test that checks ancestors, just do
+  // a simple check here.
+  if (GetSecurityOrigin()->IsPotentiallyTrustworthy())
+    return true;
+  error_message = GetSecurityOrigin()->IsPotentiallyTrustworthyErrorMessage();
+  return false;
 }
 
-KURL WorkletGlobalScope::virtualCompleteURL(const String& url) const
-{
-    // Always return a null URL when passed a null string.
-    // TODO(ikilpatrick): Should we change the KURL constructor to have this
-    // behavior?
-    if (url.isNull())
-        return KURL();
-    // Always use UTF-8 in Worklets.
-    return KURL(m_url, url);
+KURL WorkletGlobalScope::VirtualCompleteURL(const String& url) const {
+  // Always return a null URL when passed a null string.
+  // TODO(ikilpatrick): Should we change the KURL constructor to have this
+  // behavior?
+  if (url.IsNull())
+    return KURL();
+  // Always use UTF-8 in Worklets.
+  return KURL(url_, url);
 }
 
-DEFINE_TRACE(WorkletGlobalScope)
-{
-    visitor->trace(m_scriptController);
-    ExecutionContext::trace(visitor);
-    SecurityContext::trace(visitor);
-    WorkerOrWorkletGlobalScope::trace(visitor);
+DEFINE_TRACE(WorkletGlobalScope) {
+  visitor->Trace(script_controller_);
+  ExecutionContext::Trace(visitor);
+  SecurityContext::Trace(visitor);
+  WorkerOrWorkletGlobalScope::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

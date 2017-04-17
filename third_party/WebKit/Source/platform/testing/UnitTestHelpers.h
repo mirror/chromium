@@ -26,8 +26,8 @@
 #ifndef UnitTestHelpers_h
 #define UnitTestHelpers_h
 
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -35,21 +35,37 @@ class SharedBuffer;
 
 namespace testing {
 
-void runPendingTasks();
+// Note: You may want to use TestingPlatformSupportWithMockScheduler to
+// provides runUntilIdle() method that can work with WebURLLoaderMockFactory.
+void RunPendingTasks();
 
-// Wait for delayed task to complete or timers to fire for |delayMs| milliseconds.
-void runDelayedTasks(double delayMs);
+// Waits for delayed task to complete or timers to fire for |delayMs|
+// milliseconds.
+void RunDelayedTasks(double delay_ms);
 
-String blinkRootDir();
+void EnterRunLoop();
+void ExitRunLoop();
 
-PassRefPtr<SharedBuffer> readFromFile(const String& path);
+void YieldCurrentThread();
 
-void enterRunLoop();
-void exitRunLoop();
+// Returns Blink top directory as an absolute path, e.g.
+// /src/third_party/WebKit.
+String BlinkRootDir();
 
-void yieldCurrentThread();
+// Returns test data absolute path for webkit_unit_tests, i.e.
+// <blinkRootDir>/Source/web/tests/data/<relativePath>.
+// It returns the top web test directory if |relativePath| was not specified.
+String WebTestDataPath(const String& relative_path = String());
 
-} // namespace testing
-} // namespace blink
+// Returns test data absolute path for blink_platform_unittests, i.e.
+// <blinkRootDir>/Source/platform/testing/data/<relativePath>.
+// It returns the top platform test directory if |relativePath| was not
+// specified.
+String PlatformTestDataPath(const String& relative_path = String());
+
+PassRefPtr<SharedBuffer> ReadFromFile(const String& path);
+
+}  // namespace testing
+}  // namespace blink
 
 #endif

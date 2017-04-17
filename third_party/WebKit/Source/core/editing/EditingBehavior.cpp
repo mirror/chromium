@@ -28,236 +28,264 @@
 
 #include "core/events/KeyboardEvent.h"
 #include "platform/KeyboardCodes.h"
-#include "platform/PlatformKeyboardEvent.h"
+#include "public/platform/WebInputEvent.h"
 
 namespace blink {
+
+namespace {
 
 //
 // The below code was adapted from the WebKit file webview.cpp
 //
 
-static const unsigned CtrlKey = 1 << 0;
-static const unsigned AltKey = 1 << 1;
-static const unsigned ShiftKey = 1 << 2;
-static const unsigned MetaKey = 1 << 3;
+const unsigned kCtrlKey = WebInputEvent::kControlKey;
+const unsigned kAltKey = WebInputEvent::kAltKey;
+const unsigned kShiftKey = WebInputEvent::kShiftKey;
+const unsigned kMetaKey = WebInputEvent::kMetaKey;
 #if OS(MACOSX)
 // Aliases for the generic key defintions to make kbd shortcuts definitions more
 // readable on OS X.
-static const unsigned OptionKey  = AltKey;
+const unsigned kOptionKey = kAltKey;
 
 // Do not use this constant for anything but cursor movement commands. Keys
 // with cmd set have their |isSystemKey| bit set, so chances are the shortcut
 // will not be executed. Another, less important, reason is that shortcuts
-// defined in the layoutObject do not blink the menu item that they triggered. See
-// http://crbug.com/25856 and the bugs linked from there for details.
-static const unsigned CommandKey = MetaKey;
+// defined in the layoutObject do not blink the menu item that they triggered.
+// See http://crbug.com/25856 and the bugs linked from there for details.
+const unsigned kCommandKey = kMetaKey;
 #endif
 
 // Keys with special meaning. These will be delegated to the editor using
 // the execCommand() method
-struct KeyDownEntry {
-    unsigned virtualKey;
-    unsigned modifiers;
-    const char* name;
+struct KeyboardCodeKeyDownEntry {
+  unsigned virtual_key;
+  unsigned modifiers;
+  const char* name;
 };
 
-struct KeyPressEntry {
-    unsigned charCode;
-    unsigned modifiers;
-    const char* name;
+struct KeyboardCodeKeyPressEntry {
+  unsigned char_code;
+  unsigned modifiers;
+  const char* name;
+};
+
+// DomKey has a broader range than KeyboardCode, we need DomKey to handle some
+// special keys.
+// Note: We cannot use DomKey for printable keys since it may vary based on
+// locale.
+struct DomKeyKeyDownEntry {
+  const char* key;
+  unsigned modifiers;
+  const char* name;
 };
 
 // Key bindings with command key on Mac and alt key on other platforms are
 // marked as system key events and will be ignored (with the exception
 // of Command-B and Command-I) so they shouldn't be added here.
-static const KeyDownEntry keyDownEntries[] = {
-    { VKEY_LEFT,   0,                  "MoveLeft"                             },
-    { VKEY_LEFT,   ShiftKey,           "MoveLeftAndModifySelection"           },
+const KeyboardCodeKeyDownEntry kKeyboardCodeKeyDownEntries[] = {
+    {VKEY_LEFT, 0, "MoveLeft"},
+    {VKEY_LEFT, kShiftKey, "MoveLeftAndModifySelection"},
 #if OS(MACOSX)
-    { VKEY_LEFT,   OptionKey,          "MoveWordLeft"                         },
-    { VKEY_LEFT,   OptionKey | ShiftKey,
-        "MoveWordLeftAndModifySelection"                                      },
+    {VKEY_LEFT, kOptionKey, "MoveWordLeft"},
+    {VKEY_LEFT, kOptionKey | kShiftKey, "MoveWordLeftAndModifySelection"},
 #else
-    { VKEY_LEFT,   CtrlKey,            "MoveWordLeft"                         },
-    { VKEY_LEFT,   CtrlKey | ShiftKey,
-        "MoveWordLeftAndModifySelection"                                      },
+    {VKEY_LEFT, kCtrlKey, "MoveWordLeft"},
+    {VKEY_LEFT, kCtrlKey | kShiftKey, "MoveWordLeftAndModifySelection"},
 #endif
-    { VKEY_RIGHT,  0,                  "MoveRight"                            },
-    { VKEY_RIGHT,  ShiftKey,           "MoveRightAndModifySelection"          },
+    {VKEY_RIGHT, 0, "MoveRight"},
+    {VKEY_RIGHT, kShiftKey, "MoveRightAndModifySelection"},
 #if OS(MACOSX)
-    { VKEY_RIGHT,  OptionKey,          "MoveWordRight"                        },
-    { VKEY_RIGHT,  OptionKey | ShiftKey, "MoveWordRightAndModifySelection"    },
+    {VKEY_RIGHT, kOptionKey, "MoveWordRight"},
+    {VKEY_RIGHT, kOptionKey | kShiftKey, "MoveWordRightAndModifySelection"},
 #else
-    { VKEY_RIGHT,  CtrlKey,            "MoveWordRight"                        },
-    { VKEY_RIGHT,  CtrlKey | ShiftKey, "MoveWordRightAndModifySelection"      },
+    {VKEY_RIGHT, kCtrlKey, "MoveWordRight"},
+    {VKEY_RIGHT, kCtrlKey | kShiftKey, "MoveWordRightAndModifySelection"},
 #endif
-    { VKEY_UP,     0,                  "MoveUp"                               },
-    { VKEY_UP,     ShiftKey,           "MoveUpAndModifySelection"             },
-    { VKEY_PRIOR,  ShiftKey,           "MovePageUpAndModifySelection"         },
-    { VKEY_DOWN,   0,                  "MoveDown"                             },
-    { VKEY_DOWN,   ShiftKey,           "MoveDownAndModifySelection"           },
-    { VKEY_NEXT,   ShiftKey,           "MovePageDownAndModifySelection"       },
+    {VKEY_UP, 0, "MoveUp"},
+    {VKEY_UP, kShiftKey, "MoveUpAndModifySelection"},
+    {VKEY_PRIOR, kShiftKey, "MovePageUpAndModifySelection"},
+    {VKEY_DOWN, 0, "MoveDown"},
+    {VKEY_DOWN, kShiftKey, "MoveDownAndModifySelection"},
+    {VKEY_NEXT, kShiftKey, "MovePageDownAndModifySelection"},
 #if !OS(MACOSX)
-    { VKEY_UP,     CtrlKey,            "MoveParagraphBackward"                },
-    { VKEY_UP,     CtrlKey | ShiftKey, "MoveParagraphBackwardAndModifySelection" },
-    { VKEY_DOWN,   CtrlKey,            "MoveParagraphForward"                },
-    { VKEY_DOWN,   CtrlKey | ShiftKey, "MoveParagraphForwardAndModifySelection" },
-    { VKEY_PRIOR,  0,                  "MovePageUp"                           },
-    { VKEY_NEXT,   0,                  "MovePageDown"                         },
+    {VKEY_UP, kCtrlKey, "MoveParagraphBackward"},
+    {VKEY_UP, kCtrlKey | kShiftKey, "MoveParagraphBackwardAndModifySelection"},
+    {VKEY_DOWN, kCtrlKey, "MoveParagraphForward"},
+    {VKEY_DOWN, kCtrlKey | kShiftKey, "MoveParagraphForwardAndModifySelection"},
+    {VKEY_PRIOR, 0, "MovePageUp"},
+    {VKEY_NEXT, 0, "MovePageDown"},
 #endif
-    { VKEY_HOME,   0,                  "MoveToBeginningOfLine"                },
-    { VKEY_HOME,   ShiftKey,
-        "MoveToBeginningOfLineAndModifySelection"                             },
+    {VKEY_HOME, 0, "MoveToBeginningOfLine"},
+    {VKEY_HOME, kShiftKey, "MoveToBeginningOfLineAndModifySelection"},
 #if OS(MACOSX)
-    { VKEY_PRIOR,  OptionKey,          "MovePageUp"                           },
-    { VKEY_NEXT,   OptionKey,          "MovePageDown"                         },
+    {VKEY_PRIOR, kOptionKey, "MovePageUp"},
+    {VKEY_NEXT, kOptionKey, "MovePageDown"},
 #endif
 #if !OS(MACOSX)
-    { VKEY_HOME,   CtrlKey,            "MoveToBeginningOfDocument"            },
-    { VKEY_HOME,   CtrlKey | ShiftKey,
-        "MoveToBeginningOfDocumentAndModifySelection"                         },
+    {VKEY_HOME, kCtrlKey, "MoveToBeginningOfDocument"},
+    {VKEY_HOME, kCtrlKey | kShiftKey,
+     "MoveToBeginningOfDocumentAndModifySelection"},
 #endif
-    { VKEY_END,    0,                  "MoveToEndOfLine"                      },
-    { VKEY_END,    ShiftKey,           "MoveToEndOfLineAndModifySelection"    },
+    {VKEY_END, 0, "MoveToEndOfLine"},
+    {VKEY_END, kShiftKey, "MoveToEndOfLineAndModifySelection"},
 #if !OS(MACOSX)
-    { VKEY_END,    CtrlKey,            "MoveToEndOfDocument"                  },
-    { VKEY_END,    CtrlKey | ShiftKey,
-        "MoveToEndOfDocumentAndModifySelection"                               },
+    {VKEY_END, kCtrlKey, "MoveToEndOfDocument"},
+    {VKEY_END, kCtrlKey | kShiftKey, "MoveToEndOfDocumentAndModifySelection"},
 #endif
-    { VKEY_BACK,   0,                  "DeleteBackward"                       },
-    { VKEY_BACK,   ShiftKey,           "DeleteBackward"                       },
-    { VKEY_DELETE, 0,                  "DeleteForward"                        },
+    {VKEY_BACK, 0, "DeleteBackward"},
+    {VKEY_BACK, kShiftKey, "DeleteBackward"},
+    {VKEY_DELETE, 0, "DeleteForward"},
 #if OS(MACOSX)
-    { VKEY_BACK,   OptionKey,          "DeleteWordBackward"                   },
-    { VKEY_DELETE, OptionKey,          "DeleteWordForward"                    },
+    {VKEY_BACK, kOptionKey, "DeleteWordBackward"},
+    {VKEY_DELETE, kOptionKey, "DeleteWordForward"},
 #else
-    { VKEY_BACK,   CtrlKey,            "DeleteWordBackward"                   },
-    { VKEY_DELETE, CtrlKey,            "DeleteWordForward"                    },
+    {VKEY_BACK, kCtrlKey, "DeleteWordBackward"},
+    {VKEY_DELETE, kCtrlKey, "DeleteWordForward"},
 #endif
 #if OS(MACOSX)
-    { 'B',         CommandKey,         "ToggleBold"                           },
-    { 'I',         CommandKey,         "ToggleItalic"                         },
+    {'B', kCommandKey, "ToggleBold"},
+    {'I', kCommandKey, "ToggleItalic"},
 #else
-    { 'B',         CtrlKey,            "ToggleBold"                           },
-    { 'I',         CtrlKey,            "ToggleItalic"                         },
+    {'B', kCtrlKey, "ToggleBold"},
+    {'I', kCtrlKey, "ToggleItalic"},
 #endif
-    { 'U',         CtrlKey,            "ToggleUnderline"                      },
-    { VKEY_ESCAPE, 0,                  "Cancel"                               },
-    { VKEY_OEM_PERIOD, CtrlKey,        "Cancel"                               },
-    { VKEY_TAB,    0,                  "InsertTab"                            },
-    { VKEY_TAB,    ShiftKey,           "InsertBacktab"                        },
-    { VKEY_RETURN, 0,                  "InsertNewline"                        },
-    { VKEY_RETURN, CtrlKey,            "InsertNewline"                        },
-    { VKEY_RETURN, AltKey,             "InsertNewline"                        },
-    { VKEY_RETURN, AltKey | ShiftKey,  "InsertNewline"                        },
-    { VKEY_RETURN, ShiftKey,           "InsertLineBreak"                      },
-    { VKEY_INSERT, CtrlKey,            "Copy"                                 },
-    { VKEY_INSERT, ShiftKey,           "Paste"                                },
-    { VKEY_DELETE, ShiftKey,           "Cut"                                  },
+    {'U', kCtrlKey, "ToggleUnderline"},
+    {VKEY_ESCAPE, 0, "Cancel"},
+    {VKEY_OEM_PERIOD, kCtrlKey, "Cancel"},
+    {VKEY_TAB, 0, "InsertTab"},
+    {VKEY_TAB, kShiftKey, "InsertBacktab"},
+    {VKEY_RETURN, 0, "InsertNewline"},
+    {VKEY_RETURN, kCtrlKey, "InsertNewline"},
+    {VKEY_RETURN, kAltKey, "InsertNewline"},
+    {VKEY_RETURN, kAltKey | kShiftKey, "InsertNewline"},
+    {VKEY_RETURN, kShiftKey, "InsertLineBreak"},
+    {VKEY_INSERT, kCtrlKey, "Copy"},
+    {VKEY_INSERT, kShiftKey, "Paste"},
+    {VKEY_DELETE, kShiftKey, "Cut"},
 #if !OS(MACOSX)
     // On OS X, we pipe these back to the browser, so that it can do menu item
     // blinking.
-    { 'C',         CtrlKey,            "Copy"                                 },
-    { 'V',         CtrlKey,            "Paste"                                },
-    { 'V',         CtrlKey | ShiftKey, "PasteAndMatchStyle"                   },
-    { 'X',         CtrlKey,            "Cut"                                  },
-    { 'A',         CtrlKey,            "SelectAll"                            },
-    { 'Z',         CtrlKey,            "Undo"                                 },
-    { 'Z',         CtrlKey | ShiftKey, "Redo"                                 },
-    { 'Y',         CtrlKey,            "Redo"                                 },
+    {'C', kCtrlKey, "Copy"},
+    {'V', kCtrlKey, "Paste"},
+    {'V', kCtrlKey | kShiftKey, "PasteAndMatchStyle"},
+    {'X', kCtrlKey, "Cut"},
+    {'A', kCtrlKey, "SelectAll"},
+    {'Z', kCtrlKey, "Undo"},
+    {'Z', kCtrlKey | kShiftKey, "Redo"},
+    {'Y', kCtrlKey, "Redo"},
 #endif
-    { VKEY_INSERT, 0,                  "OverWrite"                            },
+    {VKEY_INSERT, 0, "OverWrite"},
 };
 
-static const KeyPressEntry keyPressEntries[] = {
-    { '\t',   0,                  "InsertTab"                                 },
-    { '\t',   ShiftKey,           "InsertBacktab"                             },
-    { '\r',   0,                  "InsertNewline"                             },
-    { '\r',   ShiftKey,           "InsertLineBreak"                           },
+const KeyboardCodeKeyPressEntry kKeyboardCodeKeyPressEntries[] = {
+    {'\t', 0, "InsertTab"},
+    {'\t', kShiftKey, "InsertBacktab"},
+    {'\r', 0, "InsertNewline"},
+    {'\r', kShiftKey, "InsertLineBreak"},
 };
 
-const char* EditingBehavior::interpretKeyEvent(const KeyboardEvent& event) const
-{
-    const PlatformKeyboardEvent* keyEvent = event.keyEvent();
-    if (!keyEvent)
-        return "";
+const DomKeyKeyDownEntry kDomKeyKeyDownEntries[] = {
+    {"Copy", 0, "Copy"},
+    {"Cut", 0, "Cut"},
+    {"Paste", 0, "Paste"},
+};
 
-    static HashMap<int, const char*>* keyDownCommandsMap = nullptr;
-    static HashMap<int, const char*>* keyPressCommandsMap = nullptr;
-
-    if (!keyDownCommandsMap) {
-        keyDownCommandsMap = new HashMap<int, const char*>;
-        keyPressCommandsMap = new HashMap<int, const char*>;
-
-        for (unsigned i = 0; i < WTF_ARRAY_LENGTH(keyDownEntries); i++) {
-            keyDownCommandsMap->set(keyDownEntries[i].modifiers << 16 | keyDownEntries[i].virtualKey, keyDownEntries[i].name);
-        }
-
-        for (unsigned i = 0; i < WTF_ARRAY_LENGTH(keyPressEntries); i++) {
-            keyPressCommandsMap->set(keyPressEntries[i].modifiers << 16 | keyPressEntries[i].charCode, keyPressEntries[i].name);
-        }
-    }
-
-    unsigned modifiers = 0;
-    if (keyEvent->shiftKey())
-        modifiers |= ShiftKey;
-    if (keyEvent->altKey())
-        modifiers |= AltKey;
-    if (keyEvent->ctrlKey())
-        modifiers |= CtrlKey;
-    if (keyEvent->metaKey())
-        modifiers |= MetaKey;
-
-    if (keyEvent->type() == PlatformEvent::RawKeyDown) {
-        int mapKey = modifiers << 16 | event.keyCode();
-        return mapKey ? keyDownCommandsMap->get(mapKey) : 0;
-    }
-
-    int mapKey = modifiers << 16 | event.charCode();
-    return mapKey ? keyPressCommandsMap->get(mapKey) : 0;
+const char* LookupCommandNameFromDomKeyKeyDown(const String& key,
+                                               unsigned modifiers) {
+  // This table is not likely to grow, so sequential search is fine here.
+  for (const auto& entry : kDomKeyKeyDownEntries) {
+    if (key == entry.key && modifiers == entry.modifiers)
+      return entry.name;
+  }
+  return nullptr;
 }
 
-bool EditingBehavior::shouldInsertCharacter(const KeyboardEvent& event) const
-{
-    if (event.keyEvent()->text().length() != 1)
-        return true;
+}  // anonymous namespace
 
-    // On Gtk/Linux, it emits key events with ASCII text and ctrl on for ctrl-<x>.
-    // In Webkit, EditorClient::handleKeyboardEvent in
-    // WebKit/gtk/WebCoreSupport/EditorClientGtk.cpp drop such events.
-    // On Mac, it emits key events with ASCII text and meta on for Command-<x>.
-    // These key events should not emit text insert event.
-    // Alt key would be used to insert alternative character, so we should let
-    // through. Also note that Ctrl-Alt combination equals to AltGr key which is
-    // also used to insert alternative character.
-    // http://code.google.com/p/chromium/issues/detail?id=10846
-    // Windows sets both alt and meta are on when "Alt" key pressed.
-    // http://code.google.com/p/chromium/issues/detail?id=2215
-    // Also, we should not rely on an assumption that keyboards don't
-    // send ASCII characters when pressing a control key on Windows,
-    // which may be configured to do it so by user.
-    // See also http://en.wikipedia.org/wiki/Keyboard_Layout
-    // FIXME(ukai): investigate more detail for various keyboard layout.
-    UChar ch = event.keyEvent()->text()[0U];
+const char* EditingBehavior::InterpretKeyEvent(
+    const KeyboardEvent& event) const {
+  const WebKeyboardEvent* key_event = event.KeyEvent();
+  if (!key_event)
+    return "";
 
-    // Don't insert null or control characters as they can result in
-    // unexpected behaviour
-    if (ch < ' ')
-        return false;
-#if !OS(WIN)
-    // Don't insert ASCII character if ctrl w/o alt or meta is on.
-    // On Mac, we should ignore events when meta is on (Command-<x>).
-    if (ch < 0x80) {
-        if (event.keyEvent()->ctrlKey() && !event.keyEvent()->altKey())
-            return false;
-#if OS(MACOSX)
-        if (event.keyEvent()->metaKey())
-            return false;
-#endif
+  static HashMap<int, const char*>* key_down_commands_map = nullptr;
+  static HashMap<int, const char*>* key_press_commands_map = nullptr;
+
+  if (!key_down_commands_map) {
+    key_down_commands_map = new HashMap<int, const char*>;
+    key_press_commands_map = new HashMap<int, const char*>;
+
+    for (const auto& entry : kKeyboardCodeKeyDownEntries) {
+      key_down_commands_map->Set(entry.modifiers << 16 | entry.virtual_key,
+                                 entry.name);
     }
-#endif
 
+    for (const auto& entry : kKeyboardCodeKeyPressEntries) {
+      key_press_commands_map->Set(entry.modifiers << 16 | entry.char_code,
+                                  entry.name);
+    }
+  }
+
+  unsigned modifiers =
+      key_event->GetModifiers() & (kShiftKey | kAltKey | kCtrlKey | kMetaKey);
+
+  if (key_event->GetType() == WebInputEvent::kRawKeyDown) {
+    int map_key = modifiers << 16 | event.keyCode();
+    const char* name = map_key ? key_down_commands_map->at(map_key) : nullptr;
+    if (!name)
+      name = LookupCommandNameFromDomKeyKeyDown(event.key(), modifiers);
+    return name;
+  }
+
+  int map_key = modifiers << 16 | event.charCode();
+  return map_key ? key_press_commands_map->at(map_key) : 0;
+}
+
+bool EditingBehavior::ShouldInsertCharacter(const KeyboardEvent& event) const {
+  if (event.KeyEvent()->text[1] != 0)
     return true;
-}
-} // namespace blink
 
+  // On Gtk/Linux, it emits key events with ASCII text and ctrl on for ctrl-<x>.
+  // In Webkit, EditorClient::handleKeyboardEvent in
+  // WebKit/gtk/WebCoreSupport/EditorClientGtk.cpp drop such events.
+  // On Mac, it emits key events with ASCII text and meta on for Command-<x>.
+  // These key events should not emit text insert event.
+  // Alt key would be used to insert alternative character, so we should let
+  // through. Also note that Ctrl-Alt combination equals to AltGr key which is
+  // also used to insert alternative character.
+  // http://code.google.com/p/chromium/issues/detail?id=10846
+  // Windows sets both alt and meta are on when "Alt" key pressed.
+  // http://code.google.com/p/chromium/issues/detail?id=2215
+  // Also, we should not rely on an assumption that keyboards don't
+  // send ASCII characters when pressing a control key on Windows,
+  // which may be configured to do it so by user.
+  // See also http://en.wikipedia.org/wiki/Keyboard_Layout
+  // FIXME(ukai): investigate more detail for various keyboard layout.
+  UChar ch = event.KeyEvent()->text[0U];
+
+  // Don't insert null or control characters as they can result in
+  // unexpected behaviour
+  if (ch < ' ')
+    return false;
+#if OS(LINUX)
+  // According to XKB map no keyboard combinations with ctrl key are mapped to
+  // printable characters, however we need the filter as the DomKey/text could
+  // contain printable characters.
+  if (event.ctrlKey())
+    return false;
+#elif !OS(WIN)
+  // Don't insert ASCII character if ctrl w/o alt or meta is on.
+  // On Mac, we should ignore events when meta is on (Command-<x>).
+  if (ch < 0x80) {
+    if (event.ctrlKey() && !event.altKey())
+      return false;
+#if OS(MACOSX)
+    if (event.metaKey())
+      return false;
+#endif
+  }
+#endif
+
+  return true;
+}
+}  // namespace blink

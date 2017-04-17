@@ -8,9 +8,10 @@
 #include <memory>
 #include <string>
 
+#include "ash/public/cpp/app_launch_id.h"
+#include "ash/public/cpp/shelf_types.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "chrome/browser/ui/ash/launcher/chrome_launcher_types.h"
 #include "chrome/browser/ui/extensions/extension_enable_flow_delegate.h"
 
 class ArcAppListPrefs;
@@ -41,23 +42,22 @@ class LauncherControllerHelper : public ExtensionEnableFlowDelegate {
   // Note that already running applications are ignored by the restore process.
   virtual bool IsValidIDForCurrentUser(const std::string& id) const;
 
-  // Sets the currently active profile for the usage of |GetAppID|.
-  virtual void SetCurrentUser(Profile* profile);
-
-  void LaunchApp(const std::string& app_id,
-                 ash::LaunchSource source,
+  void LaunchApp(ash::AppLaunchId id,
+                 ash::ShelfLaunchSource source,
                  int event_flags);
 
   virtual ArcAppListPrefs* GetArcAppListPrefs() const;
 
   Profile* profile() { return profile_; }
   const Profile* profile() const { return profile_; }
+  void set_profile(Profile* profile) { profile_ = profile; }
 
  private:
   // ExtensionEnableFlowDelegate:
   void ExtensionEnableFlowFinished() override;
   void ExtensionEnableFlowAborted(bool user_initiated) override;
 
+  // The currently active profile for the usage of |GetAppID|.
   Profile* profile_;
   std::unique_ptr<ExtensionEnableFlow> extension_enable_flow_;
 

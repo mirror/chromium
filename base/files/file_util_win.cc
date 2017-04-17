@@ -20,6 +20,7 @@
 
 #include "base/files/file_enumerator.h"
 #include "base/files/file_path.h"
+#include "base/guid.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram.h"
@@ -68,6 +69,14 @@ bool DeleteFileRecursive(const FilePath& path,
     }
   }
   return true;
+}
+
+// Appends |mode_char| to |mode| before the optional character set encoding; see
+// https://msdn.microsoft.com/library/yeby3zcb.aspx for details.
+void AppendModeCharacter(base::char16 mode_char, base::string16* mode) {
+  size_t comma_pos = mode->find(L',');
+  mode->insert(comma_pos == base::string16::npos ? mode->length() : comma_pos,
+               1, mode_char);
 }
 
 }  // namespace
@@ -134,6 +143,8 @@ bool ReplaceFile(const FilePath& from_path,
   // already exist.
   if (::MoveFile(from_path.value().c_str(), to_path.value().c_str()))
     return true;
+  File::Error move_error = File::OSErrorToFileError(GetLastError());
+
   // Try the full-blown replace if the move fails, as ReplaceFile will only
   // succeed when |to_path| does exist. When writing to a network share, we may
   // not be able to change the ACLs. Ignore ACL errors then
@@ -142,8 +153,14 @@ bool ReplaceFile(const FilePath& from_path,
                     REPLACEFILE_IGNORE_MERGE_ERRORS, NULL, NULL)) {
     return true;
   }
-  if (error)
-    *error = File::OSErrorToFileError(GetLastError());
+  // In the case of FILE_ERROR_NOT_FOUND from ReplaceFile, it is likely that
+  // |to_path| does not exist. In this case, the more relevant error comes
+  // from the call to MoveFile.
+  if (error) {
+    File::Error replace_error = File::OSErrorToFileError(GetLastError());
+    *error = replace_error == File::FILE_ERROR_NOT_FOUND ? move_error
+                                                         : replace_error;
+  }
   return false;
 }
 
@@ -177,11 +194,8 @@ bool CopyDirectory(const FilePath& from_path, const FilePath& to_path,
   FilePath real_from_path = MakeAbsoluteFilePath(from_path);
   if (real_from_path.empty())
     return false;
-  if (real_to_path.value().size() >= real_from_path.value().size() &&
-      real_to_path.value().compare(0, real_from_path.value().size(),
-                                   real_from_path.value()) == 0) {
+  if (real_to_path == real_from_path || real_from_path.IsParent(real_to_path))
     return false;
-  }
 
   int traverse_type = FileEnumerator::FILES;
   if (recursive)
@@ -327,25 +341,47 @@ FILE* CreateAndOpenTemporaryFileInDir(const FilePath& dir, FilePath* path) {
 bool CreateTemporaryFileInDir(const FilePath& dir, FilePath* temp_file) {
   ThreadRestrictions::AssertIOAllowed();
 
-  wchar_t temp_name[MAX_PATH + 1];
+  // Use GUID instead of ::GetTempFileName() to generate unique file names.
+  // "Due to the algorithm used to generate file names, GetTempFileName can
+  // perform poorly when creating a large number of files with the same prefix.
+  // In such cases, it is recommended that you construct unique file names based
+  // on GUIDs."
+  // https://msdn.microsoft.com/en-us/library/windows/desktop/aa364991(v=vs.85).aspx
 
-  if (!GetTempFileName(dir.value().c_str(), L"", 0, temp_name)) {
+  FilePath temp_name;
+  bool create_file_success = false;
+
+  // Although it is nearly impossible to get a duplicate name with GUID, we
+  // still use a loop here in case it happens.
+  for (int i = 0; i < 100; ++i) {
+    temp_name = dir.Append(ASCIIToUTF16(base::GenerateGUID()) + L".tmp");
+    File file(temp_name,
+              File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE);
+    if (file.IsValid()) {
+      file.Close();
+      create_file_success = true;
+      break;
+    }
+  }
+
+  if (!create_file_success) {
     DPLOG(WARNING) << "Failed to get temporary file name in "
                    << UTF16ToUTF8(dir.value());
     return false;
   }
 
   wchar_t long_temp_name[MAX_PATH + 1];
-  DWORD long_name_len = GetLongPathName(temp_name, long_temp_name, MAX_PATH);
+  DWORD long_name_len =
+      GetLongPathName(temp_name.value().c_str(), long_temp_name, MAX_PATH);
   if (long_name_len > MAX_PATH || long_name_len == 0) {
     // GetLongPathName() failed, but we still have a temporary file.
-    *temp_file = FilePath(temp_name);
+    *temp_file = std::move(temp_name);
     return true;
   }
 
   FilePath::StringType long_temp_name_str;
   long_temp_name_str.assign(long_temp_name, long_name_len);
-  *temp_file = FilePath(long_temp_name_str);
+  *temp_file = FilePath(std::move(long_temp_name_str));
   return true;
 }
 
@@ -559,26 +595,6 @@ bool NormalizeToNativeFilePath(const FilePath& path, FilePath* nt_path) {
   return success;
 }
 
-bool IsOnNetworkDrive(const base::FilePath& path) {
-  win::ScopedHandle handle(
-      ::CreateFileW(path.value().c_str(),
-                    GENERIC_READ,
-                    kFileShareAll,
-                    NULL,
-                    OPEN_EXISTING,
-                    FILE_FLAG_BACKUP_SEMANTICS,  // Needed to open directory.
-                    NULL));
-
-  if (!handle.IsValid())
-    return false;
-
-  // If able to get network information, then the file is on a network.
-  FILE_REMOTE_PROTOCOL_INFO remote_proto_info = {0};
-  return !!::GetFileInformationByHandleEx(handle.Get(), FileRemoteProtocolInfo,
-                                          &remote_proto_info,
-                                          sizeof(remote_proto_info));
-}
-
 // TODO(rkc): Work out if we want to handle NTFS junctions here or not, handle
 // them if we do decide to.
 bool IsLink(const FilePath& file_path) {
@@ -609,8 +625,14 @@ bool GetFileInfo(const FilePath& file_path, File::Info* results) {
 }
 
 FILE* OpenFile(const FilePath& filename, const char* mode) {
+  // 'N' is unconditionally added below, so be sure there is not one already
+  // present before a comma in |mode|.
+  DCHECK(
+      strchr(mode, 'N') == nullptr ||
+      (strchr(mode, ',') != nullptr && strchr(mode, 'N') > strchr(mode, ',')));
   ThreadRestrictions::AssertIOAllowed();
   string16 w_mode = ASCIIToUTF16(mode);
+  AppendModeCharacter(L'N', &w_mode);
   return _wfsopen(filename.value().c_str(), w_mode.c_str(), _SH_DENYNO);
 }
 

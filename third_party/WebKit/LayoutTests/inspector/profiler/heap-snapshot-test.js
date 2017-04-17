@@ -1,6 +1,6 @@
 var initialize_HeapSnapshotTest = function() {
 
-InspectorTest.preloadPanel("profiles");
+InspectorTest.preloadPanel("heap_profiler");
 
 InspectorTest.createHeapSnapshotMockFactories = function() {
 
@@ -48,9 +48,9 @@ InspectorTest.createJSHeapSnapshotMockObject = function()
             1, 11, 15]),// 18: property 'ce' to node 'E'
         strings: ["", "A", "B", "C", "D", "E", "a", "b", "ac", "bc", "bd", "ce"],
         _firstEdgeIndexes: new Uint32Array([0, 6, 12, 18, 21, 21, 21]),
-        createNode: WebInspector.JSHeapSnapshot.prototype.createNode,
-        createEdge: WebInspector.JSHeapSnapshot.prototype.createEdge,
-        createRetainingEdge: WebInspector.JSHeapSnapshot.prototype.createRetainingEdge
+        createNode: HeapSnapshotWorker.JSHeapSnapshot.prototype.createNode,
+        createEdge: HeapSnapshotWorker.JSHeapSnapshot.prototype.createEdge,
+        createRetainingEdge: HeapSnapshotWorker.JSHeapSnapshot.prototype.createRetainingEdge
     };
 };
 
@@ -334,7 +334,7 @@ InspectorTest.HeapSnapshotBuilder.prototype = {
     createJSHeapSnapshot: function()
     {
         var parsedSnapshot = InspectorTest._postprocessHeapSnapshotMock(this.generateSnapshot());
-        return new WebInspector.JSHeapSnapshot(parsedSnapshot, new WebInspector.HeapSnapshotProgress());
+        return new HeapSnapshotWorker.JSHeapSnapshot(parsedSnapshot, new HeapSnapshotWorker.HeapSnapshotProgress());
     },
 
     _registerNode: function(node)
@@ -414,19 +414,17 @@ InspectorTest.createHeapSnapshotMockFactories();
 
 InspectorTest.startProfilerTest = function(callback)
 {
-    WebInspector.settingForTest("showAdvancedHeapSnapshotProperties").set(true);
-
     InspectorTest.addResult("Profiler was enabled.");
     // We mock out HeapProfilerAgent -- as DRT runs in single-process mode, Inspector
     // and test share the same heap. Taking a snapshot takes too long for a test,
     // so we provide synthetic snapshots.
-    InspectorTest._panelReset = InspectorTest.override(WebInspector.panels.profiles, "_reset", function(){}, true);
-    InspectorTest.addSniffer(WebInspector.HeapSnapshotView.prototype, "show", InspectorTest._snapshotViewShown, true);
+    InspectorTest._panelReset = InspectorTest.override(UI.panels.heap_profiler, "_reset", function(){}, true);
+    InspectorTest.addSniffer(Profiler.HeapSnapshotView.prototype, "show", InspectorTest._snapshotViewShown, true);
 
     // Reduce the number of populated nodes to speed up testing.
-    WebInspector.HeapSnapshotContainmentDataGrid.prototype.defaultPopulateCount = function() { return 10; };
-    WebInspector.HeapSnapshotConstructorsDataGrid.prototype.defaultPopulateCount = function() { return 10; };
-    WebInspector.HeapSnapshotDiffDataGrid.prototype.defaultPopulateCount = function() { return 5; };
+    Profiler.HeapSnapshotContainmentDataGrid.prototype.defaultPopulateCount = function() { return 10; };
+    Profiler.HeapSnapshotConstructorsDataGrid.prototype.defaultPopulateCount = function() { return 10; };
+    Profiler.HeapSnapshotDiffDataGrid.prototype.defaultPopulateCount = function() { return 5; };
     InspectorTest.addResult("Detailed heap profiles were enabled.");
     InspectorTest.safeWrap(callback)();
 };
@@ -457,7 +455,7 @@ InspectorTest.runHeapSnapshotTestSuite = function(testSuite)
         var nextTest = testSuiteTests.shift();
         InspectorTest.addResult("");
         InspectorTest.addResult("Running: " + /function\s([^(]*)/.exec(nextTest)[1]);
-        InspectorTest._panelReset.call(WebInspector.panels.profiles);
+        InspectorTest._panelReset.call(UI.panels.heap_profiler);
         InspectorTest.safeWrap(nextTest)(runner, runner);
     }
 
@@ -484,7 +482,7 @@ InspectorTest.checkArrayIsSorted = function(contents, sortType, sortOrder)
     function parseSize(size)
     {
         // Remove thousands separator.
-        return parseInt(size.replace(/[\u2009,]/g, ""), 10);
+        return parseInt(size.replace(/[\xa0,]/g, ""), 10);
     }
     var extractor = {
         text: function (data) { data; },
@@ -500,9 +498,9 @@ InspectorTest.checkArrayIsSorted = function(contents, sortType, sortOrder)
     }
 
     var acceptableComparisonResult;
-    if (sortOrder === WebInspector.DataGrid.Order.Ascending) {
+    if (sortOrder === DataGrid.DataGrid.Order.Ascending) {
         acceptableComparisonResult = -1;
-    } else if (sortOrder === WebInspector.DataGrid.Order.Descending) {
+    } else if (sortOrder === DataGrid.DataGrid.Order.Descending) {
         acceptableComparisonResult = 1;
     } else {
         InspectorTest.addResult("Invalid sort order: " + sortOrder);
@@ -522,13 +520,13 @@ InspectorTest.checkArrayIsSorted = function(contents, sortType, sortOrder)
 InspectorTest.clickColumn = function(column, callback)
 {
     callback = InspectorTest.safeWrap(callback);
-    var cell = this._currentGrid()._headerTableHeaders[column.identifier];
+    var cell = this._currentGrid()._headerTableHeaders[column.id];
     var event = { target: { enclosingNodeOrSelfWithNodeName: function() { return cell; } } };
 
     function sortingComplete()
     {
-        InspectorTest._currentGrid().removeEventListener(WebInspector.HeapSnapshotSortableDataGrid.Events.SortingComplete, sortingComplete, this);
-        InspectorTest.assertEquals(column.identifier, this._currentGrid().sortColumnIdentifier(), "unexpected sorting");
+        InspectorTest._currentGrid().removeEventListener(Profiler.HeapSnapshotSortableDataGrid.Events.SortingComplete, sortingComplete, this);
+        InspectorTest.assertEquals(column.id, this._currentGrid().sortColumnId(), "unexpected sorting");
         column.sort = this._currentGrid().sortOrder();
         function callCallback()
         {
@@ -536,7 +534,7 @@ InspectorTest.clickColumn = function(column, callback)
         }
         setTimeout(callCallback, 0);
     }
-    InspectorTest._currentGrid().addEventListener(WebInspector.HeapSnapshotSortableDataGrid.Events.SortingComplete, sortingComplete, this);
+    InspectorTest._currentGrid().addEventListener(Profiler.HeapSnapshotSortableDataGrid.Events.SortingComplete, sortingComplete, this);
     this._currentGrid()._clickInHeaderCell(event);
 };
 
@@ -553,10 +551,10 @@ InspectorTest.clickRowAndGetRetainers = function(row, callback)
     var rootNode = InspectorTest.currentProfileView()._retainmentDataGrid.rootNode();
     function populateComplete()
     {
-        rootNode.removeEventListener(WebInspector.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
+        rootNode.removeEventListener(Profiler.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
         callback(rootNode);
     }
-    rootNode.addEventListener(WebInspector.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
+    rootNode.addEventListener(Profiler.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
 };
 
 InspectorTest.clickShowMoreButton = function(buttonName, row, callback)
@@ -565,14 +563,14 @@ InspectorTest.clickShowMoreButton = function(buttonName, row, callback)
     var parent = row.parent;
     function populateComplete()
     {
-        parent.removeEventListener(WebInspector.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
+        parent.removeEventListener(Profiler.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
         function callCallback()
         {
             callback(parent);
         }
         setTimeout(callCallback, 0);
     }
-    parent.addEventListener(WebInspector.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
+    parent.addEventListener(Profiler.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
     row[buttonName].click();
 };
 
@@ -611,17 +609,17 @@ InspectorTest.expandRow = function(row, callback)
     callback = InspectorTest.safeWrap(callback);
     function populateComplete()
     {
-        row.removeEventListener(WebInspector.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
+        row.removeEventListener(Profiler.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
         function callCallback()
         {
             callback(row);
         }
         setTimeout(callCallback, 0);
     }
-    row.addEventListener(WebInspector.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
+    row.addEventListener(Profiler.HeapSnapshotGridNode.Events.PopulateComplete, populateComplete, this);
     (function expand()
     {
-        if (row.hasChildren)
+        if (row.hasChildren())
             row.expand();
         else
             setTimeout(expand, 0);
@@ -678,7 +676,7 @@ InspectorTest.findMatchingRow = function(matcher, parent)
 InspectorTest.switchToView = function(title, callback)
 {
     callback = InspectorTest.safeWrap(callback);
-    var view = WebInspector.panels.profiles.visibleView;
+    var view = UI.panels.heap_profiler.visibleView;
     view._changePerspectiveAndWait(title, callback);
     // Increase the grid container height so the viewport don't limit the number of nodes.
     InspectorTest._currentGrid().scrollContainer.style.height = "10000px";
@@ -688,7 +686,7 @@ InspectorTest.takeAndOpenSnapshot = function(generator, callback)
 {
     callback = InspectorTest.safeWrap(callback);
     var snapshot = generator();
-    var profileType = WebInspector.ProfileTypeRegistry.instance.heapSnapshotProfileType;
+    var profileType = Profiler.ProfileTypeRegistry.instance.heapSnapshotProfileType;
     function pushGeneratedSnapshot(reportProgress, callback2)
     {
         var profile = profileType.profileBeingRecorded();
@@ -698,7 +696,7 @@ InspectorTest.takeAndOpenSnapshot = function(generator, callback)
         }
         snapshot.snapshot.typeId = "HEAP";
         profileType._addHeapSnapshotChunk({data: JSON.stringify(snapshot)});
-        setTimeout(callback2, 0);
+        return Promise.resolve(callback2(null));
     }
     InspectorTest.override(InspectorTest.HeapProfilerAgent, "takeHeapSnapshot", pushGeneratedSnapshot);
     InspectorTest._takeAndOpenSnapshotCallback = callback;
@@ -712,7 +710,7 @@ InspectorTest.viewColumns = function()
 
 InspectorTest.currentProfileView = function()
 {
-    return WebInspector.panels.profiles.visibleView;
+    return UI.panels.heap_profiler.visibleView;
 };
 
 InspectorTest._currentGrid = function()
@@ -728,10 +726,10 @@ InspectorTest._snapshotViewShown = function()
         var dataGrid = this._dataGrid;
         function sortingComplete()
         {
-            dataGrid.removeEventListener(WebInspector.HeapSnapshotSortableDataGrid.Events.SortingComplete, sortingComplete, null);
+            dataGrid.removeEventListener(Profiler.HeapSnapshotSortableDataGrid.Events.SortingComplete, sortingComplete, null);
             callback();
         }
-        dataGrid.addEventListener(WebInspector.HeapSnapshotSortableDataGrid.Events.SortingComplete, sortingComplete, null);
+        dataGrid.addEventListener(Profiler.HeapSnapshotSortableDataGrid.Events.SortingComplete, sortingComplete, null);
     }
 };
 

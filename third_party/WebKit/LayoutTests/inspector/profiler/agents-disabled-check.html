@@ -5,28 +5,28 @@
 
 function test()
 {
-    WebInspector.settingForTest("enableAsyncStackTraces").set(true);
+    Common.settingForTest("enableAsyncStackTraces").set(true);
     var messages = [];
     function collectMessages(message)
     {
         messages.push(message);
     }
-    InspectorBackendClass.Connection.prototype._dumpProtocolMessage = collectMessages;
-    InspectorBackendClass.Options.dumpInspectorProtocolMessages = 1;
-    messages.push("--> WebInspector.targetManager.suspendAllTargets();");
-    WebInspector.targetManager.suspendAllTargets();
+    Protocol.TargetBase.prototype._dumpProtocolMessage = collectMessages;
+    Protocol.InspectorBackend.Options.dumpInspectorProtocolMessages = 1;
+    messages.push("--> SDK.targetManager.suspendAllTargets();");
+    SDK.targetManager.suspendAllTargets();
     messages.push("");
-    messages.push("--> WebInspector.targetManager.resumeAllTargets();");
-    WebInspector.targetManager.resumeAllTargets();
+    messages.push("--> SDK.targetManager.resumeAllTargets();");
+    SDK.targetManager.resumeAllTargets();
     messages.push("");
     messages.push("--> done");
-    InspectorBackendClass.Options.dumpInspectorProtocolMessages = 0;
+    Protocol.InspectorBackend.Options.dumpInspectorProtocolMessages = 0;
     for (var i = 0; i < messages.length; ++i) {
         var message = messages[i];
         message = message.replace(/"id":\d+,/, '"id":<number>,');
         InspectorTest.addResult(message);
     }
-    WebInspector.settingForTest("enableAsyncStackTraces").set(false);
+    Common.settingForTest("enableAsyncStackTraces").set(false);
     InspectorTest.completeTest();
 }
 

@@ -6,24 +6,31 @@
 
 #include "platform/geometry/FloatRect.h"
 #include "platform/graphics/GraphicsContext.h"
-#include "third_party/skia/include/core/SkPicture.h"
+#include "platform/graphics/paint/PaintRecord.h"
 
 namespace blink {
 
-void PaintGeneratedImage::draw(SkCanvas* canvas, const SkPaint& paint, const FloatRect& destRect, const FloatRect& srcRect, RespectImageOrientationEnum, ImageClampingMode)
-{
-    SkAutoCanvasRestore ar(canvas, true);
-    canvas->clipRect(destRect);
-    canvas->translate(destRect.x(), destRect.y());
-    if (destRect.size() != srcRect.size())
-        canvas->scale(destRect.width() / srcRect.width(), destRect.height() / srcRect.height());
-    canvas->translate(-srcRect.x(), -srcRect.y());
-    canvas->drawPicture(m_picture.get(), nullptr, &paint);
+void PaintGeneratedImage::Draw(PaintCanvas* canvas,
+                               const PaintFlags& flags,
+                               const FloatRect& dest_rect,
+                               const FloatRect& src_rect,
+                               RespectImageOrientationEnum,
+                               ImageClampingMode) {
+  PaintCanvasAutoRestore ar(canvas, true);
+  canvas->clipRect(dest_rect);
+  canvas->translate(dest_rect.X(), dest_rect.Y());
+  if (dest_rect.Size() != src_rect.Size())
+    canvas->scale(dest_rect.Width() / src_rect.Width(),
+                  dest_rect.Height() / src_rect.Height());
+  canvas->translate(-src_rect.X(), -src_rect.Y());
+  SkRect bounds = record_->cullRect();
+  canvas->saveLayer(&bounds, &flags);
+  canvas->drawPicture(record_);
 }
 
-void PaintGeneratedImage::drawTile(GraphicsContext& context, const FloatRect& srcRect)
-{
-    context.drawPicture(m_picture.get());
+void PaintGeneratedImage::DrawTile(GraphicsContext& context,
+                                   const FloatRect& src_rect) {
+  context.DrawRecord(record_);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -200,9 +200,8 @@ AutomaticRebootManager::AutomaticRebootManager(
 }
 
 AutomaticRebootManager::~AutomaticRebootManager() {
-  FOR_EACH_OBSERVER(AutomaticRebootManagerObserver,
-                    observers_,
-                    WillDestroyAutomaticRebootManager());
+  for (auto& observer : observers_)
+    observer.WillDestroyAutomaticRebootManager();
 
   DBusThreadManager* dbus_thread_manager = DBusThreadManager::Get();
   dbus_thread_manager->GetPowerManagerClient()->RemoveObserver(this);
@@ -384,9 +383,8 @@ void AutomaticRebootManager::RequestReboot() {
   reboot_requested_ = true;
   DCHECK_NE(AutomaticRebootManagerObserver::REBOOT_REASON_UNKNOWN,
             reboot_reason_);
-  FOR_EACH_OBSERVER(AutomaticRebootManagerObserver,
-                    observers_,
-                    OnRebootRequested(reboot_reason_));
+  for (auto& observer : observers_)
+    observer.OnRebootRequested(reboot_reason_);
   MaybeReboot(false);
 }
 
@@ -407,7 +405,8 @@ void AutomaticRebootManager::MaybeReboot(bool ignore_session) {
 void AutomaticRebootManager::Reboot() {
   // If a non-kiosk-app session is in progress, do not reboot.
   if (user_manager::UserManager::Get()->IsUserLoggedIn() &&
-      !user_manager::UserManager::Get()->IsLoggedInAsKioskApp()) {
+      !user_manager::UserManager::Get()->IsLoggedInAsKioskApp() &&
+      !user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp()) {
     return;
   }
 

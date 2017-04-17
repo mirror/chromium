@@ -14,6 +14,8 @@ static_library("handler_lib") {
     "mac/exception_handler_server.h",
     "prune_crash_reports_thread.cc",
     "prune_crash_reports_thread.h",
+    "user_stream_data_source.cc",
+    "user_stream_data_source.h",
     "win/crash_report_exception_handler.cc",
     "win/crash_report_exception_handler.h",
   ]
@@ -48,11 +50,16 @@ executable("crashpad_handler") {
   ]
 
   if (is_mac && is_component_build) {
-    # The handler is in Chromium.app/Contents/Versions/X/Chromium Framework.framework/Helpers/
+    # The handler is in Chromium.app/Contents/Versions/X/Chromium Framework.framework/Versions/A/Helpers/
     # so set rpath up to the base.
     ldflags = [
       "-rpath",
-      "@loader_path/../../../../../..",
+      "@loader_path/../../../../../../../..",
     ]
+  }
+
+  if (is_win) {
+    configs -= [ "//build/config/win:console" ]
+    configs += [ "//build/config/win:windowed" ]
   }
 }

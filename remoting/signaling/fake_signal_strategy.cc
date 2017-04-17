@@ -13,8 +13,9 @@
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
-#include "third_party/webrtc/libjingle/xmpp/constants.h"
+#include "remoting/signaling/jid_util.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
+#include "third_party/libjingle_xmpp/xmpp/constants.h"
 
 namespace remoting {
 
@@ -27,11 +28,12 @@ void FakeSignalStrategy::Connect(FakeSignalStrategy* peer1,
   peer2->ConnectTo(peer1);
 }
 
-FakeSignalStrategy::FakeSignalStrategy(const std::string& jid)
+FakeSignalStrategy::FakeSignalStrategy(const SignalingAddress& address)
     : main_thread_(base::ThreadTaskRunnerHandle::Get()),
-      jid_(jid),
+      address_(address),
       last_id_(0),
       weak_factory_(this) {
+  DetachFromThread();
 }
 
 FakeSignalStrategy::~FakeSignalStrategy() {
@@ -57,21 +59,26 @@ void FakeSignalStrategy::ConnectTo(FakeSignalStrategy* peer) {
   }
 }
 
-void FakeSignalStrategy::SetLocalJid(const std::string& jid) {
+void FakeSignalStrategy::SetLocalAddress(const SignalingAddress& address) {
   DCHECK(CalledOnValidThread());
-  jid_ = jid;
+  address_ = address;
+}
+
+void FakeSignalStrategy::SimulateMessageReordering() {
+  DCHECK(CalledOnValidThread());
+  simulate_reorder_ = true;
 }
 
 void FakeSignalStrategy::Connect() {
   DCHECK(CalledOnValidThread());
-  FOR_EACH_OBSERVER(Listener, listeners_,
-                    OnSignalStrategyStateChange(CONNECTED));
+  for (auto& observer : listeners_)
+    observer.OnSignalStrategyStateChange(CONNECTED);
 }
 
 void FakeSignalStrategy::Disconnect() {
   DCHECK(CalledOnValidThread());
-  FOR_EACH_OBSERVER(Listener, listeners_,
-                    OnSignalStrategyStateChange(DISCONNECTED));
+  for (auto& observer : listeners_)
+    observer.OnSignalStrategyStateChange(DISCONNECTED);
 }
 
 SignalStrategy::State FakeSignalStrategy::GetState() const {
@@ -82,9 +89,9 @@ SignalStrategy::Error FakeSignalStrategy::GetError() const {
   return OK;
 }
 
-std::string FakeSignalStrategy::GetLocalJid() const {
+const SignalingAddress& FakeSignalStrategy::GetLocalAddress() const {
   DCHECK(CalledOnValidThread());
-  return jid_;
+  return address_;
 }
 
 void FakeSignalStrategy::AddListener(Listener* listener) {
@@ -100,7 +107,7 @@ void FakeSignalStrategy::RemoveListener(Listener* listener) {
 bool FakeSignalStrategy::SendStanza(std::unique_ptr<buzz::XmlElement> stanza) {
   DCHECK(CalledOnValidThread());
 
-  stanza->SetAttr(buzz::QN_FROM, jid_);
+  address_.SetInMessage(stanza.get(), SignalingAddress::FROM);
 
   if (peer_callback_.is_null())
     return false;
@@ -134,21 +141,41 @@ void FakeSignalStrategy::OnIncomingMessage(
     std::unique_ptr<buzz::XmlElement> stanza) {
   DCHECK(CalledOnValidThread());
 
+  if (!simulate_reorder_) {
+    NotifyListeners(std::move(stanza));
+    return;
+  }
+
+  // Simulate IQ messages re-ordering by swapping the delivery order of
+  // next pair of messages.
+  if (pending_stanza_) {
+    NotifyListeners(std::move(stanza));
+    NotifyListeners(std::move(pending_stanza_));
+    pending_stanza_.reset();
+  } else {
+    pending_stanza_ = std::move(stanza);
+  }
+}
+
+void FakeSignalStrategy::NotifyListeners(
+    std::unique_ptr<buzz::XmlElement> stanza) {
+  DCHECK(CalledOnValidThread());
+
   buzz::XmlElement* stanza_ptr = stanza.get();
   received_messages_.push_back(stanza.release());
 
-  const std::string& to_field = stanza_ptr->Attr(buzz::QN_TO);
-  if (to_field != jid_) {
-    LOG(WARNING) << "Dropping stanza that is addressed to " << to_field
-                 << ". Local jid: " << jid_
+  std::string to_error;
+  SignalingAddress to =
+      SignalingAddress::Parse(stanza_ptr, SignalingAddress::TO, &to_error);
+  if (to != address_) {
+    LOG(WARNING) << "Dropping stanza that is addressed to " << to.id()
+                 << ". Local address: " << address_.id()
                  << ". Message content: " << stanza_ptr->Str();
     return;
   }
 
-  base::ObserverListBase<Listener>::Iterator it(&listeners_);
-  Listener* listener;
-  while ((listener = it.GetNext()) != nullptr) {
-    if (listener->OnSignalStrategyIncomingStanza(stanza_ptr))
+  for (auto& listener : listeners_) {
+    if (listener.OnSignalStrategyIncomingStanza(stanza_ptr))
       break;
   }
 }

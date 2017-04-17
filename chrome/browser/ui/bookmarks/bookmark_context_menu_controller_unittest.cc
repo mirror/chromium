@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "chrome/app/chrome_command_ids.h"
@@ -21,7 +22,7 @@
 #include "components/bookmarks/browser/bookmark_node.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
-#include "components/syncable_prefs/testing_pref_service_syncable.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -55,7 +56,7 @@ class BookmarkContextMenuControllerTest : public testing::Test {
     TestingProfile::Builder builder;
     profile_ = builder.Build();
     profile_->CreateBookmarkModel(true);
-    model_ = BookmarkModelFactory::GetForProfile(profile_.get());
+    model_ = BookmarkModelFactory::GetForBrowserContext(profile_.get());
     bookmarks::test::WaitForBookmarkModelToLoad(model_);
     AddTestData(model_);
   }
@@ -112,7 +113,8 @@ TEST_F(BookmarkContextMenuControllerTest, DeleteURL) {
 // Tests open all on a folder with a couple of bookmarks.
 TEST_F(BookmarkContextMenuControllerTest, OpenAll) {
   const BookmarkNode* folder = model_->bookmark_bar_node()->GetChild(1);
-  chrome::OpenAll(NULL, &navigator_, folder, NEW_FOREGROUND_TAB, NULL);
+  chrome::OpenAll(NULL, &navigator_, folder,
+                  WindowOpenDisposition::NEW_FOREGROUND_TAB, NULL);
 
   // Should have navigated to F1's child, but not F11's child.
   ASSERT_EQ(static_cast<size_t>(1), navigator_.urls_.size());
@@ -240,7 +242,7 @@ TEST_F(BookmarkContextMenuControllerTest, DisableIncognito) {
       TestingProfile::Builder().BuildIncognito(profile_.get());
 
   incognito->CreateBookmarkModel(true);
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(incognito);
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(incognito);
   bookmarks::test::WaitForBookmarkModelToLoad(model);
   AddTestData(model);
 
@@ -338,7 +340,7 @@ TEST_F(BookmarkContextMenuControllerTest,
       std::vector<const BookmarkNode*>());
 
   // By default, the pref is not managed and the command is enabled.
-  syncable_prefs::TestingPrefServiceSyncable* prefs =
+  sync_preferences::TestingPrefServiceSyncable* prefs =
       profile_->GetTestingPrefService();
   EXPECT_FALSE(prefs->IsManagedPreference(
       bookmarks::prefs::kShowAppsShortcutInBookmarkBar));
@@ -347,13 +349,13 @@ TEST_F(BookmarkContextMenuControllerTest,
 
   // Disabling the shorcut by policy disables the command.
   prefs->SetManagedPref(bookmarks::prefs::kShowAppsShortcutInBookmarkBar,
-                        new base::FundamentalValue(false));
+                        base::MakeUnique<base::Value>(false));
   EXPECT_FALSE(
       controller.IsCommandIdEnabled(IDC_BOOKMARK_BAR_SHOW_APPS_SHORTCUT));
 
   // And enabling the shortcut by policy disables the command too.
   prefs->SetManagedPref(bookmarks::prefs::kShowAppsShortcutInBookmarkBar,
-                        new base::FundamentalValue(true));
+                        base::MakeUnique<base::Value>(true));
   EXPECT_FALSE(
       controller.IsCommandIdEnabled(IDC_BOOKMARK_BAR_SHOW_APPS_SHORTCUT));
 }

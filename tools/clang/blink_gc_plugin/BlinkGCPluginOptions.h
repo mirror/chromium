@@ -10,11 +10,12 @@
 #include <vector>
 
 struct BlinkGCPluginOptions {
-  BlinkGCPluginOptions()
-      : dump_graph(false),
-        warn_unneeded_finalizer(false) {}
-  bool dump_graph;
-  bool warn_unneeded_finalizer;
+  bool dump_graph = false;
+
+  // If |true|, emit warning for class types which derive from from
+  // GarbageCollectedFinalized<> when just GarbageCollected<> will do.
+  bool warn_unneeded_finalizer = false;
+
   std::set<std::string> ignored_classes;
   std::set<std::string> checked_namespaces;
   std::vector<std::string> ignored_directories;

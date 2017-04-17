@@ -32,65 +32,90 @@
 #define WorkerLoaderProxy_h
 
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContext.h"
-#include "wtf/Forward.h"
-#include "wtf/ThreadSafeRefCounted.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Functional.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/ThreadSafeRefCounted.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "public/platform/WebTraceLocation.h"
 
 namespace blink {
+
+class ThreadableLoadingContext;
 
 // The WorkerLoaderProxy is a proxy to the loader context. Normally, the
 // document on the main thread provides loading services for the subordinate
 // workers. WorkerLoaderProxy provides 2-way communications to the Document
 // context and back to the worker.
 //
-// Note that in multi-process browsers, the Worker object context and the Document
-// context can be distinct.
+// Note that in multi-process browsers, the Worker object context and the
+// Document context can be distinct.
 
-// The abstract interface providing the methods for actually posting tasks; separated
-// from the thread-safe & ref-counted WorkerLoaderProxy object which keeps a protected
-// reference to the provider object. This to support non-overlapping lifetimes, the
-// provider may be destructed before all references to the WorkerLoaderProxy object
-// have been dropped.
+// The abstract interface providing the methods for actually posting tasks;
+// separated from the thread-safe & ref-counted WorkerLoaderProxy object which
+// keeps a protected reference to the provider object. This to support
+// non-overlapping lifetimes, the provider may be destructed before all
+// references to the WorkerLoaderProxy object have been dropped.
 //
 // A provider implementation must detach itself when finalizing by calling
-// WorkerLoaderProxy::detachProvider(). This stops the WorkerLoaderProxy from accessing
-// the now-dead object, but it will remain alive while ref-ptrs are still kept to it.
+// WorkerLoaderProxy::detachProvider(). This stops the WorkerLoaderProxy from
+// accessing the now-dead object, but it will remain alive while ref-ptrs are
+// still kept to it.
 class CORE_EXPORT WorkerLoaderProxyProvider {
-public:
-    virtual ~WorkerLoaderProxyProvider() { }
+ public:
+  virtual ~WorkerLoaderProxyProvider() {}
 
-    // Posts a task to the thread which runs the loading code (normally, the main thread).
-    virtual void postTaskToLoader(std::unique_ptr<ExecutionContextTask>) = 0;
+  // Posts a task to the thread which runs the loading code (normally, the main
+  // thread). This must be called from a worker thread.
+  virtual void PostTaskToLoader(const WebTraceLocation&,
+                                std::unique_ptr<WTF::CrossThreadClosure>) = 0;
 
-    // Posts callbacks from loading code to the WorkerGlobalScope.
-    // Returns true if the task was posted successfully.
-    virtual bool postTaskToWorkerGlobalScope(std::unique_ptr<ExecutionContextTask>) = 0;
+  // Posts callbacks from loading code to the WorkerGlobalScope. This must be
+  // called from the main thread.
+  virtual void PostTaskToWorkerGlobalScope(
+      const WebTraceLocation&,
+      std::unique_ptr<WTF::CrossThreadClosure>) = 0;
+
+  // It is guaranteed that this gets accessed only on the thread where
+  // the loading context is bound.
+  virtual ThreadableLoadingContext* GetThreadableLoadingContext() = 0;
 };
 
-class CORE_EXPORT WorkerLoaderProxy final : public ThreadSafeRefCounted<WorkerLoaderProxy> {
-public:
-    static PassRefPtr<WorkerLoaderProxy> create(WorkerLoaderProxyProvider* loaderProxyProvider)
-    {
-        return adoptRef(new WorkerLoaderProxy(loaderProxyProvider));
-    }
+class CORE_EXPORT WorkerLoaderProxy final
+    : public ThreadSafeRefCounted<WorkerLoaderProxy> {
+ public:
+  static PassRefPtr<WorkerLoaderProxy> Create(
+      WorkerLoaderProxyProvider* loader_proxy_provider) {
+    return AdoptRef(new WorkerLoaderProxy(loader_proxy_provider));
+  }
 
-    ~WorkerLoaderProxy();
+  ~WorkerLoaderProxy();
 
-    void postTaskToLoader(std::unique_ptr<ExecutionContextTask>);
-    bool postTaskToWorkerGlobalScope(std::unique_ptr<ExecutionContextTask>);
+  // This must be called from a worker thread.
+  void PostTaskToLoader(const WebTraceLocation&,
+                        std::unique_ptr<WTF::CrossThreadClosure>);
 
-    // Notification from the provider that it can no longer be
-    // accessed. An implementation of WorkerLoaderProxyProvider is
-    // required to call detachProvider() when finalizing.
-    void detachProvider(WorkerLoaderProxyProvider*);
+  // This must be called from the main thread.
+  void PostTaskToWorkerGlobalScope(const WebTraceLocation&,
+                                   std::unique_ptr<WTF::CrossThreadClosure>);
 
-private:
-    explicit WorkerLoaderProxy(WorkerLoaderProxyProvider*);
+  // This may return nullptr.
+  // This must be called from the main thread (== the thread of the
+  // loading context).
+  ThreadableLoadingContext* GetThreadableLoadingContext();
 
-    Mutex m_lock;
-    WorkerLoaderProxyProvider* m_loaderProxyProvider;
+  // Notification from the provider that it can no longer be accessed. An
+  // implementation of WorkerLoaderProxyProvider is required to call
+  // detachProvider() when finalizing. This must be called from the main thread.
+  void DetachProvider(WorkerLoaderProxyProvider*);
+
+ private:
+  explicit WorkerLoaderProxy(WorkerLoaderProxyProvider*);
+
+  WTF::Mutex lock_;
+  WorkerLoaderProxyProvider* loader_proxy_provider_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerLoaderProxy_h
+#endif  // WorkerLoaderProxy_h

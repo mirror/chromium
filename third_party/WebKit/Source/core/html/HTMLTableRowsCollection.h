@@ -38,22 +38,28 @@ class HTMLTableElement;
 class HTMLTableRowElement;
 
 class HTMLTableRowsCollection final : public HTMLCollection {
-public:
-    static HTMLTableRowsCollection* create(ContainerNode&, CollectionType);
+ public:
+  static HTMLTableRowsCollection* Create(ContainerNode&, CollectionType);
 
-    HTMLTableRowElement* item(unsigned offset) const { return toHTMLTableRowElement(HTMLCollection::item(offset)); }
+  HTMLTableRowElement* Item(unsigned offset) const {
+    return toHTMLTableRowElement(HTMLCollection::item(offset));
+  }
 
-    static HTMLTableRowElement* rowAfter(HTMLTableElement&, HTMLTableRowElement*);
-    static HTMLTableRowElement* lastRow(HTMLTableElement&);
+  static HTMLTableRowElement* RowAfter(HTMLTableElement&, HTMLTableRowElement*);
+  static HTMLTableRowElement* LastRow(HTMLTableElement&);
 
-private:
-    explicit HTMLTableRowsCollection(ContainerNode&);
+ private:
+  explicit HTMLTableRowsCollection(ContainerNode&);
 
-    Element* virtualItemAfter(Element*) const override;
+  Element* VirtualItemAfter(Element*) const override;
 };
 
-DEFINE_TYPE_CASTS(HTMLTableRowsCollection, LiveNodeListBase, collection, collection->type() == TableRows, collection.type() == TableRows);
+DEFINE_TYPE_CASTS(HTMLTableRowsCollection,
+                  LiveNodeListBase,
+                  collection,
+                  collection->GetType() == kTableRows,
+                  collection.GetType() == kTableRows);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

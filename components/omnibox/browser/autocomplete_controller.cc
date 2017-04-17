@@ -11,6 +11,7 @@
 
 #include "base/format_macros.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
@@ -26,14 +27,19 @@
 #include "components/omnibox/browser/history_url_provider.h"
 #include "components/omnibox/browser/keyword_provider.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
+#include "components/omnibox/browser/physical_web_provider.h"
 #include "components/omnibox/browser/search_provider.h"
 #include "components/omnibox/browser/shortcuts_provider.h"
 #include "components/omnibox/browser/zero_suggest_provider.h"
 #include "components/open_from_clipboard/clipboard_recent_content.h"
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
+
+#if !defined(OS_IOS)
+#include "components/open_from_clipboard/clipboard_recent_content_generic.h"
+#endif
 
 namespace {
 
@@ -127,6 +133,22 @@ void AutocompleteMatchToAssistedQuery(
       *subtype = 39;
       return;
     }
+    case AutocompleteMatchType::CALCULATOR: {
+      *type = 6;
+      return;
+    }
+    case AutocompleteMatchType::CLIPBOARD: {
+      *subtype = 177;
+      return;
+    }
+    case AutocompleteMatchType::PHYSICAL_WEB: {
+      *subtype = 190;
+      return;
+    }
+    case AutocompleteMatchType::PHYSICAL_WEB_OVERFLOW: {
+      *subtype = 191;
+      return;
+    }
     default: {
       // This value indicates a native chrome suggestion with no named subtype
       // (yet).
@@ -212,13 +234,31 @@ AutocompleteController::AutocompleteController(
       providers_.push_back(zero_suggest_provider_);
   }
   if (provider_types & AutocompleteProvider::TYPE_CLIPBOARD_URL) {
-    ClipboardRecentContent* clipboard_recent_content =
-        ClipboardRecentContent::GetInstance();
-    if (clipboard_recent_content) {
-      providers_.push_back(new ClipboardURLProvider(provider_client_.get(),
-                                                    history_url_provider_,
-                                                    clipboard_recent_content));
+#if !defined(OS_IOS)
+    // On iOS, a global ClipboardRecentContent should've been created by now
+    // (if enabled).  If none has been created (e.g., we're on a different
+    // platform), use the generic implementation, which AutocompleteController
+    // will own.  Don't try to create a generic implementation on iOS because
+    // iOS doesn't want/need to link in the implementation and the libraries
+    // that would come with it.
+    if (!ClipboardRecentContent::GetInstance()) {
+      ClipboardRecentContent::SetInstance(
+          base::MakeUnique<ClipboardRecentContentGeneric>());
     }
+#endif
+    // ClipboardRecentContent can be null in iOS tests.  For non-iOS, we
+    // create a ClipboardRecentContent as above (for both Chrome and tests).
+    if (ClipboardRecentContent::GetInstance()) {
+      providers_.push_back(new ClipboardURLProvider(
+          provider_client_.get(), history_url_provider_,
+          ClipboardRecentContent::GetInstance()));
+    }
+  }
+  if (provider_types & AutocompleteProvider::TYPE_PHYSICAL_WEB) {
+    PhysicalWebProvider* physical_web_provider = PhysicalWebProvider::Create(
+        provider_client_.get(), history_url_provider_);
+    if (physical_web_provider)
+      providers_.push_back(physical_web_provider);
   }
 }
 
@@ -546,7 +586,7 @@ void AutocompleteController::UpdateKeywordDescriptions(
           // name -- don't assume that the normal search keyword description is
           // applicable.
           i->description = template_url->AdjustedShortNameForLocaleDirection();
-          if (template_url->GetType() != TemplateURL::OMNIBOX_API_EXTENSION) {
+          if (template_url->type() != TemplateURL::OMNIBOX_API_EXTENSION) {
             i->description = l10n_util::GetStringFUTF16(
                 IDS_AUTOCOMPLETE_SEARCH_DESCRIPTION, i->description);
           }

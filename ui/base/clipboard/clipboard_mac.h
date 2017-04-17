@@ -8,19 +8,28 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "ui/base/clipboard/clipboard.h"
+#include "ui/base/ui_base_export.h"
+
+@class NSPasteboard;
 
 namespace ui {
 
-class ClipboardMac : public Clipboard {
+class UI_BASE_EXPORT ClipboardMac : public Clipboard {
  private:
+  FRIEND_TEST_ALL_PREFIXES(ClipboardMacTest, ReadImageRetina);
+  FRIEND_TEST_ALL_PREFIXES(ClipboardMacTest, ReadImageNonRetina);
+  FRIEND_TEST_ALL_PREFIXES(ClipboardMacTest, EmptyImage);
+  FRIEND_TEST_ALL_PREFIXES(ClipboardMacTest, PDFImage);
   friend class Clipboard;
 
   ClipboardMac();
   ~ClipboardMac() override;
 
   // Clipboard overrides:
+  void OnPreShutdown() override;
   uint64_t GetSequenceNumber(ClipboardType type) const override;
   bool IsFormatAvailable(const FormatType& format,
                          ClipboardType type) const override;
@@ -36,6 +45,7 @@ class ClipboardMac : public Clipboard {
                 uint32_t* fragment_start,
                 uint32_t* fragment_end) const override;
   void ReadRTF(ClipboardType type, std::string* result) const override;
+  SkBitmap ReadImage(ClipboardType type, NSPasteboard* pb) const;
   SkBitmap ReadImage(ClipboardType type) const override;
   void ReadCustomData(ClipboardType clipboard_type,
                       const base::string16& type,

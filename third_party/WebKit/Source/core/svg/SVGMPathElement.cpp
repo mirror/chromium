@@ -19,105 +19,85 @@
 
 #include "core/svg/SVGMPathElement.h"
 
+#include "core/SVGNames.h"
 #include "core/dom/Document.h"
+#include "core/dom/IdTargetObserver.h"
 #include "core/svg/SVGAnimateMotionElement.h"
-#include "core/svg/SVGDocumentExtensions.h"
 #include "core/svg/SVGPathElement.h"
 
 namespace blink {
 
 inline SVGMPathElement::SVGMPathElement(Document& document)
-    : SVGElement(SVGNames::mpathTag, document)
-    , SVGURIReference(this)
-{
-    ASSERT(RuntimeEnabledFeatures::smilEnabled());
+    : SVGElement(SVGNames::mpathTag, document), SVGURIReference(this) {
+  DCHECK(RuntimeEnabledFeatures::smilEnabled());
 }
 
-DEFINE_TRACE(SVGMPathElement)
-{
-    SVGElement::trace(visitor);
-    SVGURIReference::trace(visitor);
+DEFINE_TRACE(SVGMPathElement) {
+  visitor->Trace(target_id_observer_);
+  SVGElement::Trace(visitor);
+  SVGURIReference::Trace(visitor);
 }
 
 DEFINE_NODE_FACTORY(SVGMPathElement)
 
-SVGMPathElement::~SVGMPathElement()
-{
+SVGMPathElement::~SVGMPathElement() {}
+
+void SVGMPathElement::BuildPendingResource() {
+  ClearResourceReferences();
+  if (!isConnected())
+    return;
+  Element* target = ObserveTarget(target_id_observer_, *this);
+  if (isSVGPathElement(target)) {
+    // Register us with the target in the dependencies map. Any change of
+    // hrefElement that leads to relayout/repainting now informs us, so we can
+    // react to it.
+    AddReferenceTo(ToSVGElement(target));
+  }
+  TargetPathChanged();
 }
 
-void SVGMPathElement::buildPendingResource()
-{
-    clearResourceReferences();
-    if (!isConnected())
-        return;
-
-    AtomicString id;
-    Element* target = SVGURIReference::targetElementFromIRIString(hrefString(), treeScope(), &id);
-    if (!target) {
-        // Do not register as pending if we are already pending this resource.
-        if (document().accessSVGExtensions().isElementPendingResource(this, id))
-            return;
-
-        if (!id.isEmpty()) {
-            document().accessSVGExtensions().addPendingResource(id, this);
-            ASSERT(hasPendingResources());
-        }
-    } else if (isSVGPathElement(target)) {
-        // Register us with the target in the dependencies map. Any change of hrefElement
-        // that leads to relayout/repainting now informs us, so we can react to it.
-        addReferenceTo(toSVGElement(target));
-    }
-
-    targetPathChanged();
+void SVGMPathElement::ClearResourceReferences() {
+  UnobserveTarget(target_id_observer_);
+  RemoveAllOutgoingReferences();
 }
 
-void SVGMPathElement::clearResourceReferences()
-{
-    removeAllOutgoingReferences();
+Node::InsertionNotificationRequest SVGMPathElement::InsertedInto(
+    ContainerNode* root_parent) {
+  SVGElement::InsertedInto(root_parent);
+  if (root_parent->isConnected())
+    BuildPendingResource();
+  return kInsertionDone;
 }
 
-Node::InsertionNotificationRequest SVGMPathElement::insertedInto(ContainerNode* rootParent)
-{
-    SVGElement::insertedInto(rootParent);
-    if (rootParent->isConnected())
-        buildPendingResource();
-    return InsertionDone;
+void SVGMPathElement::RemovedFrom(ContainerNode* root_parent) {
+  SVGElement::RemovedFrom(root_parent);
+  NotifyParentOfPathChange(root_parent);
+  if (root_parent->isConnected())
+    ClearResourceReferences();
 }
 
-void SVGMPathElement::removedFrom(ContainerNode* rootParent)
-{
-    SVGElement::removedFrom(rootParent);
-    notifyParentOfPathChange(rootParent);
-    if (rootParent->isConnected())
-        clearResourceReferences();
+void SVGMPathElement::SvgAttributeChanged(const QualifiedName& attr_name) {
+  if (SVGURIReference::IsKnownAttribute(attr_name)) {
+    SVGElement::InvalidationGuard invalidation_guard(this);
+    BuildPendingResource();
+    return;
+  }
+
+  SVGElement::SvgAttributeChanged(attr_name);
 }
 
-void SVGMPathElement::svgAttributeChanged(const QualifiedName& attrName)
-{
-    if (SVGURIReference::isKnownAttribute(attrName)) {
-        SVGElement::InvalidationGuard invalidationGuard(this);
-        buildPendingResource();
-        return;
-    }
-
-    SVGElement::svgAttributeChanged(attrName);
+SVGPathElement* SVGMPathElement::PathElement() {
+  Element* target = TargetElementFromIRIString(HrefString(), GetTreeScope());
+  return isSVGPathElement(target) ? toSVGPathElement(target) : 0;
 }
 
-SVGPathElement* SVGMPathElement::pathElement()
-{
-    Element* target = targetElementFromIRIString(hrefString(), treeScope());
-    return isSVGPathElement(target) ? toSVGPathElement(target) : 0;
+void SVGMPathElement::TargetPathChanged() {
+  NotifyParentOfPathChange(parentNode());
 }
 
-void SVGMPathElement::targetPathChanged()
-{
-    notifyParentOfPathChange(parentNode());
+void SVGMPathElement::NotifyParentOfPathChange(ContainerNode* parent) {
+  if (isSVGAnimateMotionElement(parent))
+    toSVGAnimateMotionElement(parent)->UpdateAnimationPath();
 }
 
-void SVGMPathElement::notifyParentOfPathChange(ContainerNode* parent)
-{
-    if (isSVGAnimateMotionElement(parent))
-        toSVGAnimateMotionElement(parent)->updateAnimationPath();
-}
-
-} // namespace blink
+}  // namespace blink

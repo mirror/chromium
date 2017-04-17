@@ -22,21 +22,16 @@ namespace image_writer {
 using content::BrowserThread;
 
 const int kMD5BufferSize = 1024;
-#if defined(OS_CHROMEOS)
-// Chrome OS only has a 1 GB temporary partition.  This is too small to hold our
-// unzipped image. Fortunately we mount part of the temporary partition under
-// /var/tmp.
-const char kChromeOSTempRoot[] = "/var/tmp";
-#endif
 
 #if !defined(OS_CHROMEOS)
-static base::LazyInstance<scoped_refptr<ImageWriterUtilityClient> >
-    g_utility_client = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<scoped_refptr<ImageWriterUtilityClient>>::
+    DestructorAtExit g_utility_client = LAZY_INSTANCE_INITIALIZER;
 #endif
 
 Operation::Operation(base::WeakPtr<OperationManager> manager,
                      const ExtensionId& extension_id,
-                     const std::string& device_path)
+                     const std::string& device_path,
+                     const base::FilePath& download_folder)
     : manager_(manager),
       extension_id_(extension_id),
 #if defined(OS_WIN)
@@ -46,7 +41,8 @@ Operation::Operation(base::WeakPtr<OperationManager> manager,
 #endif
       stage_(image_writer_api::STAGE_UNKNOWN),
       progress_(0),
-      zip_reader_(new zip::ZipReader) {
+      zip_reader_(new zip::ZipReader),
+      download_folder_(download_folder) {
 }
 
 Operation::~Operation() {}
@@ -81,8 +77,8 @@ void Operation::SetUtilityClientForTesting(
 
 void Operation::Start() {
 #if defined(OS_CHROMEOS)
-  if (!temp_dir_.CreateUniqueTempDirUnderPath(
-           base::FilePath(kChromeOSTempRoot))) {
+  if (download_folder_.empty() ||
+      !temp_dir_.CreateUniqueTempDirUnderPath(download_folder_)) {
 #else
   if (!temp_dir_.CreateUniqueTempDir()) {
 #endif
@@ -125,7 +121,8 @@ void Operation::Unzip(const base::Closure& continuation) {
   // zip_reader_.
   zip::ZipReader::EntryInfo* entry_info = zip_reader_->current_entry_info();
   if (entry_info) {
-    image_path_ = temp_dir_.path().Append(entry_info->file_path().BaseName());
+    image_path_ =
+        temp_dir_.GetPath().Append(entry_info->file_path().BaseName());
   } else {
     Error(error::kTempDirError);
     return;
@@ -266,10 +263,7 @@ void Operation::StartUtilityClient() {
 
 void Operation::StopUtilityClient() {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-  BrowserThread::PostTask(
-      BrowserThread::IO,
-      FROM_HERE,
-      base::Bind(&ImageWriterUtilityClient::Shutdown, image_writer_client_));
+  image_writer_client_->Shutdown();
 }
 
 void Operation::WriteImageProgress(int64_t total_bytes, int64_t curr_bytes) {

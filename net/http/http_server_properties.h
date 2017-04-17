@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <map>
+#include <ostream>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -17,8 +18,8 @@
 #include "base/time/time.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/net_export.h"
-#include "net/quic/quic_bandwidth.h"
-#include "net/quic/quic_server_id.h"
+#include "net/quic/core/quic_bandwidth.h"
+#include "net/quic/core/quic_server_id.h"
 #include "net/socket/next_proto.h"
 #include "net/spdy/spdy_framer.h"  // TODO(willchan): Reconsider this.
 #include "net/spdy/spdy_protocol.h"
@@ -51,13 +52,15 @@ enum AlternateProtocolUsage {
 };
 
 // Log a histogram to reflect |usage|.
-NET_EXPORT void HistogramAlternateProtocolUsage(AlternateProtocolUsage usage);
+NET_EXPORT void HistogramAlternateProtocolUsage(AlternateProtocolUsage usage,
+                                                bool proxy_server_used);
 
 enum BrokenAlternateProtocolLocation {
   BROKEN_ALTERNATE_PROTOCOL_LOCATION_HTTP_STREAM_FACTORY_IMPL_JOB = 0,
   BROKEN_ALTERNATE_PROTOCOL_LOCATION_QUIC_STREAM_FACTORY = 1,
   BROKEN_ALTERNATE_PROTOCOL_LOCATION_HTTP_STREAM_FACTORY_IMPL_JOB_ALT = 2,
   BROKEN_ALTERNATE_PROTOCOL_LOCATION_HTTP_STREAM_FACTORY_IMPL_JOB_MAIN = 3,
+  BROKEN_ALTERNATE_PROTOCOL_LOCATION_QUIC_HTTP_STREAM = 4,
   BROKEN_ALTERNATE_PROTOCOL_LOCATION_MAX,
 };
 
@@ -65,47 +68,17 @@ enum BrokenAlternateProtocolLocation {
 NET_EXPORT void HistogramBrokenAlternateProtocolLocation(
     BrokenAlternateProtocolLocation location);
 
-enum AlternateProtocol {
-  NPN_SPDY_3_1,
-  ALTERNATE_PROTOCOL_MINIMUM_VALID_VERSION = NPN_SPDY_3_1,
-  NPN_SPDY_MINIMUM_VERSION = NPN_SPDY_3_1,
-  NPN_HTTP_2,
-  NPN_SPDY_MAXIMUM_VERSION = NPN_HTTP_2,
-  QUIC,
-  ALTERNATE_PROTOCOL_MAXIMUM_VALID_VERSION = QUIC,
-  UNINITIALIZED_ALTERNATE_PROTOCOL,
-};
-
-// Simply returns whether |protocol| is between
-// ALTERNATE_PROTOCOL_MINIMUM_VALID_VERSION and
-// ALTERNATE_PROTOCOL_MAXIMUM_VALID_VERSION (inclusive).
-NET_EXPORT bool IsAlternateProtocolValid(AlternateProtocol protocol);
-
-enum AlternateProtocolSize {
-  NUM_VALID_ALTERNATE_PROTOCOLS =
-    ALTERNATE_PROTOCOL_MAXIMUM_VALID_VERSION -
-    ALTERNATE_PROTOCOL_MINIMUM_VALID_VERSION + 1,
-};
-
-NET_EXPORT const char* AlternateProtocolToString(AlternateProtocol protocol);
-NET_EXPORT AlternateProtocol AlternateProtocolFromString(
-    const std::string& str);
-NET_EXPORT_PRIVATE AlternateProtocol AlternateProtocolFromNextProto(
-    NextProto next_proto);
+NET_EXPORT bool IsAlternateProtocolValid(NextProto protocol);
 
 // (protocol, host, port) triple as defined in
 // https://tools.ietf.org/id/draft-ietf-httpbis-alt-svc-06.html
 struct NET_EXPORT AlternativeService {
-  AlternativeService()
-      : protocol(UNINITIALIZED_ALTERNATE_PROTOCOL), host(), port(0) {}
+  AlternativeService() : protocol(kProtoUnknown), host(), port(0) {}
 
-  AlternativeService(AlternateProtocol protocol,
-                     const std::string& host,
-                     uint16_t port)
+  AlternativeService(NextProto protocol, const std::string& host, uint16_t port)
       : protocol(protocol), host(host), port(port) {}
 
-  AlternativeService(AlternateProtocol protocol,
-                     const HostPortPair& host_port_pair)
+  AlternativeService(NextProto protocol, const HostPortPair& host_port_pair)
       : protocol(protocol),
         host(host_port_pair.host()),
         port(host_port_pair.port()) {}
@@ -132,10 +105,14 @@ struct NET_EXPORT AlternativeService {
 
   std::string ToString() const;
 
-  AlternateProtocol protocol;
+  NextProto protocol;
   std::string host;
   uint16_t port;
 };
+
+NET_EXPORT_PRIVATE std::ostream& operator<<(
+    std::ostream& os,
+    const AlternativeService& alternative_service);
 
 struct NET_EXPORT AlternativeServiceInfo {
   AlternativeServiceInfo() : alternative_service() {}
@@ -145,12 +122,11 @@ struct NET_EXPORT AlternativeServiceInfo {
       : alternative_service(alternative_service),
         expiration(expiration) {}
 
-  AlternativeServiceInfo(AlternateProtocol protocol,
+  AlternativeServiceInfo(NextProto protocol,
                          const std::string& host,
                          uint16_t port,
                          base::Time expiration)
-      : alternative_service(protocol, host, port),
-        expiration(expiration) {}
+      : alternative_service(protocol, host, port), expiration(expiration) {}
 
   AlternativeServiceInfo(
       const AlternativeServiceInfo& alternative_service_info) = default;
@@ -205,7 +181,9 @@ typedef std::vector<AlternativeService> AlternativeServiceVector;
 typedef std::vector<AlternativeServiceInfo> AlternativeServiceInfoVector;
 typedef base::MRUCache<url::SchemeHostPort, AlternativeServiceInfoVector>
     AlternativeServiceMap;
-typedef base::MRUCache<url::SchemeHostPort, SettingsMap> SpdySettingsMap;
+// Map to the number of times each alternative service has been marked broken.
+typedef base::MRUCache<AlternativeService, int>
+    RecentlyBrokenAlternativeServices;
 typedef base::MRUCache<url::SchemeHostPort, ServerNetworkStats>
     ServerNetworkStatsMap;
 typedef base::MRUCache<QuicServerId, std::string> QuicServerInfoMap;
@@ -234,6 +212,9 @@ class NET_EXPORT HttpServerProperties {
 
   // Returns true if |server| supports a network protocol which honors
   // request prioritization.
+  // Note that this also implies that the server supports request
+  // multiplexing, since priorities imply a relationship between
+  // multiple requests.
   virtual bool SupportsRequestPriority(const url::SchemeHostPort& server) = 0;
 
   // Returns the value set by SetSupportsSpdy(). If not set, returns false.
@@ -265,7 +246,8 @@ class NET_EXPORT HttpServerProperties {
   // Set a single alternative service for |origin|.  Previous alternative
   // services for |origin| are discarded.
   // |alternative_service.host| may be empty.
-  // Return true if |alternative_service_map_| is changed.
+  // Return true if |alternative_service_map_| has changed significantly enough
+  // that it should be persisted to disk.
   virtual bool SetAlternativeService(
       const url::SchemeHostPort& origin,
       const AlternativeService& alternative_service,
@@ -274,7 +256,9 @@ class NET_EXPORT HttpServerProperties {
   // Set alternative services for |origin|.  Previous alternative services for
   // |origin| are discarded.
   // Hostnames in |alternative_service_info_vector| may be empty.
-  // Return true if |alternative_service_map_| is changed.
+  // |alternative_service_info_vector| may be empty.
+  // Return true if |alternative_service_map_| has changed significantly enough
+  // that it should be persisted to disk.
   virtual bool SetAlternativeServices(
       const url::SchemeHostPort& origin,
       const AlternativeServiceInfoVector& alternative_service_info_vector) = 0;
@@ -313,36 +297,19 @@ class NET_EXPORT HttpServerProperties {
   virtual std::unique_ptr<base::Value> GetAlternativeServiceInfoAsValue()
       const = 0;
 
-  // Gets a reference to the SettingsMap stored for a host.
-  // If no settings are stored, returns an empty SettingsMap.
-  virtual const SettingsMap& GetSpdySettings(
-      const url::SchemeHostPort& server) = 0;
-
-  // Saves an individual SPDY setting for a host. Returns true if SPDY setting
-  // is to be persisted.
-  virtual bool SetSpdySetting(const url::SchemeHostPort& server,
-                              SpdySettingsIds id,
-                              SpdySettingsFlags flags,
-                              uint32_t value) = 0;
-
-  // Clears all SPDY settings for a host.
-  virtual void ClearSpdySettings(const url::SchemeHostPort& server) = 0;
-
-  // Clears all SPDY settings for all hosts.
-  virtual void ClearAllSpdySettings() = 0;
-
-  // Returns all persistent SPDY settings.
-  virtual const SpdySettingsMap& spdy_settings_map() const = 0;
-
   virtual bool GetSupportsQuic(IPAddress* last_address) const = 0;
 
   virtual void SetSupportsQuic(bool used_quic,
                                const IPAddress& last_address) = 0;
 
-  // Sets |stats| for |host_port_pair|.
+  // Sets |stats| for |server|.
   virtual void SetServerNetworkStats(const url::SchemeHostPort& server,
                                      ServerNetworkStats stats) = 0;
 
+  // Clears any stats for |server|.
+  virtual void ClearServerNetworkStats(const url::SchemeHostPort& server) = 0;
+
+  // Returns any stats for |server| or nullptr if there are none.
   virtual const ServerNetworkStats* GetServerNetworkStats(
       const url::SchemeHostPort& server) = 0;
 
@@ -366,6 +333,9 @@ class NET_EXPORT HttpServerProperties {
   // Sets the number of server configs (QuicServerInfo objects) to be persisted.
   virtual void SetMaxServerConfigsStoredInProperties(
       size_t max_server_configs_stored_in_properties) = 0;
+
+  // Returns whether HttpServerProperties is initialized.
+  virtual bool IsInitialized() const = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(HttpServerProperties);

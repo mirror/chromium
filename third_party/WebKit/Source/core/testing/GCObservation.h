@@ -34,35 +34,35 @@
 #include "bindings/core/v8/ScopedPersistent.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
-class GCObservation final : public GarbageCollectedFinalized<GCObservation>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static GCObservation* create(v8::Local<v8::Value> observedValue)
-    {
-        return new GCObservation(observedValue);
-    }
+class GCObservation final : public GarbageCollectedFinalized<GCObservation>,
+                            public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Caution: It is only feasible to determine whether an object was
-    // "near death"; it may have been kept alive through a weak
-    // handle. After reaching near-death, having been collected is the
-    // common case.
-    bool wasCollected() const { return m_collected; }
-    void setWasCollected();
+ public:
+  static GCObservation* Create(v8::Local<v8::Value> observed_value) {
+    return new GCObservation(observed_value);
+  }
 
-    DEFINE_INLINE_TRACE() { }
+  // Caution: It is only feasible to determine whether an object was
+  // "near death"; it may have been kept alive through a weak
+  // handle. After reaching near-death, having been collected is the
+  // common case.
+  bool wasCollected() const { return collected_; }
+  void SetWasCollected();
 
-private:
-    explicit GCObservation(v8::Local<v8::Value>);
+  DEFINE_INLINE_TRACE() {}
 
-    ScopedPersistent<v8::Value> m_observed;
-    bool m_collected;
+ private:
+  explicit GCObservation(v8::Local<v8::Value>);
+
+  ScopedPersistent<v8::Value> observed_;
+  bool collected_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GCObservation_h
+#endif  // GCObservation_h

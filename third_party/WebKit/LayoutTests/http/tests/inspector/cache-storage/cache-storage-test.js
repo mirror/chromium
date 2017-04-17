@@ -7,11 +7,11 @@ InspectorTest.preloadPanel("resources");
 
 InspectorTest.dumpCacheTree = function()
 {
-    WebInspector.panels.resources.cacheStorageListTreeElement.expand();
+    UI.panels.resources._sidebar.cacheStorageListTreeElement.expand();
     InspectorTest.addResult("Dumping CacheStorage tree:");
-    var cachesTreeElement = WebInspector.panels.resources.cacheStorageListTreeElement;
+    var cachesTreeElement = UI.panels.resources._sidebar.cacheStorageListTreeElement;
     var promise = new Promise(function(resolve, reject) {
-        InspectorTest.addSnifferPromise(WebInspector.ServiceWorkerCacheModel.prototype, "_updateCacheNames").then(crawlCacheTree).catch(reject);
+        InspectorTest.addSnifferPromise(SDK.ServiceWorkerCacheModel.prototype, "_updateCacheNames").then(crawlCacheTree).catch(reject);
 
         function crawlCacheTree()
         {
@@ -27,7 +27,7 @@ InspectorTest.dumpCacheTree = function()
                 var cacheTreeElement = cachesTreeElement.childAt(i);
                 InspectorTest.addResult("    cache: " + cacheTreeElement.title);
                 var view = cacheTreeElement._view;
-                InspectorTest.addSniffer(WebInspector.ServiceWorkerCacheView.prototype, "_updateDataCallback", addDataResult, false);
+                InspectorTest.addSniffer(Resources.ServiceWorkerCacheView.prototype, "_updateDataCallback", addDataResult, false);
                 if (!view)
                     cacheTreeElement.onselect(false);
                 else
@@ -65,22 +65,22 @@ InspectorTest.dumpCacheTree = function()
             }
         }
     });
-    WebInspector.panels.resources.cacheStorageListTreeElement._refreshCaches();
+    UI.panels.resources._sidebar.cacheStorageListTreeElement._refreshCaches();
     return promise;
 }
 
 // If optionalEntry is not specified, then the whole cache is deleted.
 InspectorTest.deleteCacheFromInspector = function(cacheName, optionalEntry)
 {
-    WebInspector.panels.resources.cacheStorageListTreeElement.expand();
+    UI.panels.resources._sidebar.cacheStorageListTreeElement.expand();
     if (optionalEntry) {
         InspectorTest.addResult("Deleting CacheStorage entry " + optionalEntry + " in cache " + cacheName);
     } else {
         InspectorTest.addResult("Deleting CacheStorage cache " + cacheName);
     }
-    var cachesTreeElement = WebInspector.panels.resources.cacheStorageListTreeElement;
+    var cachesTreeElement = UI.panels.resources._sidebar.cacheStorageListTreeElement;
     var promise = new Promise(function(resolve, reject) {
-        InspectorTest.addSnifferPromise(WebInspector.ServiceWorkerCacheModel.prototype, "_updateCacheNames")
+        InspectorTest.addSnifferPromise(SDK.ServiceWorkerCacheModel.prototype, "_updateCacheNames")
             .then(function() {
                 if (!cachesTreeElement.childCount()) {
                     reject("Error: Could not find CacheStorage cache " + cacheName);
@@ -94,14 +94,14 @@ InspectorTest.deleteCacheFromInspector = function(cacheName, optionalEntry)
                         continue;
                     if (!optionalEntry) {
                         // Here we're deleting the whole cache.
-                        InspectorTest.addSniffer(WebInspector.ServiceWorkerCacheModel.prototype, "_cacheRemoved", resolve)
+                        InspectorTest.addSniffer(SDK.ServiceWorkerCacheModel.prototype, "_cacheRemoved", resolve)
                         cacheTreeElement._clearCache();
                         return;
                     }
 
                     // Here we're deleting only the entry.  We verify that it is present in the table.
                     var view = cacheTreeElement._view;
-                    InspectorTest.addSniffer(WebInspector.ServiceWorkerCacheView.prototype, "_updateDataCallback", deleteEntryOrReject, false);
+                    InspectorTest.addSniffer(Resources.ServiceWorkerCacheView.prototype, "_updateDataCallback", deleteEntryOrReject, false);
                     if (!view)
                         cacheTreeElement.onselect(false);
                     else
@@ -124,55 +124,54 @@ InspectorTest.deleteCacheFromInspector = function(cacheName, optionalEntry)
                 reject("Error: Could not find CacheStorage cache " + cacheName);
             }).catch(reject);
     });
-    WebInspector.panels.resources.cacheStorageListTreeElement._refreshCaches();
+    UI.panels.resources._sidebar.cacheStorageListTreeElement._refreshCaches();
     return promise;
 }
 
 InspectorTest.waitForCacheRefresh = function(callback)
 {
-    InspectorTest.addSniffer(WebInspector.ServiceWorkerCacheModel.prototype, "_updateCacheNames", callback, false);
+    InspectorTest.addSniffer(SDK.ServiceWorkerCacheModel.prototype, "_updateCacheNames", callback, false);
 }
 
 InspectorTest.createCache = function(cacheName)
 {
-    return InspectorTest.invokePageFunctionPromise("createCache", [cacheName]);
+    return InspectorTest.callFunctionInPageAsync("createCache", [ cacheName ]);
 }
 
 InspectorTest.addCacheEntry = function(cacheName, requestUrl, responseText)
 {
-    return InspectorTest.invokePageFunctionPromise("addCacheEntry", [cacheName, requestUrl, responseText]);
+    return InspectorTest.callFunctionInPageAsync("addCacheEntry", [ cacheName, requestUrl, responseText ]);
 }
 
 InspectorTest.deleteCache = function(cacheName)
 {
-    return InspectorTest.invokePageFunctionPromise("deleteCache", [cacheName]);
+    return InspectorTest.callFunctionInPageAsync("deleteCache", [ cacheName ]);
 }
 
 InspectorTest.deleteCacheEntry = function(cacheName, requestUrl)
 {
-    return InspectorTest.invokePageFunctionPromise("deleteCacheEntry", [cacheName, requestUrl]);
+    return InspectorTest.callFunctionInPageAsync("deleteCacheEntry", [ cacheName, requestUrl ]);
 }
 
 InspectorTest.clearAllCaches = function()
 {
-    return InspectorTest.invokePageFunctionPromise("clearAllCaches", []);
+    return InspectorTest.callFunctionInPageAsync("clearAllCaches");
 }
 }
 
-function onCacheStorageError(reject, e)
+function onCacheStorageError(e)
 {
     console.error("CacheStorage error: " + e);
-    reject();
 }
 
-function createCache(resolve, reject, cacheName)
+function createCache(cacheName)
 {
-    caches.open(cacheName).then(resolve).catch(onCacheStorageError.bind(this, reject));
+    return caches.open(cacheName).catch(onCacheStorageError);
 }
 
-function addCacheEntry(resolve, reject, cacheName, requestUrl, responseText)
+function addCacheEntry(cacheName, requestUrl, responseText)
 {
-    caches.open(cacheName)
+    return caches.open(cacheName)
         .then(function(cache) {
             var request = new Request(requestUrl);
             var myBlob = new Blob();
@@ -180,40 +179,28 @@ function addCacheEntry(resolve, reject, cacheName, requestUrl, responseText)
             var response = new Response(myBlob, init);
             return cache.put(request, response);
         })
-        .then(resolve)
-        .catch(onCacheStorageError.bind(this, reject));
+        .catch(onCacheStorageError);
 }
 
-function deleteCache(resolve, reject, cacheName)
+function deleteCache(cacheName)
 {
-    caches.delete(cacheName)
+    return caches.delete(cacheName)
         .then(function(success) {
-            if (success)
-                resolve();
-            else
-                onCacheStorageError(reject, "Could not find cache " + cacheName);
-        }).catch(onCacheStorageError.bind(this, reject));
+            if (!success)
+                onCacheStorageError("Could not find cache " + cacheName);
+        }).catch(onCacheStorageError);
 }
 
-function deleteCacheEntry(resolve, reject, cacheName, requestUrl)
+function deleteCacheEntry(cacheName, requestUrl)
 {
-    caches.open(cacheName)
-        .then(function(cache) {
-            var request = new Request(requestUrl);
-            return cache.delete(request);
-        })
-        .then(resolve)
-        .catch(onCacheStorageError.bind(this, reject));
+    return caches.open(cacheName)
+        .then((cache) => cache.delete(new Request(requestUrl)))
+        .catch(onCacheStorageError);
 }
 
-function clearAllCaches(resolve, reject)
+function clearAllCaches()
 {
-    caches.keys()
-        .then(function(keys) {
-            return Promise.all(keys.map(function(key) {
-                return caches.delete(key);
-            }));
-        })
-        .then(resolve)
-        .catch(onCacheStorageError.bind(this, reject));
+    return caches.keys()
+        .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+        .catch(onCacheStorageError.bind(this, undefined));
 }

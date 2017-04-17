@@ -10,28 +10,37 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/id_map.h"
+#include "base/memory/weak_ptr.h"
+#include "base/metrics/statistics_recorder.h"
 #include "base/scoped_observer.h"
 #include "base/threading/thread_checker.h"
 #include "components/metrics/metrics_provider.h"
+#include "content/public/browser/browser_child_process_observer.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/render_process_host_observer.h"
 
 namespace base {
 class PersistentHistogramAllocator;
-class SharedPersistentMemoryAllocator;
 }
 
 // SubprocessMetricsProvider gathers and merges histograms stored in shared
 // memory segments between processes. Merging occurs when a process exits,
 // when metrics are being collected for upload, or when something else needs
 // combined metrics (such as the chrome://histograms page).
-class SubprocessMetricsProvider : public metrics::MetricsProvider,
-                                  public content::NotificationObserver,
-                                  public content::RenderProcessHostObserver {
+class SubprocessMetricsProvider
+    : public metrics::MetricsProvider,
+      public base::StatisticsRecorder::HistogramProvider,
+      public content::BrowserChildProcessObserver,
+      public content::NotificationObserver,
+      public content::RenderProcessHostObserver {
  public:
   SubprocessMetricsProvider();
   ~SubprocessMetricsProvider() override;
+
+  // Merge histograms for all subprocesses. This is used by tests that don't
+  // have access to the internal instance of this class.
+  static void MergeHistogramDeltasForTesting();
 
  private:
   friend class SubprocessMetricsProviderTest;
@@ -56,6 +65,18 @@ class SubprocessMetricsProvider : public metrics::MetricsProvider,
   // metrics::MetricsProvider:
   void MergeHistogramDeltas() override;
 
+  // content::BrowserChildProcessObserver:
+  void BrowserChildProcessHostConnected(
+      const content::ChildProcessData& data) override;
+  void BrowserChildProcessHostDisconnected(
+      const content::ChildProcessData& data) override;
+  void BrowserChildProcessCrashed(
+      const content::ChildProcessData& data,
+      int exit_code) override;
+  void BrowserChildProcessKilled(
+      const content::ChildProcessData& data,
+      int exit_code) override;
+
   // content::NotificationObserver:
   void Observe(int type,
                const content::NotificationSource& source,
@@ -68,6 +89,11 @@ class SubprocessMetricsProvider : public metrics::MetricsProvider,
                            int exit_code) override;
   void RenderProcessHostDestroyed(content::RenderProcessHost* host) override;
 
+  // Gets a histogram allocator from a subprocess. This must be called on
+  // the IO thread.
+  static std::unique_ptr<base::PersistentHistogramAllocator>
+  GetSubprocessHistogramAllocatorOnIOThread(int id);
+
   base::ThreadChecker thread_checker_;
 
   // Object for registing notification requests.
@@ -75,12 +101,14 @@ class SubprocessMetricsProvider : public metrics::MetricsProvider,
 
   // All of the shared-persistent-allocators for known sub-processes.
   using AllocatorByIdMap =
-      IDMap<base::PersistentHistogramAllocator, IDMapOwnPointer, int>;
+      IDMap<std::unique_ptr<base::PersistentHistogramAllocator>, int>;
   AllocatorByIdMap allocators_by_id_;
 
   // Track all observed render processes to un-observe them on exit.
   ScopedObserver<content::RenderProcessHost, SubprocessMetricsProvider>
       scoped_observer_;
+
+  base::WeakPtrFactory<SubprocessMetricsProvider> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SubprocessMetricsProvider);
 };

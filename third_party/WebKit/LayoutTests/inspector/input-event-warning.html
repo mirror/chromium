@@ -62,18 +62,20 @@ function dispatchEvents()
 
 function test()
 {
-    WebInspector.multitargetConsoleModel.addEventListener(WebInspector.ConsoleModel.Events.MessageAdded, InspectorTest.safeWrap(onConsoleMessage));
+    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, InspectorTest.safeWrap(onConsoleMessage));
     step1();
 
     function step1()
     {
-        InspectorTest.mainTarget.pageAgent().setBlockedEventsWarningThreshold(30);
+        InspectorTest.mainTarget.logAgent().startViolationsReport([
+            {name: 'blockedEvent', threshold: 30000}]);
         InspectorTest.evaluateInPage("dispatchEvents()", step2);
     }
 
     function step2()
     {
-        InspectorTest.mainTarget.pageAgent().setBlockedEventsWarningThreshold(0.000001);
+        InspectorTest.mainTarget.logAgent().startViolationsReport([
+            {name: 'blockedEvent', threshold: 0.001}]);
         InspectorTest.addResult("There should be no warnings above this line");
         InspectorTest.evaluateInPage("dispatchEvents()", () => InspectorTest.completeTest());
     }

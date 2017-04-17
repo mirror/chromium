@@ -4,133 +4,147 @@
 
 #include "modules/audio_output_devices/HTMLMediaElementAudioOutputDevice.h"
 
+#include <memory>
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/ScriptState.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "modules/audio_output_devices/AudioOutputDeviceClient.h"
 #include "modules/audio_output_devices/SetSinkIdCallbacks.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebSecurityOrigin.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
 namespace {
 
 class SetSinkIdResolver : public ScriptPromiseResolver {
-    WTF_MAKE_NONCOPYABLE(SetSinkIdResolver);
-public:
-    static SetSinkIdResolver* create(ScriptState*, HTMLMediaElement&, const String& sinkId);
-    ~SetSinkIdResolver() override = default;
-    void startAsync();
+  WTF_MAKE_NONCOPYABLE(SetSinkIdResolver);
 
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static SetSinkIdResolver* Create(ScriptState*,
+                                   HTMLMediaElement&,
+                                   const String& sink_id);
+  ~SetSinkIdResolver() override = default;
+  void StartAsync();
 
-private:
-    SetSinkIdResolver(ScriptState*, HTMLMediaElement&, const String& sinkId);
-    void timerFired(Timer<SetSinkIdResolver>*);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<HTMLMediaElement> m_element;
-    String m_sinkId;
-    Timer<SetSinkIdResolver> m_timer;
+ private:
+  SetSinkIdResolver(ScriptState*, HTMLMediaElement&, const String& sink_id);
+  void TimerFired(TimerBase*);
+
+  Member<HTMLMediaElement> element_;
+  String sink_id_;
+  TaskRunnerTimer<SetSinkIdResolver> timer_;
 };
 
-SetSinkIdResolver* SetSinkIdResolver::create(ScriptState* scriptState, HTMLMediaElement& element, const String& sinkId)
-{
-    SetSinkIdResolver* resolver = new SetSinkIdResolver(scriptState, element, sinkId);
-    resolver->suspendIfNeeded();
-    resolver->keepAliveWhilePending();
-    return resolver;
+SetSinkIdResolver* SetSinkIdResolver::Create(ScriptState* script_state,
+                                             HTMLMediaElement& element,
+                                             const String& sink_id) {
+  SetSinkIdResolver* resolver =
+      new SetSinkIdResolver(script_state, element, sink_id);
+  resolver->SuspendIfNeeded();
+  resolver->KeepAliveWhilePending();
+  return resolver;
 }
 
-SetSinkIdResolver::SetSinkIdResolver(ScriptState* scriptState, HTMLMediaElement& element, const String& sinkId)
-    : ScriptPromiseResolver(scriptState)
-    , m_element(element)
-    , m_sinkId(sinkId)
-    , m_timer(this, &SetSinkIdResolver::timerFired)
-{
+SetSinkIdResolver::SetSinkIdResolver(ScriptState* script_state,
+                                     HTMLMediaElement& element,
+                                     const String& sink_id)
+    : ScriptPromiseResolver(script_state),
+      element_(element),
+      sink_id_(sink_id),
+      timer_(TaskRunnerHelper::Get(TaskType::kMiscPlatformAPI, script_state),
+             this,
+             &SetSinkIdResolver::TimerFired) {}
+
+void SetSinkIdResolver::StartAsync() {
+  timer_.StartOneShot(0, BLINK_FROM_HERE);
 }
 
-void SetSinkIdResolver::startAsync()
-{
-    m_timer.startOneShot(0, BLINK_FROM_HERE);
-}
-
-void SetSinkIdResolver::timerFired(Timer<SetSinkIdResolver>* timer)
-{
-    ExecutionContext* context = getExecutionContext();
-    ASSERT(context && context->isDocument());
-    std::unique_ptr<SetSinkIdCallbacks> callbacks = wrapUnique(new SetSinkIdCallbacks(this, *m_element, m_sinkId));
-    WebMediaPlayer* webMediaPlayer = m_element->webMediaPlayer();
-    if (webMediaPlayer) {
-        // Using release() to transfer ownership because |webMediaPlayer| is a platform object that takes raw pointers
-        webMediaPlayer->setSinkId(m_sinkId, WebSecurityOrigin(context->getSecurityOrigin()), callbacks.release());
+void SetSinkIdResolver::TimerFired(TimerBase* timer) {
+  ExecutionContext* context = GetExecutionContext();
+  ASSERT(context && context->IsDocument());
+  std::unique_ptr<SetSinkIdCallbacks> callbacks =
+      WTF::WrapUnique(new SetSinkIdCallbacks(this, *element_, sink_id_));
+  WebMediaPlayer* web_media_player = element_->GetWebMediaPlayer();
+  if (web_media_player) {
+    // Using release() to transfer ownership because |webMediaPlayer| is a
+    // platform object that takes raw pointers.
+    web_media_player->SetSinkId(sink_id_,
+                                WebSecurityOrigin(context->GetSecurityOrigin()),
+                                callbacks.release());
+  } else {
+    if (AudioOutputDeviceClient* client =
+            AudioOutputDeviceClient::From(context)) {
+      client->CheckIfAudioSinkExistsAndIsAuthorized(context, sink_id_,
+                                                    std::move(callbacks));
     } else {
-        if (AudioOutputDeviceClient* client = AudioOutputDeviceClient::from(context)) {
-            client->checkIfAudioSinkExistsAndIsAuthorized(context, m_sinkId, std::move(callbacks));
-        } else {
-            // The context has been detached. Impossible to get a security origin to check.
-            ASSERT(context->activeDOMObjectsAreStopped());
-            reject(DOMException::create(SecurityError, "Impossible to authorize device for detached context"));
-        }
+      // The context has been detached. Impossible to get a security origin to
+      // check.
+      DCHECK(context->IsContextDestroyed());
+      Reject(DOMException::Create(
+          kSecurityError,
+          "Impossible to authorize device for detached context"));
     }
+  }
 }
 
-DEFINE_TRACE(SetSinkIdResolver)
-{
-    visitor->trace(m_element);
-    ScriptPromiseResolver::trace(visitor);
+DEFINE_TRACE(SetSinkIdResolver) {
+  visitor->Trace(element_);
+  ScriptPromiseResolver::Trace(visitor);
 }
 
-} // namespace
+}  // namespace
 
 HTMLMediaElementAudioOutputDevice::HTMLMediaElementAudioOutputDevice()
-    : m_sinkId("")
-{
+    : sink_id_("") {}
+
+String HTMLMediaElementAudioOutputDevice::sinkId(HTMLMediaElement& element) {
+  HTMLMediaElementAudioOutputDevice& aod_element =
+      HTMLMediaElementAudioOutputDevice::From(element);
+  return aod_element.sink_id_;
 }
 
-String HTMLMediaElementAudioOutputDevice::sinkId(HTMLMediaElement& element)
-{
-    HTMLMediaElementAudioOutputDevice& aodElement = HTMLMediaElementAudioOutputDevice::from(element);
-    return aodElement.m_sinkId;
+void HTMLMediaElementAudioOutputDevice::setSinkId(const String& sink_id) {
+  sink_id_ = sink_id;
 }
 
-void HTMLMediaElementAudioOutputDevice::setSinkId(const String& sinkId)
-{
-    m_sinkId = sinkId;
+ScriptPromise HTMLMediaElementAudioOutputDevice::setSinkId(
+    ScriptState* script_state,
+    HTMLMediaElement& element,
+    const String& sink_id) {
+  SetSinkIdResolver* resolver =
+      SetSinkIdResolver::Create(script_state, element, sink_id);
+  ScriptPromise promise = resolver->Promise();
+  if (sink_id == HTMLMediaElementAudioOutputDevice::sinkId(element))
+    resolver->Resolve();
+  else
+    resolver->StartAsync();
+
+  return promise;
 }
 
-ScriptPromise HTMLMediaElementAudioOutputDevice::setSinkId(ScriptState* scriptState, HTMLMediaElement& element, const String& sinkId)
-{
-    SetSinkIdResolver* resolver = SetSinkIdResolver::create(scriptState, element, sinkId);
-    ScriptPromise promise = resolver->promise();
-    if (sinkId == HTMLMediaElementAudioOutputDevice::sinkId(element))
-        resolver->resolve();
-    else
-        resolver->startAsync();
-
-    return promise;
+const char* HTMLMediaElementAudioOutputDevice::SupplementName() {
+  return "HTMLMediaElementAudioOutputDevice";
 }
 
-const char* HTMLMediaElementAudioOutputDevice::supplementName()
-{
-    return "HTMLMediaElementAudioOutputDevice";
+HTMLMediaElementAudioOutputDevice& HTMLMediaElementAudioOutputDevice::From(
+    HTMLMediaElement& element) {
+  HTMLMediaElementAudioOutputDevice* supplement =
+      static_cast<HTMLMediaElementAudioOutputDevice*>(
+          Supplement<HTMLMediaElement>::From(element, SupplementName()));
+  if (!supplement) {
+    supplement = new HTMLMediaElementAudioOutputDevice();
+    ProvideTo(element, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-HTMLMediaElementAudioOutputDevice& HTMLMediaElementAudioOutputDevice::from(HTMLMediaElement& element)
-{
-    HTMLMediaElementAudioOutputDevice* supplement = static_cast<HTMLMediaElementAudioOutputDevice*>(Supplement<HTMLMediaElement>::from(element, supplementName()));
-    if (!supplement) {
-        supplement = new HTMLMediaElementAudioOutputDevice();
-        provideTo(element, supplementName(), supplement);
-    }
-    return *supplement;
+DEFINE_TRACE(HTMLMediaElementAudioOutputDevice) {
+  Supplement<HTMLMediaElement>::Trace(visitor);
 }
 
-DEFINE_TRACE(HTMLMediaElementAudioOutputDevice)
-{
-    Supplement<HTMLMediaElement>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

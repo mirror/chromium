@@ -27,13 +27,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import devtools_file_hashes
-import hashlib
-import os
 import os.path
 import re
 import subprocess
 import sys
+
+from build import devtools_file_hashes
 
 try:
     import json
@@ -72,6 +71,7 @@ def convert_svg_to_png(svg_file_name, png_file_name, dpi):
     convert_command = "inkscape -f %s -e %s -d %s" % (svg_full_path, png_full_path, dpi)
     proc = subprocess.Popen(convert_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     return proc
+
 
 processes = {}
 for file_name in svg_file_names:

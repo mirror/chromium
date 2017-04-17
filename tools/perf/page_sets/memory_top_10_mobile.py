@@ -2,20 +2,15 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import logging
 import re
 
 from telemetry.page import page as page_module
 from telemetry.page import shared_page_state
 from telemetry import story
 
-from devil.android.sdk import intent # pylint: disable=import-error
 from devil.android.sdk import keyevent # pylint: disable=import-error
 
 from page_sets import top_10_mobile
-
-
-DUMP_WAIT_TIME = 3
 
 
 class MemoryMeasurementPage(page_module.Page):
@@ -29,20 +24,6 @@ class MemoryMeasurementPage(page_module.Page):
         shared_page_state_class=shared_page_state.SharedMobilePageState,
         grouping_keys={'phase': self._PHASE})
 
-  def _TakeMemoryMeasurement(self, action_runner):
-    platform = action_runner.tab.browser.platform
-    action_runner.Wait(1)  # See crbug.com/540022#c17.
-    if not platform.tracing_controller.is_tracing_running:
-      logging.warning('Tracing is off. No memory dumps are being recorded.')
-      return  # Tracing is not running, e.g., when recording a WPR archive.
-    with action_runner.CreateInteraction(self._PHASE):
-      action_runner.Wait(DUMP_WAIT_TIME)
-      action_runner.ForceGarbageCollection()
-      platform.FlushEntireSystemCache()
-      action_runner.Wait(DUMP_WAIT_TIME)
-      if not action_runner.tab.browser.DumpMemory():
-        logging.error('Unable to get a memory dump for %s.', self.name)
-
 
 class ForegroundPage(MemoryMeasurementPage):
   """Take a measurement after loading a regular webpage."""
@@ -54,7 +35,7 @@ class ForegroundPage(MemoryMeasurementPage):
 
   def RunPageInteractions(self, action_runner):
     action_runner.tab.WaitForDocumentReadyStateToBeComplete()
-    self._TakeMemoryMeasurement(action_runner)
+    action_runner.MeasureMemory(self.story_set.DETERMINISTIC_MODE)
 
 
 class BackgroundPage(MemoryMeasurementPage):
@@ -69,21 +50,20 @@ class BackgroundPage(MemoryMeasurementPage):
     action_runner.tab.WaitForDocumentReadyStateToBeComplete()
 
     # Launch clock app, pushing Chrome to the background.
-    android_platform = action_runner.tab.browser.platform
-    android_platform.LaunchAndroidApplication(
-        intent.Intent(package='com.google.android.deskclock',
-                      activity='com.android.deskclock.DeskClock'),
-        app_has_webviews=False)
+    android_browser = action_runner.tab.browser
+    android_browser.Background()
 
     # Take measurement.
-    self._TakeMemoryMeasurement(action_runner)
+    action_runner.MeasureMemory(self.story_set.DETERMINISTIC_MODE)
 
     # Go back to Chrome.
-    android_platform.android_action_runner.InputKeyEvent(keyevent.KEYCODE_BACK)
+    android_browser.platform.android_action_runner.InputKeyEvent(
+        keyevent.KEYCODE_BACK)
 
 
 class MemoryTop10Mobile(story.StorySet):
   """User story to measure foreground/background memory in top 10 mobile."""
+  DETERMINISTIC_MODE = True
 
   def __init__(self):
     super(MemoryTop10Mobile, self).__init__(
@@ -94,6 +74,14 @@ class MemoryTop10Mobile(story.StorySet):
       # We name pages so their foreground/background counterparts are easy
       # to identify. For example 'http://google.com' becomes
       # 'http_google_com' and 'after_http_google_com' respectively.
-      name = re.sub('\W+', '_', url)
+      name = re.sub(r'\W+', '_', url)
       self.AddStory(ForegroundPage(self, name, url))
       self.AddStory(BackgroundPage(self, 'after_' + name))
+
+
+class MemoryTop10MobileRealistic(MemoryTop10Mobile):
+  """Top 10 mobile user story in realistic mode.
+
+  This means, in particular, neither forced GCs nor clearing caches.
+  """
+  DETERMINISTIC_MODE = False

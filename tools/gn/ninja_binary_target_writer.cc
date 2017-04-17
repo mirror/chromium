@@ -417,10 +417,8 @@ OutputFile NinjaBinaryTargetWriter::WriteInputsStampAndGetDep() const {
     return OutputFile(settings_->build_settings(), target_->inputs()[0]);
 
   // Make a stamp file.
-  OutputFile input_stamp_file(
-      RebasePath(GetTargetOutputDir(target_).value(),
-                 settings_->build_settings()->build_dir(),
-                 settings_->build_settings()->root_path_utf8()));
+  OutputFile input_stamp_file =
+      GetBuildDirForTargetAsOutputFile(target_, BuildDirType::OBJ);
   input_stamp_file.value().append(target_->label().name());
   input_stamp_file.value().append(".inputs.stamp");
 
@@ -482,6 +480,9 @@ void NinjaBinaryTargetWriter::WriteOneFlag(
         pch_file.erase(pch_file.length() - 4);
         out_ << " -include " << pch_file;
       }
+    } else {
+      RecursiveTargetConfigStringsToStream(target_, getter,
+                                           flag_escape_options, out_);
     }
   } else {
     RecursiveTargetConfigStringsToStream(target_, getter,
@@ -1039,7 +1040,7 @@ OutputFile NinjaBinaryTargetWriter::GetWindowsPCHFile(
     Toolchain::ToolType tool_type) const {
   // Use "obj/{dir}/{target_name}_{lang}.pch" which ends up
   // looking like "obj/chrome/browser/browser_cc.pch"
-  OutputFile ret = GetTargetOutputDirAsOutputFile(target_);
+  OutputFile ret = GetBuildDirForTargetAsOutputFile(target_, BuildDirType::OBJ);
   ret.value().append(target_->label().name());
   ret.value().push_back('_');
   ret.value().append(GetPCHLangSuffixForToolType(tool_type));

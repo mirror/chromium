@@ -8,7 +8,7 @@
 
 #include "base/callback.h"
 #include "base/logging.h"
-#include "policy/proto/device_management_backend.pb.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 
 namespace em = enterprise_management;
 
@@ -156,7 +156,8 @@ void CloudPolicyService::OnStoreError(CloudPolicyStore* store) {
 void CloudPolicyService::CheckInitializationCompleted() {
   if (!IsInitializationComplete() && store_->is_initialized()) {
     initialization_complete_ = true;
-    FOR_EACH_OBSERVER(Observer, observers_, OnInitializationCompleted(this));
+    for (auto& observer : observers_)
+      observer.OnInitializationCompleted(this);
   }
 }
 

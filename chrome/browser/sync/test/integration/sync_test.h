@@ -11,17 +11,16 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/process/process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "components/sync/base/model_type.h"
+#include "components/sync/protocol/sync_protocol_error.h"
+#include "components/sync/test/fake_server/fake_server.h"
+#include "components/sync/test/local_sync_test_server.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/url_request_status.h"
-#include "sync/internal_api/public/base/model_type.h"
-#include "sync/protocol/sync_protocol_error.h"
-#include "sync/test/fake_server/fake_server.h"
-#include "sync/test/local_sync_test_server.h"
 
 // The E2E tests are designed to run against real backend servers. To identify
 // those tests we use *E2ETest* test name filter and run disabled tests.
@@ -39,27 +38,33 @@
 #define E2E_ONLY(test_name) MACRO_CONCAT(DISABLED_E2ETest, test_name)
 #define E2E_ENABLED(test_name) MACRO_CONCAT(test_name, E2ETest)
 
-class ProfileSyncService;
 class ProfileSyncServiceHarness;
 class P2PInvalidationForwarder;
 class P2PSyncRefresher;
 
+namespace arc {
+class SyncArcPackageHelper;
+}  // namespace arc
+
 namespace base {
 class CommandLine;
 class ScopedTempDir;
-}
+}  // namespace base
+
+namespace browser_sync {
+class ProfileSyncService;
+}  // namespace browser_sync
 
 namespace fake_server {
 class FakeServer;
 class FakeServerInvalidationService;
-}
+}  // namespace fake_server
 
 namespace net {
 class FakeURLFetcherFactory;
 class ScopedDefaultHostResolverProc;
 class URLFetcherImplFactory;
-class URLRequestContextGetter;
-}
+}  // namespace net
 
 // This is the base class for integration tests for all sync data types. Derived
 // classes must be defined for each sync data type. Individual tests are defined
@@ -94,18 +99,18 @@ class SyncTest : public InProcessBrowserTest {
   // The type of server we're running against.
   enum ServerType {
     SERVER_TYPE_UNDECIDED,
-    LOCAL_PYTHON_SERVER,    // The mock python server that runs locally and is
-                            // part of the Chromium checkout.
-    LOCAL_LIVE_SERVER,      // Some other server (maybe the real binary used by
-                            // Google's sync service) that can be started on
-                            // a per-test basis by running a command
-    EXTERNAL_LIVE_SERVER,   // A remote server that the test code has no control
-                            // over whatsoever; cross your fingers that the
-                            // account state is initially clean.
-    IN_PROCESS_FAKE_SERVER, // The fake Sync server (FakeServer) running
-                            // in-process (bypassing HTTP calls). This
-                            // ServerType will eventually replace
-                            // LOCAL_PYTHON_SERVER.
+    LOCAL_PYTHON_SERVER,   // The mock python server that runs locally and is
+                           // part of the Chromium checkout.
+    LOCAL_LIVE_SERVER,     // Some other server (maybe the real binary used by
+                           // Google's sync service) that can be started on
+                           // a per-test basis by running a command
+    EXTERNAL_LIVE_SERVER,  // A remote server that the test code has no control
+                           // over whatsoever; cross your fingers that the
+                           // account state is initially clean.
+    IN_PROCESS_FAKE_SERVER,  // The fake Sync server (FakeServer) running
+                             // in-process (bypassing HTTP calls). This
+                             // ServerType will eventually replace
+                             // LOCAL_PYTHON_SERVER.
   };
 
   // A SyncTest must be associated with a particular test type.
@@ -124,11 +129,11 @@ class SyncTest : public InProcessBrowserTest {
   void SetUpCommandLine(base::CommandLine* cl) override;
 
   // Used to get the number of sync clients used by a test.
-  int num_clients() WARN_UNUSED_RESULT { return num_clients_; }
+  int num_clients() { return num_clients_; }
 
   // Returns a pointer to a particular sync profile. Callee owns the object
   // and manages its lifetime.
-  Profile* GetProfile(int index) WARN_UNUSED_RESULT;
+  Profile* GetProfile(int index);
 
   // Returns a list of all profiles including the verifier if available. Callee
   // owns the objects and manages its lifetime.
@@ -136,30 +141,35 @@ class SyncTest : public InProcessBrowserTest {
 
   // Returns a pointer to a particular browser. Callee owns the object
   // and manages its lifetime.
-  Browser* GetBrowser(int index) WARN_UNUSED_RESULT;
+  Browser* GetBrowser(int index);
+
+  // Adds a new browser belonging to the profile at |profile_index|, and appends
+  // it to the list of browsers. Creates a copy of the Profile pointer in
+  // position |profile_index| and appends it to the list of profiles. This is
+  // done so that the profile associated with the new browser can be found at
+  // the same index as it. Tests typically use browser indexes and profile
+  // indexes interchangeably; this allows them to do so freely.
+  Browser* AddBrowser(int profile_index);
 
   // Returns a pointer to a particular sync client. Callee owns the object
   // and manages its lifetime.
-  ProfileSyncServiceHarness* GetClient(int index) WARN_UNUSED_RESULT;
+  ProfileSyncServiceHarness* GetClient(int index);
 
-  // Returns a reference to the collection of sync clients. Callee owns the
-  // object and manages its lifetime.
-  std::vector<ProfileSyncServiceHarness*>& clients() WARN_UNUSED_RESULT {
-    return clients_.get();
-  }
+  // Returns a list of the collection of sync clients.
+  std::vector<ProfileSyncServiceHarness*> GetSyncClients();
 
   // Returns a ProfileSyncService at the given index.
-  ProfileSyncService* GetSyncService(int index);
+  browser_sync::ProfileSyncService* GetSyncService(int index);
 
   // Returns the set of ProfileSyncServices.
-  std::vector<ProfileSyncService*> GetSyncServices();
+  std::vector<browser_sync::ProfileSyncService*> GetSyncServices();
 
   // Returns a pointer to the sync profile that is used to verify changes to
   // individual sync profiles. Callee owns the object and manages its lifetime.
-  Profile* verifier() WARN_UNUSED_RESULT;
+  Profile* verifier();
 
   // Used to determine whether the verifier profile should be updated or not.
-  bool use_verifier() WARN_UNUSED_RESULT { return use_verifier_; }
+  bool use_verifier() { return use_verifier_; }
 
   // After calling this method, changes made to a profile will no longer be
   // reflected in the verifier profile. Note: Not all datatypes use this.
@@ -171,6 +181,9 @@ class SyncTest : public InProcessBrowserTest {
 
   // Initializes sync clients and profiles if required and syncs each of them.
   virtual bool SetupSync() WARN_UNUSED_RESULT;
+
+  // Initialize, and clear data for given client.
+  bool SetupAndClearClient(size_t index);
 
   // Sets whether or not the sync clients in this test should respond to
   // notifications of their own commits.  Real sync clients do not do this, but
@@ -234,12 +247,14 @@ class SyncTest : public InProcessBrowserTest {
   // Triggers the creation the Synced Bookmarks folder on the server.
   void TriggerCreateSyncedBookmarks();
 
-  // Returns the FakeServer being used for the test or NULL if FakeServer is
+  // Returns the FakeServer being used for the test or null if FakeServer is
   // not being used.
   fake_server::FakeServer* GetFakeServer() const;
 
   // Triggers a sync for the given |model_types| for the Profile at |index|.
   void TriggerSyncForModelTypes(int index, syncer::ModelTypeSet model_types);
+
+  arc::SyncArcPackageHelper* sync_arc_helper();
 
  protected:
   // Add custom switches needed for running the test.
@@ -368,6 +383,9 @@ class SyncTest : public InProcessBrowserTest {
   // value of |server_type_|.
   void InitializeInvalidations(int index);
 
+  // Clear server data, and restart sync.
+  bool ClearServerData(ProfileSyncServiceHarness* harness);
+
   // Python sync test server, started on demand.
   syncer::LocalSyncTestServer sync_server_;
 
@@ -402,21 +420,23 @@ class SyncTest : public InProcessBrowserTest {
 
   // Collection of pointers to the browser objects used by a test. One browser
   // instance is created for each sync profile. Browser object lifetime is
-  // managed by BrowserList, so we don't use a ScopedVector here.
+  // managed by BrowserList, so we don't use a std::vector<std::unique_ptr<>>
+  // here.
   std::vector<Browser*> browsers_;
 
   // Collection of sync clients used by a test. A sync client is associated with
   // a sync profile, and implements methods that sync the contents of the
   // profile with the server.
-  ScopedVector<ProfileSyncServiceHarness> clients_;
+  std::vector<std::unique_ptr<ProfileSyncServiceHarness>> clients_;
 
   // A set of objects to listen for commit activity and broadcast notifications
   // of this activity to its peer sync clients.
-  ScopedVector<P2PInvalidationForwarder> invalidation_forwarders_;
+  std::vector<std::unique_ptr<P2PInvalidationForwarder>>
+      invalidation_forwarders_;
 
   // A set of objects to listen for commit activity and broadcast refresh
   // notifications of this activity to its peer sync clients.
-  ScopedVector<P2PSyncRefresher> sync_refreshers_;
+  std::vector<std::unique_ptr<P2PSyncRefresher>> sync_refreshers_;
 
   // Collection of pointers to FakeServerInvalidation objects for each profile.
   std::vector<fake_server::FakeServerInvalidationService*>
@@ -430,10 +450,6 @@ class SyncTest : public InProcessBrowserTest {
   // Indicates whether changes to a profile should also change the verifier
   // profile or not.
   bool use_verifier_;
-
-  // Indicates whether or not notifications were explicitly enabled/disabled.
-  // Defaults to true.
-  bool notifications_enabled_;
 
   // Indicates the need to create Gaia user account at runtime. This can only be
   // set if tests are run against external servers with support for user

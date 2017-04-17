@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/api/tabs/app_base_window.h"
@@ -51,21 +52,16 @@ AppWindowController::CreateWindowValueWithTabs(
     const Extension* extension) const {
   std::unique_ptr<base::DictionaryValue> result = CreateWindowValue();
 
-  base::DictionaryValue* tab_value = CreateTabValue(extension, 0);
+  std::unique_ptr<base::DictionaryValue> tab_value =
+      CreateTabObject(extension, 0)->ToValue();
   if (!tab_value)
     return result;
 
-  base::ListValue* tab_list = new base::ListValue();
-  tab_list->Append(tab_value);
-  result->Set(tabs_constants::kTabsKey, tab_list);
+  auto tab_list = base::MakeUnique<base::ListValue>();
+  tab_list->Append(std::move(tab_value));
+  result->Set(tabs_constants::kTabsKey, std::move(tab_list));
 
   return result;
-}
-
-base::DictionaryValue* AppWindowController::CreateTabValue(
-    const Extension* extension,
-    int tab_index) const {
-  return CreateTabObject(extension, tab_index)->ToValue().release();
 }
 
 std::unique_ptr<api::tabs::Tab> AppWindowController::CreateTabObject(

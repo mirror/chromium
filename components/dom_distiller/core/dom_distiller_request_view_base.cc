@@ -15,7 +15,7 @@
 #include "components/dom_distiller/core/experiments.h"
 #include "components/dom_distiller/core/task_tracker.h"
 #include "components/dom_distiller/core/viewer.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace dom_distiller {
@@ -56,10 +56,6 @@ void DomDistillerRequestViewBase::OnArticleReady(
     SendJavaScript(viewer::GetSetTitleJs(article_proto->title()));
     SendJavaScript(viewer::GetSetTextDirectionJs(text_direction));
     SendJavaScript(viewer::GetUnsafeArticleContentJs(article_proto));
-    // If any content was loaded, show the feedback form.
-    if (ShouldShowFeedbackForm()) {
-      SendJavaScript(viewer::GetShowFeedbackFormJs());
-    }
   } else {
     // It's possible that we didn't get some incremental updates from the
     // distiller. Ensure all remaining pages are flushed to the viewer.
@@ -91,10 +87,6 @@ void DomDistillerRequestViewBase::OnArticleUpdated(
       // client.
       SendJavaScript(viewer::GetSetTitleJs(page.title()));
       SendJavaScript(viewer::GetSetTextDirectionJs(page.text_direction()));
-      // If any content was loaded, show the feedback form.
-      if (ShouldShowFeedbackForm()) {
-        SendJavaScript(viewer::GetShowFeedbackFormJs());
-      }
     }
   }
 }

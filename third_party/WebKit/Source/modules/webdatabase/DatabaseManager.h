@@ -29,9 +29,9 @@
 #include "modules/webdatabase/DatabaseContext.h"
 #include "modules/webdatabase/DatabaseError.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Assertions.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashMap.h"
 
 namespace blink {
 
@@ -43,58 +43,77 @@ class SecurityOrigin;
 class ExecutionContext;
 
 class DatabaseManager {
-    WTF_MAKE_NONCOPYABLE(DatabaseManager); USING_FAST_MALLOC(DatabaseManager);
-public:
-    static DatabaseManager& manager();
-    static void terminateDatabaseThread();
+  WTF_MAKE_NONCOPYABLE(DatabaseManager);
+  USING_FAST_MALLOC(DatabaseManager);
 
-    // These 2 methods are for DatabaseContext (un)registration, and should only
-    // be called by the DatabaseContext constructor and destructor.
-    void registerDatabaseContext(DatabaseContext*);
-    void unregisterDatabaseContext(DatabaseContext*);
+ public:
+  static DatabaseManager& Manager();
 
-#if ENABLE(ASSERT)
-    void didConstructDatabaseContext();
-    void didDestructDatabaseContext();
+  // These 2 methods are for DatabaseContext (un)registration, and should only
+  // be called by the DatabaseContext constructor and destructor.
+  void RegisterDatabaseContext(DatabaseContext*);
+  void UnregisterDatabaseContext(DatabaseContext*);
+
+#if DCHECK_IS_ON()
+  void DidConstructDatabaseContext();
+  void DidDestructDatabaseContext();
 #else
-    void didConstructDatabaseContext() { }
-    void didDestructDatabaseContext() { }
+  void DidConstructDatabaseContext() {}
+  void DidDestructDatabaseContext() {}
 #endif
 
-    static void throwExceptionForDatabaseError(DatabaseError, const String& errorMessage, ExceptionState&);
+  static void ThrowExceptionForDatabaseError(DatabaseError,
+                                             const String& error_message,
+                                             ExceptionState&);
 
-    Database* openDatabase(ExecutionContext*, const String& name, const String& expectedVersion, const String& displayName, unsigned estimatedSize, DatabaseCallback*, DatabaseError&, String& errorMessage);
+  Database* OpenDatabase(ExecutionContext*,
+                         const String& name,
+                         const String& expected_version,
+                         const String& display_name,
+                         unsigned estimated_size,
+                         DatabaseCallback*,
+                         DatabaseError&,
+                         String& error_message);
 
-    String fullPathForDatabase(SecurityOrigin*, const String& name, bool createIfDoesNotExist = true);
+  String FullPathForDatabase(SecurityOrigin*,
+                             const String& name,
+                             bool create_if_does_not_exist = true);
 
-private:
-    DatabaseManager();
-    ~DatabaseManager();
+ private:
+  DatabaseManager();
+  ~DatabaseManager();
 
-    // This gets a DatabaseContext for the specified ExecutionContext.
-    // If one doesn't already exist, it will create a new one.
-    DatabaseContext* databaseContextFor(ExecutionContext*);
-    // This gets a DatabaseContext for the specified ExecutionContext if
-    // it already exist previously. Otherwise, it returns 0.
-    DatabaseContext* existingDatabaseContextFor(ExecutionContext*);
+  // This gets a DatabaseContext for the specified ExecutionContext.
+  // If one doesn't already exist, it will create a new one.
+  DatabaseContext* DatabaseContextFor(ExecutionContext*);
+  // This gets a DatabaseContext for the specified ExecutionContext if
+  // it already exist previously. Otherwise, it returns 0.
+  DatabaseContext* ExistingDatabaseContextFor(ExecutionContext*);
 
-    Database* openDatabaseInternal(ExecutionContext*,
-        const String& name, const String& expectedVersion, const String& displayName,
-        unsigned estimatedSize, bool setVersionInNewDatabase, DatabaseError&, String& errorMessage);
+  Database* OpenDatabaseInternal(ExecutionContext*,
+                                 const String& name,
+                                 const String& expected_version,
+                                 const String& display_name,
+                                 unsigned estimated_size,
+                                 bool set_version_in_new_database,
+                                 DatabaseError&,
+                                 String& error_message);
 
-    static void logErrorMessage(ExecutionContext*, const String& message);
+  static void LogErrorMessage(ExecutionContext*, const String& message);
 
-    // m_contextMap can have two or more entries even though we don't support
-    // Web SQL on workers because single Blink process can have multiple main
-    // contexts.
-    typedef PersistentHeapHashMap<Member<ExecutionContext>, Member<DatabaseContext>> ContextMap;
-    ContextMap m_contextMap;
-#if ENABLE(ASSERT)
-    int m_databaseContextRegisteredCount;
-    int m_databaseContextInstanceCount;
+  // m_contextMap can have two or more entries even though we don't support
+  // Web SQL on workers because single Blink process can have multiple main
+  // contexts.
+  typedef PersistentHeapHashMap<Member<ExecutionContext>,
+                                Member<DatabaseContext>>
+      ContextMap;
+  ContextMap context_map_;
+#if DCHECK_IS_ON()
+  int database_context_registered_count_ = 0;
+  int database_context_instance_count_ = 0;
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DatabaseManager_h
+#endif  // DatabaseManager_h

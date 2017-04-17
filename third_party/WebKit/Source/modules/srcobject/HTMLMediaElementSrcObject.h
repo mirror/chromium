@@ -6,7 +6,7 @@
 #define HTMLMediaElementSrcObject_h
 
 #include "modules/ModulesExport.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,12 +14,13 @@ class MediaStream;
 class HTMLMediaElement;
 
 class MODULES_EXPORT HTMLMediaElementSrcObject {
-    STATIC_ONLY(HTMLMediaElementSrcObject);
-public:
-    static MediaStream* srcObject(HTMLMediaElement&);
-    static void setSrcObject(HTMLMediaElement&, MediaStream*);
+  STATIC_ONLY(HTMLMediaElementSrcObject);
+
+ public:
+  static MediaStream* srcObject(HTMLMediaElement&);
+  static void setSrcObject(HTMLMediaElement&, MediaStream*);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

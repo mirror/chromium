@@ -33,28 +33,32 @@
 #define PrerendererClientImpl_h
 
 #include "core/loader/PrerendererClient.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class Prerender;
 class WebPrerendererClient;
 
-class PrerendererClientImpl final : public GarbageCollected<PrerendererClientImpl>, public PrerendererClient {
-    USING_GARBAGE_COLLECTED_MIXIN(PrerendererClientImpl);
-    WTF_MAKE_NONCOPYABLE(PrerendererClientImpl);
-public:
-    explicit PrerendererClientImpl(WebPrerendererClient*);
+class PrerendererClientImpl final
+    : public GarbageCollected<PrerendererClientImpl>,
+      public PrerendererClient {
+  USING_GARBAGE_COLLECTED_MIXIN(PrerendererClientImpl);
+  WTF_MAKE_NONCOPYABLE(PrerendererClientImpl);
 
-    void willAddPrerender(Prerender*) override;
+ public:
+  PrerendererClientImpl(Page&, WebPrerendererClient*);
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { PrerendererClient::trace(visitor); }
+  void WillAddPrerender(Prerender*) override;
+  bool IsPrefetchOnly() override;
 
-private:
-    WebPrerendererClient* m_client;
+  DEFINE_INLINE_VIRTUAL_TRACE() { PrerendererClient::Trace(visitor); }
+
+ private:
+  WebPrerendererClient* client_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PrerendererClientImpl_h
+#endif  // PrerendererClientImpl_h

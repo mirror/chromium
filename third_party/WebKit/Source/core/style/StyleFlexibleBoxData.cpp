@@ -10,17 +10,16 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- *  THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- *  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "core/style/StyleFlexibleBoxData.h"
@@ -30,28 +29,24 @@
 namespace blink {
 
 StyleFlexibleBoxData::StyleFlexibleBoxData()
-    : m_flexGrow(ComputedStyle::initialFlexGrow())
-    , m_flexShrink(ComputedStyle::initialFlexShrink())
-    , m_flexBasis(ComputedStyle::initialFlexBasis())
-    , m_flexDirection(ComputedStyle::initialFlexDirection())
-    , m_flexWrap(ComputedStyle::initialFlexWrap())
-{
-}
+    : flex_grow_(ComputedStyle::InitialFlexGrow()),
+      flex_shrink_(ComputedStyle::InitialFlexShrink()),
+      flex_basis_(ComputedStyle::InitialFlexBasis()),
+      flex_direction_(ComputedStyle::InitialFlexDirection()),
+      flex_wrap_(ComputedStyle::InitialFlexWrap()) {}
 
 StyleFlexibleBoxData::StyleFlexibleBoxData(const StyleFlexibleBoxData& o)
-    : RefCounted<StyleFlexibleBoxData>()
-    , m_flexGrow(o.m_flexGrow)
-    , m_flexShrink(o.m_flexShrink)
-    , m_flexBasis(o.m_flexBasis)
-    , m_flexDirection(o.m_flexDirection)
-    , m_flexWrap(o.m_flexWrap)
-{
+    : RefCounted<StyleFlexibleBoxData>(),
+      flex_grow_(o.flex_grow_),
+      flex_shrink_(o.flex_shrink_),
+      flex_basis_(o.flex_basis_),
+      flex_direction_(o.flex_direction_),
+      flex_wrap_(o.flex_wrap_) {}
+
+bool StyleFlexibleBoxData::operator==(const StyleFlexibleBoxData& o) const {
+  return flex_grow_ == o.flex_grow_ && flex_shrink_ == o.flex_shrink_ &&
+         flex_basis_ == o.flex_basis_ && flex_direction_ == o.flex_direction_ &&
+         flex_wrap_ == o.flex_wrap_;
 }
 
-bool StyleFlexibleBoxData::operator==(const StyleFlexibleBoxData& o) const
-{
-    return m_flexGrow == o.m_flexGrow && m_flexShrink == o.m_flexShrink && m_flexBasis == o.m_flexBasis
-        && m_flexDirection == o.m_flexDirection && m_flexWrap == o.m_flexWrap;
-}
-
-} // namespace blink
+}  // namespace blink

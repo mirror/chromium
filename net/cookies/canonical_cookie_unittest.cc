@@ -20,7 +20,7 @@ TEST(CanonicalCookieTest, Constructor) {
 
   std::unique_ptr<CanonicalCookie> cookie(CanonicalCookie::Create(
       url, "A", "2", std::string(), "/test", current_time, base::Time(), false,
-      false, CookieSameSite::DEFAULT_MODE, false, COOKIE_PRIORITY_DEFAULT));
+      false, CookieSameSite::DEFAULT_MODE, COOKIE_PRIORITY_DEFAULT));
   EXPECT_EQ("A", cookie->Name());
   EXPECT_EQ("2", cookie->Value());
   EXPECT_EQ("www.example.com", cookie->Domain());
@@ -31,7 +31,7 @@ TEST(CanonicalCookieTest, Constructor) {
 
   std::unique_ptr<CanonicalCookie> cookie2(CanonicalCookie::Create(
       url, "A", "2", ".www.example.com", std::string(), current_time,
-      base::Time(), false, false, CookieSameSite::DEFAULT_MODE, false,
+      base::Time(), false, false, CookieSameSite::DEFAULT_MODE,
       COOKIE_PRIORITY_DEFAULT));
   EXPECT_EQ("A", cookie2->Name());
   EXPECT_EQ("2", cookie2->Value());
@@ -64,11 +64,11 @@ TEST(CanonicalCookieTest, Create) {
   EXPECT_EQ("/", cookie->Path());
   EXPECT_FALSE(cookie->IsSecure());
 
-  // Test creating secure cookies. RFC 6265 allows insecure urls to set secure
-  // cookies.
+  // Test creating secure cookies.
+  // https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone disallows
+  // insecure URLs from setting secure cookies.
   cookie = CanonicalCookie::Create(url, "A=2; Secure", creation_time, options);
-  EXPECT_TRUE(cookie.get());
-  EXPECT_TRUE(cookie->IsSecure());
+  EXPECT_FALSE(cookie.get());
 
   // Test creating http only cookies.
   cookie =
@@ -93,10 +93,9 @@ TEST(CanonicalCookieTest, Create) {
 
   // Test the creating cookies using specific parameter instead of a cookie
   // string.
-  cookie = CanonicalCookie::Create(url, "A", "2", "www.example.com", "/test",
-                                   creation_time, base::Time(), false, false,
-                                   CookieSameSite::DEFAULT_MODE, false,
-                                   COOKIE_PRIORITY_DEFAULT);
+  cookie = CanonicalCookie::Create(
+      url, "A", "2", "www.example.com", "/test", creation_time, base::Time(),
+      false, false, CookieSameSite::DEFAULT_MODE, COOKIE_PRIORITY_DEFAULT);
   EXPECT_EQ("A", cookie->Name());
   EXPECT_EQ("2", cookie->Value());
   EXPECT_EQ(".www.example.com", cookie->Domain());
@@ -105,10 +104,9 @@ TEST(CanonicalCookieTest, Create) {
   EXPECT_FALSE(cookie->IsHttpOnly());
   EXPECT_EQ(CookieSameSite::NO_RESTRICTION, cookie->SameSite());
 
-  cookie = CanonicalCookie::Create(url, "A", "2", ".www.example.com", "/test",
-                                   creation_time, base::Time(), false, false,
-                                   CookieSameSite::DEFAULT_MODE, false,
-                                   COOKIE_PRIORITY_DEFAULT);
+  cookie = CanonicalCookie::Create(
+      url, "A", "2", ".www.example.com", "/test", creation_time, base::Time(),
+      false, false, CookieSameSite::DEFAULT_MODE, COOKIE_PRIORITY_DEFAULT);
   EXPECT_EQ("A", cookie->Name());
   EXPECT_EQ("2", cookie->Value());
   EXPECT_EQ(".www.example.com", cookie->Domain());
@@ -167,11 +165,11 @@ TEST(CanonicalCookieTest, EmptyExpiry) {
 }
 
 TEST(CanonicalCookieTest, IsEquivalent) {
-  GURL url("http://www.example.com/");
+  GURL url("https://www.example.com/");
   std::string cookie_name = "A";
   std::string cookie_value = "2EDA-EF";
   std::string cookie_domain = ".www.example.com";
-  std::string cookie_path = "/";
+  std::string cookie_path = "/path";
   base::Time creation_time = base::Time::Now();
   base::Time expiration_time = creation_time + base::TimeDelta::FromDays(2);
   bool secure(false);
@@ -181,171 +179,113 @@ TEST(CanonicalCookieTest, IsEquivalent) {
   // Test that a cookie is equivalent to itself.
   std::unique_ptr<CanonicalCookie> cookie(CanonicalCookie::Create(
       url, cookie_name, cookie_value, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM));
+      expiration_time, secure, httponly, same_site, COOKIE_PRIORITY_MEDIUM));
   EXPECT_TRUE(cookie->IsEquivalent(*cookie));
-
-  // Test that two identical cookies are equivalent.
-  std::unique_ptr<CanonicalCookie> other_cookie(CanonicalCookie::Create(
-      url, cookie_name, cookie_value, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM));
-  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
-
-  // Tests that use different variations of attribute values that
-  // DON'T affect cookie equivalence.
-  other_cookie =
-      CanonicalCookie::Create(url, cookie_name, "2", cookie_domain, cookie_path,
-                              creation_time, expiration_time, secure, httponly,
-                              same_site, false, COOKIE_PRIORITY_HIGH);
-  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
-
-  base::Time other_creation_time =
-      creation_time + base::TimeDelta::FromMinutes(2);
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, "2", cookie_domain, cookie_path, other_creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
-  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
-
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_name, cookie_domain, cookie_path, creation_time,
-      expiration_time, true, httponly, same_site, false, COOKIE_PRIORITY_LOW);
-  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
-
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_name, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, true, same_site, false, COOKIE_PRIORITY_LOW);
-  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
-
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_name, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, httponly, CookieSameSite::STRICT_MODE, false,
-      COOKIE_PRIORITY_LOW);
-  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
-
-  // Tests that use different variations of attribute values that
-  // DO affect cookie equivalence.
-  other_cookie = CanonicalCookie::Create(
-      url, "B", cookie_value, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
-  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
-
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_value, std::string(), cookie_path, creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
-  EXPECT_TRUE(cookie->IsDomainCookie());
-  EXPECT_FALSE(other_cookie->IsDomainCookie());
-  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
-
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_value, ".example.com", cookie_path,
-      creation_time, expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
-  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
-
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_value, cookie_domain, "/test/0", creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
-  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
-}
-
-TEST(CanonicalCookieTest, IsEquivalentForSecureCookieMatching) {
-  GURL url("http://www.example.com/");
-  std::string cookie_name = "A";
-  std::string cookie_value = "2EDA-EF";
-  std::string cookie_domain = ".www.example.com";
-  std::string cookie_path = "/";
-  base::Time creation_time = base::Time::Now();
-  base::Time expiration_time = creation_time + base::TimeDelta::FromDays(2);
-  bool secure(false);
-  bool httponly(false);
-  CookieSameSite same_site(CookieSameSite::NO_RESTRICTION);
-
-  // Test that a cookie is equivalent to itself.
-  std::unique_ptr<CanonicalCookie> cookie(CanonicalCookie::Create(
-      url, cookie_name, cookie_value, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM));
   EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*cookie));
 
   // Test that two identical cookies are equivalent.
   std::unique_ptr<CanonicalCookie> other_cookie(CanonicalCookie::Create(
       url, cookie_name, cookie_value, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM));
-  EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+      expiration_time, secure, httponly, same_site, COOKIE_PRIORITY_MEDIUM));
+  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
 
   // Tests that use different variations of attribute values that
-  // DON'T affect cookie equivalence. Differs from the IsEquivalent tests above
-  // as follows:
-  //    * Should return true even if paths differ.
-  //    * Should return true if the domains "domain-match" (but are not
-  //      identical).
-  other_cookie =
-      CanonicalCookie::Create(url, cookie_name, "2", cookie_domain, cookie_path,
-                              creation_time, expiration_time, secure, httponly,
-                              same_site, false, COOKIE_PRIORITY_HIGH);
+  // DON'T affect cookie equivalence.
+  other_cookie = CanonicalCookie::Create(
+      url, cookie_name, "2", cookie_domain, cookie_path, creation_time,
+      expiration_time, secure, httponly, same_site, COOKIE_PRIORITY_HIGH);
+  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
   EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
 
   base::Time other_creation_time =
       creation_time + base::TimeDelta::FromMinutes(2);
   other_cookie = CanonicalCookie::Create(
       url, cookie_name, "2", cookie_domain, cookie_path, other_creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
+      expiration_time, secure, httponly, same_site, COOKIE_PRIORITY_MEDIUM);
+  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
   EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
 
   other_cookie = CanonicalCookie::Create(
       url, cookie_name, cookie_name, cookie_domain, cookie_path, creation_time,
-      expiration_time, true, httponly, same_site, false, COOKIE_PRIORITY_LOW);
+      expiration_time, true, httponly, same_site, COOKIE_PRIORITY_LOW);
+  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
   EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
 
   other_cookie = CanonicalCookie::Create(
       url, cookie_name, cookie_name, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, true, same_site, false, COOKIE_PRIORITY_LOW);
+      expiration_time, secure, true, same_site, COOKIE_PRIORITY_LOW);
+  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
   EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
 
   other_cookie = CanonicalCookie::Create(
       url, cookie_name, cookie_name, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, httponly, CookieSameSite::STRICT_MODE, false,
+      expiration_time, secure, httponly, CookieSameSite::STRICT_MODE,
       COOKIE_PRIORITY_LOW);
+  EXPECT_TRUE(cookie->IsEquivalent(*other_cookie));
   EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
 
-  // The following 3 tests' expected results differ from their IsEquivalent
-  // counterparts above.
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_value, cookie_domain, "/test/0", creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
-  EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
-
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_value, std::string(), cookie_path, creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
-  EXPECT_TRUE(cookie->IsDomainCookie());
-  EXPECT_FALSE(other_cookie->IsDomainCookie());
-  EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
-
-  other_cookie = CanonicalCookie::Create(
-      url, cookie_name, cookie_value, ".example.com", cookie_path,
-      creation_time, expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
-  EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
-
-  // Tests that use different variations of attribute values that
-  // DO affect cookie equivalence. Note that unlike the IsEquivalent tests
-  // above, this does *not* include tests for differing paths or domains that
-  // "domain-match".
+  // Cookies whose names mismatch are not equivalent.
   other_cookie = CanonicalCookie::Create(
       url, "B", cookie_value, cookie_domain, cookie_path, creation_time,
-      expiration_time, secure, httponly, same_site, false,
-      COOKIE_PRIORITY_MEDIUM);
+      expiration_time, secure, httponly, same_site, COOKIE_PRIORITY_MEDIUM);
+  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
   EXPECT_FALSE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_FALSE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
+
+  // A domain cookie at 'www.example.com' is not equivalent to a host cookie
+  // at the same domain. These are, however, equivalent according to the laxer
+  // rules of 'IsEquivalentForSecureCookieMatching'.
+  other_cookie = CanonicalCookie::Create(
+      url, cookie_name, cookie_value, std::string(), cookie_path, creation_time,
+      expiration_time, secure, httponly, same_site, COOKIE_PRIORITY_MEDIUM);
+  EXPECT_TRUE(cookie->IsDomainCookie());
+  EXPECT_FALSE(other_cookie->IsDomainCookie());
+  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
+  EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
+
+  // Likewise, a cookie on 'example.com' is not equivalent to a cookie on
+  // 'www.example.com', but they are equivalent for secure cookie matching.
+  other_cookie = CanonicalCookie::Create(
+      url, cookie_name, cookie_value, ".example.com", cookie_path,
+      creation_time, expiration_time, secure, httponly, same_site,
+      COOKIE_PRIORITY_MEDIUM);
+  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
+  EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
+
+  // Paths are a bit more complicated. 'IsEquivalent' requires an exact path
+  // match, while secure cookie matching uses a more relaxed 'IsOnPath' check.
+  // That is, |cookie| set on '/path' is not equivalent in either way to
+  // |other_cookie| set on '/test' or '/path/subpath'. It is, however,
+  // equivalent for secure cookie matching to |other_cookie| set on '/'.
+  other_cookie = CanonicalCookie::Create(
+      url, cookie_name, cookie_value, cookie_domain, "/test", creation_time,
+      expiration_time, secure, httponly, same_site, COOKIE_PRIORITY_MEDIUM);
+  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
+  EXPECT_FALSE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_FALSE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
+
+  other_cookie = CanonicalCookie::Create(
+      url, cookie_name, cookie_value, cookie_domain, cookie_path + "/subpath",
+      creation_time, expiration_time, secure, httponly, same_site,
+      COOKIE_PRIORITY_MEDIUM);
+  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
+  EXPECT_FALSE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_TRUE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
+
+  other_cookie = CanonicalCookie::Create(
+      url, cookie_name, cookie_value, cookie_domain, "/", creation_time,
+      expiration_time, secure, httponly, same_site, COOKIE_PRIORITY_MEDIUM);
+  EXPECT_FALSE(cookie->IsEquivalent(*other_cookie));
+  EXPECT_TRUE(cookie->IsEquivalentForSecureCookieMatching(*other_cookie));
+  EXPECT_FALSE(other_cookie->IsEquivalentForSecureCookieMatching(*cookie));
 }
 
 TEST(CanonicalCookieTest, IsDomainMatch) {
@@ -613,8 +553,8 @@ TEST(CanonicalCookieTest, HostCookiePrefix) {
 
   // Rules don't apply for a typoed prefix.
   EXPECT_TRUE(CanonicalCookie::Create(
-      http_url, "__host-A=B; Domain=" + domain + "; Path=/; Secure;",
-      creation_time, options));
+      http_url, "__host-A=B; Domain=" + domain + "; Path=/;", creation_time,
+      options));
   EXPECT_TRUE(CanonicalCookie::Create(
       https_url, "__HostA=B; Domain=" + domain + "; Secure;", creation_time,
       options));
@@ -625,7 +565,6 @@ TEST(CanonicalCookieTest, EnforceSecureCookiesRequireSecureScheme) {
   GURL https_url("https://www.example.com");
   base::Time creation_time = base::Time::Now();
   CookieOptions options;
-  options.set_enforce_strict_secure();
 
   std::unique_ptr<CanonicalCookie> http_cookie_no_secure(
       CanonicalCookie::Create(http_url, "a=b", creation_time, options));
@@ -644,19 +583,19 @@ TEST(CanonicalCookieTest, EnforceSecureCookiesRequireSecureScheme) {
   std::unique_ptr<CanonicalCookie> http_cookie_no_secure_extended(
       CanonicalCookie::Create(
           http_url, "a", "b", "", "", creation_time, creation_time, false,
-          false, CookieSameSite::STRICT_MODE, true, COOKIE_PRIORITY_DEFAULT));
+          false, CookieSameSite::STRICT_MODE, COOKIE_PRIORITY_DEFAULT));
   std::unique_ptr<CanonicalCookie> http_cookie_secure_extended(
       CanonicalCookie::Create(
           http_url, "a", "b", "", "", creation_time, creation_time, true, false,
-          CookieSameSite::STRICT_MODE, true, COOKIE_PRIORITY_DEFAULT));
+          CookieSameSite::STRICT_MODE, COOKIE_PRIORITY_DEFAULT));
   std::unique_ptr<CanonicalCookie> https_cookie_no_secure_extended(
       CanonicalCookie::Create(
           https_url, "a", "b", "", "", creation_time, creation_time, false,
-          false, CookieSameSite::STRICT_MODE, true, COOKIE_PRIORITY_DEFAULT));
+          false, CookieSameSite::STRICT_MODE, COOKIE_PRIORITY_DEFAULT));
   std::unique_ptr<CanonicalCookie> https_cookie_secure_extended(
       CanonicalCookie::Create(
           https_url, "a", "b", "", "", creation_time, creation_time, true,
-          false, CookieSameSite::STRICT_MODE, true, COOKIE_PRIORITY_DEFAULT));
+          false, CookieSameSite::STRICT_MODE, COOKIE_PRIORITY_DEFAULT));
 
   EXPECT_TRUE(http_cookie_no_secure_extended.get());
   EXPECT_FALSE(http_cookie_secure_extended.get());

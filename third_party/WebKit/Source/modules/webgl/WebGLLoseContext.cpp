@@ -30,53 +30,42 @@
 namespace blink {
 
 WebGLLoseContext::WebGLLoseContext(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
+    : WebGLExtension(context) {}
+
+void WebGLLoseContext::Lose(bool force) {
+  if (force)
+    WebGLExtension::Lose(true);
 }
 
-WebGLLoseContext::~WebGLLoseContext()
-{
+WebGLExtensionName WebGLLoseContext::GetName() const {
+  return kWebGLLoseContextName;
 }
 
-void WebGLLoseContext::lose(bool force)
-{
-    if (force)
-        WebGLExtension::lose(true);
+WebGLLoseContext* WebGLLoseContext::Create(WebGLRenderingContextBase* context) {
+  return new WebGLLoseContext(context);
 }
 
-WebGLExtensionName WebGLLoseContext::name() const
-{
-    return WebGLLoseContextName;
+void WebGLLoseContext::loseContext() {
+  WebGLExtensionScopedContext scoped(this);
+  if (!scoped.IsLost()) {
+    scoped.Context()->ForceLostContext(
+        WebGLRenderingContextBase::kWebGLLoseContextLostContext,
+        WebGLRenderingContextBase::kManual);
+  }
 }
 
-WebGLLoseContext* WebGLLoseContext::create(WebGLRenderingContextBase* context)
-{
-    return new WebGLLoseContext(context);
+void WebGLLoseContext::restoreContext() {
+  WebGLExtensionScopedContext scoped(this);
+  if (!scoped.IsLost())
+    scoped.Context()->ForceRestoreContext();
 }
 
-void WebGLLoseContext::loseContext()
-{
-    WebGLExtensionScopedContext scoped(this);
-    if (!scoped.isLost()) {
-        scoped.context()->forceLostContext(WebGLRenderingContextBase::WebGLLoseContextLostContext, WebGLRenderingContextBase::Manual);
-    }
+bool WebGLLoseContext::Supported(WebGLRenderingContextBase*) {
+  return true;
 }
 
-void WebGLLoseContext::restoreContext()
-{
-    WebGLExtensionScopedContext scoped(this);
-    if (!scoped.isLost())
-        scoped.context()->forceRestoreContext();
+const char* WebGLLoseContext::ExtensionName() {
+  return "WEBGL_lose_context";
 }
 
-bool WebGLLoseContext::supported(WebGLRenderingContextBase*)
-{
-    return true;
-}
-
-const char* WebGLLoseContext::extensionName()
-{
-    return "WEBGL_lose_context";
-}
-
-} // namespace blink
+}  // namespace blink

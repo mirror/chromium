@@ -30,13 +30,6 @@
 #include "extensions/common/stack_frame.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
-class FaviconDownloader;
-
-namespace content {
-struct LoadCommittedDetails;
-class RenderFrameHost;
-}
-
 namespace gfx {
 class Image;
 }
@@ -45,22 +38,18 @@ namespace extensions {
 class ExtensionActionRunner;
 class BookmarkAppHelper;
 class Extension;
-class LocationBarController;
 class WebstoreInlineInstallerFactory;
 
 // Per-tab extension helper. Also handles non-extension apps.
 class TabHelper : public content::WebContentsObserver,
                   public ExtensionFunctionDispatcher::Delegate,
                   public ExtensionRegistryObserver,
-                  public base::SupportsWeakPtr<TabHelper>,
                   public content::NotificationObserver,
                   public content::WebContentsUserData<TabHelper> {
  public:
   ~TabHelper() override;
 
-  void CreateApplicationShortcuts();
   void CreateHostedAppFromWebContents();
-  bool CanCreateApplicationShortcuts() const;
   bool CanCreateBookmarkApp() const;
 
   void UpdateShortcutOnLoadComplete() {
@@ -105,10 +94,6 @@ class TabHelper : public content::WebContentsObserver,
     return script_executor_.get();
   }
 
-  LocationBarController* location_bar_controller() {
-    return location_bar_controller_.get();
-  }
-
   ExtensionActionRunner* extension_action_runner() {
     return extension_action_runner_.get();
   }
@@ -138,7 +123,6 @@ class TabHelper : public content::WebContentsObserver,
   // OnDidGetApplicationInfo uses this to dispatch calls.
   enum WebAppAction {
     NONE,               // No action at all.
-    CREATE_SHORTCUT,    // Bring up create application shortcut dialog.
     CREATE_HOSTED_APP,  // Create and install a hosted app.
     UPDATE_SHORTCUT     // Update icon for app shortcut.
   };
@@ -152,9 +136,8 @@ class TabHelper : public content::WebContentsObserver,
 
   // content::WebContentsObserver overrides.
   void RenderFrameCreated(content::RenderFrameHost* host) override;
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override;
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
   bool OnMessageReceived(const IPC::Message& message) override;
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
@@ -177,7 +160,6 @@ class TabHelper : public content::WebContentsObserver,
                                int install_id,
                                int return_route_id,
                                const std::string& webstore_item_id,
-                               const GURL& requestor_url,
                                int listeners_mask);
   void OnGetAppInstallState(content::RenderFrameHost* host,
                             const GURL& requestor_url,
@@ -256,8 +238,6 @@ class TabHelper : public content::WebContentsObserver,
   content::NotificationRegistrar registrar_;
 
   std::unique_ptr<ScriptExecutor> script_executor_;
-
-  std::unique_ptr<LocationBarController> location_bar_controller_;
 
   std::unique_ptr<ExtensionActionRunner> extension_action_runner_;
 

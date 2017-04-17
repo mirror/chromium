@@ -37,41 +37,93 @@
 #include "platform/fonts/FontCache.h"
 #include "platform/fonts/FontPlatformData.h"
 #include "platform/fonts/WebFontDecoder.h"
+#include "platform/fonts/opentype/FontSettings.h"
 #include "third_party/skia/include/core/SkStream.h"
 #include "third_party/skia/include/core/SkTypeface.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#if OS(WIN)
+#include "third_party/skia/include/ports/SkFontMgr_empty.h"
+#endif
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-FontCustomPlatformData::FontCustomPlatformData(PassRefPtr<SkTypeface> typeface)
-    : m_typeface(typeface) { }
+FontCustomPlatformData::FontCustomPlatformData(sk_sp<SkTypeface> typeface,
+                                               size_t data_size)
+    : base_typeface_(std::move(typeface)), data_size_(data_size) {}
 
-FontCustomPlatformData::~FontCustomPlatformData()
-{
-}
+FontCustomPlatformData::~FontCustomPlatformData() {}
 
-FontPlatformData FontCustomPlatformData::fontPlatformData(float size, bool bold, bool italic, FontOrientation orientation)
-{
-    ASSERT(m_typeface);
-    return FontPlatformData(m_typeface.get(), "", size, bold && !m_typeface->isBold(), italic && !m_typeface->isItalic(), orientation);
-}
+FontPlatformData FontCustomPlatformData::GetFontPlatformData(
+    float size,
+    bool bold,
+    bool italic,
+    FontOrientation orientation,
+    const FontVariationSettings* variation_settings) {
+  DCHECK(base_typeface_);
 
-std::unique_ptr<FontCustomPlatformData> FontCustomPlatformData::create(SharedBuffer* buffer, String& otsParseMessage)
-{
-    DCHECK(buffer);
-    WebFontDecoder decoder;
-    RefPtr<SkTypeface> typeface = decoder.decode(buffer);
-    if (!typeface) {
-        otsParseMessage = decoder.getErrorString();
-        return nullptr;
+  sk_sp<SkTypeface> return_typeface = base_typeface_;
+
+  // Maximum axis count is maximum value for the OpenType USHORT,
+  // which is a 16bit unsigned.
+  // https://www.microsoft.com/typography/otspec/fvar.htm Variation
+  // settings coming from CSS can have duplicate assignments and the
+  // list can be longer than UINT16_MAX, but ignoring the length for
+  // now, going with a reasonable upper limit. Deduplication is
+  // handled by Skia with priority given to the last occuring
+  // assignment.
+  if (variation_settings && variation_settings->size() < UINT16_MAX) {
+#if OS(WIN)
+    sk_sp<SkFontMgr> fm(SkFontMgr_New_Custom_Empty());
+#else
+    sk_sp<SkFontMgr> fm(SkFontMgr::RefDefault());
+#endif
+    Vector<SkFontMgr::FontParameters::Axis, 0> axes;
+    axes.ReserveCapacity(variation_settings->size());
+    for (size_t i = 0; i < variation_settings->size(); ++i) {
+      SkFontMgr::FontParameters::Axis axis = {
+          AtomicStringToFourByteTag(variation_settings->at(i).Tag()),
+          SkFloatToScalar(variation_settings->at(i).Value())};
+      axes.push_back(axis);
     }
-    return wrapUnique(new FontCustomPlatformData(typeface.release()));
+
+    sk_sp<SkTypeface> sk_variation_font(fm->createFromStream(
+        base_typeface_->openStream(nullptr)->duplicate(),
+        SkFontMgr::FontParameters().setAxes(axes.Data(), axes.size())));
+
+    if (sk_variation_font) {
+      return_typeface = sk_variation_font;
+    } else {
+      SkString family_name;
+      base_typeface_->getFamilyName(&family_name);
+      // TODO: Surface this as a console message?
+      LOG(ERROR) << "Unable for apply variation axis properties for font: "
+                 << family_name.c_str();
+    }
+  }
+
+  return FontPlatformData(return_typeface, "", size,
+                          bold && !base_typeface_->isBold(),
+                          italic && !base_typeface_->isItalic(), orientation);
 }
 
-bool FontCustomPlatformData::supportsFormat(const String& format)
-{
-    return equalIgnoringCase(format, "truetype") || equalIgnoringCase(format, "opentype") || WebFontDecoder::supportsFormat(format);
+PassRefPtr<FontCustomPlatformData> FontCustomPlatformData::Create(
+    SharedBuffer* buffer,
+    String& ots_parse_message) {
+  DCHECK(buffer);
+  WebFontDecoder decoder;
+  sk_sp<SkTypeface> typeface = decoder.Decode(buffer);
+  if (!typeface) {
+    ots_parse_message = decoder.GetErrorString();
+    return nullptr;
+  }
+  return AdoptRef(
+      new FontCustomPlatformData(std::move(typeface), decoder.DecodedSize()));
 }
 
-} // namespace blink
+bool FontCustomPlatformData::SupportsFormat(const String& format) {
+  return DeprecatedEqualIgnoringCase(format, "truetype") ||
+         DeprecatedEqualIgnoringCase(format, "opentype") ||
+         WebFontDecoder::SupportsFormat(format);
+}
+
+}  // namespace blink

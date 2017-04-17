@@ -5,16 +5,13 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_API_AUTOMATION_INTERNAL_AUTOMATION_INTERNAL_API_H_
 #define CHROME_BROWSER_EXTENSIONS_API_AUTOMATION_INTERNAL_AUTOMATION_INTERNAL_API_H_
 
+#include <string>
+
 #include "chrome/browser/extensions/chrome_extension_function.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
-namespace content {
-struct AXEventNotificationDetails;
-}  // namespace content
-
 namespace extensions {
-class AutomationActionAdapter;
 
 namespace api {
 namespace automation_internal {
@@ -26,8 +23,8 @@ struct Params;
 }  // namespace extensions
 
 namespace ui {
-struct AXNodeData;
-}
+struct AXActionData;
+}  // namespace ui
 
 namespace extensions {
 
@@ -52,10 +49,10 @@ class AutomationInternalPerformActionFunction
   ExtensionFunction::ResponseAction Run() override;
 
  private:
-  // Helper function to route an action to an action adapter.
-  ExtensionFunction::ResponseAction RouteActionToAdapter(
+  // Helper function to convert extension action to ax action.
+  ExtensionFunction::ResponseAction ConvertToAXActionData(
       api::automation_internal::PerformAction::Params* params,
-      AutomationActionAdapter* adapter);
+      ui::AXActionData* data);
 };
 
 class AutomationInternalEnableFrameFunction : public UIThreadExtensionFunction {

@@ -14,7 +14,7 @@
 
 #include "util/posix/symbolic_constants_posix.h"
 
-#include <sys/signal.h>
+#include <signal.h>
 #include <sys/types.h>
 
 #include "base/macros.h"
@@ -65,7 +65,7 @@ const struct {
 #if defined(OS_MACOSX)
     {SIGEMT, "SIGEMT", "EMT"},
     {SIGINFO, "SIGINFO", "INFO"},
-#elif defined(OS_LINUX)
+#elif defined(OS_LINUX) || defined(OS_ANDROID)
     {SIGPWR, "SIGPWR", "PWR"},
     {SIGSTKFLT, "SIGSTKFLT", "STKFLT"},
 #endif
@@ -88,9 +88,9 @@ void TestSignalToStringOnce(int value,
     if (expect[0] == '\0') {
       EXPECT_FALSE(actual.empty()) << "signal " << value;
     } else {
-      EXPECT_EQ(expect, actual) << "signal " << value;
+      EXPECT_EQ(actual, expect) << "signal " << value;
     }
-    EXPECT_EQ(actual, actual_numeric) << "signal " << value;
+    EXPECT_EQ(actual_numeric, actual) << "signal " << value;
   } else {
     EXPECT_TRUE(actual.empty()) << "signal " << value << ", actual " << actual;
     EXPECT_FALSE(actual_numeric.empty())
@@ -120,7 +120,7 @@ TEST(SymbolicConstantsPOSIX, SignalToString) {
                        kSignalTestData[index].short_name);
   }
 
-#if defined(OS_LINUX)
+#if defined(OS_LINUX) || defined(OS_ANDROID)
   // NSIG is 64 to account for real-time signals.
   const int kSignalCount = 32;
 #else
@@ -147,7 +147,7 @@ void TestStringToSignal(const base::StringPiece& string,
     EXPECT_TRUE(actual_result) << "string " << string << ", options " << options
                                << ", signal " << expect_value;
     if (actual_result) {
-      EXPECT_EQ(expect_value, actual_value) << "string " << string
+      EXPECT_EQ(actual_value, expect_value) << "string " << string
                                             << ", options " << options;
     }
   } else {

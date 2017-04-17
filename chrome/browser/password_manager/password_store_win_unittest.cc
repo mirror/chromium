@@ -17,8 +17,8 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
-#include "base/stl_util.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -54,18 +54,24 @@ namespace {
 class MockPasswordStoreConsumer : public PasswordStoreConsumer {
  public:
   MOCK_METHOD1(OnGetPasswordStoreResultsConstRef,
-               void(const std::vector<PasswordForm*>&));
+               void(const std::vector<std::unique_ptr<PasswordForm>>&));
 
   // GMock cannot mock methods with move-only args.
-  void OnGetPasswordStoreResults(ScopedVector<PasswordForm> results) override {
-    OnGetPasswordStoreResultsConstRef(results.get());
+  void OnGetPasswordStoreResults(
+      std::vector<std::unique_ptr<PasswordForm>> results) override {
+    OnGetPasswordStoreResultsConstRef(results);
   }
 };
 
 class MockWebDataServiceConsumer : public WebDataServiceConsumer {
  public:
-  MOCK_METHOD2(OnWebDataServiceRequestDone,
-               void(PasswordWebDataService::Handle, const WDTypedResult*));
+  MOCK_METHOD0(OnWebDataServiceRequestDoneStub, void());
+
+  // GMock cannot mock methods with move-only args.
+  void OnWebDataServiceRequestDone(WebDataServiceBase::Handle h,
+                                   std::unique_ptr<WDTypedResult> result) {
+    OnWebDataServiceRequestDoneStub();
+  }
 };
 
 }  // anonymous namespace
@@ -127,7 +133,7 @@ class PasswordStoreWinTest : public testing::Test {
 
     profile_.reset(new TestingProfile());
 
-    base::FilePath path = temp_dir_.path().AppendASCII("web_data_test");
+    base::FilePath path = temp_dir_.GetPath().AppendASCII("web_data_test");
     wdbs_ = new WebDatabaseService(
         path, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::DB));
@@ -159,20 +165,19 @@ class PasswordStoreWinTest : public testing::Test {
     done.Wait();
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
     db_thread_.Stop();
   }
 
   base::FilePath test_login_db_file_path() const {
-    return temp_dir_.path().Append(FILE_PATH_LITERAL("login_test"));
+    return temp_dir_.GetPath().Append(FILE_PATH_LITERAL("login_test"));
   }
 
   PasswordStoreWin* CreatePasswordStore() {
     return new PasswordStoreWin(
         base::ThreadTaskRunnerHandle::Get(),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::DB),
-        base::WrapUnique(new LoginDatabase(test_login_db_file_path())),
-        wds_.get());
+        base::MakeUnique<LoginDatabase>(test_login_db_file_path()), wds_.get());
   }
 
   base::MessageLoopForUI message_loop_;
@@ -187,17 +192,14 @@ class PasswordStoreWinTest : public testing::Test {
   scoped_refptr<PasswordStore> store_;
 };
 
-ACTION(STLDeleteElements0) {
-  STLDeleteContainerPointers(arg0.begin(), arg0.end());
-}
-
 ACTION(QuitUIMessageLoop) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   base::MessageLoop::current()->QuitWhenIdle();
 }
 
 MATCHER(EmptyWDResult, "") {
-  return static_cast<const WDResult<std::vector<PasswordForm*>>*>(arg)
+  return static_cast<
+             const WDResult<std::vector<std::unique_ptr<PasswordForm>>>*>(arg)
       ->GetValue()
       .empty();
 }
@@ -264,17 +266,16 @@ TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
       true,
       1,
   };
-  ScopedVector<autofill::PasswordForm> expected_forms;
+  std::vector<std::unique_ptr<PasswordForm>> expected_forms;
   expected_forms.push_back(
       CreatePasswordFormFromDataForTesting(expected_form_data));
 
   // The IE7 password should be returned.
-  EXPECT_CALL(consumer,
-              OnGetPasswordStoreResultsConstRef(
-                  UnorderedPasswordFormElementsAre(expected_forms.get())));
+  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(
+                            UnorderedPasswordFormElementsAre(&expected_forms)));
 
   store_->GetLogins(form, &consumer);
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(PasswordStoreWinTest, OutstandingWDSQueries) {
@@ -308,7 +309,7 @@ TEST_F(PasswordStoreWinTest, OutstandingWDSQueries) {
   wdbs_->ShutdownDatabase();
   wdbs_ = nullptr;
 
-  base::MessageLoop::current()->RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 }
 
 // Hangs flakily, see http://crbug.com/43836.
@@ -365,20 +366,20 @@ TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
       true,
       1,
   };
-  ScopedVector<autofill::PasswordForm> expected_forms;
+  std::vector<std::unique_ptr<PasswordForm>> expected_forms;
   expected_forms.push_back(
       CreatePasswordFormFromDataForTesting(expected_form_data));
 
   // The IE7 password should be returned.
   EXPECT_CALL(password_consumer,
               OnGetPasswordStoreResultsConstRef(
-                  UnorderedPasswordFormElementsAre(expected_forms.get())));
+                  UnorderedPasswordFormElementsAre(&expected_forms)));
 
   store_->GetLogins(form, &password_consumer);
 
   MockWebDataServiceConsumer wds_consumer;
 
-  EXPECT_CALL(wds_consumer, OnWebDataServiceRequestDone(_, _))
+  EXPECT_CALL(wds_consumer, OnWebDataServiceRequestDoneStub())
       .WillOnce(QuitUIMessageLoop());
 
   wds_->GetIE7Login(password_info, &wds_consumer);
@@ -386,8 +387,8 @@ TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
   // Run the MessageLoop twice: once for the GetIE7Login that PasswordStoreWin
   // schedules on the DB thread and once for the one we just scheduled on the UI
   // thread.
-  base::MessageLoop::current()->Run();
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(PasswordStoreWinTest, EmptyLogins) {
@@ -419,7 +420,7 @@ TEST_F(PasswordStoreWinTest, EmptyLogins) {
   EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(IsEmpty()));
 
   store_->GetLogins(form, &consumer);
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(PasswordStoreWinTest, EmptyBlacklistLogins) {
@@ -435,7 +436,7 @@ TEST_F(PasswordStoreWinTest, EmptyBlacklistLogins) {
   EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(IsEmpty()));
 
   store_->GetBlacklistLogins(&consumer);
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(PasswordStoreWinTest, EmptyAutofillableLogins) {
@@ -451,5 +452,5 @@ TEST_F(PasswordStoreWinTest, EmptyAutofillableLogins) {
   EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(IsEmpty()));
 
   store_->GetAutofillableLogins(&consumer);
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
 }

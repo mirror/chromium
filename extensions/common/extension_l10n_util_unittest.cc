@@ -9,7 +9,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
-#include "base/memory/linked_ptr.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -33,19 +33,20 @@ TEST(ExtensionL10nUtil, ValidateLocalesWithBadLocale) {
   base::ScopedTempDir temp;
   ASSERT_TRUE(temp.CreateUniqueTempDir());
 
-  base::FilePath src_path = temp.path().Append(kLocaleFolder);
+  base::FilePath src_path = temp.GetPath().Append(kLocaleFolder);
   base::FilePath locale = src_path.AppendASCII("ms");
   ASSERT_TRUE(base::CreateDirectory(locale));
 
   base::FilePath messages_file = locale.Append(kMessagesFilename);
   std::string data = "{ \"name\":";
-  ASSERT_TRUE(base::WriteFile(messages_file, data.c_str(), data.length()));
+  ASSERT_EQ(static_cast<int>(data.length()),
+            base::WriteFile(messages_file, data.c_str(), data.length()));
 
   base::DictionaryValue manifest;
   manifest.SetString(keys::kDefaultLocale, "en");
   std::string error;
   EXPECT_FALSE(extension_l10n_util::ValidateExtensionLocales(
-      temp.path(), &manifest, &error));
+      temp.GetPath(), &manifest, &error));
   EXPECT_THAT(
       error,
       testing::HasSubstr(base::UTF16ToUTF8(messages_file.LossyDisplayName())));
@@ -55,7 +56,7 @@ TEST(ExtensionL10nUtil, GetValidLocalesEmptyLocaleFolder) {
   base::ScopedTempDir temp;
   ASSERT_TRUE(temp.CreateUniqueTempDir());
 
-  base::FilePath src_path = temp.path().Append(kLocaleFolder);
+  base::FilePath src_path = temp.GetPath().Append(kLocaleFolder);
   ASSERT_TRUE(base::CreateDirectory(src_path));
 
   std::string error;
@@ -70,7 +71,7 @@ TEST(ExtensionL10nUtil, GetValidLocalesWithValidLocaleNoMessagesFile) {
   base::ScopedTempDir temp;
   ASSERT_TRUE(temp.CreateUniqueTempDir());
 
-  base::FilePath src_path = temp.path().Append(kLocaleFolder);
+  base::FilePath src_path = temp.GetPath().Append(kLocaleFolder);
   ASSERT_TRUE(base::CreateDirectory(src_path));
   ASSERT_TRUE(base::CreateDirectory(src_path.AppendASCII("sr")));
 
@@ -86,14 +87,15 @@ TEST(ExtensionL10nUtil, GetValidLocalesWithUnsupportedLocale) {
   base::ScopedTempDir temp;
   ASSERT_TRUE(temp.CreateUniqueTempDir());
 
-  base::FilePath src_path = temp.path().Append(kLocaleFolder);
+  base::FilePath src_path = temp.GetPath().Append(kLocaleFolder);
   ASSERT_TRUE(base::CreateDirectory(src_path));
   // Supported locale.
   base::FilePath locale_1 = src_path.AppendASCII("sr");
   ASSERT_TRUE(base::CreateDirectory(locale_1));
   std::string data("whatever");
-  ASSERT_TRUE(base::WriteFile(
-      locale_1.Append(kMessagesFilename), data.c_str(), data.length()));
+  ASSERT_EQ(static_cast<int>(data.length()),
+            base::WriteFile(locale_1.Append(kMessagesFilename), data.c_str(),
+                            data.length()));
   // Unsupported locale.
   ASSERT_TRUE(base::CreateDirectory(src_path.AppendASCII("xxx_yyy")));
 
@@ -142,7 +144,7 @@ TEST(ExtensionL10nUtil, LoadMessageCatalogsMissingFiles) {
   base::ScopedTempDir temp;
   ASSERT_TRUE(temp.CreateUniqueTempDir());
 
-  base::FilePath src_path = temp.path().Append(kLocaleFolder);
+  base::FilePath src_path = temp.GetPath().Append(kLocaleFolder);
   ASSERT_TRUE(base::CreateDirectory(src_path));
   ASSERT_TRUE(base::CreateDirectory(src_path.AppendASCII("en")));
   ASSERT_TRUE(base::CreateDirectory(src_path.AppendASCII("sr")));
@@ -157,7 +159,7 @@ TEST(ExtensionL10nUtil, LoadMessageCatalogsBadJSONFormat) {
   base::ScopedTempDir temp;
   ASSERT_TRUE(temp.CreateUniqueTempDir());
 
-  base::FilePath src_path = temp.path().Append(kLocaleFolder);
+  base::FilePath src_path = temp.GetPath().Append(kLocaleFolder);
   ASSERT_TRUE(base::CreateDirectory(src_path));
 
   base::FilePath locale = src_path.AppendASCII("sr");
@@ -165,7 +167,8 @@ TEST(ExtensionL10nUtil, LoadMessageCatalogsBadJSONFormat) {
 
   std::string data = "{ \"name\":";
   base::FilePath messages_file = locale.Append(kMessagesFilename);
-  ASSERT_TRUE(base::WriteFile(messages_file, data.c_str(), data.length()));
+  ASSERT_EQ(static_cast<int>(data.length()),
+            base::WriteFile(messages_file, data.c_str(), data.length()));
 
   std::string error;
   EXPECT_TRUE(NULL == extension_l10n_util::LoadMessageCatalogs(
@@ -181,7 +184,7 @@ TEST(ExtensionL10nUtil, LoadMessageCatalogsDuplicateKeys) {
   base::ScopedTempDir temp;
   ASSERT_TRUE(temp.CreateUniqueTempDir());
 
-  base::FilePath src_path = temp.path().Append(kLocaleFolder);
+  base::FilePath src_path = temp.GetPath().Append(kLocaleFolder);
   ASSERT_TRUE(base::CreateDirectory(src_path));
 
   base::FilePath locale_1 = src_path.AppendASCII("en");
@@ -190,14 +193,16 @@ TEST(ExtensionL10nUtil, LoadMessageCatalogsDuplicateKeys) {
   std::string data =
       "{ \"name\": { \"message\": \"something\" }, "
       "\"name\": { \"message\": \"something else\" } }";
-  ASSERT_TRUE(base::WriteFile(
-      locale_1.Append(kMessagesFilename), data.c_str(), data.length()));
+  ASSERT_EQ(static_cast<int>(data.length()),
+            base::WriteFile(locale_1.Append(kMessagesFilename), data.c_str(),
+                            data.length()));
 
   base::FilePath locale_2 = src_path.AppendASCII("sr");
   ASSERT_TRUE(base::CreateDirectory(locale_2));
 
-  ASSERT_TRUE(base::WriteFile(
-      locale_2.Append(kMessagesFilename), data.c_str(), data.length()));
+  ASSERT_EQ(static_cast<int>(data.length()),
+            base::WriteFile(locale_2.Append(kMessagesFilename), data.c_str(),
+                            data.length()));
 
   std::string error;
   // JSON parser hides duplicates. We are going to get only one key/value
@@ -210,7 +215,7 @@ TEST(ExtensionL10nUtil, LoadMessageCatalogsDuplicateKeys) {
 
 // Caller owns the returned object.
 MessageBundle* CreateManifestBundle() {
-  linked_ptr<base::DictionaryValue> catalog(new base::DictionaryValue);
+  std::unique_ptr<base::DictionaryValue> catalog(new base::DictionaryValue);
 
   base::DictionaryValue* name_tree = new base::DictionaryValue();
   name_tree->SetString("message", "name");
@@ -258,8 +263,8 @@ MessageBundle* CreateManifestBundle() {
   url_country_tree->SetString("message", "de");
   catalog->Set("country", url_country_tree);
 
-  std::vector<linked_ptr<base::DictionaryValue> > catalogs;
-  catalogs.push_back(catalog);
+  std::vector<std::unique_ptr<base::DictionaryValue>> catalogs;
+  catalogs.push_back(std::move(catalog));
 
   std::string error;
   MessageBundle* bundle = MessageBundle::Create(catalogs, &error);
@@ -428,8 +433,9 @@ TEST(ExtensionL10nUtil, LocalizeManifestWithNameDescriptionFileHandlerTitle) {
   manifest.SetString(keys::kDescription, "__MSG_description__");
   base::ListValue* handlers = new base::ListValue();
   manifest.Set(keys::kFileBrowserHandlers, handlers);
-  base::DictionaryValue* handler = new base::DictionaryValue();
-  handlers->Append(handler);
+  handlers->Append(base::MakeUnique<base::DictionaryValue>());
+  base::DictionaryValue* handler = nullptr;
+  handlers->GetDictionary(0, &handler);
   handler->SetString(keys::kPageActionDefaultTitle,
                      "__MSG_file_handler_title__");
 

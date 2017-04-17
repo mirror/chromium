@@ -28,27 +28,23 @@
 namespace blink {
 
 class PLATFORM_EXPORT PointLightSource final : public LightSource {
-public:
-    static PassRefPtr<PointLightSource> create(const FloatPoint3D& position)
-    {
-        return adoptRef(new PointLightSource(position));
-    }
+ public:
+  static PassRefPtr<PointLightSource> Create(const FloatPoint3D& position) {
+    return AdoptRef(new PointLightSource(position));
+  }
 
-    const FloatPoint3D& position() const { return m_position; }
-    bool setPosition(const FloatPoint3D&) override;
+  const FloatPoint3D& GetPosition() const { return position_; }
+  bool SetPosition(const FloatPoint3D&) override;
 
-    TextStream& externalRepresentation(TextStream&) const override;
+  TextStream& ExternalRepresentation(TextStream&) const override;
 
-private:
-    PointLightSource(const FloatPoint3D& position)
-        : LightSource(LS_POINT)
-        , m_position(position)
-    {
-    }
+ private:
+  PointLightSource(const FloatPoint3D& position)
+      : LightSource(LS_POINT), position_(position) {}
 
-    FloatPoint3D m_position;
+  FloatPoint3D position_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PointLightSource_h
+#endif  // PointLightSource_h

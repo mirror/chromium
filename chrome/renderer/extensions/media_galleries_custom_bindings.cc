@@ -12,6 +12,8 @@
 #include "third_party/WebKit/public/web/WebDOMFileSystem.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "url/gurl.h"
+#include "url/origin.h"
 #include "v8/include/v8.h"
 
 namespace extensions {
@@ -36,9 +38,9 @@ void MediaGalleriesCustomBindings::GetMediaFileSystemObject(
   CHECK(!fs_mount.empty());
 
   blink::WebLocalFrame* webframe =
-      blink::WebLocalFrame::frameForCurrentContext();
-  const GURL origin = blink::WebStringToGURL(
-      webframe->document().getSecurityOrigin().toString());
+      blink::WebLocalFrame::FrameForCurrentContext();
+  const GURL origin =
+      url::Origin(webframe->GetDocument().GetSecurityOrigin()).GetURL();
   std::string fs_name =
       storage::GetFileSystemName(origin, storage::kFileSystemTypeExternal);
   fs_name.append("_");
@@ -46,11 +48,10 @@ void MediaGalleriesCustomBindings::GetMediaFileSystemObject(
   const GURL root_url(
       storage::GetExternalFileSystemRootURIString(origin, fs_mount));
   args.GetReturnValue().Set(
-      blink::WebDOMFileSystem::create(webframe,
-                                      blink::WebFileSystemTypeExternal,
-                                      blink::WebString::fromUTF8(fs_name),
-                                      root_url)
-          .toV8Value(context()->v8_context()->Global(), args.GetIsolate()));
+      blink::WebDOMFileSystem::Create(
+          webframe, blink::kWebFileSystemTypeExternal,
+          blink::WebString::FromUTF8(fs_name), root_url)
+          .ToV8Value(context()->v8_context()->Global(), args.GetIsolate()));
 }
 
 }  // namespace extensions

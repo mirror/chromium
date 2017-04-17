@@ -32,6 +32,7 @@
 #define MIDIOutput_h
 
 #include "core/dom/DOMTypedArray.h"
+#include "core/dom/NotShared.h"
 #include "modules/webmidi/MIDIPort.h"
 
 namespace blink {
@@ -40,26 +41,39 @@ class ExceptionState;
 class MIDIAccess;
 
 class MIDIOutput final : public MIDIPort {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static MIDIOutput* create(MIDIAccess*, unsigned portIndex, const String& id, const String& manufacturer, const String& name, const String& version, MIDIAccessor::MIDIPortState);
-    ~MIDIOutput() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    void send(DOMUint8Array*, double timestamp, ExceptionState&);
-    void send(Vector<unsigned>, double timestamp, ExceptionState&);
+ public:
+  static MIDIOutput* Create(MIDIAccess*,
+                            unsigned port_index,
+                            const String& id,
+                            const String& manufacturer,
+                            const String& name,
+                            const String& version,
+                            midi::mojom::PortState);
+  ~MIDIOutput() override;
 
-    // send() without optional |timestamp|.
-    void send(DOMUint8Array*, ExceptionState&);
-    void send(Vector<unsigned>, ExceptionState&);
+  void send(NotShared<DOMUint8Array>, double timestamp, ExceptionState&);
+  void send(Vector<unsigned>, double timestamp, ExceptionState&);
 
-    DECLARE_VIRTUAL_TRACE();
+  // send() without optional |timestamp|.
+  void send(NotShared<DOMUint8Array>, ExceptionState&);
+  void send(Vector<unsigned>, ExceptionState&);
 
-private:
-    MIDIOutput(MIDIAccess*, unsigned portIndex, const String& id, const String& manufacturer, const String& name, const String& version, MIDIAccessor::MIDIPortState);
+  DECLARE_VIRTUAL_TRACE();
 
-    unsigned m_portIndex;
+ private:
+  MIDIOutput(MIDIAccess*,
+             unsigned port_index,
+             const String& id,
+             const String& manufacturer,
+             const String& name,
+             const String& version,
+             midi::mojom::PortState);
+
+  unsigned port_index_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MIDIOutput_h
+#endif  // MIDIOutput_h

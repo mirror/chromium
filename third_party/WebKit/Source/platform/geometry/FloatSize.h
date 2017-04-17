@@ -28,12 +28,12 @@
 #ifndef FloatSize_h
 #define FloatSize_h
 
-#include "platform/geometry/IntPoint.h"
-#include "third_party/skia/include/core/SkSize.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/MathExtras.h"
 #include <iosfwd>
+#include "platform/geometry/IntPoint.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/MathExtras.h"
+#include "third_party/skia/include/core/SkSize.h"
 
 #if OS(MACOSX)
 typedef struct CGSize CGSize;
@@ -49,173 +49,154 @@ class IntSize;
 class LayoutSize;
 
 class PLATFORM_EXPORT FloatSize {
-    DISALLOW_NEW();
-public:
-    FloatSize() : m_width(0), m_height(0) { }
-    FloatSize(float width, float height) : m_width(width), m_height(height) { }
-    explicit FloatSize(const IntSize& size) : m_width(size.width()), m_height(size.height()) { }
-    FloatSize(const SkSize& size) : m_width(size.width()), m_height(size.height()) { }
-    explicit FloatSize(const LayoutSize&);
+  DISALLOW_NEW();
 
-    static FloatSize narrowPrecision(double width, double height);
+ public:
+  FloatSize() : width_(0), height_(0) {}
+  FloatSize(float width, float height) : width_(width), height_(height) {}
+  explicit FloatSize(const IntSize& size)
+      : width_(size.Width()), height_(size.Height()) {}
+  FloatSize(const SkSize& size)
+      : width_(size.width()), height_(size.height()) {}
+  explicit FloatSize(const LayoutSize&);
 
-    float width() const { return m_width; }
-    float height() const { return m_height; }
+  static FloatSize NarrowPrecision(double width, double height);
 
-    void setWidth(float width) { m_width = width; }
-    void setHeight(float height) { m_height = height; }
+  float Width() const { return width_; }
+  float Height() const { return height_; }
 
-    bool isEmpty() const { return m_width <= 0 || m_height <= 0; }
-    bool isZero() const;
-    bool isExpressibleAsIntSize() const;
+  void SetWidth(float width) { width_ = width; }
+  void SetHeight(float height) { height_ = height; }
 
-    float aspectRatio() const { return m_width / m_height; }
+  bool IsEmpty() const { return width_ <= 0 || height_ <= 0; }
+  bool IsZero() const;
+  bool IsExpressibleAsIntSize() const;
 
-    void expand(float width, float height)
-    {
-        m_width += width;
-        m_height += height;
-    }
+  float AspectRatio() const { return width_ / height_; }
 
-    void scale(float s) { scale(s, s); }
+  void Expand(float width, float height) {
+    width_ += width;
+    height_ += height;
+  }
 
-    void scale(float scaleX, float scaleY)
-    {
-        m_width *= scaleX;
-        m_height *= scaleY;
-    }
+  void Scale(float s) { Scale(s, s); }
 
-    void scaleAndFloor(float scale)
-    {
-        m_width = floorf(m_width * scale);
-        m_height = floorf(m_height * scale);
-    }
+  void Scale(float scale_x, float scale_y) {
+    width_ *= scale_x;
+    height_ *= scale_y;
+  }
 
-    FloatSize expandedTo(const FloatSize& other) const
-    {
-        return FloatSize(m_width > other.m_width ? m_width : other.m_width,
-            m_height > other.m_height ? m_height : other.m_height);
-    }
+  void ScaleAndFloor(float scale) {
+    width_ = floorf(width_ * scale);
+    height_ = floorf(height_ * scale);
+  }
 
-    FloatSize shrunkTo(const FloatSize& other) const
-    {
-        return FloatSize(m_width < other.m_width ? m_width : other.m_width,
-            m_height < other.m_height ? m_height : other.m_height);
-    }
+  FloatSize ExpandedTo(const FloatSize& other) const {
+    return FloatSize(width_ > other.width_ ? width_ : other.width_,
+                     height_ > other.height_ ? height_ : other.height_);
+  }
 
-    float diagonalLength() const;
-    float diagonalLengthSquared() const
-    {
-        return m_width * m_width + m_height * m_height;
-    }
+  FloatSize ShrunkTo(const FloatSize& other) const {
+    return FloatSize(width_ < other.width_ ? width_ : other.width_,
+                     height_ < other.height_ ? height_ : other.height_);
+  }
 
-    FloatSize transposedSize() const
-    {
-        return FloatSize(m_height, m_width);
-    }
+  float DiagonalLength() const;
+  float DiagonalLengthSquared() const {
+    return width_ * width_ + height_ * height_;
+  }
 
-    FloatSize scaledBy(float scale) const
-    {
-        return scaledBy(scale, scale);
-    }
+  FloatSize TransposedSize() const { return FloatSize(height_, width_); }
 
-    FloatSize scaledBy(float scaleX, float scaleY) const
-    {
-        return FloatSize(m_width * scaleX, m_height * scaleY);
-    }
+  FloatSize ScaledBy(float scale) const { return ScaledBy(scale, scale); }
+
+  FloatSize ScaledBy(float scale_x, float scale_y) const {
+    return FloatSize(width_ * scale_x, height_ * scale_y);
+  }
 
 #if OS(MACOSX)
-    explicit FloatSize(const CGSize&); // don't do this implicitly since it's lossy
-    operator CGSize() const;
+  explicit FloatSize(
+      const CGSize&);  // don't do this implicitly since it's lossy
+  operator CGSize() const;
 #if defined(__OBJC__) && !defined(NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES)
-    explicit FloatSize(const NSSize &); // don't do this implicitly since it's lossy
-    operator NSSize() const;
+  explicit FloatSize(
+      const NSSize&);  // don't do this implicitly since it's lossy
+  operator NSSize() const;
 #endif
 #endif
 
-    operator SkSize() const { return SkSize::Make(m_width, m_height); }
+  operator SkSize() const { return SkSize::Make(width_, height_); }
 
-#ifndef NDEBUG
-    String toString() const;
-#endif
+  String ToString() const;
 
-private:
-    float m_width, m_height;
+ private:
+  float width_, height_;
 };
 
-inline FloatSize& operator+=(FloatSize& a, const FloatSize& b)
-{
-    a.setWidth(a.width() + b.width());
-    a.setHeight(a.height() + b.height());
-    return a;
+inline FloatSize& operator+=(FloatSize& a, const FloatSize& b) {
+  a.SetWidth(a.Width() + b.Width());
+  a.SetHeight(a.Height() + b.Height());
+  return a;
 }
 
-inline FloatSize& operator-=(FloatSize& a, const FloatSize& b)
-{
-    a.setWidth(a.width() - b.width());
-    a.setHeight(a.height() - b.height());
-    return a;
+inline FloatSize& operator-=(FloatSize& a, const FloatSize& b) {
+  a.SetWidth(a.Width() - b.Width());
+  a.SetHeight(a.Height() - b.Height());
+  return a;
 }
 
-inline FloatSize operator+(const FloatSize& a, const FloatSize& b)
-{
-    return FloatSize(a.width() + b.width(), a.height() + b.height());
+inline FloatSize operator+(const FloatSize& a, const FloatSize& b) {
+  return FloatSize(a.Width() + b.Width(), a.Height() + b.Height());
 }
 
-inline FloatSize operator-(const FloatSize& a, const FloatSize& b)
-{
-    return FloatSize(a.width() - b.width(), a.height() - b.height());
+inline FloatSize operator-(const FloatSize& a, const FloatSize& b) {
+  return FloatSize(a.Width() - b.Width(), a.Height() - b.Height());
 }
 
-inline FloatSize operator-(const FloatSize& size)
-{
-    return FloatSize(-size.width(), -size.height());
+inline FloatSize operator-(const FloatSize& size) {
+  return FloatSize(-size.Width(), -size.Height());
 }
 
-inline FloatSize operator*(const FloatSize& a, const float b)
-{
-    return FloatSize(a.width() * b, a.height() * b);
+inline FloatSize operator*(const FloatSize& a, const float b) {
+  return FloatSize(a.Width() * b, a.Height() * b);
 }
 
-inline FloatSize operator*(const float a, const FloatSize& b)
-{
-    return FloatSize(a * b.width(), a * b.height());
+inline FloatSize operator*(const float a, const FloatSize& b) {
+  return FloatSize(a * b.Width(), a * b.Height());
 }
 
-inline bool operator==(const FloatSize& a, const FloatSize& b)
-{
-    return a.width() == b.width() && a.height() == b.height();
+inline bool operator==(const FloatSize& a, const FloatSize& b) {
+  return a.Width() == b.Width() && a.Height() == b.Height();
 }
 
-inline bool operator!=(const FloatSize& a, const FloatSize& b)
-{
-    return a.width() != b.width() || a.height() != b.height();
+inline bool operator!=(const FloatSize& a, const FloatSize& b) {
+  return a.Width() != b.Width() || a.Height() != b.Height();
 }
 
-inline IntSize roundedIntSize(const FloatSize& p)
-{
-    return IntSize(clampTo<int>(roundf(p.width())), clampTo<int>(roundf(p.height())));
+inline IntSize RoundedIntSize(const FloatSize& p) {
+  return IntSize(clampTo<int>(roundf(p.Width())),
+                 clampTo<int>(roundf(p.Height())));
 }
 
-inline IntSize flooredIntSize(const FloatSize& p)
-{
-    return IntSize(clampTo<int>(floorf(p.width())), clampTo<int>(floorf(p.height())));
+inline IntSize FlooredIntSize(const FloatSize& p) {
+  return IntSize(clampTo<int>(floorf(p.Width())),
+                 clampTo<int>(floorf(p.Height())));
 }
 
-inline IntSize expandedIntSize(const FloatSize& p)
-{
-    return IntSize(clampTo<int>(ceilf(p.width())), clampTo<int>(ceilf(p.height())));
+inline IntSize ExpandedIntSize(const FloatSize& p) {
+  return IntSize(clampTo<int>(ceilf(p.Width())),
+                 clampTo<int>(ceilf(p.Height())));
 }
 
-inline IntPoint flooredIntPoint(const FloatSize& p)
-{
-    return IntPoint(clampTo<int>(floorf(p.width())), clampTo<int>(floorf(p.height())));
+inline IntPoint FlooredIntPoint(const FloatSize& p) {
+  return IntPoint(clampTo<int>(floorf(p.Width())),
+                  clampTo<int>(floorf(p.Height())));
 }
 
 // Redeclared here to avoid ODR issues.
 // See platform/testing/GeometryPrinters.h.
 void PrintTo(const FloatSize&, std::ostream*);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FloatSize_h
+#endif  // FloatSize_h

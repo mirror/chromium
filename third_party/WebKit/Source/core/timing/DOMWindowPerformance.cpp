@@ -11,47 +11,38 @@
 namespace blink {
 
 DOMWindowPerformance::DOMWindowPerformance(LocalDOMWindow& window)
-    : DOMWindowProperty(window.frame())
-    , m_window(&window)
-{
-}
+    : Supplement<LocalDOMWindow>(window) {}
 
-DEFINE_TRACE(DOMWindowPerformance)
-{
-    visitor->trace(m_window);
-    visitor->trace(m_performance);
-    Supplement<LocalDOMWindow>::trace(visitor);
-    DOMWindowProperty::trace(visitor);
+DEFINE_TRACE(DOMWindowPerformance) {
+  visitor->Trace(performance_);
+  Supplement<LocalDOMWindow>::Trace(visitor);
 }
 
 // static
-const char* DOMWindowPerformance::supplementName()
-{
-    return "DOMWindowPerformance";
+const char* DOMWindowPerformance::SupplementName() {
+  return "DOMWindowPerformance";
 }
 
 // static
-DOMWindowPerformance& DOMWindowPerformance::from(LocalDOMWindow& window)
-{
-    DOMWindowPerformance* supplement = static_cast<DOMWindowPerformance*>(Supplement<LocalDOMWindow>::from(window, supplementName()));
-    if (!supplement) {
-        supplement = new DOMWindowPerformance(window);
-        provideTo(window, supplementName(), supplement);
-    }
-    return *supplement;
+DOMWindowPerformance& DOMWindowPerformance::From(LocalDOMWindow& window) {
+  DOMWindowPerformance* supplement = static_cast<DOMWindowPerformance*>(
+      Supplement<LocalDOMWindow>::From(window, SupplementName()));
+  if (!supplement) {
+    supplement = new DOMWindowPerformance(window);
+    ProvideTo(window, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
 // static
-Performance* DOMWindowPerformance::performance(DOMWindow& window)
-{
-    return from(toLocalDOMWindow(window)).performance();
+Performance* DOMWindowPerformance::performance(LocalDOMWindow& window) {
+  return From(window).performance();
 }
 
-Performance* DOMWindowPerformance::performance()
-{
-    if (!m_performance)
-        m_performance = Performance::create(m_window->frame());
-    return m_performance.get();
+Performance* DOMWindowPerformance::performance() {
+  if (!performance_)
+    performance_ = Performance::Create(GetSupplementable()->GetFrame());
+  return performance_.Get();
 }
 
-} // namespace blink
+}  // namespace blink

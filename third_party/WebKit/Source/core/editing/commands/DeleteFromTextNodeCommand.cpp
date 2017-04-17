@@ -26,54 +26,50 @@
 #include "core/editing/commands/DeleteFromTextNodeCommand.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
 #include "core/dom/Text.h"
 #include "core/editing/EditingUtilities.h"
 
 namespace blink {
 
-DeleteFromTextNodeCommand::DeleteFromTextNodeCommand(Text* node, unsigned offset, unsigned count)
-    : SimpleEditCommand(node->document())
-    , m_node(node)
-    , m_offset(offset)
-    , m_count(count)
-{
-    DCHECK(m_node);
-    DCHECK_LE(m_offset, m_node->length());
-    DCHECK_LE(m_offset + m_count, m_node->length());
+DeleteFromTextNodeCommand::DeleteFromTextNodeCommand(Text* node,
+                                                     unsigned offset,
+                                                     unsigned count)
+    : SimpleEditCommand(node->GetDocument()),
+      node_(node),
+      offset_(offset),
+      count_(count) {
+  DCHECK(node_);
+  DCHECK_LE(offset_, node_->length());
+  DCHECK_LE(offset_ + count_, node_->length());
 }
 
-void DeleteFromTextNodeCommand::doApply(EditingState*)
-{
-    DCHECK(m_node);
+void DeleteFromTextNodeCommand::DoApply(EditingState*) {
+  DCHECK(node_);
 
-    if (!isContentEditable(*m_node))
-        return;
+  GetDocument().UpdateStyleAndLayoutTree();
+  if (!HasEditableStyle(*node_))
+    return;
 
-    TrackExceptionState exceptionState;
-    m_text = m_node->substringData(m_offset, m_count, exceptionState);
-    if (exceptionState.hadException())
-        return;
+  DummyExceptionStateForTesting exception_state;
+  text_ = node_->substringData(offset_, count_, exception_state);
+  if (exception_state.HadException())
+    return;
 
-    m_node->deleteData(m_offset, m_count, exceptionState);
-    m_node->document().updateStyleAndLayout();
+  node_->deleteData(offset_, count_, exception_state);
 }
 
-void DeleteFromTextNodeCommand::doUnapply()
-{
-    DCHECK(m_node);
+void DeleteFromTextNodeCommand::DoUnapply() {
+  DCHECK(node_);
 
-    if (!hasEditableStyle(*m_node))
-        return;
+  if (!HasEditableStyle(*node_))
+    return;
 
-    m_node->insertData(m_offset, m_text, IGNORE_EXCEPTION);
-    m_node->document().updateStyleAndLayout();
+  node_->insertData(offset_, text_, IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-DEFINE_TRACE(DeleteFromTextNodeCommand)
-{
-    visitor->trace(m_node);
-    SimpleEditCommand::trace(visitor);
+DEFINE_TRACE(DeleteFromTextNodeCommand) {
+  visitor->Trace(node_);
+  SimpleEditCommand::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

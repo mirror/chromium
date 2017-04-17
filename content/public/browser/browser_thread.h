@@ -6,11 +6,13 @@
 #define CONTENT_PUBLIC_BROWSER_BROWSER_THREAD_H_
 
 #include <string>
+#include <utility>
 
 #include "base/callback.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_runner_util.h"
 #include "base/time/time.h"
@@ -69,10 +71,23 @@ class CONTENT_EXPORT BrowserThread {
     DB,
 
     // This is the thread that interacts with the file system.
+    // DEPRECATED: prefer base/task_scheduler/post_task.h for new classes
+    // requiring a background file I/O task runner, i.e.:
+    //   base::CreateSequencedTaskRunnerWithTraits(
+    //       base::TaskTraits().MayBlock()
+    //           .WithPriority(base::TaskPriority::BACKGROUND))
+    //   Note: You can use base::TaskPriority::USER_VISIBLE instead of
+    //         base::TaskPriority::BACKGROUND if the latency of this operation
+    //         is visible but non-blocking to the user.
     FILE,
 
     // Used for file system operations that block user interactions.
     // Responsiveness of this thread affect users.
+    // DEPRECATED: prefer base/task_scheduler/post_task.h for new classes
+    // requiring a user-blocking file I/O task runner, i.e.:
+    //   base::CreateSequencedTaskRunnerWithTraits(
+    //       base::TaskTraits().MayBlock()
+    //           .WithPriority(base::TaskPriority::USER_BLOCKING))
     FILE_USER_BLOCKING,
 
     // Used to launch and terminate Chrome processes.
@@ -104,36 +119,35 @@ class CONTENT_EXPORT BrowserThread {
   // the target thread may already have a Quit message in its queue.
   static bool PostTask(ID identifier,
                        const tracked_objects::Location& from_here,
-                       const base::Closure& task);
+                       base::OnceClosure task);
   static bool PostDelayedTask(ID identifier,
                               const tracked_objects::Location& from_here,
-                              const base::Closure& task,
+                              base::OnceClosure task,
                               base::TimeDelta delay);
   static bool PostNonNestableTask(ID identifier,
                                   const tracked_objects::Location& from_here,
-                                  const base::Closure& task);
+                                  base::OnceClosure task);
   static bool PostNonNestableDelayedTask(
       ID identifier,
       const tracked_objects::Location& from_here,
-      const base::Closure& task,
+      base::OnceClosure task,
       base::TimeDelta delay);
 
-  static bool PostTaskAndReply(
-      ID identifier,
-      const tracked_objects::Location& from_here,
-      const base::Closure& task,
-      const base::Closure& reply);
+  static bool PostTaskAndReply(ID identifier,
+                               const tracked_objects::Location& from_here,
+                               base::OnceClosure task,
+                               base::OnceClosure reply);
 
   template <typename ReturnType, typename ReplyArgType>
   static bool PostTaskAndReplyWithResult(
       ID identifier,
       const tracked_objects::Location& from_here,
-      const base::Callback<ReturnType(void)>& task,
-      const base::Callback<void(ReplyArgType)>& reply) {
+      base::Callback<ReturnType()> task,
+      base::Callback<void(ReplyArgType)> reply) {
     scoped_refptr<base::SingleThreadTaskRunner> task_runner =
         GetTaskRunnerForThread(identifier);
-    return base::PostTaskAndReplyWithResult(task_runner.get(), from_here, task,
-                                            reply);
+    return base::PostTaskAndReplyWithResult(task_runner.get(), from_here,
+                                            std::move(task), std::move(reply));
   }
 
   template <class T>
@@ -152,6 +166,16 @@ class CONTENT_EXPORT BrowserThread {
 
   // Simplified wrappers for posting to the blocking thread pool. Use this
   // for doing things like blocking I/O.
+  //
+  // DEPRECATED: use base/task_scheduler/post_task.h instead.
+  //   * BrowserThread::PostBlockingPoolTask(AndReply)(...) =>
+  //         base::PostTaskWithTraits(AndReply)(
+  //             FROM_HERE, base::TaskTraits().MayBlock()...)
+  //   * BrowserThread::PostBlockingPoolSequencedTask =>
+  //         Share a single SequencedTaskRunner created via
+  //         base::CreateSequencedTaskRunnerWithTraits() instead of sharing a
+  //         SequenceToken (ping base/task_scheduler/OWNERS if you find a use
+  //         case where that's not possible).
   //
   // The first variant will run the task in the pool with no sequencing
   // semantics, so may get run in parallel with other posted tasks. The second
@@ -172,15 +196,15 @@ class CONTENT_EXPORT BrowserThread {
   // base::PostTaskAndReplyWithResult() with GetBlockingPool() as the task
   // runner.
   static bool PostBlockingPoolTask(const tracked_objects::Location& from_here,
-                                   const base::Closure& task);
+                                   base::OnceClosure task);
   static bool PostBlockingPoolTaskAndReply(
       const tracked_objects::Location& from_here,
-      const base::Closure& task,
-      const base::Closure& reply);
+      base::OnceClosure task,
+      base::OnceClosure reply);
   static bool PostBlockingPoolSequencedTask(
       const std::string& sequence_token_name,
       const tracked_objects::Location& from_here,
-      const base::Closure& task);
+      base::OnceClosure task);
 
   // For use with scheduling non-critical tasks for execution after startup.
   // The order or execution of tasks posted here is unspecified even when
@@ -192,11 +216,18 @@ class CONTENT_EXPORT BrowserThread {
   static void PostAfterStartupTask(
       const tracked_objects::Location& from_here,
       const scoped_refptr<base::TaskRunner>& task_runner,
-      const base::Closure& task);
+      base::OnceClosure task);
 
   // Returns the thread pool used for blocking file I/O. Use this object to
-  // perform random blocking operations such as file writes or querying the
-  // Windows registry.
+  // perform random blocking operations such as file writes.
+  //
+  // DEPRECATED: use an independent TaskRunner obtained from
+  // base/task_scheduler/post_task.h instead, e.g.:
+  //   BrowserThread::GetBlockingPool()->GetSequencedTaskRunner(
+  //       base::SequencedWorkerPool::GetSequenceToken())
+  //  =>
+  //   base::CreateSequencedTaskRunnerWithTraits(
+  //       base::TaskTraits().MayBlock()...).
   static base::SequencedWorkerPool* GetBlockingPool() WARN_UNUSED_RESULT;
 
   // Callable on any thread.  Returns whether the given well-known thread is
@@ -221,25 +252,19 @@ class CONTENT_EXPORT BrowserThread {
   static scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunnerForThread(
       ID identifier);
 
-  // Returns a pointer to the thread's message loop, which will become
-  // invalid during shutdown, so you probably shouldn't hold onto it.
+  // Sets the delegate for BrowserThread::IO.
   //
-  // This must not be called before the thread is started, or after
-  // the thread is stopped, or it will DCHECK.
+  // This only supports the IO thread as it doesn't work for potentially
+  // redirected threads (ref. http://crbug.com/653916) and also doesn't make
+  // sense for the UI thread.
   //
-  // Ownership remains with the BrowserThread implementation, so you
-  // must not delete the pointer.
-  static base::MessageLoop* UnsafeGetMessageLoopForThread(ID identifier);
-
-  // Sets the delegate for the specified BrowserThread.
-  //
-  // Only one delegate may be registered at a time.  Delegates may be
+  // Only one delegate may be registered at a time. The delegate may be
   // unregistered by providing a nullptr pointer.
   //
-  // If the caller unregisters a delegate before CleanUp has been
-  // called, it must perform its own locking to ensure the delegate is
-  // not deleted while unregistering.
-  static void SetDelegate(ID identifier, BrowserThreadDelegate* delegate);
+  // If the caller unregisters the delegate before CleanUp has been called, it
+  // must perform its own locking to ensure the delegate is not deleted while
+  // unregistering.
+  static void SetIOThreadDelegate(BrowserThreadDelegate* delegate);
 
   // Use these templates in conjunction with RefCountedThreadSafe or scoped_ptr
   // when you want to ensure that an object is deleted on a specific thread.

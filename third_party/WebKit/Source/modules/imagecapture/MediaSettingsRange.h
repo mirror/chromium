@@ -6,36 +6,40 @@
 #define MediaSettingsRange_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
+#include "media/capture/mojo/image_capture.mojom-blink.h"
 
 namespace blink {
 
-class MediaSettingsRange final
-    : public GarbageCollected<MediaSettingsRange>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static MediaSettingsRange* create(unsigned long max, unsigned long min, unsigned long current)
-    {
-        return new MediaSettingsRange(max, min, current);
-    }
+class MediaSettingsRange final : public GarbageCollected<MediaSettingsRange>,
+                                 public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    unsigned long max() const { return m_max; }
-    unsigned long min() const { return m_min; }
-    unsigned long current() const { return m_current; }
+ public:
+  static MediaSettingsRange* Create(double max, double min, double step) {
+    return new MediaSettingsRange(max, min, step);
+  }
+  static MediaSettingsRange* Create(media::mojom::blink::RangePtr range) {
+    return MediaSettingsRange::Create(*range);
+  }
+  static MediaSettingsRange* Create(const media::mojom::blink::Range& range) {
+    return MediaSettingsRange::Create(range.max, range.min, range.step);
+  }
 
-    DEFINE_INLINE_TRACE() {}
+  double max() const { return max_; }
+  double min() const { return min_; }
+  double step() const { return step_; }
 
-private:
-    MediaSettingsRange(unsigned long max, unsigned long min, unsigned long current)
-        : m_max(max)
-        , m_min(min)
-        , m_current(current) { }
+  DEFINE_INLINE_TRACE() {}
 
-    unsigned long m_max;
-    unsigned long m_min;
-    unsigned long m_current;
+ private:
+  MediaSettingsRange(double max, double min, double step)
+      : max_(max), min_(min), step_(step) {}
+
+  double max_;
+  double min_;
+  double step_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaSettingsRange_h
+#endif  // MediaSettingsRange_h

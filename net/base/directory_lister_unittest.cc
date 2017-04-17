@@ -11,9 +11,10 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/i18n/file_util_icu.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "net/base/directory_lister.h"
 #include "net/base/net_errors.h"
 #include "net/test/gtest_util.h"
@@ -102,7 +103,7 @@ class ListerDelegate : public DirectoryLister::DirectoryListerDelegate {
 
   void Run(DirectoryLister* lister) {
     lister_ = lister;
-    lister_->Start(base::ThreadTaskRunnerHandle::Get().get());
+    lister_->Start();
     run_loop.Run();
   }
 
@@ -134,16 +135,16 @@ class ListerDelegate : public DirectoryLister::DirectoryListerDelegate {
 class DirectoryListerTest : public PlatformTest {
  public:
   DirectoryListerTest()
-      : total_created_file_system_objects_in_temp_root_dir_(0),
-        created_file_system_objects_in_temp_root_dir_(0) {
-  }
+      : scoped_task_scheduler_(base::MessageLoop::current()),
+        total_created_file_system_objects_in_temp_root_dir_(0),
+        created_file_system_objects_in_temp_root_dir_(0) {}
 
   void SetUp() override {
     // Randomly create a directory structure of depth 3 in a temporary root
     // directory.
     std::list<std::pair<base::FilePath, int> > directories;
     ASSERT_TRUE(temp_root_dir_.CreateUniqueTempDir());
-    directories.push_back(std::make_pair(temp_root_dir_.path(), 0));
+    directories.push_back(std::make_pair(temp_root_dir_.GetPath(), 0));
     while (!directories.empty()) {
       std::pair<base::FilePath, int> dir_data = directories.front();
       directories.pop_front();
@@ -154,7 +155,7 @@ class DirectoryListerTest : public PlatformTest {
                         base::File::FLAG_CREATE | base::File::FLAG_WRITE);
         ASSERT_TRUE(file.IsValid());
         ++total_created_file_system_objects_in_temp_root_dir_;
-        if (dir_data.first == temp_root_dir_.path())
+        if (dir_data.first == temp_root_dir_.GetPath())
           ++created_file_system_objects_in_temp_root_dir_;
       }
       if (dir_data.second < kMaxDepth - 1) {
@@ -163,7 +164,7 @@ class DirectoryListerTest : public PlatformTest {
           base::FilePath dir_path = dir_data.first.AppendASCII(dir_name);
           ASSERT_TRUE(base::CreateDirectory(dir_path));
           ++total_created_file_system_objects_in_temp_root_dir_;
-          if (dir_data.first == temp_root_dir_.path())
+          if (dir_data.first == temp_root_dir_.GetPath())
             ++created_file_system_objects_in_temp_root_dir_;
           directories.push_back(std::make_pair(dir_path, dir_data.second + 1));
         }
@@ -172,9 +173,7 @@ class DirectoryListerTest : public PlatformTest {
     PlatformTest::SetUp();
   }
 
-  const base::FilePath& root_path() const {
-    return temp_root_dir_.path();
-  }
+  const base::FilePath& root_path() const { return temp_root_dir_.GetPath(); }
 
   int expected_list_length_recursive() const {
     // List should include everything but the top level directory, and does not
@@ -188,6 +187,8 @@ class DirectoryListerTest : public PlatformTest {
   }
 
  private:
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
+
   // Number of files and directories created in SetUp, excluding
   // |temp_root_dir_| itself.  Includes all nested directories and their files.
   int total_created_file_system_objects_in_temp_root_dir_;
@@ -223,7 +224,7 @@ TEST_F(DirectoryListerTest, EmptyDirTest) {
   EXPECT_TRUE(tempDir.CreateUniqueTempDir());
 
   ListerDelegate delegate(DirectoryLister::ALPHA_DIRS_FIRST);
-  DirectoryLister lister(tempDir.path(), &delegate);
+  DirectoryLister lister(tempDir.GetPath(), &delegate);
   delegate.Run(&lister);
 
   EXPECT_TRUE(delegate.done());
@@ -241,7 +242,7 @@ TEST_F(DirectoryListerTest, BasicCancelTest) {
   ListerDelegate delegate(DirectoryLister::ALPHA_DIRS_FIRST);
   std::unique_ptr<DirectoryLister> lister(
       new DirectoryLister(root_path(), &delegate));
-  lister->Start(base::ThreadTaskRunnerHandle::Get().get());
+  lister->Start();
   lister->Cancel();
   base::RunLoop().RunUntilIdle();
 
@@ -275,7 +276,7 @@ TEST_F(DirectoryListerTest, CancelOnLastElementTest) {
   EXPECT_TRUE(tempDir.CreateUniqueTempDir());
 
   ListerDelegate delegate(DirectoryLister::ALPHA_DIRS_FIRST);
-  DirectoryLister lister(tempDir.path(), &delegate);
+  DirectoryLister lister(tempDir.GetPath(), &delegate);
   delegate.set_cancel_lister_on_list_file(true);
   delegate.Run(&lister);
 
@@ -290,7 +291,7 @@ TEST_F(DirectoryListerTest, NoSuchDirTest) {
 
   ListerDelegate delegate(DirectoryLister::ALPHA_DIRS_FIRST);
   DirectoryLister lister(
-      tempDir.path().AppendASCII("this_path_does_not_exist"), &delegate);
+      tempDir.GetPath().AppendASCII("this_path_does_not_exist"), &delegate);
   delegate.Run(&lister);
 
   EXPECT_THAT(delegate.error(), IsError(ERR_FILE_NOT_FOUND));

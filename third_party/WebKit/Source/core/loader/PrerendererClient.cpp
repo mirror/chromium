@@ -36,21 +36,22 @@
 namespace blink {
 
 // static
-const char* PrerendererClient::supplementName()
-{
-    return "PrerendererClient";
+const char* PrerendererClient::SupplementName() {
+  return "PrerendererClient";
 }
 
 // static
-PrerendererClient* PrerendererClient::from(Page* page)
-{
-    PrerendererClient* supplement = static_cast<PrerendererClient*>(Supplement<Page>::from(page, supplementName()));
-    return supplement;
+PrerendererClient* PrerendererClient::From(Page* page) {
+  PrerendererClient* supplement = static_cast<PrerendererClient*>(
+      Supplement<Page>::From(page, SupplementName()));
+  return supplement;
 }
 
-void providePrerendererClientTo(Page& page, PrerendererClient* client)
-{
-    PrerendererClient::provideTo(page, PrerendererClient::supplementName(), client);
+PrerendererClient::PrerendererClient(Page& page) : Supplement<Page>(page) {}
+
+void ProvidePrerendererClientTo(Page& page, PrerendererClient* client) {
+  PrerendererClient::ProvideTo(page, PrerendererClient::SupplementName(),
+                               client);
 }
 
-} // namespace blink
+}  // namespace blink

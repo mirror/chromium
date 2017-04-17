@@ -7,25 +7,27 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include <v8.h>
+#include "platform/wtf/Allocator.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 // This class provides toV8Impl() virtual function which will be overridden
 // by auto-generated IDL dictionary impl classes. toV8Impl() is used
-// in ToV8.h to provide a consistent API of toV8().
+// in ToV8.h to provide a consistent API of ToV8().
 class CORE_EXPORT IDLDictionaryBase {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    IDLDictionaryBase() { }
-    virtual ~IDLDictionaryBase() { }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    virtual v8::Local<v8::Value> toV8Impl(v8::Local<v8::Object> creationContext, v8::Isolate*) const;
+ public:
+  IDLDictionaryBase() {}
+  virtual ~IDLDictionaryBase() {}
 
-    DECLARE_VIRTUAL_TRACE();
+  virtual v8::Local<v8::Value> ToV8Impl(v8::Local<v8::Object> creation_context,
+                                        v8::Isolate*) const;
+
+  DECLARE_VIRTUAL_TRACE();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IDLDictionaryBase_h
+#endif  // IDLDictionaryBase_h

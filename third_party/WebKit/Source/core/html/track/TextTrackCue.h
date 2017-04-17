@@ -41,87 +41,84 @@ namespace blink {
 class TextTrack;
 
 class TextTrackCue : public EventTargetWithInlineData {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static const AtomicString& cueShadowPseudoId()
-    {
-        DEFINE_STATIC_LOCAL(const AtomicString, cue, ("cue"));
-        return cue;
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~TextTrackCue() override { }
+ public:
+  static const AtomicString& CueShadowPseudoId() {
+    DEFINE_STATIC_LOCAL(const AtomicString, cue, ("cue"));
+    return cue;
+  }
 
-    TextTrack* track() const;
-    void setTrack(TextTrack*);
+  ~TextTrackCue() override {}
 
-    Node* owner() const;
+  TextTrack* track() const;
+  void SetTrack(TextTrack*);
 
-    const AtomicString& id() const { return m_id; }
-    void setId(const AtomicString&);
+  Node* Owner() const;
 
-    double startTime() const { return m_startTime; }
-    void setStartTime(double);
+  const AtomicString& id() const { return id_; }
+  void setId(const AtomicString&);
 
-    double endTime() const { return m_endTime; }
-    void setEndTime(double);
+  double startTime() const { return start_time_; }
+  void setStartTime(double);
 
-    bool pauseOnExit() const { return m_pauseOnExit; }
-    void setPauseOnExit(bool);
+  double endTime() const { return end_time_; }
+  void setEndTime(double);
 
-    unsigned cueIndex();
-    void updateCueIndex(unsigned cueIndex) { m_cueIndex = cueIndex; }
-    void invalidateCueIndex();
+  bool pauseOnExit() const { return pause_on_exit_; }
+  void setPauseOnExit(bool);
 
-    bool isActive() const { return m_isActive; }
-    void setIsActive(bool active) { m_isActive = active; }
+  unsigned CueIndex();
+  void UpdateCueIndex(unsigned cue_index) { cue_index_ = cue_index; }
+  void InvalidateCueIndex();
 
-    // Updates the display tree and appends it to container if it has not
-    // already been added.
-    virtual void updateDisplay(HTMLDivElement& container) = 0;
+  bool IsActive() const { return is_active_; }
+  void SetIsActive(bool active) { is_active_ = active; }
 
-    // Marks the nodes of the display tree as past or future relative to
-    // movieTime. If updateDisplay() has not been called there is no display
-    // tree and nothing is done.
-    virtual void updatePastAndFutureNodes(double movieTime) = 0;
+  // Updates the display tree and appends it to container if it has not
+  // already been added.
+  virtual void UpdateDisplay(HTMLDivElement& container) = 0;
 
-    // FIXME: Refactor to eliminate removeDisplayTree(). https://crbug.com/322434
-    enum RemovalNotification {
-        DontNotifyRegion,
-        NotifyRegion
-    };
-    virtual void removeDisplayTree(RemovalNotification = NotifyRegion) = 0;
+  // Marks the nodes of the display tree as past or future relative to
+  // movieTime. If updateDisplay() has not been called there is no display
+  // tree and nothing is done.
+  virtual void UpdatePastAndFutureNodes(double movie_time) = 0;
 
-    const AtomicString& interfaceName() const override;
+  // FIXME: Refactor to eliminate removeDisplayTree(). https://crbug.com/322434
+  enum RemovalNotification { kDontNotifyRegion, kNotifyRegion };
+  virtual void RemoveDisplayTree(RemovalNotification = kNotifyRegion) = 0;
+
+  const AtomicString& InterfaceName() const override;
 
 #ifndef NDEBUG
-    virtual String toString() const = 0;
+  virtual String ToString() const = 0;
 #endif
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(enter);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(exit);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(enter);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(exit);
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    TextTrackCue(double start, double end);
+ protected:
+  TextTrackCue(double start, double end);
 
-    void cueWillChange();
-    virtual void cueDidChange();
-    DispatchEventResult dispatchEventInternal(Event*) override;
+  void CueWillChange();
+  virtual void CueDidChange();
+  DispatchEventResult DispatchEventInternal(Event*) override;
 
-private:
-    AtomicString m_id;
-    double m_startTime;
-    double m_endTime;
+ private:
+  AtomicString id_;
+  double start_time_;
+  double end_time_;
 
-    Member<TextTrack> m_track;
+  Member<TextTrack> track_;
 
-    unsigned m_cueIndex;
+  unsigned cue_index_;
 
-    bool m_isActive : 1;
-    bool m_pauseOnExit : 1;
+  bool is_active_ : 1;
+  bool pause_on_exit_ : 1;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextTrackCue_h
+#endif  // TextTrackCue_h

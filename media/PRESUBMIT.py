@@ -144,7 +144,7 @@ def _CheckForHistogramOffByOne(input_api, output_api):
       ' - The max value (3rd argument) should be an enum value equal to the\n'
       '   last valid value, e.g. FOO_MAX = LAST_VALID_FOO.\n'
       ' - 1 must be added to that max value.\n'
-      'Contact rileya@chromium.org if you have questions.' , problems)]
+      'Contact dalecurtis@chromium.org if you have questions.' , problems)]
 
   return []
 
@@ -167,12 +167,30 @@ def _CheckPassByValue(input_api, output_api):
   return []
 
 
+def _CheckForUseOfLazyInstance(input_api, output_api):
+  """Check that base::LazyInstance is not used."""
+
+  problems = []
+
+  lazy_instance_re = re.compile(r'(^|\W)base::LazyInstance<')
+
+  for f in input_api.AffectedSourceFiles(_FilterFile):
+    for line_number, line in f.ChangedContents():
+      if lazy_instance_re.search(line):
+        problems.append('%s:%d' % (f, line_number))
+
+  if problems:
+    return [output_api.PresubmitError(
+      'base::LazyInstance is deprecated; use a thread safe static.', problems)]
+  return []
+
+
 def _CheckChange(input_api, output_api):
   results = []
   results.extend(_CheckForUseOfWrongClock(input_api, output_api))
   results.extend(_CheckPassByValue(input_api, output_api))
   results.extend(_CheckForHistogramOffByOne(input_api, output_api))
-  results += input_api.canned_checks.CheckPatchFormatted(input_api, output_api)
+  results.extend(_CheckForUseOfLazyInstance(input_api, output_api))
   return results
 
 

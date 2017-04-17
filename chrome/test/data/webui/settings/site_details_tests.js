@@ -49,14 +49,6 @@ cr.define('site_details', function() {
               source: 'preference',
             },
           ],
-          fullscreen: [
-            {
-              embeddingOrigin: 'https://foo-allow.com:443',
-              origin: 'https://foo-allow.com:443',
-              setting: 'allow',
-              source: 'preference',
-            },
-          ],
           geolocation: [
             {
               embeddingOrigin: 'https://foo-allow.com:443',
@@ -66,14 +58,6 @@ cr.define('site_details', function() {
             },
           ],
           javascript: [
-            {
-              embeddingOrigin: 'https://foo-allow.com:443',
-              origin: 'https://foo-allow.com:443',
-              setting: 'allow',
-              source: 'preference',
-            },
-          ],
-          keygen: [
             {
               embeddingOrigin: 'https://foo-allow.com:443',
               origin: 'https://foo-allow.com:443',
@@ -124,13 +108,6 @@ cr.define('site_details', function() {
         }
       };
 
-      // Import necessary html before running suite.
-      suiteSetup(function() {
-        return PolymerTest.importHtml(
-            'chrome://md-settings/site_settings/site_details.html'
-            );
-      });
-
       // Initialize a site-details before each test.
       setup(function() {
         browserProxy = new TestSiteSettingsPrefsBrowserProxy();
@@ -144,15 +121,15 @@ cr.define('site_details', function() {
         var category = settings.ContentSettingsTypes.NOTIFICATIONS;
         var site = {
           origin: 'http://www.google.com',
-          originForDisplay: 'http://www.google.com',
+          displayName: 'http://www.google.com',
           embeddingOrigin: '',
         };
         browserProxy.setPrefs(prefsEmpty);
         testElement.category = category;
         testElement.site = site
 
-        assertTrue(testElement.$.usage.hidden);
-        assertTrue(testElement.$.storage.hidden);
+        //expect usage to not be rendered
+        assertFalse(!!testElement.$$('#usage'));
 
         // TODO(finnur): Check for the Permission heading hiding when no
         // permissions are showing.
@@ -160,7 +137,6 @@ cr.define('site_details', function() {
         var msg = 'No category should be showing, height';
         assertEquals(0, testElement.$.camera.offsetHeight, msg);
         assertEquals(0, testElement.$.cookies.offsetHeight, msg);
-        assertEquals(0, testElement.$.fullscreen.offsetHeight, msg);
         assertEquals(0, testElement.$.geolocation.offsetHeight, msg);
         assertEquals(0, testElement.$.javascript.offsetHeight, msg);
         assertEquals(0, testElement.$.mic.offsetHeight, msg);
@@ -172,7 +148,7 @@ cr.define('site_details', function() {
         var category = settings.ContentSettingsTypes.NOTIFICATIONS;
         var site = {
           origin: 'https://foo-allow.com:443',
-          originForDisplay: 'https://foo-allow.com:443',
+          displayName: 'https://foo-allow.com:443',
           embeddingOrigin: '',
         };
 
@@ -183,7 +159,6 @@ cr.define('site_details', function() {
         var msg = 'All categories should be showing';
         assertFalse(testElement.$.camera.hidden, msg);
         assertFalse(testElement.$.cookies.hidden, msg);
-        assertFalse(testElement.$.fullscreen.hidden, msg);
         assertFalse(testElement.$.geolocation.hidden, msg);
         assertFalse(testElement.$.javascript.hidden, msg);
         assertFalse(testElement.$.mic.hidden, msg);
@@ -211,12 +186,14 @@ cr.define('site_details', function() {
         browserProxy.setPrefs(prefs);
         testElement.site = {
           origin: 'https://foo-allow.com:443',
-          originForDisplay: 'https://foo-allow.com:443',
+          displayName: 'https://foo-allow.com:443',
           embeddingOrigin: '',
         };
 
-        assertFalse(testElement.$.usage.hidden);
-        assertFalse(testElement.$.storage.hidden);
+        Polymer.dom.flush();
+
+        //expect usage to be rendered
+        assertTrue(!!testElement.$$('#usage'));
       });
     });
   }

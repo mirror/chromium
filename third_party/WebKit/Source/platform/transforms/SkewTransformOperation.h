@@ -26,51 +26,51 @@
 #define SkewTransformOperation_h
 
 #include "platform/transforms/TransformOperation.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT SkewTransformOperation final : public TransformOperation {
-public:
-    static PassRefPtr<SkewTransformOperation> create(double angleX, double angleY, OperationType type)
-    {
-        return adoptRef(new SkewTransformOperation(angleX, angleY, type));
-    }
+ public:
+  static PassRefPtr<SkewTransformOperation> Create(double angle_x,
+                                                   double angle_y,
+                                                   OperationType type) {
+    return AdoptRef(new SkewTransformOperation(angle_x, angle_y, type));
+  }
 
-    double angleX() const { return m_angleX; }
-    double angleY() const { return m_angleY; }
+  double AngleX() const { return angle_x_; }
+  double AngleY() const { return angle_y_; }
 
-    virtual bool canBlendWith(const TransformOperation& other) const;
-private:
-    OperationType type() const override { return m_type; }
+  virtual bool CanBlendWith(const TransformOperation& other) const;
 
-    bool operator==(const TransformOperation& o) const override
-    {
-        if (!isSameType(o))
-            return false;
-        const SkewTransformOperation* s = static_cast<const SkewTransformOperation*>(&o);
-        return m_angleX == s->m_angleX && m_angleY == s->m_angleY;
-    }
+ private:
+  OperationType GetType() const override { return type_; }
 
-    void apply(TransformationMatrix& transform, const FloatSize&) const override
-    {
-        transform.skew(m_angleX, m_angleY);
-    }
+  bool operator==(const TransformOperation& o) const override {
+    if (!IsSameType(o))
+      return false;
+    const SkewTransformOperation* s =
+        static_cast<const SkewTransformOperation*>(&o);
+    return angle_x_ == s->angle_x_ && angle_y_ == s->angle_y_;
+  }
 
-    PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false) override;
-    PassRefPtr<TransformOperation> zoom(double factor) final { return this; }
+  void Apply(TransformationMatrix& transform, const FloatSize&) const override {
+    transform.Skew(angle_x_, angle_y_);
+  }
 
-    SkewTransformOperation(double angleX, double angleY, OperationType type)
-        : m_angleX(angleX)
-        , m_angleY(angleY)
-        , m_type(type)
-    {
-    }
+  PassRefPtr<TransformOperation> Blend(const TransformOperation* from,
+                                       double progress,
+                                       bool blend_to_identity = false) override;
+  PassRefPtr<TransformOperation> Zoom(double factor) final { return this; }
 
-    double m_angleX;
-    double m_angleY;
-    OperationType m_type;
+  SkewTransformOperation(double angle_x, double angle_y, OperationType type)
+      : angle_x_(angle_x), angle_y_(angle_y), type_(type) {}
+
+  double angle_x_;
+  double angle_y_;
+  OperationType type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SkewTransformOperation_h
+#endif  // SkewTransformOperation_h

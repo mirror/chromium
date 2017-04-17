@@ -9,9 +9,9 @@
 #include "core/HTMLNames.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/URLSearchParams.h"
-#include "core/html/FormAssociatedElement.h"
 #include "core/html/FormData.h"
 #include "core/html/HTMLFormElement.h"
+#include "core/html/ListedElement.h"
 #include "modules/credentialmanager/FormDataOptions.h"
 #include "modules/credentialmanager/PasswordCredentialData.h"
 #include "platform/credentialmanager/PlatformPasswordCredential.h"
@@ -21,154 +21,170 @@
 
 namespace blink {
 
-PasswordCredential* PasswordCredential::create(WebPasswordCredential* webPasswordCredential)
-{
-    return new PasswordCredential(webPasswordCredential);
+PasswordCredential* PasswordCredential::Create(
+    WebPasswordCredential* web_password_credential) {
+  return new PasswordCredential(web_password_credential);
 }
 
-PasswordCredential* PasswordCredential::create(const PasswordCredentialData& data, ExceptionState& exceptionState)
-{
-    if (data.id().isEmpty()) {
-        exceptionState.throwTypeError("'id' must not be empty.");
-        return nullptr;
-    }
-    if (data.password().isEmpty()) {
-        exceptionState.throwTypeError("'password' must not be empty.");
-        return nullptr;
-    }
+PasswordCredential* PasswordCredential::Create(
+    const PasswordCredentialData& data,
+    ExceptionState& exception_state) {
+  if (data.id().IsEmpty()) {
+    exception_state.ThrowTypeError("'id' must not be empty.");
+    return nullptr;
+  }
+  if (data.password().IsEmpty()) {
+    exception_state.ThrowTypeError("'password' must not be empty.");
+    return nullptr;
+  }
 
-    KURL iconURL = parseStringAsURL(data.iconURL(), exceptionState);
-    if (exceptionState.hadException())
-        return nullptr;
+  KURL icon_url = ParseStringAsURL(data.iconURL(), exception_state);
+  if (exception_state.HadException())
+    return nullptr;
 
-    return new PasswordCredential(data.id(), data.password(), data.name(), iconURL);
+  return new PasswordCredential(data.id(), data.password(), data.name(),
+                                icon_url);
 }
 
 // https://w3c.github.io/webappsec-credential-management/#passwordcredential-form-constructor
-PasswordCredential* PasswordCredential::create(HTMLFormElement* form, ExceptionState& exceptionState)
-{
-    // Extract data from the form, then use the extracted |formData| object's
-    // value to populate |data|.
-    FormData* formData = FormData::create(form);
-    PasswordCredentialData data;
+PasswordCredential* PasswordCredential::Create(
+    HTMLFormElement* form,
+    ExceptionState& exception_state) {
+  // Extract data from the form, then use the extracted |formData| object's
+  // value to populate |data|.
+  FormData* form_data = FormData::Create(form);
+  PasswordCredentialData data;
 
-    AtomicString idName;
-    AtomicString passwordName;
-    for (FormAssociatedElement* element : form->associatedElements()) {
-        // If |element| isn't a "submittable element" with string data, then it
-        // won't have a matching value in |formData|, and we can safely skip it.
-        FileOrUSVString result;
-        formData->get(element->name(), result);
-        if (!result.isUSVString())
-            continue;
+  AtomicString id_name;
+  AtomicString password_name;
+  for (ListedElement* element : form->ListedElements()) {
+    // If |element| isn't a "submittable element" with string data, then it
+    // won't have a matching value in |formData|, and we can safely skip it.
+    FileOrUSVString result;
+    form_data->get(element->GetName(), result);
+    if (!result.isUSVString())
+      continue;
 
-        AtomicString autocomplete = toHTMLElement(element)->fastGetAttribute(HTMLNames::autocompleteAttr);
-        if (equalIgnoringCase(autocomplete, "current-password") || equalIgnoringCase(autocomplete, "new-password")) {
-            data.setPassword(result.getAsUSVString());
-            passwordName = element->name();
-        } else if (equalIgnoringCase(autocomplete, "photo")) {
-            data.setIconURL(result.getAsUSVString());
-        } else if (equalIgnoringCase(autocomplete, "name") || equalIgnoringCase(autocomplete, "nickname")) {
-            data.setName(result.getAsUSVString());
-        } else if (equalIgnoringCase(autocomplete, "username")) {
-            data.setId(result.getAsUSVString());
-            idName = element->name();
-        }
+    Vector<String> autofill_tokens;
+    ToHTMLElement(element)
+        ->FastGetAttribute(HTMLNames::autocompleteAttr)
+        .GetString()
+        .DeprecatedLower()  // Lowercase here once to avoid the case-folding
+                            // logic below.
+        .Split(' ', autofill_tokens);
+    for (const auto& token : autofill_tokens) {
+      if (token == "current-password" || token == "new-password") {
+        data.setPassword(result.getAsUSVString());
+        password_name = element->GetName();
+      } else if (token == "photo") {
+        data.setIconURL(result.getAsUSVString());
+      } else if (token == "name" || token == "nickname") {
+        data.setName(result.getAsUSVString());
+      } else if (token == "username") {
+        data.setId(result.getAsUSVString());
+        id_name = element->GetName();
+      }
     }
+  }
 
-    // Create a PasswordCredential using the data gathered above.
-    PasswordCredential* credential = PasswordCredential::create(data, exceptionState);
-    if (exceptionState.hadException())
-        return nullptr;
-    ASSERT(credential);
+  // Create a PasswordCredential using the data gathered above.
+  PasswordCredential* credential =
+      PasswordCredential::Create(data, exception_state);
+  if (exception_state.HadException())
+    return nullptr;
+  ASSERT(credential);
 
-    // After creating the Credential, populate its 'additionalData', 'idName', and 'passwordName' attributes.
-    // If the form's 'enctype' is anything other than multipart, generate a URLSearchParams using the
-    // data in |formData|.
-    credential->setIdName(idName);
-    credential->setPasswordName(passwordName);
+  // After creating the Credential, populate its 'additionalData', 'idName', and
+  // 'passwordName' attributes.  If the form's 'enctype' is anything other than
+  // multipart, generate a URLSearchParams using the
+  // data in |formData|.
+  credential->setIdName(id_name);
+  credential->setPasswordName(password_name);
 
-    FormDataOrURLSearchParams additionalData;
-    if (form->enctype() == "multipart/form-data") {
-        additionalData.setFormData(formData);
-    } else {
-        URLSearchParams* params = URLSearchParams::create(URLSearchParamsInit());
-        for (const FormData::Entry* entry : formData->entries()) {
-            if (entry->isString())
-                params->append(entry->name().data(), entry->value().data());
-        }
-        additionalData.setURLSearchParams(params);
+  FormDataOrURLSearchParams additional_data;
+  if (form->enctype() == "multipart/form-data") {
+    additional_data.setFormData(form_data);
+  } else {
+    URLSearchParams* params = URLSearchParams::Create(String());
+    for (const FormData::Entry* entry : form_data->Entries()) {
+      if (entry->IsString())
+        params->append(entry->name().Data(), entry->Value().Data());
     }
+    additional_data.setURLSearchParams(params);
+  }
 
-    credential->setAdditionalData(additionalData);
-    return credential;
+  credential->setAdditionalData(additional_data);
+  return credential;
 }
 
-PasswordCredential::PasswordCredential(WebPasswordCredential* webPasswordCredential)
-    : SiteBoundCredential(webPasswordCredential->getPlatformCredential())
-    , m_idName("username")
-    , m_passwordName("password")
-{
-}
+PasswordCredential::PasswordCredential(
+    WebPasswordCredential* web_password_credential)
+    : SiteBoundCredential(web_password_credential->GetPlatformCredential()),
+      id_name_("username"),
+      password_name_("password") {}
 
-PasswordCredential::PasswordCredential(const String& id, const String& password, const String& name, const KURL& icon)
-    : SiteBoundCredential(PlatformPasswordCredential::create(id, password, name, icon))
-    , m_idName("username")
-    , m_passwordName("password")
-{
-}
+PasswordCredential::PasswordCredential(const String& id,
+                                       const String& password,
+                                       const String& name,
+                                       const KURL& icon)
+    : SiteBoundCredential(
+          PlatformPasswordCredential::Create(id, password, name, icon)),
+      id_name_("username"),
+      password_name_("password") {}
 
-PassRefPtr<EncodedFormData> PasswordCredential::encodeFormData(String& contentType) const
-{
-    if (m_additionalData.isURLSearchParams()) {
-        // If |additionalData| is a 'URLSearchParams' object, build a urlencoded response.
-        URLSearchParams* params = URLSearchParams::create(URLSearchParamsInit());
-        URLSearchParams* additionalData = m_additionalData.getAsURLSearchParams();
-        for (const auto& param : additionalData->params()) {
-            const String& name = param.first;
-            if (name != idName() && name != passwordName())
-                params->append(name, param.second);
-        }
-        params->append(idName(), id());
-        params->append(passwordName(), password());
-
-        contentType = AtomicString("application/x-www-form-urlencoded;charset=UTF-8");
-
-        return params->toEncodedFormData();
+PassRefPtr<EncodedFormData> PasswordCredential::EncodeFormData(
+    String& content_type) const {
+  if (additional_data_.isURLSearchParams()) {
+    // If |additionalData| is a 'URLSearchParams' object, build a urlencoded
+    // response.
+    URLSearchParams* params = URLSearchParams::Create(String());
+    URLSearchParams* additional_data = additional_data_.getAsURLSearchParams();
+    for (const auto& param : additional_data->Params()) {
+      const String& name = param.first;
+      if (name != idName() && name != passwordName())
+        params->append(name, param.second);
     }
+    params->append(idName(), id());
+    params->append(passwordName(), Password());
 
-    // Otherwise, we'll build a multipart response.
-    FormData* formData = FormData::create(nullptr);
-    if (m_additionalData.isFormData()) {
-        FormData* additionalData = m_additionalData.getAsFormData();
-        for (const FormData::Entry* entry : additionalData->entries()) {
-            const String& name = formData->decode(entry->name());
-            if (name == idName() || name == passwordName())
-                continue;
+    content_type =
+        AtomicString("application/x-www-form-urlencoded;charset=UTF-8");
 
-            if (entry->blob())
-                formData->append(name, entry->blob(), entry->filename());
-            else
-                formData->append(name, formData->decode(entry->value()));
-        }
+    return params->ToEncodedFormData();
+  }
+
+  // Otherwise, we'll build a multipart response.
+  FormData* form_data = FormData::Create(nullptr);
+  if (additional_data_.isFormData()) {
+    FormData* additional_data = additional_data_.getAsFormData();
+    for (const FormData::Entry* entry : additional_data->Entries()) {
+      const String& name = form_data->Decode(entry->name());
+      if (name == idName() || name == passwordName())
+        continue;
+
+      if (entry->GetBlob())
+        form_data->append(name, entry->GetBlob(), entry->Filename());
+      else
+        form_data->append(name, form_data->Decode(entry->Value()));
     }
-    formData->append(idName(), id());
-    formData->append(passwordName(), password());
+  }
+  form_data->append(idName(), id());
+  form_data->append(passwordName(), Password());
 
-    RefPtr<EncodedFormData> encodedData = formData->encodeMultiPartFormData();
-    contentType = AtomicString("multipart/form-data; boundary=") + encodedData->boundary().data();
-    return encodedData.release();
+  RefPtr<EncodedFormData> encoded_data = form_data->EncodeMultiPartFormData();
+  content_type = AtomicString("multipart/form-data; boundary=") +
+                 encoded_data->Boundary().Data();
+  return encoded_data.Release();
 }
 
-const String& PasswordCredential::password() const
-{
-    return static_cast<PlatformPasswordCredential*>(m_platformCredential.get())->password();
+const String& PasswordCredential::Password() const {
+  return static_cast<PlatformPasswordCredential*>(platform_credential_.Get())
+      ->Password();
 }
 
-DEFINE_TRACE(PasswordCredential)
-{
-    SiteBoundCredential::trace(visitor);
-    visitor->trace(m_additionalData);
+DEFINE_TRACE(PasswordCredential) {
+  SiteBoundCredential::Trace(visitor);
+  visitor->Trace(additional_data_);
 }
 
-} // namespace blink
+}  // namespace blink

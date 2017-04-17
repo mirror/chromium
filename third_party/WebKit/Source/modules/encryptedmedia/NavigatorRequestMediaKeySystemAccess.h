@@ -10,20 +10,21 @@
 #include "core/frame/Navigator.h"
 #include "modules/encryptedmedia/MediaKeySystemConfiguration.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class NavigatorRequestMediaKeySystemAccess {
-    STATIC_ONLY(NavigatorRequestMediaKeySystemAccess);
-public:
-    static ScriptPromise requestMediaKeySystemAccess(
-        ScriptState*,
-        Navigator&,
-        const String& keySystem,
-        const HeapVector<MediaKeySystemConfiguration>& supportedConfigurations);
+  STATIC_ONLY(NavigatorRequestMediaKeySystemAccess);
+
+ public:
+  static ScriptPromise requestMediaKeySystemAccess(
+      ScriptState*,
+      Navigator&,
+      const String& key_system,
+      const HeapVector<MediaKeySystemConfiguration>& supported_configurations);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NavigatorRequestMediaKeySystemAccess_h
+#endif  // NavigatorRequestMediaKeySystemAccess_h

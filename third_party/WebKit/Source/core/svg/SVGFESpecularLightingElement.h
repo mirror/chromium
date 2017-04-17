@@ -27,40 +27,46 @@
 #include "core/svg/SVGAnimatedNumberOptionalNumber.h"
 #include "core/svg/SVGFELightElement.h"
 #include "core/svg/SVGFilterPrimitiveStandardAttributes.h"
-#include "platform/graphics/filters/FESpecularLighting.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class SVGFESpecularLightingElement final : public SVGFilterPrimitiveStandardAttributes {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGFESpecularLightingElement);
-    void lightElementAttributeChanged(const SVGFELightElement*, const QualifiedName&);
+class SVGFESpecularLightingElement final
+    : public SVGFilterPrimitiveStandardAttributes {
+  DEFINE_WRAPPERTYPEINFO();
 
-    SVGAnimatedNumber* specularConstant() { return m_specularConstant.get(); }
-    SVGAnimatedNumber* specularExponent() { return m_specularExponent.get(); }
-    SVGAnimatedNumber* surfaceScale() { return m_surfaceScale.get(); }
-    SVGAnimatedNumber* kernelUnitLengthX() { return m_kernelUnitLength->firstNumber(); }
-    SVGAnimatedNumber* kernelUnitLengthY() { return m_kernelUnitLength->secondNumber(); }
-    SVGAnimatedString* in1() { return m_in1.get(); }
+ public:
+  DECLARE_NODE_FACTORY(SVGFESpecularLightingElement);
+  void LightElementAttributeChanged(const SVGFELightElement*,
+                                    const QualifiedName&);
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedNumber* specularConstant() { return specular_constant_.Get(); }
+  SVGAnimatedNumber* specularExponent() { return specular_exponent_.Get(); }
+  SVGAnimatedNumber* surfaceScale() { return surface_scale_.Get(); }
+  SVGAnimatedNumber* kernelUnitLengthX() {
+    return kernel_unit_length_->FirstNumber();
+  }
+  SVGAnimatedNumber* kernelUnitLengthY() {
+    return kernel_unit_length_->SecondNumber();
+  }
+  SVGAnimatedString* in1() { return in1_.Get(); }
 
-private:
-    explicit SVGFESpecularLightingElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    bool setFilterEffectAttribute(FilterEffect*, const QualifiedName&) override;
-    void svgAttributeChanged(const QualifiedName&) override;
-    FilterEffect* build(SVGFilterBuilder*, Filter*) override;
+ private:
+  explicit SVGFESpecularLightingElement(Document&);
 
-    Member<SVGAnimatedNumber> m_specularConstant;
-    Member<SVGAnimatedNumber> m_specularExponent;
-    Member<SVGAnimatedNumber> m_surfaceScale;
-    Member<SVGAnimatedNumberOptionalNumber> m_kernelUnitLength;
-    Member<SVGAnimatedString> m_in1;
+  bool SetFilterEffectAttribute(FilterEffect*, const QualifiedName&) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
+  FilterEffect* Build(SVGFilterBuilder*, Filter*) override;
+
+  Member<SVGAnimatedNumber> specular_constant_;
+  Member<SVGAnimatedNumber> specular_exponent_;
+  Member<SVGAnimatedNumber> surface_scale_;
+  Member<SVGAnimatedNumberOptionalNumber> kernel_unit_length_;
+  Member<SVGAnimatedString> in1_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGFESpecularLightingElement_h
+#endif  // SVGFESpecularLightingElement_h

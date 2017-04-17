@@ -29,10 +29,6 @@ class BrowserTestBase : public testing::Test {
   BrowserTestBase();
   ~BrowserTestBase() override;
 
-  // We do this so we can be used in a Task.
-  void AddRef() {}
-  void Release() {}
-
   // Configures everything for an in process browser test, then invokes
   // BrowserMain. BrowserMain ends up invoking RunTestOnMainThreadLoop.
   void SetUp() override;
@@ -125,8 +121,8 @@ class BrowserTestBase : public testing::Test {
   // instead.
   void UseSoftwareCompositing();
 
-  // Returns true if the test will be using GL acceleration via OSMesa.
-  bool UsingOSMesa() const;
+  // Returns true if the test will be using GL acceleration via a software GL.
+  bool UsingSoftwareGL() const;
 
  private:
   void ProxyRunTestOnMainThreadLoop();

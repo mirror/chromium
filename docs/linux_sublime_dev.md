@@ -15,9 +15,8 @@ Here's what works:
 *   Editing code works well (especially if you're used to it and get used to the
     shortcuts).
 *   Navigating around the code works well. There are multiple ways to do this (a
-    full list of keyboard shortcuts is available for [Windows/Linux](http://
-    docs.sublimetext.info/en/latest/reference/keyboard_shortcuts_win.html) and
-    [Mac](http://docs.sublimetext.info/en/latest/reference/keyboard_shortcuts_osx.html)).
+    full list of keyboard shortcuts is available for [Windows/Linux](http://docs.sublimetext.info/en/latest/reference/keyboard_shortcuts_win.html)
+    and [Mac](http://docs.sublimetext.info/en/latest/reference/keyboard_shortcuts_osx.html)).
 *   Building works fairly well and it does a decent job of parsing errors so
     that you can click and jump to the problem spot.
 
@@ -74,6 +73,9 @@ Here are some settings that help match the Chromium style guide:
   "draw_white_space": "all",
   "enable_tab_scrolling": false,
   "highlight_line": true,
+
+  // Mainly for Windows, but harmless on Mac/Linux
+  "default_line_ending": "unix",
 }
 ```
 
@@ -94,10 +96,10 @@ The settings will take effect as soon as you save the file.
 *   `Alt + PageUp`/`Alt + PageDown` (`Alt + Cmd + Left`/`Alt + Cmd + Right` on
     Mac) moves between tabs
 *   `F12` (`Alt + Cmd + Down` on Mac) goes to the symbol's definition
-*   With text selected, `Ctrl + D` will multi-select the next occurrance (so
+*   With text selected, `Ctrl + D` will multi-select the next occurrence (so
     typing in one types in all of them), and `Ctrl+U` deselects
 *   Similarly, after finding something with `Ctrl + F`, `Alt + Enter` will
-    select all occurrances of the search query, which can be multi-edited
+    select all occurrences of the search query, which can be multi-edited
 *   `Ctrl + X` without anything selected cuts the current line, then move to a
     different line and `Ctrl + V` pastes it below the current line
 
@@ -246,6 +248,19 @@ and hence is not useful on third_party projects that use another style.
 
 2. Select some text and press `Ctrl + Shift + C` to format, or select no text to
    format the entire file
+
+## CodeSearch Integration with Chromium X-Refs
+
+With [Chromium X-Refs](https://github.com/karlinjf/ChromiumXRefs/) you can
+perform [https://cs.chromium.org](https://cs.chromium.org) cross-reference
+searches in your editor. This gives you the call graph, overrides, references,
+declaration, and definition of most of the code. The results are as fresh as
+the search engine's index so uncomitted changes won't be reflected.
+
+More information on Chromium X-Ref's functionality (including keyboard and
+mouse shortcuts) can be found on the [Chromium X-Refs
+page](https://github.com/karlinjf/ChromiumXRefs/).
+
 
 ## Code Completion with SublimeClang (Linux Only)
 

@@ -26,6 +26,7 @@
 #include "chrome/browser/browsing_data/browsing_data_remover.h"
 #include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/browsing_data/browsing_data_remover_test_util.h"
+#include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
@@ -34,6 +35,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "components/browsing_data/core/browsing_data_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
@@ -45,6 +47,7 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_context.h"
@@ -304,17 +307,14 @@ class SdchBrowserTest : public InProcessBrowserTest,
  public:
   static const char kTestHost[];
 
-  SdchBrowserTest()
-      : response_handler_(kTestHost),
-        url_request_context_getter_(NULL),
-        url_fetch_complete_(false),
-        waiting_(false) {}
+  SdchBrowserTest() : response_handler_(kTestHost) {}
 
   // Helper functions for fetching data.
 
   void FetchUrlDetailed(GURL url, net::URLRequestContextGetter* getter) {
     url_fetch_complete_ = false;
-    fetcher_ = net::URLFetcher::Create(url, net::URLFetcher::GET, this);
+    fetcher_ = net::URLFetcher::Create(url, net::URLFetcher::GET, this,
+                                       TRAFFIC_ANNOTATION_FOR_TESTS);
     fetcher_->SetRequestContext(getter);
     fetcher_->Start();
     if (!url_fetch_complete_) {
@@ -408,8 +408,13 @@ class SdchBrowserTest : public InProcessBrowserTest,
     BrowsingDataRemover* remover =
         BrowsingDataRemoverFactory::GetForBrowserContext(browser()->profile());
     BrowsingDataRemoverCompletionObserver completion_observer(remover);
-    remover->Remove(BrowsingDataRemover::Period(browsing_data::LAST_HOUR),
-                    remove_mask, BrowsingDataHelper::UNPROTECTED_WEB);
+    remover->RemoveAndReply(browsing_data::CalculateBeginDeleteTime(
+                                browsing_data::TimePeriod::LAST_HOUR),
+                            browsing_data::CalculateEndDeleteTime(
+                                browsing_data::TimePeriod::LAST_HOUR),
+                            remove_mask,
+                            BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB,
+                            &completion_observer);
     completion_observer.BlockUntilCompletion();
   }
 
@@ -435,10 +440,10 @@ class SdchBrowserTest : public InProcessBrowserTest,
       return false;
 
     second_profile_ = g_browser_process->profile_manager()->GetProfile(
-        second_profile_data_dir_.path());
+        second_profile_data_dir_.GetPath());
     if (!second_profile_) return false;
 
-    second_browser_ = new Browser(Browser::CreateParams(second_profile_));
+    second_browser_ = new Browser(Browser::CreateParams(second_profile_, true));
     if (!second_browser_) return false;
 
     chrome::AddSelectedTabWithURL(second_browser_,
@@ -448,12 +453,18 @@ class SdchBrowserTest : public InProcessBrowserTest,
         second_browser_->tab_strip_model()->GetActiveWebContents());
     second_browser_->window()->Show();
 
-    content::BrowserThread::PostTask(
+    bool sdch_enabled = false;
+    base::RunLoop run_loop;
+    content::BrowserThread::PostTaskAndReply(
         content::BrowserThread::IO, FROM_HERE,
-        base::Bind(&SdchBrowserTest::SubscribeToSdchNotifications,
-                   base::Unretained(this),
-                   base::RetainedRef(
-                       second_browser_->profile()->GetRequestContext())));
+        base::Bind(
+            &SdchBrowserTest::SubscribeToSdchNotifications,
+            base::Unretained(this),
+            base::RetainedRef(second_browser_->profile()->GetRequestContext()),
+            &sdch_enabled_),
+        run_loop.QuitClosure());
+    run_loop.Run();
+    DCHECK(sdch_enabled);
 
     return true;
   }
@@ -464,12 +475,18 @@ class SdchBrowserTest : public InProcessBrowserTest,
     if (!incognito_browser_)
       return false;
 
-    content::BrowserThread::PostTask(
+    bool sdch_enabled = false;
+    base::RunLoop run_loop;
+    content::BrowserThread::PostTaskAndReply(
         content::BrowserThread::IO, FROM_HERE,
         base::Bind(&SdchBrowserTest::SubscribeToSdchNotifications,
                    base::Unretained(this),
                    base::RetainedRef(
-                       incognito_browser_->profile()->GetRequestContext())));
+                       incognito_browser_->profile()->GetRequestContext()),
+                   &sdch_enabled),
+        run_loop.QuitClosure());
+    run_loop.Run();
+    DCHECK(sdch_enabled);
 
     return true;
   }
@@ -566,6 +583,8 @@ class SdchBrowserTest : public InProcessBrowserTest,
             request_vector[3].relative_url == kDataURLPath);
   }
 
+  bool sdch_enabled() const { return sdch_enabled_; }
+
  private:
   static void NukeSdchDictionariesOnIOThread(
       net::URLRequestContextGetter* context_getter) {
@@ -606,11 +625,15 @@ class SdchBrowserTest : public InProcessBrowserTest,
     CHECK(test_server_.Start());
     url_request_context_getter_ = browser()->profile()->GetRequestContext();
 
-    content::BrowserThread::PostTask(
+    base::RunLoop run_loop;
+    content::BrowserThread::PostTaskAndReply(
         content::BrowserThread::IO, FROM_HERE,
         base::Bind(&SdchBrowserTest::SubscribeToSdchNotifications,
                    base::Unretained(this),
-                   base::RetainedRef(url_request_context_getter_)));
+                   base::RetainedRef(url_request_context_getter_),
+                   &sdch_enabled_),
+        run_loop.QuitClosure());
+    run_loop.Run();
   }
 
   void TearDownOnMainThread() override {
@@ -623,12 +646,19 @@ class SdchBrowserTest : public InProcessBrowserTest,
                    base::Unretained(this)));
   }
 
+  // Check if SDCH is enabled, and if so subscribe an observer to the
+  // SDCH manager on the URLRequestContext that was passed in.
   void SubscribeToSdchNotifications(
-      net::URLRequestContextGetter* context_getter) {
+      net::URLRequestContextGetter* context_getter,
+      bool* sdch_enabled) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
     net::SdchManager* manager =
         context_getter->GetURLRequestContext()->sdch_manager();
+    *sdch_enabled = !!manager;
+    if (!*sdch_enabled)
+      return;
+
     DCHECK(observers_.end() == observers_.find(manager));
 
     observers_[manager].Observe(manager);
@@ -646,12 +676,14 @@ class SdchBrowserTest : public InProcessBrowserTest,
       base::MessageLoopForUI::current()->QuitWhenIdle();
   }
 
+  bool sdch_enabled_ = false;
   SdchResponseHandler response_handler_;
   net::EmbeddedTestServer test_server_;
-  scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
+  scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_ =
+      nullptr;
   std::unique_ptr<net::URLFetcher> fetcher_;
-  bool url_fetch_complete_;
-  bool waiting_;
+  bool url_fetch_complete_ = false;
+  bool waiting_ = false;
   base::ScopedTempDir second_profile_data_dir_;
   Profile* second_profile_;
   Browser* second_browser_;
@@ -667,18 +699,23 @@ const char SdchBrowserTest::kTestHost[] = "our.test.host.com";
 // data remover renders it unusable.  Also (in calling
 // ForceSdchDictionaryLoad()) servers as a smoke test for SDCH.
 IN_PROC_BROWSER_TEST_F(SdchBrowserTest, BrowsingDataRemover) {
+  if (!sdch_enabled()) {
+    LOG(ERROR) << "SDCH disabled; not running test.";
+    return;
+  }
+
   ASSERT_TRUE(ForceSdchDictionaryLoad(browser()));
 
   // Confirm browsing data remover without removing the cache leaves
   // SDCH alone.
-  BrowsingDataRemoveAndWait(BrowsingDataRemover::REMOVE_ALL &
-                            ~BrowsingDataRemover::REMOVE_CACHE);
+  BrowsingDataRemoveAndWait(ChromeBrowsingDataRemoverDelegate::ALL_DATA_TYPES &
+                            ~BrowsingDataRemover::DATA_TYPE_CACHE);
   bool sdch_encoding_used = false;
   ASSERT_TRUE(GetData(&sdch_encoding_used));
   EXPECT_TRUE(sdch_encoding_used);
 
   // Confirm browsing data remover removing the cache clears SDCH state.
-  BrowsingDataRemoveAndWait(BrowsingDataRemover::REMOVE_CACHE);
+  BrowsingDataRemoveAndWait(BrowsingDataRemover::DATA_TYPE_CACHE);
   sdch_encoding_used = false;
   ASSERT_TRUE(GetData(&sdch_encoding_used));
   EXPECT_FALSE(sdch_encoding_used);
@@ -686,6 +723,11 @@ IN_PROC_BROWSER_TEST_F(SdchBrowserTest, BrowsingDataRemover) {
 
 // Confirm dictionaries not visible in other profiles.
 IN_PROC_BROWSER_TEST_F(SdchBrowserTest, Isolation) {
+  if (!sdch_enabled()) {
+    LOG(ERROR) << "SDCH disabled; not running test.";
+    return;
+  }
+
   ASSERT_TRUE(ForceSdchDictionaryLoad(browser()));
   ASSERT_TRUE(SetupSecondBrowser());
   ASSERT_TRUE(SetupIncognitoBrowser());
@@ -706,6 +748,11 @@ IN_PROC_BROWSER_TEST_F(SdchBrowserTest, Isolation) {
 
 // Confirm a dictionary loaded in incognito isn't visible in the main profile.
 IN_PROC_BROWSER_TEST_F(SdchBrowserTest, ReverseIsolation) {
+  if (!sdch_enabled()) {
+    LOG(ERROR) << "SDCH disabled; not running test.";
+    return;
+  }
+
   ASSERT_TRUE(SetupIncognitoBrowser());
   ASSERT_TRUE(ForceSdchDictionaryLoad(incognito_browser()));
 

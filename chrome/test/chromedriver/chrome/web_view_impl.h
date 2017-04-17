@@ -31,18 +31,17 @@ class NetworkConditionsOverrideManager;
 class HeapSnapshotTaker;
 struct KeyEvent;
 struct MouseEvent;
-class NavigationTracker;
+class PageLoadStrategy;
 class Status;
 
 class WebViewImpl : public WebView {
  public:
   WebViewImpl(const std::string& id,
-              const BrowserInfo* browser_info,
-              std::unique_ptr<DevToolsClient> client);
-  WebViewImpl(const std::string& id,
+              const bool w3c_compliant,
               const BrowserInfo* browser_info,
               std::unique_ptr<DevToolsClient> client,
-              const DeviceMetrics* device_metrics);
+              const DeviceMetrics* device_metrics,
+              std::string page_load_strategy);
   ~WebViewImpl() override;
 
   // Overridden from WebView:
@@ -108,6 +107,10 @@ class WebViewImpl : public WebView {
                                  int xoffset,
                                  int yoffset) override;
   Status SynthesizePinchGesture(int x, int y, double scale_factor) override;
+  Status GetScreenOrientation(std::string* orientation) override;
+  Status SetScreenOrientation(std::string orientation) override;
+  Status DeleteScreenOrientation() override;
+
 
  private:
   Status TraverseHistoryWithJavaScript(int delta);
@@ -125,11 +128,12 @@ class WebViewImpl : public WebView {
   Status StopProfileInternal();
 
   std::string id_;
+  bool w3c_compliant_;
   const BrowserInfo* browser_info_;
   std::unique_ptr<DomTracker> dom_tracker_;
   std::unique_ptr<FrameTracker> frame_tracker_;
   std::unique_ptr<JavaScriptDialogManager> dialog_manager_;
-  std::unique_ptr<NavigationTracker> navigation_tracker_;
+  std::unique_ptr<PageLoadStrategy> navigation_tracker_;
   std::unique_ptr<MobileEmulationOverrideManager>
       mobile_emulation_override_manager_;
   std::unique_ptr<GeolocationOverrideManager> geolocation_override_manager_;
@@ -167,7 +171,8 @@ Status GetNodeIdFromFunction(DevToolsClient* client,
                              const std::string& function,
                              const base::ListValue& args,
                              bool* found_node,
-                             int* node_id);
+                             int* node_id,
+                             bool w3c_compliant);
 
 }  // namespace internal
 

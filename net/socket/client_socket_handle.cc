@@ -12,6 +12,8 @@
 #include "base/logging.h"
 #include "base/trace_event/trace_event.h"
 #include "net/base/net_errors.h"
+#include "net/base/trace_constants.h"
+#include "net/log/net_log_event_type.h"
 #include "net/socket/client_socket_pool.h"
 
 namespace net {
@@ -29,6 +31,17 @@ ClientSocketHandle::~ClientSocketHandle() {
   Reset();
 }
 
+void ClientSocketHandle::SetPriority(RequestPriority priority) {
+  if (socket_) {
+    // The priority of the handle is no longer relevant to the socket pool;
+    // just return.
+    return;
+  }
+
+  if (pool_)
+    pool_->SetPriority(group_name_, this, priority);
+}
+
 void ClientSocketHandle::Reset() {
   ResetInternal(true);
   ResetErrorState();
@@ -41,7 +54,7 @@ void ClientSocketHandle::ResetInternal(bool cancel) {
     CHECK(pool_);
     if (is_initialized()) {
       if (socket_) {
-        socket_->NetLog().EndEvent(NetLog::TYPE_SOCKET_IN_USE);
+        socket_->NetLog().EndEvent(NetLogEventType::SOCKET_IN_USE);
         // Release the socket back to the ClientSocketPool so it can be
         // deleted or reused.
         pool_->ReleaseSocket(group_name_, std::move(socket_), pool_id_);
@@ -65,8 +78,6 @@ void ClientSocketHandle::ResetInternal(bool cancel) {
     RemoveHigherLayeredPool(higher_pool_);
   pool_ = NULL;
   idle_time_ = base::TimeDelta();
-  init_time_ = base::TimeTicks();
-  setup_time_ = base::TimeDelta();
   connect_timing_ = LoadTimingInfo::ConnectTiming();
   pool_id_ = -1;
 }
@@ -115,6 +126,11 @@ void ClientSocketHandle::RemoveHigherLayeredPool(
   }
 }
 
+void ClientSocketHandle::CloseIdleSocketsInGroup() {
+  if (pool_)
+    pool_->CloseIdleSocketsInGroup(group_name_);
+}
+
 bool ClientSocketHandle::GetLoadTimingInfo(
     bool is_reused,
     LoadTimingInfo* load_timing_info) const {
@@ -133,12 +149,19 @@ bool ClientSocketHandle::GetLoadTimingInfo(
   return true;
 }
 
+void ClientSocketHandle::DumpMemoryStats(
+    StreamSocket::SocketMemoryStats* stats) const {
+  if (!socket_)
+    return;
+  socket_->DumpMemoryStats(stats);
+}
+
 void ClientSocketHandle::SetSocket(std::unique_ptr<StreamSocket> s) {
   socket_ = std::move(s);
 }
 
 void ClientSocketHandle::OnIOComplete(int result) {
-  TRACE_EVENT0("net", "ClientSocketHandle::OnIOComplete");
+  TRACE_EVENT0(kNetTracingCategory, "ClientSocketHandle::OnIOComplete");
   CompletionCallback callback = user_callback_;
   user_callback_.Reset();
   HandleInitCompletion(result);
@@ -160,16 +183,14 @@ void ClientSocketHandle::HandleInitCompletion(int result) {
   }
   is_initialized_ = true;
   CHECK_NE(-1, pool_id_) << "Pool should have set |pool_id_| to a valid value.";
-  setup_time_ = base::TimeTicks::Now() - init_time_;
 
   // Broadcast that the socket has been acquired.
   // TODO(eroman): This logging is not complete, in particular set_socket() and
   // release() socket. It ends up working though, since those methods are being
   // used to layer sockets (and the destination sources are the same).
   DCHECK(socket_.get());
-  socket_->NetLog().BeginEvent(
-      NetLog::TYPE_SOCKET_IN_USE,
-      requesting_source_.ToEventParametersCallback());
+  socket_->NetLog().BeginEvent(NetLogEventType::SOCKET_IN_USE,
+                               requesting_source_.ToEventParametersCallback());
 }
 
 }  // namespace net

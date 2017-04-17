@@ -15,7 +15,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/utility_process_host.h"
 #include "content/public/browser/utility_process_host_client.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace {
@@ -54,8 +54,7 @@ void UtilityProcessMojoProxyResolverFactory::CreateProcessAndConnect() {
       IDS_UTILITY_PROCESS_PROXY_RESOLVER_NAME));
   bool process_started = utility_process_host->Start();
   if (process_started) {
-    utility_process_host->GetRemoteInterfaces()->GetInterface(
-        &resolver_factory_);
+    BindInterface(utility_process_host, &resolver_factory_);
     resolver_factory_.set_connection_error_handler(
         base::Bind(&UtilityProcessMojoProxyResolverFactory::OnConnectionError,
                    base::Unretained(this)));
@@ -67,7 +66,7 @@ void UtilityProcessMojoProxyResolverFactory::CreateProcessAndConnect() {
 
 std::unique_ptr<base::ScopedClosureRunner>
 UtilityProcessMojoProxyResolverFactory::CreateResolver(
-    const mojo::String& pac_script,
+    const std::string& pac_script,
     mojo::InterfaceRequest<net::interfaces::ProxyResolver> req,
     net::interfaces::ProxyResolverFactoryRequestClientPtr client) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -84,9 +83,9 @@ UtilityProcessMojoProxyResolverFactory::CreateResolver(
   num_proxy_resolvers_++;
   resolver_factory_->CreateResolver(pac_script, std::move(req),
                                     std::move(client));
-  return base::WrapUnique(new base::ScopedClosureRunner(
+  return base::MakeUnique<base::ScopedClosureRunner>(
       base::Bind(&UtilityProcessMojoProxyResolverFactory::OnResolverDestroyed,
-                 base::Unretained(this))));
+                 base::Unretained(this)));
 }
 
 void UtilityProcessMojoProxyResolverFactory::OnConnectionError() {

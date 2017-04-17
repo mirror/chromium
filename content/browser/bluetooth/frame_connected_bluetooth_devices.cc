@@ -4,12 +4,25 @@
 
 #include "content/browser/bluetooth/frame_connected_bluetooth_devices.h"
 
+#include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "base/strings/string_util.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/web_contents.h"
 #include "device/bluetooth/bluetooth_gatt_connection.h"
 
 namespace content {
+
+struct GATTConnectionAndServerClient {
+  GATTConnectionAndServerClient(
+      std::unique_ptr<device::BluetoothGattConnection> connection,
+      blink::mojom::WebBluetoothServerClientAssociatedPtr client)
+      : gatt_connection(std::move(connection)),
+        server_client(std::move(client)) {}
+
+  std::unique_ptr<device::BluetoothGattConnection> gatt_connection;
+  blink::mojom::WebBluetoothServerClientAssociatedPtr server_client;
+};
 
 FrameConnectedBluetoothDevices::FrameConnectedBluetoothDevices(
     RenderFrameHost* rfh)
@@ -23,79 +36,68 @@ FrameConnectedBluetoothDevices::~FrameConnectedBluetoothDevices() {
 }
 
 bool FrameConnectedBluetoothDevices::IsConnectedToDeviceWithId(
-    const std::string& device_id) {
+    const WebBluetoothDeviceId& device_id) {
   auto connection_iter = device_id_to_connection_map_.find(device_id);
   if (connection_iter == device_id_to_connection_map_.end()) {
     return false;
   }
-  // Owners of FrameConnectedBluetoothDevices should notify it when a device
-  // disconnects but currently Android and Mac don't notify of disconnection,
-  // so the map could get into a state where it's holding a stale connection.
-  // For this reason we return the value of IsConnected for the connection.
-  // TODO(ortuno): Always return true once Android and Mac notify of
-  // disconnection.
-  // http://crbug.com/607273
-  return connection_iter->second->IsConnected();
+  DCHECK(connection_iter->second->gatt_connection->IsConnected());
+  return true;
 }
 
 void FrameConnectedBluetoothDevices::Insert(
-    const std::string& device_id,
-    std::unique_ptr<device::BluetoothGattConnection> connection) {
-  auto connection_iter = device_id_to_connection_map_.find(device_id);
-  if (connection_iter != device_id_to_connection_map_.end()) {
-    // Owners of FrameConnectedBluetoothDevices should notify it when a device
-    // disconnects but currently Android and Mac don't notify of disconnection,
-    // so the map could get into a state where it's holding a stale connection.
-    // For this reason we check if the current connection is active and if
-    // not we remove it.
-    // TODO(ortuno): Remove once Android and Mac notify of disconnection.
-    // http://crbug.com/607273
-    if (!connection_iter->second->IsConnected()) {
-      device_address_to_id_map_.erase(
-          connection_iter->second->GetDeviceAddress());
-      device_id_to_connection_map_.erase(connection_iter);
-      DecrementDevicesConnectedCount();
-    } else {
-      // It's possible for WebBluetoothServiceImpl to issue two successive
-      // connection requests for which it would get two successive responses
-      // and consequently try to insert two BluetoothGattConnections for the
-      // same device. WebBluetoothServiceImpl should reject or queue connection
-      // requests if there is a pending connection already, but the platform
-      // abstraction doesn't currently support checking for pending connections.
-      // TODO(ortuno): CHECK that this never happens once the platform
-      // abstraction allows to check for pending connections.
-      // http://crbug.com/583544
-      return;
-    }
+    const WebBluetoothDeviceId& device_id,
+    std::unique_ptr<device::BluetoothGattConnection> connection,
+    blink::mojom::WebBluetoothServerClientAssociatedPtr client) {
+  if (device_id_to_connection_map_.find(device_id) !=
+      device_id_to_connection_map_.end()) {
+    // It's possible for WebBluetoothServiceImpl to issue two successive
+    // connection requests for which it would get two successive responses
+    // and consequently try to insert two BluetoothGattConnections for the
+    // same device. WebBluetoothServiceImpl should reject or queue connection
+    // requests if there is a pending connection already, but the platform
+    // abstraction doesn't currently support checking for pending connections.
+    // TODO(ortuno): CHECK that this never happens once the platform
+    // abstraction allows to check for pending connections.
+    // http://crbug.com/583544
+    return;
   }
   device_address_to_id_map_[connection->GetDeviceAddress()] = device_id;
-  device_id_to_connection_map_[device_id] = std::move(connection);
+  auto gatt_connection_and_client =
+      base::MakeUnique<GATTConnectionAndServerClient>(std::move(connection),
+                                                      std::move(client));
+  device_id_to_connection_map_[device_id] =
+      std::move(gatt_connection_and_client);
   IncrementDevicesConnectedCount();
 }
 
 void FrameConnectedBluetoothDevices::CloseConnectionToDeviceWithId(
-    const std::string& device_id) {
+    const WebBluetoothDeviceId& device_id) {
   auto connection_iter = device_id_to_connection_map_.find(device_id);
   if (connection_iter == device_id_to_connection_map_.end()) {
     return;
   }
   CHECK(device_address_to_id_map_.erase(
-      connection_iter->second->GetDeviceAddress()));
+      connection_iter->second->gatt_connection->GetDeviceAddress()));
   device_id_to_connection_map_.erase(connection_iter);
   DecrementDevicesConnectedCount();
 }
 
-std::string FrameConnectedBluetoothDevices::CloseConnectionToDeviceWithAddress(
+base::Optional<WebBluetoothDeviceId>
+FrameConnectedBluetoothDevices::CloseConnectionToDeviceWithAddress(
     const std::string& device_address) {
   auto device_address_iter = device_address_to_id_map_.find(device_address);
   if (device_address_iter == device_address_to_id_map_.end()) {
-    return std::string();
+    return base::nullopt;
   }
-  std::string device_id = device_address_iter->second;
+  WebBluetoothDeviceId device_id = device_address_iter->second;
+  auto device_id_iter = device_id_to_connection_map_.find(device_id);
+  CHECK(device_id_iter != device_id_to_connection_map_.end());
+  device_id_iter->second->server_client->GATTServerDisconnected();
   CHECK(device_address_to_id_map_.erase(device_address));
-  CHECK(device_id_to_connection_map_.erase(device_id));
+  device_id_to_connection_map_.erase(device_id);
   DecrementDevicesConnectedCount();
-  return device_id;
+  return base::make_optional(device_id);
 }
 
 void FrameConnectedBluetoothDevices::IncrementDevicesConnectedCount() {

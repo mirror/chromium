@@ -6,18 +6,17 @@
 
 #include <memory>
 
-#include "ash/common/ash_layout_constants.h"
-#include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
-#include "ash/common/wm_shell.h"
+#include "ash/ash_layout_constants.h"
 #include "ash/frame/caption_buttons/frame_caption_button.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/test_session_state_delegate.h"
-#include "grit/ash_resources.h"
-#include "ui/base/resource/resource_bundle.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/image/image_unittest_util.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
@@ -111,12 +110,19 @@ class CustomFrameViewAshTest : public test::AshTestBase {
 
   test::TestSessionStateDelegate* GetTestSessionStateDelegate() {
     return static_cast<test::TestSessionStateDelegate*>(
-        WmShell::Get()->GetSessionStateDelegate());
+        ShellPort::Get()->GetSessionStateDelegate());
   }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CustomFrameViewAshTest);
 };
+
+// Verifies the client view is not placed at a y location of 0.
+TEST_F(CustomFrameViewAshTest, ClientViewCorrectlyPlaced) {
+  std::unique_ptr<views::Widget> widget(CreateWidget(new TestWidgetDelegate));
+  widget->Show();
+  EXPECT_NE(0, widget->client_view()->bounds().y());
+}
 
 // Test that the height of the header is correct upon initially displaying
 // the widget.
@@ -182,10 +188,8 @@ TEST_F(CustomFrameViewAshTest, AvatarIcon) {
   EXPECT_FALSE(custom_frame_view->GetAvatarIconViewForTest());
 
   // Avatar image becomes available.
-  const gfx::ImageSkia user_image =
-      *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
-          IDR_AURA_UBER_TRAY_GUEST_ICON);
-  GetTestSessionStateDelegate()->SetUserImage(user_image);
+  GetTestSessionStateDelegate()->SetUserImage(
+      gfx::test::CreateImage(27, 27).AsImageSkia());
   widget->Hide();
   widget->Show();
   EXPECT_TRUE(custom_frame_view->GetAvatarIconViewForTest());
@@ -207,13 +211,13 @@ TEST_F(CustomFrameViewAshTest, HeaderViewNotifiedOfChildSizeChange) {
 
   const gfx::Rect initial =
       delegate->GetFrameCaptionButtonContainerViewBounds();
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       true);
   delegate->EndFrameCaptionButtonContainerViewAnimations();
   const gfx::Rect maximize_mode_bounds =
       delegate->GetFrameCaptionButtonContainerViewBounds();
   EXPECT_GT(initial.width(), maximize_mode_bounds.width());
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       false);
   delegate->EndFrameCaptionButtonContainerViewAnimations();
   const gfx::Rect after_restore =

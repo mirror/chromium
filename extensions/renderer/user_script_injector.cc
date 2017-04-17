@@ -9,16 +9,16 @@
 
 #include "base/lazy_instance.h"
 #include "content/public/common/url_constants.h"
-#include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/render_frame.h"
+#include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/render_view.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/guest_view/extensions_guest_view_messages.h"
 #include "extensions/common/permissions/permissions_data.h"
+#include "extensions/grit/extensions_renderer_resources.h"
 #include "extensions/renderer/injection_host.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/scripts_run_info.h"
-#include "grit/extensions_renderer_resources.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
@@ -44,11 +44,6 @@ struct RoutingInfoKey {
 
 using RoutingInfoMap = std::map<RoutingInfoKey, bool>;
 
-// These two strings are injected before and after the Greasemonkey API and
-// user script to wrap it in an anonymous scope.
-const char kUserScriptHead[] = "(function (unsafeWindow) {\n";
-const char kUserScriptTail[] = "\n})(window);";
-
 // A map records whether a given |script_id| from a webview-added user script
 // is allowed to inject on the render of given |routing_id|.
 // Once a script is added, the decision of whether or not allowed to inject
@@ -56,7 +51,7 @@ const char kUserScriptTail[] = "\n})(window);";
 // After removed by the webview, the user scipt will also be removed
 // from the render. Therefore, there won't be any query from the same
 // |script_id| and |routing_id| pair.
-base::LazyInstance<RoutingInfoMap> g_routing_info_map =
+base::LazyInstance<RoutingInfoMap>::DestructorAtExit g_routing_info_map =
     LAZY_INSTANCE_INITIALIZER;
 
 // Greasemonkey API source that is injected with the scripts.
@@ -65,23 +60,36 @@ struct GreasemonkeyApiJsString {
   blink::WebScriptSource GetSource() const;
 
  private:
-  std::string source_;
+  blink::WebString source_;
 };
 
 // The below constructor, monstrous as it is, just makes a WebScriptSource from
 // the GreasemonkeyApiJs resource.
-GreasemonkeyApiJsString::GreasemonkeyApiJsString()
-    : source_(ResourceBundle::GetSharedInstance()
-                  .GetRawDataResource(IDR_GREASEMONKEY_API_JS)
-                  .as_string()) {
+GreasemonkeyApiJsString::GreasemonkeyApiJsString() {
+  base::StringPiece source_piece =
+      ResourceBundle::GetSharedInstance().GetRawDataResource(
+          IDR_GREASEMONKEY_API_JS);
+  source_ =
+      blink::WebString::FromUTF8(source_piece.data(), source_piece.length());
 }
 
 blink::WebScriptSource GreasemonkeyApiJsString::GetSource() const {
-  return blink::WebScriptSource(blink::WebString::fromUTF8(source_));
+  return blink::WebScriptSource(source_);
 }
 
-base::LazyInstance<GreasemonkeyApiJsString> g_greasemonkey_api =
+base::LazyInstance<GreasemonkeyApiJsString>::Leaky g_greasemonkey_api =
     LAZY_INSTANCE_INITIALIZER;
+
+bool ShouldInjectScripts(const UserScript::FileList& scripts,
+                         const std::set<std::string>& injected_files) {
+  for (const std::unique_ptr<UserScript::File>& file : scripts) {
+    // Check if the script is already injected.
+    if (injected_files.count(file->url().path()) == 0) {
+      return true;
+    }
+  }
+  return false;
+}
 
 }  // namespace
 
@@ -89,6 +97,7 @@ UserScriptInjector::UserScriptInjector(const UserScript* script,
                                        UserScriptSet* script_list,
                                        bool is_declarative)
     : script_(script),
+      user_script_set_(script_list),
       script_id_(script_->id()),
       host_id_(script_->host_id()),
       is_declarative_(is_declarative),
@@ -101,24 +110,23 @@ UserScriptInjector::~UserScriptInjector() {
 
 void UserScriptInjector::OnUserScriptsUpdated(
     const std::set<HostID>& changed_hosts,
-    const std::vector<UserScript*>& scripts) {
+    const UserScriptList& scripts) {
+  // When user scripts are updated, all the old script pointers are invalidated.
+  script_ = nullptr;
   // If the host causing this injection changed, then this injection
   // will be removed, and there's no guarantee the backing script still exists.
-  if (changed_hosts.count(host_id_) > 0) {
-    script_ = nullptr;
+  if (changed_hosts.count(host_id_) > 0)
     return;
-  }
 
-  for (std::vector<UserScript*>::const_iterator iter = scripts.begin();
-       iter != scripts.end();
-       ++iter) {
-    // We need to compare to |script_id_| (and not to script_->id()) because the
-    // old |script_| may be deleted by now.
-    if ((*iter)->id() == script_id_) {
-      script_ = *iter;
+  for (const std::unique_ptr<UserScript>& script : scripts) {
+    if (script->id() == script_id_) {
+      script_ = script.get();
       break;
     }
   }
+  // If |host_id_| wasn't in |changed_hosts|, then the script for this injection
+  // should be guaranteed to exist.
+  DCHECK(script_);
 }
 
 UserScript::InjectionType UserScriptInjector::script_type() const {
@@ -138,21 +146,25 @@ bool UserScriptInjector::ExpectsResults() const {
 }
 
 bool UserScriptInjector::ShouldInjectJs(
-    UserScript::RunLocation run_location) const {
+    UserScript::RunLocation run_location,
+    const std::set<std::string>& executing_scripts) const {
   return script_ && script_->run_location() == run_location &&
-         !script_->js_scripts().empty();
+         !script_->js_scripts().empty() &&
+         ShouldInjectScripts(script_->js_scripts(), executing_scripts);
 }
 
 bool UserScriptInjector::ShouldInjectCss(
-    UserScript::RunLocation run_location) const {
+    UserScript::RunLocation run_location,
+    const std::set<std::string>& injected_stylesheets) const {
   return script_ && run_location == UserScript::DOCUMENT_START &&
-         !script_->css_scripts().empty();
+         !script_->css_scripts().empty() &&
+         ShouldInjectScripts(script_->css_scripts(), injected_stylesheets);
 }
 
 PermissionsData::AccessType UserScriptInjector::CanExecuteOnFrame(
     const InjectionHost* injection_host,
     blink::WebLocalFrame* web_frame,
-    int tab_id) const {
+    int tab_id) {
   // There is no harm in allowing the injection when the script is gone,
   // because there is nothing to inject.
   if (!script_)
@@ -160,8 +172,8 @@ PermissionsData::AccessType UserScriptInjector::CanExecuteOnFrame(
 
   if (script_->consumer_instance_type() ==
           UserScript::ConsumerInstanceType::WEBVIEW) {
-    int routing_id = content::RenderView::FromWebView(web_frame->top()->view())
-                        ->GetRoutingID();
+    int routing_id = content::RenderView::FromWebView(web_frame->Top()->View())
+                         ->GetRoutingID();
 
     RoutingInfoKey key(routing_id, script_->id());
 
@@ -187,7 +199,7 @@ PermissionsData::AccessType UserScriptInjector::CanExecuteOnFrame(
   }
 
   GURL effective_document_url = ScriptContext::GetEffectiveDocumentURL(
-      web_frame, web_frame->document().url(), script_->match_about_blank());
+      web_frame, web_frame->GetDocument().Url(), script_->match_about_blank());
 
   return injection_host->CanExecuteOnFrame(
       effective_document_url,
@@ -198,90 +210,59 @@ PermissionsData::AccessType UserScriptInjector::CanExecuteOnFrame(
 
 std::vector<blink::WebScriptSource> UserScriptInjector::GetJsSources(
     UserScript::RunLocation run_location,
-    ScriptsRunInfo* scripts_run_info) const {
+    std::set<std::string>* executing_scripts,
+    size_t* num_injected_js_scripts) const {
+  DCHECK(script_);
   std::vector<blink::WebScriptSource> sources;
-  if (!script_)
-    return sources;
 
   DCHECK_EQ(script_->run_location(), run_location);
 
   const UserScript::FileList& js_scripts = script_->js_scripts();
-
-  for (UserScript::FileList::const_iterator iter = js_scripts.begin();
-       iter != js_scripts.end();
-       ++iter) {
-    const GURL& script_url = iter->url();
-    // Check if the script is already injected.
-    if (scripts_run_info->injected_scripts.count(script_url) != 0)
-      continue;
-
-    std::string content = iter->GetContent().as_string();
-
-    // We add this dumb function wrapper for user scripts to emulate what
-    // Greasemonkey does.
-    if (script_->emulate_greasemonkey()) {
-      content.insert(0, kUserScriptHead);
-      content += kUserScriptTail;
-    }
-    sources.push_back(blink::WebScriptSource(
-        blink::WebString::fromUTF8(content), script_url));
-
-    scripts_run_info->injected_scripts.insert(script_url);
-  }
-
+  sources.reserve(js_scripts.size() +
+                  (script_->emulate_greasemonkey() ? 1 : 0));
   // Emulate Greasemonkey API for scripts that were converted to extension
   // user scripts.
   if (script_->emulate_greasemonkey())
-    sources.insert(sources.begin(), g_greasemonkey_api.Get().GetSource());
+    sources.push_back(g_greasemonkey_api.Get().GetSource());
+  for (const std::unique_ptr<UserScript::File>& file : js_scripts) {
+    const GURL& script_url = file->url();
+    // Check if the script is already injected.
+    if (executing_scripts->count(script_url.path()) != 0)
+      continue;
+
+    sources.push_back(blink::WebScriptSource(
+        user_script_set_->GetJsSource(*file, script_->emulate_greasemonkey()),
+        script_url));
+
+    (*num_injected_js_scripts) += 1;
+    executing_scripts->insert(script_url.path());
+  }
 
   return sources;
 }
 
-std::vector<std::string> UserScriptInjector::GetCssSources(
+std::vector<blink::WebString> UserScriptInjector::GetCssSources(
     UserScript::RunLocation run_location,
-    ScriptsRunInfo* scripts_run_info) const {
+    std::set<std::string>* injected_stylesheets,
+    size_t* num_injected_stylesheets) const {
+  DCHECK(script_);
   DCHECK_EQ(UserScript::DOCUMENT_START, run_location);
 
-  std::vector<std::string> sources;
-  if (!script_)
-    return sources;
+  std::vector<blink::WebString> sources;
 
   const UserScript::FileList& css_scripts = script_->css_scripts();
-
-  for (UserScript::FileList::const_iterator iter = css_scripts.begin();
-       iter != css_scripts.end();
-       ++iter) {
-    const GURL& script_url = iter->url();
+  sources.reserve(css_scripts.size());
+  for (const std::unique_ptr<UserScript::File>& file : script_->css_scripts()) {
+    const std::string& stylesheet_path = file->url().path();
     // Check if the stylesheet is already injected.
-    if (scripts_run_info->injected_scripts.find(script_url) ==
-        scripts_run_info->injected_scripts.end()) {
-      sources.push_back(iter->GetContent().as_string());
+    if (injected_stylesheets->count(stylesheet_path) != 0)
+      continue;
 
-      scripts_run_info->injected_scripts.insert(script_url);
-    }
+    sources.push_back(user_script_set_->GetCssSource(*file));
+    (*num_injected_stylesheets) += 1;
+    injected_stylesheets->insert(stylesheet_path);
   }
   return sources;
-}
-
-void UserScriptInjector::GetRunInfo(
-    ScriptsRunInfo* scripts_run_info,
-    UserScript::RunLocation run_location) const {
-  if (!script_)
-    return;
-
-  if (ShouldInjectJs(run_location)) {
-    const UserScript::FileList& js_scripts = script_->js_scripts();
-    scripts_run_info->num_js += js_scripts.size();
-    for (UserScript::FileList::const_iterator iter = js_scripts.begin();
-         iter != js_scripts.end();
-         ++iter) {
-      scripts_run_info->executing_scripts[host_id_.id()].insert(
-          iter->url().path());
-    }
-  }
-
-  if (ShouldInjectCss(run_location))
-    scripts_run_info->num_css += script_->css_scripts().size();
 }
 
 void UserScriptInjector::OnInjectionComplete(

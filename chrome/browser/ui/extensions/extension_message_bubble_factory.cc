@@ -18,7 +18,9 @@
 #include "chrome/browser/extensions/suspicious_extension_bubble_delegate.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/common/channel_info.h"
+#include "chrome/common/chrome_switches.h"
 #include "components/version_info/version_info.h"
 #include "extensions/common/feature_switch.h"
 
@@ -27,7 +29,7 @@ namespace {
 // A map of all profiles evaluated, so we can tell if it's the initial check.
 // TODO(devlin): It would be nice to coalesce all the "profiles evaluated" maps
 // that are in the different bubble controllers.
-base::LazyInstance<std::set<Profile*> > g_profiles_evaluated =
+base::LazyInstance<std::set<Profile*>>::DestructorAtExit g_profiles_evaluated =
     LAZY_INSTANCE_INITIALIZER;
 
 // This is used to turn on override whether bubbles are enabled or disabled for
@@ -83,6 +85,14 @@ bool EnableDevModeBubble() {
   if (extensions::FeatureSwitch::force_dev_mode_highlighting()->IsEnabled())
     return true;
 
+  // If an automated test is controlling the browser, we don't show the dev mode
+  // bubble because it interferes with focus. This isn't a security concern
+  // because we'll instead show an (even scarier) infobar. See also
+  // AutomationInfoBarDelegate.
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnableAutomation))
+    return false;
+
 #if defined(OS_WIN)
   if (chrome::GetChannel() >= version_info::Channel::BETA)
     return true;
@@ -133,8 +143,10 @@ ExtensionMessageBubbleFactory::GetController() {
   }
 
   if (EnableSettingsApiBubble()) {
-    // No use showing this if it's not the startup of the profile.
-    if (is_initial_check) {
+    // No use showing this if it's not the startup of the profile, and if the
+    // browser was restarted, then we always do a session restore (rather than
+    // showing normal startup pages).
+    if (is_initial_check && !StartupBrowserCreator::WasRestarted()) {
       controller.reset(new extensions::ExtensionMessageBubbleController(
               new extensions::SettingsApiBubbleDelegate(
                   browser_->profile(), extensions::BUBBLE_TYPE_STARTUP_PAGES),

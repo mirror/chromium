@@ -2,24 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// https://webbluetoothchrome.github.io/web-bluetooth/#idl-def-bluetoothgattcharacteristic
+// https://webbluetoothcg.github.io/web-bluetooth/#bluetoothremotegattcharacteristic
 
 // Implement BluetoothRemoteGATTCharacteristic interface: https://crbug.com/483344
 
 [
     DependentLifetime,
-    OriginTrialEnabled=WebBluetooth,
+    RuntimeEnabled=WebBluetooth,
 ] interface BluetoothRemoteGATTCharacteristic : EventTarget {//: CharacteristicEventHandlers {
-    readonly attribute BluetoothRemoteGATTService        service;
-    readonly attribute UUID                              uuid;
+    [SameObject] readonly attribute BluetoothRemoteGATTService service;
+    readonly attribute UUID uuid;
     readonly attribute BluetoothCharacteristicProperties properties;
-    readonly attribute DataView?                         value;
-    // Promise<BluetoothRemoteGATTDescriptor>           getDescriptor(BluetoothDescriptorUUID descriptor);
-    // Promise<sequence<BluetoothRemoteGATTDescriptor>> getDescriptors(optional BluetoothDescriptorUUID descriptor);
-    [CallWith=ScriptState] Promise<DataView>    readValue();
-    [CallWith=ScriptState] Promise<void>        writeValue(BufferSource value);
-    [CallWith=ScriptState] Promise<void>        startNotifications();
-    [CallWith=ScriptState] Promise<void>        stopNotifications();
+    readonly attribute DataView? value;
+    [RaisesException, CallWith=ScriptState, MeasureAs=WebBluetoothRemoteCharacteristicGetDescriptor] Promise<BluetoothRemoteGATTDescriptor> getDescriptor(BluetoothDescriptorUUID descriptor);
+    [RaisesException, CallWith=ScriptState, MeasureAs=WebBluetoothRemoteCharacteristicGetDescriptors] Promise<sequence<BluetoothRemoteGATTDescriptor>> getDescriptors(optional BluetoothDescriptorUUID descriptor);
+    [CallWith=ScriptState, MeasureAs=WebBluetoothRemoteCharacteristicReadValue] Promise<DataView> readValue();
+    [CallWith=ScriptState, MeasureAs=WebBluetoothRemoteCharacteristicWriteValue] Promise<void> writeValue(BufferSource value);
+    [CallWith=ScriptState, MeasureAs=WebBluetoothRemoteCharacteristicStartNotifications] Promise<BluetoothRemoteGATTCharacteristic> startNotifications();
+    [CallWith=ScriptState, MeasureAs=WebBluetoothRemoteCharacteristicStopNotifications] Promise<BluetoothRemoteGATTCharacteristic> stopNotifications();
 
     // TODO(ortuno): Move this to CharacteristicEventHandlers.
     // http://crbug.com/537459

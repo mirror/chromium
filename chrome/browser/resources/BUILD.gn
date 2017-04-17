@@ -5,6 +5,8 @@
 import("//chrome/common/features.gni")
 import("//tools/grit/grit_rule.gni")
 
+assert(!is_ios, "Chromium/iOS shouldn't use anything in //chrome")
+
 grit("net_internals_resources") {
   source = "net_internals_resources.grd"
   defines = chrome_grit_defines
@@ -37,11 +39,22 @@ grit("password_manager_internals_resources") {
 
 grit("policy_resources") {
   source = "md_policy/policy_resources.grd"
+  defines = chrome_grit_defines
   outputs = [
     "grit/policy_resources.h",
     "grit/policy_resources_map.cc",
     "grit/policy_resources_map.h",
     "policy_resources.pak",
+  ]
+  output_dir = "$root_gen_dir/chrome"
+}
+
+grit("task_scheduler_internals_resources") {
+  source = "task_scheduler_internals/resources.grd"
+  defines = chrome_grit_defines
+  outputs = [
+    "grit/task_scheduler_internals_resources.h",
+    "task_scheduler_internals_resources.pak",
   ]
   output_dir = "$root_gen_dir/chrome"
 }
@@ -56,20 +69,14 @@ grit("translate_internals_resources") {
   output_dir = "$root_gen_dir/chrome"
 }
 
-# GYP version: copy command of chrome_extra_resources
-copy("extension_resource_demo") {
-  sources = [
-    "extension_resource/demo/library.js",
-  ]
-  outputs = [
-    "$root_out_dir/resources/extension/demo/library.js",
-  ]
-}
-
-if (!is_ios) {
+if (!is_android) {
   grit("component_extension_resources") {
     source = "component_extension_resources.grd"
     defines = chrome_grit_defines
+    if (enable_hangout_services_extension) {
+      defines += [ "enable_hangout_services_extension" ]
+    }
+
     outputs = [
       "grit/component_extension_resources.h",
       "grit/component_extension_resources_map.cc",
@@ -80,7 +87,19 @@ if (!is_ios) {
   }
 
   grit("settings_resources") {
-    source = "settings/settings_resources.grd"
+    if (use_vulcanize) {
+      source = "settings/settings_resources_vulcanized.grd"
+      deps = [
+        "//chrome/browser/resources/settings:build",
+      ]
+      grit_flags = [
+        "-E",
+        "root_gen_dir=" + rebase_path(root_gen_dir, root_build_dir),
+      ]
+    } else {
+      source = "settings/settings_resources.grd"
+    }
+
     defines = chrome_grit_defines
     outputs = [
       "grit/settings_resources.h",
@@ -110,17 +129,29 @@ if (!is_ios) {
     ]
     output_dir = "$root_gen_dir/chrome"
   }
+}
 
-  grit("quota_internals_resources") {
-    source = "quota_internals_resources.grd"
-    defines = chrome_grit_defines
-    outputs = [
-      "grit/quota_internals_resources.h",
-      "quota_internals_resources.pak",
-    ]
-    output_dir = "$root_gen_dir/chrome"
-  }
+grit("quota_internals_resources") {
+  source = "quota_internals_resources.grd"
+  defines = chrome_grit_defines
+  outputs = [
+    "grit/quota_internals_resources.h",
+    "quota_internals_resources.pak",
+  ]
+  output_dir = "$root_gen_dir/chrome"
+}
 
+grit("webapks_ui_resources") {
+  source = "webapks_ui_resources.grd"
+  defines = chrome_grit_defines
+  outputs = [
+    "grit/webapks_ui_resources.h",
+    "webapks_ui_resources.pak",
+  ]
+  output_dir = "$root_gen_dir/chrome"
+}
+
+if (enable_extensions) {
   grit("sync_file_system_internals_resources") {
     source = "sync_file_system_internals_resources.grd"
     defines = chrome_grit_defines

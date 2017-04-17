@@ -10,33 +10,34 @@
 
 namespace blink {
 
-class LinkElementLoadingTest : public SimTest {
-};
+class LinkElementLoadingTest : public SimTest {};
 
-TEST_F(LinkElementLoadingTest, ShouldCancelLoadingStyleSheetIfLinkElementIsDisconnected)
-{
-    SimRequest mainResource("https://example.com/test.html", "text/html");
-    SimRequest cssResource("https://example.com/test.css", "text/css");
+TEST_F(LinkElementLoadingTest,
+       ShouldCancelLoadingStyleSheetIfLinkElementIsDisconnected) {
+  SimRequest main_resource("https://example.com/test.html", "text/html");
+  SimRequest css_resource("https://example.com/test.css", "text/css");
 
-    loadURL("https://example.com/test.html");
+  LoadURL("https://example.com/test.html");
 
-    mainResource.start();
-    mainResource.write("<!DOCTYPE html><link id=link rel=stylesheet href=test.css>");
+  main_resource.Start();
+  main_resource.Write(
+      "<!DOCTYPE html><link id=link rel=stylesheet href=test.css>");
 
-    // Sheet is streaming in, but not ready yet.
-    cssResource.start();
+  // Sheet is streaming in, but not ready yet.
+  css_resource.Start();
 
-    // Remove a link element from a document
-    HTMLLinkElement* link = toHTMLLinkElement(document().getElementById("link"));
-    EXPECT_NE(nullptr, link);
-    link->remove();
+  // Remove a link element from a document
+  HTMLLinkElement* link =
+      toHTMLLinkElement(GetDocument().GetElementById("link"));
+  EXPECT_NE(nullptr, link);
+  link->remove();
 
-    // Finish the load.
-    cssResource.complete();
-    mainResource.finish();
+  // Finish the load.
+  css_resource.Complete();
+  main_resource.Finish();
 
-    // Link element's sheet loading should be canceled.
-    EXPECT_EQ(nullptr, link->sheet());
+  // Link element's sheet loading should be canceled.
+  EXPECT_EQ(nullptr, link->sheet());
 }
 
-} // namespace blink
+}  // namespace blink

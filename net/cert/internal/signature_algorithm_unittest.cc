@@ -8,6 +8,7 @@
 
 #include "base/files/file_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "net/cert/internal/cert_errors.h"
 #include "net/cert/pem_tokenizer.h"
 #include "net/der/input.h"
 #include "net/der/parser.h"
@@ -23,15 +24,25 @@ namespace {
 template <size_t N>
 bool ParseDer(const uint8_t (&data)[N],
               std::unique_ptr<SignatureAlgorithm>* out) {
-  *out = SignatureAlgorithm::CreateFromDer(der::Input(data, N));
-  return !!*out;
+  CertErrors errors;
+  *out = SignatureAlgorithm::Create(der::Input(data, N), &errors);
+  bool success = !!*out;
+
+  // TODO(crbug.com/634443): Test the errors.
+  // if (!success)
+  //   EXPECT_FALSE(errors.empty());
+
+  return success;
 }
 
 // Parses a SignatureAlgorithm given an empty DER input.
 TEST(SignatureAlgorithmTest, ParseDerEmpty) {
+  CertErrors errors;
   std::unique_ptr<SignatureAlgorithm> algorithm =
-      SignatureAlgorithm::CreateFromDer(der::Input());
+      SignatureAlgorithm::Create(der::Input(), &errors);
   ASSERT_FALSE(algorithm);
+  // TODO(crbug.com/634443): Test the errors.
+  // EXPECT_FALSE(errors.empty());
 }
 
 // Parses a SignatureAlgorithm given invalid DER input.
@@ -1051,6 +1062,69 @@ TEST(SignatureAlgorithmTest, ParseDerRsaPssNonDefaultHashAndMaskGenAndSalt) {
   ASSERT_TRUE(params);
   EXPECT_EQ(DigestAlgorithm::Sha256, params->mgf1_hash());
   EXPECT_EQ(10u, params->salt_length());
+}
+
+// Parses a md5WithRSAEncryption which contains a NULL parameters field.
+//
+//   SEQUENCE (2 elem)
+//       OBJECT IDENTIFIER  1.2.840.113549.1.1.4
+//       NULL
+TEST(SignatureAlgorithmTest, ParseDerMd5WithRsaEncryptionNullParams) {
+  // clang-format off
+  const uint8_t kData[] = {
+      0x30, 0x0D,  // SEQUENCE (13 bytes)
+      0x06, 0x09,  // OBJECT IDENTIFIER (9 bytes)
+      0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x04,
+      0x05, 0x00,  // NULL (0 bytes)
+  };
+  // clang-format on
+  std::unique_ptr<SignatureAlgorithm> algorithm;
+  ASSERT_TRUE(ParseDer(kData, &algorithm));
+
+  EXPECT_EQ(SignatureAlgorithmId::RsaPkcs1, algorithm->algorithm());
+  EXPECT_EQ(DigestAlgorithm::Md5, algorithm->digest());
+}
+
+// Parses a md4WithRSAEncryption which contains a NULL parameters field.
+//
+//   SEQUENCE (2 elem)
+//       OBJECT IDENTIFIER  1.2.840.113549.1.1.3
+//       NULL
+TEST(SignatureAlgorithmTest, ParseDerMd4WithRsaEncryptionNullParams) {
+  // clang-format off
+  const uint8_t kData[] = {
+      0x30, 0x0D,  // SEQUENCE (13 bytes)
+      0x06, 0x09,  // OBJECT IDENTIFIER (9 bytes)
+      0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x03,
+      0x05, 0x00,  // NULL (0 bytes)
+  };
+  // clang-format on
+  std::unique_ptr<SignatureAlgorithm> algorithm;
+  ASSERT_TRUE(ParseDer(kData, &algorithm));
+
+  EXPECT_EQ(SignatureAlgorithmId::RsaPkcs1, algorithm->algorithm());
+  EXPECT_EQ(DigestAlgorithm::Md4, algorithm->digest());
+}
+
+// Parses a md2WithRSAEncryption which contains a NULL parameters field.
+//
+//   SEQUENCE (2 elem)
+//       OBJECT IDENTIFIER  1.2.840.113549.1.1.2
+//       NULL
+TEST(SignatureAlgorithmTest, ParseDerMd2WithRsaEncryptionNullParams) {
+  // clang-format off
+  const uint8_t kData[] = {
+      0x30, 0x0D,  // SEQUENCE (13 bytes)
+      0x06, 0x09,  // OBJECT IDENTIFIER (9 bytes)
+      0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x02,
+      0x05, 0x00,  // NULL (0 bytes)
+  };
+  // clang-format on
+  std::unique_ptr<SignatureAlgorithm> algorithm;
+  ASSERT_TRUE(ParseDer(kData, &algorithm));
+
+  EXPECT_EQ(SignatureAlgorithmId::RsaPkcs1, algorithm->algorithm());
+  EXPECT_EQ(DigestAlgorithm::Md2, algorithm->digest());
 }
 
 }  // namespace

@@ -31,75 +31,67 @@
 #include "core/svg/SVGStaticStringList.h"
 
 #include "core/svg/SVGElement.h"
+#include "core/svg/SVGStringListTearOff.h"
 
 namespace blink {
 
-SVGStaticStringList::SVGStaticStringList(SVGElement* contextElement, const QualifiedName& attributeName)
-    : SVGAnimatedPropertyBase(AnimatedUnknown, contextElement, attributeName)
-    , m_value(SVGStringList::create())
-{
-    ASSERT(contextElement);
+SVGStaticStringList::SVGStaticStringList(SVGElement* context_element,
+                                         const QualifiedName& attribute_name)
+    : SVGAnimatedPropertyBase(kAnimatedUnknown,
+                              context_element,
+                              attribute_name),
+      value_(SVGStringList::Create()) {
+  DCHECK(context_element);
 }
 
-SVGStaticStringList::~SVGStaticStringList()
-{
+SVGStaticStringList::~SVGStaticStringList() {}
+
+DEFINE_TRACE(SVGStaticStringList) {
+  visitor->Trace(value_);
+  visitor->Trace(tear_off_);
+  SVGAnimatedPropertyBase::Trace(visitor);
 }
 
-DEFINE_TRACE(SVGStaticStringList)
-{
-    visitor->trace(m_value);
-    visitor->trace(m_tearOff);
-    SVGAnimatedPropertyBase::trace(visitor);
+SVGPropertyBase* SVGStaticStringList::CurrentValueBase() {
+  return value_.Get();
 }
 
-SVGPropertyBase* SVGStaticStringList::currentValueBase()
-{
-    return m_value.get();
+const SVGPropertyBase& SVGStaticStringList::BaseValueBase() const {
+  NOTREACHED();
+  return *value_;
 }
 
-const SVGPropertyBase& SVGStaticStringList::baseValueBase() const
-{
-    ASSERT_NOT_REACHED();
-    return *m_value;
+bool SVGStaticStringList::IsAnimating() const {
+  return false;
 }
 
-bool SVGStaticStringList::isAnimating() const
-{
-    return false;
+SVGPropertyBase* SVGStaticStringList::CreateAnimatedValue() {
+  NOTREACHED();
+  return nullptr;
 }
 
-SVGPropertyBase* SVGStaticStringList::createAnimatedValue()
-{
-    ASSERT_NOT_REACHED();
-    return nullptr;
+void SVGStaticStringList::SetAnimatedValue(SVGPropertyBase*) {
+  NOTREACHED();
 }
 
-void SVGStaticStringList::setAnimatedValue(SVGPropertyBase*)
-{
-    ASSERT_NOT_REACHED();
+void SVGStaticStringList::AnimationEnded() {
+  NOTREACHED();
 }
 
-void SVGStaticStringList::animationEnded()
-{
-    ASSERT_NOT_REACHED();
+bool SVGStaticStringList::NeedsSynchronizeAttribute() {
+  return tear_off_;
 }
 
-bool SVGStaticStringList::needsSynchronizeAttribute()
-{
-    return m_tearOff;
+SVGStringListTearOff* SVGStaticStringList::TearOff() {
+  if (!tear_off_)
+    tear_off_ = SVGStringListTearOff::Create(
+        value_, contextElement(), kPropertyIsNotAnimVal, AttributeName());
+
+  return tear_off_.Get();
 }
 
-SVGStringListTearOff* SVGStaticStringList::tearOff()
-{
-    if (!m_tearOff)
-        m_tearOff = SVGStringListTearOff::create(m_value, contextElement(), PropertyIsNotAnimVal, attributeName());
-
-    return m_tearOff.get();
+SVGParsingError SVGStaticStringList::SetBaseValueAsString(const String& value) {
+  return value_->SetValueAsString(value);
 }
 
-SVGParsingError SVGStaticStringList::setBaseValueAsString(const String& value)
-{
-    return m_value->setValueAsString(value);
-}
-
-} // namespace blink
+}  // namespace blink

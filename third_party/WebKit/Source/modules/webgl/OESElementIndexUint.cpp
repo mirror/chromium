@@ -28,33 +28,27 @@
 namespace blink {
 
 OESElementIndexUint::OESElementIndexUint(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
-    context->extensionsUtil()->ensureExtensionEnabled("GL_OES_element_index_uint");
+    : WebGLExtension(context) {
+  context->ExtensionsUtil()->EnsureExtensionEnabled(
+      "GL_OES_element_index_uint");
 }
 
-OESElementIndexUint::~OESElementIndexUint()
-{
+WebGLExtensionName OESElementIndexUint::GetName() const {
+  return kOESElementIndexUintName;
 }
 
-WebGLExtensionName OESElementIndexUint::name() const
-{
-    return OESElementIndexUintName;
+OESElementIndexUint* OESElementIndexUint::Create(
+    WebGLRenderingContextBase* context) {
+  return new OESElementIndexUint(context);
 }
 
-OESElementIndexUint* OESElementIndexUint::create(WebGLRenderingContextBase* context)
-{
-    return new OESElementIndexUint(context);
+bool OESElementIndexUint::Supported(WebGLRenderingContextBase* context) {
+  return context->ExtensionsUtil()->SupportsExtension(
+      "GL_OES_element_index_uint");
 }
 
-bool OESElementIndexUint::supported(WebGLRenderingContextBase* context)
-{
-    return context->extensionsUtil()->supportsExtension("GL_OES_element_index_uint");
+const char* OESElementIndexUint::ExtensionName() {
+  return "OES_element_index_uint";
 }
 
-const char* OESElementIndexUint::extensionName()
-{
-    return "OES_element_index_uint";
-}
-
-} // namespace blink
+}  // namespace blink

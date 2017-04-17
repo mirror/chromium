@@ -9,12 +9,12 @@
 #include <memory>
 #include <vector>
 
+#include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_field_prediction_map.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "url/gurl.h"
 
 namespace blink {
-class WebDocument;
 class WebFormElement;
 class WebFormControlElement;
 class WebFrame;
@@ -23,8 +23,6 @@ class WebInputElement;
 
 namespace autofill {
 
-struct FormData;
-struct FormFieldData;
 struct PasswordForm;
 
 // Tests whether the given form is a GAIA reauthentication form. The form is
@@ -35,8 +33,10 @@ bool IsGaiaReauthenticationForm(
     const GURL& origin,
     const std::vector<blink::WebFormControlElement>& control_elements);
 
-typedef std::map<const blink::WebInputElement,
-                 blink::WebString> ModifiedValues;
+typedef std::map<
+    const blink::WebFormControlElement,
+    std::pair<std::unique_ptr<base::string16>, FieldPropertiesMask>>
+    FieldValueAndPropertiesMaskMap;
 
 // Create a PasswordForm from DOM form. Webkit doesn't allow storing
 // custom metadata to DOM nodes, so we have to do this every time an event
@@ -49,20 +49,24 @@ typedef std::map<const blink::WebInputElement,
 // overwriting default username element selection.
 std::unique_ptr<PasswordForm> CreatePasswordFormFromWebForm(
     const blink::WebFormElement& form,
-    const ModifiedValues* nonscript_modified_values,
+    const FieldValueAndPropertiesMaskMap* nonscript_modified_values,
     const FormsPredictionsMap* form_predictions);
 
 // Same as CreatePasswordFormFromWebForm() but for input elements that are not
 // enclosed in <form> element.
 std::unique_ptr<PasswordForm> CreatePasswordFormFromUnownedInputElements(
     const blink::WebFrame& frame,
-    const ModifiedValues* nonscript_modified_values,
+    const FieldValueAndPropertiesMaskMap* nonscript_modified_values,
     const FormsPredictionsMap* form_predictions);
 
 // Checks in a case-insensitive way if the autocomplete attribute for the given
 // |element| is present and has the specified |value_in_lowercase|.
 bool HasAutocompleteAttributeValue(const blink::WebInputElement& element,
                                    const char* value_in_lowercase);
+
+// Checks in a case-insensitive way if credit card autocomplete attributes for
+// the given |element| are present.
+bool HasCreditCardAutocompleteAttributes(const blink::WebInputElement& element);
 
 }  // namespace autofill
 

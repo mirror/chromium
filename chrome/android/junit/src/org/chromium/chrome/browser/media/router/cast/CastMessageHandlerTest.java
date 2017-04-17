@@ -7,13 +7,13 @@ package org.chromium.chrome.browser.media.router.cast;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -23,11 +23,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.chromium.base.test.util.Feature;
-import org.chromium.chrome.browser.media.router.cast.CastMessageHandler.RequestRecord;
-import org.chromium.chrome.browser.media.router.cast.JSONTestUtils.JSONObjectLike;
-import org.chromium.chrome.browser.media.router.cast.JSONTestUtils.JSONStringLike;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -37,6 +32,12 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
+
+import org.chromium.base.test.util.Feature;
+import org.chromium.chrome.browser.media.router.cast.CastMessageHandler.RequestRecord;
+import org.chromium.chrome.browser.media.router.cast.JSONTestUtils.JSONObjectLike;
+import org.chromium.chrome.browser.media.router.cast.JSONTestUtils.JSONStringLike;
+import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
@@ -273,7 +274,7 @@ public class CastMessageHandlerTest {
                 any(JSONObject.class), anyString(), anyString(), anyInt());
         for (String messageType : CastMessageHandler.getMediaMessageTypesForTest()) {
             // TODO(zqzhang): SET_VOLUME and STOP should not reach here?
-            if (messageType == "MEDIA_SET_VOLUME" || messageType == "STOP_MEDIA")
+            if ("MEDIA_SET_VOLUME".equals(messageType) || "STOP_MEDIA".equals(messageType))
                 continue;
             JSONObject innerMessage = new JSONObject().put("type", messageType);
             JSONObject message = buildCastV2Message(CLIENT_ID1, innerMessage);
@@ -587,7 +588,7 @@ public class CastMessageHandlerTest {
         mMessageHandler.onMessageReceived(NAMESPACE1, message.toString());
         assertEquals(mMessageHandler.getRequestsForTest().size(), 1);
         verify(mMessageHandler).onAppMessage(
-                eq(message.toString()), eq(NAMESPACE1), isNull(RequestRecord.class));
+                eq(message.toString()), eq(NAMESPACE1), (RequestRecord) isNull());
     }
 
     @Test
@@ -604,7 +605,7 @@ public class CastMessageHandlerTest {
         mMessageHandler.onMessageReceived(NAMESPACE1, message.toString());
         assertEquals(mMessageHandler.getRequestsForTest().size(), 1);
         verify(mMessageHandler).onAppMessage(
-                eq(message.toString()), eq(NAMESPACE1), isNull(RequestRecord.class));
+                eq(message.toString()), eq(NAMESPACE1), (RequestRecord) isNull());
     }
 
     @Test
@@ -612,7 +613,7 @@ public class CastMessageHandlerTest {
     public void testOnMessageReceivedOfMediaNamespace() throws JSONException {
         doNothing().when(mMessageHandler).onMediaMessage(anyString(), any(RequestRecord.class));
         mMessageHandler.onMessageReceived(MEDIA_NAMESPACE, "anymessage");
-        verify(mMessageHandler).onMediaMessage(eq("anymessage"), isNull(RequestRecord.class));
+        verify(mMessageHandler).onMediaMessage(eq("anymessage"), (RequestRecord) isNull());
     }
 
     @Test
@@ -752,7 +753,7 @@ public class CastMessageHandlerTest {
                 anyString(), anyString(), anyString(), anyInt());
         mMessageHandler.onVolumeChanged(CLIENT_ID1, SEQUENCE_NUMBER1);
         verify(mMessageHandler).sendClientMessageTo(
-                eq(CLIENT_ID1), eq("v2_message"), isNull(String.class), eq(SEQUENCE_NUMBER1));
+                eq(CLIENT_ID1), eq("v2_message"), (String) isNull(), eq(SEQUENCE_NUMBER1));
     }
 
     @Test
@@ -762,7 +763,7 @@ public class CastMessageHandlerTest {
                 anyString(), anyString(), anyString(), anyInt());
         mMessageHandler.onAppMessageSent(CLIENT_ID1, SEQUENCE_NUMBER1);
         verify(mMessageHandler).sendClientMessageTo(
-                eq(CLIENT_ID1), eq("app_message"), isNull(String.class), eq(SEQUENCE_NUMBER1));
+                eq(CLIENT_ID1), eq("app_message"), (String) isNull(), eq(SEQUENCE_NUMBER1));
     }
 
     @Test

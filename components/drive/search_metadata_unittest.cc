@@ -7,11 +7,14 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
+#include <vector>
+
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/i18n/string_search.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
@@ -37,11 +40,12 @@ bool FindAndHighlightWrapper(
     const std::string& text,
     const std::string& query_text,
     std::string* highlighted_text) {
-  ScopedVector<base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>
+  std::vector<std::unique_ptr<
+      base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>>
       queries;
-  queries.push_back(
-      new base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents(
-          base::UTF8ToUTF16(query_text)));
+  queries.push_back(base::MakeUnique<
+                    base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>(
+      base::UTF8ToUTF16(query_text)));
   return FindAndHighlight(text, queries, highlighted_text);
 }
 
@@ -54,11 +58,10 @@ class SearchMetadataTest : public testing::Test {
     fake_free_disk_space_getter_.reset(new FakeFreeDiskSpaceGetter);
 
     metadata_storage_.reset(new ResourceMetadataStorage(
-        temp_dir_.path(), base::ThreadTaskRunnerHandle::Get().get()));
+        temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
     ASSERT_TRUE(metadata_storage_->Initialize());
 
-    cache_.reset(new FileCache(metadata_storage_.get(),
-                               temp_dir_.path(),
+    cache_.reset(new FileCache(metadata_storage_.get(), temp_dir_.GetPath(),
                                base::ThreadTaskRunnerHandle::Get().get(),
                                fake_free_disk_space_getter_.get()));
     ASSERT_TRUE(cache_->Initialize());
@@ -74,7 +77,8 @@ class SearchMetadataTest : public testing::Test {
 
   void AddEntriesToMetadata() {
     base::FilePath temp_file;
-    EXPECT_TRUE(base::CreateTemporaryFileInDir(temp_dir_.path(), &temp_file));
+    EXPECT_TRUE(
+        base::CreateTemporaryFileInDir(temp_dir_.GetPath(), &temp_file));
     const std::string temp_file_md5 = "md5";
 
     ResourceEntry entry;
@@ -464,7 +468,8 @@ TEST(SearchMetadataSimpleTest, FindAndHighlight_EmptyText) {
 }
 
 TEST(SearchMetadataSimpleTest, FindAndHighlight_EmptyQuery) {
-  ScopedVector<base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>
+  std::vector<std::unique_ptr<
+      base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>>
       queries;
 
   std::string highlighted_text;
@@ -535,11 +540,12 @@ TEST(SearchMetadataSimpleTest, FindAndHighlight_IgnoreCaseNonASCII) {
 }
 
 TEST(SearchMetadataSimpleTest, MultiTextBySingleQuery) {
-  ScopedVector<base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>
+  std::vector<std::unique_ptr<
+      base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>>
       queries;
-  queries.push_back(
-      new base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents(
-          base::UTF8ToUTF16("hello")));
+  queries.push_back(base::MakeUnique<
+                    base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>(
+      base::UTF8ToUTF16("hello")));
 
   std::string highlighted_text;
   EXPECT_TRUE(FindAndHighlight("hello", queries, &highlighted_text));
@@ -570,14 +576,15 @@ TEST(SearchMetadataSimpleTest, FindAndHighlight_SurrogatePair) {
 }
 
 TEST(SearchMetadataSimpleTest, FindAndHighlight_MultipleQueries) {
-  ScopedVector<base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>
+  std::vector<std::unique_ptr<
+      base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>>
       queries;
-  queries.push_back(
-      new base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents(
-          base::UTF8ToUTF16("hello")));
-  queries.push_back(
-      new base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents(
-          base::UTF8ToUTF16("good")));
+  queries.push_back(base::MakeUnique<
+                    base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>(
+      base::UTF8ToUTF16("hello")));
+  queries.push_back(base::MakeUnique<
+                    base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>(
+      base::UTF8ToUTF16("good")));
 
   std::string highlighted_text;
   EXPECT_TRUE(
@@ -586,14 +593,15 @@ TEST(SearchMetadataSimpleTest, FindAndHighlight_MultipleQueries) {
 }
 
 TEST(SearchMetadataSimpleTest, FindAndHighlight_OverlappingHighlights) {
-  ScopedVector<base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>
+  std::vector<std::unique_ptr<
+      base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>>
       queries;
-  queries.push_back(
-      new base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents(
-          base::UTF8ToUTF16("morning")));
-  queries.push_back(
-      new base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents(
-          base::UTF8ToUTF16("ing,")));
+  queries.push_back(base::MakeUnique<
+                    base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>(
+      base::UTF8ToUTF16("morning")));
+  queries.push_back(base::MakeUnique<
+                    base::i18n::FixedPatternStringSearchIgnoringCaseAndAccents>(
+      base::UTF8ToUTF16("ing,")));
 
   std::string highlighted_text;
   EXPECT_TRUE(

@@ -30,18 +30,25 @@
 
 #include "core/svg/properties/SVGPropertyTearOff.h"
 
+#include "bindings/core/v8/ExceptionMessages.h"
+#include "bindings/core/v8/ExceptionState.h"
+#include "core/dom/ExceptionCode.h"
 #include "core/svg/SVGElement.h"
 
 namespace blink {
 
-void SVGPropertyTearOffBase::commitChange()
-{
-    ASSERT(!isImmutable());
-    if (!contextElement() || isAnimVal())
-        return;
-    ASSERT(m_attributeName != QualifiedName::null());
-    contextElement()->invalidateSVGAttributes();
-    contextElement()->svgAttributeBaseValChanged(m_attributeName);
+void SVGPropertyTearOffBase::ThrowReadOnly(ExceptionState& exception_state) {
+  exception_state.ThrowDOMException(kNoModificationAllowedError,
+                                    ExceptionMessages::ReadOnly());
 }
 
-} // namespace blink
+void SVGPropertyTearOffBase::CommitChange() {
+  DCHECK(!IsImmutable());
+  if (!contextElement() || IsAnimVal())
+    return;
+  DCHECK(attribute_name_ != QualifiedName::Null());
+  contextElement()->InvalidateSVGAttributes();
+  contextElement()->SvgAttributeBaseValChanged(attribute_name_);
+}
+
+}  // namespace blink

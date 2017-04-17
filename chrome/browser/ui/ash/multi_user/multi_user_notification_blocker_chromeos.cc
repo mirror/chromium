@@ -4,7 +4,7 @@
 
 #include "chrome/browser/ui/ash/multi_user/multi_user_notification_blocker_chromeos.h"
 
-#include "ash/common/system/system_notifier.h"
+#include "ash/system/system_notifier.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/message_center/message_center.h"
@@ -20,19 +20,20 @@ MultiUserNotificationBlockerChromeOS::~MultiUserNotificationBlockerChromeOS() {
 }
 
 bool MultiUserNotificationBlockerChromeOS::ShouldShowNotification(
-    const message_center::NotifierId& notifier_id) const {
+    const message_center::Notification& notification) const {
   if (!IsActive())
     return true;
 
-  if (ash::system_notifier::IsAshSystemNotifier(notifier_id))
+  if (ash::system_notifier::IsAshSystemNotifier(notification.notifier_id()))
     return true;
 
-  return AccountId::FromUserEmail(notifier_id.profile_id) == active_account_id_;
+  return AccountId::FromUserEmail(notification.notifier_id().profile_id) ==
+         active_account_id_;
 }
 
 bool MultiUserNotificationBlockerChromeOS::ShouldShowNotificationAsPopup(
-    const message_center::NotifierId& notifier_id) const {
-  return ShouldShowNotification(notifier_id);
+    const message_center::Notification& notification) const {
+  return ShouldShowNotification(notification);
 }
 
 void MultiUserNotificationBlockerChromeOS::ActiveUserChanged(

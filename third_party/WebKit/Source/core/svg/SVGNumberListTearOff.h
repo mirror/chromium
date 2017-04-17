@@ -37,25 +37,37 @@
 namespace blink {
 
 class SVGNumberListTearOff final
-    : public SVGListPropertyTearOffHelper<SVGNumberListTearOff, SVGNumberList>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SVGNumberListTearOff* create(SVGNumberList* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName = QualifiedName::null())
-    {
-        return new SVGNumberListTearOff(target, contextElement, propertyIsAnimVal, attributeName);
-    }
+    : public SVGListPropertyTearOffHelper<SVGNumberListTearOff, SVGNumberList>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS()
-    {
-        visitor->traceWrappers(contextElement());
-    }
+ public:
+  static SVGNumberListTearOff* Create(
+      SVGNumberList* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null()) {
+    return new SVGNumberListTearOff(target, context_element,
+                                    property_is_anim_val, attribute_name);
+  }
 
-private:
-    SVGNumberListTearOff(SVGNumberList* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName = QualifiedName::null())
-        : SVGListPropertyTearOffHelper<SVGNumberListTearOff, SVGNumberList>(target, contextElement, propertyIsAnimVal, attributeName) { }
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    visitor->TraceWrappers(contextElement());
+  }
+
+ private:
+  SVGNumberListTearOff(
+      SVGNumberList* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null())
+      : SVGListPropertyTearOffHelper<SVGNumberListTearOff, SVGNumberList>(
+            target,
+            context_element,
+            property_is_anim_val,
+            attribute_name) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGNumberListTearOff_h
+#endif  // SVGNumberListTearOff_h

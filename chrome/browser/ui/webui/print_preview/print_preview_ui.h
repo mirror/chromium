@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "chrome/browser/ui/webui/constrained_web_dialog_ui.h"
+#include "printing/features/features.h"
 
 class PrintPreviewDataService;
 class PrintPreviewHandler;
@@ -87,11 +88,6 @@ class PrintPreviewUI : public ConstrainedWebDialogUI {
   // Notifies the Web UI of a print preview request with |request_id|.
   void OnPrintPreviewRequest(int request_id);
 
-#if defined(ENABLE_BASIC_PRINTING)
-  // Notifies the Web UI to show the system dialog.
-  void OnShowSystemDialog();
-#endif  // ENABLE_BASIC_PRINTING
-
   // Notifies the Web UI about the page count of the request preview.
   void OnDidGetPreviewPageCount(
       const PrintHostMsg_DidGetPreviewPageCount_Params& params);
@@ -146,11 +142,9 @@ class PrintPreviewUI : public ConstrainedWebDialogUI {
   void OnSetOptionsFromDocument(
       const PrintHostMsg_SetOptionsFromDocument_Params& params);
 
-  // Allows tests to wait until the print preview dialog is loaded. Optionally
-  // also instructs the dialog to auto-cancel, which is used for testing only.
+  // Allows tests to wait until the print preview dialog is loaded.
   class TestingDelegate {
    public:
-    virtual bool IsAutoCancelEnabled() = 0;
     virtual void DidGetPreviewPageCount(int page_count) = 0;
     virtual void DidRenderPreviewPage(content::WebContents* preview_dialog) = 0;
   };

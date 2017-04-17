@@ -16,16 +16,14 @@
 #include "base/strings/string16.h"
 #include "device/usb/public/interfaces/chooser_service.mojom.h"
 #include "device/usb/usb_service.h"
-#include "mojo/public/cpp/bindings/array.h"
 
 namespace content {
 class RenderFrameHost;
-class WebContents;
 }
 
 namespace device {
 class UsbDevice;
-class UsbDeviceFilter;
+struct UsbDeviceFilter;
 }
 
 // Represents a way to ask the user to select a USB device from a list of
@@ -33,7 +31,7 @@ class UsbDeviceFilter;
 class UsbChooserDialogAndroid : public device::UsbService::Observer {
  public:
   UsbChooserDialogAndroid(
-      mojo::Array<device::usb::DeviceFilterPtr> device_filters,
+      const std::vector<device::UsbDeviceFilter>& filters,
       content::RenderFrameHost* render_frame_host,
       const device::usb::ChooserService::GetPermissionCallback& callback);
   ~UsbChooserDialogAndroid() override;

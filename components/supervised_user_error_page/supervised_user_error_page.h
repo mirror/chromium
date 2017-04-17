@@ -7,16 +7,17 @@
 
 #include <string>
 
-#include "base/strings/string16.h"
-
 namespace supervised_user_error_page {
 
+// A Java counterpart will be generated for this enum.
+// GENERATED_JAVA_ENUM_PACKAGE: org.chromium.components.supervisedusererrorpage
 enum FilteringBehaviorReason {
-  DEFAULT,
-  ASYNC_CHECKER,
-  BLACKLIST,
-  MANUAL,
-  WHITELIST
+  DEFAULT = 0,
+  ASYNC_CHECKER = 1,
+  BLACKLIST = 2,
+  MANUAL = 3,
+  WHITELIST = 4,
+  NOT_SIGNED_IN = 5,
 };
 
 int GetBlockMessageID(
@@ -27,10 +28,10 @@ int GetBlockMessageID(
 std::string BuildHtml(bool allow_access_requests,
                       const std::string& profile_image_url,
                       const std::string& profile_image_url2,
-                      const base::string16& custodian,
-                      const base::string16& custodian_email,
-                      const base::string16& second_custodian,
-                      const base::string16& second_custodian_email,
+                      const std::string& custodian,
+                      const std::string& custodian_email,
+                      const std::string& second_custodian,
+                      const std::string& second_custodian_email,
                       bool is_child_account,
                       FilteringBehaviorReason reason,
                       const std::string& app_locale);

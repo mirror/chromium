@@ -40,121 +40,77 @@
 
 namespace blink {
 
-void WebSecurityPolicy::registerURLSchemeAsLocal(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsLocal(scheme);
+void WebSecurityPolicy::RegisterURLSchemeAsDisplayIsolated(
+    const WebString& scheme) {
+  SchemeRegistry::RegisterURLSchemeAsDisplayIsolated(scheme);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsNoAccess(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsNoAccess(scheme);
+void WebSecurityPolicy::RegisterURLSchemeAsAllowingServiceWorkers(
+    const WebString& scheme) {
+  SchemeRegistry::RegisterURLSchemeAsAllowingServiceWorkers(scheme);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsDisplayIsolated(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsDisplayIsolated(scheme);
+void WebSecurityPolicy::RegisterURLSchemeAsSupportingFetchAPI(
+    const WebString& scheme) {
+  SchemeRegistry::RegisterURLSchemeAsSupportingFetchAPI(scheme);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsRestrictingMixedContent(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsRestrictingMixedContent(scheme);
+void WebSecurityPolicy::RegisterURLSchemeAsFirstPartyWhenTopLevel(
+    const WebString& scheme) {
+  SchemeRegistry::RegisterURLSchemeAsFirstPartyWhenTopLevel(scheme);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsSecure(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsSecure(scheme);
+void WebSecurityPolicy::AddOriginAccessWhitelistEntry(
+    const WebURL& source_origin,
+    const WebString& destination_protocol,
+    const WebString& destination_host,
+    bool allow_destination_subdomains) {
+  SecurityPolicy::AddOriginAccessWhitelistEntry(
+      *SecurityOrigin::Create(source_origin), destination_protocol,
+      destination_host, allow_destination_subdomains);
 }
 
-bool WebSecurityPolicy::shouldTreatURLSchemeAsSecure(const WebString& scheme)
-{
-    return SchemeRegistry::shouldTreatURLSchemeAsSecure(scheme);
+void WebSecurityPolicy::RemoveOriginAccessWhitelistEntry(
+    const WebURL& source_origin,
+    const WebString& destination_protocol,
+    const WebString& destination_host,
+    bool allow_destination_subdomains) {
+  SecurityPolicy::RemoveOriginAccessWhitelistEntry(
+      *SecurityOrigin::Create(source_origin), destination_protocol,
+      destination_host, allow_destination_subdomains);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsCORSEnabled(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsCORSEnabled(scheme);
+void WebSecurityPolicy::ResetOriginAccessWhitelists() {
+  SecurityPolicy::ResetOriginAccessWhitelists();
 }
 
-void WebSecurityPolicy::registerURLSchemeAsAllowingServiceWorkers(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsAllowingServiceWorkers(scheme);
+void WebSecurityPolicy::AddOriginTrustworthyWhiteList(
+    const WebSecurityOrigin& origin) {
+  SecurityPolicy::AddOriginTrustworthyWhiteList(origin);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsSupportingFetchAPI(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsSupportingFetchAPI(scheme);
+void WebSecurityPolicy::AddSchemeToBypassSecureContextWhitelist(
+    const WebString& scheme) {
+  SchemeRegistry::RegisterURLSchemeBypassingSecureContextCheck(scheme);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsBypassingContentSecurityPolicy(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsBypassingContentSecurityPolicy(scheme);
+WebString WebSecurityPolicy::GenerateReferrerHeader(
+    WebReferrerPolicy referrer_policy,
+    const WebURL& url,
+    const WebString& referrer) {
+  return SecurityPolicy::GenerateReferrer(
+             static_cast<ReferrerPolicy>(referrer_policy), url, referrer)
+      .referrer;
 }
 
-void WebSecurityPolicy::registerURLSchemeAsBypassingContentSecurityPolicy(const WebString& scheme, PolicyAreas policyAreas)
-{
-    SchemeRegistry::registerURLSchemeAsBypassingContentSecurityPolicy(scheme, static_cast<SchemeRegistry::PolicyAreas>(policyAreas));
+void WebSecurityPolicy::RegisterURLSchemeAsNotAllowingJavascriptURLs(
+    const WebString& scheme) {
+  SchemeRegistry::RegisterURLSchemeAsNotAllowingJavascriptURLs(scheme);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsFirstPartyWhenTopLevel(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsFirstPartyWhenTopLevel(scheme);
+void WebSecurityPolicy::RegisterURLSchemeAsAllowedForReferrer(
+    const WebString& scheme) {
+  SchemeRegistry::RegisterURLSchemeAsAllowedForReferrer(scheme);
 }
 
-void WebSecurityPolicy::registerURLSchemeAsEmptyDocument(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsEmptyDocument(scheme);
-}
-
-void WebSecurityPolicy::addOriginAccessWhitelistEntry(
-    const WebURL& sourceOrigin,
-    const WebString& destinationProtocol,
-    const WebString& destinationHost,
-    bool allowDestinationSubdomains)
-{
-    SecurityPolicy::addOriginAccessWhitelistEntry(
-        *SecurityOrigin::create(sourceOrigin), destinationProtocol,
-        destinationHost, allowDestinationSubdomains);
-}
-
-void WebSecurityPolicy::removeOriginAccessWhitelistEntry(
-    const WebURL& sourceOrigin,
-    const WebString& destinationProtocol,
-    const WebString& destinationHost,
-    bool allowDestinationSubdomains)
-{
-    SecurityPolicy::removeOriginAccessWhitelistEntry(
-        *SecurityOrigin::create(sourceOrigin), destinationProtocol,
-        destinationHost, allowDestinationSubdomains);
-}
-
-void WebSecurityPolicy::resetOriginAccessWhitelists()
-{
-    SecurityPolicy::resetOriginAccessWhitelists();
-}
-
-void WebSecurityPolicy::addOriginTrustworthyWhiteList(const WebSecurityOrigin& origin)
-{
-    SecurityPolicy::addOriginTrustworthyWhiteList(origin);
-}
-
-void WebSecurityPolicy::addSchemeToBypassSecureContextWhitelist(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeBypassingSecureContextCheck(scheme);
-}
-
-WebString WebSecurityPolicy::generateReferrerHeader(WebReferrerPolicy referrerPolicy, const WebURL& url, const WebString& referrer)
-{
-    return SecurityPolicy::generateReferrer(static_cast<ReferrerPolicy>(referrerPolicy), url, referrer).referrer;
-}
-
-void WebSecurityPolicy::registerURLSchemeAsNotAllowingJavascriptURLs(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsNotAllowingJavascriptURLs(scheme);
-}
-
-void WebSecurityPolicy::registerURLSchemeAsAllowedForReferrer(const WebString& scheme)
-{
-    SchemeRegistry::registerURLSchemeAsAllowedForReferrer(scheme);
-}
-
-} // namespace blink
+}  // namespace blink

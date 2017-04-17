@@ -26,48 +26,98 @@
 #ifndef ThemeMac_h
 #define ThemeMac_h
 
+#import <AppKit/AppKit.h>
+
 #include "platform/Theme.h"
 
 namespace blink {
 
 class ThemeMac : public Theme {
-public:
-    ThemeMac() {}
-    ~ThemeMac() override {}
+ public:
+  ThemeMac() {}
+  ~ThemeMac() override {}
 
-    virtual int baselinePositionAdjustment(ControlPart) const;
+  virtual int BaselinePositionAdjustment(ControlPart) const;
 
-    virtual FontDescription controlFont(ControlPart, const FontDescription&, float zoomFactor) const;
+  virtual FontDescription ControlFont(ControlPart,
+                                      const FontDescription&,
+                                      float zoom_factor) const;
 
-    virtual LengthSize controlSize(ControlPart, const FontDescription&, const LengthSize&, float zoomFactor) const;
-    virtual LengthSize minimumControlSize(ControlPart, const FontDescription&, float zoomFactor) const;
+  virtual LengthSize GetControlSize(ControlPart,
+                                    const FontDescription&,
+                                    const LengthSize&,
+                                    float zoom_factor) const;
+  virtual LengthSize MinimumControlSize(ControlPart,
+                                        const FontDescription&,
+                                        float zoom_factor) const;
 
-    virtual LengthBox controlPadding(ControlPart, const FontDescription&, const LengthBox& zoomedBox, float zoomFactor) const;
-    virtual LengthBox controlBorder(ControlPart, const FontDescription&, const LengthBox& zoomedBox, float zoomFactor) const;
+  virtual LengthBox ControlPadding(ControlPart,
+                                   const FontDescription&,
+                                   const LengthBox& zoomed_box,
+                                   float zoom_factor) const;
+  virtual LengthBox ControlBorder(ControlPart,
+                                  const FontDescription&,
+                                  const LengthBox& zoomed_box,
+                                  float zoom_factor) const;
 
-    virtual bool controlRequiresPreWhiteSpace(ControlPart part) const { return part == PushButtonPart; }
+  virtual bool ControlRequiresPreWhiteSpace(ControlPart part) const {
+    return part == kPushButtonPart;
+  }
 
-    virtual void paint(ControlPart, ControlStates, GraphicsContext&, const IntRect&, float zoomFactor, ScrollableArea*) const;
-    virtual void addVisualOverflow(ControlPart, ControlStates, float zoomFactor, IntRect& borderBox) const;
+  virtual void AddVisualOverflow(ControlPart,
+                                 ControlStates,
+                                 float zoom_factor,
+                                 IntRect& border_box) const;
 
-    // Inflate an IntRect to accout for specific padding around margins.
-    enum {
-        TopMargin = 0,
-        RightMargin = 1,
-        BottomMargin = 2,
-        LeftMargin = 3
-    };
-    static PLATFORM_EXPORT IntRect inflateRect(const IntRect&, const IntSize&, const int* margins, float zoomLevel = 1.0f);
+  // Inflate an IntRect to accout for specific padding around margins.
+  enum { kTopMargin = 0, kRightMargin = 1, kBottomMargin = 2, kLeftMargin = 3 };
+  static PLATFORM_EXPORT IntRect InflateRect(const IntRect&,
+                                             const IntSize&,
+                                             const int* margins,
+                                             float zoom_level = 1.0f);
 
-    // Inflate an IntRect to account for any bleeding that would happen due to anti-aliasing.
-    static PLATFORM_EXPORT IntRect inflateRectForAA(const IntRect&);
+  // Inflate an IntRect to account for any bleeding that would happen due to
+  // anti-aliasing.
+  static PLATFORM_EXPORT IntRect InflateRectForAA(const IntRect&);
 
-    // Inflate an IntRect to account for its focus ring.
-    // TODO: Consider using computing the focus ring's bounds with
-    // -[NSCell focusRingMaskBoundsForFrame:inView:]).
-    static PLATFORM_EXPORT IntRect inflateRectForFocusRing(const IntRect&);
+  // Inflate an IntRect to account for its focus ring.
+  // TODO: Consider using computing the focus ring's bounds with
+  // -[NSCell focusRingMaskBoundsForFrame:inView:]).
+  static PLATFORM_EXPORT IntRect InflateRectForFocusRing(const IntRect&);
+
+  static PLATFORM_EXPORT LengthSize CheckboxSize(const FontDescription&,
+                                                 const LengthSize& zoomed_size,
+                                                 float zoom_factor);
+  static PLATFORM_EXPORT NSButtonCell* Checkbox(ControlStates,
+                                                const IntRect& zoomed_rect,
+                                                float zoom_factor);
+  static PLATFORM_EXPORT const IntSize* CheckboxSizes();
+  static PLATFORM_EXPORT const int* CheckboxMargins(NSControlSize);
+  static PLATFORM_EXPORT NSView* EnsuredView(ScrollableArea*);
+
+  static PLATFORM_EXPORT const IntSize* RadioSizes();
+  static PLATFORM_EXPORT const int* RadioMargins(NSControlSize);
+  static PLATFORM_EXPORT LengthSize RadioSize(const FontDescription&,
+                                              const LengthSize& zoomed_size,
+                                              float zoom_factor);
+  static PLATFORM_EXPORT NSButtonCell* Radio(ControlStates,
+                                             const IntRect& zoomed_rect,
+                                             float zoom_factor);
+
+  static PLATFORM_EXPORT const IntSize* ButtonSizes();
+  static PLATFORM_EXPORT const int* ButtonMargins(NSControlSize);
+  static PLATFORM_EXPORT NSButtonCell* Button(ControlPart,
+                                              ControlStates,
+                                              const IntRect& zoomed_rect,
+                                              float zoom_factor);
+
+  static PLATFORM_EXPORT NSControlSize
+  ControlSizeFromPixelSize(const IntSize* sizes,
+                           const IntSize& min_zoomed_size,
+                           float zoom_factor);
+  static PLATFORM_EXPORT const IntSize* StepperSizes();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ThemeMac_h
+#endif  // ThemeMac_h

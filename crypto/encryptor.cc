@@ -4,8 +4,6 @@
 
 #include "crypto/encryptor.h"
 
-#include <openssl/aes.h>
-#include <openssl/evp.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -14,6 +12,8 @@
 #include "base/sys_byteorder.h"
 #include "crypto/openssl_util.h"
 #include "crypto/symmetric_key.h"
+#include "third_party/boringssl/src/include/openssl/aes.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
 
 namespace crypto {
 
@@ -32,7 +32,7 @@ const EVP_CIPHER* GetCipherForKey(SymmetricKey* key) {
 // ERR stack as a convenience.
 class ScopedCipherCTX {
  public:
-  explicit ScopedCipherCTX() {
+  ScopedCipherCTX() {
     EVP_CIPHER_CTX_init(&ctx_);
   }
   ~ScopedCipherCTX() {
@@ -133,43 +133,6 @@ bool Encryptor::SetCounter(const base::StringPiece& counter) {
 
   counter_.reset(new Counter(counter));
   return true;
-}
-
-bool Encryptor::GenerateCounterMask(size_t plaintext_len,
-                                    uint8_t* mask,
-                                    size_t* mask_len) {
-  DCHECK_EQ(CTR, mode_);
-  CHECK(mask);
-  CHECK(mask_len);
-
-  const size_t kBlockLength = counter_->GetLengthInBytes();
-  size_t blocks = (plaintext_len + kBlockLength - 1) / kBlockLength;
-  CHECK(blocks);
-
-  *mask_len = blocks * kBlockLength;
-
-  for (size_t i = 0; i < blocks; ++i) {
-    counter_->Write(mask);
-    mask += kBlockLength;
-
-    bool ret = counter_->Increment();
-    if (!ret)
-      return false;
-  }
-  return true;
-}
-
-void Encryptor::MaskMessage(const void* plaintext,
-                            size_t plaintext_len,
-                            const void* mask,
-                            void* ciphertext) const {
-  DCHECK_EQ(CTR, mode_);
-  const uint8_t* plaintext_ptr = reinterpret_cast<const uint8_t*>(plaintext);
-  const uint8_t* mask_ptr = reinterpret_cast<const uint8_t*>(mask);
-  uint8_t* ciphertext_ptr = reinterpret_cast<uint8_t*>(ciphertext);
-
-  for (size_t i = 0; i < plaintext_len; ++i)
-    ciphertext_ptr[i] = plaintext_ptr[i] ^ mask_ptr[i];
 }
 
 bool Encryptor::Crypt(bool do_encrypt,

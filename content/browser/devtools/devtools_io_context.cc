@@ -12,7 +12,6 @@
 #include "content/public/browser/browser_thread.h"
 
 namespace content {
-namespace devtools {
 
 namespace {
 unsigned s_last_stream_handle = 0;
@@ -21,7 +20,7 @@ unsigned s_last_stream_handle = 0;
 using Stream = DevToolsIOContext::Stream;
 
 Stream::Stream()
-    : base::RefCountedDeleteOnMessageLoop<Stream>(
+    : base::RefCountedDeleteOnSequence<Stream>(
           BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE)),
       handle_(base::UintToString(++s_last_stream_handle)),
       had_errors_(false),
@@ -62,9 +61,10 @@ void Stream::Read(off_t position, size_t max_size, ReadCallback callback) {
                  callback));
 }
 
-void Stream::Append(const scoped_refptr<base::RefCountedString>& data) {
+void Stream::Append(std::unique_ptr<std::string> data) {
   BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-      base::Bind(&Stream::AppendOnFileThread, this, data));
+                          base::Bind(&Stream::AppendOnFileThread, this,
+                                     base::Passed(std::move(data))));
 }
 
 void Stream::ReadOnFileThread(off_t position, size_t max_size,
@@ -101,14 +101,12 @@ void Stream::ReadOnFileThread(off_t position, size_t max_size,
                           base::Bind(callback, data, status));
 }
 
-void Stream::AppendOnFileThread(
-    const scoped_refptr<base::RefCountedString>& data) {
+void Stream::AppendOnFileThread(std::unique_ptr<std::string> data) {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   if (!InitOnFileThreadIfNeeded())
     return;
-  const std::string& buffer = data->data();
-  int size_written = file_.WriteAtCurrentPos(&*buffer.begin(), buffer.size());
-  if (size_written != static_cast<int>(buffer.size())) {
+  int size_written = file_.WriteAtCurrentPos(data->data(), data->size());
+  if (size_written != static_cast<int>(data->size())) {
     LOG(ERROR) << "Failed to write temporary file";
     had_errors_ = true;
     file_.Close();
@@ -141,5 +139,4 @@ void DevToolsIOContext::DiscardAllStreams() {
   return streams_.clear();
 }
 
-}  // namespace devtools
 }  // namespace content

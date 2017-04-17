@@ -10,11 +10,12 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/devtools/device/adb/adb_client_socket.h"
 #include "net/base/net_errors.h"
 #include "net/dns/host_resolver.h"
+#include "net/log/net_log_source.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/tcp_client_socket.h"
 
 namespace {
@@ -40,7 +41,7 @@ class ResolveHostAndOpenSocket final {
         request_info, net::DEFAULT_PRIORITY, &address_list_,
         base::Bind(&ResolveHostAndOpenSocket::OnResolved,
                    base::Unretained(this)),
-        &request_, net::BoundNetLog());
+        &request_, net::NetLogWithSource());
     if (result != net::ERR_IO_PENDING)
       OnResolved(result);
   }
@@ -53,9 +54,13 @@ class ResolveHostAndOpenSocket final {
       return;
     }
     std::unique_ptr<net::StreamSocket> socket(new net::TCPClientSocket(
-        address_list_, NULL, NULL, net::NetLog::Source()));
-    socket->Connect(
-        base::Bind(&RunSocketCallback, callback_, base::Passed(&socket)));
+        address_list_, NULL, NULL, net::NetLogSource()));
+    net::StreamSocket* socket_ptr = socket.get();
+    net::CompletionCallback on_connect =
+        base::Bind(&RunSocketCallback, callback_, base::Passed(&socket));
+    result = socket_ptr->Connect(on_connect);
+    if (result != net::ERR_IO_PENDING)
+      on_connect.Run(result);
     delete this;
   }
 
@@ -82,7 +87,7 @@ void TCPDeviceProvider::QueryDevices(const SerialsCallback& callback) {
   std::vector<std::string> result;
   for (const net::HostPortPair& target : targets_) {
     const std::string& host = target.host();
-    if (ContainsValue(result, host))
+    if (base::ContainsValue(result, host))
       continue;
     result.push_back(host);
   }

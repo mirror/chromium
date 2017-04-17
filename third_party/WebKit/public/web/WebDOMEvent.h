@@ -39,59 +39,58 @@ namespace blink {
 class Event;
 
 class WebDOMEvent {
-public:
-    ~WebDOMEvent() { reset(); }
+ public:
+  ~WebDOMEvent() { Reset(); }
 
-    WebDOMEvent() { }
-    WebDOMEvent(const WebDOMEvent& other) { assign(other); }
-    WebDOMEvent& operator=(const WebDOMEvent& e)
-    {
-        assign(e);
-        return *this;
-    }
+  WebDOMEvent() {}
+  WebDOMEvent(const WebDOMEvent& other) { Assign(other); }
+  WebDOMEvent& operator=(const WebDOMEvent& e) {
+    Assign(e);
+    return *this;
+  }
 
-    BLINK_EXPORT void reset();
-    BLINK_EXPORT void assign(const WebDOMEvent&);
+  BLINK_EXPORT void Reset();
+  BLINK_EXPORT void Assign(const WebDOMEvent&);
 
-    bool isNull() const { return m_private.isNull(); }
+  bool IsNull() const { return private_.IsNull(); }
 
 #if BLINK_IMPLEMENTATION
-    WebDOMEvent(Event*);
-    operator Event*() const;
+  WebDOMEvent(Event*);
+  operator Event*() const;
 #endif
 
-    template<typename T> T to()
-    {
-        T res;
-        res.WebDOMEvent::assign(*this);
-        return res;
-    }
+  template <typename T>
+  T To() {
+    T res;
+    res.WebDOMEvent::assign(*this);
+    return res;
+  }
 
-    template<typename T> const T toConst() const
-    {
-        T res;
-        res.WebDOMEvent::assign(*this);
-        return res;
-    }
+  template <typename T>
+  const T ToConst() const {
+    T res;
+    res.WebDOMEvent::assign(*this);
+    return res;
+  }
 
-protected:
+ protected:
 #if BLINK_IMPLEMENTATION
-    void assign(Event*);
+  void Assign(Event*);
 
-    template<typename T> T* unwrap()
-    {
-        return static_cast<T*>(m_private.get());
-    }
+  template <typename T>
+  T* Unwrap() {
+    return static_cast<T*>(private_.Get());
+  }
 
-    template<typename T> const T* constUnwrap() const
-    {
-        return static_cast<const T*>(m_private.get());
-    }
+  template <typename T>
+  const T* ConstUnwrap() const {
+    return static_cast<const T*>(private_.Get());
+  }
 #endif
 
-    WebPrivatePtr<Event> m_private;
+  WebPrivatePtr<Event> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

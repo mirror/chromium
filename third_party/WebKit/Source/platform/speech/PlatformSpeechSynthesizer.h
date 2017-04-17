@@ -26,79 +26,87 @@
 #ifndef PlatformSpeechSynthesizer_h
 #define PlatformSpeechSynthesizer_h
 
+#include <memory>
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/speech/PlatformSpeechSynthesisVoice.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-enum SpeechBoundary {
-    SpeechWordBoundary,
-    SpeechSentenceBoundary
-};
+enum SpeechBoundary { kSpeechWordBoundary, kSpeechSentenceBoundary };
 
 class PlatformSpeechSynthesisUtterance;
 class WebSpeechSynthesizer;
 class WebSpeechSynthesizerClientImpl;
 
-class PLATFORM_EXPORT PlatformSpeechSynthesizerClient : public GarbageCollectedMixin {
-public:
-    virtual void didStartSpeaking(PlatformSpeechSynthesisUtterance*) = 0;
-    virtual void didFinishSpeaking(PlatformSpeechSynthesisUtterance*) = 0;
-    virtual void didPauseSpeaking(PlatformSpeechSynthesisUtterance*) = 0;
-    virtual void didResumeSpeaking(PlatformSpeechSynthesisUtterance*) = 0;
-    virtual void speakingErrorOccurred(PlatformSpeechSynthesisUtterance*) = 0;
-    virtual void boundaryEventOccurred(PlatformSpeechSynthesisUtterance*, SpeechBoundary, unsigned charIndex) = 0;
-    virtual void voicesDidChange() = 0;
+class PLATFORM_EXPORT PlatformSpeechSynthesizerClient
+    : public GarbageCollectedMixin {
+ public:
+  virtual void DidStartSpeaking(PlatformSpeechSynthesisUtterance*) = 0;
+  virtual void DidFinishSpeaking(PlatformSpeechSynthesisUtterance*) = 0;
+  virtual void DidPauseSpeaking(PlatformSpeechSynthesisUtterance*) = 0;
+  virtual void DidResumeSpeaking(PlatformSpeechSynthesisUtterance*) = 0;
+  virtual void SpeakingErrorOccurred(PlatformSpeechSynthesisUtterance*) = 0;
+  virtual void BoundaryEventOccurred(PlatformSpeechSynthesisUtterance*,
+                                     SpeechBoundary,
+                                     unsigned char_index) = 0;
+  virtual void VoicesDidChange() = 0;
 
-protected:
-    virtual ~PlatformSpeechSynthesizerClient() { }
+ protected:
+  virtual ~PlatformSpeechSynthesizerClient() {}
 };
 
-class PLATFORM_EXPORT PlatformSpeechSynthesizer : public GarbageCollectedFinalized<PlatformSpeechSynthesizer> {
-    WTF_MAKE_NONCOPYABLE(PlatformSpeechSynthesizer);
-public:
-    static PlatformSpeechSynthesizer* create(PlatformSpeechSynthesizerClient*);
+class PLATFORM_EXPORT PlatformSpeechSynthesizer
+    : public GarbageCollectedFinalized<PlatformSpeechSynthesizer> {
+  WTF_MAKE_NONCOPYABLE(PlatformSpeechSynthesizer);
 
-    virtual ~PlatformSpeechSynthesizer();
+ public:
+  static PlatformSpeechSynthesizer* Create(PlatformSpeechSynthesizerClient*);
 
-    const Vector<RefPtr<PlatformSpeechSynthesisVoice>>& voiceList() const { return m_voiceList; }
-    virtual void speak(PlatformSpeechSynthesisUtterance*);
-    virtual void pause();
-    virtual void resume();
-    virtual void cancel();
+  virtual ~PlatformSpeechSynthesizer();
 
-    PlatformSpeechSynthesizerClient* client() const { return m_speechSynthesizerClient; }
+  const Vector<RefPtr<PlatformSpeechSynthesisVoice>>& VoiceList() const {
+    return voice_list_;
+  }
+  virtual void Speak(PlatformSpeechSynthesisUtterance*);
+  virtual void Pause();
+  virtual void Resume();
+  virtual void Cancel();
 
-    void setVoiceList(Vector<RefPtr<PlatformSpeechSynthesisVoice>>&);
+  PlatformSpeechSynthesizerClient* Client() const {
+    return speech_synthesizer_client_;
+  }
 
-    // Eager finalization is required to promptly release the owned WebSpeechSynthesizer.
-    //
-    // If not and delayed until lazily swept, m_webSpeechSynthesizerClient may end up
-    // being lazily swept first (i.e., before this PlatformSpeechSynthesizer), leaving
-    // m_webSpeechSynthesizer with a dangling pointer to a finalized object --
-    // WebSpeechSynthesizer embedder implementations calling notification methods in the
-    // other directions by way of m_webSpeechSynthesizerClient. Eagerly releasing
-    // WebSpeechSynthesizer prevents such unsafe accesses.
-    EAGERLY_FINALIZE();
-    DECLARE_VIRTUAL_TRACE();
+  void SetVoiceList(Vector<RefPtr<PlatformSpeechSynthesisVoice>>&);
 
-protected:
-    explicit PlatformSpeechSynthesizer(PlatformSpeechSynthesizerClient*);
+  // Eager finalization is required to promptly release the owned
+  // WebSpeechSynthesizer.
+  //
+  // If not and delayed until lazily swept, m_webSpeechSynthesizerClient may end
+  // up being lazily swept first (i.e., before this PlatformSpeechSynthesizer),
+  // leaving m_webSpeechSynthesizer with a dangling pointer to a finalized
+  // object -- WebSpeechSynthesizer embedder implementations calling
+  // notification methods in the other directions by way of
+  // m_webSpeechSynthesizerClient. Eagerly releasing WebSpeechSynthesizer
+  // prevents such unsafe accesses.
+  EAGERLY_FINALIZE();
+  DECLARE_VIRTUAL_TRACE();
 
-    virtual void initializeVoiceList();
+ protected:
+  explicit PlatformSpeechSynthesizer(PlatformSpeechSynthesizerClient*);
 
-    Vector<RefPtr<PlatformSpeechSynthesisVoice>> m_voiceList;
+  virtual void InitializeVoiceList();
 
-private:
-    Member<PlatformSpeechSynthesizerClient> m_speechSynthesizerClient;
+  Vector<RefPtr<PlatformSpeechSynthesisVoice>> voice_list_;
 
-    std::unique_ptr<WebSpeechSynthesizer> m_webSpeechSynthesizer;
-    Member<WebSpeechSynthesizerClientImpl> m_webSpeechSynthesizerClient;
+ private:
+  Member<PlatformSpeechSynthesizerClient> speech_synthesizer_client_;
+
+  std::unique_ptr<WebSpeechSynthesizer> web_speech_synthesizer_;
+  Member<WebSpeechSynthesizerClientImpl> web_speech_synthesizer_client_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PlatformSpeechSynthesizer_h
+#endif  // PlatformSpeechSynthesizer_h

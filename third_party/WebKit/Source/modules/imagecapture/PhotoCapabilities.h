@@ -6,47 +6,50 @@
 #define PhotoCapabilities_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "media/mojo/interfaces/image_capture.mojom-blink.h"
+#include "media/capture/mojo/image_capture.mojom-blink.h"
 #include "modules/imagecapture/MediaSettingsRange.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class PhotoCapabilities final
-    : public GarbageCollectedFinalized<PhotoCapabilities>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static PhotoCapabilities* create();
-    virtual ~PhotoCapabilities() = default;
+    : public GarbageCollectedFinalized<PhotoCapabilities>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    MediaSettingsRange* iso() const { return m_iso; }
-    void setIso(MediaSettingsRange* value) { m_iso = value; }
+ public:
+  static PhotoCapabilities* Create();
+  virtual ~PhotoCapabilities() = default;
 
-    MediaSettingsRange* imageHeight() const { return m_imageHeight; }
-    void setImageHeight(MediaSettingsRange* value) { m_imageHeight = value; }
+  MediaSettingsRange* imageHeight() const { return image_height_; }
+  void SetImageHeight(MediaSettingsRange* value) { image_height_ = value; }
 
-    MediaSettingsRange* imageWidth() const { return m_imageWidth; }
-    void setImageWidth(MediaSettingsRange* value) { m_imageWidth = value; }
+  MediaSettingsRange* imageWidth() const { return image_width_; }
+  void SetImageWidth(MediaSettingsRange* value) { image_width_ = value; }
 
-    MediaSettingsRange* zoom() const { return m_zoom; }
-    void setZoom(MediaSettingsRange* value) { m_zoom = value; }
+  Vector<String> fillLightMode() const;
+  void SetFillLightMode(Vector<media::mojom::blink::FillLightMode> modes) {
+    fill_light_modes_ = modes;
+  }
 
-    String focusMode() const;
-    void setFocusMode(media::mojom::blink::FocusMode focusMode) { m_focusMode = focusMode; }
+  String redEyeReduction() const;
+  void SetRedEyeReduction(
+      media::mojom::blink::RedEyeReduction red_eye_reduction) {
+    red_eye_reduction_ = red_eye_reduction;
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    PhotoCapabilities() = default;
+ private:
+  PhotoCapabilities() = default;
 
-    Member<MediaSettingsRange> m_iso;
-    Member<MediaSettingsRange> m_imageHeight;
-    Member<MediaSettingsRange> m_imageWidth;
-    Member<MediaSettingsRange> m_zoom;
-    media::mojom::blink::FocusMode m_focusMode = media::mojom::blink::FocusMode::UNAVAILABLE;
+  Member<MediaSettingsRange> image_height_;
+  Member<MediaSettingsRange> image_width_;
+  Vector<media::mojom::blink::FillLightMode> fill_light_modes_;
+  media::mojom::blink::RedEyeReduction red_eye_reduction_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PhotoCapabilities_h
+#endif  // PhotoCapabilities_h

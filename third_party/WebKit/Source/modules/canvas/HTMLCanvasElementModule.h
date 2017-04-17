@@ -7,28 +7,32 @@
 
 #include "core/html/HTMLCanvasElement.h"
 #include "modules/ModulesExport.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CanvasContextCreationAttributes;
 class HTMLCanvasElement;
-class ScriptState;
 class OffscreenCanvas;
 
 class MODULES_EXPORT HTMLCanvasElementModule {
-    STATIC_ONLY(HTMLCanvasElementModule);
+  STATIC_ONLY(HTMLCanvasElementModule);
 
-    friend class HTMLCanvasElementModuleTest;
+  friend class HTMLCanvasElementModuleTest;
 
-public:
-    static void getContext(HTMLCanvasElement&, const String&, const CanvasContextCreationAttributes&, RenderingContext&);
-    static OffscreenCanvas* transferControlToOffscreen(HTMLCanvasElement&, ExceptionState&);
+ public:
+  static void getContext(HTMLCanvasElement&,
+                         const String&,
+                         const CanvasContextCreationAttributes&,
+                         ExceptionState&,
+                         RenderingContext&);
+  static OffscreenCanvas* transferControlToOffscreen(HTMLCanvasElement&,
+                                                     ExceptionState&);
 
-private:
-    static OffscreenCanvas* transferControlToOffscreenInternal(HTMLCanvasElement&, ExceptionState&);
+ private:
+  static OffscreenCanvas* TransferControlToOffscreenInternal(HTMLCanvasElement&,
+                                                             ExceptionState&);
 };
-
 }
 
 #endif

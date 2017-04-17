@@ -4,11 +4,12 @@
 
 #include "chrome/browser/ui/views/frame/browser_frame_ash.h"
 
-#include "ash/common/wm/window_state.h"
-#include "ash/common/wm/window_state_delegate.h"
+#include "ash/ash_switches.h"
 #include "ash/shell.h"
 #include "ash/wm/window_properties.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
+#include "ash/wm/window_state_delegate.h"
 #include "ash/wm/window_util.h"
 #include "base/macros.h"
 #include "build/build_config.h"
@@ -90,6 +91,9 @@ void BrowserFrameAsh::OnWindowTargetVisibilityChanged(bool visible) {
   views::NativeWidgetAura::OnWindowTargetVisibilityChanged(visible);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// BrowserFrameAsh, NativeBrowserFrame implementation:
+
 bool BrowserFrameAsh::ShouldSaveWindowPlacement() const {
   return nullptr == GetWidget()->GetNativeWindow()->GetProperty(
                         ash::kRestoreBoundsOverrideKey);
@@ -114,24 +118,17 @@ void BrowserFrameAsh::GetWindowPlacement(
       *show_state != ui::SHOW_STATE_MINIMIZED) {
     *show_state = ui::SHOW_STATE_NORMAL;
   }
-
-  if (ash::wm::GetWindowState(GetNativeWindow())->IsDocked()) {
-    if (browser_view_->browser()->is_app()) {
-      // Only web app windows (not tabbed browser windows) persist docked state.
-      *show_state = ui::SHOW_STATE_DOCKED;
-    } else {
-      // Restore original restore bounds for tabbed browser windows ignoring
-      // the docked origin.
-      gfx::Rect* restore_bounds = GetWidget()->GetNativeWindow()->GetProperty(
-          aura::client::kRestoreBoundsKey);
-      if (restore_bounds)
-        *bounds = *restore_bounds;
-    }
-  }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// BrowserFrameAsh, NativeBrowserFrame implementation:
+bool BrowserFrameAsh::PreHandleKeyboardEvent(
+    const content::NativeWebKeyboardEvent& event) {
+  return false;
+}
+
+bool BrowserFrameAsh::HandleKeyboardEvent(
+    const content::NativeWebKeyboardEvent& event) {
+  return false;
+}
 
 views::Widget::InitParams BrowserFrameAsh::GetWidgetParams() {
   views::Widget::InitParams params;
@@ -165,9 +162,10 @@ BrowserFrameAsh::~BrowserFrameAsh() {
 // BrowserFrameAsh, private:
 
 void BrowserFrameAsh::SetWindowAutoManaged() {
-  if (!browser_view_->browser()->is_type_popup() ||
-      browser_view_->browser()->is_app()) {
-    ash::wm::GetWindowState(GetNativeWindow())->
-        set_window_position_managed(true);
+  // For browser window in Chrome OS, we should only enable the auto window
+  // management logic for tabbed browser.
+  if (!browser_view_->browser()->is_type_popup()) {
+    ash::wm::GetWindowState(GetNativeWindow())
+        ->set_window_position_managed(true);
   }
 }

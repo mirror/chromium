@@ -6,19 +6,19 @@
 #define CHROME_BROWSER_CHROMEOS_LOGIN_SCREENS_NETWORK_VIEW_H_
 
 #include "base/strings/string16.h"
+#include "chrome/browser/chromeos/login/oobe_screen.h"
 
 namespace chromeos {
 
-class NetworkModel;
+class NetworkScreen;
 
 // Interface for dependency injection between NetworkScreen and its actual
 // representation, either views based or WebUI. Owned by NetworkScreen.
 class NetworkView {
  public:
-  virtual ~NetworkView() {}
+  constexpr static OobeScreen kScreenId = OobeScreen::SCREEN_OOBE_NETWORK;
 
-  // Prepare the contents to showing.
-  virtual void PrepareToShow() = 0;
+  virtual ~NetworkView() {}
 
   // Shows the contents of the screen.
   virtual void Show() = 0;
@@ -26,8 +26,8 @@ class NetworkView {
   // Hides the contents of the screen.
   virtual void Hide() = 0;
 
-  // Binds |model| to the view.
-  virtual void Bind(NetworkModel& model) = 0;
+  // Binds |screen| to the view.
+  virtual void Bind(NetworkScreen* screen) = 0;
 
   // Unbinds model from the view.
   virtual void Unbind() = 0;

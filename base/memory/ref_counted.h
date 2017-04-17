@@ -14,70 +14,113 @@
 #include "base/atomic_ref_count.h"
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
-#include "base/macros.h"
-#ifndef NDEBUG
 #include "base/logging.h"
-#endif
+#include "base/macros.h"
+#include "base/sequence_checker.h"
 #include "base/threading/thread_collision_warner.h"
 #include "build/build_config.h"
 
+template <class T>
+class scoped_refptr;
+
 namespace base {
 
+template <typename T>
+scoped_refptr<T> AdoptRef(T* t);
+
 namespace subtle {
+
+enum AdoptRefTag { kAdoptRefTag };
+enum StartRefCountFromZeroTag { kStartRefCountFromZeroTag };
+enum StartRefCountFromOneTag { kStartRefCountFromOneTag };
 
 class BASE_EXPORT RefCountedBase {
  public:
   bool HasOneRef() const { return ref_count_ == 1; }
 
  protected:
-  RefCountedBase()
-      : ref_count_(0)
-  #ifndef NDEBUG
-      , in_dtor_(false)
-  #endif
-      {
+  explicit RefCountedBase(StartRefCountFromZeroTag) {
+#if DCHECK_IS_ON()
+    sequence_checker_.DetachFromSequence();
+#endif
+  }
+
+  explicit RefCountedBase(StartRefCountFromOneTag) : ref_count_(1) {
+#if DCHECK_IS_ON()
+    needs_adopt_ref_ = true;
+    sequence_checker_.DetachFromSequence();
+#endif
   }
 
   ~RefCountedBase() {
-  #ifndef NDEBUG
+#if DCHECK_IS_ON()
     DCHECK(in_dtor_) << "RefCounted object deleted without calling Release()";
-  #endif
+#endif
   }
-
 
   void AddRef() const {
     // TODO(maruel): Add back once it doesn't assert 500 times/sec.
     // Current thread books the critical section "AddRelease"
     // without release it.
     // DFAKE_SCOPED_LOCK_THREAD_LOCKED(add_release_);
-  #ifndef NDEBUG
+#if DCHECK_IS_ON()
     DCHECK(!in_dtor_);
-  #endif
+    DCHECK(!needs_adopt_ref_)
+        << "This RefCounted object is created with non-zero reference count."
+        << " The first reference to such a object has to be made by AdoptRef or"
+        << " MakeShared.";
+    if (ref_count_ >= 1) {
+      DCHECK(CalledOnValidSequence());
+    }
+#endif
+
     ++ref_count_;
   }
 
   // Returns true if the object should self-delete.
   bool Release() const {
+    --ref_count_;
+
     // TODO(maruel): Add back once it doesn't assert 500 times/sec.
     // Current thread books the critical section "AddRelease"
     // without release it.
     // DFAKE_SCOPED_LOCK_THREAD_LOCKED(add_release_);
-  #ifndef NDEBUG
+
+#if DCHECK_IS_ON()
     DCHECK(!in_dtor_);
-  #endif
-    if (--ref_count_ == 0) {
-  #ifndef NDEBUG
+    if (ref_count_ == 0)
       in_dtor_ = true;
-  #endif
-      return true;
-    }
-    return false;
+
+    if (ref_count_ >= 1)
+      DCHECK(CalledOnValidSequence());
+    if (ref_count_ == 1)
+      sequence_checker_.DetachFromSequence();
+#endif
+
+    return ref_count_ == 0;
   }
 
  private:
-  mutable int ref_count_;
-#ifndef NDEBUG
-  mutable bool in_dtor_;
+  template <typename U>
+  friend scoped_refptr<U> base::AdoptRef(U*);
+
+  void Adopted() const {
+#if DCHECK_IS_ON()
+    DCHECK(needs_adopt_ref_);
+    needs_adopt_ref_ = false;
+#endif
+  }
+
+#if DCHECK_IS_ON()
+  bool CalledOnValidSequence() const;
+#endif
+
+  mutable size_t ref_count_ = 0;
+
+#if DCHECK_IS_ON()
+  mutable bool needs_adopt_ref_ = false;
+  mutable bool in_dtor_ = false;
+  mutable SequenceChecker sequence_checker_;
 #endif
 
   DFAKE_MUTEX(add_release_);
@@ -90,7 +133,13 @@ class BASE_EXPORT RefCountedThreadSafeBase {
   bool HasOneRef() const;
 
  protected:
-  RefCountedThreadSafeBase();
+  explicit RefCountedThreadSafeBase(StartRefCountFromZeroTag) {}
+  explicit RefCountedThreadSafeBase(StartRefCountFromOneTag) : ref_count_(1) {
+#if DCHECK_IS_ON()
+    needs_adopt_ref_ = true;
+#endif
+  }
+
   ~RefCountedThreadSafeBase();
 
   void AddRef() const;
@@ -99,15 +148,47 @@ class BASE_EXPORT RefCountedThreadSafeBase {
   bool Release() const;
 
  private:
-  mutable AtomicRefCount ref_count_;
-#ifndef NDEBUG
-  mutable bool in_dtor_;
+  template <typename U>
+  friend scoped_refptr<U> base::AdoptRef(U*);
+
+  void Adopted() const {
+#if DCHECK_IS_ON()
+    DCHECK(needs_adopt_ref_);
+    needs_adopt_ref_ = false;
+#endif
+  }
+
+  mutable AtomicRefCount ref_count_ = 0;
+#if DCHECK_IS_ON()
+  mutable bool needs_adopt_ref_ = false;
+  mutable bool in_dtor_ = false;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(RefCountedThreadSafeBase);
 };
 
 }  // namespace subtle
+
+// ScopedAllowCrossThreadRefCountAccess disables the check documented on
+// RefCounted below for rare pre-existing use cases where thread-safety was
+// guaranteed through other means (e.g. explicit sequencing of calls across
+// execution sequences when bouncing between threads in order). New callers
+// should refrain from using this (callsites handling thread-safety through
+// locks should use RefCountedThreadSafe per the overhead of its atomics being
+// negligible compared to locks anyways and callsites doing explicit sequencing
+// should properly std::move() the ref to avoid hitting this check).
+// TODO(tzik): Cleanup existing use cases and remove
+// ScopedAllowCrossThreadRefCountAccess.
+class BASE_EXPORT ScopedAllowCrossThreadRefCountAccess final {
+ public:
+#if DCHECK_IS_ON()
+  ScopedAllowCrossThreadRefCountAccess();
+  ~ScopedAllowCrossThreadRefCountAccess();
+#else
+  ScopedAllowCrossThreadRefCountAccess() {}
+  ~ScopedAllowCrossThreadRefCountAccess() {}
+#endif
+};
 
 //
 // A base class for reference counted classes.  Otherwise, known as a cheap
@@ -123,10 +204,45 @@ class BASE_EXPORT RefCountedThreadSafeBase {
 //
 // You should always make your destructor non-public, to avoid any code deleting
 // the object accidently while there are references to it.
+//
+//
+// The ref count manipulation to RefCounted is NOT thread safe and has DCHECKs
+// to trap unsafe cross thread usage. A subclass instance of RefCounted can be
+// passed to another execution sequence only when its ref count is 1. If the ref
+// count is more than 1, the RefCounted class verifies the ref updates are made
+// on the same execution sequence as the previous ones.
+//
+//
+// The reference count starts from zero by default, and we intended to migrate
+// to start-from-one ref count. Put REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE() to
+// the ref counted class to opt-in.
+//
+// If an object has start-from-one ref count, the first scoped_refptr need to be
+// created by base::AdoptRef() or base::MakeShared(). We can use
+// base::MakeShared() to create create both type of ref counted object.
+//
+// The motivations to use start-from-one ref count are:
+//  - Start-from-one ref count doesn't need the ref count increment for the
+//    first reference.
+//  - It can detect an invalid object acquisition for a being-deleted object
+//    that has zero ref count. That tends to happen on custom deleter that
+//    delays the deletion.
+//    TODO(tzik): Implement invalid acquisition detection.
+//  - Behavior parity to Blink's WTF::RefCounted, whose count starts from one.
+//    And start-from-one ref count is a step to merge WTF::RefCounted into
+//    base::RefCounted.
+//
+#define REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE()             \
+  static constexpr ::base::subtle::StartRefCountFromOneTag \
+      kRefCountPreference = ::base::subtle::kStartRefCountFromOneTag
+
 template <class T>
 class RefCounted : public subtle::RefCountedBase {
  public:
-  RefCounted() {}
+  static constexpr subtle::StartRefCountFromZeroTag kRefCountPreference =
+      subtle::kStartRefCountFromZeroTag;
+
+  RefCounted() : subtle::RefCountedBase(T::kRefCountPreference) {}
 
   void AddRef() const {
     subtle::RefCountedBase::AddRef();
@@ -139,10 +255,10 @@ class RefCounted : public subtle::RefCountedBase {
   }
 
  protected:
-  ~RefCounted() {}
+  ~RefCounted() = default;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(RefCounted<T>);
+  DISALLOW_COPY_AND_ASSIGN(RefCounted);
 };
 
 // Forward declaration.
@@ -173,10 +289,17 @@ struct DefaultRefCountedThreadSafeTraits {
 //    private:
 //     friend class base::RefCountedThreadSafe<MyFoo>;
 //     ~MyFoo();
+//
+// We can use REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE() with RefCountedThreadSafe
+// too. See the comment above the RefCounted definition for details.
 template <class T, typename Traits = DefaultRefCountedThreadSafeTraits<T> >
 class RefCountedThreadSafe : public subtle::RefCountedThreadSafeBase {
  public:
-  RefCountedThreadSafe() {}
+  static constexpr subtle::StartRefCountFromZeroTag kRefCountPreference =
+      subtle::kStartRefCountFromZeroTag;
+
+  explicit RefCountedThreadSafe()
+      : subtle::RefCountedThreadSafeBase(T::kRefCountPreference) {}
 
   void AddRef() const {
     subtle::RefCountedThreadSafeBase::AddRef();
@@ -189,7 +312,7 @@ class RefCountedThreadSafe : public subtle::RefCountedThreadSafeBase {
   }
 
  protected:
-  ~RefCountedThreadSafe() {}
+  ~RefCountedThreadSafe() = default;
 
  private:
   friend struct DefaultRefCountedThreadSafeTraits<T>;
@@ -213,8 +336,45 @@ class RefCountedData
 
  private:
   friend class base::RefCountedThreadSafe<base::RefCountedData<T> >;
-  ~RefCountedData() {}
+  ~RefCountedData() = default;
 };
+
+// Creates a scoped_refptr from a raw pointer without incrementing the reference
+// count. Use this only for a newly created object whose reference count starts
+// from 1 instead of 0.
+template <typename T>
+scoped_refptr<T> AdoptRef(T* obj) {
+  using Tag = typename std::decay<decltype(T::kRefCountPreference)>::type;
+  static_assert(std::is_same<subtle::StartRefCountFromOneTag, Tag>::value,
+                "Use AdoptRef only for the reference count starts from one.");
+
+  DCHECK(obj);
+  DCHECK(obj->HasOneRef());
+  obj->Adopted();
+  return scoped_refptr<T>(obj, subtle::kAdoptRefTag);
+}
+
+namespace subtle {
+
+template <typename T>
+scoped_refptr<T> AdoptRefIfNeeded(T* obj, StartRefCountFromZeroTag) {
+  return scoped_refptr<T>(obj);
+}
+
+template <typename T>
+scoped_refptr<T> AdoptRefIfNeeded(T* obj, StartRefCountFromOneTag) {
+  return AdoptRef(obj);
+}
+
+}  // namespace subtle
+
+// Constructs an instance of T, which is a ref counted type, and wraps the
+// object into a scoped_refptr.
+template <typename T, typename... Args>
+scoped_refptr<T> MakeShared(Args&&... args) {
+  T* obj = new T(std::forward<Args>(args)...);
+  return subtle::AdoptRefIfNeeded(obj, T::kRefCountPreference);
+}
 
 }  // namespace base
 
@@ -226,6 +386,9 @@ class RefCountedData
 //
 //   class MyFoo : public RefCounted<MyFoo> {
 //    ...
+//    private:
+//     friend class RefCounted<MyFoo>;  // Allow destruction by RefCounted<>.
+//     ~MyFoo();                        // Destructor must be private/protected.
 //   };
 //
 //   void some_function() {
@@ -237,7 +400,7 @@ class RefCountedData
 //   void some_other_function() {
 //     scoped_refptr<MyFoo> foo = new MyFoo();
 //     ...
-//     foo = NULL;  // explicitly releases |foo|
+//     foo = nullptr;  // explicitly releases |foo|
 //     ...
 //     if (foo)
 //       foo->Method(param);
@@ -252,7 +415,7 @@ class RefCountedData
 //     scoped_refptr<MyFoo> b;
 //
 //     b.swap(a);
-//     // now, |b| references the MyFoo object, and |a| references NULL.
+//     // now, |b| references the MyFoo object, and |a| references nullptr.
 //   }
 //
 // To make both |a| and |b| in the above example reference the same MyFoo
@@ -271,8 +434,7 @@ class scoped_refptr {
  public:
   typedef T element_type;
 
-  scoped_refptr() : ptr_(NULL) {
-  }
+  scoped_refptr() {}
 
   scoped_refptr(T* p) : ptr_(p) {
     if (ptr_)
@@ -314,12 +476,12 @@ class scoped_refptr {
   T* get() const { return ptr_; }
 
   T& operator*() const {
-    assert(ptr_ != NULL);
+    assert(ptr_ != nullptr);
     return *ptr_;
   }
 
   T* operator->() const {
-    assert(ptr_ != NULL);
+    assert(ptr_ != nullptr);
     return ptr_;
   }
 
@@ -354,14 +516,10 @@ class scoped_refptr {
     return *this;
   }
 
-  void swap(T** pp) {
-    T* p = ptr_;
-    ptr_ = *pp;
-    *pp = p;
-  }
-
   void swap(scoped_refptr<T>& r) {
-    swap(&r.ptr_);
+    T* tmp = ptr_;
+    ptr_ = r.ptr_;
+    r.ptr_ = tmp;
   }
 
   explicit operator bool() const { return ptr_ != nullptr; }
@@ -382,9 +540,14 @@ class scoped_refptr {
   }
 
  protected:
-  T* ptr_;
+  T* ptr_ = nullptr;
 
  private:
+  template <typename U>
+  friend scoped_refptr<U> base::AdoptRef(U*);
+
+  scoped_refptr(T* p, base::subtle::AdoptRefTag) : ptr_(p) {}
+
   // Friend required for move constructors that set r.ptr_ to null.
   template <typename U>
   friend class scoped_refptr;
@@ -397,11 +560,13 @@ class scoped_refptr {
   static void Release(T* ptr);
 };
 
+// static
 template <typename T>
 void scoped_refptr<T>::AddRef(T* ptr) {
   ptr->AddRef();
 }
 
+// static
 template <typename T>
 void scoped_refptr<T>::Release(T* ptr) {
   ptr->Release();

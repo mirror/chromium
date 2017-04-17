@@ -7,10 +7,12 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "components/contextual_search/renderer/contextual_search_wrapper.h"
 #include "components/contextual_search/renderer/overlay_page_notifier_service_impl.h"
 #include "content/public/renderer/render_frame.h"
-#include "services/shell/public/cpp/interface_registry.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "services/service_manager/public/cpp/interface_registry.h"
 #include "v8/include/v8.h"
 
 namespace contextual_search {
@@ -23,7 +25,8 @@ OverlayJsRenderFrameObserver::OverlayJsRenderFrameObserver(
 
 OverlayJsRenderFrameObserver::~OverlayJsRenderFrameObserver() {}
 
-void OverlayJsRenderFrameObserver::DidStartProvisionalLoad() {
+void OverlayJsRenderFrameObserver::DidStartProvisionalLoad(
+    blink::WebDataSource* data_source) {
   RegisterMojoInterface();
 }
 
@@ -35,8 +38,10 @@ void OverlayJsRenderFrameObserver::RegisterMojoInterface() {
 
 void OverlayJsRenderFrameObserver::CreateOverlayPageNotifierService(
     mojo::InterfaceRequest<mojom::OverlayPageNotifierService> request) {
-  // This is strongly bound to and owned by the pipe.
-  new OverlayPageNotifierServiceImpl(this, std::move(request));
+  mojo::MakeStrongBinding(
+      base::MakeUnique<OverlayPageNotifierServiceImpl>(
+          weak_factory_.GetWeakPtr()),
+      std::move(request));
 }
 
 void OverlayJsRenderFrameObserver::SetIsContextualSearchOverlay() {
@@ -53,12 +58,19 @@ void OverlayJsRenderFrameObserver::DidFinishLoad() {
   // If no message about the Contextual Search overlay was received at this
   // point, there will not be one; remove the OverlayPageNotifierService
   // from the registry.
-  render_frame()
-      ->GetInterfaceRegistry()
-      ->RemoveInterface<mojom::OverlayPageNotifierService>();
+  DestroyOverlayPageNotifierService();
+}
+
+void OverlayJsRenderFrameObserver::DestroyOverlayPageNotifierService() {
+  if (render_frame()) {
+    render_frame()
+        ->GetInterfaceRegistry()
+        ->RemoveInterface<mojom::OverlayPageNotifierService>();
+  }
 }
 
 void OverlayJsRenderFrameObserver::OnDestruct() {
+  DestroyOverlayPageNotifierService();
   delete this;
 }
 

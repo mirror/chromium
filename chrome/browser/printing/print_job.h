@@ -6,16 +6,14 @@
 #define CHROME_BROWSER_PRINTING_PRINT_JOB_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/message_loop/message_loop.h"
 #include "build/build_config.h"
 #include "chrome/browser/printing/print_job_worker_owner.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
-
-class Thread;
 
 namespace base {
 class RefCountedMemory;
@@ -25,7 +23,6 @@ namespace printing {
 
 class JobEventDetails;
 class MetafilePlayer;
-class PdfToEmfConverter;
 class PrintJobWorker;
 class PrintedDocument;
 class PrintedPage;
@@ -58,7 +55,8 @@ class PrintJob : public PrintJobWorkerOwner,
   // PrintJobWorkerOwner implementation.
   void GetSettingsDone(const PrintSettings& new_settings,
                        PrintingContext::Result result) override;
-  PrintJobWorker* DetachWorker(PrintJobWorkerOwner* new_owner) override;
+  std::unique_ptr<PrintJobWorker> DetachWorker(
+      PrintJobWorkerOwner* new_owner) override;
   const PrintSettings& settings() const override;
   int cookie() const override;
 
@@ -93,17 +91,27 @@ class PrintJob : public PrintJobWorkerOwner,
   PrintedDocument* document() const;
 
 #if defined(OS_WIN)
+  // Let the PrintJob know the 0-based |page_number| of a given printed page.
+  void AppendPrintedPage(int page_number);
+
   void StartPdfToEmfConversion(
       const scoped_refptr<base::RefCountedMemory>& bytes,
       const gfx::Size& page_size,
-      const gfx::Rect& content_area);
-#endif  // OS_WIN
+      const gfx::Rect& content_area,
+      bool print_text_with_gdi);
+
+  void StartPdfToPostScriptConversion(
+      const scoped_refptr<base::RefCountedMemory>& bytes,
+      const gfx::Rect& content_area,
+      const gfx::Point& physical_offset,
+      bool ps_level2);
+#endif  // defined(OS_WIN)
 
  protected:
   ~PrintJob() override;
 
  private:
-  // Updates document_ to a new instance.
+  // Updates |document_| to a new instance.
   void UpdatePrintedDocument(PrintedDocument* new_document);
 
   // Processes a NOTIFY_PRINT_JOB_EVENT notification.
@@ -123,11 +131,11 @@ class PrintJob : public PrintJobWorkerOwner,
   void HoldUntilStopIsCalled();
 
 #if defined(OS_WIN)
-  void OnPdfToEmfStarted(int page_count);
-  void OnPdfToEmfPageConverted(int page_number,
-                               float scale_factor,
-                               std::unique_ptr<MetafilePlayer> emf);
-#endif  // OS_WIN
+  void OnPdfConversionStarted(int page_count);
+  void OnPdfPageConverted(int page_number,
+                          float scale_factor,
+                          std::unique_ptr<MetafilePlayer> metafile);
+#endif  // defined(OS_WIN)
 
   content::NotificationRegistrar registrar_;
 
@@ -154,9 +162,10 @@ class PrintJob : public PrintJobWorkerOwner,
   bool is_canceling_;
 
 #if defined(OS_WIN)
-  class PdfToEmfState;
-  std::unique_ptr<PdfToEmfState> ptd_to_emf_state_;
-#endif  // OS_WIN
+  class PdfConversionState;
+  std::unique_ptr<PdfConversionState> pdf_conversion_state_;
+  std::vector<int> pdf_page_mapping_;
+#endif  // defined(OS_WIN)
 
   // Used at shutdown so that we can quit a nested message loop.
   base::WeakPtrFactory<PrintJob> quit_factory_;
@@ -202,7 +211,10 @@ class JobEventDetails : public base::RefCountedThreadSafe<JobEventDetails> {
     FAILED,
   };
 
-  JobEventDetails(Type type, PrintedDocument* document, PrintedPage* page);
+  JobEventDetails(Type type,
+                  int job_id,
+                  PrintedDocument* document,
+                  PrintedPage* page);
 
   // Getters.
   PrintedDocument* document() const;
@@ -210,6 +222,7 @@ class JobEventDetails : public base::RefCountedThreadSafe<JobEventDetails> {
   Type type() const {
     return type_;
   }
+  int job_id() const { return job_id_; }
 
  private:
   friend class base::RefCountedThreadSafe<JobEventDetails>;
@@ -219,6 +232,7 @@ class JobEventDetails : public base::RefCountedThreadSafe<JobEventDetails> {
   scoped_refptr<PrintedDocument> document_;
   scoped_refptr<PrintedPage> page_;
   const Type type_;
+  int job_id_;
 
   DISALLOW_COPY_AND_ASSIGN(JobEventDetails);
 };

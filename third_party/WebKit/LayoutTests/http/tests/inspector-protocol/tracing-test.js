@@ -110,13 +110,16 @@ InspectorTest.retrieveStream = function(streamHandle, offset, chunkSize, callbac
     }
 }
 
+InspectorTest.findEvents = function(name, ph, condition)
+{
+    return InspectorTest.devtoolsEvents.filter(e => e.name === name && e.ph === ph && (!condition || condition(e)));
+}
+
 InspectorTest.findEvent = function(name, ph, condition)
 {
-    for (var i = 0; i < InspectorTest.devtoolsEvents.length; i++) {
-        var e = InspectorTest.devtoolsEvents[i];
-        if (e.name === name && e.ph === ph && (!condition || condition(e)))
-            return e;
-    }
+    var events = InspectorTest.findEvents(name, ph, condition);
+    if (events.length)
+        return events[0];
     throw new Error("Couldn't find event " + name + " / " + ph + "\n\n in " + JSON.stringify(InspectorTest.devtoolsEvents, null, 2));
 }
 
@@ -126,43 +129,8 @@ InspectorTest.invokeAsyncWithTracing = function(functionName, callback)
 
     function onStart()
     {
-        InspectorTest.invokePageFunctionAsync(functionName, done);
+        InspectorTest.evaluateInPageAsync(functionName + "()").then((data) => InspectorTest.stopTracing((devtoolsEvents) => callback(devtoolsEvents, data)));
     }
-
-    function done()
-    {
-        InspectorTest.stopTracing(callback);
-    }
-}
-
-InspectorTest._lastEvalId = 0;
-InspectorTest._pendingEvalRequests = {};
-
-InspectorTest.invokePageFunctionAsync = function(functionName, callback)
-{
-    var id = ++InspectorTest._lastEvalId;
-    InspectorTest._pendingEvalRequests[id] = callback;
-    var asyncEvalWrapper = function(callId, functionName)
-    {
-        function evalCallback(result)
-        {
-            evaluateInFrontend("InspectorTest.didInvokePageFunctionAsync(" + callId + ", " + JSON.stringify(result) + ");");
-        }
-        eval(functionName + "(" + evalCallback + ")");
-    }
-    InspectorTest.evaluateInPage("(" + asyncEvalWrapper.toString() + ")(" + id + ", unescape('" + escape(functionName) + "'))", function() { });
-}
-
-InspectorTest.didInvokePageFunctionAsync = function(callId, value)
-{
-    var callback = InspectorTest._pendingEvalRequests[callId];
-
-    if (!callback) {
-        InspectorTest.addResult("Missing callback for async eval " + callId + ", perhaps callback invoked twice?");
-        return;
-    }
-    delete InspectorTest._pendingEvalRequests[callId];
-    callback(value);
 }
 
 }

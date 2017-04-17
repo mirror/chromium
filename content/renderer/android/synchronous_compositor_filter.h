@@ -8,8 +8,9 @@
 #include <stdint.h>
 
 #include <memory>
+#include <unordered_map>
+#include <vector>
 
-#include "base/containers/scoped_ptr_hash_map.h"
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
 #include "content/renderer/android/synchronous_compositor_registry.h"
@@ -24,6 +25,7 @@ class SynchronousInputHandlerProxy;
 namespace content {
 
 class SynchronousCompositorProxy;
+struct SyncCompositorCommonRendererParams;
 
 class SynchronousCompositorFilter
     : public IPC::MessageFilter,
@@ -35,7 +37,7 @@ class SynchronousCompositorFilter
                                   compositor_task_runner);
 
   // IPC::MessageFilter overrides.
-  void OnFilterAdded(IPC::Sender* sender) override;
+  void OnFilterAdded(IPC::Channel* channel) override;
   void OnFilterRemoved() override;
   void OnChannelClosing() override;
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -46,12 +48,12 @@ class SynchronousCompositorFilter
   bool Send(IPC::Message* message) override;
 
   // SynchronousCompositorRegistry overrides.
-  void RegisterOutputSurface(
+  void RegisterCompositorFrameSink(
       int routing_id,
-      SynchronousCompositorOutputSurface* output_surface) override;
-  void UnregisterOutputSurface(
+      SynchronousCompositorFrameSink* compositor_frame_sink) override;
+  void UnregisterCompositorFrameSink(
       int routing_id,
-      SynchronousCompositorOutputSurface* output_surface) override;
+      SynchronousCompositorFrameSink* compositor_frame_sink) override;
 
   // SynchronousInputHandlerProxyClient overrides.
   void DidAddSynchronousHandlerProxy(
@@ -69,16 +71,18 @@ class SynchronousCompositorFilter
   // Compositor thread methods.
   void FilterReadyOnCompositorThread();
   void OnMessageReceivedOnCompositorThread(const IPC::Message& message);
-  void CheckIsReady(int routing_id);
   void CreateSynchronousCompositorProxy(
       int routing_id,
       ui::SynchronousInputHandlerProxy* synchronous_input_handler_proxy);
-  void SetProxyOutputSurface(
+  void SetProxyCompositorFrameSink(
       int routing_id,
-      SynchronousCompositorOutputSurface* output_surface);
+      SynchronousCompositorFrameSink* compositor_frame_sink);
   void UnregisterObjects(int routing_id);
   void RemoveEntryIfNeeded(int routing_id);
   SynchronousCompositorProxy* FindProxy(int routing_id);
+  void OnSynchronizeRendererState(
+      const std::vector<int>& routing_ids,
+      std::vector<SyncCompositorCommonRendererParams>* out);
 
   const scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
 
@@ -88,21 +92,21 @@ class SynchronousCompositorFilter
 
   // Compositor thread-only fields.
   using SyncCompositorMap =
-      base::ScopedPtrHashMap<int /* routing_id */,
-                             std::unique_ptr<SynchronousCompositorProxy>>;
+      std::unordered_map<int /* routing_id */,
+                         std::unique_ptr<SynchronousCompositorProxy>>;
   SyncCompositorMap sync_compositor_map_;
 
   bool filter_ready_;
   using SynchronousInputHandlerProxyMap =
       base::hash_map<int, ui::SynchronousInputHandlerProxy*>;
-  using OutputSurfaceMap =
-      base::hash_map<int, SynchronousCompositorOutputSurface*>;
+  using CompositorFrameSinkMap =
+      base::hash_map<int, SynchronousCompositorFrameSink*>;
 
   // This is only used before FilterReadyOnCompositorThread.
   SynchronousInputHandlerProxyMap synchronous_input_handler_proxy_map_;
 
   // This is only used if input_handler_proxy has not been registered.
-  OutputSurfaceMap output_surface_map_;
+  CompositorFrameSinkMap compositor_frame_sink_map_;
 
   DISALLOW_COPY_AND_ASSIGN(SynchronousCompositorFilter);
 };

@@ -34,11 +34,6 @@ void UpdateCursorImage(DrmBuffer* cursor, const SkBitmap& image) {
   // Clear to transparent in case |image| is smaller than the canvas.
   SkCanvas* canvas = cursor->GetCanvas();
   canvas->clear(SK_ColorTRANSPARENT);
-
-  SkRect clip;
-  clip.set(0, 0, canvas->getBaseLayerSize().width(),
-           canvas->getBaseLayerSize().height());
-  canvas->clipRect(clip, SkRegion::kReplace_Op);
   canvas->drawBitmapRect(image, damage, NULL);
 }
 
@@ -60,7 +55,7 @@ void DrmWindow::Initialize(ScanoutBufferGenerator* buffer_generator) {
 
   device_manager_->UpdateDrmDevice(widget_, nullptr);
   overlay_validator_ =
-      base::WrapUnique(new DrmOverlayValidator(this, buffer_generator));
+      base::MakeUnique<DrmOverlayValidator>(this, buffer_generator);
 }
 
 void DrmWindow::Shutdown() {

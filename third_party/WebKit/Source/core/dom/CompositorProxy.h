@@ -8,11 +8,11 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "core/dom/CompositorProxyClient.h"
-#include "core/dom/DOMMatrix.h"
 #include "core/dom/Element.h"
+#include "core/geometry/DOMMatrix.h"
 #include "platform/graphics/CompositorMutableState.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -20,55 +20,66 @@ class DOMMatrix;
 class ExceptionState;
 class ExecutionContext;
 
-class CORE_EXPORT CompositorProxy final : public GarbageCollectedFinalized<CompositorProxy>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static CompositorProxy* create(ExecutionContext*, Element*, const Vector<String>& attributeArray, ExceptionState&);
-    static CompositorProxy* create(ExecutionContext*, uint64_t element, uint32_t compositorMutableProperties);
-    virtual ~CompositorProxy();
+// Owned by the main thread or control thread.
+class CORE_EXPORT CompositorProxy final
+    : public GarbageCollectedFinalized<CompositorProxy>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_client);
-    }
+ public:
+  static CompositorProxy* Create(ExecutionContext*,
+                                 Element*,
+                                 const Vector<String>& attribute_array,
+                                 ExceptionState&);
+  static CompositorProxy* Create(ExecutionContext*,
+                                 uint64_t element,
+                                 uint32_t compositor_mutable_properties);
+  virtual ~CompositorProxy();
 
-    uint64_t elementId() const { return m_elementId; }
-    uint32_t compositorMutableProperties() const { return m_compositorMutableProperties; }
-    bool supports(const String& attribute) const;
+  DECLARE_TRACE();
 
-    bool initialized() const { return m_connected && m_state.get(); }
-    bool connected() const { return m_connected; }
-    void disconnect();
+  uint64_t ElementId() const { return element_id_; }
+  uint32_t CompositorMutableProperties() const {
+    return compositor_mutable_properties_;
+  }
+  bool supports(const String& attribute) const;
 
-    double opacity(ExceptionState&) const;
-    double scrollLeft(ExceptionState&) const;
-    double scrollTop(ExceptionState&) const;
-    DOMMatrix* transform(ExceptionState&) const;
+  bool initialized() const { return connected_ && state_.get(); }
+  bool Connected() const { return connected_; }
+  void disconnect();
 
-    void setOpacity(double, ExceptionState&);
-    void setScrollLeft(double, ExceptionState&);
-    void setScrollTop(double, ExceptionState&);
-    void setTransform(DOMMatrix*, ExceptionState&);
+  double opacity(ExceptionState&) const;
+  double scrollLeft(ExceptionState&) const;
+  double scrollTop(ExceptionState&) const;
+  DOMMatrix* transform(ExceptionState&) const;
 
-    void takeCompositorMutableState(std::unique_ptr<CompositorMutableState>);
+  void setOpacity(double, ExceptionState&);
+  void setScrollLeft(double, ExceptionState&);
+  void setScrollTop(double, ExceptionState&);
+  void setTransform(DOMMatrix*, ExceptionState&);
 
-protected:
-    CompositorProxy(uint64_t elementId, uint32_t compositorMutableProperties);
-    CompositorProxy(Element&, const Vector<String>& attributeArray);
-    CompositorProxy(uint64_t element, uint32_t compositorMutableProperties, CompositorProxyClient*);
+  void TakeCompositorMutableState(std::unique_ptr<CompositorMutableState>);
 
-private:
-    bool raiseExceptionIfNotMutable(uint32_t compositorMutableProperty, ExceptionState&) const;
-    void disconnectInternal();
+ protected:
+  CompositorProxy(uint64_t element_id, uint32_t compositor_mutable_properties);
+  CompositorProxy(Element&, const Vector<String>& attribute_array);
+  CompositorProxy(uint64_t element,
+                  uint32_t compositor_mutable_properties,
+                  CompositorProxyClient*);
 
-    const uint64_t m_elementId = 0;
-    const uint32_t m_compositorMutableProperties = 0;
+ private:
+  bool RaiseExceptionIfNotMutable(uint32_t compositor_mutable_property,
+                                  ExceptionState&) const;
+  void DisconnectInternal();
 
-    bool m_connected = true;
-    Member<CompositorProxyClient> m_client;
-    std::unique_ptr<CompositorMutableState> m_state;
+  const uint64_t element_id_ = 0;
+  const uint32_t compositor_mutable_properties_ = 0;
+
+  bool connected_ = true;
+  Member<CompositorProxyClient> client_;
+  std::unique_ptr<CompositorMutableState> state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorProxy_h
+#endif  // CompositorProxy_h

@@ -36,12 +36,13 @@
 
 #if INSIDE_BLINK
 #include "platform/heap/Handle.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/TypeTraits.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/TypeTraits.h"
 #endif
 
 namespace WTF {
-template<class T> class ThreadSafeRefCounted;
+template <class T>
+class ThreadSafeRefCounted;
 }
 
 namespace blink {
@@ -50,145 +51,182 @@ namespace blink {
 // thread that created it, but can optionally be allowed to happen on
 // another thread.
 enum WebPrivatePtrDestruction {
-    WebPrivatePtrDestructionSameThread,
-    WebPrivatePtrDestructionCrossThread,
+  kWebPrivatePtrDestructionSameThread,
+  kWebPrivatePtrDestructionCrossThread,
 };
 
 // The WebPrivatePtr<> holds by default a strong reference to its Blink object,
 // but Blink GC managed objects also support keeping a weak reference by
 // way of WebPrivatePtr<>.
 enum class WebPrivatePtrStrength {
-    Normal,
-    Weak,
+  kNormal,
+  kWeak,
 };
 
 #if INSIDE_BLINK
 enum LifetimeManagementType {
-    RefCountedLifetime,
-    GarbageCollectedLifetime,
+  kRefCountedLifetime,
+  kGarbageCollectedLifetime,
 };
 
-template<typename T>
+template <typename T>
 struct LifetimeOf {
-private:
-    static const bool isGarbageCollected = WTF::IsSubclassOfTemplate<T, GarbageCollected>::value || IsGarbageCollectedMixin<T>::value;
-public:
-    static const LifetimeManagementType value = !isGarbageCollected ? RefCountedLifetime : GarbageCollectedLifetime;
+ private:
+  static const bool kIsGarbageCollected =
+      WTF::IsSubclassOfTemplate<T, GarbageCollected>::value ||
+      IsGarbageCollectedMixin<T>::value;
+
+ public:
+  static const LifetimeManagementType value =
+      !kIsGarbageCollected ? kRefCountedLifetime : kGarbageCollectedLifetime;
 };
 
-template<typename T, WebPrivatePtrDestruction crossThreadDestruction, WebPrivatePtrStrength strongOrWeak, LifetimeManagementType lifetime>
+template <typename T,
+          WebPrivatePtrDestruction crossThreadDestruction,
+          WebPrivatePtrStrength strongOrWeak,
+          LifetimeManagementType lifetime>
 class PtrStorageImpl;
 
-template<typename T, WebPrivatePtrDestruction crossThreadDestruction, WebPrivatePtrStrength strongOrWeak>
-class PtrStorageImpl<T, crossThreadDestruction, strongOrWeak, RefCountedLifetime> {
-public:
-    typedef PassRefPtr<T> BlinkPtrType;
+template <typename T,
+          WebPrivatePtrDestruction crossThreadDestruction,
+          WebPrivatePtrStrength strongOrWeak>
+class PtrStorageImpl<T,
+                     crossThreadDestruction,
+                     strongOrWeak,
+                     kRefCountedLifetime> {
+ public:
+  typedef PassRefPtr<T> BlinkPtrType;
 
-    void assign(const BlinkPtrType& val)
-    {
-        static_assert(crossThreadDestruction == WebPrivatePtrDestructionSameThread || WTF::IsSubclassOfTemplate<T, WTF::ThreadSafeRefCounted>::value, "Cross thread destructible class must derive from ThreadSafeRefCounted<>");
-        static_assert(strongOrWeak == WebPrivatePtrStrength::Normal, "Ref-counted classes do not support weak WebPrivatePtr<> references");
-        release();
-        m_ptr = val.leakRef();
-    }
+  void Assign(const BlinkPtrType& val) {
+    static_assert(
+        crossThreadDestruction == kWebPrivatePtrDestructionSameThread ||
+            WTF::IsSubclassOfTemplate<T, WTF::ThreadSafeRefCounted>::value,
+        "Cross thread destructible class must derive from "
+        "ThreadSafeRefCounted<>");
+    static_assert(
+        strongOrWeak == WebPrivatePtrStrength::kNormal,
+        "Ref-counted classes do not support weak WebPrivatePtr<> references");
+    Release();
+    ptr_ = val.LeakRef();
+  }
 
-    void assign(const PtrStorageImpl& other)
-    {
-        T* val = other.get();
-        if (m_ptr == val)
-            return;
-        release();
-        WTF::refIfNotNull(val);
-        m_ptr = val;
-    }
+  void Assign(const PtrStorageImpl& other) {
+    T* val = other.Get();
+    if (ptr_ == val)
+      return;
+    Release();
+    WTF::RefIfNotNull(val);
+    ptr_ = val;
+  }
 
-    T* get() const { return m_ptr; }
+  T* Get() const { return ptr_; }
 
-    void release()
-    {
-        WTF::derefIfNotNull(m_ptr);
-        m_ptr = 0;
-    }
+  void Release() {
+    WTF::DerefIfNotNull(ptr_);
+    ptr_ = 0;
+  }
 
-private:
-    T* m_ptr;
+ private:
+  T* ptr_;
 };
 
 template <typename T, WebPrivatePtrDestruction, WebPrivatePtrStrength>
 struct WebPrivatePtrPersistentStorageType {
-public:
-    using Type = Persistent<T>;
+ public:
+  using Type = Persistent<T>;
 };
 
 template <typename T>
-struct WebPrivatePtrPersistentStorageType<T, WebPrivatePtrDestructionSameThread, WebPrivatePtrStrength::Weak>  {
-public:
-    using Type = WeakPersistent<T>;
+struct WebPrivatePtrPersistentStorageType<T,
+                                          kWebPrivatePtrDestructionSameThread,
+                                          WebPrivatePtrStrength::kWeak> {
+ public:
+  using Type = WeakPersistent<T>;
 };
 
 template <typename T>
-struct WebPrivatePtrPersistentStorageType<T, WebPrivatePtrDestructionCrossThread, WebPrivatePtrStrength::Normal> {
-public:
-    using Type = CrossThreadPersistent<T>;
+struct WebPrivatePtrPersistentStorageType<T,
+                                          kWebPrivatePtrDestructionCrossThread,
+                                          WebPrivatePtrStrength::kNormal> {
+ public:
+  using Type = CrossThreadPersistent<T>;
 };
 
 template <typename T>
-struct WebPrivatePtrPersistentStorageType<T, WebPrivatePtrDestructionCrossThread, WebPrivatePtrStrength::Weak> {
-public:
-    using Type = CrossThreadWeakPersistent<T>;
+struct WebPrivatePtrPersistentStorageType<T,
+                                          kWebPrivatePtrDestructionCrossThread,
+                                          WebPrivatePtrStrength::kWeak> {
+ public:
+  using Type = CrossThreadWeakPersistent<T>;
 };
 
-template<typename T, WebPrivatePtrDestruction crossThreadDestruction, WebPrivatePtrStrength strongOrWeak>
-class PtrStorageImpl<T, crossThreadDestruction, strongOrWeak, GarbageCollectedLifetime> {
-public:
-    void assign(T* val)
-    {
-        if (!val) {
-            release();
-            return;
-        }
+template <typename T,
+          WebPrivatePtrDestruction crossThreadDestruction,
+          WebPrivatePtrStrength strongOrWeak>
+class PtrStorageImpl<T,
+                     crossThreadDestruction,
+                     strongOrWeak,
+                     kGarbageCollectedLifetime> {
+ public:
+  using BlinkPtrType =
+      typename WebPrivatePtrPersistentStorageType<T,
+                                                  crossThreadDestruction,
+                                                  strongOrWeak>::Type;
 
-        if (!m_handle)
-            m_handle = new (typename WebPrivatePtrPersistentStorageType<T, crossThreadDestruction, strongOrWeak>::Type)();
-
-        (*m_handle) = val;
+  void Assign(T* val) {
+    if (!val) {
+      Release();
+      return;
     }
 
-    template<typename U> void assign(U* val) { assign(static_cast<T*>(val)); }
+    if (!handle_)
+      handle_ = new BlinkPtrType;
 
-    void assign(const PtrStorageImpl& other) { assign(other.get()); }
+    (*handle_) = val;
+  }
 
-    T* get() const { return m_handle ? m_handle->get() : 0; }
+  template <typename U>
+  void Assign(U* val) {
+    Assign(static_cast<T*>(val));
+  }
 
-    void release()
-    {
-        delete m_handle;
-        m_handle = 0;
-    }
+  void Assign(const PtrStorageImpl& other) { Assign(other.Get()); }
 
-private:
-    typename WebPrivatePtrPersistentStorageType<T, crossThreadDestruction, strongOrWeak>::Type* m_handle;
+  T* Get() const { return handle_ ? handle_->Get() : 0; }
+
+  void Release() {
+    delete handle_;
+    handle_ = 0;
+  }
+
+ private:
+  BlinkPtrType* handle_;
 };
 
-template<typename T, WebPrivatePtrDestruction crossThreadDestruction, WebPrivatePtrStrength strongOrWeak>
-class PtrStorage : public PtrStorageImpl<T, crossThreadDestruction, strongOrWeak, LifetimeOf<T>::value> {
-public:
-    static PtrStorage& fromSlot(void** slot)
-    {
-        static_assert(sizeof(PtrStorage) == sizeof(void*), "PtrStorage must be the size of a pointer");
-        return *reinterpret_cast<PtrStorage*>(slot);
-    }
+template <typename T,
+          WebPrivatePtrDestruction crossThreadDestruction,
+          WebPrivatePtrStrength strongOrWeak>
+class PtrStorage : public PtrStorageImpl<T,
+                                         crossThreadDestruction,
+                                         strongOrWeak,
+                                         LifetimeOf<T>::value> {
+ public:
+  static PtrStorage& FromSlot(void** slot) {
+    static_assert(sizeof(PtrStorage) == sizeof(void*),
+                  "PtrStorage must be the size of a pointer");
+    return *reinterpret_cast<PtrStorage*>(slot);
+  }
 
-    static const PtrStorage& fromSlot(void* const* slot)
-    {
-        static_assert(sizeof(PtrStorage) == sizeof(void*), "PtrStorage must be the size of a pointer");
-        return *reinterpret_cast<const PtrStorage*>(slot);
-    }
+  static const PtrStorage& FromSlot(void* const* slot) {
+    static_assert(sizeof(PtrStorage) == sizeof(void*),
+                  "PtrStorage must be the size of a pointer");
+    return *reinterpret_cast<const PtrStorage*>(slot);
+  }
 
-private:
-    // Prevent construction via normal means.
-    PtrStorage();
-    PtrStorage(const PtrStorage&);
+ private:
+  // Prevent construction via normal means.
+  PtrStorage();
+  PtrStorage(const PtrStorage&);
 };
 #endif
 
@@ -217,7 +255,7 @@ private:
 //        // Methods that are used only by other Blink classes should only be
 //        // declared when INSIDE_BLINK is set.
 //    #if INSIDE_BLINK
-//        WebFoo(const WTF::PassRefPtr<Foo>&);
+//        WebFoo(WTF::PassRefPtr<Foo>);
 //    #endif
 //
 //    private:
@@ -228,79 +266,79 @@ private:
 //    WebFoo::~WebFoo() { m_private.reset(); }
 //    void WebFoo::assign(const WebFoo& other) { ... }
 //
-template <typename T, WebPrivatePtrDestruction crossThreadDestruction = WebPrivatePtrDestructionSameThread, WebPrivatePtrStrength strongOrWeak = WebPrivatePtrStrength::Normal>
+template <typename T,
+          WebPrivatePtrDestruction crossThreadDestruction =
+              kWebPrivatePtrDestructionSameThread,
+          WebPrivatePtrStrength strongOrWeak = WebPrivatePtrStrength::kNormal>
 class WebPrivatePtr {
-public:
-    WebPrivatePtr() : m_storage(0) { }
-    ~WebPrivatePtr()
-    {
-        // We don't destruct the object pointed by m_ptr here because we don't
-        // want to expose destructors of core classes to embedders. We should
-        // call reset() manually in destructors of classes with WebPrivatePtr
-        // members.
-        DCHECK(!m_storage);
-    }
+ public:
+  WebPrivatePtr() : storage_(0) {}
+  ~WebPrivatePtr() {
+    // We don't destruct the object pointed by m_ptr here because we don't
+    // want to expose destructors of core classes to embedders. We should
+    // call reset() manually in destructors of classes with WebPrivatePtr
+    // members.
+    DCHECK(!storage_);
+  }
 
-    bool isNull() const { return !m_storage; }
+  bool IsNull() const { return !storage_; }
 
 #if INSIDE_BLINK
-    template<typename U>
-    WebPrivatePtr(const U& ptr)
-        : m_storage(0)
-    {
-        storage().assign(ptr);
-    }
+  template <typename U>
+  WebPrivatePtr(const U& ptr) : storage_(0) {
+    Storage().Assign(ptr);
+  }
 
-    void reset() { storage().release(); }
+  void Reset() { Storage().Release(); }
 
-    WebPrivatePtr& operator=(const WebPrivatePtr& other)
-    {
-        storage().assign(other.storage());
-        return *this;
-    }
+  WebPrivatePtr& operator=(const WebPrivatePtr& other) {
+    Storage().Assign(other.Storage());
+    return *this;
+  }
 
-    template<typename U>
-    WebPrivatePtr& operator=(const U& ptr)
-    {
-        storage().assign(ptr);
-        return *this;
-    }
+  template <typename U>
+  WebPrivatePtr& operator=(const U& ptr) {
+    Storage().Assign(ptr);
+    return *this;
+  }
 
-    T* get() const { return storage().get(); }
+  T* Get() const { return Storage().Get(); }
 
-    T& operator*() const
-    {
-        ASSERT(m_storage);
-        return *get();
-    }
+  T& operator*() const {
+    ASSERT(storage_);
+    return *Get();
+  }
 
-    T* operator->() const
-    {
-        ASSERT(m_storage);
-        return get();
-    }
+  T* operator->() const {
+    ASSERT(storage_);
+    return Get();
+  }
 #endif
 
-private:
+ private:
 #if INSIDE_BLINK
-    PtrStorage<T, crossThreadDestruction, strongOrWeak>& storage() { return PtrStorage<T, crossThreadDestruction, strongOrWeak>::fromSlot(&m_storage); }
-    const PtrStorage<T, crossThreadDestruction, strongOrWeak>& storage() const { return PtrStorage<T, crossThreadDestruction, strongOrWeak>::fromSlot(&m_storage); }
+  using PtrStorageType = PtrStorage<T, crossThreadDestruction, strongOrWeak>;
+
+  PtrStorageType& Storage() { return PtrStorageType::FromSlot(&storage_); }
+  const PtrStorageType& Storage() const {
+    return PtrStorageType::FromSlot(&storage_);
+  }
 #endif
 
 #if !INSIDE_BLINK
-    // Disable the assignment operator; we define it above for when
-    // INSIDE_BLINK is set, but we need to make sure that it is not
-    // used outside there; the compiler-provided version won't handle reference
-    // counting properly.
-    WebPrivatePtr& operator=(const WebPrivatePtr& other);
+  // Disable the assignment operator; we define it above for when
+  // INSIDE_BLINK is set, but we need to make sure that it is not
+  // used outside there; the compiler-provided version won't handle reference
+  // counting properly.
+  WebPrivatePtr& operator=(const WebPrivatePtr& other) = delete;
 #endif
-    // Disable the copy constructor; classes that contain a WebPrivatePtr
-    // should implement their copy constructor using assign().
-    WebPrivatePtr(const WebPrivatePtr&);
+  // Disable the copy constructor; classes that contain a WebPrivatePtr
+  // should implement their copy constructor using assign().
+  WebPrivatePtr(const WebPrivatePtr&) = delete;
 
-    void* m_storage;
+  void* storage_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebPrivatePtr_h
+#endif  // WebPrivatePtr_h

@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "components/autofill/content/renderer/password_form_conversion_utils.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/autofill/core/common/password_form_field_prediction_map.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
@@ -74,18 +75,20 @@ class ScopedLayoutPreventer {
   DISALLOW_COPY_AND_ASSIGN(ScopedLayoutPreventer);
 };
 
+// Helper function that strips any authentication data, as well as query and
+// ref portions of URL
+GURL StripAuthAndParams(const GURL& gurl);
+
 // Extract FormData from the form element and return whether the operation was
 // successful.
 bool ExtractFormData(const blink::WebFormElement& form_element, FormData* data);
 
-// Helper function to check if there exist any form on |frame| where its action
+// Helper function to check if there exist any visible form on |frame| which
+// equals |form_element|. If |form_element| is null, checks if forms action
 // equals |action|. Returns true if so. For forms with empty or unspecified
-// actions, all form data are used for comparison. Form data comparison is
-// disabled on Mac and Android because the update prompt isn't implemented.
-// It may cause many false password updates.
-// TODO(kolos) Turn on all data comparing when the update prompt will be
-// implemented on Mac and Android.
+// actions, all form data are used for comparison.
 bool IsFormVisible(blink::WebFrame* frame,
+                   const blink::WebFormElement& form_element,
                    const GURL& action,
                    const GURL& origin,
                    const FormData& form_data);
@@ -122,13 +125,14 @@ bool IsCheckableElement(const blink::WebInputElement* element);
 // autofilled. {Text, Radiobutton, Checkbox}.
 bool IsAutofillableInputElement(const blink::WebInputElement* element);
 
-// True if this node takes up space in the layout, ie. this node or a descendant
-// has a non-empty bounding bounding client rect.
-//
-// TODO(esprehn): This isn't really about visibility, it's about the size.
-// We should remove this function and just call hasNonEmptyLayoutSize()
-// directly.
-bool IsWebNodeVisible(const blink::WebNode& node);
+// Returns true if |element| is one of the element types that can be autofilled.
+// {Text, Radiobutton, Checkbox, Select, TextArea}.
+bool IsAutofillableElement(const blink::WebFormControlElement& element);
+
+// True if this node can take focus. If layout is blocked, then the function
+// checks if the element takes up space in the layout, ie. this element or a
+// descendant has a non-empty bounding bounding client rect.
+bool IsWebElementVisible(const blink::WebElement& element);
 
 // Returns the form's |name| attribute if non-empty; otherwise the form's |id|
 // attribute.
@@ -143,9 +147,12 @@ std::vector<blink::WebFormControlElement> ExtractAutofillableElementsInForm(
     const blink::WebFormElement& form_element);
 
 // Fills out a FormField object from a given WebFormControlElement.
-// |extract_mask|: See the enum ExtractMask above for details.
+// |extract_mask|: See the enum ExtractMask above for details. Field properties
+// will be copied from |field_value_and_properties_map|, if the argument is not
+// null and has entry for |element| (see properties in FieldPropertiesFlags).
 void WebFormControlElementToFormField(
     const blink::WebFormControlElement& element,
+    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
     ExtractMask extract_mask,
     FormFieldData* field);
 
@@ -153,10 +160,13 @@ void WebFormControlElementToFormField(
 // If |field| is non-NULL, also fills |field| with the FormField object
 // corresponding to the |form_control_element|. |extract_mask| controls what
 // data is extracted. Returns true if |form| is filled out.  Also returns false
-// if there are no fields or too many fields in the |form|.
+// if there are no fields or too many fields in the |form|. Field properties
+// will be copied from |field_value_and_properties_map|, if the argument is not
+// null and has entry for |element| (see properties in FieldPropertiesFlags).
 bool WebFormElementToFormData(
     const blink::WebFormElement& form_element,
     const blink::WebFormControlElement& form_control_element,
+    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
     ExtractMask extract_mask,
     FormData* form,
     FormFieldData* field);
@@ -192,12 +202,15 @@ bool UnownedCheckoutFormElementsAndFieldSetsToFormData(
     FormFieldData* field);
 
 // Same as above, but without the requirement that the elements only be
-// related to checkout.
+// related to checkout. Field properties of |control_elements| will be copied
+// from |field_value_and_properties_map|, if the argument is not null and has
+// corresponding entries (see properties in FieldPropertiesFlags).
 bool UnownedPasswordFormElementsAndFieldSetsToFormData(
     const std::vector<blink::WebElement>& fieldsets,
     const std::vector<blink::WebFormControlElement>& control_elements,
     const blink::WebFormControlElement* element,
     const blink::WebDocument& document,
+    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
     ExtractMask extract_mask,
     FormData* form,
     FormFieldData* field);

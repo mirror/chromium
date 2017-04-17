@@ -24,214 +24,151 @@
 #ifndef HTMLLinkElement_h
 #define HTMLLinkElement_h
 
+#include "bindings/core/v8/TraceWrapperMember.h"
 #include "core/CoreExport.h"
-#include "core/css/CSSStyleSheet.h"
 #include "core/dom/DOMTokenList.h"
-#include "core/dom/IconURL.h"
-#include "core/dom/StyleEngineContext.h"
-#include "core/fetch/ResourceOwner.h"
-#include "core/fetch/StyleSheetResource.h"
-#include "core/fetch/StyleSheetResourceClient.h"
+#include "core/dom/IncrementLoadEventDelayCount.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/LinkRelAttribute.h"
 #include "core/html/LinkResource.h"
+#include "core/html/LinkStyle.h"
 #include "core/html/RelList.h"
 #include "core/loader/LinkLoader.h"
 #include "core/loader/LinkLoaderClient.h"
+#include "platform/WebTaskRunner.h"
+#include <memory>
 
 namespace blink {
 
-class HTMLLinkElement;
 class KURL;
 class LinkImport;
 
-template<typename T> class EventSender;
-using LinkEventSender = EventSender<HTMLLinkElement>;
+class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
+                                          public LinkLoaderClient,
+                                          private DOMTokenListObserver {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(HTMLLinkElement);
 
-//
-// LinkStyle handles dynamically change-able link resources, which is
-// typically @rel="stylesheet".
-//
-// It could be @rel="shortcut icon" or something else though. Each of
-// types might better be handled by a separate class, but dynamically
-// changing @rel makes it harder to move such a design so we are
-// sticking current way so far.
-//
-class LinkStyle final : public LinkResource, ResourceOwner<StyleSheetResource> {
-    USING_GARBAGE_COLLECTED_MIXIN(LinkStyle);
-public:
-    static LinkStyle* create(HTMLLinkElement* owner);
+ public:
+  static HTMLLinkElement* Create(Document&, bool created_by_parser);
+  ~HTMLLinkElement() override;
 
-    explicit LinkStyle(HTMLLinkElement* owner);
-    ~LinkStyle() override;
+  KURL Href() const;
+  const AtomicString& Rel() const;
+  String Media() const { return media_; }
+  String TypeValue() const { return type_; }
+  String AsValue() const { return as_; }
+  ReferrerPolicy GetReferrerPolicy() const { return referrer_policy_; }
+  const LinkRelAttribute& RelAttribute() const { return rel_attribute_; }
+  DOMTokenList& relList() const {
+    return static_cast<DOMTokenList&>(*rel_list_);
+  }
+  String Scope() const { return scope_; }
 
-    LinkResourceType type() const override { return Style; }
-    void process() override;
-    void ownerRemoved() override;
-    bool hasLoaded() const override { return m_loadedSheet; }
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& GetType() const;
 
-    void startLoadingDynamicSheet();
-    void notifyLoadedSheetAndAllCriticalSubresources(Node::LoadedSheetErrorStatus);
-    bool sheetLoaded();
+  IconType GetIconType() const;
 
-    void setDisabledState(bool);
-    void setSheetTitle(const String&);
+  // the icon sizes as parsed from the HTML attribute
+  const Vector<IntSize>& IconSizes() const;
 
-    bool styleSheetIsLoading() const;
-    bool hasSheet() const { return m_sheet; }
-    bool isDisabled() const { return m_disabledState == Disabled; }
-    bool isEnabledViaScript() const { return m_disabledState == EnabledViaScript; }
-    bool isUnset() const { return m_disabledState == Unset; }
+  bool Async() const;
 
-    CSSStyleSheet* sheet() const { return m_sheet.get(); }
+  CSSStyleSheet* sheet() const {
+    return GetLinkStyle() ? GetLinkStyle()->Sheet() : 0;
+  }
+  Document* import() const;
 
-private:
-    // From StyleSheetResourceClient
-    void setCSSStyleSheet(const String& href, const KURL& baseURL, const String& charset, const CSSStyleSheetResource*) override;
-    String debugName() const override { return "LinkStyle"; }
+  bool StyleSheetIsLoading() const;
 
-    enum DisabledState {
-        Unset,
-        EnabledViaScript,
-        Disabled
-    };
+  bool IsImport() const { return GetLinkImport(); }
+  bool IsDisabled() const {
+    return GetLinkStyle() && GetLinkStyle()->IsDisabled();
+  }
+  bool IsEnabledViaScript() const {
+    return GetLinkStyle() && GetLinkStyle()->IsEnabledViaScript();
+  }
 
-    enum PendingSheetType {
-        None,
-        NonBlocking,
-        Blocking
-    };
+  DOMTokenList* sizes() const;
 
-    void clearSheet();
-    void addPendingSheet(PendingSheetType);
-    void removePendingSheet();
-    Document& document();
+  void ScheduleEvent();
 
-    void setCrossOriginStylesheetStatus(CSSStyleSheet*);
-    void setFetchFollowingCORS()
-    {
-        ASSERT(!m_fetchFollowingCORS);
-        m_fetchFollowingCORS = true;
-    }
-    void clearFetchFollowingCORS()
-    {
-        m_fetchFollowingCORS = false;
-    }
+  // From LinkLoaderClient
+  bool ShouldLoadLink() override;
 
-    Member<CSSStyleSheet> m_sheet;
-    DisabledState m_disabledState;
-    PendingSheetType m_pendingSheetType;
-    StyleEngineContext m_styleEngineContext;
-    bool m_loading;
-    bool m_firedLoad;
-    bool m_loadedSheet;
-    bool m_fetchFollowingCORS;
+  // For LinkStyle
+  bool LoadLink(const String& type,
+                const String& as,
+                const String& media,
+                ReferrerPolicy,
+                const KURL&);
+  bool IsAlternate() const {
+    return GetLinkStyle()->IsUnset() && rel_attribute_.IsAlternate();
+  }
+  bool ShouldProcessStyle() {
+    return LinkResourceToProcess() && GetLinkStyle();
+  }
+  bool IsCreatedByParser() const { return created_by_parser_; }
+
+  DECLARE_VIRTUAL_TRACE();
+
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
+
+ private:
+  HTMLLinkElement(Document&, bool created_by_parser);
+
+  LinkStyle* GetLinkStyle() const;
+  LinkImport* GetLinkImport() const;
+  LinkResource* LinkResourceToProcess();
+
+  void Process();
+  static void ProcessCallback(Node*);
+
+  // Always call this asynchronously because this can cause synchronous
+  // Document load event and JavaScript execution.
+  void DispatchPendingEvent(std::unique_ptr<IncrementLoadEventDelayCount>);
+
+  // From Node and subclassses
+  void ParseAttribute(const AttributeModificationParams&) override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
+  bool IsURLAttribute(const Attribute&) const override;
+  bool HasLegalLinkAttribute(const QualifiedName&) const override;
+  const QualifiedName& SubResourceAttributeName() const override;
+  bool SheetLoaded() override;
+  void NotifyLoadedSheetAndAllCriticalSubresources(
+      LoadedSheetErrorStatus) override;
+  void StartLoadingDynamicSheet() override;
+  void FinishParsingChildren() override;
+
+  // From LinkLoaderClient
+  void LinkLoaded() override;
+  void LinkLoadingErrored() override;
+  void DidStartLinkPrerender() override;
+  void DidStopLinkPrerender() override;
+  void DidSendLoadForLinkPrerender() override;
+  void DidSendDOMContentLoadedForLinkPrerender() override;
+  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override;
+
+  // From DOMTokenListObserver
+  void ValueWasSet() final;
+
+  Member<LinkResource> link_;
+  Member<LinkLoader> link_loader_;
+
+  String type_;
+  String as_;
+  String media_;
+  ReferrerPolicy referrer_policy_;
+  Member<DOMTokenList> sizes_;
+  Vector<IntSize> icon_sizes_;
+  TraceWrapperMember<RelList> rel_list_;
+  LinkRelAttribute rel_attribute_;
+  String scope_;
+
+  bool created_by_parser_;
 };
 
+}  // namespace blink
 
-class CORE_EXPORT HTMLLinkElement final : public HTMLElement, public LinkLoaderClient, private DOMTokenListObserver {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(HTMLLinkElement);
-public:
-    static HTMLLinkElement* create(Document&, bool createdByParser);
-    ~HTMLLinkElement() override;
-
-    KURL href() const;
-    const AtomicString& rel() const;
-    String media() const { return m_media; }
-    String typeValue() const { return m_type; }
-    String asValue() const { return m_as; }
-    const LinkRelAttribute& relAttribute() const { return m_relAttribute; }
-    DOMTokenList& relList() const { return static_cast<DOMTokenList&>(*m_relList); }
-    String scope() const { return m_scope; }
-
-    const AtomicString& type() const;
-
-    IconType getIconType() const;
-
-    // the icon sizes as parsed from the HTML attribute
-    const Vector<IntSize>& iconSizes() const;
-
-    bool async() const;
-
-    CSSStyleSheet* sheet() const { return linkStyle() ? linkStyle()->sheet() : 0; }
-    Document* import() const;
-
-    bool styleSheetIsLoading() const;
-
-    bool isImport() const { return linkImport(); }
-    bool isDisabled() const { return linkStyle() && linkStyle()->isDisabled(); }
-    bool isEnabledViaScript() const { return linkStyle() && linkStyle()->isEnabledViaScript(); }
-
-    DOMTokenList* sizes() const;
-
-    void dispatchPendingEvent(LinkEventSender*);
-    void scheduleEvent();
-    void dispatchEventImmediately();
-    static void dispatchPendingLoadEvents();
-
-    // From LinkLoaderClient
-    bool shouldLoadLink() override;
-
-    // For LinkStyle
-    bool loadLink(const String& type, const String& as, const String& media, const KURL&);
-    bool isAlternate() const { return linkStyle()->isUnset() && m_relAttribute.isAlternate(); }
-    bool shouldProcessStyle() { return linkResourceToProcess() && linkStyle(); }
-    bool isCreatedByParser() const { return m_createdByParser; }
-
-    DECLARE_VIRTUAL_TRACE();
-
-    DECLARE_VIRTUAL_TRACE_WRAPPERS();
-
-private:
-    HTMLLinkElement(Document&, bool createdByParser);
-
-    LinkStyle* linkStyle() const;
-    LinkImport* linkImport() const;
-    LinkResource* linkResourceToProcess();
-
-    void process();
-    static void processCallback(Node*);
-
-    // From Node and subclassses
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
-    bool isURLAttribute(const Attribute&) const override;
-    bool hasLegalLinkAttribute(const QualifiedName&) const override;
-    const QualifiedName& subResourceAttributeName() const override;
-    bool sheetLoaded() override;
-    void notifyLoadedSheetAndAllCriticalSubresources(LoadedSheetErrorStatus) override;
-    void startLoadingDynamicSheet() override;
-    void finishParsingChildren() override;
-
-    // From LinkLoaderClient
-    void linkLoaded() override;
-    void linkLoadingErrored() override;
-    void didStartLinkPrerender() override;
-    void didStopLinkPrerender() override;
-    void didSendLoadForLinkPrerender() override;
-    void didSendDOMContentLoadedForLinkPrerender() override;
-
-    // From DOMTokenListObserver
-    void valueWasSet() final;
-
-    Member<LinkResource> m_link;
-    Member<LinkLoader> m_linkLoader;
-
-    String m_type;
-    String m_as;
-    String m_media;
-    Member<DOMTokenList> m_sizes;
-    Vector<IntSize> m_iconSizes;
-    Member<RelList> m_relList;
-    LinkRelAttribute m_relAttribute;
-    String m_scope;
-
-    bool m_createdByParser;
-};
-
-} // namespace blink
-
-#endif // HTMLLinkElement_h
+#endif  // HTMLLinkElement_h

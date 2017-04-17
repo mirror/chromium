@@ -9,21 +9,23 @@ function test()
     var profileAndExpectations = {
         "title": "profile1",
         "target": function() {
-          return WebInspector.targetManager.targets()[0];
+          return SDK.targetManager.targets()[0];
         },
         "_profile": {
-            "head": {
-                "callFrame":
+            "nodes": [
                 {
-                    "functionName": "(root)",
-                    "scriptId": "0",
-                    "url": "a.js",
-                    "lineNumber": 0
+                    "id": 0,
+                    "callFrame":
+                    {
+                        "functionName": "(root)",
+                        "scriptId": "0",
+                        "url": "a.js",
+                        "lineNumber": 0
+                    },
+                    "hitCount": 350
                 },
-                "hitCount": 350,
-                "callUID": 1000,
-                "children": [
                 {
+                    "id": 1,
                     "callFrame":
                     {
                         "functionName": "(idle)",
@@ -32,10 +34,10 @@ function test()
                         "lineNumber": 1
                     },
                     "hitCount": 1000,
-                    "callUID": 2,
-                    "children": []
+                    "parent": 0
                 },
                 {
+                    "id": 2,
                     "callFrame":
                     {
                         "functionName": "A",
@@ -44,36 +46,34 @@ function test()
                         "lineNumber": 4642
                     },
                     "hitCount": 250,
-                    "callUID": 1001,
-                    "children": [
-                    {
-                        "callFrame":
-                        {
-                            "functionName": "C",
-                            "scriptId": "0",
-                            "url": "a.js",
-                            "lineNumber": 525
-                        },
-                        "hitCount": 100,
-                        "callUID": 2000,
-                        "children": [
-                        {
-                            "callFrame":
-                            {
-                                "functionName": "D",
-                                "scriptId": "0",
-                                "url": "a.js",
-                                "lineNumber": 425
-                            },
-                            "hitCount": 20,
-                            "callUID": 3000,
-                            "children": []
-                        }
-                        ]
-                    }
-                    ]
+                    "parent": 0
                 },
                 {
+                    "id": 3,
+                    "callFrame":
+                    {
+                        "functionName": "C",
+                        "scriptId": "0",
+                        "url": "a.js",
+                        "lineNumber": 525
+                    },
+                    "hitCount": 100,
+                    "parent": 2
+                },
+                {
+                    "id": 4,
+                    "callFrame":
+                    {
+                        "functionName": "D",
+                        "scriptId": "0",
+                        "url": "a.js",
+                        "lineNumber": 425
+                    },
+                    "hitCount": 20,
+                    "parent": 3
+                },
+                {
+                    "id": 5,
                     "callFrame":
                     {
                         "functionName": "B",
@@ -82,42 +82,38 @@ function test()
                         "lineNumber": 4662
                     },
                     "hitCount": 150,
-                    "callUID": 1002,
-                    "children": [
+                    "parent": 0
+                },
+                {
+                    "id": 6,
+                    "callFrame":
                     {
-                        "callFrame":
-                        {
-                            "functionName": "C",
-                            "scriptId": "0",
-                            "url": "a.js",
-                            "lineNumber": 525
-                        },
-                        "hitCount": 100,
-                        "callUID": 2000,
-                        "children": [
-                        {
-                            "callFrame":
-                            {
-                                "functionName": "D",
-                                "scriptId": "0",
-                                "url": "a.js",
-                                "lineNumber": 425
-                            },
-                            "hitCount": 30,
-                            "callUID": 3000,
-                            "children": []
-                        }
-                        ]
-                    }
-                    ]
+                        "functionName": "C",
+                        "scriptId": "0",
+                        "url": "a.js",
+                        "lineNumber": 525
+                    },
+                    "hitCount": 100,
+                    "parent": 5
+                },
+                {
+                    "id": 7,
+                    "callFrame":
+                    {
+                        "functionName": "D",
+                        "scriptId": "0",
+                        "url": "a.js",
+                        "lineNumber": 425
+                    },
+                    "hitCount": 30,
+                    "parent": 6
                 }
-                ]
-            },
+            ],
             "startTime": 0,
-            "endTime": 1.000
+            "endTime": 1e6
         }
     };
-    var view = new WebInspector.CPUProfileView(profileAndExpectations);
+    var view = new Profiler.CPUProfileView(profileAndExpectations);
     view.viewSelectComboBox.setSelectedIndex(1);
     view._changeView();
     var tree = view.profileDataGridTree;

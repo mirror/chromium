@@ -9,7 +9,6 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "content/public/browser/notification_service.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extensions_test.h"
 #include "extensions/browser/process_manager.h"
@@ -19,8 +18,7 @@ namespace extensions {
 
 class KeepAliveTest : public ExtensionsTest {
  public:
-  KeepAliveTest()
-      : notification_service_(content::NotificationService::Create()) {}
+  KeepAliveTest() {}
   ~KeepAliveTest() override {}
 
   void SetUp() override {
@@ -73,7 +71,6 @@ class KeepAliveTest : public ExtensionsTest {
 
  private:
   std::unique_ptr<base::MessageLoop> message_loop_;
-  std::unique_ptr<content::NotificationService> notification_service_;
   scoped_refptr<const Extension> extension_;
 
   DISALLOW_COPY_AND_ASSIGN(KeepAliveTest);
@@ -81,7 +78,7 @@ class KeepAliveTest : public ExtensionsTest {
 
 TEST_F(KeepAliveTest, Basic) {
   mojo::InterfacePtr<KeepAlive> keep_alive;
-  CreateKeepAlive(mojo::GetProxy(&keep_alive));
+  CreateKeepAlive(mojo::MakeRequest(&keep_alive));
   EXPECT_EQ(1, GetKeepAliveCount());
 
   keep_alive.reset();
@@ -91,11 +88,11 @@ TEST_F(KeepAliveTest, Basic) {
 
 TEST_F(KeepAliveTest, TwoKeepAlives) {
   mojo::InterfacePtr<KeepAlive> keep_alive;
-  CreateKeepAlive(mojo::GetProxy(&keep_alive));
+  CreateKeepAlive(mojo::MakeRequest(&keep_alive));
   EXPECT_EQ(1, GetKeepAliveCount());
 
   mojo::InterfacePtr<KeepAlive> other_keep_alive;
-  CreateKeepAlive(mojo::GetProxy(&other_keep_alive));
+  CreateKeepAlive(mojo::MakeRequest(&other_keep_alive));
   EXPECT_EQ(2, GetKeepAliveCount());
 
   keep_alive.reset();
@@ -109,7 +106,7 @@ TEST_F(KeepAliveTest, TwoKeepAlives) {
 
 TEST_F(KeepAliveTest, UnloadExtension) {
   mojo::InterfacePtr<KeepAlive> keep_alive;
-  CreateKeepAlive(mojo::GetProxy(&keep_alive));
+  CreateKeepAlive(mojo::MakeRequest(&keep_alive));
   EXPECT_EQ(1, GetKeepAliveCount());
 
   scoped_refptr<const Extension> other_extension =
@@ -152,7 +149,7 @@ TEST_F(KeepAliveTest, UnloadExtension) {
 
 TEST_F(KeepAliveTest, Shutdown) {
   mojo::InterfacePtr<KeepAlive> keep_alive;
-  CreateKeepAlive(mojo::GetProxy(&keep_alive));
+  CreateKeepAlive(mojo::MakeRequest(&keep_alive));
   EXPECT_EQ(1, GetKeepAliveCount());
 
   ExtensionRegistry::Get(browser_context())->Shutdown();

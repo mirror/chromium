@@ -8,12 +8,14 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include <memory>
 #include <utility>
 
 #include "base/command_line.h"
 #include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -141,38 +143,53 @@ bool WebDriverLog::NameToLevel(const std::string& name, Log::Level* out_level) {
 }
 
 WebDriverLog::WebDriverLog(const std::string& type, Log::Level min_level)
-    : type_(type), min_level_(min_level), entries_(new base::ListValue()) {
-}
+    : type_(type), min_level_(min_level), emptied_(true) {}
 
 WebDriverLog::~WebDriverLog() {
-  VLOG(1) << "Log type '" << type_ << "' lost "
-          << entries_->GetSize() << " entries on destruction";
+  size_t sum = 0;
+  for (const std::unique_ptr<base::ListValue>& batch : batches_of_entries_)
+    sum += batch->GetSize();
+  VLOG(1) << "Log type '" << type_ << "' lost " << sum
+          << " entries on destruction";
 }
 
 std::unique_ptr<base::ListValue> WebDriverLog::GetAndClearEntries() {
-  std::unique_ptr<base::ListValue> ret(entries_.release());
-  entries_.reset(new base::ListValue());
+  std::unique_ptr<base::ListValue> ret;
+  if (batches_of_entries_.empty()) {
+    ret.reset(new base::ListValue());
+    emptied_ = true;
+  } else {
+    ret = std::move(batches_of_entries_.front());
+    batches_of_entries_.pop_front();
+    emptied_ = false;
+  }
   return ret;
 }
 
-std::string WebDriverLog::GetFirstErrorMessage() const {
-  for (base::ListValue::iterator it = entries_->begin();
-       it != entries_->end();
+bool GetFirstErrorMessageFromList(const base::ListValue* list,
+                                  std::string* message) {
+  for (base::ListValue::const_iterator it = list->begin();
+       it != list->end();
        ++it) {
-    base::DictionaryValue* log_entry = NULL;
-    (*it)->GetAsDictionary(&log_entry);
+    const base::DictionaryValue* log_entry = NULL;
+    it->GetAsDictionary(&log_entry);
     if (log_entry != NULL) {
       std::string level;
-      if (log_entry->GetString("level", &level)) {
-        if (level == kLevelToName[Log::kError]) {
-          std::string message;
-          if (log_entry->GetString("message", &message))
-            return message;
-        }
-      }
+      if (log_entry->GetString("level", &level))
+        if (level == kLevelToName[Log::kError])
+          if (log_entry->GetString("message", message))
+            return true;
     }
   }
-  return std::string();
+  return false;
+}
+
+std::string WebDriverLog::GetFirstErrorMessage() const {
+  std::string message;
+  for (const std::unique_ptr<base::ListValue>& list : batches_of_entries_)
+    if (GetFirstErrorMessageFromList(list.get(), &message))
+      break;
+  return message;
 }
 
 void WebDriverLog::AddEntryTimestamped(const base::Time& timestamp,
@@ -190,7 +207,18 @@ void WebDriverLog::AddEntryTimestamped(const base::Time& timestamp,
   if (!source.empty())
     log_entry_dict->SetString("source", source);
   log_entry_dict->SetString("message", message);
-  entries_->Append(std::move(log_entry_dict));
+  if (batches_of_entries_.empty() ||
+      batches_of_entries_.back()->GetSize() >= internal::kMaxReturnedEntries) {
+    std::unique_ptr<base::ListValue> list(new base::ListValue());
+    list->Append(std::move(log_entry_dict));
+    batches_of_entries_.push_back(std::move(list));
+  } else {
+    batches_of_entries_.back()->Append(std::move(log_entry_dict));
+  }
+}
+
+bool WebDriverLog::Emptied() const {
+  return emptied_;
 }
 
 const std::string& WebDriverLog::type() const {
@@ -244,14 +272,15 @@ bool InitLogging() {
   return logging::InitLogging(logging_settings);
 }
 
-Status CreateLogs(const Capabilities& capabilities,
-                  const Session* session,
-                  ScopedVector<WebDriverLog>* out_logs,
-                  ScopedVector<DevToolsEventListener>* out_devtools_listeners,
-                  ScopedVector<CommandListener>* out_command_listeners) {
-  ScopedVector<WebDriverLog> logs;
-  ScopedVector<DevToolsEventListener> devtools_listeners;
-  ScopedVector<CommandListener> command_listeners;
+Status CreateLogs(
+    const Capabilities& capabilities,
+    const Session* session,
+    std::vector<std::unique_ptr<WebDriverLog>>* out_logs,
+    std::vector<std::unique_ptr<DevToolsEventListener>>* out_devtools_listeners,
+    std::vector<std::unique_ptr<CommandListener>>* out_command_listeners) {
+  std::vector<std::unique_ptr<WebDriverLog>> logs;
+  std::vector<std::unique_ptr<DevToolsEventListener>> devtools_listeners;
+  std::vector<std::unique_ptr<CommandListener>> command_listeners;
   Log::Level browser_log_level = Log::kWarning;
   const LoggingPrefs& prefs = capabilities.logging_prefs;
 
@@ -262,19 +291,18 @@ Status CreateLogs(const Capabilities& capabilities,
     Log::Level level = iter->second;
     if (type == WebDriverLog::kPerformanceType) {
       if (level != Log::kOff) {
-        WebDriverLog* log = new WebDriverLog(type, Log::kAll);
-        logs.push_back(log);
+        logs.push_back(base::MakeUnique<WebDriverLog>(type, Log::kAll));
+        devtools_listeners.push_back(base::MakeUnique<PerformanceLogger>(
+            logs.back().get(), session, capabilities.perf_logging_prefs));
         PerformanceLogger* perf_log =
-            new PerformanceLogger(log, session,
-                                  capabilities.perf_logging_prefs);
+            static_cast<PerformanceLogger*>(devtools_listeners.back().get());
         // We use a proxy for |perf_log|'s |CommandListener| interface.
         // Otherwise, |perf_log| would be owned by both session->chrome and
         // |session|, which would lead to memory errors on destruction.
         // session->chrome will own |perf_log|, and |session| will own |proxy|.
         // session->command_listeners (the proxy) will be destroyed first.
-        CommandListenerProxy* proxy = new CommandListenerProxy(perf_log);
-        devtools_listeners.push_back(perf_log);
-        command_listeners.push_back(proxy);
+        command_listeners.push_back(
+            base::MakeUnique<CommandListenerProxy>(perf_log));
       }
     } else if (type == WebDriverLog::kBrowserType) {
       browser_log_level = level;
@@ -286,12 +314,12 @@ Status CreateLogs(const Capabilities& capabilities,
     }
   }
   // Create "browser" log -- should always exist.
-  WebDriverLog* browser_log =
-      new WebDriverLog(WebDriverLog::kBrowserType, browser_log_level);
-  logs.push_back(browser_log);
+  logs.push_back(base::MakeUnique<WebDriverLog>(WebDriverLog::kBrowserType,
+                                                browser_log_level));
   // If the level is OFF, don't even bother listening for DevTools events.
   if (browser_log_level != Log::kOff)
-    devtools_listeners.push_back(new ConsoleLogger(browser_log));
+    devtools_listeners.push_back(
+        base::MakeUnique<ConsoleLogger>(logs.back().get()));
 
   out_logs->swap(logs);
   out_devtools_listeners->swap(devtools_listeners);

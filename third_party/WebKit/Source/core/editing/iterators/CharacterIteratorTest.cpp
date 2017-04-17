@@ -35,23 +35,40 @@
 
 namespace blink {
 
-class CharacterIteratorTest : public EditingTestBase {
-};
+class CharacterIteratorTest : public EditingTestBase {};
 
-TEST_F(CharacterIteratorTest, SubrangeWithReplacedElements)
-{
-    static const char* bodyContent =
-        "<div id='div' contenteditable='true'>1<img src='foo.png'>345</div>";
-    setBodyContent(bodyContent);
-    document().view()->updateAllLifecyclePhases();
+TEST_F(CharacterIteratorTest, SubrangeWithReplacedElements) {
+  static const char* body_content =
+      "<div id='div' contenteditable='true'>1<img src='foo.png'>345</div>";
+  SetBodyContent(body_content);
+  GetDocument().View()->UpdateAllLifecyclePhases();
 
-    Node* divNode = document().getElementById("div");
-    Range* entireRange = Range::create(document(), divNode, 0, divNode, 3);
+  Node* div_node = GetDocument().GetElementById("div");
+  Range* entire_range = Range::Create(GetDocument(), div_node, 0, div_node, 3);
 
-    EphemeralRange result = calculateCharacterSubrange(EphemeralRange(entireRange), 2, 3);
-    Node* textNode = divNode->lastChild();
-    EXPECT_EQ(Position(textNode, 0), result.startPosition());
-    EXPECT_EQ(Position(textNode, 3), result.endPosition());
+  EphemeralRange result =
+      CalculateCharacterSubrange(EphemeralRange(entire_range), 2, 3);
+  Node* text_node = div_node->lastChild();
+  EXPECT_EQ(Position(text_node, 0), result.StartPosition());
+  EXPECT_EQ(Position(text_node, 3), result.EndPosition());
 }
 
-} // namespace blink
+TEST_F(CharacterIteratorTest, CollapsedSubrange) {
+  static const char* body_content =
+      "<div id='div' contenteditable='true'>hello</div>";
+  SetBodyContent(body_content);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  Node* text_node = GetDocument().GetElementById("div")->LastChild();
+  Range* entire_range =
+      Range::Create(GetDocument(), text_node, 1, text_node, 4);
+  EXPECT_EQ(1u, entire_range->startOffset());
+  EXPECT_EQ(4u, entire_range->endOffset());
+
+  const EphemeralRange& result =
+      CalculateCharacterSubrange(EphemeralRange(entire_range), 2, 0);
+  EXPECT_EQ(Position(text_node, 3), result.StartPosition());
+  EXPECT_EQ(Position(text_node, 3), result.EndPosition());
+}
+
+}  // namespace blink

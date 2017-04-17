@@ -7,11 +7,17 @@
 
 #include <stdint.h>
 
+#include <memory>
+#include <vector>
+
 #include "base/macros.h"
+#include "base/time/default_tick_clock.h"
+#include "base/unguessable_token.h"
 #include "media/base/demuxer_stream.h"
 #include "media/base/renderer.h"
+#include "media/base/time_delta_interpolator.h"
 #include "media/mojo/interfaces/renderer.mojom.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -19,7 +25,7 @@ class SingleThreadTaskRunner;
 
 namespace media {
 
-class DemuxerStreamProvider;
+class MediaResource;
 class MojoDemuxerStreamImpl;
 class VideoOverlayFactory;
 class VideoRendererSink;
@@ -43,7 +49,7 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   ~MojoRenderer() override;
 
   // Renderer implementation.
-  void Initialize(DemuxerStreamProvider* demuxer_stream_provider,
+  void Initialize(MediaResource* media_resource,
                   media::RendererClient* client,
                   const PipelineStatusCB& init_cb) override;
   void SetCdm(CdmContext* cdm_context,
@@ -53,31 +59,49 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   void SetPlaybackRate(double playback_rate) override;
   void SetVolume(float volume) override;
   base::TimeDelta GetMediaTime() override;
-  bool HasAudio() override;
-  bool HasVideo() override;
+
+  using ReceiveSurfaceRequestTokenCB =
+      base::Callback<void(const base::UnguessableToken&)>;
+
+  // Asks |remote_renderer_| to register a request in the browser's
+  // ScopedSurfaceRequestManager, and returns the request's token.
+  void InitiateScopedSurfaceRequest(
+      const ReceiveSurfaceRequestTokenCB& receive_request_token_cb);
 
  private:
   // mojom::RendererClient implementation, dispatched on the
   // |task_runner_|.
-  void OnTimeUpdate(int64_t time_usec, int64_t max_time_usec) override;
-  void OnBufferingStateChange(mojom::BufferingState state) override;
+  void OnTimeUpdate(base::TimeDelta time,
+                    base::TimeDelta max_time,
+                    base::TimeTicks capture_time) override;
+  void OnBufferingStateChange(BufferingState state) override;
   void OnEnded() override;
   void OnError() override;
   void OnVideoNaturalSizeChange(const gfx::Size& size) override;
   void OnVideoOpacityChange(bool opaque) override;
   void OnWaitingForDecryptionKey() override;
   void OnStatisticsUpdate(const PipelineStatistics& stats) override;
+  void OnDurationChange(base::TimeDelta duration) override;
 
   // Binds |remote_renderer_| to the mojo message pipe. Can be called multiple
   // times. If an error occurs during connection, OnConnectionError will be
   // called asynchronously.
   void BindRemoteRendererIfNeeded();
 
+  // Initialize the remote renderer when |media_resource| is of type
+  // MediaResource::Type::STREAM.
+  void InitializeRendererFromStreams(media::RendererClient* client);
+
+  // Initialize the remote renderer when |media_resource| is of type
+  // MediaResource::Type::URL.
+  void InitializeRendererFromUrl(media::RendererClient* client);
+
   // Callback for connection error on |remote_renderer_|.
   void OnConnectionError();
 
-  // Callback for connection error on |audio_stream_| and |video_stream_|.
-  void OnDemuxerStreamConnectionError(DemuxerStream::Type type);
+  // Callback for connection error on any of |streams_|. The |stream| parameter
+  // indicates which stream the error happened on.
+  void OnDemuxerStreamConnectionError(MojoDemuxerStreamImpl* stream);
 
   // Callbacks for |remote_renderer_| methods.
   void OnInitialized(media::RendererClient* client, bool success);
@@ -100,7 +124,7 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
 
   // Provider of audio/video DemuxerStreams. Must be valid throughout the
   // lifetime of |this|.
-  DemuxerStreamProvider* demuxer_stream_provider_ = nullptr;
+  MediaResource* media_resource_ = nullptr;
 
   // Client of |this| renderer passed in Initialize.
   media::RendererClient* client_ = nullptr;
@@ -108,11 +132,10 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   // Mojo demuxer streams.
   // Owned by MojoRenderer instead of remote mojom::Renderer
   // becuase these demuxer streams need to be destroyed as soon as |this| is
-  // destroyed. The local demuxer streams returned by DemuxerStreamProvider
-  // cannot be used after |this| is destroyed.
+  // destroyed. The local demuxer streams returned by MediaResource cannot be
+  // used after |this| is destroyed.
   // TODO(alokp): Add tests for MojoDemuxerStreamImpl.
-  std::unique_ptr<MojoDemuxerStreamImpl> audio_stream_;
-  std::unique_ptr<MojoDemuxerStreamImpl> video_stream_;
+  std::vector<std::unique_ptr<MojoDemuxerStreamImpl>> streams_;
 
   // This class is constructed on one thread and used exclusively on another
   // thread. This member is used to safely pass the RendererPtr from one thread
@@ -123,7 +146,7 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   mojom::RendererPtr remote_renderer_;
 
   // Binding for RendererClient, bound to the |task_runner_|.
-  mojo::Binding<RendererClient> binding_;
+  mojo::AssociatedBinding<RendererClient> client_binding_;
 
   bool encountered_error_ = false;
 
@@ -131,9 +154,10 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   base::Closure flush_cb_;
   CdmAttachedCB cdm_attached_cb_;
 
-  // Lock used to serialize access for |time_|.
+  // Lock used to serialize access for |time_interpolator_|.
   mutable base::Lock lock_;
-  base::TimeDelta time_;
+  base::DefaultTickClock media_clock_;
+  media::TimeDeltaInterpolator media_time_interpolator_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoRenderer);
 };

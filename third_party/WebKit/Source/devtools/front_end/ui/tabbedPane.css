@@ -50,6 +50,7 @@
     text-align: center;
     margin-top: 20px;
     text-shadow: rgba(255, 255, 255, 0.75) 0 1px 0;
+    white-space: pre;
 }
 
 .tabbed-pane-header {
@@ -73,6 +74,9 @@
 }
 
 .tabbed-pane-header-tab-icon {
+    min-width: 14px;
+    display: flex;
+    align-items: center;
     margin-right: 2px;
 }
 
@@ -124,12 +128,7 @@
 }
 
 .tabbed-pane-header-tab .tabbed-pane-close-button {
-    display: inline-block;
-    position: relative;
-    top: 2px;
-    left: 1px;
-    margin-left: 2px;
-    margin-top: -3px;
+    margin: 0 -3px 0 4px;
     visibility: hidden;
 }
 
@@ -140,29 +139,17 @@
 
 .tabbed-pane-header-tabs-drop-down-container {
     float: left;
-    position: relative;
-    vertical-align: bottom;
-    line-height: 24px;
     opacity: 0.8;
-    color: inherit;
-    font-size: 133%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
-.tabbed-pane-header-tabs-drop-down-container > .glyph {
-    height: 26px;
+.tabbed-pane-header-tabs-drop-down-container > .chevron-icon {
     background-color: hsla(0,0%,20%,1);
-    -webkit-mask-image: url(Images/toolbarButtonGlyphs.png);
-    -webkit-mask-position: -68px -143px;
-    -webkit-mask-size: 352px 168px;
-    width: 24px;
+    display: block;
 }
-
-@media (-webkit-min-device-pixel-ratio: 1.5) {
-.tabbed-pane-header-tabs-drop-down-container > .glyph {
-    -webkit-mask-image: url(Images/toolbarButtonGlyphs_2x.png);
-}
-} /* media */
 
 .tabbed-pane-header-tabs-drop-down-container:hover {
     background-color: rgb(229, 229, 229);
@@ -250,7 +237,7 @@
     border-top: 1px solid hsl(218, 82%, 78%);
 }
 
-@media (-webkit-min-device-pixel-ratio: 1.5) {
+@media (-webkit-min-device-pixel-ratio: 1.1) {
     .tabbed-pane-tab-slider {
         border-top: none;
     }
@@ -267,4 +254,23 @@
 
 .tabbed-pane-header.tabbed-pane-no-header-background {
     background-color: transparent;
+}
+
+.tabbed-pane-no-tab-borders .tabbed-pane-header-tab {
+    border: none !important;
+    padding: 2px 0.8em;
+}
+
+.tabbed-pane-no-tab-borders .tabbed-pane-header-contents {
+    margin-left: 0;
+}
+
+.tabbed-pane-left-toolbar {
+    margin-right: -4px;
+    flex: none;
+}
+
+.tabbed-pane-right-toolbar {
+    margin-left: -4px;
+    flex: none;
 }

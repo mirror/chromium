@@ -8,16 +8,17 @@
 namespace blink {
 
 enum class WebInputEventResult {
-    // Event was not consumed by application or system.
-    NotHandled,
-    // Event was consumed but suppressed before dispatched to application.
-    HandledSuppressed,
-    // Event was consumed by application itself; ie. a script handler calling preventDefault.
-    HandledApplication,
-    // Event was consumed by the system; ie. executing the default action.
-    HandledSystem,
+  // Event was not consumed by application or system.
+  kNotHandled,
+  // Event was consumed but suppressed before dispatched to application.
+  kHandledSuppressed,
+  // Event was consumed by application itself; ie. a script handler calling
+  // preventDefault.
+  kHandledApplication,
+  // Event was consumed by the system; ie. executing the default action.
+  kHandledSystem,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebInputEventResult_h
+#endif  // WebInputEventResult_h

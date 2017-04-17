@@ -12,7 +12,11 @@ const void* const kDataReductionProxyUserDataKey =
     &kDataReductionProxyUserDataKey;
 
 DataReductionProxyData::DataReductionProxyData()
-    : used_data_reduction_proxy_(false), lofi_requested_(false) {}
+    : used_data_reduction_proxy_(false),
+      lofi_requested_(false),
+      effective_connection_type_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {}
+
+DataReductionProxyData::~DataReductionProxyData() {}
 
 std::unique_ptr<DataReductionProxyData> DataReductionProxyData::DeepCopy()
     const {
@@ -20,7 +24,9 @@ std::unique_ptr<DataReductionProxyData> DataReductionProxyData::DeepCopy()
   copy->used_data_reduction_proxy_ = used_data_reduction_proxy_;
   copy->lofi_requested_ = lofi_requested_;
   copy->session_key_ = session_key_;
-  copy->original_request_url_ = original_request_url_;
+  copy->request_url_ = request_url_;
+  copy->effective_connection_type_ = effective_connection_type_;
+  copy->page_id_ = page_id_;
   return copy;
 }
 
@@ -41,6 +47,10 @@ DataReductionProxyData* DataReductionProxyData::GetDataAndCreateIfNecessary(
   data = new DataReductionProxyData();
   request->SetUserData(kDataReductionProxyUserDataKey, data);
   return data;
+}
+
+void DataReductionProxyData::ClearData(net::URLRequest* request) {
+  request->RemoveUserData(kDataReductionProxyUserDataKey);
 }
 
 }  // namespace data_reduction_proxy

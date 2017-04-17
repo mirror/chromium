@@ -20,15 +20,18 @@
 #include "content/public/browser/web_contents_observer.h"
 
 class Browser;
+
+namespace browser_sync {
 class ProfileSyncService;
+}  // namespace browser_sync
 
 namespace content {
 class WebContents;
-}
+}  // namespace content
 
-namespace sync_driver {
+namespace syncer {
 class SyncSetupInProgressHandle;
-}
+}  // namespace syncer
 
 // Waits for successful sign-in notification from the signin manager and then
 // starts the sync machine.  Instances of this class delete themselves once
@@ -38,6 +41,17 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
                                   public content::WebContentsObserver,
                                   public LoginUIService::Observer {
  public:
+  enum ProfileMode {
+    // Attempts to sign the user in |profile_|. Note that if the account to be
+    // signed in is a managed account, then a profile confirmation dialog is
+    // shown and the user has the possibility to create a new profile before
+    // signing in.
+    CURRENT_PROFILE,
+
+    // Creates a new profile and signs the user in this new profile.
+    NEW_PROFILE
+  };
+
   enum StartSyncMode {
     // Starts the process of signing the user in with the SigninManager, and
     // once completed automatically starts sync with all data types enabled.
@@ -83,7 +97,7 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
     SYNC_SETUP_FAILURE
   };
 
-  typedef base::Callback<void(SyncSetupResult)> Callback;
+  using Callback = base::Callback<void(SyncSetupResult)>;
 
   // |profile| must not be NULL, however |browser| can be. When using the
   // OneClickSigninSyncStarter from a browser, provide both.
@@ -102,6 +116,7 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
                             const std::string& email,
                             const std::string& password,
                             const std::string& refresh_token,
+                            ProfileMode profile_mode,
                             StartSyncMode start_mode,
                             content::WebContents* web_contents,
                             ConfirmationRequired display_confirmation,
@@ -117,13 +132,17 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
   // desktop, adds an empty tab and makes sure the browser is visible.
   static Browser* EnsureBrowser(Browser* browser, Profile* profile);
 
+ protected:
+  ~OneClickSigninSyncStarter() override;
+
+  // Overridden from tests.
+  virtual void ShowSyncSetupSettingsSubpage();
+
  private:
   friend class OneClickSigninSyncStarterTest;
   FRIEND_TEST_ALL_PREFIXES(OneClickSigninSyncStarterTest, CallbackSigninFailed);
   FRIEND_TEST_ALL_PREFIXES(OneClickSigninSyncStarterTest, CallbackNull);
   FRIEND_TEST_ALL_PREFIXES(OneClickSigninSyncStarterTest, LoadContinueUrl);
-
-  ~OneClickSigninSyncStarter() override;
 
   // Initializes the internals of the OneClickSigninSyncStarter object. Can also
   // be used to re-initialize the object to refer to a newly created profile.
@@ -181,7 +200,7 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
 
   // Callback invoked to check whether the user needs policy or if a
   // confirmation is required (in which case we have to prompt the user first).
-  void ConfirmSignin(const std::string& oauth_token);
+  void ConfirmSignin(ProfileMode profile_mode, const std::string& oauth_token);
 
   // Displays confirmation UI to the user if confirmation_required_ ==
   // CONFIRM_UNTRUSTED_SIGNIN, otherwise completes the pending signin process.
@@ -197,7 +216,7 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
   // disabled during setup. In this case GetProfileSyncService will return NULL,
   // but we still need to call PSS::SetSetupInProgress(false). For this purpose
   // call FinishProfileSyncServiceSetup() function.
-  ProfileSyncService* GetProfileSyncService();
+  browser_sync::ProfileSyncService* GetProfileSyncService();
 
   void FinishProfileSyncServiceSetup();
 
@@ -243,7 +262,7 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
   bool first_account_added_to_cookie_;
 
   // Prevents Sync from running until configuration is complete.
-  std::unique_ptr<sync_driver::SyncSetupInProgressHandle> sync_blocker_;
+  std::unique_ptr<syncer::SyncSetupInProgressHandle> sync_blocker_;
 
   base::WeakPtrFactory<OneClickSigninSyncStarter> weak_pointer_factory_;
 

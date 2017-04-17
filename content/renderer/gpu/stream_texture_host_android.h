@@ -9,9 +9,12 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "gpu/ipc/common/android/surface_texture_peer.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_message.h"
+
+namespace base {
+class UnguessableToken;
+}
 
 namespace gfx {
 class Size;
@@ -21,15 +24,14 @@ namespace gpu {
 class GpuChannelHost;
 }
 
-struct GpuStreamTextureMsg_MatrixChanged_Params;
-
 namespace content {
 
 // Class for handling all the IPC messages between the GPU process and
 // StreamTextureProxy.
 class StreamTextureHost : public IPC::Listener {
  public:
-  explicit StreamTextureHost(scoped_refptr<gpu::GpuChannelHost> channel);
+  explicit StreamTextureHost(scoped_refptr<gpu::GpuChannelHost> channel,
+                             int32_t route_id);
   ~StreamTextureHost() override;
 
   // Listener class that is listening to the stream texture updates. It is
@@ -40,17 +42,21 @@ class StreamTextureHost : public IPC::Listener {
     virtual ~Listener() {}
   };
 
-  bool BindToCurrentThread(int32_t stream_id, Listener* listener);
+  bool BindToCurrentThread(Listener* listener);
 
   // IPC::Channel::Listener implementation:
   bool OnMessageReceived(const IPC::Message& message) override;
   void OnChannelError() override;
 
+  void SetStreamTextureSize(const gfx::Size& size);
+  void ForwardStreamTextureForSurfaceRequest(
+      const base::UnguessableToken& request_token);
+
  private:
   // Message handlers:
   void OnFrameAvailable();
 
-  int stream_id_;
+  int32_t route_id_;
   Listener* listener_;
   scoped_refptr<gpu::GpuChannelHost> channel_;
   base::WeakPtrFactory<StreamTextureHost> weak_ptr_factory_;

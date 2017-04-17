@@ -6,46 +6,42 @@
 
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "modules/push_messaging/PushError.h"
-#include "wtf/Assertions.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-PushPermissionStatusCallbacks::PushPermissionStatusCallbacks(ScriptPromiseResolver* resolver)
-    : m_resolver(resolver)
-{
+PushPermissionStatusCallbacks::PushPermissionStatusCallbacks(
+    ScriptPromiseResolver* resolver)
+    : resolver_(resolver) {}
+
+PushPermissionStatusCallbacks::~PushPermissionStatusCallbacks() {}
+
+void PushPermissionStatusCallbacks::OnSuccess(WebPushPermissionStatus status) {
+  resolver_->Resolve(PermissionString(status));
 }
 
-PushPermissionStatusCallbacks::~PushPermissionStatusCallbacks()
-{
-}
-
-void PushPermissionStatusCallbacks::onSuccess(WebPushPermissionStatus status)
-{
-    m_resolver->resolve(permissionString(status));
-}
-
-void PushPermissionStatusCallbacks::onError(const WebPushError& error)
-{
-    if (!m_resolver->getExecutionContext() || m_resolver->getExecutionContext()->activeDOMObjectsAreStopped())
-        return;
-    m_resolver->reject(PushError::take(m_resolver.get(), error));
+void PushPermissionStatusCallbacks::OnError(const WebPushError& error) {
+  if (!resolver_->GetExecutionContext() ||
+      resolver_->GetExecutionContext()->IsContextDestroyed())
+    return;
+  resolver_->Reject(PushError::Take(resolver_.Get(), error));
 }
 
 // static
-String PushPermissionStatusCallbacks::permissionString(WebPushPermissionStatus status)
-{
-    switch (status) {
-    case WebPushPermissionStatusGranted:
-        return "granted";
-    case WebPushPermissionStatusDenied:
-        return "denied";
-    case WebPushPermissionStatusPrompt:
-        return "prompt";
-    }
+String PushPermissionStatusCallbacks::PermissionString(
+    WebPushPermissionStatus status) {
+  switch (status) {
+    case kWebPushPermissionStatusGranted:
+      return "granted";
+    case kWebPushPermissionStatusDenied:
+      return "denied";
+    case kWebPushPermissionStatusPrompt:
+      return "prompt";
+  }
 
-    NOTREACHED();
-    return "denied";
+  NOTREACHED();
+  return "denied";
 }
 
-} // namespace blink
+}  // namespace blink

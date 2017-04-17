@@ -72,7 +72,12 @@ public final class CommandLineFlags {
         BaseChromiumApplication.initCommandLine(targetContext);
         Set<String> flags = getFlags(element);
         for (String flag : flags) {
-            CommandLine.getInstance().appendSwitch(flag);
+            String[] parsedFlags = flag.split("=", 2);
+            if (parsedFlags.length == 1) {
+                CommandLine.getInstance().appendSwitch(flag);
+            } else {
+                CommandLine.getInstance().appendSwitchWithValue(parsedFlags[0], parsedFlags[1]);
+            }
         }
     }
 
@@ -103,7 +108,9 @@ public final class CommandLineFlags {
         return flags;
     }
 
-    private CommandLineFlags() {}
+    private CommandLineFlags() {
+        throw new AssertionError("CommandLineFlags is a non-instantiable class");
+    }
 
     public static PreTestHook getRegistrationHook() {
         return new PreTestHook() {

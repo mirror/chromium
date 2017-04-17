@@ -39,23 +39,19 @@ namespace blink {
 using namespace HTMLNames;
 
 DetailsMarkerControl::DetailsMarkerControl(Document& document)
-    : HTMLDivElement(document)
-{
+    : HTMLDivElement(document) {}
+
+LayoutObject* DetailsMarkerControl::CreateLayoutObject(const ComputedStyle&) {
+  return new LayoutDetailsMarker(this);
 }
 
-LayoutObject* DetailsMarkerControl::createLayoutObject(const ComputedStyle&)
-{
-    return new LayoutDetailsMarker(this);
+bool DetailsMarkerControl::LayoutObjectIsNeeded(const ComputedStyle& style) {
+  return SummaryElement()->IsMainSummary() &&
+         HTMLDivElement::LayoutObjectIsNeeded(style);
 }
 
-bool DetailsMarkerControl::layoutObjectIsNeeded(const ComputedStyle& style)
-{
-    return summaryElement()->isMainSummary() && HTMLDivElement::layoutObjectIsNeeded(style);
+HTMLSummaryElement* DetailsMarkerControl::SummaryElement() {
+  return toHTMLSummaryElement(OwnerShadowHost());
 }
 
-HTMLSummaryElement* DetailsMarkerControl::summaryElement()
-{
-    return toHTMLSummaryElement(shadowHost());
-}
-
-} // namespace blink
+}  // namespace blink

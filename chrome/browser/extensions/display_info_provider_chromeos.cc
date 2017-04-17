@@ -7,16 +7,22 @@
 #include <stdint.h>
 
 #include "ash/display/display_configuration_controller.h"
-#include "ash/display/display_manager.h"
 #include "ash/display/resolution_notification_controller.h"
+#include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/shell.h"
+#include "ash/touch/ash_touch_transform_controller.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "base/strings/string_number_conversions.h"
 #include "chrome/browser/chromeos/display/display_preferences.h"
 #include "chrome/browser/chromeos/display/overscan_calibrator.h"
+#include "chrome/browser/chromeos/display/touch_calibrator/touch_calibrator_controller.h"
+#include "chrome/browser/ui/ash/ash_util.h"
 #include "extensions/common/api/system_display.h"
 #include "ui/display/display.h"
-#include "ui/display/manager/display_layout.h"
-#include "ui/display/manager/display_layout_builder.h"
+#include "ui/display/display_layout.h"
+#include "ui/display/display_layout_builder.h"
+#include "ui/display/manager/display_manager.h"
+#include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -34,8 +40,7 @@ display::Display GetDisplay(const std::string& display_id_str) {
   int64_t display_id;
   if (!base::StringToInt64(display_id_str, &display_id))
     return display::Display();
-  return ash::Shell::GetInstance()->display_manager()->GetDisplayForId(
-      display_id);
+  return ash::Shell::Get()->display_manager()->GetDisplayForId(display_id);
 }
 
 // Checks if the given integer value is valid display rotation in degrees.
@@ -217,9 +222,8 @@ void UpdateDisplayLayout(const gfx::Rect& primary_display_bounds,
   layout->placement_list.push_back(placement);
   layout->primary_id = primary_display_id;
 
-  ash::Shell::GetInstance()
-      ->display_configuration_controller()
-      ->SetDisplayLayout(std::move(layout), true /* user_action */);
+  ash::Shell::Get()->display_configuration_controller()->SetDisplayLayout(
+      std::move(layout));
 }
 
 // Validates that parameters passed to the SetInfo function are valid for the
@@ -228,18 +232,30 @@ void UpdateDisplayLayout(const gfx::Rect& primary_display_bounds,
 // error message.
 bool ValidateParamsForDisplay(const system_display::DisplayProperties& info,
                               const display::Display& display,
-                              ash::DisplayManager* display_manager,
+                              display::DisplayManager* display_manager,
                               int64_t primary_display_id,
                               std::string* error) {
   int64_t id = display.id();
   bool is_primary =
       id == primary_display_id || (info.is_primary && *info.is_primary);
 
+  if (info.is_unified) {
+    if (!is_primary) {
+      *error = "Unified desktop mode can only be set for the primary display.";
+      return false;
+    }
+    if (info.mirroring_source_id) {
+      *error = "Unified desktop mode can not be set with mirroringSourceId.";
+      return false;
+    }
+    return true;
+  }
+
   // If mirroring source id is set, a display with the given id should exist,
   // and if should not be the same as the target display's id.
   if (info.mirroring_source_id && !info.mirroring_source_id->empty()) {
     int64_t mirroring_id = GetDisplay(*info.mirroring_source_id).id();
-    if (mirroring_id == display::Display::kInvalidDisplayID) {
+    if (mirroring_id == display::kInvalidDisplayId) {
       *error = "Display " + *info.mirroring_source_id + " not found.";
       return false;
     }
@@ -317,63 +333,127 @@ bool ValidateParamsForDisplay(const system_display::DisplayProperties& info,
 
   // Set the display mode.
   if (info.display_mode) {
-    ash::DisplayMode current_mode =
+    scoped_refptr<display::ManagedDisplayMode> current_mode =
         display_manager->GetActiveModeForDisplayId(id);
-    ash::DisplayMode new_mode;
     // Copy properties not set in the UI from the current mode.
-    new_mode.refresh_rate = current_mode.refresh_rate;
-    new_mode.interlaced = current_mode.interlaced;
-    // Set properties from the UI properties.
-    new_mode.size.SetSize(info.display_mode->width_in_native_pixels,
-                          info.display_mode->height_in_native_pixels);
-    new_mode.ui_scale = info.display_mode->ui_scale;
-    new_mode.device_scale_factor = info.display_mode->device_scale_factor;
-    new_mode.native = info.display_mode->is_native;
+    gfx::Size size(info.display_mode->width_in_native_pixels,
+                   info.display_mode->height_in_native_pixels);
 
-    if (new_mode.IsEquivalent(current_mode)) {
-      *error = "Display mode mataches crrent mode.";
+    // NB: info.display_mode is neither a display::ManagedDisplayMode or a
+    // display::DisplayMode.
+    scoped_refptr<display::ManagedDisplayMode> new_mode(
+        new display::ManagedDisplayMode(
+            size, current_mode->refresh_rate(), current_mode->is_interlaced(),
+            info.display_mode->is_native, info.display_mode->ui_scale,
+            info.display_mode->device_scale_factor));
+
+    if (new_mode->IsEquivalent(current_mode)) {
+      *error = "Display mode matches current mode.";
       return false;
     }
 
-    if (!display_manager->SetDisplayMode(id, new_mode)) {
+    // If it's the internal display, the display mode will be applied directly,
+    // otherwise a confirm/revert notification will be prepared first, and the
+    // display mode will be applied. If the user accepts the mode change by
+    // dismissing the notification, StoreDisplayPrefs() will be called back to
+    // persist the new preferences.
+    if (!ash::Shell::Get()
+             ->resolution_notification_controller()
+             ->PrepareNotificationAndSetDisplayMode(
+                 id, current_mode, new_mode,
+                 base::Bind(&chromeos::StoreDisplayPrefs))) {
       *error = "Unable to set the display mode.";
       return false;
-    }
-
-    if (!display::Display::IsInternalDisplayId(id)) {
-      // For external displays, show a notification confirming the resolution
-      // change.
-      ash::Shell::GetInstance()
-          ->resolution_notification_controller()
-          ->PrepareNotification(id, current_mode, new_mode,
-                                base::Bind(&chromeos::StoreDisplayPrefs));
     }
   }
   return true;
 }
 
 system_display::DisplayMode GetDisplayMode(
-    ash::DisplayManager* display_manager,
-    const ash::DisplayInfo& display_info,
-    const ash::DisplayMode& display_mode) {
+    display::DisplayManager* display_manager,
+    const display::ManagedDisplayInfo& display_info,
+    const scoped_refptr<display::ManagedDisplayMode>& display_mode) {
   system_display::DisplayMode result;
 
   bool is_internal = display::Display::HasInternalDisplay() &&
                      display::Display::InternalDisplayId() == display_info.id();
-  gfx::Size size_dip = display_mode.GetSizeInDIP(is_internal);
+  gfx::Size size_dip = display_mode->GetSizeInDIP(is_internal);
   result.width = size_dip.width();
   result.height = size_dip.height();
-  result.width_in_native_pixels = display_mode.size.width();
-  result.height_in_native_pixels = display_mode.size.height();
-  result.ui_scale = display_mode.ui_scale;
-  result.device_scale_factor = display_mode.device_scale_factor;
-  result.is_native = display_mode.native;
-  result.is_selected = display_mode.IsEquivalent(
+  result.width_in_native_pixels = display_mode->size().width();
+  result.height_in_native_pixels = display_mode->size().height();
+  result.ui_scale = display_mode->ui_scale();
+  result.device_scale_factor = display_mode->device_scale_factor();
+  result.is_native = display_mode->native();
+  result.is_selected = display_mode->IsEquivalent(
       display_manager->GetActiveModeForDisplayId(display_info.id()));
   return result;
 }
 
+display::TouchCalibrationData::CalibrationPointPair GetCalibrationPair(
+    const system_display::TouchCalibrationPair& pair) {
+  return std::make_pair(gfx::Point(pair.display_point.x, pair.display_point.y),
+                        gfx::Point(pair.touch_point.x, pair.touch_point.y));
+}
+
+bool ValidateParamsForTouchCalibration(
+    const std::string& id,
+    const display::Display& display,
+    chromeos::TouchCalibratorController* const touch_calibrator_controller,
+    std::string* error) {
+  if (display.id() == display::kInvalidDisplayId) {
+    *error = "Display Id(" + id + ") is an invalid display ID";
+    return false;
+  }
+
+  if (display.IsInternal()) {
+    *error = "Display Id(" + id + ") is an internal display. Internal " +
+             "displays cannot be calibrated for touch.";
+    return false;
+  }
+
+  if (display.touch_support() != display::Display::TOUCH_SUPPORT_AVAILABLE) {
+    *error = "Display Id(" + id + ") does not support touch.";
+    return false;
+  }
+
+  return true;
+}
+
+bool IsMaximizeModeWindowManagerEnabled() {
+  return ash::Shell::Get()
+      ->maximize_mode_controller()
+      ->IsMaximizeModeWindowManagerEnabled();
+}
+
 }  // namespace
+
+// static
+const char
+    DisplayInfoProviderChromeOS::kCustomTouchCalibrationInProgressError[] =
+        "Another custom touch calibration already under progress.";
+
+// static
+const char
+    DisplayInfoProviderChromeOS::kCompleteCalibrationCalledBeforeStartError[] =
+        "system.display.completeCustomTouchCalibration called before "
+        "system.display.startCustomTouchCalibration before.";
+
+// static
+const char DisplayInfoProviderChromeOS::kTouchBoundsNegativeError[] =
+    "Bounds cannot have negative values.";
+
+// static
+const char DisplayInfoProviderChromeOS::kTouchCalibrationPointsNegativeError[] =
+    "Display points and touch points cannot have negative coordinates";
+
+// static
+const char DisplayInfoProviderChromeOS::kTouchCalibrationPointsTooLargeError[] =
+    "Display point coordinates cannot be more than size of the display.";
+
+// static
+const char DisplayInfoProviderChromeOS::kNativeTouchCalibrationActiveError[] =
+    "Another touch calibration is already active.";
 
 DisplayInfoProviderChromeOS::DisplayInfoProviderChromeOS() {}
 
@@ -383,15 +463,22 @@ bool DisplayInfoProviderChromeOS::SetInfo(
     const std::string& display_id_str,
     const system_display::DisplayProperties& info,
     std::string* error) {
-  ash::DisplayManager* display_manager =
-      ash::Shell::GetInstance()->display_manager();
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    *error = "Not implemented for mash.";
+    return false;
+  }
+
+  display::DisplayManager* display_manager =
+      ash::Shell::Get()->display_manager();
   ash::DisplayConfigurationController* display_configuration_controller =
-      ash::Shell::GetInstance()->display_configuration_controller();
+      ash::Shell::Get()->display_configuration_controller();
 
   const display::Display target = GetDisplay(display_id_str);
 
-  if (target.id() == display::Display::kInvalidDisplayID) {
-    *error = "Display not found.";
+  if (target.id() == display::kInvalidDisplayId) {
+    *error = "Display not found:" + display_id_str;
     return false;
   }
 
@@ -404,17 +491,21 @@ bool DisplayInfoProviderChromeOS::SetInfo(
     return false;
   }
 
-  // Process 'isPrimary' parameter.
-  if (info.is_primary && *info.is_primary && target.id() != primary.id()) {
-    display_configuration_controller->SetPrimaryDisplayId(
-        display_id, true /* user_action */);
+  // Process 'isUnified' parameter if set.
+  if (info.is_unified) {
+    display_manager->SetDefaultMultiDisplayModeForCurrentDisplays(
+        *info.is_unified ? display::DisplayManager::UNIFIED
+                         : display::DisplayManager::EXTENDED);
   }
+
+  // Process 'isPrimary' parameter.
+  if (info.is_primary && *info.is_primary && target.id() != primary.id())
+    display_configuration_controller->SetPrimaryDisplayId(display_id);
 
   // Process 'mirroringSourceId' parameter.
   if (info.mirroring_source_id) {
     bool mirror = !info.mirroring_source_id->empty();
-    display_configuration_controller->SetMirrorMode(mirror,
-                                                    true /* user_action */);
+    display_configuration_controller->SetMirrorMode(mirror);
   }
 
   // Process 'overscan' parameter.
@@ -426,9 +517,15 @@ bool DisplayInfoProviderChromeOS::SetInfo(
 
   // Process 'rotation' parameter.
   if (info.rotation) {
-    display_configuration_controller->SetDisplayRotation(
-        display_id, DegreesToRotation(*info.rotation),
-        display::Display::ROTATION_SOURCE_ACTIVE, true /* user_action */);
+    if (IsMaximizeModeWindowManagerEnabled() &&
+        display_id == display::Display::InternalDisplayId()) {
+      ash::Shell::Get()->screen_orientation_controller()->SetLockToRotation(
+          DegreesToRotation(*info.rotation));
+    } else {
+      display_configuration_controller->SetDisplayRotation(
+          display_id, DegreesToRotation(*info.rotation),
+          display::Display::ROTATION_SOURCE_ACTIVE);
+    }
   }
 
   // Process new display origin parameters.
@@ -451,21 +548,26 @@ bool DisplayInfoProviderChromeOS::SetInfo(
 
 bool DisplayInfoProviderChromeOS::SetDisplayLayout(
     const DisplayLayoutList& layouts) {
-  ash::DisplayManager* display_manager =
-      ash::Shell::GetInstance()->display_manager();
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return false;
+  }
+  display::DisplayManager* display_manager =
+      ash::Shell::Get()->display_manager();
   display::DisplayLayoutBuilder builder(
-      display_manager->GetCurrentDisplayLayout());
+      display_manager->GetCurrentResolvedDisplayLayout());
 
   bool have_root = false;
   builder.ClearPlacements();
   for (const system_display::DisplayLayout& layout : layouts) {
     display::Display display = GetDisplay(layout.id);
-    if (display.id() == display::Display::kInvalidDisplayID) {
+    if (display.id() == display::kInvalidDisplayId) {
       LOG(ERROR) << "Invalid layout: display id not found: " << layout.id;
       return false;
     }
     display::Display parent = GetDisplay(layout.parent_id);
-    if (parent.id() == display::Display::kInvalidDisplayID) {
+    if (parent.id() == display::kInvalidDisplayId) {
       if (have_root) {
         LOG(ERROR) << "Invalid layout: multople roots.";
         return false;
@@ -484,24 +586,28 @@ bool DisplayInfoProviderChromeOS::SetDisplayLayout(
     LOG(ERROR) << "Invalid layout: Validate failed.";
     return false;
   }
-  ash::Shell::GetInstance()
-      ->display_configuration_controller()
-      ->SetDisplayLayout(std::move(layout), true /* user_action */);
+  ash::Shell::Get()->display_configuration_controller()->SetDisplayLayout(
+      std::move(layout));
   return true;
 }
 
 void DisplayInfoProviderChromeOS::UpdateDisplayUnitInfoForPlatform(
     const display::Display& display,
     system_display::DisplayUnitInfo* unit) {
-  ash::DisplayManager* display_manager =
-      ash::Shell::GetInstance()->display_manager();
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return;
+  }
+  display::DisplayManager* display_manager =
+      ash::Shell::Get()->display_manager();
   unit->name = display_manager->GetDisplayNameForId(display.id());
   if (display_manager->IsInMirrorMode()) {
     unit->mirroring_source_id =
         base::Int64ToString(display_manager->mirroring_display_id());
   }
 
-  const ash::DisplayInfo& display_info =
+  const display::ManagedDisplayInfo& display_info =
       display_manager->GetDisplayInfo(display.id());
   const float device_dpi = display_info.device_dpi();
   unit->dpi_x = device_dpi * display.size().width() /
@@ -516,44 +622,69 @@ void DisplayInfoProviderChromeOS::UpdateDisplayUnitInfoForPlatform(
   unit->overscan.right = overscan_insets.right();
   unit->overscan.bottom = overscan_insets.bottom();
 
-  for (const ash::DisplayMode& display_mode : display_info.display_modes()) {
+  for (const scoped_refptr<display::ManagedDisplayMode>& display_mode :
+       display_info.display_modes()) {
     unit->modes.push_back(
         GetDisplayMode(display_manager, display_info, display_mode));
   }
 }
 
 void DisplayInfoProviderChromeOS::EnableUnifiedDesktop(bool enable) {
-  ash::Shell::GetInstance()->display_manager()->SetUnifiedDesktopEnabled(
-      enable);
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return;
+  }
+  ash::Shell::Get()->display_manager()->SetUnifiedDesktopEnabled(enable);
 }
 
 DisplayInfoProvider::DisplayUnitInfoList
-DisplayInfoProviderChromeOS::GetAllDisplaysInfo() {
-  ash::DisplayManager* display_manager =
-      ash::Shell::GetInstance()->display_manager();
+DisplayInfoProviderChromeOS::GetAllDisplaysInfo(bool single_unified) {
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return DisplayInfoProvider::DisplayUnitInfoList();
+  }
+  display::DisplayManager* display_manager =
+      ash::Shell::Get()->display_manager();
+
   if (!display_manager->IsInUnifiedMode())
-    return DisplayInfoProvider::GetAllDisplaysInfo();
+    return DisplayInfoProvider::GetAllDisplaysInfo(single_unified);
 
-  std::vector<display::Display> displays =
-      display_manager->software_mirroring_display_list();
-  CHECK_GT(displays.size(), 0u);
+  // Chrome OS specific: get displays for unified mode.
+  std::vector<display::Display> displays;
+  int64_t primary_id;
+  if (single_unified) {
+    for (size_t i = 0; i < display_manager->GetNumDisplays(); ++i)
+      displays.push_back(display_manager->GetDisplayAt(i));
+    primary_id = display::Screen::GetScreen()->GetPrimaryDisplay().id();
+  } else {
+    displays = display_manager->software_mirroring_display_list();
+    CHECK_GT(displays.size(), 0u);
+    // Use first display as primary.
+    primary_id = displays[0].id();
+  }
 
-  // Use first display as primary.
-  int64_t primary_id = displays[0].id();
   DisplayUnitInfoList all_displays;
   for (const display::Display& display : displays) {
-    system_display::DisplayUnitInfo unit =
+    system_display::DisplayUnitInfo unit_info =
         CreateDisplayUnitInfo(display, primary_id);
-    UpdateDisplayUnitInfoForPlatform(display, &unit);
-    all_displays.push_back(std::move(unit));
+    UpdateDisplayUnitInfoForPlatform(display, &unit_info);
+    unit_info.is_unified = true;
+    all_displays.push_back(std::move(unit_info));
   }
   return all_displays;
 }
 
 DisplayInfoProvider::DisplayLayoutList
 DisplayInfoProviderChromeOS::GetDisplayLayout() {
-  ash::DisplayManager* display_manager =
-      ash::Shell::GetInstance()->display_manager();
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return DisplayInfoProvider::DisplayLayoutList();
+  }
+  display::DisplayManager* display_manager =
+      ash::Shell::Get()->display_manager();
 
   if (display_manager->num_connected_displays() < 2)
     return DisplayInfoProvider::DisplayLayoutList();
@@ -564,9 +695,9 @@ DisplayInfoProviderChromeOS::GetDisplayLayout() {
   DisplayLayoutList result;
   for (const display::Display& display : displays) {
     const display::DisplayPlacement placement =
-        display_manager->GetCurrentDisplayLayout().FindPlacementById(
+        display_manager->GetCurrentResolvedDisplayLayout().FindPlacementById(
             display.id());
-    if (placement.display_id == display::Display::kInvalidDisplayID)
+    if (placement.display_id == display::kInvalidDisplayId)
       continue;
     system_display::DisplayLayout display_layout;
     display_layout.id = base::Int64ToString(placement.display_id);
@@ -580,12 +711,17 @@ DisplayInfoProviderChromeOS::GetDisplayLayout() {
 
 bool DisplayInfoProviderChromeOS::OverscanCalibrationStart(
     const std::string& id) {
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return false;
+  }
   VLOG(1) << "OverscanCalibrationStart: " << id;
   const display::Display display = GetDisplay(id);
-  if (display.id() == display::Display::kInvalidDisplayID)
+  if (display.id() == display::kInvalidDisplayId)
     return false;
   auto insets =
-      ash::Shell::GetInstance()->window_tree_host_manager()->GetOverscanInsets(
+      ash::Shell::Get()->window_tree_host_manager()->GetOverscanInsets(
           display.id());
   overscan_calibrators_[id].reset(
       new chromeos::OverscanCalibrator(display, insets));
@@ -596,7 +732,7 @@ bool DisplayInfoProviderChromeOS::OverscanCalibrationAdjust(
     const std::string& id,
     const system_display::Insets& delta) {
   VLOG(1) << "OverscanCalibrationAdjust: " << id;
-  chromeos::OverscanCalibrator* calibrator = GetCalibrator(id);
+  chromeos::OverscanCalibrator* calibrator = GetOverscanCalibrator(id);
   if (!calibrator)
     return false;
   gfx::Insets insets = calibrator->insets();
@@ -608,7 +744,7 @@ bool DisplayInfoProviderChromeOS::OverscanCalibrationAdjust(
 bool DisplayInfoProviderChromeOS::OverscanCalibrationReset(
     const std::string& id) {
   VLOG(1) << "OverscanCalibrationReset: " << id;
-  chromeos::OverscanCalibrator* calibrator = GetCalibrator(id);
+  chromeos::OverscanCalibrator* calibrator = GetOverscanCalibrator(id);
   if (!calibrator)
     return false;
   calibrator->Reset();
@@ -618,7 +754,7 @@ bool DisplayInfoProviderChromeOS::OverscanCalibrationReset(
 bool DisplayInfoProviderChromeOS::OverscanCalibrationComplete(
     const std::string& id) {
   VLOG(1) << "OverscanCalibrationComplete: " << id;
-  chromeos::OverscanCalibrator* calibrator = GetCalibrator(id);
+  chromeos::OverscanCalibrator* calibrator = GetOverscanCalibrator(id);
   if (!calibrator)
     return false;
   calibrator->Commit();
@@ -626,12 +762,162 @@ bool DisplayInfoProviderChromeOS::OverscanCalibrationComplete(
   return true;
 }
 
-chromeos::OverscanCalibrator* DisplayInfoProviderChromeOS::GetCalibrator(
-    const std::string& id) {
+bool DisplayInfoProviderChromeOS::ShowNativeTouchCalibration(
+    const std::string& id,
+    std::string* error,
+    const DisplayInfoProvider::TouchCalibrationCallback& callback) {
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return false;
+  }
+  VLOG(1) << "StartNativeTouchCalibration: " << id;
+
+  // If a custom calibration is already running, then throw an error.
+  if (custom_touch_calibration_active_) {
+    *error = kCustomTouchCalibrationInProgressError;
+    return false;
+  }
+
+  const display::Display display = GetDisplay(id);
+  if (!ValidateParamsForTouchCalibration(id, display, GetTouchCalibrator(),
+                                         error)) {
+    return false;
+  }
+
+  GetTouchCalibrator()->StartCalibration(display, callback);
+  return true;
+}
+
+bool DisplayInfoProviderChromeOS::StartCustomTouchCalibration(
+    const std::string& id,
+    std::string* error) {
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return false;
+  }
+  VLOG(1) << "StartCustomTouchCalibration: " << id;
+  const display::Display display = GetDisplay(id);
+  if (!ValidateParamsForTouchCalibration(id, display, GetTouchCalibrator(),
+                                         error)) {
+    return false;
+  }
+
+  touch_calibration_target_id_ = id;
+  custom_touch_calibration_active_ = true;
+
+  // Enable un-transformed touch input.
+  ash::Shell::Get()->touch_transformer_controller()->SetForCalibration(true);
+  return true;
+}
+
+bool DisplayInfoProviderChromeOS::CompleteCustomTouchCalibration(
+    const api::system_display::TouchCalibrationPairQuad& pairs,
+    const api::system_display::Bounds& bounds,
+    std::string* error) {
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    return false;
+  }
+  VLOG(1) << "CompleteCustomTouchCalibration: " << touch_calibration_target_id_;
+
+  ash::Shell::Get()->touch_transformer_controller()->SetForCalibration(false);
+
+  const display::Display display = GetDisplay(touch_calibration_target_id_);
+  touch_calibration_target_id_.clear();
+
+  // If Complete() is called before calling Start(), throw an error.
+  if (!custom_touch_calibration_active_) {
+    *error = kCompleteCalibrationCalledBeforeStartError;
+    return false;
+  }
+
+  custom_touch_calibration_active_ = false;
+
+  if (!ValidateParamsForTouchCalibration(touch_calibration_target_id_, display,
+                                         GetTouchCalibrator(), error)) {
+    return false;
+  }
+
+  display::TouchCalibrationData::CalibrationPointPairQuad calibration_points;
+  calibration_points[0] = GetCalibrationPair(pairs.pair1);
+  calibration_points[1] = GetCalibrationPair(pairs.pair2);
+  calibration_points[2] = GetCalibrationPair(pairs.pair3);
+  calibration_points[3] = GetCalibrationPair(pairs.pair4);
+
+  // The display bounds cannot have negative values.
+  if (bounds.width < 0 || bounds.height < 0) {
+    *error = kTouchBoundsNegativeError;
+    return false;
+  }
+
+  for (size_t row = 0; row < calibration_points.size(); row++) {
+    // Coordinates for display and touch point cannot be negative.
+    if (calibration_points[row].first.x() < 0 ||
+        calibration_points[row].first.y() < 0 ||
+        calibration_points[row].second.x() < 0 ||
+        calibration_points[row].second.y() < 0) {
+      *error = kTouchCalibrationPointsNegativeError;
+      return false;
+    }
+    // Coordinates for display points cannot be greater than the screen bounds.
+    if (calibration_points[row].first.x() > bounds.width ||
+        calibration_points[row].first.y() > bounds.height) {
+      *error = kTouchCalibrationPointsTooLargeError;
+      return false;
+    }
+  }
+
+  gfx::Size display_size(bounds.width, bounds.height);
+  ash::Shell::Get()->display_manager()->SetTouchCalibrationData(
+      display.id(), calibration_points, display_size);
+  return true;
+}
+
+bool DisplayInfoProviderChromeOS::ClearTouchCalibration(const std::string& id,
+                                                        std::string* error) {
+  if (ash_util::IsRunningInMash()) {
+    // TODO(crbug.com/682402): Mash support.
+    NOTIMPLEMENTED();
+    *error = "Not implemented for mash.";
+    return false;
+  }
+  const display::Display display = GetDisplay(id);
+
+  if (!ValidateParamsForTouchCalibration(id, display, GetTouchCalibrator(),
+                                         error)) {
+    return false;
+  }
+
+  ash::Shell::Get()->display_manager()->ClearTouchCalibrationData(display.id());
+  return true;
+}
+
+bool DisplayInfoProviderChromeOS::IsNativeTouchCalibrationActive(
+    std::string* error) {
+  // If native touch calibration UX is active, set error and return false.
+  if (GetTouchCalibrator()->is_calibrating()) {
+    *error = kNativeTouchCalibrationActiveError;
+    return true;
+  }
+  return false;
+}
+
+chromeos::OverscanCalibrator*
+DisplayInfoProviderChromeOS::GetOverscanCalibrator(const std::string& id) {
   auto iter = overscan_calibrators_.find(id);
   if (iter == overscan_calibrators_.end())
     return nullptr;
   return iter->second.get();
+}
+
+chromeos::TouchCalibratorController*
+DisplayInfoProviderChromeOS::GetTouchCalibrator() {
+  if (!touch_calibrator_)
+    touch_calibrator_.reset(new chromeos::TouchCalibratorController);
+  return touch_calibrator_.get();
 }
 
 // static

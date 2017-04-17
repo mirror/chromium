@@ -13,127 +13,133 @@
 #include "modules/device_orientation/DeviceOrientationDispatcher.h"
 #include "modules/device_orientation/DeviceOrientationEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/Assertions.h"
 #include "public/platform/Platform.h"
-#include "wtf/Assertions.h"
 
 namespace blink {
 
 DeviceOrientationController::DeviceOrientationController(Document& document)
-    : DeviceSingleWindowEventController(document)
-{
+    : DeviceSingleWindowEventController(document),
+      Supplement<Document>(document) {}
+
+DeviceOrientationController::~DeviceOrientationController() {}
+
+void DeviceOrientationController::DidUpdateData() {
+  if (override_orientation_data_)
+    return;
+  DispatchDeviceEvent(LastEvent());
 }
 
-DeviceOrientationController::~DeviceOrientationController()
-{
+const char* DeviceOrientationController::SupplementName() {
+  return "DeviceOrientationController";
 }
 
-void DeviceOrientationController::didUpdateData()
-{
-    if (m_overrideOrientationData)
+DeviceOrientationController& DeviceOrientationController::From(
+    Document& document) {
+  DeviceOrientationController* controller =
+      static_cast<DeviceOrientationController*>(
+          Supplement<Document>::From(document, SupplementName()));
+  if (!controller) {
+    controller = new DeviceOrientationController(document);
+    Supplement<Document>::ProvideTo(document, SupplementName(), controller);
+  }
+  return *controller;
+}
+
+void DeviceOrientationController::DidAddEventListener(
+    LocalDOMWindow* window,
+    const AtomicString& event_type) {
+  if (event_type != EventTypeName())
+    return;
+
+  if (GetDocument().GetFrame()) {
+    if (GetDocument().IsSecureContext()) {
+      UseCounter::Count(GetDocument().GetFrame(),
+                        UseCounter::kDeviceOrientationSecureOrigin);
+    } else {
+      Deprecation::CountDeprecation(
+          GetDocument().GetFrame(),
+          UseCounter::kDeviceOrientationInsecureOrigin);
+      HostsUsingFeatures::CountAnyWorld(
+          GetDocument(),
+          HostsUsingFeatures::Feature::kDeviceOrientationInsecureHost);
+      if (GetDocument()
+              .GetFrame()
+              ->GetSettings()
+              ->GetStrictPowerfulFeatureRestrictions())
         return;
-    dispatchDeviceEvent(lastEvent());
-}
-
-const char* DeviceOrientationController::supplementName()
-{
-    return "DeviceOrientationController";
-}
-
-DeviceOrientationController& DeviceOrientationController::from(Document& document)
-{
-    DeviceOrientationController* controller = static_cast<DeviceOrientationController*>(Supplement<Document>::from(document, supplementName()));
-    if (!controller) {
-        controller = new DeviceOrientationController(document);
-        Supplement<Document>::provideTo(document, supplementName(), controller);
     }
-    return *controller;
-}
+  }
 
-void DeviceOrientationController::didAddEventListener(LocalDOMWindow* window, const AtomicString& eventType)
-{
-    if (eventType != eventTypeName())
-        return;
+  if (!has_event_listener_) {
+    Platform::Current()->RecordRapporURL("DeviceSensors.DeviceOrientation",
+                                         WebURL(GetDocument().Url()));
 
-    if (document().frame()) {
-        String errorMessage;
-        if (document().isSecureContext(errorMessage)) {
-            UseCounter::count(document().frame(), UseCounter::DeviceOrientationSecureOrigin);
-        } else {
-            Deprecation::countDeprecation(document().frame(), UseCounter::DeviceOrientationInsecureOrigin);
-            HostsUsingFeatures::countAnyWorld(document(), HostsUsingFeatures::Feature::DeviceOrientationInsecureHost);
-            if (document().frame()->settings()->strictPowerfulFeatureRestrictions())
-                return;
-        }
+    if (!IsSameSecurityOriginAsMainFrame()) {
+      Platform::Current()->RecordRapporURL(
+          "DeviceSensors.DeviceOrientationCrossOrigin",
+          WebURL(GetDocument().Url()));
     }
+  }
 
-    if (!m_hasEventListener)
-        Platform::current()->recordRapporURL("DeviceSensors.DeviceOrientation", WebURL(document().url()));
-
-    DeviceSingleWindowEventController::didAddEventListener(window, eventType);
+  DeviceSingleWindowEventController::DidAddEventListener(window, event_type);
 }
 
-DeviceOrientationData* DeviceOrientationController::lastData() const
-{
-    return m_overrideOrientationData ? m_overrideOrientationData.get() : dispatcherInstance().latestDeviceOrientationData();
+DeviceOrientationData* DeviceOrientationController::LastData() const {
+  return override_orientation_data_
+             ? override_orientation_data_.Get()
+             : DispatcherInstance().LatestDeviceOrientationData();
 }
 
-bool DeviceOrientationController::hasLastData()
-{
-    return lastData();
+bool DeviceOrientationController::HasLastData() {
+  return LastData();
 }
 
-void DeviceOrientationController::registerWithDispatcher()
-{
-    dispatcherInstance().addController(this);
+void DeviceOrientationController::RegisterWithDispatcher() {
+  DispatcherInstance().AddController(this);
 }
 
-void DeviceOrientationController::unregisterWithDispatcher()
-{
-    dispatcherInstance().removeController(this);
+void DeviceOrientationController::UnregisterWithDispatcher() {
+  DispatcherInstance().RemoveController(this);
 }
 
-Event* DeviceOrientationController::lastEvent() const
-{
-    return DeviceOrientationEvent::create(eventTypeName(), lastData());
+Event* DeviceOrientationController::LastEvent() const {
+  return DeviceOrientationEvent::Create(EventTypeName(), LastData());
 }
 
-bool DeviceOrientationController::isNullEvent(Event* event) const
-{
-    DeviceOrientationEvent* orientationEvent = toDeviceOrientationEvent(event);
-    return !orientationEvent->orientation()->canProvideEventData();
+bool DeviceOrientationController::IsNullEvent(Event* event) const {
+  DeviceOrientationEvent* orientation_event = ToDeviceOrientationEvent(event);
+  return !orientation_event->Orientation()->CanProvideEventData();
 }
 
-const AtomicString& DeviceOrientationController::eventTypeName() const
-{
-    return EventTypeNames::deviceorientation;
+const AtomicString& DeviceOrientationController::EventTypeName() const {
+  return EventTypeNames::deviceorientation;
 }
 
-void DeviceOrientationController::setOverride(DeviceOrientationData* deviceOrientationData)
-{
-    DCHECK(deviceOrientationData);
-    m_overrideOrientationData = deviceOrientationData;
-    dispatchDeviceEvent(lastEvent());
+void DeviceOrientationController::SetOverride(
+    DeviceOrientationData* device_orientation_data) {
+  DCHECK(device_orientation_data);
+  override_orientation_data_ = device_orientation_data;
+  DispatchDeviceEvent(LastEvent());
 }
 
-void DeviceOrientationController::clearOverride()
-{
-    if (!m_overrideOrientationData)
-        return;
-    m_overrideOrientationData.clear();
-    if (lastData())
-        didUpdateData();
+void DeviceOrientationController::ClearOverride() {
+  if (!override_orientation_data_)
+    return;
+  override_orientation_data_.Clear();
+  if (LastData())
+    DidUpdateData();
 }
 
-DeviceOrientationDispatcher& DeviceOrientationController::dispatcherInstance() const
-{
-    return DeviceOrientationDispatcher::instance(false);
+DeviceOrientationDispatcher& DeviceOrientationController::DispatcherInstance()
+    const {
+  return DeviceOrientationDispatcher::Instance(false);
 }
 
-DEFINE_TRACE(DeviceOrientationController)
-{
-    visitor->trace(m_overrideOrientationData);
-    DeviceSingleWindowEventController::trace(visitor);
-    Supplement<Document>::trace(visitor);
+DEFINE_TRACE(DeviceOrientationController) {
+  visitor->Trace(override_orientation_data_);
+  DeviceSingleWindowEventController::Trace(visitor);
+  Supplement<Document>::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

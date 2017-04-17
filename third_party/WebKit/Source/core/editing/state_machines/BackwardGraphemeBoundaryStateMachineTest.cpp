@@ -5,7 +5,7 @@
 #include "core/editing/state_machines/BackwardGraphemeBoundaryStateMachine.h"
 
 #include "core/editing/state_machines/StateMachineTestUtil.h"
-#include "wtf/text/CharacterNames.h"
+#include "platform/wtf/text/CharacterNames.h"
 
 namespace blink {
 
@@ -19,7 +19,7 @@ namespace blink {
 namespace {
 // kWatch kVS16, kEye kVS16 are valid standardized variants.
 const UChar32 kWatch = 0x231A;
-const UChar32 kEye = WTF::Unicode::eyeCharacter;
+const UChar32 kEye = WTF::Unicode::kEyeCharacter;
 const UChar32 kVS16 = 0xFE0F;
 
 // kHanBMP KVS17, kHanSIP kVS17 are valie IVD sequences.
@@ -35,446 +35,472 @@ const UChar kTrail = 0xDC66;
 // U+1F1F8 is REGIONAL INDICATOR SYMBOL LETTER S
 const UChar32 kRisU = 0x1F1FA;
 const UChar32 kRisS = 0x1F1F8;
-} // namespace
+}  // namespace
 
-class BackwardGraphemeBoundaryStatemachineTest : public GraphemeStateMachineTestBase {
-protected:
-    BackwardGraphemeBoundaryStatemachineTest() = default;
-    ~BackwardGraphemeBoundaryStatemachineTest() override = default;
+class BackwardGraphemeBoundaryStatemachineTest
+    : public GraphemeStateMachineTestBase {
+ protected:
+  BackwardGraphemeBoundaryStatemachineTest() = default;
+  ~BackwardGraphemeBoundaryStatemachineTest() override = default;
 
-private:
-    DISALLOW_COPY_AND_ASSIGN(BackwardGraphemeBoundaryStatemachineTest);
+ private:
+  DISALLOW_COPY_AND_ASSIGN(BackwardGraphemeBoundaryStatemachineTest);
 };
 
-TEST_F(BackwardGraphemeBoundaryStatemachineTest, DoNothingCase)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+TEST_F(BackwardGraphemeBoundaryStatemachineTest, DoNothingCase) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    EXPECT_EQ(0, machine.finalizeAndGetBoundaryOffset());
-    EXPECT_EQ(0, machine.finalizeAndGetBoundaryOffset());
+  EXPECT_EQ(0, machine.FinalizeAndGetBoundaryOffset());
+  EXPECT_EQ(0, machine.FinalizeAndGetBoundaryOffset());
 }
 
-TEST_F(BackwardGraphemeBoundaryStatemachineTest, BrokenSurrogatePair)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+TEST_F(BackwardGraphemeBoundaryStatemachineTest, BrokenSurrogatePair) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // [Lead]
-    EXPECT_EQ("F", processSequenceBackward(&machine, asCodePoints(kLead)));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // [Lead]
+  EXPECT_EQ("F", ProcessSequenceBackward(&machine, AsCodePoints(kLead)));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail]
-    EXPECT_EQ("RF", processSequenceBackward(&machine, asCodePoints('a', kTrail)));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail]
+  EXPECT_EQ("RF", ProcessSequenceBackward(&machine, AsCodePoints('a', kTrail)));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail]
-    EXPECT_EQ("RF", processSequenceBackward(&machine, asCodePoints(kTrail, kTrail)));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail]
+  EXPECT_EQ("RF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kTrail, kTrail)));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail]
-    EXPECT_EQ("RF", processSequenceBackward(&machine, asCodePoints(kTrail)));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail]
+  EXPECT_EQ("RF", ProcessSequenceBackward(&machine, AsCodePoints(kTrail)));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 }
 
-TEST_F(BackwardGraphemeBoundaryStatemachineTest, BreakImmediately_BMP)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+TEST_F(BackwardGraphemeBoundaryStatemachineTest, BreakImmediately_BMP) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // U+0000 + U+0000
-    EXPECT_EQ("RF", processSequenceBackward(&machine, asCodePoints(0, 0)));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // U+0000 + U+0000
+  EXPECT_EQ("RF", ProcessSequenceBackward(&machine, AsCodePoints(0, 0)));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + 'a'
-    EXPECT_EQ("RF", processSequenceBackward(&machine, asCodePoints('a', 'a')));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + 'a'
+  EXPECT_EQ("RF", ProcessSequenceBackward(&machine, AsCodePoints('a', 'a')));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F441 + 'a'
-    EXPECT_EQ("RRF", processSequenceBackward(&machine, asCodePoints(kEye, 'a')));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + 'a'
+  EXPECT_EQ("RRF", ProcessSequenceBackward(&machine, AsCodePoints(kEye, 'a')));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + 'a'
-    EXPECT_EQ("RF", processSequenceBackward(&machine, asCodePoints('a')));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // SOT + 'a'
+  EXPECT_EQ("RF", ProcessSequenceBackward(&machine, AsCodePoints('a')));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // Broken surrogates.
-    // [Lead] + 'a'
-    EXPECT_EQ("RF", processSequenceBackward(&machine, asCodePoints(kLead, 'a')));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // Broken surrogates.
+  // [Lead] + 'a'
+  EXPECT_EQ("RF", ProcessSequenceBackward(&machine, AsCodePoints(kLead, 'a')));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + 'a'
-    EXPECT_EQ("RRF", processSequenceBackward(&machine, asCodePoints('a', kTrail, 'a')));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + 'a'
+  EXPECT_EQ("RRF",
+            ProcessSequenceBackward(&machine, AsCodePoints('a', kTrail, 'a')));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + 'a'
-    EXPECT_EQ("RRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, 'a')));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + 'a'
+  EXPECT_EQ("RRF", ProcessSequenceBackward(&machine,
+                                           AsCodePoints(kTrail, kTrail, 'a')));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail] + 'a'
-    EXPECT_EQ("RRF", processSequenceBackward(&machine, asCodePoints(kTrail, 'a')));
-    EXPECT_EQ(-1, machine.finalizeAndGetBoundaryOffset());
-}
-
-TEST_F(BackwardGraphemeBoundaryStatemachineTest,
-    BreakImmediately_SupplementaryPlane)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
-
-    // 'a' + U+1F441
-    EXPECT_EQ("RRF", processSequenceBackward(&machine, asCodePoints('a', kEye)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
-
-    // U+1F441 + U+1F441
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine, asCodePoints(kEye, kEye)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
-
-    // SOT + U+1F441
-    EXPECT_EQ("RRF", processSequenceBackward(&machine, asCodePoints(kEye)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
-
-    // Broken surrogates.
-    // [Lead] + U+1F441
-    EXPECT_EQ("RRF", processSequenceBackward(&machine, asCodePoints(kLead, kEye)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
-
-    // 'a' + [Trail] + U+1F441
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine, asCodePoints('a', kTrail, kEye)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
-
-    // [Trail] + [Trail] + U+1F441
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kEye)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
-
-    // SOT + [Trail] + U+1F441
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine, asCodePoints(kTrail, kEye)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail] + 'a'
+  EXPECT_EQ("RRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kTrail, 'a')));
+  EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 }
 
 TEST_F(BackwardGraphemeBoundaryStatemachineTest,
-    NotBreakImmediatelyBefore_BMP_BMP)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+       BreakImmediately_SupplementaryPlane) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // 'a' + U+231A + U+FE0F
-    EXPECT_EQ("RRF", processSequenceBackward(&machine,
-        asCodePoints('a', kWatch, kVS16)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + U+1F441
+  EXPECT_EQ("RRF", ProcessSequenceBackward(&machine, AsCodePoints('a', kEye)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F441 + U+231A + U+FE0F
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints(kEye, kWatch, kVS16)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + U+1F441
+  EXPECT_EQ("RRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kEye, kEye)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + U+231A + U+FE0F
-    EXPECT_EQ("RRF", processSequenceBackward(&machine, asCodePoints(kWatch, kVS16)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // SOT + U+1F441
+  EXPECT_EQ("RRF", ProcessSequenceBackward(&machine, AsCodePoints(kEye)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Lead] + U+231A + U+FE0F
-    EXPECT_EQ("RRF", processSequenceBackward(&machine,
-        asCodePoints(kLead, kWatch, kVS16)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // Broken surrogates.
+  // [Lead] + U+1F441
+  EXPECT_EQ("RRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kLead, kEye)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + U+231A + U+FE0F
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kTrail, kWatch, kVS16)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + U+1F441
+  EXPECT_EQ("RRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints('a', kTrail, kEye)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + U+231A + U+FE0F
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kWatch, kVS16)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + U+1F441
+  EXPECT_EQ("RRRF", ProcessSequenceBackward(
+                        &machine, AsCodePoints(kTrail, kTrail, kEye)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail] + U+231A + U+FE0F
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kWatch, kVS16)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail] + U+1F441
+  EXPECT_EQ("RRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kTrail, kEye)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 }
 
 TEST_F(BackwardGraphemeBoundaryStatemachineTest,
-    NotBreakImmediatelyBefore_Supplementary_BMP)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+       NotBreakImmediatelyBefore_BMP_BMP) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // 'a' + U+1F441 + U+FE0F
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine, asCodePoints('a', kEye, kVS16)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + U+231A + U+FE0F
+  EXPECT_EQ("RRF", ProcessSequenceBackward(&machine,
+                                           AsCodePoints('a', kWatch, kVS16)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F441 + U+1F441 + U+FE0F
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kEye, kEye, kVS16)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + U+231A + U+FE0F
+  EXPECT_EQ("RRRF", ProcessSequenceBackward(&machine,
+                                            AsCodePoints(kEye, kWatch, kVS16)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + U+1F441 + U+FE0F
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine, asCodePoints(kEye, kVS16)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // SOT + U+231A + U+FE0F
+  EXPECT_EQ("RRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kWatch, kVS16)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Lead] + U+1F441 + U+FE0F
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints(kLead, kEye, kVS16)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // [Lead] + U+231A + U+FE0F
+  EXPECT_EQ("RRF", ProcessSequenceBackward(&machine,
+                                           AsCodePoints(kLead, kWatch, kVS16)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + U+1F441 + U+FE0F
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kTrail, kEye, kVS16)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + U+231A + U+FE0F
+  EXPECT_EQ("RRRF", ProcessSequenceBackward(
+                        &machine, AsCodePoints('a', kTrail, kWatch, kVS16)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + U+1F441 + U+FE0F
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kEye, kVS16)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + U+231A + U+FE0F
+  EXPECT_EQ("RRRF", ProcessSequenceBackward(
+                        &machine, AsCodePoints(kTrail, kTrail, kWatch, kVS16)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail] + U+1F441 + U+FE0F
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kEye, kVS16)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail] + U+231A + U+FE0F
+  EXPECT_EQ("RRRF", ProcessSequenceBackward(
+                        &machine, AsCodePoints(kTrail, kWatch, kVS16)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
 }
 
 TEST_F(BackwardGraphemeBoundaryStatemachineTest,
-    NotBreakImmediatelyBefore_BMP_Supplementary)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+       NotBreakImmediatelyBefore_Supplementary_BMP) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // 'a' + U+845B + U+E0100
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kHanBMP, kVS17)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + U+1F441 + U+FE0F
+  EXPECT_EQ("RRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints('a', kEye, kVS16)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F441 + U+845B + U+E0100
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kEye, kHanBMP, kVS17)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + U+1F441 + U+FE0F
+  EXPECT_EQ("RRRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kEye, kEye, kVS16)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + U+845B + U+E0100
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints(kHanBMP, kVS17)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // SOT + U+1F441 + U+FE0F
+  EXPECT_EQ("RRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kEye, kVS16)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Lead] + U+845B + U+E0100
-    EXPECT_EQ("RRRF", processSequenceBackward(&machine,
-        asCodePoints(kLead, kHanBMP, kVS17)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // [Lead] + U+1F441 + U+FE0F
+  EXPECT_EQ("RRRF", ProcessSequenceBackward(&machine,
+                                            AsCodePoints(kLead, kEye, kVS16)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + U+845B + U+E0100
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kTrail, kHanBMP, kVS17)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + U+1F441 + U+FE0F
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints('a', kTrail, kEye, kVS16)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + U+845B + U+E0100
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kHanBMP, kVS17)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + U+1F441 + U+FE0F
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints(kTrail, kTrail, kEye, kVS16)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail] + U+845B + U+E0100
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kHanBMP, kVS17)));
-    EXPECT_EQ(-3, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail] + U+1F441 + U+FE0F
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints(kTrail, kEye, kVS16)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 }
 
 TEST_F(BackwardGraphemeBoundaryStatemachineTest,
-    NotBreakImmediatelyBefore_Supplementary_Supplementary)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+       NotBreakImmediatelyBefore_BMP_Supplementary) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // 'a' + U+20000 + U+E0100
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kHanSIP, kVS17)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + U+845B + U+E0100
+  EXPECT_EQ("RRRF", ProcessSequenceBackward(&machine,
+                                            AsCodePoints('a', kHanBMP, kVS17)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F441 + U+20000 + U+E0100
-    EXPECT_EQ("RRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kEye, kHanSIP, kVS17)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + U+845B + U+E0100
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints(kEye, kHanBMP, kVS17)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + U+20000 + U+E0100
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kHanSIP, kVS17)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // SOT + U+845B + U+E0100
+  EXPECT_EQ("RRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kHanBMP, kVS17)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Lead] + U+20000 + U+E0100
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kLead, kHanSIP, kVS17)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // [Lead] + U+845B + U+E0100
+  EXPECT_EQ("RRRF", ProcessSequenceBackward(
+                        &machine, AsCodePoints(kLead, kHanBMP, kVS17)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + U+20000 + U+E0100
-    EXPECT_EQ("RRRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kTrail, kHanSIP, kVS17)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + U+845B + U+E0100
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints('a', kTrail, kHanBMP, kVS17)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + U+20000 + U+E0100
-    EXPECT_EQ("RRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kHanSIP, kVS17)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + U+845B + U+E0100
+  EXPECT_EQ("RRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kTrail, kTrail, kHanBMP, kVS17)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail] + U+20000 + U+E0100
-    EXPECT_EQ("RRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kHanSIP, kVS17)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail] + U+845B + U+E0100
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints(kTrail, kHanBMP, kVS17)));
+  EXPECT_EQ(-3, machine.FinalizeAndGetBoundaryOffset());
 }
 
-TEST_F(BackwardGraphemeBoundaryStatemachineTest, MuchLongerCase)
-{
-    const UChar32 kMan = WTF::Unicode::manCharacter;
-    const UChar32 kZwj = WTF::Unicode::zeroWidthJoinerCharacter;
-    const UChar32 kHeart = WTF::Unicode::heavyBlackHeartCharacter;
-    const UChar32 kKiss = WTF::Unicode::kissMarkCharacter;
+TEST_F(BackwardGraphemeBoundaryStatemachineTest,
+       NotBreakImmediatelyBefore_Supplementary_Supplementary) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    BackwardGraphemeBoundaryStateMachine machine;
+  // 'a' + U+20000 + U+E0100
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints('a', kHanSIP, kVS17)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F468 U+200D U+2764 U+FE0F U+200D U+1F48B U+200D U+1F468 is a valid ZWJ
-    // emoji sequence.
-    // 'a' + ZWJ Emoji Sequence
-    EXPECT_EQ("RRRRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kMan, kZwj, kHeart, kVS16, kZwj, kKiss, kZwj, kMan)));
-    EXPECT_EQ(-11, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + U+20000 + U+E0100
+  EXPECT_EQ("RRRRRF", ProcessSequenceBackward(
+                          &machine, AsCodePoints(kEye, kHanSIP, kVS17)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F441 + ZWJ Emoji Sequence
-    EXPECT_EQ("RRRRRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kEye, kMan, kZwj, kHeart, kVS16, kZwj, kKiss, kZwj, kMan)));
-    EXPECT_EQ(-11, machine.finalizeAndGetBoundaryOffset());
+  // SOT + U+20000 + U+E0100
+  EXPECT_EQ("RRRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kHanSIP, kVS17)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + ZWJ Emoji Sequence
-    EXPECT_EQ("RRRRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kMan, kZwj, kHeart, kVS16, kZwj, kKiss, kZwj, kMan)));
-    EXPECT_EQ(-11, machine.finalizeAndGetBoundaryOffset());
+  // [Lead] + U+20000 + U+E0100
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints(kLead, kHanSIP, kVS17)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Lead] + ZWJ Emoji Sequence
-    EXPECT_EQ("RRRRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kLead, kMan, kZwj, kHeart, kVS16, kZwj, kKiss, kZwj, kMan)));
-    EXPECT_EQ(-11, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + U+20000 + U+E0100
+  EXPECT_EQ("RRRRRF", ProcessSequenceBackward(
+                          &machine, AsCodePoints('a', kTrail, kHanSIP, kVS17)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + ZWJ Emoji Sequence
-    EXPECT_EQ("RRRRRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kTrail, kMan, kZwj, kHeart, kVS16, kZwj, kKiss, kZwj, kMan)));
-    EXPECT_EQ(-11, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + U+20000 + U+E0100
+  EXPECT_EQ("RRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kTrail, kTrail, kHanSIP, kVS17)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + ZWJ Emoji Sequence
-    EXPECT_EQ("RRRRRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kMan, kZwj, kHeart, kVS16, kZwj, kKiss, kZwj, kMan)));
-    EXPECT_EQ(-11, machine.finalizeAndGetBoundaryOffset());
-
-    // SOT + [Trail] + ZWJ Emoji Sequence
-    EXPECT_EQ("RRRRRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kMan, kZwj, kHeart, kVS16, kZwj, kKiss, kZwj, kMan)));
-    EXPECT_EQ(-11, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail] + U+20000 + U+E0100
+  EXPECT_EQ("RRRRRF", ProcessSequenceBackward(
+                          &machine, AsCodePoints(kTrail, kHanSIP, kVS17)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 }
 
-TEST_F(BackwardGraphemeBoundaryStatemachineTest, Flags_singleFlag)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+TEST_F(BackwardGraphemeBoundaryStatemachineTest, MuchLongerCase) {
+  const UChar32 kMan = WTF::Unicode::kManCharacter;
+  const UChar32 kZwj = WTF::Unicode::kZeroWidthJoinerCharacter;
+  const UChar32 kHeart = WTF::Unicode::kHeavyBlackHeartCharacter;
+  const UChar32 kKiss = WTF::Unicode::kKissMarkCharacter;
 
-    // 'a' + [U] + [S]
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // U+1F441 + [U] + [S]
-    EXPECT_EQ("RRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kEye, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // U+1F468 U+200D U+2764 U+FE0F U+200D U+1F48B U+200D U+1F468 is a valid ZWJ
+  // emoji sequence.
+  // 'a' + ZWJ Emoji Sequence
+  EXPECT_EQ("RRRRRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints('a', kMan, kZwj, kHeart, kVS16, kZwj,
+                                       kKiss, kZwj, kMan)));
+  EXPECT_EQ(-11, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [U] + [S]
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + ZWJ Emoji Sequence
+  EXPECT_EQ("RRRRRRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kEye, kMan, kZwj, kHeart, kVS16, kZwj,
+                                       kKiss, kZwj, kMan)));
+  EXPECT_EQ(-11, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Lead] + [U] + [S]
-    EXPECT_EQ("RRRRF", processSequenceBackward(&machine,
-        asCodePoints(kLead, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // SOT + ZWJ Emoji Sequence
+  EXPECT_EQ(
+      "RRRRRRRRRRRF",
+      ProcessSequenceBackward(&machine, AsCodePoints(kMan, kZwj, kHeart, kVS16,
+                                                     kZwj, kKiss, kZwj, kMan)));
+  EXPECT_EQ(-11, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + [U] + [S]
-    EXPECT_EQ("RRRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kTrail, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // [Lead] + ZWJ Emoji Sequence
+  EXPECT_EQ("RRRRRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kLead, kMan, kZwj, kHeart, kVS16, kZwj,
+                                       kKiss, kZwj, kMan)));
+  EXPECT_EQ(-11, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + [U] + [S]
-    EXPECT_EQ("RRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + ZWJ Emoji Sequence
+  EXPECT_EQ("RRRRRRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints('a', kTrail, kMan, kZwj, kHeart, kVS16,
+                                       kZwj, kKiss, kZwj, kMan)));
+  EXPECT_EQ(-11, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail] + [U] + [S]
-    EXPECT_EQ("RRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + ZWJ Emoji Sequence
+  EXPECT_EQ("RRRRRRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kTrail, kTrail, kMan, kZwj, kHeart,
+                                       kVS16, kZwj, kKiss, kZwj, kMan)));
+  EXPECT_EQ(-11, machine.FinalizeAndGetBoundaryOffset());
+
+  // SOT + [Trail] + ZWJ Emoji Sequence
+  EXPECT_EQ("RRRRRRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kTrail, kMan, kZwj, kHeart, kVS16, kZwj,
+                                       kKiss, kZwj, kMan)));
+  EXPECT_EQ(-11, machine.FinalizeAndGetBoundaryOffset());
 }
 
-TEST_F(BackwardGraphemeBoundaryStatemachineTest, Flags_twoFlags)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+TEST_F(BackwardGraphemeBoundaryStatemachineTest, Flags_singleFlag) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // 'a' + [U] + [S] + [U] + [S]
-    EXPECT_EQ("RRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kRisU, kRisS, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [U] + [S]
+  EXPECT_EQ("RRRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints('a', kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F441 + [U] + [S] + [U] + [S]
-    EXPECT_EQ("RRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kEye, kRisU, kRisS, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + [U] + [S]
+  EXPECT_EQ("RRRRRF", ProcessSequenceBackward(
+                          &machine, AsCodePoints(kEye, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [U] + [S] + [U] + [S]
-    EXPECT_EQ("RRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kRisU, kRisS, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [U] + [S]
+  EXPECT_EQ("RRRRF",
+            ProcessSequenceBackward(&machine, AsCodePoints(kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Lead] + [U] + [S] + [U] + [S]
-    EXPECT_EQ("RRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kLead, kRisU, kRisS, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // [Lead] + [U] + [S]
+  EXPECT_EQ("RRRRF", ProcessSequenceBackward(
+                         &machine, AsCodePoints(kLead, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + [U] + [S] + [U] + [S]
-    EXPECT_EQ("RRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kTrail, kRisU, kRisS, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + [U] + [S]
+  EXPECT_EQ("RRRRRF", ProcessSequenceBackward(
+                          &machine, AsCodePoints('a', kTrail, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + [U] + [S] + [U] + [S]
-    EXPECT_EQ("RRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kRisU, kRisS, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + [U] + [S]
+  EXPECT_EQ("RRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kTrail, kTrail, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail] + [U] + [S] + [U] + [S]
-    EXPECT_EQ("RRRRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kRisU, kRisS, kRisU, kRisS)));
-    EXPECT_EQ(-4, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail] + [U] + [S]
+  EXPECT_EQ("RRRRRF", ProcessSequenceBackward(
+                          &machine, AsCodePoints(kTrail, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 }
 
-TEST_F(BackwardGraphemeBoundaryStatemachineTest, Flags_oddNumberedRIS)
-{
-    BackwardGraphemeBoundaryStateMachine machine;
+TEST_F(BackwardGraphemeBoundaryStatemachineTest, Flags_twoFlags) {
+  BackwardGraphemeBoundaryStateMachine machine;
 
-    // 'a' + [U] + [S] + [U]
-    EXPECT_EQ("RRRRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kRisU, kRisS, kRisU)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [U] + [S] + [U] + [S]
+  EXPECT_EQ("RRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints('a', kRisU, kRisS, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // U+1F441 + [U] + [S] + [U]
-    EXPECT_EQ("RRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kEye, kRisU, kRisS, kRisU)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // U+1F441 + [U] + [S] + [U] + [S]
+  EXPECT_EQ("RRRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kEye, kRisU, kRisS, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [U] + [S] + [U]
-    EXPECT_EQ("RRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kRisU, kRisS, kRisU)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [U] + [S] + [U] + [S]
+  EXPECT_EQ("RRRRRRRRF",
+            ProcessSequenceBackward(&machine,
+                                    AsCodePoints(kRisU, kRisS, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Lead] + [U] + [S] + [U]
-    EXPECT_EQ("RRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kLead, kRisU, kRisS, kRisU)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // [Lead] + [U] + [S] + [U] + [S]
+  EXPECT_EQ("RRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kLead, kRisU, kRisS, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // 'a' + [Trail] + [U] + [S] + [U]
-    EXPECT_EQ("RRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints('a', kTrail, kRisU, kRisS, kRisU)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // 'a' + [Trail] + [U] + [S] + [U] + [S]
+  EXPECT_EQ("RRRRRRRRRF", ProcessSequenceBackward(
+                              &machine, AsCodePoints('a', kTrail, kRisU, kRisS,
+                                                     kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // [Trail] + [Trail] + [U] + [S] + [U]
-    EXPECT_EQ("RRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kTrail, kRisU, kRisS, kRisU)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // [Trail] + [Trail] + [U] + [S] + [U] + [S]
+  EXPECT_EQ("RRRRRRRRRF", ProcessSequenceBackward(
+                              &machine, AsCodePoints(kTrail, kTrail, kRisU,
+                                                     kRisS, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 
-    // SOT + [Trail] + [U] + [S] + [U]
-    EXPECT_EQ("RRRRRRRF", processSequenceBackward(&machine,
-        asCodePoints(kTrail, kRisU, kRisS, kRisU)));
-    EXPECT_EQ(-2, machine.finalizeAndGetBoundaryOffset());
+  // SOT + [Trail] + [U] + [S] + [U] + [S]
+  EXPECT_EQ("RRRRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kTrail, kRisU, kRisS, kRisU, kRisS)));
+  EXPECT_EQ(-4, machine.FinalizeAndGetBoundaryOffset());
 }
-} // namespace blink
+
+TEST_F(BackwardGraphemeBoundaryStatemachineTest, Flags_oddNumberedRIS) {
+  BackwardGraphemeBoundaryStateMachine machine;
+
+  // 'a' + [U] + [S] + [U]
+  EXPECT_EQ("RRRRRRF", ProcessSequenceBackward(
+                           &machine, AsCodePoints('a', kRisU, kRisS, kRisU)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
+
+  // U+1F441 + [U] + [S] + [U]
+  EXPECT_EQ("RRRRRRRF", ProcessSequenceBackward(
+                            &machine, AsCodePoints(kEye, kRisU, kRisS, kRisU)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
+
+  // SOT + [U] + [S] + [U]
+  EXPECT_EQ("RRRRRRF", ProcessSequenceBackward(
+                           &machine, AsCodePoints(kRisU, kRisS, kRisU)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
+
+  // [Lead] + [U] + [S] + [U]
+  EXPECT_EQ("RRRRRRF", ProcessSequenceBackward(
+                           &machine, AsCodePoints(kLead, kRisU, kRisS, kRisU)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
+
+  // 'a' + [Trail] + [U] + [S] + [U]
+  EXPECT_EQ("RRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints('a', kTrail, kRisU, kRisS, kRisU)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
+
+  // [Trail] + [Trail] + [U] + [S] + [U]
+  EXPECT_EQ("RRRRRRRF",
+            ProcessSequenceBackward(
+                &machine, AsCodePoints(kTrail, kTrail, kRisU, kRisS, kRisU)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
+
+  // SOT + [Trail] + [U] + [S] + [U]
+  EXPECT_EQ("RRRRRRRF",
+            ProcessSequenceBackward(&machine,
+                                    AsCodePoints(kTrail, kRisU, kRisS, kRisU)));
+  EXPECT_EQ(-2, machine.FinalizeAndGetBoundaryOffset());
+}
+}  // namespace blink

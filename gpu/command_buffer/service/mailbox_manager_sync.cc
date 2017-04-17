@@ -25,20 +25,22 @@ namespace gles2 {
 
 namespace {
 
-base::LazyInstance<base::Lock> g_lock = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<base::Lock>::DestructorAtExit g_lock =
+    LAZY_INSTANCE_INITIALIZER;
 
 #if !defined(OS_MACOSX)
 typedef std::map<SyncToken, std::unique_ptr<gl::GLFence>> SyncTokenToFenceMap;
-base::LazyInstance<SyncTokenToFenceMap> g_sync_point_to_fence =
-    LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<std::queue<SyncTokenToFenceMap::iterator>> g_sync_points =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<SyncTokenToFenceMap>::DestructorAtExit
+    g_sync_point_to_fence = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::queue<SyncTokenToFenceMap::iterator>>::DestructorAtExit
+    g_sync_points = LAZY_INSTANCE_INITIALIZER;
 #endif
 
 void CreateFenceLocked(const SyncToken& sync_token) {
 #if !defined(OS_MACOSX)
   g_lock.Get().AssertAcquired();
-  if (gl::GetGLImplementation() == gl::kGLImplementationMockGL)
+  if (gl::GetGLImplementation() == gl::kGLImplementationMockGL ||
+      gl::GetGLImplementation() == gl::kGLImplementationStubGL)
     return;
 
   std::queue<SyncTokenToFenceMap::iterator>& sync_points = g_sync_points.Get();
@@ -76,8 +78,8 @@ static const unsigned kNewTextureVersion = 1;
 
 }  // anonymous namespace
 
-base::LazyInstance<MailboxManagerSync::TextureGroup::MailboxToGroupMap>
-    MailboxManagerSync::TextureGroup::mailbox_to_group_ =
+base::LazyInstance<MailboxManagerSync::TextureGroup::MailboxToGroupMap>::
+    DestructorAtExit MailboxManagerSync::TextureGroup::mailbox_to_group_ =
         LAZY_INSTANCE_INITIALIZER;
 
 // static
@@ -193,6 +195,10 @@ bool MailboxManagerSync::UsesSync() {
 
 Texture* MailboxManagerSync::ConsumeTexture(const Mailbox& mailbox) {
   base::AutoLock lock(g_lock.Get());
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // The lock above protects non-thread-safe RefCount in TextureGroup.
+  base::ScopedAllowCrossThreadRefCountAccess
+      scoped_allow_cross_thread_ref_count_access;
   TextureGroup* group = TextureGroup::FromName(mailbox);
   if (!group)
     return NULL;
@@ -218,8 +224,15 @@ Texture* MailboxManagerSync::ConsumeTexture(const Mailbox& mailbox) {
 }
 
 void MailboxManagerSync::ProduceTexture(const Mailbox& mailbox,
-                                        Texture* texture) {
+                                        TextureBase* texture_base) {
   base::AutoLock lock(g_lock.Get());
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // The lock above protects non-thread-safe RefCount in TextureGroup.
+  base::ScopedAllowCrossThreadRefCountAccess
+      scoped_allow_cross_thread_ref_count_access;
+
+  Texture* texture = static_cast<Texture*>(texture_base);
+  DCHECK(texture != nullptr);
 
   TextureToGroupMap::iterator tex_it = texture_to_group_.find(texture);
   TextureGroup* group_for_mailbox = TextureGroup::FromName(mailbox);
@@ -238,6 +251,9 @@ void MailboxManagerSync::ProduceTexture(const Mailbox& mailbox,
     // Unlink the mailbox from its current group.
     group_for_mailbox->RemoveName(mailbox);
   }
+
+  if (!texture)
+    return;
 
   if (group_for_texture) {
     group_for_texture->AddName(mailbox);
@@ -259,8 +275,16 @@ void MailboxManagerSync::ProduceTexture(const Mailbox& mailbox,
   DCHECK(texture->mailbox_manager_ == this);
 }
 
-void MailboxManagerSync::TextureDeleted(Texture* texture) {
+void MailboxManagerSync::TextureDeleted(TextureBase* texture_base) {
   base::AutoLock lock(g_lock.Get());
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // The lock above protects non-thread-safe RefCount in TextureGroup.
+  base::ScopedAllowCrossThreadRefCountAccess
+      scoped_allow_cross_thread_ref_count_access;
+
+  Texture* texture = static_cast<Texture*>(texture_base);
+  DCHECK(texture != nullptr);
+
   TextureToGroupMap::iterator tex_it = texture_to_group_.find(texture);
   DCHECK(tex_it != texture_to_group_.end());
   TextureGroup* group_for_texture = tex_it->second.group.get();
@@ -269,10 +293,12 @@ void MailboxManagerSync::TextureDeleted(Texture* texture) {
   texture_to_group_.erase(tex_it);
 }
 
-void MailboxManagerSync::UpdateDefinitionLocked(
-    Texture* texture,
-    TextureGroupRef* group_ref) {
+void MailboxManagerSync::UpdateDefinitionLocked(TextureBase* texture_base,
+                                                TextureGroupRef* group_ref) {
   g_lock.Get().AssertAcquired();
+
+  Texture* texture = static_cast<Texture*>(texture_base);
+  DCHECK(texture != nullptr);
 
   if (SkipTextureWorkarounds(texture))
     return;
@@ -302,6 +328,10 @@ void MailboxManagerSync::UpdateDefinitionLocked(
 
 void MailboxManagerSync::PushTextureUpdates(const SyncToken& token) {
   base::AutoLock lock(g_lock.Get());
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // The lock above protects non-thread-safe RefCount in TextureGroup.
+  base::ScopedAllowCrossThreadRefCountAccess
+      scoped_allow_cross_thread_ref_count_access;
 
   for (TextureToGroupMap::iterator it = texture_to_group_.begin();
        it != texture_to_group_.end(); it++) {
@@ -315,6 +345,10 @@ void MailboxManagerSync::PullTextureUpdates(const SyncToken& token) {
   std::vector<TextureUpdatePair> needs_update;
   {
     base::AutoLock lock(g_lock.Get());
+    // Relax the cross-thread access restriction to non-thread-safe RefCount.
+    // The lock above protects non-thread-safe RefCount in TextureGroup.
+    base::ScopedAllowCrossThreadRefCountAccess
+        scoped_allow_cross_thread_ref_count_access;
     AcquireFenceLocked(token);
 
     for (TextureToGroupMap::iterator it = texture_to_group_.begin();

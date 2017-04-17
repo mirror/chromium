@@ -4,8 +4,11 @@
 
 #include "chrome/browser/chromeos/printer_detector/printer_detector_factory.h"
 
+#include "base/command_line.h"
 #include "chrome/browser/chromeos/printer_detector/printer_detector.h"
+#include "chrome/browser/chromeos/printing/printers_manager_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_switches.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "extensions/browser/extensions_browser_client.h"
 
@@ -13,7 +16,7 @@ namespace chromeos {
 
 namespace {
 
-static base::LazyInstance<PrinterDetectorFactory> g_factory =
+static base::LazyInstance<PrinterDetectorFactory>::DestructorAtExit g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
@@ -34,6 +37,7 @@ PrinterDetectorFactory::PrinterDetectorFactory()
           BrowserContextDependencyManager::GetInstance()) {
   DependsOn(
       extensions::ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
+  DependsOn(PrintersManagerFactory::GetInstance());
 }
 
 PrinterDetectorFactory::~PrinterDetectorFactory() {
@@ -41,7 +45,14 @@ PrinterDetectorFactory::~PrinterDetectorFactory() {
 
 KeyedService* PrinterDetectorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  return new PrinterDetector(Profile::FromBrowserContext(context));
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ::switches::kDisableNativeCups)) {
+    return PrinterDetector::CreateLegacy(Profile::FromBrowserContext(context))
+        .release();
+  }
+
+  return PrinterDetector::CreateCups(Profile::FromBrowserContext(context))
+      .release();
 }
 
 bool PrinterDetectorFactory::ServiceIsCreatedWithBrowserContext() const {

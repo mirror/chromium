@@ -51,8 +51,7 @@ class LocalFileChangeTrackerTest : public testing::Test {
 
     ASSERT_TRUE(base_dir_.CreateUniqueTempDir());
     sync_context_ =
-        new LocalFileSyncContext(base_dir_.path(),
-                                 in_memory_env_.get(),
+        new LocalFileSyncContext(base_dir_.GetPath(), in_memory_env_.get(),
                                  base::ThreadTaskRunnerHandle::Get().get(),
                                  base::ThreadTaskRunnerHandle::Get().get());
     ASSERT_EQ(
@@ -178,14 +177,14 @@ TEST_F(LocalFileChangeTrackerTest, GetChanges) {
   file_system_.GetChangedURLsInTracker(&urls);
 
   EXPECT_EQ(5U, urls.size());
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath1)));
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath2)));
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath3)));
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath4)));
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath5)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath1)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath2)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath3)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath4)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath5)));
 
   // Changes for kPath0 must have been offset and removed.
-  EXPECT_FALSE(ContainsKey(urls, URL(kPath0)));
+  EXPECT_FALSE(base::ContainsKey(urls, URL(kPath0)));
 
   // GetNextChangedURLs only returns up to max_urls (i.e. 3) urls.
   std::deque<FileSystemURL> urls_to_process;
@@ -670,8 +669,8 @@ TEST_F(LocalFileChangeTrackerTest, NextChangedURLsWithRecursiveRemove) {
   ASSERT_EQ(2U, urls.size());
 
   // The exact order of recursive removal cannot be determined.
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath1)));
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath2)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath1)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath2)));
 }
 
 TEST_F(LocalFileChangeTrackerTest, ResetForFileSystem) {
@@ -694,10 +693,10 @@ TEST_F(LocalFileChangeTrackerTest, ResetForFileSystem) {
   FileSystemURLSet urls;
   GetAllChangedURLs(&urls);
   EXPECT_EQ(4u, urls.size());
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath0)));
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath1)));
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath2)));
-  EXPECT_TRUE(ContainsKey(urls, URL(kPath3)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath0)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath1)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath2)));
+  EXPECT_TRUE(base::ContainsKey(urls, URL(kPath3)));
 
   // Reset all changes for the file system.
   change_tracker()->ResetForFileSystem(

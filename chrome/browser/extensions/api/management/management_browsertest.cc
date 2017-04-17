@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_management.h"
@@ -24,6 +25,7 @@
 #include "components/policy/core/common/mock_configuration_policy_provider.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_types.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -38,7 +40,6 @@
 #include "extensions/browser/updater/extension_downloader.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "net/url_request/test_url_request_interceptor.h"
-#include "policy/policy_constants.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using content::BrowserThread;
@@ -336,8 +337,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, MAYBE_AutoUpdate) {
   ASSERT_EQ("2.0", extension->VersionString());
   ASSERT_TRUE(notification_listener.started());
   ASSERT_TRUE(notification_listener.finished());
-  ASSERT_TRUE(ContainsKey(notification_listener.updates(),
-                          "ogjcoiohnmldgjemafoockdghcjciccf"));
+  ASSERT_TRUE(base::ContainsKey(notification_listener.updates(),
+                                "ogjcoiohnmldgjemafoockdghcjciccf"));
   notification_listener.Reset();
 
   // Now try doing an update to version 3, which has been incorrectly
@@ -352,8 +353,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, MAYBE_AutoUpdate) {
   ASSERT_TRUE(WaitForExtensionInstallError());
   ASSERT_TRUE(notification_listener.started());
   ASSERT_TRUE(notification_listener.finished());
-  ASSERT_TRUE(ContainsKey(notification_listener.updates(),
-                          "ogjcoiohnmldgjemafoockdghcjciccf"));
+  ASSERT_TRUE(base::ContainsKey(notification_listener.updates(),
+                                "ogjcoiohnmldgjemafoockdghcjciccf"));
 
   // Make sure the extension state is the same as before.
   ASSERT_EQ(size_before + 1, registry->enabled_extensions().size());
@@ -436,8 +437,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest,
   listener2.WaitUntilSatisfied();
   ASSERT_TRUE(notification_listener.started());
   ASSERT_TRUE(notification_listener.finished());
-  ASSERT_TRUE(ContainsKey(notification_listener.updates(),
-                          "ogjcoiohnmldgjemafoockdghcjciccf"));
+  ASSERT_TRUE(base::ContainsKey(notification_listener.updates(),
+                                "ogjcoiohnmldgjemafoockdghcjciccf"));
   notification_listener.Reset();
 }
 

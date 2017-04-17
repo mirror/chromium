@@ -40,13 +40,13 @@ class SquareInkDropRippleTestApi;
 //
 // The valid InkDropState transitions are defined below:
 //
-//   {All InkDropStates}      => HIDDEN
-//   HIDDEN                   => ACTION_PENDING
-//   HIDDEN, ACTION_PENDING   => ACTION_TRIGGERED
-//   ACTION_PENDING           => ALTERNATE_ACTION_PENDING
+//   {All InkDropStates}           => HIDDEN
+//   HIDDEN                        => ACTION_PENDING
+//   HIDDEN, ACTION_PENDING        => ACTION_TRIGGERED
+//   ACTION_PENDING                => ALTERNATE_ACTION_PENDING
 //   ALTERNATE_ACTION_PENDING      => ALTERNATE_ACTION_TRIGGERED
-//   {All InkDropStates}      => ACTIVATED
-//   {All InkDropStates}      => DEACTIVATED
+//   {All InkDropStates}           => ACTIVATED
+//   {All InkDropStates}           => DEACTIVATED
 //
 class VIEWS_EXPORT SquareInkDropRipple : public InkDropRipple {
  public:
@@ -67,7 +67,6 @@ class VIEWS_EXPORT SquareInkDropRipple : public InkDropRipple {
   // InkDropRipple:
   void SnapToActivated() override;
   ui::Layer* GetRootLayer() override;
-  bool IsVisible() const override;
 
  private:
   friend class test::SquareInkDropRippleTestApi;
@@ -132,14 +131,24 @@ class VIEWS_EXPORT SquareInkDropRipple : public InkDropRipple {
 
   // Updates all of the Transforms in |transforms_out| for a circle of the given
   // |size|.
-  void CalculateCircleTransforms(const gfx::Size& size,
+  void CalculateCircleTransforms(const gfx::Size& desired_size,
                                  InkDropTransforms* transforms_out) const;
 
   // Updates all of the Transforms in |transforms_out| for a rounded rectangle
-  // of the given |size| and |corner_radius|.
-  void CalculateRectTransforms(const gfx::Size& size,
+  // of the given |desired_size| and |corner_radius|. The effective size may
+  // differ from |desired_size| at certain scale factors to make sure the ripple
+  // is pixel-aligned.
+  void CalculateRectTransforms(const gfx::Size& desired_size,
                                float corner_radius,
                                InkDropTransforms* transforms_out) const;
+
+  // Calculates a Transform for a circle layer.
+  gfx::Transform CalculateCircleTransform(float scale,
+                                          float target_center_x,
+                                          float target_center_y) const;
+
+  // Calculates a Transform for a rectangle layer.
+  gfx::Transform CalculateRectTransform(float x_scale, float y_scale) const;
 
   // Updates all of the Transforms in |transforms_out| to the current Transforms
   // of the painted shape Layers.
@@ -164,19 +173,22 @@ class VIEWS_EXPORT SquareInkDropRipple : public InkDropRipple {
 
   // Maximum size that an ink drop will be drawn to for any InkDropState whose
   // final frame should be large.
-  gfx::Size large_size_;
+  const gfx::Size large_size_;
 
   // Corner radius used to draw the rounded rectangles corner for any
   // InkDropState whose final frame should be large.
-  int large_corner_radius_;
+  const int large_corner_radius_;
 
   // Maximum size that an ink drop will be drawn to for any InkDropState whose
   // final frame should be small.
-  gfx::Size small_size_;
+  const gfx::Size small_size_;
 
   // Corner radius used to draw the rounded rectangles corner for any
   // InkDropState whose final frame should be small.
-  int small_corner_radius_;
+  const int small_corner_radius_;
+
+  // The center point of the ripple, relative to the root layer's origin.
+  gfx::Point center_point_;
 
   // ui::LayerDelegate to paint circles for all the circle layers.
   std::unique_ptr<CircleLayerDelegate> circle_layer_delegate_;

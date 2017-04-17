@@ -31,14 +31,20 @@
 #ifndef MutationObserver_h
 #define MutationObserver_h
 
+#include "base/gtest_prod_util.h"
 #include "bindings/core/v8/ScriptWrappable.h"
+#include "bindings/core/v8/TraceWrapperMember.h"
+#include "core/CoreExport.h"
+#include "core/dom/ExecutionContext.h"
 #include "platform/heap/Handle.h"
-#include "wtf/HashSet.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
+class Document;
 class ExceptionState;
+class HTMLSlotElement;
 class MutationCallback;
 class MutationObserver;
 class MutationObserverInit;
@@ -50,65 +56,77 @@ typedef unsigned char MutationObserverOptions;
 typedef unsigned char MutationRecordDeliveryOptions;
 
 using MutationObserverSet = HeapHashSet<Member<MutationObserver>>;
-using MutationObserverRegistrationSet = HeapHashSet<WeakMember<MutationObserverRegistration>>;
+using MutationObserverRegistrationSet =
+    HeapHashSet<WeakMember<MutationObserverRegistration>>;
 using MutationObserverVector = HeapVector<Member<MutationObserver>>;
 using MutationRecordVector = HeapVector<Member<MutationRecord>>;
 
-class MutationObserver final : public GarbageCollectedFinalized<MutationObserver>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    enum MutationType {
-        ChildList = 1 << 0,
-        Attributes = 1 << 1,
-        CharacterData = 1 << 2,
+class CORE_EXPORT MutationObserver final
+    : public GarbageCollectedFinalized<MutationObserver>,
+      public ActiveScriptWrappable<MutationObserver>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(MutationObserver);
 
-        AllMutationTypes = ChildList | Attributes | CharacterData
-    };
+ public:
+  enum MutationType {
+    kChildList = 1 << 0,
+    kAttributes = 1 << 1,
+    kCharacterData = 1 << 2,
 
-    enum ObservationFlags  {
-        Subtree = 1 << 3,
-        AttributeFilter = 1 << 4
-    };
+    kAllMutationTypes = kChildList | kAttributes | kCharacterData
+  };
 
-    enum DeliveryFlags {
-        AttributeOldValue = 1 << 5,
-        CharacterDataOldValue = 1 << 6,
-    };
+  enum ObservationFlags { kSubtree = 1 << 3, kAttributeFilter = 1 << 4 };
 
-    static MutationObserver* create(MutationCallback*);
-    static void resumeSuspendedObservers();
-    static void deliverMutations();
+  enum DeliveryFlags {
+    kAttributeOldValue = 1 << 5,
+    kCharacterDataOldValue = 1 << 6,
+  };
 
-    ~MutationObserver();
+  static MutationObserver* Create(MutationCallback*);
+  static void ResumeSuspendedObservers();
+  static void DeliverMutations();
+  static void EnqueueSlotChange(HTMLSlotElement&);
+  static void CleanSlotChangeList(Document&);
 
-    void observe(Node*, const MutationObserverInit&, ExceptionState&);
-    MutationRecordVector takeRecords();
-    void disconnect();
-    void observationStarted(MutationObserverRegistration*);
-    void observationEnded(MutationObserverRegistration*);
-    void enqueueMutationRecord(MutationRecord*);
-    void setHasTransientRegistration();
+  ~MutationObserver();
 
-    HeapHashSet<Member<Node>> getObservedNodes() const;
+  void observe(Node*, const MutationObserverInit&, ExceptionState&);
+  MutationRecordVector takeRecords();
+  void disconnect();
+  void ObservationStarted(MutationObserverRegistration*);
+  void ObservationEnded(MutationObserverRegistration*);
+  void EnqueueMutationRecord(MutationRecord*);
+  void SetHasTransientRegistration();
 
-    // Eagerly finalized as destructor accesses heap object members.
-    EAGERLY_FINALIZE();
-    DECLARE_TRACE();
+  HeapHashSet<Member<Node>> GetObservedNodes() const;
 
-private:
-    struct ObserverLessThan;
+  bool HasPendingActivity() const override { return !records_.IsEmpty(); }
+  ExecutionContext* GetExecutionContext() const;
 
-    explicit MutationObserver(MutationCallback*);
-    void deliver();
-    bool shouldBeSuspended() const;
-    void cancelInspectorAsyncTasks();
+  // Eagerly finalized as destructor accesses heap object members.
+  EAGERLY_FINALIZE();
+  DECLARE_TRACE();
 
-    Member<MutationCallback> m_callback;
-    MutationRecordVector m_records;
-    MutationObserverRegistrationSet m_registrations;
-    unsigned m_priority;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
+
+ private:
+  struct ObserverLessThan;
+
+  explicit MutationObserver(MutationCallback*);
+  void Deliver();
+  bool ShouldBeSuspended() const;
+  void CancelInspectorAsyncTasks();
+
+  TraceWrapperMember<MutationCallback> callback_;
+  HeapVector<TraceWrapperMember<MutationRecord>> records_;
+  MutationObserverRegistrationSet registrations_;
+  unsigned priority_;
+
+  FRIEND_TEST_ALL_PREFIXES(MutationObserverTest, DisconnectCrash);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MutationObserver_h
+#endif  // MutationObserver_h

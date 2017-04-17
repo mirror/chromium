@@ -5,11 +5,10 @@
 #ifndef NET_CERT_INTERNAL_VERIFY_CERTIFICATE_CHAIN_TYPED_UNITTEST_H_
 #define NET_CERT_INTERNAL_VERIFY_CERTIFICATE_CHAIN_TYPED_UNITTEST_H_
 
-#include "base/base_paths.h"
-#include "base/files/file_util.h"
-#include "base/path_service.h"
 #include "net/cert/internal/parsed_certificate.h"
 #include "net/cert/internal/test_helpers.h"
+#include "net/cert/internal/trust_store.h"
+#include "net/cert/internal/verify_certificate_chain.h"
 #include "net/cert/pem_tokenizer.h"
 #include "net/der/input.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -20,93 +19,16 @@ template <typename TestDelegate>
 class VerifyCertificateChainTest : public ::testing::Test {
  public:
   void RunTest(const char* file_name) {
-    ParsedCertificateList chain;
-    ParsedCertificateList roots;
-    der::GeneralizedTime time;
-    bool expected_result;
+    VerifyCertChainTest test;
 
-    ReadTestFromFile(file_name, &chain, &roots, &time, &expected_result);
+    std::string path =
+        std::string("net/data/verify_certificate_chain_unittest/") + file_name;
 
-    TestDelegate::Verify(chain, roots, time, expected_result);
-  }
+    SCOPED_TRACE("Test file: " + path);
 
- private:
-  // Reads a data file from the unit-test data.
-  std::string ReadTestFileToString(const std::string& file_name) {
-    // Compute the full path, relative to the src/ directory.
-    base::FilePath src_root;
-    PathService::Get(base::DIR_SOURCE_ROOT, &src_root);
-    base::FilePath filepath = src_root.AppendASCII(
-        std::string("net/data/verify_certificate_chain_unittest/") + file_name);
+    ReadVerifyCertChainTestFromFile(path, &test);
 
-    // Read the full contents of the file.
-    std::string file_data;
-    if (!base::ReadFileToString(filepath, &file_data)) {
-      ADD_FAILURE() << "Couldn't read file: " << filepath.value();
-      return std::string();
-    }
-
-    return file_data;
-  }
-
-  // Reads a test case from |file_name|. Test cases are comprised of a
-  // certificate chain, trust store, a timestamp to validate at, and the
-  // expected result of verification.
-  void ReadTestFromFile(const std::string& file_name,
-                        ParsedCertificateList* chain,
-                        ParsedCertificateList* roots,
-                        der::GeneralizedTime* time,
-                        bool* verify_result) {
-    chain->clear();
-    roots->clear();
-
-    std::string file_data = ReadTestFileToString(file_name);
-
-    std::vector<std::string> pem_headers;
-
-    const char kCertificateHeader[] = "CERTIFICATE";
-    const char kTrustedCertificateHeader[] = "TRUSTED_CERTIFICATE";
-    const char kTimeHeader[] = "TIME";
-    const char kResultHeader[] = "VERIFY_RESULT";
-
-    pem_headers.push_back(kCertificateHeader);
-    pem_headers.push_back(kTrustedCertificateHeader);
-    pem_headers.push_back(kTimeHeader);
-    pem_headers.push_back(kResultHeader);
-
-    bool has_time = false;
-    bool has_result = false;
-
-    PEMTokenizer pem_tokenizer(file_data, pem_headers);
-    while (pem_tokenizer.GetNext()) {
-      const std::string& block_type = pem_tokenizer.block_type();
-      const std::string& block_data = pem_tokenizer.data();
-
-      if (block_type == kCertificateHeader) {
-        ASSERT_TRUE(net::ParsedCertificate::CreateAndAddToVector(
-            reinterpret_cast<const uint8_t*>(block_data.data()),
-            block_data.size(),
-            net::ParsedCertificate::DataSource::INTERNAL_COPY, {}, chain));
-      } else if (block_type == kTrustedCertificateHeader) {
-        ASSERT_TRUE(net::ParsedCertificate::CreateAndAddToVector(
-            reinterpret_cast<const uint8_t*>(block_data.data()),
-            block_data.size(),
-            net::ParsedCertificate::DataSource::INTERNAL_COPY, {}, roots));
-      } else if (block_type == kTimeHeader) {
-        ASSERT_FALSE(has_time) << "Duplicate " << kTimeHeader;
-        has_time = true;
-        ASSERT_TRUE(der::ParseUTCTime(der::Input(&block_data), time));
-      } else if (block_type == kResultHeader) {
-        ASSERT_FALSE(has_result) << "Duplicate " << kResultHeader;
-        ASSERT_TRUE(block_data == "SUCCESS" || block_data == "FAIL")
-            << "Unrecognized result: " << block_data;
-        has_result = true;
-        *verify_result = block_data == "SUCCESS";
-      }
-    }
-
-    ASSERT_TRUE(has_time);
-    ASSERT_TRUE(has_result);
+    TestDelegate::Verify(test, path);
   }
 };
 
@@ -118,60 +40,42 @@ class VerifyCertificateChainSingleRootTest
 
 TYPED_TEST_CASE_P(VerifyCertificateChainSingleRootTest);
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetAndIntermediate) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, Simple) {
   this->RunTest("target-and-intermediate.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             IntermediateLacksBasicConstraints) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, BasicConstraintsCa) {
   this->RunTest("intermediate-lacks-basic-constraints.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             IntermediateBasicConstraintsCaFalse) {
   this->RunTest("intermediate-basic-constraints-ca-false.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             IntermediateBasicConstraintsNotCritical) {
   this->RunTest("intermediate-basic-constraints-not-critical.pem");
+  this->RunTest("unconstrained-root-lacks-basic-constraints.pem");
+  this->RunTest("constrained-root-lacks-basic-constraints.pem");
+  this->RunTest("unconstrained-root-basic-constraints-ca-false.pem");
+  this->RunTest("constrained-root-basic-constraints-ca-false.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             IntermediateLacksSigningKeyUsage) {
-  this->RunTest("intermediate-lacks-signing-key-usage.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             IntermediateUnknownCriticalExtension) {
-  this->RunTest("intermediate-unknown-critical-extension.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             IntermediateUnknownNonCriticalExtension) {
-  this->RunTest("intermediate-unknown-non-critical-extension.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             ViolatesBasicConstraintsPathlen0) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, BasicConstraintsPathlen) {
   this->RunTest("violates-basic-constraints-pathlen-0.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             BasicConstraintsPathlen0SelfIssued) {
   this->RunTest("basic-constraints-pathlen-0-self-issued.pem");
+  this->RunTest("target-has-pathlen-but-not-ca.pem");
+  this->RunTest("violates-pathlen-1-constrained-root.pem");
+  this->RunTest("violates-pathlen-1-unconstrained-root.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetSignedWithMd5) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, UnknownExtension) {
+  this->RunTest("intermediate-unknown-critical-extension.pem");
+  this->RunTest("intermediate-unknown-non-critical-extension.pem");
+  this->RunTest("target-unknown-critical-extension.pem");
+}
+
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, Md5) {
   this->RunTest("target-signed-with-md5.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, IntermediateSignedWithMd5) {
   this->RunTest("intermediate-signed-with-md5.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetWrongSignature) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, WrongSignature) {
   this->RunTest("target-wrong-signature.pem");
+  this->RunTest("incorrect-trust-anchor.pem");
 }
 
 TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetSignedBy512bitRsa) {
@@ -182,123 +86,72 @@ TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetSignedUsingEcdsa) {
   this->RunTest("target-signed-using-ecdsa.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, ExpiredIntermediate) {
-  this->RunTest("expired-intermediate.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, ExpiredTarget) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, Expired) {
   this->RunTest("expired-target.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, ExpiredTargetNotBefore) {
+  this->RunTest("expired-intermediate.pem");
   this->RunTest("expired-target-notBefore.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, ExpiredRoot) {
-  this->RunTest("expired-root.pem");
+  this->RunTest("expired-unconstrained-root.pem");
+  this->RunTest("expired-constrained-root.pem");
 }
 
 TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetNotEndEntity) {
   this->RunTest("target-not-end-entity.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             TargetHasKeyCertSignButNotCa) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, KeyUsage) {
+  this->RunTest("intermediate-lacks-signing-key-usage.pem");
   this->RunTest("target-has-keycertsign-but-not-ca.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetHasPathlenButNotCa) {
-  this->RunTest("target-has-pathlen-but-not-ca.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             TargetUnknownCriticalExtension) {
-  this->RunTest("target-unknown-critical-extension.pem");
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, ExtendedKeyUsage) {
+  this->RunTest("target-lacks-eku.pem");
+  this->RunTest("target-restricts-eku-fail.pem");
+  this->RunTest("intermediate-restricts-eku-fail.pem");
+  this->RunTest("intermediate-restricts-eku-ok.pem");
+  this->RunTest("intermediate-sets-eku-any.pem");
+  this->RunTest("target-sets-eku-any.pem");
+  this->RunTest("constrained-root-bad-eku.pem");
+  this->RunTest("unconstrained-root-bad-eku.pem");
 }
 
 TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
              IssuerAndSubjectNotByteForByteEqual) {
   this->RunTest("issuer-and-subject-not-byte-for-byte-equal.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             IssuerAndSubjectNotByteForByteEqualAnchor) {
   this->RunTest("issuer-and-subject-not-byte-for-byte-equal-anchor.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, ViolatesPathlen1Root) {
-  this->RunTest("violates-pathlen-1-root.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, NonSelfSignedRoot) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TrustAnchorNotSelfSigned) {
   this->RunTest("non-self-signed-root.pem");
+  this->RunTest("unconstrained-non-self-signed-root.pem");
+  this->RunTest("constrained-non-self-signed-root.pem");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, KeyRolloverOldChain) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, KeyRollover) {
   this->RunTest("key-rollover-oldchain.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, KeyRolloverRolloverChain) {
   this->RunTest("key-rollover-rolloverchain.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
-             KeyRolloverLongRolloverChain) {
   this->RunTest("key-rollover-longrolloverchain.pem");
-}
-
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, KeyRolloverNewChain) {
   this->RunTest("key-rollover-newchain.pem");
 }
 
-// TODO(eroman): Add test that invalidate validity dates where the day or month
+// TODO(eroman): Add test that invalid validity dates where the day or month
 // ordinal not in range, like "March 39, 2016" are rejected.
 
 REGISTER_TYPED_TEST_CASE_P(VerifyCertificateChainSingleRootTest,
-                           TargetAndIntermediate,
-                           IntermediateLacksBasicConstraints,
-                           IntermediateBasicConstraintsCaFalse,
-                           IntermediateBasicConstraintsNotCritical,
-                           IntermediateLacksSigningKeyUsage,
-                           IntermediateUnknownCriticalExtension,
-                           IntermediateUnknownNonCriticalExtension,
-                           ViolatesBasicConstraintsPathlen0,
-                           BasicConstraintsPathlen0SelfIssued,
-                           TargetSignedWithMd5,
-                           IntermediateSignedWithMd5,
-                           TargetWrongSignature,
+                           Simple,
+                           BasicConstraintsCa,
+                           BasicConstraintsPathlen,
+                           UnknownExtension,
+                           Md5,
+                           WrongSignature,
                            TargetSignedBy512bitRsa,
                            TargetSignedUsingEcdsa,
-                           ExpiredIntermediate,
-                           ExpiredTarget,
-                           ExpiredTargetNotBefore,
-                           ExpiredRoot,
+                           Expired,
                            TargetNotEndEntity,
-                           TargetHasKeyCertSignButNotCa,
-                           TargetHasPathlenButNotCa,
-                           TargetUnknownCriticalExtension,
+                           KeyUsage,
+                           ExtendedKeyUsage,
                            IssuerAndSubjectNotByteForByteEqual,
-                           IssuerAndSubjectNotByteForByteEqualAnchor,
-                           ViolatesPathlen1Root,
-                           NonSelfSignedRoot,
-                           KeyRolloverOldChain,
-                           KeyRolloverRolloverChain,
-                           KeyRolloverLongRolloverChain,
-                           KeyRolloverNewChain);
-
-// Tests that have zero roots or more than one root.
-template <typename TestDelegate>
-class VerifyCertificateChainNonSingleRootTest
-    : public VerifyCertificateChainTest<TestDelegate> {};
-
-TYPED_TEST_CASE_P(VerifyCertificateChainNonSingleRootTest);
-
-TYPED_TEST_P(VerifyCertificateChainNonSingleRootTest, UnknownRoot) {
-  this->RunTest("unknown-root.pem");
-}
-
-REGISTER_TYPED_TEST_CASE_P(VerifyCertificateChainNonSingleRootTest,
-                           UnknownRoot);
+                           TrustAnchorNotSelfSigned,
+                           KeyRollover);
 
 }  // namespace net
 

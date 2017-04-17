@@ -4,6 +4,7 @@
 
 #include "ui/events/keycodes/platform_key_map_win.h"
 
+#include <algorithm>
 #include <utility>
 
 #include "base/lazy_instance.h"
@@ -261,7 +262,8 @@ void CleanupKeyMapTls(void* data) {
 }
 
 struct PlatformKeyMapInstanceTlsTraits
-    : public base::DefaultLazyInstanceTraits<base::ThreadLocalStorage::Slot> {
+    : public base::internal::DestructorAtExitLazyInstanceTraits<
+          base::ThreadLocalStorage::Slot> {
   static base::ThreadLocalStorage::Slot* New(void* instance) {
     // Use placement new to initialize our instance in our preallocated space.
     // TODO(chongz): Use std::default_delete instead of providing own function.
@@ -285,6 +287,12 @@ PlatformKeyMap::~PlatformKeyMap() {}
 
 DomKey PlatformKeyMap::DomKeyFromKeyboardCodeImpl(KeyboardCode key_code,
                                                   int flags) const {
+  // Windows expresses right-Alt as VKEY_MENU with the extended flag set.
+  // This key should generate AltGraph under layouts which use that modifier.
+  if (key_code == VKEY_MENU && (flags & EF_IS_EXTENDED_KEY) && has_alt_graph_) {
+    return DomKey::ALT_GRAPH;
+  }
+
   DomKey key = NonPrintableKeyboardCodeToDomKey(key_code, keyboard_layout_);
   if (key != DomKey::NONE)
     return key;
@@ -345,6 +353,7 @@ void PlatformKeyMap::UpdateLayout(HKL layout) {
   // TODO(chongz): Optimize layout switching (see crbug.com/587147).
   keyboard_layout_ = layout;
   printable_keycode_to_key_.clear();
+  has_alt_graph_ = false;
 
   // Map size for some sample keyboard layouts:
   // US: 476, French: 602, Persian: 482, Vietnamese: 1436
@@ -384,6 +393,11 @@ void PlatformKeyMap::UpdateLayout(HKL layout) {
           printable_keycode_to_key_[std::make_pair(static_cast<int>(key_code),
                                                    flags)] =
               DomKey::FromCharacter(translated_chars[0]);
+
+          // Detect whether the layout makes use of AltGraph.
+          if (flags & EF_ALTGR_DOWN) {
+            has_alt_graph_ = true;
+          }
         } else {
           // Ignores legacy non-printable control characters.
         }

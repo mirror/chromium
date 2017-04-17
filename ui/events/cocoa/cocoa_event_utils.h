@@ -11,6 +11,9 @@
 
 namespace ui {
 
+// Conversion between wheel delta amounts and number of pixels to scroll.
+constexpr double kScrollbarPixelsPerCocoaTick = 40.0;
+
 // Converts the Cocoa |modifiers| bitsum into a ui::EventFlags bitsum.
 EVENTS_EXPORT int EventFlagsFromModifiers(NSUInteger modifiers);
 
@@ -21,6 +24,11 @@ EVENTS_EXPORT int EventFlagsFromModifiers(NSUInteger modifiers);
 // scratch.
 EVENTS_EXPORT int EventFlagsFromNSEventWithModifiers(NSEvent* event,
                                                      NSUInteger modifiers);
+
+// Returns true for |NSKeyUp| and for |NSFlagsChanged| when modifier key was
+// released.
+EVENTS_EXPORT bool IsKeyUpEvent(NSEvent* event);
+
 }  // namespace ui
 
 #endif  // UI_EVENTS_COCOA_COCOA_EVENT_UTILS_H_

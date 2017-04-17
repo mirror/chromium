@@ -11,71 +11,74 @@
 
 namespace blink {
 
-CredentialManagerClient::CredentialManagerClient(WebCredentialManagerClient* client)
-    : m_client(client)
-{
-}
+CredentialManagerClient::CredentialManagerClient(
+    WebCredentialManagerClient* client)
+    : client_(client) {}
 
-CredentialManagerClient::~CredentialManagerClient()
-{
-}
+CredentialManagerClient::~CredentialManagerClient() {}
 
-DEFINE_TRACE(CredentialManagerClient)
-{
-    Supplement<Page>::trace(visitor);
+DEFINE_TRACE(CredentialManagerClient) {
+  Supplement<Page>::Trace(visitor);
 }
 
 // static
-const char* CredentialManagerClient::supplementName()
-{
-    return "CredentialManagerClient";
+const char* CredentialManagerClient::SupplementName() {
+  return "CredentialManagerClient";
 }
 
 // static
-CredentialManagerClient* CredentialManagerClient::from(ExecutionContext* executionContext)
-{
-    if (!executionContext->isDocument() || !toDocument(executionContext)->page())
-        return 0;
-    return from(toDocument(executionContext)->page());
+CredentialManagerClient* CredentialManagerClient::From(
+    ExecutionContext* execution_context) {
+  if (!execution_context->IsDocument() ||
+      !ToDocument(execution_context)->GetPage())
+    return 0;
+  return From(ToDocument(execution_context)->GetPage());
 }
 
 // static
-CredentialManagerClient* CredentialManagerClient::from(Page* page)
-{
-    return static_cast<CredentialManagerClient*>(Supplement<Page>::from(page, supplementName()));
+CredentialManagerClient* CredentialManagerClient::From(Page* page) {
+  return static_cast<CredentialManagerClient*>(
+      Supplement<Page>::From(page, SupplementName()));
 }
 
-void provideCredentialManagerClientTo(Page& page, CredentialManagerClient* client)
-{
-    CredentialManagerClient::provideTo(page, CredentialManagerClient::supplementName(), client);
+void ProvideCredentialManagerClientTo(Page& page,
+                                      CredentialManagerClient* client) {
+  CredentialManagerClient::ProvideTo(
+      page, CredentialManagerClient::SupplementName(), client);
 }
 
-void CredentialManagerClient::dispatchFailedSignIn(const WebCredential& credential, WebCredentialManagerClient::NotificationCallbacks* callbacks)
-{
-    if (!m_client)
-        return;
-    m_client->dispatchFailedSignIn(credential, callbacks);
+void CredentialManagerClient::DispatchFailedSignIn(
+    const WebCredential& credential,
+    WebCredentialManagerClient::NotificationCallbacks* callbacks) {
+  if (!client_)
+    return;
+  client_->DispatchFailedSignIn(credential, callbacks);
 }
 
-void CredentialManagerClient::dispatchStore(const WebCredential& credential, WebCredentialManagerClient::NotificationCallbacks* callbacks)
-{
-    if (!m_client)
-        return;
-    m_client->dispatchStore(credential, callbacks);
+void CredentialManagerClient::DispatchStore(
+    const WebCredential& credential,
+    WebCredentialManagerClient::NotificationCallbacks* callbacks) {
+  if (!client_)
+    return;
+  client_->DispatchStore(credential, callbacks);
 }
 
-void CredentialManagerClient::dispatchRequireUserMediation(WebCredentialManagerClient::NotificationCallbacks* callbacks)
-{
-    if (!m_client)
-        return;
-    m_client->dispatchRequireUserMediation(callbacks);
+void CredentialManagerClient::DispatchRequireUserMediation(
+    WebCredentialManagerClient::NotificationCallbacks* callbacks) {
+  if (!client_)
+    return;
+  client_->DispatchRequireUserMediation(callbacks);
 }
 
-void CredentialManagerClient::dispatchGet(bool zeroClickOnly, bool includePasswords, const WebVector<WebURL>& federations, WebCredentialManagerClient::RequestCallbacks* callbacks)
-{
-    if (!m_client)
-        return;
-    m_client->dispatchGet(zeroClickOnly, includePasswords, federations, callbacks);
+void CredentialManagerClient::DispatchGet(
+    bool zero_click_only,
+    bool include_passwords,
+    const WebVector<WebURL>& federations,
+    WebCredentialManagerClient::RequestCallbacks* callbacks) {
+  if (!client_)
+    return;
+  client_->DispatchGet(zero_click_only, include_passwords, federations,
+                       callbacks);
 }
 
-} // namespace blink
+}  // namespace blink

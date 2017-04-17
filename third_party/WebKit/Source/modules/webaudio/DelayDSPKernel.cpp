@@ -10,61 +10,70 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/DelayDSPKernel.h"
-#include "platform/audio/AudioUtilities.h"
-#include "wtf/MathExtras.h"
 #include <algorithm>
+#include "platform/audio/AudioUtilities.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
-const float SmoothingTimeConstant = 0.020f; // 20ms
+const float kSmoothingTimeConstant = 0.020f;  // 20ms
 
 DelayDSPKernel::DelayDSPKernel(DelayProcessor* processor)
-    : AudioDelayDSPKernel(processor, AudioHandler::ProcessingSizeInFrames)
-{
-    ASSERT(processor);
-    ASSERT(processor->sampleRate() > 0);
-    if (!(processor && processor->sampleRate() > 0))
-        return;
+    : AudioDelayDSPKernel(processor, AudioUtilities::kRenderQuantumFrames) {
+  DCHECK(processor);
+  DCHECK_GT(processor->SampleRate(), 0);
+  if (!(processor && processor->SampleRate() > 0))
+    return;
 
-    m_maxDelayTime = processor->maxDelayTime();
-    ASSERT(m_maxDelayTime >= 0);
-    ASSERT(!std::isnan(m_maxDelayTime));
-    if (m_maxDelayTime < 0 || std::isnan(m_maxDelayTime))
-        return;
+  max_delay_time_ = processor->MaxDelayTime();
+  DCHECK_GE(max_delay_time_, 0);
+  DCHECK(!std::isnan(max_delay_time_));
+  if (max_delay_time_ < 0 || std::isnan(max_delay_time_))
+    return;
 
-    m_buffer.allocate(bufferLengthForDelay(m_maxDelayTime, processor->sampleRate()));
-    m_buffer.zero();
+  buffer_.Allocate(
+      BufferLengthForDelay(max_delay_time_, processor->SampleRate()));
+  buffer_.Zero();
 
-    m_smoothingRate = AudioUtilities::discreteTimeConstantForSampleRate(SmoothingTimeConstant, processor->sampleRate());
+  smoothing_rate_ = AudioUtilities::DiscreteTimeConstantForSampleRate(
+      kSmoothingTimeConstant, processor->SampleRate());
 }
 
-bool DelayDSPKernel::hasSampleAccurateValues()
-{
-    return getDelayProcessor()->delayTime().hasSampleAccurateValues();
+bool DelayDSPKernel::HasSampleAccurateValues() {
+  return GetDelayProcessor()->DelayTime().HasSampleAccurateValues();
 }
 
-void DelayDSPKernel::calculateSampleAccurateValues(float* delayTimes, size_t framesToProcess)
-{
-    getDelayProcessor()->delayTime().calculateSampleAccurateValues(delayTimes, framesToProcess);
+void DelayDSPKernel::CalculateSampleAccurateValues(float* delay_times,
+                                                   size_t frames_to_process) {
+  GetDelayProcessor()->DelayTime().CalculateSampleAccurateValues(
+      delay_times, frames_to_process);
 }
 
-double DelayDSPKernel::delayTime(float)
-{
-    return getDelayProcessor()->delayTime().finalValue();
+double DelayDSPKernel::DelayTime(float) {
+  return GetDelayProcessor()->DelayTime().FinalValue();
 }
 
-} // namespace blink
+void DelayDSPKernel::ProcessOnlyAudioParams(size_t frames_to_process) {
+  DCHECK_LE(frames_to_process, AudioUtilities::kRenderQuantumFrames);
 
+  float values[AudioUtilities::kRenderQuantumFrames];
+
+  GetDelayProcessor()->DelayTime().CalculateSampleAccurateValues(
+      values, frames_to_process);
+}
+
+}  // namespace blink

@@ -21,8 +21,9 @@
 #include "components/history/core/browser/download_row.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/download_manager.h"
+#include "extensions/features/features.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/common/extension.h"
 #endif
 
@@ -45,7 +46,7 @@ class DownloadsCounterTest : public InProcessBrowserTest,
         content::BrowserContext::GetDownloadManager(
             browser()->profile()->GetOffTheRecordProfile());
     SetDownloadsDeletionPref(true);
-    SetDeletionPeriodPref(browsing_data::EVERYTHING);
+    SetDeletionPeriodPref(browsing_data::TimePeriod::ALL_TIME);
   }
 
   void TearDownOnMainThread() override {
@@ -78,7 +79,7 @@ class DownloadsCounterTest : public InProcessBrowserTest,
         true);
   }
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   std::string AddExtensionDownload() {
     // Extension downloads are not expected to be persisted. We don't need to
     // wait for a callback from them, so we don't add them to |guids_to_add_|.
@@ -128,28 +129,13 @@ class DownloadsCounterTest : public InProcessBrowserTest,
 
     content::DownloadManager* manager = incognito ? otr_manager_ : manager_;
     manager->CreateDownloadItem(
-        guid,
-        content::DownloadItem::kInvalidId + (++items_count_),
+        guid, content::DownloadItem::kInvalidId + (++items_count_),
         base::FilePath(FILE_PATH_LITERAL("current/path")),
-        base::FilePath(FILE_PATH_LITERAL("target/path")),
-        url_chain,
-        GURL(),
-        GURL(),
-        GURL(),
-        GURL(),
-        mime_type,
-        std::string(),
-        time_,
-        time_,
-        std::string(),
-        std::string(),
-        1,
-        1,
-        std::string(),
-        state,
-        danger,
-        reason,
-        false);
+        base::FilePath(FILE_PATH_LITERAL("target/path")), url_chain, GURL(),
+        GURL(), GURL(), GURL(), mime_type, std::string(), time_, time_,
+        std::string(), std::string(), 1, 1, std::string(), state, danger,
+        reason, false, time_, false,
+        std::vector<content::DownloadItem::ReceivedSlice>());
 
     return guid;
   }
@@ -262,6 +248,7 @@ IN_PROC_BROWSER_TEST_F(DownloadsCounterTest, Count) {
   Profile* profile = browser()->profile();
   DownloadsCounter counter(profile);
   counter.Init(profile->GetPrefs(),
+               browsing_data::ClearBrowsingDataTab::ADVANCED,
                base::Bind(&DownloadsCounterTest::ResultCallback,
                           base::Unretained(this)));
   counter.Restart();
@@ -291,6 +278,7 @@ IN_PROC_BROWSER_TEST_F(DownloadsCounterTest, Types) {
   Profile* profile = browser()->profile();
   DownloadsCounter counter(profile);
   counter.Init(profile->GetPrefs(),
+               browsing_data::ClearBrowsingDataTab::ADVANCED,
                base::Bind(&DownloadsCounterTest::ResultCallback,
                           base::Unretained(this)));
 
@@ -326,12 +314,13 @@ IN_PROC_BROWSER_TEST_F(DownloadsCounterTest, NotPersisted) {
   Profile* profile = browser()->profile();
   DownloadsCounter counter(profile);
   counter.Init(profile->GetPrefs(),
+               browsing_data::ClearBrowsingDataTab::ADVANCED,
                base::Bind(&DownloadsCounterTest::ResultCallback,
                           base::Unretained(this)));
 
   // Extension and user scripts download are not persisted.
   AddDownload();
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   AddUserScriptDownload();
   AddExtensionDownload();
 #endif
@@ -375,22 +364,23 @@ IN_PROC_BROWSER_TEST_F(DownloadsCounterTest, TimeRanges) {
   Profile* profile = browser()->profile();
   DownloadsCounter counter(profile);
   counter.Init(profile->GetPrefs(),
+               browsing_data::ClearBrowsingDataTab::ADVANCED,
                base::Bind(&DownloadsCounterTest::ResultCallback,
                           base::Unretained(this)));
 
-  SetDeletionPeriodPref(browsing_data::LAST_HOUR);
+  SetDeletionPeriodPref(browsing_data::TimePeriod::LAST_HOUR);
   EXPECT_EQ(2u, GetResult());
 
-  SetDeletionPeriodPref(browsing_data::LAST_DAY);
+  SetDeletionPeriodPref(browsing_data::TimePeriod::LAST_DAY);
   EXPECT_EQ(5u, GetResult());
 
-  SetDeletionPeriodPref(browsing_data::LAST_WEEK);
+  SetDeletionPeriodPref(browsing_data::TimePeriod::LAST_WEEK);
   EXPECT_EQ(7u, GetResult());
 
-  SetDeletionPeriodPref(browsing_data::FOUR_WEEKS);
+  SetDeletionPeriodPref(browsing_data::TimePeriod::FOUR_WEEKS);
   EXPECT_EQ(8u, GetResult());
 
-  SetDeletionPeriodPref(browsing_data::EVERYTHING);
+  SetDeletionPeriodPref(browsing_data::TimePeriod::ALL_TIME);
   EXPECT_EQ(11u, GetResult());
 }
 

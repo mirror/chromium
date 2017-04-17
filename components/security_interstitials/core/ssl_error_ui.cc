@@ -9,14 +9,14 @@
 #include "components/security_interstitials/core/metrics_helper.h"
 #include "components/ssl_errors/error_classification.h"
 #include "components/ssl_errors/error_info.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace security_interstitials {
 namespace {
 
 // URL for help page.
-const char kHelpURL[] = "https://support.google.com/chrome/answer/4454607";
+const char kHelpURL[] = "https://support.google.com/chrome/answer/6098869";
 
 bool IsMasked(int options, SSLErrorUI::SSLErrorOptionsMask mask) {
   return ((options & mask) != 0);
@@ -66,7 +66,6 @@ void SSLErrorUI::PopulateStringsForHTML(base::DictionaryValue* load_time_data) {
   common_string_util::PopulateSSLLayoutStrings(cert_error_, load_time_data);
   common_string_util::PopulateSSLDebuggingStrings(ssl_info_, time_triggered_,
                                                   load_time_data);
-  common_string_util::PopulateNewIconStrings(load_time_data);
 
   // Shared values for both the overridable and non-overridable versions.
   load_time_data->SetBoolean("bad_clock", false);
@@ -181,6 +180,9 @@ void SSLErrorUI::HandleCommand(SecurityInterstitialCommands command) {
       break;
     case CMD_OPEN_REPORTING_PRIVACY:
       controller_->OpenExtendedReportingPrivacyPolicy();
+      break;
+    case CMD_OPEN_WHITEPAPER:
+      controller_->OpenExtendedReportingWhitepaper();
       break;
     case CMD_OPEN_DATE_SETTINGS:
     case CMD_OPEN_DIAGNOSTIC:

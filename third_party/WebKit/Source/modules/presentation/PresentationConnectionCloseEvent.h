@@ -16,41 +16,43 @@ class PresentationConnectionCloseEventInit;
 // Presentation API event to be fired when the state of a PresentationConnection
 // has changed to 'closed'.
 class PresentationConnectionCloseEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~PresentationConnectionCloseEvent() override = default;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static PresentationConnectionCloseEvent* create()
-    {
-        return new PresentationConnectionCloseEvent;
-    }
+ public:
+  ~PresentationConnectionCloseEvent() override = default;
 
-    static PresentationConnectionCloseEvent* create(const AtomicString& eventType, const String& reason, const String& message)
-    {
-        return new PresentationConnectionCloseEvent(eventType, reason, message);
-    }
+  static PresentationConnectionCloseEvent* Create(
+      const AtomicString& event_type,
+      const String& reason,
+      const String& message) {
+    return new PresentationConnectionCloseEvent(event_type, reason, message);
+  }
 
-    static PresentationConnectionCloseEvent* create(const AtomicString& eventType, const PresentationConnectionCloseEventInit& initializer)
-    {
-        return new PresentationConnectionCloseEvent(eventType, initializer);
-    }
+  static PresentationConnectionCloseEvent* Create(
+      const AtomicString& event_type,
+      const PresentationConnectionCloseEventInit& initializer) {
+    return new PresentationConnectionCloseEvent(event_type, initializer);
+  }
 
-    const String& reason() const { return m_reason; }
-    const String& message() const { return m_message; }
+  const String& reason() const { return reason_; }
+  const String& message() const { return message_; }
 
-    const AtomicString& interfaceName() const override;
+  const AtomicString& InterfaceName() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    PresentationConnectionCloseEvent() = default;
-    PresentationConnectionCloseEvent(const AtomicString& eventType, const String& reason, const String& message);
-    PresentationConnectionCloseEvent(const AtomicString& eventType, const PresentationConnectionCloseEventInit& initializer);
+ private:
+  PresentationConnectionCloseEvent(const AtomicString& event_type,
+                                   const String& reason,
+                                   const String& message);
+  PresentationConnectionCloseEvent(
+      const AtomicString& event_type,
+      const PresentationConnectionCloseEventInit& initializer);
 
-    String m_reason;
-    String m_message;
+  String reason_;
+  String message_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PresentationConnectionAvailableEvent_h
+#endif  // PresentationConnectionAvailableEvent_h

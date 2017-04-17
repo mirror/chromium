@@ -7,12 +7,13 @@
 #import "chrome/browser/ui/cocoa/passwords/confirmation_password_saved_view_controller.h"
 
 #include "base/strings/sys_string_conversions.h"
-#include "chrome/browser/ui/chrome_style.h"
+#include "chrome/browser/ui/cocoa/chrome_style.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_utils.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
-#include "grit/components_strings.h"
-#include "grit/generated_resources.h"
+#include "chrome/grit/generated_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "skia/ext/skia_utils_mac.h"
+#import "third_party/google_toolbox_for_mac/src/AppKit/GTMUILocalizerAndLayoutTweaker.h"
 #import "ui/base/cocoa/controls/hyperlink_text_view.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -42,7 +43,7 @@
    clickedOnLink:(id)link
          atIndex:(NSUInteger)charIndex {
   if (self.model)
-    self.model->OnManageLinkClicked();
+    self.model->OnNavigateToPasswordManagerAccountDashboardLinkClicked();
   [self.delegate viewShouldDismiss];
   return YES;
 }
@@ -64,6 +65,10 @@
   NSTextField* titleLabel =
       [self addTitleLabel:base::SysUTF16ToNSString(self.model->title())
                    toView:view];
+  // Title should occupy the whole width to that it's aligned properly for RTL.
+  [titleLabel setFrameSize:NSMakeSize(kDesiredBubbleWidth - 2 * kFramePadding,
+                                      0)];
+  [GTMUILocalizerAndLayoutTweaker sizeToFitFixedWidthTextField:titleLabel];
 
   // Text.
   confirmationText_.reset([[HyperlinkTextView alloc] initWithFrame:NSZeroRect]);
@@ -83,7 +88,9 @@
            withURL:nil
          linkColor:linkColor];
   [confirmationText_ setDelegate:self];
-  [[confirmationText_ textContainer] setLineFragmentPadding:0.0f];
+  // Set the same text inset as in the title.
+  [[confirmationText_ textContainer]
+      setLineFragmentPadding:kConfirmationBubbleContentInset];
   // Force the text to wrap to fit in the bubble size.
   [confirmationText_ setVerticallyResizable:YES];
   [confirmationText_

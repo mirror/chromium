@@ -11,22 +11,11 @@
 #include "base/feature_list.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
 
 using autofill::PasswordForm;
 
 namespace password_manager {
-
-namespace {
-
-void GetFeatureOverridesAsCSV(const std::vector<const base::Feature*>& features,
-                              std::string* overrides) {
-  for (const base::Feature* feature : features) {
-    overrides->append(feature->name);
-    overrides->push_back(',');
-  }
-}
-
-}  // namespace
 
 const char kTestingIconUrlSpec[] = "https://accounts.google.com/Icon";
 const char kTestingFederationUrlSpec[] = "https://accounts.google.com/login";
@@ -71,17 +60,33 @@ std::unique_ptr<PasswordForm> CreatePasswordFormFromDataForTesting(
   return form;
 }
 
+std::vector<std::unique_ptr<PasswordForm>> WrapForms(
+    std::vector<PasswordForm> forms) {
+  std::vector<std::unique_ptr<PasswordForm>> results;
+  results.reserve(forms.size());
+  std::transform(forms.begin(), forms.end(), std::back_inserter(results),
+                 [](PasswordForm& form) {
+                   return base::MakeUnique<PasswordForm>(std::move(form));
+                 });
+  return results;
+}
+
 bool ContainsEqualPasswordFormsUnordered(
-    const std::vector<PasswordForm*>& expectations,
-    const std::vector<PasswordForm*>& actual_values,
+    const std::vector<std::unique_ptr<PasswordForm>>& expectations,
+    const std::vector<std::unique_ptr<PasswordForm>>& actual_values,
     std::ostream* mismatch_output) {
-  std::vector<PasswordForm*> remaining_expectations(expectations.begin(),
-                                                    expectations.end());
+  std::vector<PasswordForm*> remaining_expectations(expectations.size());
+  std::transform(
+      expectations.begin(), expectations.end(), remaining_expectations.begin(),
+      [](const std::unique_ptr<PasswordForm>& form) { return form.get(); });
+
   bool had_mismatched_actual_form = false;
-  for (const PasswordForm* actual : actual_values) {
+  for (const auto& actual : actual_values) {
     auto it_matching_expectation = std::find_if(
         remaining_expectations.begin(), remaining_expectations.end(),
-        [actual](PasswordForm* expected) { return *expected == *actual; });
+        [&actual](const PasswordForm* expected) {
+          return *expected == *actual;
+        });
     if (it_matching_expectation != remaining_expectations.end()) {
       // Erase the matched expectation by moving the last element to its place.
       *it_matching_expectation = remaining_expectations.back();
@@ -107,22 +112,30 @@ bool ContainsEqualPasswordFormsUnordered(
   return !had_mismatched_actual_form && remaining_expectations.empty();
 }
 
-void SetFeatures(const std::vector<const base::Feature*>& enable_features,
-                 const std::vector<const base::Feature*>& disable_features,
-                 std::unique_ptr<base::FeatureList> feature_list) {
-  std::string enable_overrides;
-  std::string disable_overrides;
-
-  GetFeatureOverridesAsCSV(enable_features, &enable_overrides);
-  GetFeatureOverridesAsCSV(disable_features, &disable_overrides);
-
-  base::FeatureList::ClearInstanceForTesting();
-  feature_list->InitializeFromCommandLine(enable_overrides, disable_overrides);
-  base::FeatureList::SetInstance(std::move(feature_list));
-}
-
 MockPasswordStoreObserver::MockPasswordStoreObserver() {}
 
 MockPasswordStoreObserver::~MockPasswordStoreObserver() {}
 
+// TODO(crbug.com/706392): Fix password reuse detection for Android.
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+MockPasswordReuseDetectorConsumer::MockPasswordReuseDetectorConsumer() {}
+
+MockPasswordReuseDetectorConsumer::~MockPasswordReuseDetectorConsumer() {}
+#endif
+
+HSTSStateManager::HSTSStateManager(net::TransportSecurityState* state,
+                                   bool is_hsts,
+                                   const std::string& host)
+    : state_(state), is_hsts_(is_hsts), host_(host) {
+  if (is_hsts_) {
+    base::Time expiry = base::Time::Max();
+    bool include_subdomains = false;
+    state_->AddHSTS(host_, expiry, include_subdomains);
+  }
+}
+
+HSTSStateManager::~HSTSStateManager() {
+  if (is_hsts_)
+    state_->DeleteDynamicDataForHost(host_);
+}
 }  // namespace password_manager

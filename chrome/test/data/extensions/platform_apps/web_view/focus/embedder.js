@@ -33,6 +33,14 @@ window.runCommand = function(command, opt_step) {
       break;
     case 'testFocusRestoredRunNextStep':
       testFocusRestoredRunNextStep(opt_step);
+      break;
+    case 'testKeyboardFocusRunNextStep':
+      testKeyboardFocusRunNextStep(opt_step);
+      break;
+    case 'monitorGuestEvent':
+      monitorGuestEvent(opt_step);
+    case 'waitGuestEvent':
+      waitGuestEvent(opt_step);
     default:
       embedder.test.fail();
   }
@@ -389,6 +397,61 @@ function testBlurEvent() {
   });
 }
 
+// This test verifies that keyboard input is correctly routed into the guest.
+//
+// 1) Load the guest and attach an <input> to the guest dom. Count the number of
+// input events sent to that element.
+// 2) C++ simulates a mouse over and click of the <input> element and waits for
+// the browser to see the guest main frame as focused.
+// 3) Injects the key sequence: a, Shift+b, c.
+// 4) In the second step, the test waits for the input events to be processed
+// and then expects the vaue of the <input> to be what the test sent, notably:
+// aBc.
+function testKeyboardFocusImpl(input_length) {
+  embedder.testFocus_(function(webview) {
+    var created = function(e) {
+      var data = JSON.parse(e.data);
+      if (data[0] === 'response-createdInput') {
+        chrome.test.sendMessage('TEST_PASSED');
+        window.removeEventListener('message', created);
+      }
+    };
+    window.addEventListener('message', created);
+
+    g_webview = webview;
+    var msg = ['request-createInput', input_length];
+    webview.contentWindow.postMessage(JSON.stringify(msg), '*');
+  }, 'response-elementClicked', function() {
+        chrome.test.sendMessage('TEST_STEP_PASSED');
+  });
+
+}
+
+function testKeyboardFocusRunNextStep(expected) {
+  window.addEventListener('message', function(e) {
+    var data = JSON.parse(e.data);
+    LOG('send window.message, data: ' + data);
+    if (data[0] == 'response-inputValue') {
+      if (data[1] == expected) {
+        chrome.test.sendMessage('TEST_STEP_PASSED');
+      } else {
+        chrome.test.sendMessage('TEST_STEP_FAILED');
+      }
+    }
+  });
+
+  g_webview.contentWindow.postMessage(
+      JSON.stringify(['request-getInputValue']), '*');
+}
+
+function testKeyboardFocusSimple() {
+  testKeyboardFocusImpl(3);
+}
+
+function testKeyboardFocusWindowFocusCycle() {
+  testKeyboardFocusImpl(6);
+}
+
 // This test verifies IME related stuff for guest.
 //
 // Briefly:
@@ -591,6 +654,29 @@ function testAdvanceFocus() {
   webview.src = embedder.guestURL;
 }
 
+function monitorGuestEvent(type) {
+  g_webview.contentWindow.postMessage(
+      JSON.stringify(['request-monitorEvent', type]), '*');
+}
+
+function waitGuestEvent(type) {
+  var listener = function(e) {
+    var data = JSON.parse(e.data);
+    if (data[0] == 'response-waitEvent') {
+      window.removeEventListener('message', listener);
+      if (data[1] == type) {
+        chrome.test.sendMessage('TEST_STEP_PASSED');
+      } else {
+        chrome.test.sendMessage('TEST_STEP_FAILED');
+      }
+    }
+  }
+  window.addEventListener('message', listener);
+
+  g_webview.contentWindow.postMessage(
+      JSON.stringify(['request-waitEvent', type]), '*');
+}
+
 embedder.test.testList = {
   'testAdvanceFocus': testAdvanceFocus,
   'testBlurEvent': testBlurEvent,
@@ -598,6 +684,8 @@ embedder.test.testList = {
   'testFocusEvent': testFocusEvent,
   'testFocusTracksEmbedder': testFocusTracksEmbedder,
   'testInputMethod': testInputMethod,
+  'testKeyboardFocusSimple': testKeyboardFocusSimple,
+  'testKeyboardFocusWindowFocusCycle': testKeyboardFocusWindowFocusCycle,
   'testFocusRestored': testFocusRestored
 };
 

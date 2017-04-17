@@ -31,55 +31,77 @@
 #ifndef MutationObserverRegistration_h
 #define MutationObserverRegistration_h
 
+#include "bindings/core/v8/ScriptWrappable.h"
+#include "bindings/core/v8/TraceWrapperMember.h"
+#include "core/CoreExport.h"
 #include "core/dom/MutationObserver.h"
 #include "platform/heap/Handle.h"
-#include "wtf/HashSet.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/AtomicStringHash.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicStringHash.h"
 
 namespace blink {
 
 class QualifiedName;
 
-class MutationObserverRegistration final : public GarbageCollectedFinalized<MutationObserverRegistration> {
-public:
-    static MutationObserverRegistration* create(MutationObserver&, Node*, MutationObserverOptions, const HashSet<AtomicString>& attributeFilter);
-    ~MutationObserverRegistration();
+class CORE_EXPORT MutationObserverRegistration final
+    : public GarbageCollectedFinalized<MutationObserverRegistration>,
+      public TraceWrapperBase {
+ public:
+  static MutationObserverRegistration* Create(
+      MutationObserver&,
+      Node*,
+      MutationObserverOptions,
+      const HashSet<AtomicString>& attribute_filter);
+  ~MutationObserverRegistration();
 
-    void resetObservation(MutationObserverOptions, const HashSet<AtomicString>& attributeFilter);
-    void observedSubtreeNodeWillDetach(Node&);
-    void clearTransientRegistrations();
-    bool hasTransientRegistrations() const { return m_transientRegistrationNodes && !m_transientRegistrationNodes->isEmpty(); }
-    void unregister();
+  void ResetObservation(MutationObserverOptions,
+                        const HashSet<AtomicString>& attribute_filter);
+  void ObservedSubtreeNodeWillDetach(Node&);
+  void ClearTransientRegistrations();
+  bool HasTransientRegistrations() const {
+    return transient_registration_nodes_ &&
+           !transient_registration_nodes_->IsEmpty();
+  }
+  void Unregister();
 
-    bool shouldReceiveMutationFrom(Node&, MutationObserver::MutationType, const QualifiedName* attributeName) const;
-    bool isSubtree() const { return m_options & MutationObserver::Subtree; }
+  bool ShouldReceiveMutationFrom(Node&,
+                                 MutationObserver::MutationType,
+                                 const QualifiedName* attribute_name) const;
+  bool IsSubtree() const { return options_ & MutationObserver::kSubtree; }
 
-    MutationObserver& observer() const { return *m_observer; }
-    MutationRecordDeliveryOptions deliveryOptions() const { return m_options & (MutationObserver::AttributeOldValue | MutationObserver::CharacterDataOldValue); }
-    MutationObserverOptions mutationTypes() const { return m_options & MutationObserver::AllMutationTypes; }
+  MutationObserver& Observer() const { return *observer_; }
+  MutationRecordDeliveryOptions DeliveryOptions() const {
+    return options_ & (MutationObserver::kAttributeOldValue |
+                       MutationObserver::kCharacterDataOldValue);
+  }
+  MutationObserverOptions MutationTypes() const {
+    return options_ & MutationObserver::kAllMutationTypes;
+  }
 
-    void addRegistrationNodesToSet(HeapHashSet<Member<Node>>&) const;
+  void AddRegistrationNodesToSet(HeapHashSet<Member<Node>>&) const;
 
-    DECLARE_TRACE();
+  void Dispose();
 
-    DECLARE_TRACE_WRAPPERS();
+  DECLARE_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    void dispose();
+ private:
+  MutationObserverRegistration(MutationObserver&,
+                               Node*,
+                               MutationObserverOptions,
+                               const HashSet<AtomicString>& attribute_filter);
 
-private:
-    MutationObserverRegistration(MutationObserver&, Node*, MutationObserverOptions, const HashSet<AtomicString>& attributeFilter);
+  TraceWrapperMember<MutationObserver> observer_;
+  WeakMember<Node> registration_node_;
+  Member<Node> registration_node_keep_alive_;
+  typedef HeapHashSet<Member<Node>> NodeHashSet;
+  Member<NodeHashSet> transient_registration_nodes_;
 
-    Member<MutationObserver> m_observer;
-    WeakMember<Node> m_registrationNode;
-    Member<Node> m_registrationNodeKeepAlive;
-    typedef HeapHashSet<Member<Node>> NodeHashSet;
-    Member<NodeHashSet> m_transientRegistrationNodes;
-
-    MutationObserverOptions m_options;
-    HashSet<AtomicString> m_attributeFilter;
+  MutationObserverOptions options_;
+  HashSet<AtomicString> attribute_filter_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MutationObserverRegistration_h
+#endif  // MutationObserverRegistration_h

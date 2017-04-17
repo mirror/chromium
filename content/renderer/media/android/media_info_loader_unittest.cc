@@ -7,12 +7,12 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "content/renderer/media/android/media_info_loader.h"
-#include "content/test/mock_webframeclient.h"
-#include "content/test/mock_weburlloader.h"
+#include "content/test/mock_webassociatedurlloader.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
+#include "third_party/WebKit/public/web/WebFrameClient.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
@@ -40,16 +40,12 @@ static const int kHttpNotFound = 404;
 class MediaInfoLoaderTest : public testing::Test {
  public:
   MediaInfoLoaderTest()
-      : view_(WebView::create(nullptr, blink::WebPageVisibilityStateVisible)),
-        frame_(WebLocalFrame::create(blink::WebTreeScopeType::Document,
-                                     &client_)) {
-    view_->setMainFrame(frame_);
+      : view_(WebView::Create(nullptr, blink::kWebPageVisibilityStateVisible)) {
+    view_->SetMainFrame(WebLocalFrame::Create(
+        blink::WebTreeScopeType::kDocument, &client_, nullptr, nullptr));
   }
 
-  virtual ~MediaInfoLoaderTest() {
-    view_->close();
-    frame_->close();
-  }
+  virtual ~MediaInfoLoaderTest() { view_->Close(); }
 
   void Initialize(
       const char* url,
@@ -62,19 +58,20 @@ class MediaInfoLoaderTest : public testing::Test {
                    base::Unretained(this))));
 
     // |test_loader_| will be used when Start() is called.
-    url_loader_ = new NiceMock<MockWebURLLoader>();
-    loader_->test_loader_ = std::unique_ptr<blink::WebURLLoader>(url_loader_);
+    url_loader_ = new NiceMock<MockWebAssociatedURLLoader>();
+    loader_->test_loader_ =
+        std::unique_ptr<blink::WebAssociatedURLLoader>(url_loader_);
   }
 
   void Start() {
     InSequence s;
-    EXPECT_CALL(*url_loader_, loadAsynchronously(_, _));
-    loader_->Start(view_->mainFrame());
+    EXPECT_CALL(*url_loader_, LoadAsynchronously(_, _));
+    loader_->Start(view_->MainFrame());
   }
 
   void Stop() {
     InSequence s;
-    EXPECT_CALL(*url_loader_, cancel());
+    EXPECT_CALL(*url_loader_, Cancel());
     loader_.reset();
   }
 
@@ -83,7 +80,7 @@ class MediaInfoLoaderTest : public testing::Test {
     blink::WebURLRequest new_request(redirect_url);
     blink::WebURLResponse redirect_response(gurl_);
 
-    loader_->willFollowRedirect(url_loader_, new_request, redirect_response, 0);
+    loader_->WillFollowRedirect(new_request, redirect_response);
 
     base::RunLoop().RunUntilIdle();
   }
@@ -91,20 +88,20 @@ class MediaInfoLoaderTest : public testing::Test {
   void SendResponse(
       int http_status, MediaInfoLoader::Status expected_status) {
     EXPECT_CALL(*this, ReadyCallback(expected_status, _, _, _));
-    EXPECT_CALL(*url_loader_, cancel());
+    EXPECT_CALL(*url_loader_, Cancel());
 
     WebURLResponse response(gurl_);
-    response.setHTTPHeaderField(WebString::fromUTF8("Content-Length"),
-                                WebString::fromUTF8("0"));
-    response.setExpectedContentLength(0);
-    response.setHTTPStatusCode(http_status);
-    loader_->didReceiveResponse(url_loader_, response);
+    response.SetHTTPHeaderField(WebString::FromUTF8("Content-Length"),
+                                WebString::FromUTF8("0"));
+    response.SetExpectedContentLength(0);
+    response.SetHTTPStatusCode(http_status);
+    loader_->DidReceiveResponse(response);
   }
 
   void FailLoad() {
     EXPECT_CALL(*this, ReadyCallback(
         MediaInfoLoader::kFailed, _, _, _));
-    loader_->didFail(url_loader_, WebURLError());
+    loader_->DidFail(WebURLError());
   }
 
   MOCK_METHOD4(ReadyCallback,
@@ -114,11 +111,10 @@ class MediaInfoLoaderTest : public testing::Test {
   GURL gurl_;
 
   std::unique_ptr<MediaInfoLoader> loader_;
-  NiceMock<MockWebURLLoader>* url_loader_;
+  NiceMock<MockWebAssociatedURLLoader>* url_loader_;
 
-  MockWebFrameClient client_;
+  blink::WebFrameClient client_;
   WebView* view_;
-  WebLocalFrame* frame_;
 
   base::MessageLoop message_loop_;
 
@@ -127,26 +123,26 @@ class MediaInfoLoaderTest : public testing::Test {
 };
 
 TEST_F(MediaInfoLoaderTest, StartStop) {
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUnspecified);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUnspecified);
   Start();
   Stop();
 }
 
 TEST_F(MediaInfoLoaderTest, LoadFailure) {
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUnspecified);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUnspecified);
   Start();
   FailLoad();
 }
 
 TEST_F(MediaInfoLoaderTest, DataUri) {
-  Initialize(kHttpDataUrl, blink::WebMediaPlayer::CORSModeUnspecified);
+  Initialize(kHttpDataUrl, blink::WebMediaPlayer::kCORSModeUnspecified);
   Start();
   SendResponse(0, MediaInfoLoader::kOk);
 }
 
 TEST_F(MediaInfoLoaderTest, HasSingleOriginNoRedirect) {
   // Make sure no redirect case works as expected.
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUnspecified);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUnspecified);
   Start();
   SendResponse(kHttpOK, MediaInfoLoader::kOk);
   EXPECT_TRUE(loader_->HasSingleOrigin());
@@ -154,7 +150,7 @@ TEST_F(MediaInfoLoaderTest, HasSingleOriginNoRedirect) {
 
 TEST_F(MediaInfoLoaderTest, HasSingleOriginSingleRedirect) {
   // Test redirect to the same domain.
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUnspecified);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUnspecified);
   Start();
   Redirect(kHttpRedirectToSameDomainUrl1);
   SendResponse(kHttpOK, MediaInfoLoader::kOk);
@@ -163,7 +159,7 @@ TEST_F(MediaInfoLoaderTest, HasSingleOriginSingleRedirect) {
 
 TEST_F(MediaInfoLoaderTest, HasSingleOriginDoubleRedirect) {
   // Test redirect twice to the same domain.
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUnspecified);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUnspecified);
   Start();
   Redirect(kHttpRedirectToSameDomainUrl1);
   Redirect(kHttpRedirectToSameDomainUrl2);
@@ -173,7 +169,7 @@ TEST_F(MediaInfoLoaderTest, HasSingleOriginDoubleRedirect) {
 
 TEST_F(MediaInfoLoaderTest, HasSingleOriginDifferentDomain) {
   // Test redirect to a different domain.
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUnspecified);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUnspecified);
   Start();
   Redirect(kHttpRedirectToDifferentDomainUrl1);
   SendResponse(kHttpOK, MediaInfoLoader::kOk);
@@ -182,7 +178,7 @@ TEST_F(MediaInfoLoaderTest, HasSingleOriginDifferentDomain) {
 
 TEST_F(MediaInfoLoaderTest, HasSingleOriginMultipleDomains) {
   // Test redirect to the same domain and then to a different domain.
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUnspecified);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUnspecified);
   Start();
   Redirect(kHttpRedirectToSameDomainUrl1);
   Redirect(kHttpRedirectToDifferentDomainUrl1);
@@ -191,14 +187,14 @@ TEST_F(MediaInfoLoaderTest, HasSingleOriginMultipleDomains) {
 }
 
 TEST_F(MediaInfoLoaderTest, CORSAccessCheckPassed) {
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUseCredentials);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUseCredentials);
   Start();
   SendResponse(kHttpOK, MediaInfoLoader::kOk);
   EXPECT_TRUE(loader_->DidPassCORSAccessCheck());
 }
 
 TEST_F(MediaInfoLoaderTest, CORSAccessCheckFailed) {
-  Initialize(kHttpUrl, blink::WebMediaPlayer::CORSModeUseCredentials);
+  Initialize(kHttpUrl, blink::WebMediaPlayer::kCORSModeUseCredentials);
   Start();
   SendResponse(kHttpNotFound, MediaInfoLoader::kFailed);
   EXPECT_FALSE(loader_->DidPassCORSAccessCheck());

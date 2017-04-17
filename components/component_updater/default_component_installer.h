@@ -46,9 +46,9 @@ class ComponentInstallerTraits {
   virtual bool VerifyInstallation(const base::DictionaryValue& manifest,
                                   const base::FilePath& install_dir) const = 0;
 
-  // Returns true if the component can be automatically updated. Called once
-  // during component registration from the UI thread.
-  virtual bool CanAutoUpdate() const = 0;
+  // Returns true if the component supports a group policy to enable updates.
+  // Called once during component registration from the UI thread.
+  virtual bool SupportsGroupPolicyEnabledComponentUpdates() const = 0;
 
   // Returns true if the network communication related to this component
   // must be encrypted.
@@ -58,8 +58,9 @@ class ComponentInstallerTraits {
   // require custom installation operations should implement them here.
   // Returns false if a custom operation failed, and true otherwise.
   // Called only from a thread belonging to a blocking thread pool.
-  virtual bool OnCustomInstall(const base::DictionaryValue& manifest,
-                               const base::FilePath& install_dir) = 0;
+  virtual update_client::CrxInstaller::Result OnCustomInstall(
+      const base::DictionaryValue& manifest,
+      const base::FilePath& install_dir) = 0;
 
   // ComponentReady is called in two cases:
   //   1) After an installation is successfully completed.
@@ -85,6 +86,9 @@ class ComponentInstallerTraits {
 
   // Returns the human-readable name of the component.
   virtual std::string GetName() const = 0;
+
+  // If this component is a plugin, returns the media types it can handle.
+  virtual std::vector<std::string> GetMimeTypes() const = 0;
 
   // Returns a container of name-value pairs representing arbitrary,
   // installer-defined metadata.
@@ -112,8 +116,9 @@ class DefaultComponentInstaller : public update_client::CrxInstaller {
 
   // Overridden from ComponentInstaller:
   void OnUpdateError(int error) override;
-  bool Install(const base::DictionaryValue& manifest,
-               const base::FilePath& unpack_path) override;
+  update_client::CrxInstaller::Result Install(
+      const base::DictionaryValue& manifest,
+      const base::FilePath& unpack_path) override;
   bool GetInstalledFile(const std::string& file,
                         base::FilePath* installed_file) override;
   // Only user-level component installations can be uninstalled.
@@ -127,9 +132,10 @@ class DefaultComponentInstaller : public update_client::CrxInstaller {
   // values associated with that installation and returns true; otherwise,
   // returns false.
   bool FindPreinstallation(const base::FilePath& root);
-  bool InstallHelper(const base::DictionaryValue& manifest,
-                     const base::FilePath& unpack_path,
-                     const base::FilePath& install_path);
+  update_client::CrxInstaller::Result InstallHelper(
+      const base::DictionaryValue& manifest,
+      const base::FilePath& unpack_path,
+      const base::FilePath& install_path);
   void StartRegistration(ComponentUpdateService* cus);
   void FinishRegistration(ComponentUpdateService* cus,
                           const base::Closure& callback);

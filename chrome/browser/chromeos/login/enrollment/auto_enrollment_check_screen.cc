@@ -41,28 +41,29 @@ NetworkPortalDetector::CaptivePortalStatus GetCaptivePortalStatus() {
 AutoEnrollmentCheckScreen* AutoEnrollmentCheckScreen::Get(
     ScreenManager* manager) {
   return static_cast<AutoEnrollmentCheckScreen*>(
-      manager->GetScreen(WizardController::kAutoEnrollmentCheckScreenName));
+      manager->GetScreen(OobeScreen::SCREEN_AUTO_ENROLLMENT_CHECK));
 }
 
 AutoEnrollmentCheckScreen::AutoEnrollmentCheckScreen(
     BaseScreenDelegate* base_screen_delegate,
-    AutoEnrollmentCheckScreenActor* actor)
-    : BaseScreen(base_screen_delegate),
-      actor_(actor),
+    AutoEnrollmentCheckScreenView* view)
+    : BaseScreen(base_screen_delegate,
+                 OobeScreen::SCREEN_AUTO_ENROLLMENT_CHECK),
+      view_(view),
       auto_enrollment_controller_(nullptr),
       captive_portal_status_(
           NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_UNKNOWN),
       auto_enrollment_state_(policy::AUTO_ENROLLMENT_STATE_IDLE),
       histogram_helper_(new ErrorScreensHistogramHelper("Enrollment")),
       weak_ptr_factory_(this) {
-  if (actor_)
-    actor_->SetDelegate(this);
+  if (view_)
+    view_->SetDelegate(this);
 }
 
 AutoEnrollmentCheckScreen::~AutoEnrollmentCheckScreen() {
   network_portal_detector::GetInstance()->RemoveObserver(this);
-  if (actor_)
-    actor_->SetDelegate(NULL);
+  if (view_)
+    view_->SetDelegate(NULL);
 }
 
 void AutoEnrollmentCheckScreen::ClearState() {
@@ -72,9 +73,6 @@ void AutoEnrollmentCheckScreen::ClearState() {
 
   auto_enrollment_state_ = policy::AUTO_ENROLLMENT_STATE_IDLE;
   captive_portal_status_ = NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_UNKNOWN;
-}
-
-void AutoEnrollmentCheckScreen::PrepareToShow() {
 }
 
 void AutoEnrollmentCheckScreen::Show() {
@@ -92,7 +90,7 @@ void AutoEnrollmentCheckScreen::Show() {
   // Bring up the screen. It's important to do this before updating the UI,
   // because the latter may switch to the error screen, which needs to stay on
   // top.
-  actor_->Show();
+  view_->Show();
   histogram_helper_->OnScreenShow();
 
   // Set up state change observers.
@@ -123,14 +121,10 @@ void AutoEnrollmentCheckScreen::Show() {
 void AutoEnrollmentCheckScreen::Hide() {
 }
 
-std::string AutoEnrollmentCheckScreen::GetName() const {
-  return WizardController::kAutoEnrollmentCheckScreenName;
-}
-
-void AutoEnrollmentCheckScreen::OnActorDestroyed(
-    AutoEnrollmentCheckScreenActor* actor) {
-  if (actor_ == actor)
-    actor_ = NULL;
+void AutoEnrollmentCheckScreen::OnViewDestroyed(
+    AutoEnrollmentCheckScreenView* view) {
+  if (view_ == view)
+    view_ = nullptr;
 }
 
 void AutoEnrollmentCheckScreen::OnPortalDetectionCompleted(
@@ -254,9 +248,9 @@ void AutoEnrollmentCheckScreen::SignalCompletion() {
   // their work before.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::Bind(
-          &AutoEnrollmentCheckScreen::Finish, weak_ptr_factory_.GetWeakPtr(),
-          BaseScreenDelegate::ENTERPRISE_AUTO_ENROLLMENT_CHECK_COMPLETED));
+      base::Bind(&AutoEnrollmentCheckScreen::Finish,
+                 weak_ptr_factory_.GetWeakPtr(),
+                 ScreenExitCode::ENTERPRISE_AUTO_ENROLLMENT_CHECK_COMPLETED));
 }
 
 bool AutoEnrollmentCheckScreen::IsCompleted() const {

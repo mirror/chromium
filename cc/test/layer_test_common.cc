@@ -17,8 +17,7 @@
 #include "cc/quads/draw_quad.h"
 #include "cc/quads/render_pass.h"
 #include "cc/test/animation_test_common.h"
-#include "cc/test/fake_output_surface.h"
-#include "cc/test/layer_tree_settings_for_testing.h"
+#include "cc/test/fake_compositor_frame_sink.h"
 #include "cc/test/mock_occlusion_tracker.h"
 #include "cc/trees/layer_tree_host_common.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -48,9 +47,11 @@ void LayerTestCommon::VerifyQuadsExactlyCoverRect(const QuadList& quads,
   Region remaining = rect;
 
   for (auto iter = quads.cbegin(); iter != quads.cend(); ++iter) {
+    EXPECT_TRUE(iter->rect.Contains(iter->visible_rect));
+
     gfx::RectF quad_rectf = MathUtil::MapClippedRect(
         iter->shared_quad_state->quad_to_target_transform,
-        gfx::RectF(iter->rect));
+        gfx::RectF(iter->visible_rect));
 
     // Before testing for exact coverage in the integer world, assert that
     // rounding will not round the rect incorrectly.
@@ -116,34 +117,46 @@ void LayerTestCommon::VerifyQuadsAreOccluded(const QuadList& quads,
 }
 
 LayerTestCommon::LayerImplTest::LayerImplTest()
-    : LayerImplTest(LayerTreeSettingsForTesting()) {}
+    : LayerImplTest(LayerTreeSettings()) {}
+
+LayerTestCommon::LayerImplTest::LayerImplTest(
+    std::unique_ptr<CompositorFrameSink> compositor_frame_sink)
+    : LayerImplTest(LayerTreeSettings(), std::move(compositor_frame_sink)) {}
 
 LayerTestCommon::LayerImplTest::LayerImplTest(const LayerTreeSettings& settings)
-    : output_surface_(FakeOutputSurface::CreateDelegating3d()),
-      host_(FakeLayerTreeHost::Create(&client_, &task_graph_runner_, settings)),
+    : LayerImplTest(settings, FakeCompositorFrameSink::Create3d()) {}
+
+LayerTestCommon::LayerImplTest::LayerImplTest(
+    const LayerTreeSettings& settings,
+    std::unique_ptr<CompositorFrameSink> compositor_frame_sink)
+    : compositor_frame_sink_(std::move(compositor_frame_sink)),
+      animation_host_(AnimationHost::CreateForTesting(ThreadInstance::MAIN)),
+      host_(FakeLayerTreeHost::Create(&client_,
+                                      &task_graph_runner_,
+                                      animation_host_.get(),
+                                      settings)),
       render_pass_(RenderPass::Create()),
       layer_impl_id_(2) {
   std::unique_ptr<LayerImpl> root =
       LayerImpl::Create(host_->host_impl()->active_tree(), 1);
   host_->host_impl()->active_tree()->SetRootLayerForTesting(std::move(root));
-  root_layer_for_testing()->SetHasRenderSurface(true);
   host_->host_impl()->SetVisible(true);
-  EXPECT_TRUE(host_->host_impl()->InitializeRenderer(output_surface_.get()));
+  EXPECT_TRUE(
+      host_->host_impl()->InitializeRenderer(compositor_frame_sink_.get()));
 
   const int timeline_id = AnimationIdProvider::NextTimelineId();
   timeline_ = AnimationTimeline::Create(timeline_id);
-  host_->animation_host()->AddAnimationTimeline(timeline_);
+  animation_host_->AddAnimationTimeline(timeline_);
   // Create impl-side instance.
-  host_->animation_host()->PushPropertiesTo(
-      host_->host_impl()->animation_host());
+  animation_host_->PushPropertiesTo(host_->host_impl()->animation_host());
   timeline_impl_ =
       host_->host_impl()->animation_host()->GetTimelineById(timeline_id);
 }
 
 LayerTestCommon::LayerImplTest::~LayerImplTest() {
-  host_->animation_host()->RemoveAnimationTimeline(timeline_);
+  animation_host_->RemoveAnimationTimeline(timeline_);
   timeline_ = nullptr;
-  host_->host_impl()->ReleaseOutputSurface();
+  host_->host_impl()->ReleaseCompositorFrameSink();
 }
 
 void LayerTestCommon::LayerImplTest::CalcDrawProps(
@@ -197,11 +210,10 @@ void LayerTestCommon::LayerImplTest::AppendSurfaceQuadsWithOcclusion(
   render_pass_->quad_list.clear();
   render_pass_->shared_quad_state_list.clear();
 
-  surface_impl->AppendQuads(
-      render_pass_.get(), gfx::Transform(),
+  surface_impl->set_occlusion_in_content_space(
       Occlusion(gfx::Transform(), SimpleEnclosedRegion(occluded),
-                SimpleEnclosedRegion()),
-      SK_ColorBLACK, 1.f, nullptr, &data, RenderPassId(1, 1));
+                SimpleEnclosedRegion()));
+  surface_impl->AppendQuads(render_pass_.get(), &data);
 }
 
 void EmptyCopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {}

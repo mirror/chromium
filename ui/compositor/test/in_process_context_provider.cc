@@ -9,12 +9,14 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/output/context_cache_controller.h"
 #include "cc/output/managed_memory_policy.h"
-#include "gpu/command_buffer/client/gl_in_process_context.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_lib.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
+#include "gpu/ipc/gl_in_process_context.h"
 #include "gpu/skia_bindings/grcontext_for_gles2_interface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLInterface.h"
@@ -27,7 +29,7 @@ scoped_refptr<InProcessContextProvider> InProcessContextProvider::Create(
     InProcessContextProvider* shared_context,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
-    gfx::AcceleratedWidget window,
+    gpu::SurfaceHandle window,
     const std::string& debug_name) {
   return new InProcessContextProvider(attribs, shared_context,
                                       gpu_memory_buffer_manager, image_factory,
@@ -53,7 +55,7 @@ InProcessContextProvider::CreateOffscreen(
   attribs.bind_generates_resource = false;
   return new InProcessContextProvider(attribs, shared_context,
                                       gpu_memory_buffer_manager, image_factory,
-                                      gfx::kNullAcceleratedWidget, "Offscreen");
+                                      gpu::kNullSurfaceHandle, "Offscreen");
 }
 
 InProcessContextProvider::InProcessContextProvider(
@@ -61,7 +63,7 @@ InProcessContextProvider::InProcessContextProvider(
     InProcessContextProvider* shared_context,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
-    gfx::AcceleratedWidget window,
+    gpu::SurfaceHandle window,
     const std::string& debug_name)
     : attribs_(attribs),
       shared_context_(shared_context),
@@ -89,10 +91,13 @@ bool InProcessContextProvider::BindToCurrentThread() {
         !window_, /* is_offscreen */
         window_, (shared_context_ ? shared_context_->context_.get() : nullptr),
         attribs_, gpu::SharedMemoryLimits(), gpu_memory_buffer_manager_,
-        image_factory_));
+        image_factory_, base::ThreadTaskRunnerHandle::Get()));
 
     if (!context_)
       return false;
+
+    cache_controller_.reset(new cc::ContextCacheController(
+        context_->GetImplementation(), base::ThreadTaskRunnerHandle::Get()));
   }
 
   std::string unique_context_name =
@@ -131,8 +136,14 @@ class GrContext* InProcessContextProvider::GrContext() {
     return gr_context_->get();
 
   gr_context_.reset(new skia_bindings::GrContextForGLES2Interface(ContextGL()));
+  cache_controller_->SetGrContext(gr_context_->get());
 
   return gr_context_->get();
+}
+
+cc::ContextCacheController* InProcessContextProvider::CacheController() {
+  DCHECK(context_thread_checker_.CalledOnValidThread());
+  return cache_controller_.get();
 }
 
 void InProcessContextProvider::InvalidateGrContext(uint32_t state) {
@@ -144,13 +155,6 @@ void InProcessContextProvider::InvalidateGrContext(uint32_t state) {
 
 base::Lock* InProcessContextProvider::GetLock() {
   return &context_lock_;
-}
-
-void InProcessContextProvider::DeleteCachedResources() {
-  DCHECK(context_thread_checker_.CalledOnValidThread());
-
-  if (gr_context_)
-    gr_context_->FreeGpuResources();
 }
 
 void InProcessContextProvider::SetLostContextCallback(

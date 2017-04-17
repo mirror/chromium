@@ -17,6 +17,7 @@
 #include "base/compiler_specific.h"
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
+#include "base/synchronization/lock.h"
 #include "base/time/time.h"
 #include "media/midi/midi_manager.h"
 #include "media/midi/usb_midi_device.h"
@@ -25,10 +26,10 @@
 #include "media/midi/usb_midi_jack.h"
 #include "media/midi/usb_midi_output_stream.h"
 
-namespace media {
 namespace midi {
 
 class MidiScheduler;
+class MidiService;
 
 // MidiManager for USB-MIDI.
 class USB_MIDI_EXPORT MidiManagerUsb
@@ -36,12 +37,13 @@ class USB_MIDI_EXPORT MidiManagerUsb
       public UsbMidiDeviceDelegate,
       NON_EXPORTED_BASE(public UsbMidiInputStream::Delegate) {
  public:
-  explicit MidiManagerUsb(
-      std::unique_ptr<UsbMidiDevice::Factory> device_factory);
+  MidiManagerUsb(MidiService* service,
+                 std::unique_ptr<UsbMidiDevice::Factory> device_factory);
   ~MidiManagerUsb() override;
 
   // MidiManager implementation.
   void StartInitialization() override;
+  void Finalize() override;
   void DispatchSendMidiData(MidiManagerClient* client,
                             uint32_t port_index,
                             const std::vector<uint8_t>& data,
@@ -74,7 +76,7 @@ class USB_MIDI_EXPORT MidiManagerUsb
   // will be canceled silently (i.e. |callback| will not be called).
   // The function is public just for unit tests. Do not call this function
   // outside code for testing.
-  void Initialize(base::Callback<void(Result result)> callback);
+  void Initialize(base::Callback<void(mojom::Result result)> callback);
 
  private:
   void OnEnumerateDevicesDone(bool result, UsbMidiDevice::Devices* devices);
@@ -85,17 +87,19 @@ class USB_MIDI_EXPORT MidiManagerUsb
   ScopedVector<UsbMidiOutputStream> output_streams_;
   std::unique_ptr<UsbMidiInputStream> input_stream_;
 
-  base::Callback<void(Result result)> initialize_callback_;
+  base::Callback<void(mojom::Result result)> initialize_callback_;
 
   // A map from <endpoint_number, cable_number> to the index of input jacks.
   base::hash_map<std::pair<int, int>, size_t> input_jack_dictionary_;
 
+  // Lock to ensure the MidiScheduler is being destructed only once in
+  // Finalize() on Chrome_IOThread.
+  base::Lock scheduler_lock_;
   std::unique_ptr<MidiScheduler> scheduler_;
 
   DISALLOW_COPY_AND_ASSIGN(MidiManagerUsb);
 };
 
 }  // namespace midi
-}  // namespace media
 
 #endif  // MEDIA_MIDI_MIDI_MANAGER_USB_H_

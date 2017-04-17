@@ -26,43 +26,38 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/geometry/FloatPoint3D.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
-enum LightType {
-    LS_DISTANT,
-    LS_POINT,
-    LS_SPOT
-};
+enum LightType { LS_DISTANT, LS_POINT, LS_SPOT };
 
 class TextStream;
 
 class PLATFORM_EXPORT LightSource : public RefCounted<LightSource> {
-    WTF_MAKE_NONCOPYABLE(LightSource);
-public:
-    LightSource(LightType type)
-        : m_type(type)
-    { }
+  WTF_MAKE_NONCOPYABLE(LightSource);
 
-    virtual ~LightSource();
+ public:
+  LightSource(LightType type) : type_(type) {}
 
-    LightType type() const { return m_type; }
-    virtual TextStream& externalRepresentation(TextStream&) const = 0;
+  virtual ~LightSource();
 
-    virtual bool setAzimuth(float) { return false; }
-    virtual bool setElevation(float) { return false; }
-    virtual bool setPosition(const FloatPoint3D&) { return false; }
-    virtual bool setPointsAt(const FloatPoint3D&) { return false; }
-    virtual bool setSpecularExponent(float) { return false; }
-    virtual bool setLimitingConeAngle(float) { return false; }
+  LightType GetType() const { return type_; }
+  virtual TextStream& ExternalRepresentation(TextStream&) const = 0;
 
-private:
-    LightType m_type;
+  virtual bool SetAzimuth(float) { return false; }
+  virtual bool SetElevation(float) { return false; }
+  virtual bool SetPosition(const FloatPoint3D&) { return false; }
+  virtual bool SetPointsAt(const FloatPoint3D&) { return false; }
+  virtual bool SetSpecularExponent(float) { return false; }
+  virtual bool SetLimitingConeAngle(float) { return false; }
+
+ private:
+  LightType type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LightSource_h
+#endif  // LightSource_h

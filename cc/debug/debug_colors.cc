@@ -2,16 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/logging.h"
 #include "base/macros.h"
 
 #include "cc/debug/debug_colors.h"
 
-#include "cc/trees/layer_tree_impl.h"
-
 namespace cc {
 
-static float Scale(float width, const LayerTreeImpl* tree_impl) {
-  return width * (tree_impl ? tree_impl->device_scale_factor() : 1);
+static float Scale(float width, float device_scale_factor) {
+  return width * device_scale_factor;
 }
 
 // ======= Layer border colors =======
@@ -20,64 +19,56 @@ static float Scale(float width, const LayerTreeImpl* tree_impl) {
 SkColor DebugColors::TiledContentLayerBorderColor() {
   return SkColorSetARGB(128, 255, 128, 0);
 }
-int DebugColors::TiledContentLayerBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::TiledContentLayerBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // Image layers are olive.
 SkColor DebugColors::ImageLayerBorderColor() {
   return SkColorSetARGB(128, 128, 128, 0);
 }
-int DebugColors::ImageLayerBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::ImageLayerBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // Non-tiled content layers area green.
 SkColor DebugColors::ContentLayerBorderColor() {
   return SkColorSetARGB(128, 0, 128, 32);
 }
-int DebugColors::ContentLayerBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::ContentLayerBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // Masking layers are pale blue and wide.
 SkColor DebugColors::MaskingLayerBorderColor() {
   return SkColorSetARGB(48, 128, 255, 255);
 }
-int DebugColors::MaskingLayerBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(20, tree_impl);
+int DebugColors::MaskingLayerBorderWidth(float device_scale_factor) {
+  return Scale(20, device_scale_factor);
 }
 
 // Other container layers are yellow.
 SkColor DebugColors::ContainerLayerBorderColor() {
   return SkColorSetARGB(192, 255, 255, 0);
 }
-int DebugColors::ContainerLayerBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::ContainerLayerBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // Surface layers are a blue-ish green.
 SkColor DebugColors::SurfaceLayerBorderColor() {
   return SkColorSetARGB(128, 0, 255, 136);
 }
-int DebugColors::SurfaceLayerBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::SurfaceLayerBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // Render surfaces are blue.
 SkColor DebugColors::SurfaceBorderColor() {
   return SkColorSetARGB(100, 0, 0, 255);
 }
-int DebugColors::SurfaceBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
-}
-
-// Replicas of render surfaces are purple.
-SkColor DebugColors::SurfaceReplicaBorderColor() {
-  return SkColorSetARGB(100, 160, 0, 255);
-}
-int DebugColors::SurfaceReplicaBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::SurfaceBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // ======= Tile colors =======
@@ -86,72 +77,85 @@ int DebugColors::SurfaceReplicaBorderWidth(const LayerTreeImpl* tree_impl) {
 SkColor DebugColors::HighResTileBorderColor() {
   return SkColorSetARGB(100, 80, 200, 200);
 }
-int DebugColors::HighResTileBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(1, tree_impl);
+int DebugColors::HighResTileBorderWidth(float device_scale_factor) {
+  return Scale(1, device_scale_factor);
 }
 
 // Low-res tile borders are purple.
 SkColor DebugColors::LowResTileBorderColor() {
   return SkColorSetARGB(100, 212, 83, 192);
 }
-int DebugColors::LowResTileBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::LowResTileBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // Other high-resolution tile borders are yellow.
 SkColor DebugColors::ExtraHighResTileBorderColor() {
   return SkColorSetARGB(100, 239, 231, 20);
 }
-int DebugColors::ExtraHighResTileBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::ExtraHighResTileBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // Other low-resolution tile borders are green.
 SkColor DebugColors::ExtraLowResTileBorderColor() {
   return SkColorSetARGB(100, 93, 186, 18);
 }
-int DebugColors::ExtraLowResTileBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::ExtraLowResTileBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // Missing tile borders are dark grey.
 SkColor DebugColors::MissingTileBorderColor() {
   return SkColorSetARGB(64, 64, 64, 0);
 }
-int DebugColors::MissingTileBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(1, tree_impl);
+int DebugColors::MissingTileBorderWidth(float device_scale_factor) {
+  return Scale(1, device_scale_factor);
 }
 
 // Solid color tile borders are grey.
 SkColor DebugColors::SolidColorTileBorderColor() {
   return SkColorSetARGB(128, 128, 128, 128);
 }
-int DebugColors::SolidColorTileBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(1, tree_impl);
+int DebugColors::SolidColorTileBorderWidth(float device_scale_factor) {
+  return Scale(1, device_scale_factor);
 }
 
 // OOM tile borders are red.
 SkColor DebugColors::OOMTileBorderColor() {
   return SkColorSetARGB(100, 255, 0, 0);
 }
-int DebugColors::OOMTileBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(1, tree_impl);
+int DebugColors::OOMTileBorderWidth(float device_scale_factor) {
+  return Scale(1, device_scale_factor);
 }
 
 // Direct picture borders are chartreuse.
 SkColor DebugColors::DirectPictureBorderColor() {
   return SkColorSetARGB(255, 127, 255, 0);
 }
-int DebugColors::DirectPictureBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(1, tree_impl);
+int DebugColors::DirectPictureBorderWidth(float device_scale_factor) {
+  return Scale(1, device_scale_factor);
+}
+
+// Borders added to GL composited draw quads. This is useful to debug HW
+// overlays. When the border disappears, it means we're using an overlay.
+// We draw borders in different colors to be able to distinguish neighboring
+// quads (often shadows).
+SkColor DebugColors::GLCompositedTextureQuadBorderColor(int index) {
+  const SkColor kColors[] = {SK_ColorBLUE,   SK_ColorGREEN, SK_ColorRED,
+                             SK_ColorYELLOW, SK_ColorCYAN,  SK_ColorMAGENTA};
+  return kColors[index % arraysize(kColors)];
+}
+int DebugColors::GLCompositedTextureQuadBoderWidth() {
+  return 6;
 }
 
 // Compressed tile borders are blue.
 SkColor DebugColors::CompressedTileBorderColor() {
   return SkColorSetARGB(100, 20, 20, 240);
 }
-int DebugColors::CompressedTileBorderWidth(const LayerTreeImpl* tree_impl) {
-  return Scale(2, tree_impl);
+int DebugColors::CompressedTileBorderWidth(float device_scale_factor) {
+  return Scale(2, device_scale_factor);
 }
 
 // ======= Checkerboard colors =======
@@ -206,22 +210,13 @@ SkColor DebugColors::SurfaceDamageRectFillColor() {
   return SkColorSetARGB(30, 200, 100, 0);
 }
 
-// Surface replica screen space rects in green.
+// Surface screen space rects in yellow-green.
 SkColor DebugColors::ScreenSpaceLayerRectBorderColor() {
   return SkColorSetARGB(255, 100, 200, 0);
 }
 int DebugColors::ScreenSpaceLayerRectBorderWidth() { return 2; }
 SkColor DebugColors::ScreenSpaceLayerRectFillColor() {
   return SkColorSetARGB(30, 100, 200, 0);
-}
-
-// Layer screen space rects in purple.
-SkColor DebugColors::ScreenSpaceSurfaceReplicaRectBorderColor() {
-  return SkColorSetARGB(255, 100, 0, 200);
-}
-int DebugColors::ScreenSpaceSurfaceReplicaRectBorderWidth() { return 2; }
-SkColor DebugColors::ScreenSpaceSurfaceReplicaRectFillColor() {
-  return SkColorSetARGB(10, 100, 0, 200);
 }
 
 // Touch-event-handler rects in yellow.

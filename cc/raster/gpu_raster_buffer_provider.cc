@@ -13,10 +13,12 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
-#include "cc/playback/image_hijack_canvas.h"
-#include "cc/playback/raster_source.h"
+#include "cc/paint/paint_canvas.h"
+#include "cc/raster/image_hijack_canvas.h"
+#include "cc/raster/raster_source.h"
 #include "cc/raster/scoped_gpu_raster.h"
 #include "cc/resources/resource.h"
+#include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "third_party/skia/include/core/SkMultiPictureDraw.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
@@ -26,17 +28,34 @@
 namespace cc {
 namespace {
 
-static sk_sp<SkPicture> PlaybackToPicture(
+static void RasterizeSource(
     const RasterSource* raster_source,
     bool resource_has_previous_content,
     const gfx::Size& resource_size,
     const gfx::Rect& raster_full_rect,
     const gfx::Rect& raster_dirty_rect,
-    float scale,
-    const RasterSource::PlaybackSettings& playback_settings) {
-  // GPU raster doesn't do low res tiles, so should always include images.
-  DCHECK(!playback_settings.skip_images);
+    const gfx::AxisTransform2d& transform,
+    const RasterSource::PlaybackSettings& playback_settings,
+    ContextProvider* context_provider,
+    ResourceProvider::ScopedWriteLockGL* resource_lock,
+    bool async_worker_context_enabled,
+    bool use_distance_field_text,
+    int msaa_sample_count) {
+  ScopedGpuRaster gpu_raster(context_provider);
 
+  ResourceProvider::ScopedSkSurfaceProvider scoped_surface(
+      context_provider, resource_lock, async_worker_context_enabled,
+      use_distance_field_text, raster_source->CanUseLCDText(),
+      msaa_sample_count);
+  SkSurface* sk_surface = scoped_surface.sk_surface();
+  // Allocating an SkSurface will fail after a lost context.  Pretend we
+  // rasterized, as the contents of the resource don't matter anymore.
+  if (!sk_surface) {
+    DLOG(ERROR) << "Failed to allocate raster surface";
+    return;
+  }
+
+  // Playback
   gfx::Rect playback_rect = raster_full_rect;
   if (resource_has_previous_content) {
     playback_rect.Intersect(raster_dirty_rect);
@@ -58,69 +77,9 @@ static sk_sp<SkPicture> PlaybackToPicture(
         100.0f * fraction_saved);
   }
 
-  // Play back raster_source into temp SkPicture.
-  SkPictureRecorder recorder;
-  sk_sp<SkCanvas> canvas = sk_ref_sp(
-      recorder.beginRecording(resource_size.width(), resource_size.height()));
-  canvas->save();
-
-  // The GPU image decode controller assumes that Skia is done with an image
-  // when playback is complete. However, in this case, where we play back to a
-  // picture, we don't actually finish with the images until the picture is
-  // rasterized later. This can cause lifetime issues in the GPU image decode
-  // controller. To avoid this, we disable the image hijack canvas (and image
-  // decode controller) for this playback step, instead enabling it for the
-  // later picture rasterization.
-  RasterSource::PlaybackSettings settings = playback_settings;
-  settings.use_image_hijack_canvas = false;
-  raster_source->PlaybackToCanvas(canvas.get(), raster_full_rect, playback_rect,
-                                  scale, settings);
-  canvas->restore();
-  return recorder.finishRecordingAsPicture();
-}
-
-static void RasterizePicture(SkPicture* picture,
-                             ContextProvider* context_provider,
-                             ResourceProvider::ScopedWriteLockGL* resource_lock,
-                             bool async_worker_context_enabled,
-                             bool use_distance_field_text,
-                             bool can_use_lcd_text,
-                             int msaa_sample_count,
-                             ImageDecodeController* image_decode_controller,
-                             bool use_image_hijack_canvas) {
-  ScopedGpuRaster gpu_raster(context_provider);
-
-  ResourceProvider::ScopedSkSurfaceProvider scoped_surface(
-      context_provider, resource_lock, async_worker_context_enabled,
-      use_distance_field_text, can_use_lcd_text, msaa_sample_count);
-  SkSurface* sk_surface = scoped_surface.sk_surface();
-  // Allocating an SkSurface will fail after a lost context.  Pretend we
-  // rasterized, as the contents of the resource don't matter anymore.
-  if (!sk_surface)
-    return;
-
-  // As we did not use the image hijack canvas during the initial playback to
-  // |picture| (see PlaybackToPicture), we must enable it here if requested.
-  SkCanvas* canvas = sk_surface->getCanvas();
-  std::unique_ptr<ImageHijackCanvas> hijack_canvas;
-  if (use_image_hijack_canvas) {
-    DCHECK(image_decode_controller);
-    const SkImageInfo& info = canvas->imageInfo();
-    hijack_canvas.reset(new ImageHijackCanvas(info.width(), info.height(),
-                                              image_decode_controller));
-    SkIRect raster_bounds;
-    canvas->getClipDeviceBounds(&raster_bounds);
-    hijack_canvas->clipRect(SkRect::MakeFromIRect(raster_bounds));
-    hijack_canvas->setMatrix(canvas->getTotalMatrix());
-    hijack_canvas->addCanvas(canvas);
-
-    // Replace canvas with our ImageHijackCanvas which is wrapping it.
-    canvas = hijack_canvas.get();
-  }
-
-  SkMultiPictureDraw multi_picture_draw;
-  multi_picture_draw.add(canvas, picture);
-  multi_picture_draw.draw(false);
+  raster_source->PlaybackToCanvas(
+      sk_surface->getCanvas(), resource_lock->color_space_for_raster(),
+      raster_full_rect, playback_rect, transform, playback_settings);
 }
 
 }  // namespace
@@ -146,13 +105,13 @@ void GpuRasterBufferProvider::RasterBufferImpl::Playback(
     const gfx::Rect& raster_full_rect,
     const gfx::Rect& raster_dirty_rect,
     uint64_t new_content_id,
-    float scale,
+    const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings) {
   TRACE_EVENT0("cc", "GpuRasterBuffer::Playback");
   client_->PlaybackOnWorkerThread(&lock_, sync_token_,
                                   resource_has_previous_content_, raster_source,
                                   raster_full_rect, raster_dirty_rect,
-                                  new_content_id, scale, playback_settings);
+                                  new_content_id, transform, playback_settings);
 }
 
 GpuRasterBufferProvider::GpuRasterBufferProvider(
@@ -161,12 +120,14 @@ GpuRasterBufferProvider::GpuRasterBufferProvider(
     ResourceProvider* resource_provider,
     bool use_distance_field_text,
     int gpu_rasterization_msaa_sample_count,
+    ResourceFormat preferred_tile_format,
     bool async_worker_context_enabled)
     : compositor_context_provider_(compositor_context_provider),
       worker_context_provider_(worker_context_provider),
       resource_provider_(resource_provider),
       use_distance_field_text_(use_distance_field_text),
       msaa_sample_count_(gpu_rasterization_msaa_sample_count),
+      preferred_tile_format_(preferred_tile_format),
       async_worker_context_enabled_(async_worker_context_enabled) {
   DCHECK(compositor_context_provider);
   DCHECK(worker_context_provider);
@@ -182,9 +143,9 @@ std::unique_ptr<RasterBuffer> GpuRasterBufferProvider::AcquireBufferForRaster(
     uint64_t previous_content_id) {
   bool resource_has_previous_content =
       resource_content_id && resource_content_id == previous_content_id;
-  return base::WrapUnique(new RasterBufferImpl(
+  return base::MakeUnique<RasterBufferImpl>(
       this, resource_provider_, resource->id(), async_worker_context_enabled_,
-      resource_has_previous_content));
+      resource_has_previous_content);
 }
 
 void GpuRasterBufferProvider::ReleaseBufferForRaster(
@@ -216,6 +177,13 @@ void GpuRasterBufferProvider::OrderingBarrier() {
 
 ResourceFormat GpuRasterBufferProvider::GetResourceFormat(
     bool must_support_alpha) const {
+  if (resource_provider_->IsRenderBufferFormatSupported(
+          preferred_tile_format_) &&
+      (DoesResourceFormatSupportAlpha(preferred_tile_format_) ||
+       !must_support_alpha)) {
+    return preferred_tile_format_;
+  }
+
   return resource_provider_->best_render_buffer_format();
 }
 
@@ -232,6 +200,46 @@ bool GpuRasterBufferProvider::CanPartialRasterIntoProvidedResource() const {
   return msaa_sample_count_ == 0;
 }
 
+bool GpuRasterBufferProvider::IsResourceReadyToDraw(
+    ResourceId resource_id) const {
+  if (!async_worker_context_enabled_)
+    return true;
+
+  gpu::SyncToken sync_token =
+      resource_provider_->GetSyncTokenForResources({resource_id});
+  if (!sync_token.HasData())
+    return true;
+
+  // IsSyncTokenSignaled is thread-safe, no need for worker context lock.
+  return worker_context_provider_->ContextSupport()->IsSyncTokenSignaled(
+      sync_token);
+}
+
+uint64_t GpuRasterBufferProvider::SetReadyToDrawCallback(
+    const ResourceProvider::ResourceIdArray& resource_ids,
+    const base::Closure& callback,
+    uint64_t pending_callback_id) const {
+  if (!async_worker_context_enabled_)
+    return 0;
+
+  gpu::SyncToken sync_token =
+      resource_provider_->GetSyncTokenForResources(resource_ids);
+  uint64_t callback_id = sync_token.release_count();
+  DCHECK_NE(callback_id, 0u);
+
+  // If the callback is different from the one the caller is already waiting on,
+  // pass the callback through to SignalSyncToken. Otherwise the request is
+  // redundant.
+  if (callback_id != pending_callback_id) {
+    // Use the compositor context because we want this callback on the impl
+    // thread.
+    compositor_context_provider_->ContextSupport()->SignalSyncToken(sync_token,
+                                                                    callback);
+  }
+
+  return callback_id;
+}
+
 void GpuRasterBufferProvider::Shutdown() {
   pending_raster_buffers_.clear();
 }
@@ -244,7 +252,7 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
     const gfx::Rect& raster_full_rect,
     const gfx::Rect& raster_dirty_rect,
     uint64_t new_content_id,
-    float scale,
+    const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings) {
   ContextProvider::ScopedContextLock scoped_context(worker_context_provider_);
   gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
@@ -259,20 +267,11 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
     gl->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
   }
 
-  sk_sp<SkPicture> picture = PlaybackToPicture(
-      raster_source, resource_has_previous_content, resource_lock->size(),
-      raster_full_rect, raster_dirty_rect, scale, playback_settings);
-
-  // Turn on distance fields for layers that have ever animated.
-  bool use_distance_field_text =
-      use_distance_field_text_ ||
-      raster_source->ShouldAttemptToUseDistanceFieldText();
-
-  RasterizePicture(picture.get(), worker_context_provider_, resource_lock,
-                   async_worker_context_enabled_, use_distance_field_text,
-                   raster_source->CanUseLCDText(), msaa_sample_count_,
-                   raster_source->image_decode_controller(),
-                   playback_settings.use_image_hijack_canvas);
+  RasterizeSource(raster_source, resource_has_previous_content,
+                  resource_lock->size(), raster_full_rect, raster_dirty_rect,
+                  transform, playback_settings, worker_context_provider_,
+                  resource_lock, async_worker_context_enabled_,
+                  use_distance_field_text_, msaa_sample_count_);
 
   const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
 

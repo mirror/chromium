@@ -8,30 +8,29 @@
 #include "platform/animation/CompositorAnimationTimeline.h"
 #include "platform/testing/CompositorTest.h"
 #include "platform/testing/WebLayerTreeViewImplForTesting.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
 
 namespace blink {
 
-class CompositorAnimationHostTest : public CompositorTest {
-};
+class CompositorAnimationHostTest : public CompositorTest {};
 
-TEST_F(CompositorAnimationHostTest, AnimationHostNullWhenTimelineDetached)
-{
-    std::unique_ptr<CompositorAnimationTimeline> timeline = CompositorAnimationTimeline::create();
+TEST_F(CompositorAnimationHostTest, AnimationHostNullWhenTimelineDetached) {
+  std::unique_ptr<CompositorAnimationTimeline> timeline =
+      CompositorAnimationTimeline::Create();
 
-    scoped_refptr<cc::AnimationTimeline> ccTimeline = timeline->animationTimeline();
-    EXPECT_FALSE(ccTimeline->animation_host());
-    EXPECT_TRUE(timeline->compositorAnimationHost().isNull());
+  scoped_refptr<cc::AnimationTimeline> cc_timeline =
+      timeline->GetAnimationTimeline();
+  EXPECT_FALSE(cc_timeline->animation_host());
 
-    std::unique_ptr<WebLayerTreeView> layerTreeHost = wrapUnique(new WebLayerTreeViewImplForTesting);
-    DCHECK(layerTreeHost);
+  WebLayerTreeViewImplForTesting layer_tree_view;
+  CompositorAnimationHost compositor_animation_host(
+      layer_tree_view.CompositorAnimationHost());
 
-    layerTreeHost->attachCompositorAnimationTimeline(timeline->animationTimeline());
-    EXPECT_FALSE(timeline->compositorAnimationHost().isNull());
+  compositor_animation_host.AddTimeline(*timeline);
+  EXPECT_TRUE(cc_timeline->animation_host());
 
-    layerTreeHost->detachCompositorAnimationTimeline(timeline->animationTimeline());
-    EXPECT_TRUE(timeline->compositorAnimationHost().isNull());
+  compositor_animation_host.RemoveTimeline(*timeline);
+  EXPECT_FALSE(cc_timeline->animation_host());
 }
 
-} // namespace blink
+}  // namespace blink

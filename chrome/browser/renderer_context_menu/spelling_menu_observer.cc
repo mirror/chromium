@@ -14,19 +14,20 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/renderer_context_menu/render_view_context_menu.h"
 #include "chrome/browser/renderer_context_menu/spelling_bubble_model.h"
-#include "chrome/browser/spellchecker/feedback_sender.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
-#include "chrome/browser/spellchecker/spellcheck_host_metrics.h"
-#include "chrome/browser/spellchecker/spellcheck_platform.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
-#include "chrome/browser/spellchecker/spelling_service_client.h"
 #include "chrome/browser/ui/confirm_bubble.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/spellcheck_common.h"
-#include "chrome/common/spellcheck_result.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
+#include "components/spellcheck/browser/pref_names.h"
+#include "components/spellcheck/browser/spellcheck_host_metrics.h"
+#include "components/spellcheck/browser/spellcheck_platform.h"
+#include "components/spellcheck/browser/spelling_service_client.h"
+#include "components/spellcheck/common/spellcheck_common.h"
+#include "components/spellcheck/common/spellcheck_result.h"
+#include "components/spellcheck/spellcheck_build_features.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
@@ -44,12 +45,11 @@ SpellingMenuObserver::SpellingMenuObserver(RenderViewContextMenuProxy* proxy)
     : proxy_(proxy),
       loading_frame_(0),
       succeeded_(false),
-      misspelling_hash_(0),
       client_(new SpellingServiceClient) {
   if (proxy_ && proxy_->GetBrowserContext()) {
     Profile* profile = Profile::FromBrowserContext(proxy_->GetBrowserContext());
-    integrate_spelling_service_.Init(prefs::kSpellCheckUseSpellingService,
-                                     profile->GetPrefs());
+    integrate_spelling_service_.Init(
+        spellcheck::prefs::kSpellCheckUseSpellingService, profile->GetPrefs());
   }
 }
 
@@ -73,7 +73,6 @@ void SpellingMenuObserver::InitMenu(const content::ContextMenuParams& params) {
 
   suggestions_ = params.dictionary_suggestions;
   misspelled_word_ = params.misspelled_word;
-  misspelling_hash_ = params.misspelling_hash;
 
   bool use_suggestions = SpellingServiceClient::IsAvailable(
       browser_context, SpellingServiceClient::SUGGEST);
@@ -158,6 +157,7 @@ void SpellingMenuObserver::InitMenu(const content::ContextMenuParams& params) {
         SpellcheckServiceFactory::GetForContext(browser_context);
     if (spellcheck_service && spellcheck_service->GetMetrics())
       spellcheck_service->GetMetrics()->RecordSuggestionStats(1);
+    proxy_->AddSeparator();
   }
 
   // If word is misspelled, give option for "Add to dictionary" and, if
@@ -166,7 +166,6 @@ void SpellingMenuObserver::InitMenu(const content::ContextMenuParams& params) {
   proxy_->AddMenuItem(IDC_SPELLCHECK_ADD_TO_DICTIONARY,
       l10n_util::GetStringUTF16(IDS_CONTENT_CONTEXT_ADD_TO_DICTIONARY));
   proxy_->AddSpellCheckServiceItem(integrate_spelling_service_.GetValue());
-  proxy_->AddSeparator();
 }
 
 bool SpellingMenuObserver::IsCommandIdSupported(int command_id) {
@@ -240,8 +239,6 @@ void SpellingMenuObserver::ExecuteCommand(int command_id) {
       if (spellcheck) {
         if (spellcheck->GetMetrics())
           spellcheck->GetMetrics()->RecordReplacedWordStats(1);
-        spellcheck->GetFeedbackSender()->SelectedSuggestion(
-            misspelling_hash_, suggestion_index);
       }
     }
     return;
@@ -266,10 +263,9 @@ void SpellingMenuObserver::ExecuteCommand(int command_id) {
       if (spellcheck) {
         spellcheck->GetCustomDictionary()->AddWord(base::UTF16ToUTF8(
             misspelled_word_));
-        spellcheck->GetFeedbackSender()->AddedToDictionary(misspelling_hash_);
       }
     }
-#if defined(USE_BROWSER_SPELLCHECKER)
+#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
     spellcheck_platform::AddWord(misspelled_word_);
 #endif
   }
@@ -294,22 +290,11 @@ void SpellingMenuObserver::ExecuteCommand(int command_id) {
           gfx::Point(rect.CenterPoint().x(), rect.y()), std::move(model));
     } else {
       if (profile) {
-        profile->GetPrefs()->SetBoolean(prefs::kSpellCheckUseSpellingService,
-                                        false);
+        profile->GetPrefs()->SetBoolean(
+            spellcheck::prefs::kSpellCheckUseSpellingService, false);
       }
     }
   }
-}
-
-void SpellingMenuObserver::OnMenuCancel() {
-  content::BrowserContext* browser_context = proxy_->GetBrowserContext();
-  if (!browser_context)
-    return;
-  SpellcheckService* spellcheck =
-      SpellcheckServiceFactory::GetForContext(browser_context);
-  if (!spellcheck)
-    return;
-  spellcheck->GetFeedbackSender()->IgnoredSuggestions(misspelling_hash_);
 }
 
 void SpellingMenuObserver::OnTextCheckComplete(

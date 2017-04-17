@@ -13,7 +13,9 @@
 #include "build/build_config.h"
 #include "chrome/browser/extensions/api/permissions/permissions_api.h"
 #include "chrome/browser/extensions/extension_apitest.h"
+#include "chrome/browser/extensions/extension_management_test_util.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/extension_with_management_policy_apitest.h"
 #include "chrome/browser/extensions/test_extension_dir.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -28,6 +30,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "extensions/browser/notification_types.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/switches.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
 #include "net/dns/mock_host_resolver.h"
@@ -164,12 +167,11 @@ DialogHelper::DialogHelper(content::WebContents* web_contents)
       client_(nullptr) {
   app_modal::JavaScriptDialogManager* dialog_manager_impl =
       app_modal::JavaScriptDialogManager::GetInstance();
-  dialog_manager_ =
-      web_contents_->GetDelegate()->GetJavaScriptDialogManager(web_contents_);
-  DCHECK_EQ(dialog_manager_impl, dialog_manager_);
-
   client_ = new DialogClient(this);
   dialog_manager_impl->SetExtensionsClient(base::WrapUnique(client_));
+
+  dialog_manager_ =
+      web_contents_->GetDelegate()->GetJavaScriptDialogManager(web_contents_);
 }
 
 DialogHelper::~DialogHelper() {
@@ -177,7 +179,7 @@ DialogHelper::~DialogHelper() {
 }
 
 void DialogHelper::CloseDialogs() {
-  dialog_manager_->CancelActiveAndPendingDialogs(web_contents_);
+  dialog_manager_->CancelDialogs(web_contents_, false);
 }
 
 void DialogHelper::DialogOpened() {
@@ -233,18 +235,42 @@ const char kNewTabHtml[] = "<html>NewTabOverride!</html>";
 
 }  // namespace
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptAllFrames) {
+enum class TestConfig {
+  kDefault,
+  kYieldBetweenContentScriptRunsEnabled,
+};
+
+class ContentScriptApiTest : public ExtensionApiTest,
+                             public testing::WithParamInterface<TestConfig> {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ExtensionApiTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitchASCII(
+        switches::kYieldBetweenContentScriptRuns,
+        (GetParam() == TestConfig::kYieldBetweenContentScriptRunsEnabled)
+            ? "1"
+            : "0");
+  }
+};
+
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptAllFrames) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(RunExtensionTest("content_scripts/all_frames")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptAboutBlankIframes) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptAboutBlankIframes) {
+  const char* testArg =
+      GetParam() == TestConfig::kYieldBetweenContentScriptRunsEnabled
+          ? "YieldBetweenContentScriptRunsEnabled"
+          : "YieldBetweenContentScriptRunsDisabled";
+
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(
-      RunExtensionTest("content_scripts/about_blank_iframes")) << message_;
+      RunExtensionTestWithArg("content_scripts/about_blank_iframes", testArg))
+      << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptAboutBlankAndSrcdoc) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptAboutBlankAndSrcdoc) {
   // The optional "*://*/*" permission is requested after verifying that
   // content script insertion solely depends on content_scripts[*].matches.
   // The permission is needed for chrome.tabs.executeScript tests.
@@ -256,18 +282,18 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptAboutBlankAndSrcdoc) {
       << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptExtensionIframe) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptExtensionIframe) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(RunExtensionTest("content_scripts/extension_iframe")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptExtensionProcess) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptExtensionProcess) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(
       RunExtensionTest("content_scripts/extension_process")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptFragmentNavigation) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptFragmentNavigation) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   const char extension_name[] = "content_scripts/fragment";
   ASSERT_TRUE(RunExtensionTest(extension_name)) << message_;
@@ -279,7 +305,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptFragmentNavigation) {
 #else
 #define MAYBE_ContentScriptIsolatedWorlds ContentScriptIsolatedWorlds
 #endif
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_ContentScriptIsolatedWorlds) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
+                       MAYBE_ContentScriptIsolatedWorlds) {
   // This extension runs various bits of script and tests that they all run in
   // the same isolated world.
   ASSERT_TRUE(StartEmbeddedTestServer());
@@ -290,7 +317,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_ContentScriptIsolatedWorlds) {
   ASSERT_TRUE(RunExtensionTest("content_scripts/isolated_world2")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptIgnoreHostPermissions) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
+                       ContentScriptIgnoreHostPermissions) {
   host_resolver()->AddRule("a.com", "127.0.0.1");
   host_resolver()->AddRule("b.com", "127.0.0.1");
   ASSERT_TRUE(StartEmbeddedTestServer());
@@ -299,14 +327,14 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptIgnoreHostPermissions) {
 }
 
 // crbug.com/39249 -- content scripts js should not run on view source.
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptViewSource) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptViewSource) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(RunExtensionTest("content_scripts/view_source")) << message_;
 }
 
 // crbug.com/126257 -- content scripts should not get injected into other
 // extensions.
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptOtherExtensions) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptOtherExtensions) {
   host_resolver()->AddRule("a.com", "127.0.0.1");
   ASSERT_TRUE(StartEmbeddedTestServer());
   // First, load extension that sets up content script.
@@ -330,12 +358,12 @@ class ContentScriptCssInjectionTest : public ExtensionApiTest {
     // can't use the real Webstore's URL. If this changes, we could clean this
     // up.
     command_line->AppendSwitchASCII(
-        switches::kAppsGalleryURL,
+        ::switches::kAppsGalleryURL,
         base::StringPrintf("http://%s", kWebstoreDomain));
   }
 };
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
                        ContentScriptDuplicateScriptInjection) {
   host_resolver()->AddRule("maps.google.com", "127.0.0.1");
   ASSERT_TRUE(StartEmbeddedTestServer());
@@ -428,13 +456,12 @@ IN_PROC_BROWSER_TEST_F(
   ASSERT_TRUE(styles_injected);
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
-                       ContentScriptCSSLocalization) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptCSSLocalization) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(RunExtensionTest("content_scripts/css_l10n")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptExtensionAPIs) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptExtensionAPIs) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
   const extensions::Extension* extension = LoadExtension(
@@ -458,7 +485,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptExtensionAPIs) {
   // listening for.
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), extension->GetResourceURL("fire_event.html"),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_NONE);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
   EXPECT_TRUE(catcher.GetNextResult());
 }
 
@@ -468,7 +496,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptExtensionAPIs) {
 #else
 #define MAYBE_ContentScriptPermissionsApi ContentScriptPermissionsApi
 #endif
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_ContentScriptPermissionsApi) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
+                       MAYBE_ContentScriptPermissionsApi) {
   extensions::PermissionsRequestFunction::SetIgnoreUserGestureForTests(true);
   extensions::PermissionsRequestFunction::SetAutoConfirmForTests(true);
   host_resolver()->AddRule("*.com", "127.0.0.1");
@@ -476,14 +505,26 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_ContentScriptPermissionsApi) {
   ASSERT_TRUE(RunExtensionTest("content_scripts/permissions")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBypassPageCSP) {
+IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
+                       ContentScriptPolicy) {
+  // Set enterprise policy to block injection to policy specified host.
+  {
+    ExtensionManagementPolicyUpdater pref(&policy_provider_);
+    pref.AddRuntimeBlockedHost("*", "*://example.com/*");
+  }
+  host_resolver()->AddRule("*.com", "127.0.0.1");
+  ASSERT_TRUE(StartEmbeddedTestServer());
+  ASSERT_TRUE(RunExtensionTest("content_scripts/policy")) << message_;
+}
+
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptBypassPageCSP) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(RunExtensionTest("content_scripts/bypass_page_csp")) << message_;
 }
 
 // Test that when injecting a blocking content script, other scripts don't run
 // until the blocking script finishes.
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBlockingScript) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptBlockingScript) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
   // Load up two extensions.
@@ -491,13 +532,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBlockingScript) {
   ext_dir1.WriteManifest(
       base::StringPrintf(kManifest, "ext1", "document_start"));
   ext_dir1.WriteFile(FILE_PATH_LITERAL("script.js"), kBlockingScript);
-  const Extension* ext1 = LoadExtension(ext_dir1.unpacked_path());
+  const Extension* ext1 = LoadExtension(ext_dir1.UnpackedPath());
   ASSERT_TRUE(ext1);
 
   TestExtensionDir ext_dir2;
   ext_dir2.WriteManifest(base::StringPrintf(kManifest, "ext2", "document_end"));
   ext_dir2.WriteFile(FILE_PATH_LITERAL("script.js"), kNonBlockingScript);
-  const Extension* ext2 = LoadExtension(ext_dir2.unpacked_path());
+  const Extension* ext2 = LoadExtension(ext_dir2.UnpackedPath());
   ASSERT_TRUE(ext2);
 
   content::WebContents* web_contents =
@@ -511,10 +552,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBlockingScript) {
 
   // Navigate! Both extensions will try to inject.
   ui_test_utils::NavigateToURLWithDisposition(
-      browser(),
-      embedded_test_server()->GetURL("/empty.html"),
-      CURRENT_TAB,
-      ui_test_utils::BROWSER_TEST_NONE);
+      browser(), embedded_test_server()->GetURL("/empty.html"),
+      WindowOpenDisposition::CURRENT_TAB, ui_test_utils::BROWSER_TEST_NONE);
 
   run_loop.Run();
   // Right now, the alert dialog is showing and blocking injection of anything
@@ -530,15 +569,15 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBlockingScript) {
 
 // Test that closing a tab with a blocking script results in no further scripts
 // running (and we don't crash).
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBlockingScriptTabClosed) {
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
+                       ContentScriptBlockingScriptTabClosed) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
   // We're going to close a tab in this test, so make a new one (to ensure
   // we don't close the browser).
   ui_test_utils::NavigateToURLWithDisposition(
-      browser(),
-      embedded_test_server()->GetURL("/empty.html"),
-      NEW_FOREGROUND_TAB,
+      browser(), embedded_test_server()->GetURL("/empty.html"),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
       ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
 
   // Set up the same as the previous test case.
@@ -546,13 +585,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBlockingScriptTabClosed) {
   ext_dir1.WriteManifest(
       base::StringPrintf(kManifest, "ext1", "document_start"));
   ext_dir1.WriteFile(FILE_PATH_LITERAL("script.js"), kBlockingScript);
-  const Extension* ext1 = LoadExtension(ext_dir1.unpacked_path());
+  const Extension* ext1 = LoadExtension(ext_dir1.UnpackedPath());
   ASSERT_TRUE(ext1);
 
   TestExtensionDir ext_dir2;
   ext_dir2.WriteManifest(base::StringPrintf(kManifest, "ext2", "document_end"));
   ext_dir2.WriteFile(FILE_PATH_LITERAL("script.js"), kNonBlockingScript);
-  const Extension* ext2 = LoadExtension(ext_dir2.unpacked_path());
+  const Extension* ext2 = LoadExtension(ext_dir2.UnpackedPath());
   ASSERT_TRUE(ext2);
 
   content::WebContents* web_contents =
@@ -566,10 +605,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBlockingScriptTabClosed) {
 
   // Navitate!
   ui_test_utils::NavigateToURLWithDisposition(
-      browser(),
-      embedded_test_server()->GetURL("/empty.html"),
-      CURRENT_TAB,
-      ui_test_utils::BROWSER_TEST_NONE);
+      browser(), embedded_test_server()->GetURL("/empty.html"),
+      WindowOpenDisposition::CURRENT_TAB, ui_test_utils::BROWSER_TEST_NONE);
 
   // Now, instead of closing the dialog, just close the tab. Later scripts
   // should never get a chance to run (and we shouldn't crash).
@@ -583,7 +620,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ContentScriptBlockingScriptTabClosed) {
 // There was a bug by which content scripts that blocked and ran on
 // document_idle could be injected twice (crbug.com/431263). Test for
 // regression.
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
                        ContentScriptBlockingScriptsDontRunTwice) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
@@ -592,7 +629,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
   ext_dir1.WriteManifest(
       base::StringPrintf(kManifest, "ext1", "document_idle"));
   ext_dir1.WriteFile(FILE_PATH_LITERAL("script.js"), kBlockingScript);
-  const Extension* ext1 = LoadExtension(ext_dir1.unpacked_path());
+  const Extension* ext1 = LoadExtension(ext_dir1.UnpackedPath());
   ASSERT_TRUE(ext1);
 
   content::WebContents* web_contents =
@@ -603,10 +640,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
 
   // Navigate!
   ui_test_utils::NavigateToURLWithDisposition(
-      browser(),
-      embedded_test_server()->GetURL("/empty.html"),
-      CURRENT_TAB,
-      ui_test_utils::BROWSER_TEST_NONE);
+      browser(), embedded_test_server()->GetURL("/empty.html"),
+      WindowOpenDisposition::CURRENT_TAB, ui_test_utils::BROWSER_TEST_NONE);
 
   run_loop.Run();
 
@@ -618,7 +653,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
 }
 
 // Bug fix for crbug.com/507461.
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
                        DocumentStartInjectionFromExtensionTabNavigation) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
@@ -626,14 +661,14 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
   new_tab_override_dir.WriteManifest(kNewTabOverrideManifest);
   new_tab_override_dir.WriteFile(FILE_PATH_LITERAL("newtab.html"), kNewTabHtml);
   const Extension* new_tab_override =
-      LoadExtension(new_tab_override_dir.unpacked_path());
+      LoadExtension(new_tab_override_dir.UnpackedPath());
   ASSERT_TRUE(new_tab_override);
 
   TestExtensionDir injector_dir;
   injector_dir.WriteManifest(
       base::StringPrintf(kManifest, "injector", "document_start"));
   injector_dir.WriteFile(FILE_PATH_LITERAL("script.js"), kNonBlockingScript);
-  const Extension* injector = LoadExtension(injector_dir.unpacked_path());
+  const Extension* injector = LoadExtension(injector_dir.UnpackedPath());
   ASSERT_TRUE(injector);
 
   ExtensionTestMessageListener listener("done", false);
@@ -649,12 +684,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
 
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), embedded_test_server()->GetURL("/empty.html"),
-      CURRENT_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(listener.was_satisfied());
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
+IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
                        DontInjectContentScriptsInBackgroundPages) {
   host_resolver()->AddRule("a.com", "127.0.0.1");
   ASSERT_TRUE(StartEmbeddedTestServer());
@@ -671,5 +707,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
   iframe_loaded_listener.WaitUntilSatisfied();
   EXPECT_FALSE(content_script_listener.was_satisfied());
 }
+
+INSTANTIATE_TEST_CASE_P(
+    ContentScriptApiTests,
+    ContentScriptApiTest,
+    testing::Values(TestConfig::kDefault,
+                    TestConfig::kYieldBetweenContentScriptRunsEnabled));
 
 }  // namespace extensions

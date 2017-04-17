@@ -29,104 +29,111 @@
 #ifndef DynamicsCompressorKernel_h
 #define DynamicsCompressorKernel_h
 
+#include <memory>
 #include "platform/PlatformExport.h"
 #include "platform/audio/AudioArray.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT DynamicsCompressorKernel {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(DynamicsCompressorKernel);
-public:
-    DynamicsCompressorKernel(float sampleRate, unsigned numberOfChannels);
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(DynamicsCompressorKernel);
 
-    void setNumberOfChannels(unsigned);
+ public:
+  DynamicsCompressorKernel(float sample_rate, unsigned number_of_channels);
 
-    // Performs stereo-linked compression.
-    void process(const float* sourceChannels[],
-                 float* destinationChannels[],
-                 unsigned numberOfChannels,
-                 unsigned framesToProcess,
+  void SetNumberOfChannels(unsigned);
 
-                 float dbThreshold,
-                 float dbKnee,
-                 float ratio,
-                 float attackTime,
-                 float releaseTime,
-                 float preDelayTime,
-                 float dbPostGain,
-                 float effectBlend,
+  // Performs stereo-linked compression.
+  void Process(const float* source_channels[],
+               float* destination_channels[],
+               unsigned number_of_channels,
+               unsigned frames_to_process,
 
-                 float releaseZone1,
-                 float releaseZone2,
-                 float releaseZone3,
-                 float releaseZone4
-                 );
+               float db_threshold,
+               float db_knee,
+               float ratio,
+               float attack_time,
+               float release_time,
+               float pre_delay_time,
+               float db_post_gain,
+               float effect_blend,
 
-    void reset();
+               float release_zone1,
+               float release_zone2,
+               float release_zone3,
+               float release_zone4);
 
-    unsigned latencyFrames() const { return m_lastPreDelayFrames; }
+  void Reset();
 
-    float sampleRate() const { return m_sampleRate; }
+  unsigned LatencyFrames() const { return last_pre_delay_frames_; }
 
-    float meteringGain() const { return m_meteringGain; }
+  float SampleRate() const { return sample_rate_; }
 
-protected:
-    float m_sampleRate;
+  float MeteringGain() const { return metering_gain_; }
 
-    float m_detectorAverage;
-    float m_compressorGain;
+ protected:
+  float sample_rate_;
 
-    // Metering
-    float m_meteringReleaseK;
-    float m_meteringGain;
+  float detector_average_;
+  float compressor_gain_;
 
-    // Lookahead section.
-    enum { MaxPreDelayFrames = 1024 };
-    enum { MaxPreDelayFramesMask = MaxPreDelayFrames - 1 };
-    enum { DefaultPreDelayFrames = 256 }; // setPreDelayTime() will override this initial value
-    unsigned m_lastPreDelayFrames;
-    void setPreDelayTime(float);
+  // Metering
+  float metering_release_k_;
+  float metering_gain_;
 
-    Vector<std::unique_ptr<AudioFloatArray>> m_preDelayBuffers;
-    int m_preDelayReadIndex;
-    int m_preDelayWriteIndex;
+  // Lookahead section.
+  enum { kMaxPreDelayFrames = 1024 };
+  enum { kMaxPreDelayFramesMask = kMaxPreDelayFrames - 1 };
+  enum {
+    kDefaultPreDelayFrames = 256
+  };  // setPreDelayTime() will override this initial value
+  unsigned last_pre_delay_frames_;
+  void SetPreDelayTime(float);
 
-    float m_maxAttackCompressionDiffDb;
+  Vector<std::unique_ptr<AudioFloatArray>> pre_delay_buffers_;
+  int pre_delay_read_index_;
+  int pre_delay_write_index_;
 
-    // Static compression curve.
-    float kneeCurve(float x, float k);
-    float saturate(float x, float k);
-    float slopeAt(float x, float k);
-    float kAtSlope(float desiredSlope);
+  float max_attack_compression_diff_db_;
 
-    float updateStaticCurveParameters(float dbThreshold, float dbKnee, float ratio);
+  // Static compression curve.
+  float KneeCurve(float x, float k);
+  float Saturate(float x, float k);
+  float SlopeAt(float x, float k);
+  float KAtSlope(float desired_slope);
 
-    // Amount of input change in dB required for 1 dB of output change.
-    // This applies to the portion of the curve above m_kneeThresholdDb (see below).
-    float m_ratio;
-    float m_slope; // Inverse ratio.
+  float UpdateStaticCurveParameters(float db_threshold,
+                                    float db_knee,
+                                    float ratio);
 
-    // The input to output change below the threshold is linear 1:1.
-    float m_linearThreshold;
-    float m_dbThreshold;
+  // Amount of input change in dB required for 1 dB of output change.
+  // This applies to the portion of the curve above m_kneeThresholdDb (see
+  // below).
+  float ratio_;
+  float slope_;  // Inverse ratio.
 
-    // m_dbKnee is the number of dB above the threshold before we enter the "ratio" portion of the curve.
-    // m_kneeThresholdDb = m_dbThreshold + m_dbKnee
-    // The portion between m_dbThreshold and m_kneeThresholdDb is the "soft knee" portion of the curve
-    // which transitions smoothly from the linear portion to the ratio portion.
-    float m_dbKnee;
-    float m_kneeThreshold;
-    float m_kneeThresholdDb;
-    float m_ykneeThresholdDb;
+  // The input to output change below the threshold is linear 1:1.
+  float linear_threshold_;
+  float db_threshold_;
 
-    // Internal parameter for the knee portion of the curve.
-    float m_knee;
+  // m_dbKnee is the number of dB above the threshold before we enter the
+  // "ratio" portion of the curve.
+  // m_kneeThresholdDb = m_dbThreshold + m_dbKnee
+  // The portion between m_dbThreshold and m_kneeThresholdDb is the "soft knee"
+  // portion of the curve which transitions smoothly from the linear portion to
+  // the ratio portion.
+  float db_knee_;
+  float knee_threshold_;
+  float knee_threshold_db_;
+  float yknee_threshold_db_;
+
+  // Internal parameter for the knee portion of the curve.
+  float knee_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DynamicsCompressorKernel_h
+#endif  // DynamicsCompressorKernel_h

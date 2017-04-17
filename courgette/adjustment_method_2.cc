@@ -1252,16 +1252,12 @@ class Adjuster : public AdjustmentMethod {
   void CollectTraces(const AssemblyProgram* program, Trace* abs32, Trace* rel32,
                      bool is_model) {
     label_info_maker_.ResetDebugLabel();
-    const InstructionVector& instructions = program->instructions();
-    for (size_t i = 0;  i < instructions.size();  ++i) {
-      Instruction* instruction = instructions[i];
-      if (Label* label = program->InstructionAbs32Label(instruction))
-        ReferenceLabel(abs32, label, is_model);
-      if (Label* label = program->InstructionAbs64Label(instruction))
-        ReferenceLabel(abs32, label, is_model);
-      if (Label* label = program->InstructionRel32Label(instruction))
-        ReferenceLabel(rel32, label, is_model);
-    }
+
+    for (Label* label : program->abs32_label_annotations())
+      ReferenceLabel(abs32, is_model, label);
+    for (Label* label : program->rel32_label_annotations())
+      ReferenceLabel(rel32, is_model, label);
+
     // TODO(sra): we could simply append all the labels in index order to
     // incorporate some costing for entropy (bigger deltas) that will be
     // introduced into the label address table by non-monotonic ordering.  This
@@ -1277,7 +1273,7 @@ class Adjuster : public AdjustmentMethod {
             << (base::Time::Now() - start_time).InSecondsF();
   }
 
-  void ReferenceLabel(Trace* trace, Label* label, bool is_model) {
+  void ReferenceLabel(Trace* trace, bool is_model, Label* label) {
     trace->push_back(label_info_maker_.MakeLabelInfo(
         label, is_model, static_cast<uint32_t>(trace->size())));
   }

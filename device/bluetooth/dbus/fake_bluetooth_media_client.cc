@@ -78,7 +78,7 @@ void FakeBluetoothMediaClient::UnregisterEndpoint(
   // TODO(mcchou): Come up with some corresponding actions.
   VLOG(1) << "UnregisterEndpoint: " << endpoint_path.value();
 
-  if (!ContainsKey(endpoints_, endpoint_path)) {
+  if (!base::ContainsKey(endpoints_, endpoint_path)) {
     error_callback.Run(kFailedError, "Unknown media endpoint");
     return;
   }
@@ -100,8 +100,8 @@ void FakeBluetoothMediaClient::SetVisible(bool visible) {
     SetEndpointRegistered(endpoints_.begin()->second, false);
 
   // Notifies observers about the change on |visible_|.
-  FOR_EACH_OBSERVER(BluetoothMediaClient::Observer, observers_,
-                    MediaRemoved(object_path_));
+  for (auto& observer : observers_)
+    observer.MediaRemoved(object_path_);
 }
 
 void FakeBluetoothMediaClient::SetEndpointRegistered(
@@ -128,7 +128,7 @@ void FakeBluetoothMediaClient::SetEndpointRegistered(
 
 bool FakeBluetoothMediaClient::IsRegistered(
     const dbus::ObjectPath& endpoint_path) {
-  return ContainsKey(endpoints_, endpoint_path);
+  return base::ContainsKey(endpoints_, endpoint_path);
 }
 
 }  // namespace bluez

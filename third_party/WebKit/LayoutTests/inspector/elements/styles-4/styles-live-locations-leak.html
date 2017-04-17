@@ -64,12 +64,9 @@ function test()
     function countLiveLocations()
     {
         var locationsCount = 0;
-        var targetInfos = WebInspector.cssWorkspaceBinding._modelToTargetInfo.valuesArray();
-        for (var targetInfo of targetInfos) {
-            var headerInfos = targetInfo._headerInfoById.valuesArray();
-            for (var headerInfo of headerInfos)
-                locationsCount += headerInfo._locations.size;
-        }
+        var modelInfos = Bindings.cssWorkspaceBinding._modelToInfo.valuesArray();
+        for (var modelInfo of modelInfos)
+            locationsCount += modelInfo._locations.valuesArray().length;
         return locationsCount;
     }
 }

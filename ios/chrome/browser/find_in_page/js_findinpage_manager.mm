@@ -7,19 +7,19 @@
 #include <memory>
 #include <string>
 
-#import "base/ios/weak_nsobject.h"
 #include "base/json/json_reader.h"
 #include "base/json/string_escape.h"
 #include "base/logging.h"
+#include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/values.h"
 #import "ios/chrome/browser/find_in_page/find_in_page_model.h"
 
-namespace {
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
-// Global variable defined in find_in_page.js that can be used for testing
-// whether JavaScript bas heen loaded.
-NSString* const kFindInPageBeacon = @"window.__gCrWeb.findInPage";
+namespace {
 
 // Initializes Find In Page JavaScript with the width and height of the window.
 NSString* const kFindInPageInit = @"window.__gCrWeb.findInPage && "
@@ -57,8 +57,7 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
 // Update find in page model with results, return true if fip completes or
 // false if still pending and requires pumping. If |point| is not nil, it will
 // contain the scroll position upon return.
-- (BOOL)processFindInPageResult:(NSString*)result
-                 scrollPosition:(CGPoint*)point;
+- (BOOL)processFindInPageResult:(id)result scrollPosition:(CGPoint*)point;
 // Updates find in page model with results. Calls |completionHandler| with the
 // the result of the processing and the new scroll position if successful. If
 // |completionHandler| is called with NO, further pumping is required.
@@ -79,49 +78,44 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
 @end
 
 @implementation JsFindinpageManager
-
-- (FindInPageModel*)findInPageModel {
-  if (!findInPageModel_)
-    findInPageModel_.reset([[FindInPageModel alloc] init]);
-  return findInPageModel_.get();
-}
+@synthesize findInPageModel = _findInPageModel;
 
 - (void)setWidth:(CGFloat)width height:(CGFloat)height {
   NSString* javaScript =
       [NSString stringWithFormat:kFindInPageInit, width, height];
-  [self evaluate:javaScript stringResultHandler:nil];
+  [self executeJavaScript:javaScript completionHandler:nil];
 }
 
 - (void)findString:(NSString*)query
     completionHandler:(void (^)(BOOL, CGPoint))completionHandler {
   DCHECK(completionHandler);
   // Save the query in the model before searching.
-  [findInPageModel_ updateQuery:query matches:0];
+  [self.findInPageModel updateQuery:query matches:0];
 
   // Escape |query| before passing to js.
-  std::string escapedJson;
-  base::EscapeJSONString(base::SysNSStringToUTF16(query), true, &escapedJson);
-  NSString* jsonQuery =
+  std::string escapedJSON;
+  base::EscapeJSONString(base::SysNSStringToUTF16(query), true, &escapedJSON);
+  NSString* JSONQuery =
       [NSString stringWithFormat:kFindInPageVerbatim,
-                                 base::SysUTF8ToNSString(escapedJson.c_str())];
-  base::WeakNSObject<JsFindinpageManager> weakSelf(self);
-  [self evaluate:jsonQuery
-      stringResultHandler:^(NSString* result, NSError* error) {
-        [weakSelf processFindInPagePumpResult:result
-                            completionHandler:completionHandler];
-      }];
+                                 base::SysUTF8ToNSString(escapedJSON.c_str())];
+  __weak JsFindinpageManager* weakSelf = self;
+  [self executeJavaScript:JSONQuery
+        completionHandler:^(id result, NSError* error) {
+          [weakSelf processFindInPagePumpResult:result
+                              completionHandler:completionHandler];
+        }];
 }
 
 - (void)pumpWithCompletionHandler:(void (^)(BOOL, CGPoint))completionHandler {
   DCHECK(completionHandler);
-  base::WeakNSObject<JsFindinpageManager> weakSelf(self);
-  [self evaluate:kFindInPagePump
-      stringResultHandler:^(NSString* result, NSError* error) {
-        // TODO(shreyasv): What to do here if this returns an NSError in the
-        // WKWebView version.
-        [weakSelf processFindInPagePumpResult:result
-                            completionHandler:completionHandler];
-      }];
+  __weak JsFindinpageManager* weakSelf = self;
+  [self executeJavaScript:kFindInPagePump
+        completionHandler:^(id result, NSError* error) {
+          // TODO(shreyasv): What to do here if this returns an NSError in the
+          // WKWebView version.
+          [weakSelf processFindInPagePumpResult:result
+                              completionHandler:completionHandler];
+        }];
 }
 
 - (void)nextMatchWithCompletionHandler:(void (^)(CGPoint))completionHandler {
@@ -138,45 +132,46 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
 - (void)moveHighlightByEvaluatingJavaScript:(NSString*)script
                           completionHandler:
                               (void (^)(CGPoint))completionHandler {
-  base::WeakNSObject<JsFindinpageManager> weakSelf(self);
-  [self evaluate:script
-      stringResultHandler:^(NSString* result, NSError* error) {
-        base::WeakNSObject<JsFindinpageManager> strongSelf([weakSelf retain]);
-        if (!strongSelf)
-          return;
-        DCHECK(!error);
-        FindInPageEntry entry = kFindInPageEntryZero;
-        if (![result isEqualToString:kFindInPagePending])
-          entry = [strongSelf findInPageEntryForJson:result];
-        CGPoint newPoint = entry.point;
-        [strongSelf updateIndex:entry.index atPoint:newPoint];
-        if (completionHandler)
-          completionHandler(newPoint);
-      }];
+  __weak JsFindinpageManager* weakSelf = self;
+  [self executeJavaScript:script
+        completionHandler:^(id result, NSError* error) {
+          JsFindinpageManager* strongSelf = weakSelf;
+          if (!strongSelf)
+            return;
+          DCHECK(!error);
+          FindInPageEntry entry = kFindInPageEntryZero;
+          if (![result isEqual:kFindInPagePending]) {
+            NSString* stringResult =
+                base::mac::ObjCCastStrict<NSString>(result);
+            entry = [strongSelf findInPageEntryForJson:stringResult];
+          }
+          CGPoint newPoint = entry.point;
+          [strongSelf updateIndex:entry.index atPoint:newPoint];
+          if (completionHandler)
+            completionHandler(newPoint);
+        }];
 }
 
 - (void)disableWithCompletionHandler:(ProceduralBlock)completionHandler {
   DCHECK(completionHandler);
-  [self evaluate:kFindInPageDisable
-      stringResultHandler:^(NSString* result, NSError* error) {
-        completionHandler();
-      }];
+  [self executeJavaScript:kFindInPageDisable completionHandler:^(id, NSError*) {
+    completionHandler();
+  }];
 }
 
 #pragma mark -
 #pragma mark FindInPageEntry
 
-- (BOOL)processFindInPageResult:(NSString*)result
-                 scrollPosition:(CGPoint*)point {
+- (BOOL)processFindInPageResult:(id)result scrollPosition:(CGPoint*)point {
   if (!result)
     return NO;
 
   // Parse JSONs.
-  std::string json([result UTF8String]);
+  std::string json = base::SysNSStringToUTF8(result);
   std::unique_ptr<base::Value> root(base::JSONReader::Read(json, false));
   if (!root.get())
     return YES;
-  if (!root->IsType(base::Value::TYPE_LIST))
+  if (!root->IsType(base::Value::Type::LIST))
     return YES;
 
   base::ListValue* resultList = static_cast<base::ListValue*>(root.get());
@@ -188,10 +183,10 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
         if (numHighlighted > 0) {
           base::ListValue* position;
           if (resultList->GetList(1, &position)) {
-            [findInPageModel_ updateQuery:nil matches:numHighlighted];
+            [self.findInPageModel updateQuery:nil matches:numHighlighted];
             // Scroll to first match.
             FindInPageEntry entry = [self entryForListValue:position];
-            [findInPageModel_ updateIndex:entry.index atPoint:entry.point];
+            [self.findInPageModel updateIndex:entry.index atPoint:entry.point];
             if (point)
               *point = entry.point;
           }
@@ -202,10 +197,10 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
   return YES;
 }
 
-- (void)processFindInPagePumpResult:(NSString*)result
+- (void)processFindInPagePumpResult:(id)result
                   completionHandler:(void (^)(BOOL, CGPoint))completionHandler {
   CGPoint point = CGPointZero;
-  if ([result isEqualToString:kFindInPagePending]) {
+  if ([result isEqual:kFindInPagePending]) {
     completionHandler(NO, point);
   }
   // TODO(shreyasv): Inline this call from the logic from the above function
@@ -216,16 +211,16 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
 }
 
 - (void)updateIndex:(NSInteger)index atPoint:(CGPoint)point {
-  [findInPageModel_ updateIndex:index atPoint:point];
+  [self.findInPageModel updateIndex:index atPoint:point];
 }
 
 - (FindInPageEntry)findInPageEntryForJson:(NSString*)jsonStr {
-  std::string json([jsonStr UTF8String]);
+  std::string json = base::SysNSStringToUTF8(jsonStr);
   std::unique_ptr<base::Value> root(base::JSONReader::Read(json, false));
   if (!root.get())
     return kFindInPageEntryZero;
 
-  if (!root->IsType(base::Value::TYPE_LIST))
+  if (!root->IsType(base::Value::Type::LIST))
     return kFindInPageEntryZero;
 
   base::ListValue* position = static_cast<base::ListValue*>(root.get());
@@ -262,10 +257,6 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
 
 - (NSString*)scriptPath {
   return @"find_in_page";
-}
-
-- (NSString*)presenceBeacon {
-  return kFindInPageBeacon;
 }
 
 @end

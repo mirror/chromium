@@ -11,40 +11,59 @@
 
 namespace blink {
 
-class CORE_EXPORT InputDeviceCapabilities final : public GarbageCollected<InputDeviceCapabilities>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    // This return a static local InputDeviceCapabilities pointer which has firesTouchEvents set to be true.
-    static InputDeviceCapabilities* firesTouchEventsSourceCapabilities();
+class CORE_EXPORT InputDeviceCapabilities final
+    : public GarbageCollected<InputDeviceCapabilities>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // This return a static local InputDeviceCapabilities pointer which has firesTouchEvents set to be false.
-    static InputDeviceCapabilities* doesntFireTouchEventsSourceCapabilities();
+ public:
+  static InputDeviceCapabilities* Create(bool fires_touch_events) {
+    return new InputDeviceCapabilities(fires_touch_events);
+  }
 
-    static InputDeviceCapabilities* create(bool firesTouchEvents)
-    {
-        return new InputDeviceCapabilities(firesTouchEvents);
-    }
+  static InputDeviceCapabilities* Create(
+      const InputDeviceCapabilitiesInit& initializer) {
+    return new InputDeviceCapabilities(initializer);
+  }
 
-    static InputDeviceCapabilities* create(
-        const InputDeviceCapabilitiesInit& initializer)
-    {
-        return new InputDeviceCapabilities(initializer);
-    }
+  bool firesTouchEvents() const { return fires_touch_events_; }
 
-    bool firesTouchEvents() const { return m_firesTouchEvents; }
+  DEFINE_INLINE_TRACE() {}
 
-    DEFINE_INLINE_TRACE() { }
+ private:
+  InputDeviceCapabilities(bool fires_touch_events);
+  InputDeviceCapabilities(const InputDeviceCapabilitiesInit&);
 
-private:
-    InputDeviceCapabilities(bool firesTouchEvents);
-    InputDeviceCapabilities(const InputDeviceCapabilitiesInit&);
-
-    // Whether this device dispatches touch events. This mainly lets developers
-    // avoid handling both touch and mouse events dispatched for a single user
-    // action.
-    bool m_firesTouchEvents;
+  // Whether this device dispatches touch events. This mainly lets developers
+  // avoid handling both touch and mouse events dispatched for a single user
+  // action.
+  bool fires_touch_events_;
 };
 
-} // namespace blink
+// Grouping constant-valued InputDeviceCapabilities objects together,
+// which is kept and used by each 'view' (DOMWindow) that dispatches
+// events parameterized over InputDeviceCapabilities.
+//
+// TODO(sof): lazily instantiate InputDeviceCapabilities instances upon
+// UIEvent access instead. This would allow internal tracking of such
+// capabilities by value.
+class InputDeviceCapabilitiesConstants final
+    : public GarbageCollected<InputDeviceCapabilitiesConstants> {
+ public:
+  // Returns an InputDeviceCapabilities which has
+  // |firesTouchEvents| set to value of |firesTouch|.
+  InputDeviceCapabilities* FiresTouchEvents(bool fires_touch);
 
-#endif // InputDeviceCapabilities_h
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(fires_touch_events_);
+    visitor->Trace(doesnt_fire_touch_events_);
+  }
+
+ private:
+  Member<InputDeviceCapabilities> fires_touch_events_;
+  Member<InputDeviceCapabilities> doesnt_fire_touch_events_;
+};
+
+}  // namespace blink
+
+#endif  // InputDeviceCapabilities_h

@@ -9,45 +9,43 @@
 #include "modules/background_sync/SyncEventInit.h"
 #include "modules/serviceworkers/ExtendableEvent.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class MODULES_EXPORT SyncEvent final : public ExtendableEvent {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SyncEvent* create()
-    {
-        return new SyncEvent;
-    }
-    static SyncEvent* create(const AtomicString& type, const String& tag, bool lastChance, WaitUntilObserver* observer)
-    {
-        return new SyncEvent(type, tag, lastChance, observer);
-    }
-    static SyncEvent* create(const AtomicString& type, const SyncEventInit& init)
-    {
-        return new SyncEvent(type, init);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~SyncEvent() override;
+ public:
+  static SyncEvent* Create(const AtomicString& type,
+                           const String& tag,
+                           bool last_chance,
+                           WaitUntilObserver* observer) {
+    return new SyncEvent(type, tag, last_chance, observer);
+  }
+  static SyncEvent* Create(const AtomicString& type,
+                           const SyncEventInit& init) {
+    return new SyncEvent(type, init);
+  }
 
-    const AtomicString& interfaceName() const override;
+  ~SyncEvent() override;
 
-    String tag();
-    bool lastChance();
+  const AtomicString& InterfaceName() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  String tag();
+  bool lastChance();
 
-private:
-    SyncEvent();
-    SyncEvent(const AtomicString& type, const String&, bool, WaitUntilObserver*);
-    SyncEvent(const AtomicString& type, const SyncEventInit&);
+  DECLARE_VIRTUAL_TRACE();
 
-    String m_tag;
-    bool m_lastChance;
+ private:
+  SyncEvent(const AtomicString& type, const String&, bool, WaitUntilObserver*);
+  SyncEvent(const AtomicString& type, const SyncEventInit&);
+
+  String tag_;
+  bool last_chance_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SyncEvent_h
+#endif  // SyncEvent_h

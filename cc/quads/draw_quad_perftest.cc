@@ -6,7 +6,7 @@
 
 #include "base/bind.h"
 #include "base/time/time.h"
-#include "cc/debug/lap_timer.h"
+#include "cc/base/lap_timer.h"
 #include "cc/quads/draw_quad.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/texture_draw_quad.h"
@@ -28,7 +28,7 @@ SharedQuadState* CreateSharedQuadState(RenderPass* render_pass) {
   bool is_clipped = false;
   float opacity = 1.f;
   int sorting_context_id = 65536;
-  SkXfermode::Mode blend_mode = SkXfermode::kSrcOver_Mode;
+  SkBlendMode blend_mode = SkBlendMode::kSrcOver;
 
   SharedQuadState* state = render_pass->CreateAndAppendSharedQuadState();
   state->SetAll(quad_transform, content_bounds, visible_layer_rect, clip_rect,

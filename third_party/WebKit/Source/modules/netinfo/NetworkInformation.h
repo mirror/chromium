@@ -6,9 +6,9 @@
 #define NetworkInformation_h
 
 #include "bindings/core/v8/ActiveScriptWrappable.h"
-#include "core/dom/ActiveDOMObject.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/events/EventTarget.h"
-#include "core/page/NetworkStateNotifier.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "public/platform/WebConnectionType.h"
 
 namespace blink {
@@ -16,61 +16,64 @@ namespace blink {
 class ExecutionContext;
 
 class NetworkInformation final
-    : public EventTargetWithInlineData
-    , public ActiveScriptWrappable
-    , public ActiveDOMObject
-    , public NetworkStateNotifier::NetworkStateObserver {
-    USING_GARBAGE_COLLECTED_MIXIN(NetworkInformation);
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static NetworkInformation* create(ExecutionContext*);
-    ~NetworkInformation() override;
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappable<NetworkInformation>,
+      public ContextLifecycleObserver,
+      public NetworkStateNotifier::NetworkStateObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(NetworkInformation);
+  DEFINE_WRAPPERTYPEINFO();
 
-    String type() const;
-    double downlinkMax() const;
+ public:
+  static NetworkInformation* Create(ExecutionContext*);
+  ~NetworkInformation() override;
 
-    // NetworkStateObserver overrides.
-    void connectionChange(WebConnectionType, double downlinkMaxMbps) override;
+  String type() const;
+  double downlinkMax() const;
 
-    // EventTarget overrides.
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
-    void removeAllEventListeners() override;
+  // NetworkStateObserver overrides.
+  void ConnectionChange(WebConnectionType, double downlink_max_mbps) override;
 
-    // ActiveScriptWrappable
-    bool hasPendingActivity() const final;
+  // EventTarget overrides.
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
+  void RemoveAllEventListeners() override;
 
-    // ActiveDOMObject overrides.
-    void stop() override;
+  // ScriptWrappable
+  bool HasPendingActivity() const final;
 
-    DECLARE_VIRTUAL_TRACE();
+  // ContextLifecycleObserver overrides.
+  void ContextDestroyed(ExecutionContext*) override;
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(typechange); // Deprecated
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    // EventTarget overrides.
-    void addedEventListener(const AtomicString& eventType, RegisteredEventListener&) final;
-    void removedEventListener(const AtomicString& eventType, const RegisteredEventListener&) final;
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(typechange);  // Deprecated
 
-private:
-    explicit NetworkInformation(ExecutionContext*);
-    void startObserving();
-    void stopObserving();
+ protected:
+  // EventTarget overrides.
+  void AddedEventListener(const AtomicString& event_type,
+                          RegisteredEventListener&) final;
+  void RemovedEventListener(const AtomicString& event_type,
+                            const RegisteredEventListener&) final;
 
-    // Touched only on context thread.
-    WebConnectionType m_type;
+ private:
+  explicit NetworkInformation(ExecutionContext*);
+  void StartObserving();
+  void StopObserving();
 
-    // Touched only on context thread.
-    double m_downlinkMaxMbps;
+  // Touched only on context thread.
+  WebConnectionType type_;
 
-    // Whether this object is listening for events from NetworkStateNotifier.
-    bool m_observing;
+  // Touched only on context thread.
+  double downlink_max_mbps_;
 
-    // Whether ActiveDOMObject::stop has been called.
-    bool m_contextStopped;
+  // Whether this object is listening for events from NetworkStateNotifier.
+  bool observing_;
+
+  // Whether ContextLifecycleObserver::contextDestroyed has been called.
+  bool context_stopped_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NetworkInformation_h
+#endif  // NetworkInformation_h

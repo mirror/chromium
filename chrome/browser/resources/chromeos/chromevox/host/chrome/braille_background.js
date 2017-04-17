@@ -8,13 +8,13 @@
 
 goog.provide('cvox.BrailleBackground');
 
+goog.require('BrailleKeyEventRewriter');
 goog.require('ChromeVoxState');
 goog.require('cvox.BrailleDisplayManager');
 goog.require('cvox.BrailleInputHandler');
 goog.require('cvox.BrailleInterface');
 goog.require('cvox.BrailleKeyEvent');
 goog.require('cvox.BrailleTranslatorManager');
-
 
 /**
  * @constructor
@@ -58,12 +58,49 @@ cvox.BrailleBackground = function(opt_displayManagerForTest,
   this.inputHandler_ = opt_inputHandlerForTest ||
       new cvox.BrailleInputHandler(this.translatorManager_);
   this.inputHandler_.init();
+
+  /** @private {boolean} */
+  this.frozen_ = false;
+
+  /** @private {BrailleKeyEventRewriter} */
+  this.keyEventRewriter_ = new BrailleKeyEventRewriter();
 };
+goog.addSingletonGetter(cvox.BrailleBackground);
 
 
 /** @override */
 cvox.BrailleBackground.prototype.write = function(params) {
+  if (this.frozen_) {
+    return;
+  }
   this.setContent_(params, null);
+};
+
+
+/** @override */
+cvox.BrailleBackground.prototype.writeRawImage = function(imageDataUrl) {
+  if (this.frozen_) {
+    return;
+  }
+  this.displayManager_.setImageContent(imageDataUrl);
+};
+
+
+/** @override */
+cvox.BrailleBackground.prototype.freeze = function() {
+  this.frozen_ = true;
+};
+
+
+/** @override */
+cvox.BrailleBackground.prototype.thaw = function() {
+  this.frozen_ = false;
+};
+
+
+/** @override */
+cvox.BrailleBackground.prototype.getDisplayState = function() {
+  return this.displayManager_.getDisplayState();
 };
 
 
@@ -115,6 +152,10 @@ cvox.BrailleBackground.prototype.setContent_ = function(
  */
 cvox.BrailleBackground.prototype.onBrailleKeyEvent_ = function(
     brailleEvt, content) {
+  if (this.keyEventRewriter_.onBrailleKeyEvent(brailleEvt)) {
+    return;
+  }
+
   if (this.inputHandler_.onBrailleKeyEvent(brailleEvt)) {
     return;
   }

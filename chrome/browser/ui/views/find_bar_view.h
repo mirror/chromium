@@ -10,21 +10,25 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "chrome/browser/ui/views/dropdown_bar_view.h"
+#include "chrome/browser/ui/views/dropdown_bar_host_delegate.h"
 #include "ui/views/controls/button/button.h"
-#include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
+#include "ui/views/view.h"
 #include "ui/views/view_targeter_delegate.h"
 
 class FindBarHost;
 class FindNotificationDetails;
 
+namespace gfx {
+class Range;
+}
+
 namespace views {
 class ImageButton;
 class Label;
-class MouseEvent;
 class Painter;
 class Separator;
+class Textfield;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +38,8 @@ class Separator;
 // button. It communicates the user search words to the FindBarHost.
 //
 ////////////////////////////////////////////////////////////////////////////////
-class FindBarView : public DropdownBarView,
+class FindBarView : public views::View,
+                    public DropdownBarHostDelegate,
                     public views::ButtonListener,
                     public views::TextfieldController,
                     public views::ViewTargeterDelegate {
@@ -62,14 +67,14 @@ class FindBarView : public DropdownBarView,
   // Clears the current Match Count value in the Find text box.
   void ClearMatchCount();
 
-  // Claims focus for the text field and selects its contents.
-  void SetFocusAndSelection(bool select_all) override;
-
-  // DropdownBarView:
-  void OnPaint(gfx::Canvas* canvas) override;
-  void OnPaintBackground(gfx::Canvas* canvas) override;
+  // views::View:
+  const char* GetClassName() const override;
   void Layout() override;
   gfx::Size GetPreferredSize() const override;
+  void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
+
+  // DropdownBarHostDelegate:
+  void SetFocusAndSelection(bool select_all) override;
 
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
@@ -84,48 +89,18 @@ class FindBarView : public DropdownBarView,
   views::View* TargetForRect(View* root, const gfx::Rect& rect) override;
 
  private:
-  // Does mode-specific init. The NonMaterial version should eventually be
-  // removed in favor of Material.
-  void InitViewsForNonMaterial();
-  void InitViewsForMaterial();
-
   // Starts finding |search_text|.  If the text is empty, stops finding.
   void Find(const base::string16& search_text);
 
   // Updates the appearance for the match count label.
   void UpdateMatchCountAppearance(bool no_match);
 
-  // DropdownBarView:
-  const char* GetClassName() const override;
-  void OnThemeChanged() override;
-  void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
-
   // Returns the color for the icons on the buttons per the current NativeTheme.
   SkColor GetTextColorForIcon();
 
-  // We use a hidden view to grab mouse clicks and bring focus to the find
-  // text box. This is because although the find text box may look like it
-  // extends all the way to the find button, it only goes as far as to the
-  // match_count label. The user, however, expects being able to click anywhere
-  // inside what looks like the find text box (including on or around the
-  // match_count label) and have focus brought to the find box.
-  class FocusForwarderView : public views::View {
-   public:
-    explicit FocusForwarderView(
-        views::Textfield* view_to_focus_on_mousedown)
-      : view_to_focus_on_mousedown_(view_to_focus_on_mousedown) {}
-
-   private:
-    bool OnMousePressed(const ui::MouseEvent& event) override;
-
-    views::Textfield* view_to_focus_on_mousedown_;
-
-    DISALLOW_COPY_AND_ASSIGN(FocusForwarderView);
-  };
-
-  // Returns the OS-specific view for the find bar that acts as an intermediary
+  // The OS-specific view for the find bar that acts as an intermediary
   // between us and the WebContentsView.
-  FindBarHost* find_bar_host() const;
+  FindBarHost* find_bar_host_;
 
   // Used to detect if the input text, not including the IME composition text,
   // has changed or not.

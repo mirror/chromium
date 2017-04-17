@@ -64,11 +64,10 @@ InspectorTest.dumpResourcesTree = function()
             dump(children[i], prefix + "    ");
     }
 
-    dump(WebInspector.panels.resources.resourcesListTreeElement, "");
+    dump(UI.panels.resources._sidebar._resourcesSection._treeElement, "");
     if (!InspectorTest._testSourceNavigator) {
-        InspectorTest._testSourceNavigator = new WebInspector.SourcesNavigatorView();
-        InspectorTest._testSourceNavigator.setWorkspace(WebInspector.workspace);
-        InspectorTest._testSourceNavigator.show(WebInspector.inspectorView.element);
+        InspectorTest._testSourceNavigator = new Sources.SourcesNavigatorView();
+        InspectorTest._testSourceNavigator.show(UI.inspectorView.element);
     }
     InspectorTest.dumpNavigatorViewInAllModes(InspectorTest._testSourceNavigator);
 }

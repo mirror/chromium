@@ -6,9 +6,9 @@
 
 #include "chrome/browser/extensions/extension_prefs_unittest.h"
 #include "components/crx_file/id_util.h"
+#include "components/sync/model/string_ordinal.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/manifest_constants.h"
-#include "sync/api/string_ordinal.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace extensions {
@@ -154,24 +154,24 @@ class ChromeAppSortingInitialize : public PrefsPrepopulatedTestBase {
         static_cast<ExtensionScopedPrefs*>(prefs());
     scoped_prefs->UpdateExtensionPref(extension1()->id(),
                                       kPrefAppLaunchIndexDeprecated,
-                                      new base::FundamentalValue(0));
+                                      base::MakeUnique<base::Value>(0));
     scoped_prefs->UpdateExtensionPref(extension1()->id(),
                                       kPrefPageIndexDeprecated,
-                                      new base::FundamentalValue(0));
+                                      base::MakeUnique<base::Value>(0));
 
     scoped_prefs->UpdateExtensionPref(extension2()->id(),
                                       kPrefAppLaunchIndexDeprecated,
-                                      new base::FundamentalValue(1));
+                                      base::MakeUnique<base::Value>(1));
     scoped_prefs->UpdateExtensionPref(extension2()->id(),
                                       kPrefPageIndexDeprecated,
-                                      new base::FundamentalValue(0));
+                                      base::MakeUnique<base::Value>(0));
 
     scoped_prefs->UpdateExtensionPref(extension3()->id(),
                                       kPrefAppLaunchIndexDeprecated,
-                                      new base::FundamentalValue(0));
+                                      base::MakeUnique<base::Value>(0));
     scoped_prefs->UpdateExtensionPref(extension3()->id(),
                                       kPrefPageIndexDeprecated,
-                                      new base::FundamentalValue(1));
+                                      base::MakeUnique<base::Value>(1));
 
     // We insert the ids in reverse order so that we have to deal with the
     // element on the 2nd page before the 1st page is seen.
@@ -261,10 +261,10 @@ class ChromeAppSortingMigrateAppIndexInvalid
         static_cast<ExtensionScopedPrefs*>(prefs());
     scoped_prefs->UpdateExtensionPref(extension1()->id(),
                                       kPrefAppLaunchIndexDeprecated,
-                                      new base::FundamentalValue(0));
+                                      base::MakeUnique<base::Value>(0));
     scoped_prefs->UpdateExtensionPref(extension1()->id(),
                                       kPrefPageIndexDeprecated,
-                                      new base::FundamentalValue(-1));
+                                      base::MakeUnique<base::Value>(-1));
   }
   void Verify() override {
     // Make sure that the invalid page_index wasn't converted over.

@@ -16,6 +16,13 @@ function addListenerAndClick()
     element.click();
 }
 
+function addListenerAndAuxclick()
+{
+    var element = document.getElementById("test");
+    element.addEventListener("auxclick", testElementEventListener, true);
+    element.dispatchEvent(new MouseEvent("auxclick", {button: 1}));
+}
+
 function addListenerAndPointerDown()
 {
     var element = document.getElementById("test");
@@ -65,7 +72,7 @@ function onVideoPlay()
 
 function test()
 {
-    var pane = WebInspector.panels.sources.sidebarPanes.eventListenerBreakpoints;
+    var pane = self.runtime.sharedInstance(Sources.EventListenerBreakpointsSidebarPane);
     var testFunctions = [
         function testClickBreakpoint(next)
         {
@@ -87,16 +94,36 @@ function test()
             }
         },
 
+        function testAuxclickBreakpoint(next)
+        {
+            pane._setBreakpoint("listener:auxclick");
+            InspectorTest.waitUntilPaused(paused);
+            InspectorTest.evaluateInPageWithTimeout("addListenerAndAuxclick()");
+
+            function paused(callFrames, reason, breakpointIds, asyncStackTrace, auxData)
+            {
+                InspectorTest.captureStackTrace(callFrames);
+                printEventTargetName(auxData);
+                pane._removeBreakpoint("listener:auxclick");
+                InspectorTest.resumeExecution(resumed);
+            }
+
+            function resumed()
+            {
+                InspectorTest.evaluateInPage("addListenerAndAuxclick()", next);
+            }
+        },
+
         function testTimerFiredBreakpoint(next)
         {
-            pane._setBreakpoint("instrumentation:timerFired");
+            pane._setBreakpoint("instrumentation:setTimeout.callback");
             InspectorTest.waitUntilPaused(paused);
             InspectorTest.evaluateInPage("setTimeout(timerFired, 10)");
 
             function paused(callFrames)
             {
                 InspectorTest.captureStackTrace(callFrames);
-                pane._removeBreakpoint("instrumentation:timerFired");
+                pane._removeBreakpoint("instrumentation:setTimeout.callback");
                 InspectorTest.resumeExecution(next);
             }
         },

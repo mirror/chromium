@@ -5,6 +5,7 @@
 #include "ui/views/examples/text_example.h"
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font_list.h"
@@ -66,7 +67,6 @@ class TextExample::TextExampleView : public View {
   TextExampleView()
     : text_(base::ASCIIToUTF16(kShortText)),
       flags_(0),
-      halo_(false),
       elide_(gfx::NO_ELIDE) {
   }
 
@@ -76,9 +76,6 @@ class TextExample::TextExampleView : public View {
     const SkColor color = SK_ColorDKGRAY;
     if (elide_ == gfx::FADE_TAIL) {
       canvas->DrawFadedString(text_, font_list_, color, bounds, flags_);
-    } else if (halo_) {
-      canvas->DrawStringRectWithHalo(text_, font_list_, color, SK_ColorYELLOW,
-                                     bounds, flags_);
     } else {
       canvas->DrawStringRectWithFlags(text_, font_list_, color, bounds, flags_);
     }
@@ -87,7 +84,6 @@ class TextExample::TextExampleView : public View {
   int flags() const { return flags_; }
   void set_flags(int flags) { flags_ = flags; }
   void set_text(const base::string16& text) { text_ = text; }
-  void set_halo(bool halo) { halo_ = halo; }
   void set_elide(gfx::ElideBehavior elide) { elide_ = elide; }
 
   int GetStyle() const { return font_list_.GetFontStyle(); }
@@ -107,9 +103,6 @@ class TextExample::TextExampleView : public View {
 
   // Text flags for passing to |DrawStringRect()|.
   int flags_;
-
-  // A flag to draw a halo around the text.
-  bool halo_;
 
   // The eliding, fading, or truncating behavior.
   gfx::ElideBehavior elide_;
@@ -137,9 +130,9 @@ Combobox* TextExample::AddCombobox(GridLayout* layout,
                                    int count) {
   layout->StartRow(0, 0);
   layout->AddView(new Label(base::ASCIIToUTF16(name)));
-  ExampleComboboxModel* model = new ExampleComboboxModel(strings, count);
-  example_combobox_model_.push_back(model);
-  Combobox* combobox = new Combobox(model);
+  example_combobox_model_.push_back(
+      base::MakeUnique<ExampleComboboxModel>(strings, count));
+  Combobox* combobox = new Combobox(example_combobox_model_.back().get());
   combobox->SetSelectedIndex(0);
   combobox->set_listener(this);
   layout->AddView(combobox, kNumColumns - 1, 1);
@@ -148,7 +141,7 @@ Combobox* TextExample::AddCombobox(GridLayout* layout,
 
 void TextExample::CreateExampleView(View* container) {
   text_view_ = new TextExampleView;
-  text_view_->SetBorder(Border::CreateSolidBorder(1, SK_ColorGRAY));
+  text_view_->SetBorder(CreateSolidBorder(1, SK_ColorGRAY));
   GridLayout* layout = new GridLayout(container);
   container->SetLayoutManager(layout);
   layout->AddPaddingRow(0, 8);
@@ -174,7 +167,6 @@ void TextExample::CreateExampleView(View* container) {
   layout->StartRow(0, 0);
   multiline_checkbox_ = AddCheckbox(layout, "Multiline");
   break_checkbox_ = AddCheckbox(layout, "Character Break");
-  halo_checkbox_ = AddCheckbox(layout, "Halo");
   bold_checkbox_ = AddCheckbox(layout, "Bold");
   italic_checkbox_ = AddCheckbox(layout, "Italic");
   underline_checkbox_ = AddCheckbox(layout, "Underline");
@@ -197,7 +189,6 @@ void TextExample::ButtonPressed(Button* button, const ui::Event& event) {
   SetFlagFromCheckbox(break_checkbox_, &flags, gfx::Canvas::CHARACTER_BREAK);
   SetFlagFromCheckbox(italic_checkbox_, &style, gfx::Font::ITALIC);
   SetFlagFromCheckbox(underline_checkbox_, &style, gfx::Font::UNDERLINE);
-  text_view_->set_halo(halo_checkbox_->checked());
   text_view_->set_flags(flags);
   text_view_->SetStyle(style);
   text_view_->SetWeight(bold_checkbox_->checked() ? gfx::Font::Weight::BOLD

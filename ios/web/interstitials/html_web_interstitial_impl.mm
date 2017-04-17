@@ -8,14 +8,17 @@
 
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
-#include "ios/web/interstitials/web_interstitial_facade_delegate.h"
-#include "ios/web/public/interstitials/web_interstitial_delegate.h"
-#include "ios/web/public/web_state/ui/crw_web_view_content_view.h"
+#import "ios/web/public/interstitials/web_interstitial_delegate.h"
+#import "ios/web/public/web_state/ui/crw_web_view_content_view.h"
 #import "ios/web/public/web_view_creation_util.h"
 #import "ios/web/web_state/ui/web_view_js_utils.h"
-#include "ios/web/web_state/web_state_impl.h"
+#import "ios/web/web_state/web_state_impl.h"
 #import "net/base/mac/url_conversions.h"
 #include "ui/gfx/geometry/size.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 // The delegate of the web view that is used to display the HTML content.
 // It intercepts JavaScript-triggered commands and forwards them
@@ -108,8 +111,8 @@ void HtmlWebInterstitialImpl::PrepareForDisplay() {
   if (!content_view_) {
     web_view_delegate_.reset([[CRWWebInterstitialImplWKWebViewDelegate alloc]
         initWithInterstitial:this]);
-    web_view_.reset(
-        web::CreateWKWebView(CGRectZero, GetWebStateImpl()->GetBrowserState()));
+    web_view_ =
+        web::BuildWKWebView(CGRectZero, GetWebStateImpl()->GetBrowserState());
     [web_view_ setNavigationDelegate:web_view_delegate_];
     [web_view_ setAutoresizingMask:(UIViewAutoresizingFlexibleWidth |
                                     UIViewAutoresizingFlexibleHeight)];
@@ -125,10 +128,10 @@ WebInterstitialDelegate* HtmlWebInterstitialImpl::GetDelegate() const {
   return delegate_.get();
 }
 
-void HtmlWebInterstitialImpl::EvaluateJavaScript(
+void HtmlWebInterstitialImpl::ExecuteJavaScript(
     NSString* script,
-    JavaScriptCompletion completionHandler) {
-  web::EvaluateJavaScript(web_view_, script, completionHandler);
+    JavaScriptResultBlock completion_handler) {
+  web::ExecuteJavaScript(web_view_, script, completion_handler);
 }
 
 }  // namespace web

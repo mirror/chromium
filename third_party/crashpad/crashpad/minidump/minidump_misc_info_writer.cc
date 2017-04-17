@@ -26,11 +26,14 @@
 #include "snapshot/process_snapshot.h"
 #include "snapshot/system_snapshot.h"
 #include "util/file/file_writer.h"
+#include "util/misc/arraysize_unsafe.h"
 #include "util/numeric/in_range_cast.h"
 #include "util/numeric/safe_assignment.h"
 
 #if defined(OS_MACOSX)
 #include <AvailabilityMacros.h>
+#elif defined(OS_ANDROID)
+#include <android/api-level.h>
 #endif
 
 namespace crashpad {
@@ -66,8 +69,8 @@ std::string BuildString(const SystemSnapshot* system_snapshot) {
 #if defined(OS_MACOSX)
 // Converts the value of the MAC_OS_VERSION_MIN_REQUIRED or
 // MAC_OS_X_VERSION_MAX_ALLOWED macro from <AvailabilityMacros.h> to a number
-// identifying the minor Mac OS X version that it represents. For example, with
-// an argument of MAC_OS_X_VERSION_10_6, this function will return 6.
+// identifying the minor macOS version that it represents. For example, with an
+// argument of MAC_OS_X_VERSION_10_6, this function will return 6.
 int AvailabilityVersionToMacOSXMinorVersion(int availability) {
   // Through MAC_OS_X_VERSION_10_9, the minor version is the tens digit.
   if (availability >= 1000 && availability <= 1099) {
@@ -99,6 +102,8 @@ std::string MinidumpMiscInfoDebugBuildString() {
   // they will be truncated and a message will be logged.
 #if defined(OS_MACOSX)
   const char kOS[] = "mac";
+#elif defined(OS_ANDROID)
+  const char kOS[] = "android";
 #elif defined(OS_LINUX)
   const char kOS[] = "linux";
 #elif defined(OS_WIN)
@@ -111,6 +116,10 @@ std::string MinidumpMiscInfoDebugBuildString() {
   const char kCPU[] = "i386";
 #elif defined(ARCH_CPU_X86_64)
   const char kCPU[] = "amd64";
+#elif defined(ARCH_CPU_ARMEL)
+  const char kCPU[] = "arm";
+#elif defined(ARCH_CPU_ARM64)
+  const char kCPU[] = "arm64";
 #else
 #error define kCPU for this CPU
 #endif
@@ -126,6 +135,8 @@ std::string MinidumpMiscInfoDebugBuildString() {
       ",%d,%d",
       AvailabilityVersionToMacOSXMinorVersion(MAC_OS_X_VERSION_MIN_REQUIRED),
       AvailabilityVersionToMacOSXMinorVersion(MAC_OS_X_VERSION_MAX_ALLOWED));
+#elif defined(OS_ANDROID)
+  debug_build_string += base::StringPrintf(",%d", __ANDROID_API__);
 #endif
 
   return debug_build_string;
@@ -134,7 +145,7 @@ std::string MinidumpMiscInfoDebugBuildString() {
 }  // namespace internal
 
 MinidumpMiscInfoWriter::MinidumpMiscInfoWriter()
-    : MinidumpStreamWriter(), misc_info_() {
+    : MinidumpStreamWriter(), misc_info_(), has_xstate_data_(false) {
 }
 
 MinidumpMiscInfoWriter::~MinidumpMiscInfoWriter() {
@@ -149,14 +160,14 @@ void MinidumpMiscInfoWriter::InitializeFromSnapshot(
 
   const SystemSnapshot* system_snapshot = process_snapshot->System();
 
-  uint64_t current_mhz;
-  uint64_t max_mhz;
-  system_snapshot->CPUFrequency(&current_mhz, &max_mhz);
+  uint64_t current_hz;
+  uint64_t max_hz;
+  system_snapshot->CPUFrequency(&current_hz, &max_hz);
   const uint32_t kHzPerMHz = static_cast<const uint32_t>(1E6);
   SetProcessorPowerInfo(
-      InRangeCast<uint32_t>(current_mhz / kHzPerMHz,
+      InRangeCast<uint32_t>(current_hz / kHzPerMHz,
                             std::numeric_limits<uint32_t>::max()),
-      InRangeCast<uint32_t>(max_mhz / kHzPerMHz,
+      InRangeCast<uint32_t>(max_hz / kHzPerMHz,
                             std::numeric_limits<uint32_t>::max()),
       0,
       0,
@@ -285,7 +296,7 @@ void MinidumpMiscInfoWriter::SetTimeZone(uint32_t time_zone_id,
 
   internal::MinidumpWriterUtil::AssignUTF8ToUTF16(
       misc_info_.TimeZone.StandardName,
-      arraysize(misc_info_.TimeZone.StandardName),
+      ARRAYSIZE_UNSAFE(misc_info_.TimeZone.StandardName),
       standard_name);
 
   misc_info_.TimeZone.StandardDate = standard_date;
@@ -293,7 +304,7 @@ void MinidumpMiscInfoWriter::SetTimeZone(uint32_t time_zone_id,
 
   internal::MinidumpWriterUtil::AssignUTF8ToUTF16(
       misc_info_.TimeZone.DaylightName,
-      arraysize(misc_info_.TimeZone.DaylightName),
+      ARRAYSIZE_UNSAFE(misc_info_.TimeZone.DaylightName),
       daylight_name);
 
   misc_info_.TimeZone.DaylightDate = daylight_date;
@@ -310,11 +321,28 @@ void MinidumpMiscInfoWriter::SetBuildString(
   misc_info_.Flags1 |= MINIDUMP_MISC4_BUILDSTRING;
 
   internal::MinidumpWriterUtil::AssignUTF8ToUTF16(
-      misc_info_.BuildString, arraysize(misc_info_.BuildString), build_string);
+      misc_info_.BuildString,
+      ARRAYSIZE_UNSAFE(misc_info_.BuildString),
+      build_string);
   internal::MinidumpWriterUtil::AssignUTF8ToUTF16(
       misc_info_.DbgBldStr,
-      arraysize(misc_info_.DbgBldStr),
+      ARRAYSIZE_UNSAFE(misc_info_.DbgBldStr),
       debug_build_string);
+}
+
+void MinidumpMiscInfoWriter::SetXStateData(
+    const XSTATE_CONFIG_FEATURE_MSC_INFO& xstate_data) {
+  DCHECK_EQ(state(), kStateMutable);
+
+  misc_info_.XStateData = xstate_data;
+  has_xstate_data_ = true;
+}
+
+void MinidumpMiscInfoWriter::SetProcessCookie(uint32_t process_cookie) {
+  DCHECK_EQ(state(), kStateMutable);
+
+  misc_info_.ProcessCookie = process_cookie;
+  misc_info_.Flags1 |= MINIDUMP_MISC5_PROCESS_COOKIE;
 }
 
 bool MinidumpMiscInfoWriter::Freeze() {
@@ -352,6 +380,9 @@ MinidumpStreamType MinidumpMiscInfoWriter::StreamType() const {
 size_t MinidumpMiscInfoWriter::CalculateSizeOfObjectFromFlags() const {
   DCHECK_GE(state(), kStateFrozen);
 
+  if (has_xstate_data_ || (misc_info_.Flags1 & MINIDUMP_MISC5_PROCESS_COOKIE)) {
+    return sizeof(MINIDUMP_MISC_INFO_5);
+  }
   if (misc_info_.Flags1 & MINIDUMP_MISC4_BUILDSTRING) {
     return sizeof(MINIDUMP_MISC_INFO_4);
   }

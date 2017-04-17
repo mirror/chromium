@@ -15,10 +15,16 @@
 #undef IPC_MESSAGE_EXPORT
 #define IPC_MESSAGE_EXPORT GFX_IPC_COLOR_EXPORT
 
-IPC_STRUCT_TRAITS_BEGIN(gfx::ICCProfile)
-  IPC_STRUCT_TRAITS_MEMBER(valid_)
-  IPC_STRUCT_TRAITS_MEMBER(data_)
-  IPC_STRUCT_TRAITS_MEMBER(id_)
-IPC_STRUCT_TRAITS_END()
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::ColorSpace::PrimaryID,
+                          gfx::ColorSpace::PrimaryID::LAST);
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::ColorSpace::TransferID,
+                          gfx::ColorSpace::TransferID::LAST);
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::ColorSpace::MatrixID,
+                          gfx::ColorSpace::MatrixID::LAST);
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::ColorSpace::RangeID,
+                          gfx::ColorSpace::RangeID::LAST);
+
+#undef IPC_MESSAGE_EXPORT
+#define IPC_MESSAGE_EXPORT
 
 #endif  // UI_GFX_IPC_COLOR_GFX_PARAM_TRAITS_MACROS_H_

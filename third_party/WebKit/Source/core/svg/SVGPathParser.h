@@ -34,43 +34,42 @@ class SVGPathConsumer;
 
 namespace SVGPathParser {
 
-template<typename SourceType, typename ConsumerType>
-inline bool parsePath(SourceType& source, ConsumerType& consumer)
-{
-    while (source.hasMoreData()) {
-        PathSegmentData segment = source.parseSegment();
-        if (segment.command == PathSegUnknown)
-            return false;
+template <typename SourceType, typename ConsumerType>
+inline bool ParsePath(SourceType& source, ConsumerType& consumer) {
+  while (source.HasMoreData()) {
+    PathSegmentData segment = source.ParseSegment();
+    if (segment.command == kPathSegUnknown)
+      return false;
 
-        consumer.emitSegment(segment);
-    }
-    return true;
+    consumer.EmitSegment(segment);
+  }
+  return true;
 }
 
-} // namespace SVGPathParser
+}  // namespace SVGPathParser
 
 class SVGPathNormalizer {
-    STACK_ALLOCATED();
-public:
-    SVGPathNormalizer(SVGPathConsumer* consumer)
-        : m_consumer(consumer)
-        , m_lastCommand(PathSegUnknown)
-    {
-        ASSERT(m_consumer);
-    }
+  STACK_ALLOCATED();
 
-    void emitSegment(const PathSegmentData&);
+ public:
+  SVGPathNormalizer(SVGPathConsumer* consumer)
+      : consumer_(consumer), last_command_(kPathSegUnknown) {
+    DCHECK(consumer_);
+  }
 
-private:
-    bool decomposeArcToCubic(const FloatPoint& currentPoint, const PathSegmentData&);
+  void EmitSegment(const PathSegmentData&);
 
-    SVGPathConsumer* m_consumer;
-    FloatPoint m_controlPoint;
-    FloatPoint m_currentPoint;
-    FloatPoint m_subPathPoint;
-    SVGPathSegType m_lastCommand;
+ private:
+  bool DecomposeArcToCubic(const FloatPoint& current_point,
+                           const PathSegmentData&);
+
+  SVGPathConsumer* consumer_;
+  FloatPoint control_point_;
+  FloatPoint current_point_;
+  FloatPoint sub_path_point_;
+  SVGPathSegType last_command_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPathParser_h
+#endif  // SVGPathParser_h

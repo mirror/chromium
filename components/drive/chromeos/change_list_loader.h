@@ -14,14 +14,11 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/scoped_vector.h"
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
 #include "components/drive/file_errors.h"
 #include "google_apis/drive/drive_api_error_codes.h"
 #include "google_apis/drive/drive_common_callbacks.h"
-
-class GURL;
 
 namespace base {
 class CancellationFlag;
@@ -38,14 +35,12 @@ namespace drive {
 
 class EventLogger;
 class JobScheduler;
-class ResourceEntry;
 
 namespace internal {
 
 class ChangeList;
 class ChangeListLoaderObserver;
 class ChangeListProcessor;
-class DirectoryLoader;
 class ResourceMetadata;
 
 // Delays execution of tasks as long as more than one lock is alive.
@@ -211,7 +206,7 @@ class ChangeListLoader {
       std::unique_ptr<google_apis::AboutResource> about_resource,
       bool is_delta_update,
       FileError error,
-      ScopedVector<ChangeList> change_lists);
+      std::vector<std::unique_ptr<ChangeList>> change_lists);
 
   // Part of LoadChangeListFromServer().
   // Called when the resource metadata is updated.

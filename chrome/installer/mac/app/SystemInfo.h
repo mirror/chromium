@@ -13,10 +13,11 @@
 
 @interface SystemInfo : NSObject
 // Gets the CPU architecture type of the client's system, which will be used
-// when crafting the query to Omaha. This will return either "x84_64h" for
-// systems running on Intel Haswell chips, "x86_64" for other  Intel machines,
-// or strings representing other CPU types ("amd", "pentium", and "i686", for
-// example, are all valid).
+// when crafting the query to Omaha. This should return either "x84_64h" for
+// systems running on Intel Haswell chips, "i486" for other Intel machines, or
+// strings representing other CPU types ("amd", "pentium", and "i686", for
+// example, are all possible; however, due to the above macro, the possible
+// return strings are limited to either "x84_64h" or "i486").
 + (NSString*)getArch;
 
 // Gets the operating system version of the client. This function may return

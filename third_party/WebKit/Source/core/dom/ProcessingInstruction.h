@@ -24,93 +24,105 @@
 
 #include "core/dom/CharacterData.h"
 #include "core/dom/StyleEngineContext.h"
-#include "core/fetch/ResourceOwner.h"
-#include "core/fetch/StyleSheetResource.h"
-#include "core/fetch/StyleSheetResourceClient.h"
+#include "core/loader/resource/StyleSheetResource.h"
+#include "core/loader/resource/StyleSheetResourceClient.h"
+#include "platform/loader/fetch/ResourceOwner.h"
 
 namespace blink {
 
 class StyleSheet;
-class CSSStyleSheet;
 class EventListener;
 
-class ProcessingInstruction final : public CharacterData, private ResourceOwner<StyleSheetResource> {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(ProcessingInstruction);
-public:
-    static ProcessingInstruction* create(Document&, const String& target, const String& data);
-    ~ProcessingInstruction() override;
-    DECLARE_VIRTUAL_TRACE();
+class ProcessingInstruction final : public CharacterData,
+                                    private ResourceOwner<StyleSheetResource> {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(ProcessingInstruction);
 
-    const String& target() const { return m_target; }
-    const String& localHref() const { return m_localHref; }
-    StyleSheet* sheet() const { return m_sheet.get(); }
+ public:
+  static ProcessingInstruction* Create(Document&,
+                                       const String& target,
+                                       const String& data);
+  ~ProcessingInstruction() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    bool isCSS() const { return m_isCSS; }
-    bool isXSL() const { return m_isXSL; }
+  const String& target() const { return target_; }
+  const String& LocalHref() const { return local_href_; }
+  StyleSheet* sheet() const { return sheet_.Get(); }
 
-    void didAttributeChanged();
-    bool isLoading() const;
+  bool IsCSS() const { return is_css_; }
+  bool IsXSL() const { return is_xsl_; }
 
-    // For XSLT
-    class DetachableEventListener : public GarbageCollectedMixin {
-    public:
-        virtual ~DetachableEventListener() { }
-        virtual EventListener* toEventListener() = 0;
-        // Detach event listener from its processing instruction.
-        virtual void detach() = 0;
+  void DidAttributeChanged();
+  bool IsLoading() const;
 
-        DEFINE_INLINE_VIRTUAL_TRACE() { }
-    };
+  // For XSLT
+  class DetachableEventListener : public GarbageCollectedMixin {
+   public:
+    virtual ~DetachableEventListener() {}
+    virtual EventListener* ToEventListener() = 0;
+    // Detach event listener from its processing instruction.
+    virtual void Detach() = 0;
 
-    void setEventListenerForXSLT(DetachableEventListener* listener) { m_listenerForXSLT = listener; }
-    EventListener* eventListenerForXSLT();
-    void clearEventListenerForXSLT();
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
+  };
 
-private:
-    ProcessingInstruction(Document&, const String& target, const String& data);
+  void SetEventListenerForXSLT(DetachableEventListener* listener) {
+    listener_for_xslt_ = listener;
+  }
+  EventListener* EventListenerForXSLT();
+  void ClearEventListenerForXSLT();
 
-    String nodeName() const override;
-    NodeType getNodeType() const override;
-    Node* cloneNode(bool deep) override;
+ private:
+  ProcessingInstruction(Document&, const String& target, const String& data);
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+  String nodeName() const override;
+  NodeType getNodeType() const override;
+  Node* cloneNode(bool deep, ExceptionState&) override;
 
-    bool checkStyleSheet(String& href, String& charset);
-    void process(const String& href, const String& charset);
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
 
-    void setCSSStyleSheet(const String& href, const KURL& baseURL, const String& charset, const CSSStyleSheetResource*) override;
-    void setXSLStyleSheet(const String& href, const KURL& baseURL, const String& sheet) override;
+  bool CheckStyleSheet(String& href, String& charset);
+  void Process(const String& href, const String& charset);
 
-    bool sheetLoaded() override;
+  void SetCSSStyleSheet(const String& href,
+                        const KURL& base_url,
+                        ReferrerPolicy,
+                        const String& charset,
+                        const CSSStyleSheetResource*) override;
+  void SetXSLStyleSheet(const String& href,
+                        const KURL& base_url,
+                        const String& sheet) override;
 
-    void parseStyleSheet(const String& sheet);
-    void clearSheet();
+  bool SheetLoaded() override;
 
-    String debugName() const override { return "ProcessingInstruction"; }
+  void ParseStyleSheet(const String& sheet);
+  void ClearSheet();
 
-    String m_target;
-    String m_localHref;
-    String m_title;
-    String m_media;
-    Member<StyleSheet> m_sheet;
-    StyleEngineContext m_styleEngineContext;
-    bool m_loading;
-    bool m_alternate;
-    bool m_isCSS;
-    bool m_isXSL;
+  String DebugName() const override { return "ProcessingInstruction"; }
 
-    Member<DetachableEventListener> m_listenerForXSLT;
+  String target_;
+  String local_href_;
+  String title_;
+  String media_;
+  Member<StyleSheet> sheet_;
+  StyleEngineContext style_engine_context_;
+  bool loading_;
+  bool alternate_;
+  bool is_css_;
+  bool is_xsl_;
+
+  Member<DetachableEventListener> listener_for_xslt_;
 };
 
-DEFINE_NODE_TYPE_CASTS(ProcessingInstruction, getNodeType() == Node::PROCESSING_INSTRUCTION_NODE);
+DEFINE_NODE_TYPE_CASTS(ProcessingInstruction,
+                       getNodeType() == Node::kProcessingInstructionNode);
 
-inline bool isXSLStyleSheet(const Node& node)
-{
-    return node.getNodeType() == Node::PROCESSING_INSTRUCTION_NODE && toProcessingInstruction(node).isXSL();
+inline bool IsXSLStyleSheet(const Node& node) {
+  return node.getNodeType() == Node::kProcessingInstructionNode &&
+         ToProcessingInstruction(node).IsXSL();
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ProcessingInstruction_h
+#endif  // ProcessingInstruction_h

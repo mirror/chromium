@@ -1,7 +1,7 @@
 include_rules = [
-  "+chrome/grit",  # For generated headers.
+  "+chrome/grit",
+  "+components/data_use_measurement/core",
   "+components/prefs",
-  "+components/network_session_configurator/switches.h",
   "+components/version_info",
   "+mojo/edk/embedder",
   "+sandbox/win/src",

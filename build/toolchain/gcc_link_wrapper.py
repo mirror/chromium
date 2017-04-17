@@ -11,8 +11,11 @@ does not have a POSIX-like shell (e.g. Windows).
 """
 
 import argparse
+import os
 import subprocess
 import sys
+
+import wrapper_utils
 
 
 # When running on a Windows host and using a toolchain whose tools are
@@ -36,8 +39,11 @@ def main():
                       help='The strip binary to run',
                       metavar='PATH')
   parser.add_argument('--unstripped-file',
-                      required=True,
                       help='Executable file produced by linking command',
+                      metavar='FILE')
+  parser.add_argument('--map-file',
+                      help=('Use --Wl,-Map to generate a map file. Will be '
+                            'gzipped if extension ends with .gz'),
                       metavar='FILE')
   parser.add_argument('--output',
                       required=True,
@@ -47,8 +53,11 @@ def main():
                       help='Linking command')
   args = parser.parse_args()
 
-  # First, run the actual link.
-  result = subprocess.call(CommandToRun(args.command))
+  # Work-around for gold being slow-by-default. http://crbug.com/632230
+  fast_env = dict(os.environ)
+  fast_env['LC_ALL'] = 'C'
+  result = wrapper_utils.RunLinkWithOptionalMapFile(args.command, env=fast_env,
+                                                    map_file=args.map_file)
   if result != 0:
     return result
 

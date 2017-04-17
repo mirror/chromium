@@ -34,23 +34,21 @@
 
 namespace blink {
 
-WebTextCheckingResult::operator TextCheckingResult() const
-{
-    TextCheckingResult result;
-    result.decoration = static_cast<TextDecorationType>(decoration);
-    result.location = location;
-    result.length = length;
-    result.replacement = replacement;
-    result.hash = hash;
-    if (result.decoration == TextDecorationTypeGrammar) {
-        GrammarDetail detail;
-        detail.location = 0;
-        detail.length = length;
-        detail.userDescription = replacement;
-        result.details.append(detail);
-    }
+WebTextCheckingResult::operator TextCheckingResult() const {
+  TextCheckingResult result;
+  result.decoration = static_cast<TextDecorationType>(decoration);
+  result.location = location;
+  result.length = length;
+  result.replacement = replacement;
+  if (result.decoration == kTextDecorationTypeGrammar) {
+    GrammarDetail detail;
+    detail.location = 0;
+    detail.length = length;
+    detail.user_description = replacement;
+    result.details.push_back(detail);
+  }
 
-    return result;
+  return result;
 }
 
-} // namespace blink
+}  // namespace blink

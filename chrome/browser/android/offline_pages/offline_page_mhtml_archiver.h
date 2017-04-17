@@ -14,11 +14,11 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "components/offline_pages/offline_page_archiver.h"
+#include "components/offline_pages/core/offline_page_archiver.h"
+#include "content/public/common/page_type.h"
 
 namespace base {
 class FilePath;
-class SingleThreadTaskRunner;
 }  // namespace base
 
 namespace content {
@@ -43,20 +43,13 @@ namespace offline_pages {
 //   }
 class OfflinePageMHTMLArchiver : public OfflinePageArchiver {
  public:
-  // Returns the extension name of the offline page file.
-  static std::string GetFileNameExtension();
-  // Creates a file name for the archive file based on url and title. Public for
-  // testing.
-  static base::FilePath GenerateFileName(const GURL& url,
-                                         const std::string& title,
-                                         int64_t archive_id);
 
   explicit OfflinePageMHTMLArchiver(content::WebContents* web_contents);
   ~OfflinePageMHTMLArchiver() override;
 
   // OfflinePageArchiver implementation:
   void CreateArchive(const base::FilePath& archives_dir,
-                     int64_t archive_id,
+                     const CreateArchiveParams& create_archive_params,
                      const CreateArchiveCallback& callback) override;
 
  protected:
@@ -66,17 +59,21 @@ class OfflinePageMHTMLArchiver : public OfflinePageArchiver {
   // Try to generate MHTML.
   // Might be overridden for testing purpose.
   virtual void GenerateMHTML(const base::FilePath& archives_dir,
-                             int64_t archive_id);
+                             const CreateArchiveParams& create_archive_params);
 
   // Callback for Generating MHTML.
   void OnGenerateMHTMLDone(const GURL& url,
                            const base::FilePath& file_path,
+                           const base::string16& title,
                            int64_t file_size);
 
   // Checks whether the page to be saved has security error when loaded over
   // HTTPS. Saving a page will fail if that is the case. HTTP connections are
   // not affected.
   virtual bool HasConnectionSecurityError();
+
+  // Returns the page type of the page being saved.
+  virtual content::PageType GetPageType();
 
   // Reports failure to create archive a page to the client that requested it.
   void ReportFailure(ArchiverResult result);

@@ -6,25 +6,30 @@
 #define TransformOrigin_h
 
 #include "platform/Length.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class TransformOrigin {
-    DISALLOW_NEW();
-public:
-    TransformOrigin(const Length& x, const Length& y, float z) : m_x(x), m_y(y), m_z(z) { }
-    bool operator==(const TransformOrigin& o) const { return m_x == o.m_x && m_y == o.m_y && m_z == o.m_z; }
-    bool operator!=(const TransformOrigin& o) const { return !(*this == o); }
-    const Length& x() const { return m_x; }
-    const Length& y() const { return m_y; }
-    float z() const { return m_z; }
-private:
-    Length m_x;
-    Length m_y;
-    float m_z;
+  DISALLOW_NEW();
+
+ public:
+  TransformOrigin(const Length& x, const Length& y, float z)
+      : x_(x), y_(y), z_(z) {}
+  bool operator==(const TransformOrigin& o) const {
+    return x_ == o.x_ && y_ == o.y_ && z_ == o.z_;
+  }
+  bool operator!=(const TransformOrigin& o) const { return !(*this == o); }
+  const Length& X() const { return x_; }
+  const Length& Y() const { return y_; }
+  float Z() const { return z_; }
+
+ private:
+  Length x_;
+  Length y_;
+  float z_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TransformOrigin_h
+#endif  // TransformOrigin_h

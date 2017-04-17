@@ -15,6 +15,8 @@ namespace device {
 class BluetoothTestMac;
 }
 
+@class MockCBCharacteristic;
+
 // This class mocks the behavior of a CBPeripheral.
 @interface MockCBPeripheral : NSObject
 
@@ -39,8 +41,11 @@ class BluetoothTestMac;
 - (void)addServices:(NSArray*)services;
 - (void)didDiscoverServicesWithError:(NSError*)error;
 - (void)removeService:(CBService*)uuid;
-- (void)didDiscoverCharactericsForAllServices;
+- (void)mockDidDiscoverServices;
+- (void)mockDidDiscoverEvents;
 - (void)didModifyServices:(NSArray*)invalidatedServices;
+- (void)didDiscoverDescriptorsWithCharacteristic:
+    (MockCBCharacteristic*)characteristic_mock;
 
 @end
 

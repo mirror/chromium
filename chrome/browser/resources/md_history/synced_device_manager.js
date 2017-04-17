@@ -5,6 +5,7 @@
 /**
  * @typedef {{device: string,
  *           lastUpdateTime: string,
+ *           opened: boolean,
  *           separatorIndexes: !Array<number>,
  *           timestamp: number,
  *           tabs: !Array<!ForeignSessionTab>,
@@ -21,12 +22,12 @@ Polymer({
      */
     sessionList: {
       type: Array,
-      observer: 'updateSyncedDevices'
+      observer: 'updateSyncedDevices',
     },
 
     searchTerm: {
       type: String,
-      observer: 'searchTermChanged'
+      observer: 'searchTermChanged',
     },
 
     /**
@@ -35,13 +36,15 @@ Polymer({
      */
     syncedDevices_: {
       type: Array,
-      value: function() { return []; }
+      value: function() {
+        return [];
+      },
     },
 
     /** @private */
-    signInState_: {
+    signInState: {
       type: Boolean,
-      value: loadTimeData.getBoolean('isUserSignedIn'),
+      observer: 'signInStateChanged_',
     },
 
     /** @private */
@@ -54,12 +57,51 @@ Polymer({
     fetchingSyncedTabs_: {
       type: Boolean,
       value: false,
-    }
+    },
+
+    /** @private */
+    hasSeenForeignData_: Boolean,
+
+    /**
+     * The session ID referring to the currently active action menu.
+     * @private {?string}
+     */
+    actionMenuModel_: String,
+  },
+
+  listeners: {
+    'open-menu': 'onOpenMenu_',
+    'update-focus-grid': 'updateFocusGrid_',
+  },
+
+  /** @type {?cr.ui.FocusGrid} */
+  focusGrid_: null,
+
+  /** @override */
+  attached: function() {
+    this.focusGrid_ = new cr.ui.FocusGrid();
+
+    // Update the sign in state.
+    chrome.send('otherDevicesInitialized');
+    md_history.BrowserService.getInstance().recordHistogram(
+        SYNCED_TABS_HISTOGRAM_NAME, SyncedTabsHistogram.INITIALIZED,
+        SyncedTabsHistogram.LIMIT);
+  },
+
+  /** @override */
+  detached: function() {
+    this.focusGrid_.destroy();
+  },
+
+  /** @return {HTMLElement} */
+  getContentScrollTarget: function() {
+    return this;
   },
 
   /**
    * @param {!ForeignSession} session
    * @return {!ForeignDeviceInternal}
+   * @private
    */
   createInternalDevice_: function(session) {
     var tabs = [];
@@ -74,13 +116,13 @@ Polymer({
         tab.windowId = windowId;
       });
 
+      var windowAdded = false;
       if (!this.searchTerm) {
         // Add all the tabs if there is no search term.
         tabs = tabs.concat(newTabs);
-        separatorIndexes.push(tabs.length - 1);
+        windowAdded = true;
       } else {
         var searchText = this.searchTerm.toLowerCase();
-        var windowAdded = false;
         for (var j = 0; j < newTabs.length; j++) {
           var tab = newTabs[j];
           if (tab.title.toLowerCase().indexOf(searchText) != -1) {
@@ -88,14 +130,14 @@ Polymer({
             windowAdded = true;
           }
         }
-        if (windowAdded)
-          separatorIndexes.push(tabs.length - 1);
       }
-
+      if (windowAdded && i != session.windows.length - 1)
+        separatorIndexes.push(tabs.length - 1);
     }
     return {
       device: session.name,
       lastUpdateTime: '– ' + session.modifiedTime,
+      opened: true,
       separatorIndexes: separatorIndexes,
       timestamp: session.timestamp,
       tabs: tabs,
@@ -103,10 +145,65 @@ Polymer({
     };
   },
 
-
+  /** @private */
   onSignInTap_: function() {
-    chrome.send('SyncSetupShowSetupUI');
-    chrome.send('SyncSetupStartSignIn', [false]);
+    chrome.send('startSignInFlow');
+  },
+
+  /** @private */
+  onOpenMenu_: function(e) {
+    var menu = /** @type {CrActionMenuElement} */ this.$.menu.get();
+    this.actionMenuModel_ = e.detail.tag;
+    menu.showAt(e.detail.target);
+    md_history.BrowserService.getInstance().recordHistogram(
+        SYNCED_TABS_HISTOGRAM_NAME, SyncedTabsHistogram.SHOW_SESSION_MENU,
+        SyncedTabsHistogram.LIMIT);
+  },
+
+  /** @private */
+  onOpenAllTap_: function() {
+    var menu = assert(this.$.menu.getIfExists());
+    var browserService = md_history.BrowserService.getInstance();
+    browserService.recordHistogram(
+        SYNCED_TABS_HISTOGRAM_NAME, SyncedTabsHistogram.OPEN_ALL,
+        SyncedTabsHistogram.LIMIT);
+    browserService.openForeignSessionAllTabs(assert(this.actionMenuModel_));
+    this.actionMenuModel_ = null;
+    menu.close();
+  },
+
+  /** @private */
+  updateFocusGrid_: function() {
+    if (!this.focusGrid_)
+      return;
+
+    this.focusGrid_.destroy();
+
+    this.debounce('updateFocusGrid', function() {
+      Polymer.dom(this.root)
+          .querySelectorAll('history-synced-device-card')
+          .reduce(
+              function(prev, cur) {
+                return prev.concat(cur.createFocusRows());
+              },
+              [])
+          .forEach(function(row) {
+            this.focusGrid_.addRow(row);
+          }.bind(this));
+      this.focusGrid_.ensureRowActive(1);
+    });
+  },
+
+  /** @private */
+  onDeleteSessionTap_: function() {
+    var menu = assert(this.$.menu.getIfExists());
+    var browserService = md_history.BrowserService.getInstance();
+    browserService.recordHistogram(
+        SYNCED_TABS_HISTOGRAM_NAME, SyncedTabsHistogram.HIDE_FOR_NOW,
+        SyncedTabsHistogram.LIMIT);
+    browserService.deleteForeignSession(assert(this.actionMenuModel_));
+    this.actionMenuModel_ = null;
+    menu.close();
   },
 
   /** @private */
@@ -137,18 +234,25 @@ Polymer({
    * @return {boolean}
    */
   showSignInGuide: function(signInState, guestSession) {
-    return !signInState && !guestSession;
+    var show = !signInState && !guestSession;
+    if (show) {
+      md_history.BrowserService.getInstance().recordAction(
+          'Signin_Impression_FromRecentTabs');
+    }
+
+    return show;
   },
 
   /**
    * Decide what message should be displayed when user is logged in and there
    * are no synced tabs.
-   * @param {boolean} fetchingSyncedTabs
    * @return {string}
    */
-  noSyncedTabsMessage: function(fetchingSyncedTabs) {
-    return loadTimeData.getString(
-        fetchingSyncedTabs ? 'loading' : 'noSyncedResults');
+  noSyncedTabsMessage: function() {
+    var stringName = this.fetchingSyncedTabs_ ? 'loading' : 'noSyncedResults';
+    if (this.searchTerm !== '')
+      stringName = 'noSearchResults';
+    return loadTimeData.getString(stringName);
   },
 
   /**
@@ -165,39 +269,33 @@ Polymer({
     if (!sessionList)
       return;
 
-    // First, update any existing devices that have changed.
-    var updateCount = Math.min(sessionList.length, this.syncedDevices_.length);
-    for (var i = 0; i < updateCount; i++) {
-      var oldDevice = this.syncedDevices_[i];
-      if (oldDevice.tag != sessionList[i].tag ||
-          oldDevice.timestamp != sessionList[i].timestamp) {
-        this.splice(
-            'syncedDevices_', i, 1, this.createInternalDevice_(sessionList[i]));
-      }
+    if (sessionList.length > 0 && !this.hasSeenForeignData_) {
+      this.hasSeenForeignData_ = true;
+      md_history.BrowserService.getInstance().recordHistogram(
+          SYNCED_TABS_HISTOGRAM_NAME, SyncedTabsHistogram.HAS_FOREIGN_DATA,
+          SyncedTabsHistogram.LIMIT);
     }
 
-    // Then, append any new devices.
-    for (var i = updateCount; i < sessionList.length; i++) {
-      this.push('syncedDevices_', this.createInternalDevice_(sessionList[i]));
-    }
+    var devices = [];
+    sessionList.forEach(function(session) {
+      var device = this.createInternalDevice_(session);
+      if (device.tabs.length != 0)
+        devices.push(device);
+    }.bind(this));
+
+    this.syncedDevices_ = devices;
   },
 
   /**
    * Get called when user's sign in state changes, this will affect UI of synced
    * tabs page. Sign in promo gets displayed when user is signed out, and
    * different messages are shown when there are no synced tabs.
-   * @param {boolean} isUserSignedIn
    */
-  updateSignInState: function(isUserSignedIn) {
-    // If user's sign in state didn't change, then don't change message or
-    // update UI.
-    if (this.signInState_ == isUserSignedIn)
-      return;
-
-    this.signInState_ = isUserSignedIn;
+  signInStateChanged_: function() {
+    this.fire('history-view-changed');
 
     // User signed out, clear synced device list and show the sign in promo.
-    if (!isUserSignedIn) {
+    if (!this.signInState) {
       this.clearDisplayedSyncedDevices_();
       return;
     }

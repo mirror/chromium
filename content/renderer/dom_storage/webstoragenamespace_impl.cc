@@ -8,12 +8,12 @@
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/renderer/dom_storage/webstoragearea_impl.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
-#include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 using blink::WebStorageArea;
 using blink::WebStorageNamespace;
-using blink::WebString;
 
 namespace content {
 
@@ -29,9 +29,9 @@ WebStorageNamespaceImpl::WebStorageNamespaceImpl(int64_t namespace_id)
 WebStorageNamespaceImpl::~WebStorageNamespaceImpl() {
 }
 
-WebStorageArea* WebStorageNamespaceImpl::createStorageArea(
-    const WebString& origin) {
-  return new WebStorageAreaImpl(namespace_id_, blink::WebStringToGURL(origin));
+WebStorageArea* WebStorageNamespaceImpl::CreateStorageArea(
+    const blink::WebSecurityOrigin& origin) {
+  return new WebStorageAreaImpl(namespace_id_, url::Origin(origin).GetURL());
 }
 
 WebStorageNamespace* WebStorageNamespaceImpl::copy() {
@@ -42,7 +42,7 @@ WebStorageNamespace* WebStorageNamespaceImpl::copy() {
   return NULL;
 }
 
-bool WebStorageNamespaceImpl::isSameNamespace(
+bool WebStorageNamespaceImpl::IsSameNamespace(
     const WebStorageNamespace& other) const {
   const WebStorageNamespaceImpl* other_impl =
       static_cast<const WebStorageNamespaceImpl*>(&other);

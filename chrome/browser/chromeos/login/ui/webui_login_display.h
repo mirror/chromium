@@ -65,6 +65,7 @@ class WebUILoginDisplay : public LoginDisplay,
   void CompleteLogin(const UserContext& user_context) override;
 
   void OnSigninScreenReady() override;
+  void OnGaiaScreenReady() override;
   void CancelUserAdding() override;
   void LoadWallpaper(const AccountId& account_id) override;
   void LoadSigninWallpaper() override;
@@ -83,6 +84,8 @@ class WebUILoginDisplay : public LoginDisplay,
   bool AllowNewUserChanged() const override;
   bool IsUserSigninCompleted() const override;
   void SetDisplayEmail(const std::string& email) override;
+  void SetDisplayAndGivenName(const std::string& display_name,
+                              const std::string& given_name) override;
 
   void HandleGetUsers() override;
   void CheckUserStatus(const AccountId& account_id) override;

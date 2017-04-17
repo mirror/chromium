@@ -19,6 +19,7 @@ class Browser;
 @class MenuButton;
 class ToolbarActionsBar;
 @class ToolbarActionsBarBubbleMac;
+class ToolbarActionsBarBubbleViewsPresenter;
 class ToolbarActionsBarDelegate;
 
 namespace content {
@@ -58,8 +59,12 @@ extern NSString* const kBrowserActionVisibilityChangedNotification;
   // The index of the currently-focused view in the overflow menu, or -1 if
   // no view is focused.
   NSInteger focusedViewIndex_;
+
+  // Bridge for showing the toolkit-views bubble on a Cocoa browser.
+  std::unique_ptr<ToolbarActionsBarBubbleViewsPresenter> viewsBubblePresenter_;
 }
 
+@property(nonatomic) CGFloat maxWidth;
 @property(readonly, nonatomic) BrowserActionsContainerView* containerView;
 @property(readonly, nonatomic) Browser* browser;
 @property(readonly, nonatomic) BOOL isOverflow;
@@ -107,6 +112,10 @@ extern NSString* const kBrowserActionVisibilityChangedNotification;
 
 // Returns the size for the provided |maxWidth| of the overflow menu.
 - (gfx::Size)sizeForOverflowWidth:(int)maxWidth;
+
+// Called when the window for the active bubble is closing, and sets the active
+// bubble to nil.
+- (void)bubbleWindowClosing:(NSNotification*)notification;
 
 @end  // @interface BrowserActionsController
 

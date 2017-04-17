@@ -4,10 +4,11 @@
 
 #include "base/threading/worker_pool.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/compiler_specific.h"
 #include "base/debug/leak_annotations.h"
-#include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/task_runner.h"
 #include "base/threading/post_task_and_reply_impl.h"
@@ -26,8 +27,8 @@ class PostTaskAndReplyWorkerPool : public internal::PostTaskAndReplyImpl {
 
  private:
   bool PostTask(const tracked_objects::Location& from_here,
-                const Closure& task) override {
-    return WorkerPool::PostTask(from_here, task, task_is_slow_);
+                OnceClosure task) override {
+    return WorkerPool::PostTask(from_here, std::move(task), task_is_slow_);
   }
 
   bool task_is_slow_;
@@ -44,7 +45,7 @@ class WorkerPoolTaskRunner : public TaskRunner {
 
   // TaskRunner implementation
   bool PostDelayedTask(const tracked_objects::Location& from_here,
-                       const Closure& task,
+                       OnceClosure task,
                        TimeDelta delay) override;
   bool RunsTasksOnCurrentThread() const override;
 
@@ -55,7 +56,7 @@ class WorkerPoolTaskRunner : public TaskRunner {
   // zero because non-zero delays are not supported.
   bool PostDelayedTaskAssertZeroDelay(
       const tracked_objects::Location& from_here,
-      const Closure& task,
+      OnceClosure task,
       base::TimeDelta delay);
 
   const bool tasks_are_slow_;
@@ -72,9 +73,9 @@ WorkerPoolTaskRunner::~WorkerPoolTaskRunner() {
 
 bool WorkerPoolTaskRunner::PostDelayedTask(
     const tracked_objects::Location& from_here,
-    const Closure& task,
+    OnceClosure task,
     TimeDelta delay) {
-  return PostDelayedTaskAssertZeroDelay(from_here, task, delay);
+  return PostDelayedTaskAssertZeroDelay(from_here, std::move(task), delay);
 }
 
 bool WorkerPoolTaskRunner::RunsTasksOnCurrentThread() const {
@@ -83,11 +84,11 @@ bool WorkerPoolTaskRunner::RunsTasksOnCurrentThread() const {
 
 bool WorkerPoolTaskRunner::PostDelayedTaskAssertZeroDelay(
     const tracked_objects::Location& from_here,
-    const Closure& task,
+    OnceClosure task,
     base::TimeDelta delay) {
   DCHECK_EQ(delay.InMillisecondsRoundedUp(), 0)
       << "WorkerPoolTaskRunner does not support non-zero delays";
-  return WorkerPool::PostTask(from_here, task, tasks_are_slow_);
+  return WorkerPool::PostTask(from_here, std::move(task), tasks_are_slow_);
 }
 
 struct TaskRunnerHolder {
@@ -98,14 +99,11 @@ struct TaskRunnerHolder {
   scoped_refptr<TaskRunner> taskrunners_[2];
 };
 
-base::LazyInstance<TaskRunnerHolder>::Leaky
-    g_taskrunners = LAZY_INSTANCE_INITIALIZER;
-
 }  // namespace
 
 bool WorkerPool::PostTaskAndReply(const tracked_objects::Location& from_here,
-                                  const Closure& task,
-                                  const Closure& reply,
+                                  OnceClosure task,
+                                  OnceClosure reply,
                                   bool task_is_slow) {
   // Do not report PostTaskAndReplyRelay leaks in tests. There's nothing we can
   // do about them because WorkerPool doesn't have a flushing API.
@@ -113,14 +111,15 @@ bool WorkerPool::PostTaskAndReply(const tracked_objects::Location& from_here,
   // http://crbug.com/290897
   // Note: this annotation does not cover tasks posted through a TaskRunner.
   ANNOTATE_SCOPED_MEMORY_LEAK;
-  return PostTaskAndReplyWorkerPool(task_is_slow).PostTaskAndReply(
-      from_here, task, reply);
+  return PostTaskAndReplyWorkerPool(task_is_slow)
+      .PostTaskAndReply(from_here, std::move(task), std::move(reply));
 }
 
 // static
 const scoped_refptr<TaskRunner>&
 WorkerPool::GetTaskRunner(bool tasks_are_slow) {
-  return g_taskrunners.Get().taskrunners_[tasks_are_slow];
+  static auto* task_runner_holder = new TaskRunnerHolder();
+  return task_runner_holder->taskrunners_[tasks_are_slow];
 }
 
 }  // namespace base

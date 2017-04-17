@@ -44,7 +44,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Manages UI effects for reader mode including hiding and showing the
  * reader mode and reader mode preferences toolbar icon and hiding the
- * top controls when a reader mode page has finished loading.
+ * browser controls when a reader mode page has finished loading.
  */
 public class ReaderModeManager extends TabModelSelectorTabObserver
         implements InfoBarContainerObserver, ReaderModeManagerDelegate {
@@ -92,6 +92,9 @@ public class ReaderModeManager extends TabModelSelectorTabObserver
     // InfoBar tracking.
     private boolean mIsInfoBarContainerShown;
 
+    // If Reader Mode is detecting all pages as distillable.
+    private boolean mIsReaderHeuristicAlwaysTrue;
+
 
     public ReaderModeManager(TabModelSelector selector, ChromeActivity activity) {
         super(selector);
@@ -99,6 +102,15 @@ public class ReaderModeManager extends TabModelSelectorTabObserver
         mTabModelSelector = selector;
         mChromeActivity = activity;
         mTabStatusMap = new HashMap<>();
+        mIsReaderHeuristicAlwaysTrue = isDistillerHeuristicAlwaysTrue();
+    }
+
+    /**
+     * This function wraps a method that calls native code and is overridden by tests.
+     * @return True if the heuristic is ALWAYS_TRUE.
+     */
+    protected boolean isDistillerHeuristicAlwaysTrue() {
+        return DomDistillerTabUtils.isHeuristicAlwaysTrue();
     }
 
     /**
@@ -428,10 +440,9 @@ public class ReaderModeManager extends TabModelSelectorTabObserver
 
         return new WebContentsObserver(webContents) {
             @Override
-            public void didStartProvisionalLoadForFrame(long frameId, long parentFrameId,
-                    boolean isMainFrame, String validatedUrl, boolean isErrorPage,
-                    boolean isIframeSrcdoc) {
-                if (!isMainFrame) return;
+            public void didStartNavigation(String url, boolean isInMainFrame,
+                    boolean isSameDocument, boolean isErrorPage) {
+                if (!isInMainFrame || isSameDocument) return;
                 // If there is a navigation in the current tab, hide the bar. It will show again
                 // once the distillability test is successful.
                 if (readerTabId == mTabModelSelector.getCurrentTabId()) {
@@ -442,20 +453,21 @@ public class ReaderModeManager extends TabModelSelectorTabObserver
                 ReaderModeTabInfo tabInfo = mTabStatusMap.get(readerTabId);
                 if (tabInfo == null) return;
 
-                tabInfo.setUrl(validatedUrl);
-                if (DomDistillerUrlUtils.isDistilledPage(validatedUrl)) {
+                tabInfo.setUrl(url);
+                if (DomDistillerUrlUtils.isDistilledPage(url)) {
                     tabInfo.setStatus(STARTED);
-                    mReaderModePageUrl = validatedUrl;
+                    mReaderModePageUrl = url;
                 }
             }
 
             @Override
-            public void didNavigateMainFrame(String url, String baseUrl,
-                    boolean isNavigationToDifferentPage, boolean isNavigationInPage,
-                    int statusCode) {
+            public void didFinishNavigation(String url, boolean isInMainFrame, boolean isErrorPage,
+                    boolean hasCommitted, boolean isSameDocument, boolean isFragmentNavigation,
+                    Integer pageTransition, int errorCode, String errorDescription,
+                    int httpStatusCode) {
                 // TODO(cjhopman): This should possibly ignore navigations that replace the entry
                 // (like those from history.replaceState()).
-                if (isNavigationInPage) return;
+                if (!hasCommitted || !isInMainFrame || isSameDocument) return;
                 if (DomDistillerUrlUtils.isDistilledPage(url)) return;
 
                 // Make sure the tab was not destroyed.
@@ -508,7 +520,14 @@ public class ReaderModeManager extends TabModelSelectorTabObserver
         int currentTabId = mTabModelSelector.getCurrentTabId();
         if (currentTabId == Tab.INVALID_TAB_ID) return;
 
+        // Test if the user is requesting the desktop site. Ignore this if distiller is set to
+        // ALWAYS_TRUE.
+        boolean usingRequestDesktopSite = getBasePageWebContents() != null
+                && getBasePageWebContents().getNavigationController().getUseDesktopUserAgent()
+                && !mIsReaderHeuristicAlwaysTrue;
+
         if (mReaderModePanel == null || !mTabStatusMap.containsKey(currentTabId)
+                || usingRequestDesktopSite
                 || mTabStatusMap.get(currentTabId).getStatus() != POSSIBLE
                 || mTabStatusMap.get(currentTabId).isDismissed()
                 || mIsInfoBarContainerShown
@@ -526,6 +545,7 @@ public class ReaderModeManager extends TabModelSelectorTabObserver
      * Open a link from the panel in a new tab.
      * @param url The URL to load.
      */
+    @Override
     public void createNewTab(String url) {
         if (mChromeActivity == null) return;
 

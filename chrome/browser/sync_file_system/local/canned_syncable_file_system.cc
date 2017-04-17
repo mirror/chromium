@@ -26,8 +26,6 @@
 #include "chrome/browser/sync_file_system/local/sync_file_system_backend.h"
 #include "chrome/browser/sync_file_system/syncable_file_system_util.h"
 #include "content/public/test/mock_blob_url_request_context.h"
-#include "content/public/test/mock_special_storage_policy.h"
-#include "content/public/test/test_file_system_options.h"
 #include "storage/browser/blob/shareable_file_reference.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_backend.h"
@@ -35,6 +33,8 @@
 #include "storage/browser/fileapi/file_system_operation_context.h"
 #include "storage/browser/fileapi/file_system_operation_runner.h"
 #include "storage/browser/quota/quota_manager.h"
+#include "storage/browser/test/mock_special_storage_policy.h"
+#include "storage/browser/test/test_file_system_options.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::File;
@@ -240,11 +240,10 @@ void CannedSyncableFileSystem::SetUp(QuotaMode quota_mode) {
       new content::MockSpecialStoragePolicy();
 
   if (quota_mode == QUOTA_ENABLED) {
-    quota_manager_ = new QuotaManager(false /* is_incognito */,
-                                      data_dir_.path(),
-                                      io_task_runner_.get(),
-                                      base::ThreadTaskRunnerHandle::Get().get(),
-                                      storage_policy.get());
+    quota_manager_ = new QuotaManager(
+        false /* is_incognito */, data_dir_.GetPath(), io_task_runner_.get(),
+        base::ThreadTaskRunnerHandle::Get().get(), storage_policy.get(),
+        storage::GetQuotaSettingsFunc());
   }
 
   std::vector<std::string> additional_allowed_schemes;
@@ -254,7 +253,7 @@ void CannedSyncableFileSystem::SetUp(QuotaMode quota_mode) {
       additional_allowed_schemes,
       env_override_);
 
-  ScopedVector<storage::FileSystemBackend> additional_backends;
+  std::vector<std::unique_ptr<storage::FileSystemBackend>> additional_backends;
   additional_backends.push_back(SyncFileSystemBackend::CreateForTesting());
 
   file_system_context_ = new FileSystemContext(
@@ -263,7 +262,7 @@ void CannedSyncableFileSystem::SetUp(QuotaMode quota_mode) {
       storage_policy.get(),
       quota_manager_.get() ? quota_manager_->proxy() : nullptr,
       std::move(additional_backends),
-      std::vector<storage::URLRequestAutoMountHandler>(), data_dir_.path(),
+      std::vector<storage::URLRequestAutoMountHandler>(), data_dir_.GetPath(),
       options);
 
   is_filesystem_set_up_ = true;

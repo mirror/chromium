@@ -10,15 +10,16 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/chromeos/attestation/attestation_ca_client.h"
-#include "chrome/browser/chromeos/attestation/attestation_signed_data.pb.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/permissions/permission_manager.h"
+#include "chrome/browser/permissions/permission_result.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chromeos/attestation/attestation.pb.h"
 #include "chromeos/attestation/attestation_flow.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/async_method_caller.h"
@@ -27,13 +28,12 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
+#include "components/content_settings/core/common/content_settings_types.h"
 #include "components/user_manager/user.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/permission_type.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/url_constants.h"
 #include "net/cert/pem_tokenizer.h"
@@ -112,14 +112,15 @@ class DefaultDelegate : public PlatformVerificationFlow::Delegate {
     const GURL& requesting_origin = GetURL(web_contents).GetOrigin();
 
     GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
-    blink::mojom::PermissionStatus status =
+    ContentSetting content_setting =
         PermissionManager::Get(
             Profile::FromBrowserContext(web_contents->GetBrowserContext()))
             ->GetPermissionStatus(
-                content::PermissionType::PROTECTED_MEDIA_IDENTIFIER,
-                requesting_origin, embedding_origin);
+                CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER,
+                requesting_origin, embedding_origin)
+            .content_setting;
 
-    return status == blink::mojom::PermissionStatus::GRANTED;
+    return content_setting == CONTENT_SETTING_ALLOW;
   }
 
   bool IsInSupportedMode(content::WebContents* web_contents) override {
@@ -200,8 +201,14 @@ void PlatformVerificationFlow::ChallengePlatformKey(
     return;
   }
 
-  // Note: The following two checks are also checked in GetPermissionStatus.
-  // Checking them here explicitly to report the correct error type.
+  // Note: The following checks are performed when use of the protected media
+  // identifier is indicated. The first two in GetPermissionStatus and the third
+  // in DecidePermission.
+  // In Chrome, the result of the first and third could have changed in the
+  // interim, but the mode cannot change.
+  // TODO(ddorwin): Share more code for the first two checks with
+  // ProtectedMediaIdentifierPermissionContext::
+  // IsProtectedMediaIdentifierEnabled().
 
   if (!IsAttestationAllowedByPolicy()) {
     VLOG(1) << "Platform verification not allowed by device policy.";
@@ -209,11 +216,8 @@ void PlatformVerificationFlow::ChallengePlatformKey(
     return;
   }
 
-  // TODO(xhwang): Change to DCHECK when prefixed EME support is removed.
-  // See http://crbug.com/249976
   if (!delegate_->IsInSupportedMode(web_contents)) {
-    VLOG(1) << "Platform verification denied because it's not supported in the "
-            << "current mode.";
+    LOG(ERROR) << "Platform verification not supported in the current mode.";
     ReportError(callback, PLATFORM_NOT_VERIFIED);
     return;
   }
@@ -332,7 +336,7 @@ void PlatformVerificationFlow::OnChallengeReady(
     ReportError(context.callback, INTERNAL_ERROR);
     return;
   }
-  SignedData signed_data_pb;
+  chromeos::attestation::SignedData signed_data_pb;
   if (response_data.empty() || !signed_data_pb.ParseFromString(response_data)) {
     LOG(ERROR) << "PlatformVerificationFlow: Failed to parse response data.";
     ReportError(context.callback, INTERNAL_ERROR);

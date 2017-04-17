@@ -7,12 +7,11 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
-#include "base/containers/scoped_ptr_hash_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/scoped_vector.h"
 #include "base/memory/singleton.h"
 #include "base/observer_list.h"
 #include "base/values.h"
@@ -71,7 +70,7 @@ class ExtensionManagement : public KeyedService {
     INSTALLATION_RECOMMENDED,
   };
 
-  explicit ExtensionManagement(PrefService* pref_service);
+  ExtensionManagement(PrefService* pref_service, bool is_signin_profile);
   ~ExtensionManagement() override;
 
   // KeyedService implementations:
@@ -82,7 +81,8 @@ class ExtensionManagement : public KeyedService {
 
   // Get the list of ManagementPolicy::Provider controlled by extension
   // management policy settings.
-  std::vector<ManagementPolicy::Provider*> GetProviders() const;
+  const std::vector<std::unique_ptr<ManagementPolicy::Provider>>& GetProviders()
+      const;
 
   // Checks if extensions are blacklisted by default, by policy. When true,
   // this means that even extensions without an ID should be blacklisted (e.g.
@@ -114,6 +114,34 @@ class ExtensionManagement : public KeyedService {
   // Returns the list of blocked API permissions for |extension|.
   APIPermissionSet GetBlockedAPIPermissions(const Extension* extension) const;
 
+  // Returns the list of hosts blocked by policy for |extension|.
+  const URLPatternSet& GetRuntimeBlockedHosts(const Extension* extension) const;
+
+  // Returns the hosts exempted by policy from the RuntimeBlockedHosts for
+  // |extension|.
+  const URLPatternSet& GetRuntimeAllowedHosts(const Extension* extension) const;
+
+  // Returns the list of hosts blocked by policy for Default scope. This can be
+  // overridden by an invividual scope which is queried via
+  // GetRuntimeBlockedHosts.
+  const URLPatternSet& GetDefaultRuntimeBlockedHosts() const;
+
+  // Returns the hosts exempted by policy from RuntimeBlockedHosts for
+  // the default scope. This can be overridden by an individual scope which is
+  // queries via GetRuntimeAllowedHosts. This should only be used to
+  // initialize a new renderer.
+  const URLPatternSet& GetDefaultRuntimeAllowedHosts() const;
+
+  // Checks if an |extension| has its own runtime_blocked_hosts or
+  // runtime_allowed_hosts defined in the individual scope of the
+  // ExtensionSettings policy.
+  // Returns false if an individual scoped setting isn't defined.
+  bool UsesDefaultRuntimeHostRestrictions(const Extension* extension) const;
+
+  // Checks if a URL is on the blocked host permissions list for a specific
+  // extension.
+  bool IsRuntimeBlockedHost(const Extension* extension, const GURL& url) const;
+
   // Returns blocked permission set for |extension|.
   std::unique_ptr<const PermissionSet> GetBlockedPermissions(
       const Extension* extension) const;
@@ -130,12 +158,12 @@ class ExtensionManagement : public KeyedService {
                            std::string* required_version) const;
 
  private:
-  typedef base::ScopedPtrHashMap<ExtensionId,
-                                 std::unique_ptr<internal::IndividualSettings>>
-      SettingsIdMap;
-  typedef base::ScopedPtrHashMap<std::string,
-                                 std::unique_ptr<internal::IndividualSettings>>
-      SettingsUpdateUrlMap;
+  using SettingsIdMap =
+      std::unordered_map<ExtensionId,
+                         std::unique_ptr<internal::IndividualSettings>>;
+  using SettingsUpdateUrlMap =
+      std::unordered_map<std::string,
+                         std::unique_ptr<internal::IndividualSettings>>;
   friend class ExtensionManagementServiceTest;
 
   // Load all extension management preferences from |pref_service|, and
@@ -152,6 +180,14 @@ class ExtensionManagement : public KeyedService {
 
   void OnExtensionPrefChanged();
   void NotifyExtensionManagementPrefChanged();
+
+  // Helper to return an extension install list, in format specified by
+  // ExternalPolicyLoader::AddExtension().
+  std::unique_ptr<base::DictionaryValue> GetInstallListByMode(
+      InstallationMode installation_mode) const;
+
+  // Helper to update |extension_dict| for forced installs.
+  void UpdateForcedExtensions(const base::DictionaryValue* extension_dict);
 
   // Helper function to access |settings_by_id_| with |id| as key.
   // Adds a new IndividualSettings entry to |settings_by_id_| if none exists for
@@ -183,11 +219,12 @@ class ExtensionManagement : public KeyedService {
   // Extension settings applicable to all extensions.
   std::unique_ptr<internal::GlobalSettings> global_settings_;
 
-  PrefService* pref_service_;
+  PrefService* pref_service_ = nullptr;
+  bool is_signin_profile_ = false;
 
   base::ObserverList<Observer, true> observer_list_;
   PrefChangeRegistrar pref_change_registrar_;
-  ScopedVector<ManagementPolicy::Provider> providers_;
+  std::vector<std::unique_ptr<ManagementPolicy::Provider>> providers_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionManagement);
 };

@@ -2,20 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/spellchecker/spellcheck_message_filter_platform.h"
+#include "components/spellcheck/browser/spellcheck_message_filter_platform.h"
 
 #include <algorithm>
 #include <functional>
 
 #include "base/barrier_closure.h"
 #include "base/bind.h"
-#include "chrome/browser/spellchecker/feedback_sender.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
-#include "chrome/browser/spellchecker/spellcheck_platform.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
-#include "chrome/browser/spellchecker/spelling_service_client.h"
-#include "chrome/common/spellcheck_messages.h"
-#include "chrome/common/spellcheck_result.h"
+#include "components/spellcheck/browser/spellcheck_platform.h"
+#include "components/spellcheck/browser/spelling_service_client.h"
+#include "components/spellcheck/common/spellcheck_messages.h"
+#include "components/spellcheck/common/spellcheck_result.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/render_process_host.h"
 
@@ -40,8 +39,8 @@ class SpellingRequest {
   void RequestCheck(const base::string16& text,
                     int route_id,
                     int identifier,
-                    int document_tag,
-                    const std::vector<SpellCheckMarker>& markers);
+                    int document_tag);
+
  private:
   // Request server-side checking for |text_|.
   void RequestRemoteCheck();
@@ -75,7 +74,6 @@ class SpellingRequest {
   int route_id_;
   int identifier_;
   int document_tag_;
-  std::vector<SpellCheckMarker> markers_;
 };
 
 SpellingRequest::SpellingRequest(SpellingServiceClient* client,
@@ -91,12 +89,10 @@ SpellingRequest::SpellingRequest(SpellingServiceClient* client,
   destination_->AddRef();
 }
 
-void SpellingRequest::RequestCheck(
-    const base::string16& text,
-    int route_id,
-    int identifier,
-    int document_tag,
-    const std::vector<SpellCheckMarker>& markers) {
+void SpellingRequest::RequestCheck(const base::string16& text,
+                                   int route_id,
+                                   int identifier,
+                                   int document_tag) {
   DCHECK(!text.empty());
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -104,7 +100,6 @@ void SpellingRequest::RequestCheck(
   route_id_ = route_id;
   identifier_ = identifier;
   document_tag_ = document_tag;
-  markers_ = markers;
 
   // Send the remote query out. The barrier owns |this|, ensuring it is deleted
   // after completion.
@@ -169,17 +164,6 @@ void SpellingRequest::OnRemoteCheckCompleted(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   remote_success_ = success;
   remote_results_ = results;
-
-  SpellcheckService* spellcheck_service =
-      SpellcheckServiceFactory::GetForRenderProcessId(render_process_id_);
-  if (spellcheck_service) {
-    spellcheck_service->GetFeedbackSender()->OnSpellcheckResults(
-        render_process_id_,
-        text,
-        markers_,
-        &remote_results_);
-  }
-
   completion_barrier_.Run();
 }
 
@@ -277,8 +261,7 @@ void SpellCheckMessageFilterPlatform::OnUpdateSpellingPanelWithMisspelledWord(
 void SpellCheckMessageFilterPlatform::OnRequestTextCheck(
     int route_id,
     int identifier,
-    const base::string16& text,
-    std::vector<SpellCheckMarker> markers) {
+    const base::string16& text) {
   DCHECK(!text.empty());
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -288,18 +271,10 @@ void SpellCheckMessageFilterPlatform::OnRequestTextCheck(
   // happen on UI thread.
   SpellcheckServiceFactory::GetForRenderProcessId(render_process_id_);
 
-  // Erase invalid markers (with offsets out of boundaries of text length).
-  markers.erase(
-      std::remove_if(
-          markers.begin(),
-          markers.end(),
-          std::not1(SpellCheckMarker::IsValidPredicate(text.length()))),
-      markers.end());
   // SpellingRequest self-destructs.
   SpellingRequest* request =
     new SpellingRequest(client_.get(), this, render_process_id_);
-  request->RequestCheck(
-      text, route_id, identifier, ToDocumentTag(route_id), markers);
+  request->RequestCheck(text, route_id, identifier, ToDocumentTag(route_id));
 }
 
 int SpellCheckMessageFilterPlatform::ToDocumentTag(int route_id) {

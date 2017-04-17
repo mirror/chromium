@@ -14,9 +14,14 @@
       <option>garply</option>
   </optgroup>
 </select>
+<select id="menu2">
+  <option>abc</option>
+  <option>xyz</option>
+</select>
 <div id="console"></div>
 <script>
 var menu = document.getElementById('menu');
+var menu2 = document.getElementById('menu2');
 var picker = null;
 function openPickerErrorCallback() {
     testFailed('picker didn\'t open')
@@ -25,6 +30,7 @@ function openPickerErrorCallback() {
 openPicker(menu, test1, openPickerErrorCallback);
 
 function test1() {
+    debug('==> Arrow keys + Enter');
     picker = window.internals.pagePopupWindow.global.picker;
     shouldBeEqualToString('picker._selectElement.value', '1');
     shouldBeEqualToString('menu.value', 'bar');
@@ -66,6 +72,7 @@ function test1() {
 }
 
 function test2() {
+    debug('==> Arrow keys + ESC');
     picker = window.internals.pagePopupWindow.global.picker;
     shouldBeEqualToString('picker._selectElement.value', '0');
     shouldBeEqualToString('internals.selectMenuListText(menu)', 'foo');
@@ -82,11 +89,33 @@ function test2() {
     shouldBeEqualToString('internals.selectMenuListText(menu)', 'bar');
 
     waitUntilClosing(function() {
-        openPicker(menu, test3, openPickerErrorCallback);
+        menu.value = 'foo';
+        openPicker(menu, testProvisionalSelectionAndBlur, openPickerErrorCallback);
     });
 }
 
+function testProvisionalSelectionAndBlur() {
+    debug('==> Arrow keys + blur');
+    picker = window.internals.pagePopupWindow.global.picker;
+    shouldBeEqualToString('picker._selectElement.value', '0');
+    shouldBeEqualToString('internals.selectMenuListText(menu)', 'foo');
+
+    eventSender.keyDown('ArrowDown');
+    shouldBeEqualToString('picker._selectElement.value', '1');
+    shouldBeEqualToString('menu.value', 'foo');
+    shouldBeEqualToString('internals.selectMenuListText(menu)', 'bar');
+
+    // Blur should close the popup and select the provisonal item.
+    menu.blur();
+    shouldBeNull('window.internals.pagePopupWindow');
+    shouldBeEqualToString('menu.value', 'bar');
+    shouldBeEqualToString('internals.selectMenuListText(menu)', 'bar');
+
+    openPicker(menu, test3, openPickerErrorCallback);
+}
+
 function test3() {
+    debug('==> Typeahead + ESC');
     picker = window.internals.pagePopupWindow.global.picker;
     shouldBeEqualToString('picker._selectElement.value', '1');
     shouldBeEqualToString('internals.selectMenuListText(menu)', 'bar');
@@ -108,6 +137,7 @@ function test3() {
 }
 
 function test4() {
+    debug('==> Hover + ESC');
     picker = window.internals.pagePopupWindow.global.picker;
     shouldBeEqualToString('picker._selectElement.value', '4');
     shouldBeEqualToString('internals.selectMenuListText(menu)', 'garply');
@@ -129,6 +159,7 @@ function test4() {
 }
 
 function test5() {
+    debug('==> Hover + Invalid arrow + ESC');
     picker = window.internals.pagePopupWindow.global.picker;
     shouldBeEqualToString('picker._selectElement.value', '4');
     shouldBeEqualToString('internals.selectMenuListText(menu)', 'garply');
@@ -157,6 +188,7 @@ function test5() {
 }
 
 function test6() {
+    debug('==> Arrow key + Click');
     picker = window.internals.pagePopupWindow.global.picker;
     shouldBeEqualToString('picker._selectElement.value', '0');
     shouldBeEqualToString('internals.selectMenuListText(menu)', 'foo');
@@ -170,6 +202,20 @@ function test6() {
     shouldBeNull('window.internals.pagePopupWindow');
     shouldBeEqualToString('menu.value', 'foo');
     shouldBeEqualToString('internals.selectMenuListText(menu)', 'foo');
+
+    waitUntilClosing(() => {
+        menu2.selectedIndex = -1;
+        openPicker(menu2, testEnterWithoutSelection, openPickerErrorCallback);
+    });
+}
+
+function testEnterWithoutSelection() {
+    debug('==> Enter with no selected OPTION');
+    picker = window.internals.pagePopupWindow.global.picker;
+    shouldBeEqualToString('picker._selectElement.value', '');
+    eventSender.keyDown('Enter');
+    shouldBeNull('window.internals.pagePopupWindow');
+    shouldBeEqualToString('menu2.value', '');
 
     finishJSTest();
 }

@@ -33,40 +33,40 @@
 
 #include "platform/Length.h"
 #include "platform/LengthFunctions.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT CalculationValue : public RefCounted<CalculationValue> {
-public:
-    static PassRefPtr<CalculationValue> create(PixelsAndPercent value, ValueRange range)
-    {
-        return adoptRef(new CalculationValue(value, range));
-    }
+ public:
+  static PassRefPtr<CalculationValue> Create(PixelsAndPercent value,
+                                             ValueRange range) {
+    return AdoptRef(new CalculationValue(value, range));
+  }
 
-    float evaluate(float maxValue) const
-    {
-        float value = pixels() + percent() / 100 * maxValue;
-        return (isNonNegative() && value < 0) ? 0 : value;
-    }
-    bool operator==(const CalculationValue& o) const { return pixels() == o.pixels() && percent() == o.percent(); }
-    bool isNonNegative() const { return m_isNonNegative; }
-    ValueRange getValueRange() const { return m_isNonNegative ? ValueRangeNonNegative : ValueRangeAll; }
-    float pixels() const { return m_value.pixels; }
-    float percent() const { return m_value.percent; }
-    PixelsAndPercent getPixelsAndPercent() const { return m_value; }
+  float Evaluate(float max_value) const {
+    float value = Pixels() + Percent() / 100 * max_value;
+    return (IsNonNegative() && value < 0) ? 0 : value;
+  }
+  bool operator==(const CalculationValue& o) const {
+    return Pixels() == o.Pixels() && Percent() == o.Percent();
+  }
+  bool IsNonNegative() const { return is_non_negative_; }
+  ValueRange GetValueRange() const {
+    return is_non_negative_ ? kValueRangeNonNegative : kValueRangeAll;
+  }
+  float Pixels() const { return value_.pixels; }
+  float Percent() const { return value_.percent; }
+  PixelsAndPercent GetPixelsAndPercent() const { return value_; }
 
-private:
-    CalculationValue(PixelsAndPercent value, ValueRange range)
-        : m_value(value)
-        , m_isNonNegative(range == ValueRangeNonNegative)
-    {
-    }
+ private:
+  CalculationValue(PixelsAndPercent value, ValueRange range)
+      : value_(value), is_non_negative_(range == kValueRangeNonNegative) {}
 
-    PixelsAndPercent m_value;
-    bool m_isNonNegative;
+  PixelsAndPercent value_;
+  bool is_non_negative_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CalculationValue_h
+#endif  // CalculationValue_h

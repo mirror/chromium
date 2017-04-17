@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/timer/timer.h"
 #include "ui/app_list/app_list_export.h"
 #include "ui/app_list/app_list_model.h"
@@ -49,19 +48,22 @@ class APP_LIST_EXPORT SearchController {
   void AddProvider(size_t group_id, std::unique_ptr<SearchProvider> provider);
 
  private:
-  typedef ScopedVector<SearchProvider> Providers;
-
   // Invoked when the search results are changed.
   void OnResultsChanged();
 
   SearchBoxModel* search_box_;
 
-  bool dispatching_query_;
+  bool dispatching_query_ = false;
+
+  // If true, the search results are shown on the launcher start page.
+  bool query_for_recommendation_ = false;
+
+  using Providers = std::vector<std::unique_ptr<SearchProvider>>;
   Providers providers_;
   std::unique_ptr<Mixer> mixer_;
   History* history_;  // KeyedService, not owned.
 
-  bool is_voice_query_;
+  bool is_voice_query_ = false;
 
   base::OneShotTimer stop_timer_;
 

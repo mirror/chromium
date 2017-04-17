@@ -30,15 +30,15 @@
 
 #include "core/html/forms/SearchInputType.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
-#include "core/dom/ExecutionContextTask.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/html/HTMLInputElement.h"
+#include "core/html/forms/TextControlInnerElements.h"
 #include "core/html/shadow/ShadowElementNames.h"
-#include "core/html/shadow/TextControlInnerElements.h"
 #include "core/layout/LayoutSearchField.h"
 
 namespace blink {
@@ -46,135 +46,129 @@ namespace blink {
 using namespace HTMLNames;
 
 inline SearchInputType::SearchInputType(HTMLInputElement& element)
-    : BaseTextInputType(element)
-    , m_searchEventTimer(this, &SearchInputType::searchEventTimerFired)
-{
+    : BaseTextInputType(element),
+      search_event_timer_(TaskRunnerHelper::Get(TaskType::kUserInteraction,
+                                                &element.GetDocument()),
+                          this,
+                          &SearchInputType::SearchEventTimerFired) {}
+
+InputType* SearchInputType::Create(HTMLInputElement& element) {
+  return new SearchInputType(element);
 }
 
-InputType* SearchInputType::create(HTMLInputElement& element)
-{
-    return new SearchInputType(element);
+void SearchInputType::CountUsage() {
+  CountUsageIfVisible(UseCounter::kInputTypeSearch);
 }
 
-void SearchInputType::countUsage()
-{
-    countUsageIfVisible(UseCounter::InputTypeSearch);
+LayoutObject* SearchInputType::CreateLayoutObject(const ComputedStyle&) const {
+  return new LayoutSearchField(&GetElement());
 }
 
-LayoutObject* SearchInputType::createLayoutObject(const ComputedStyle&) const
-{
-    return new LayoutSearchField(&element());
+const AtomicString& SearchInputType::FormControlType() const {
+  return InputTypeNames::search;
 }
 
-const AtomicString& SearchInputType::formControlType() const
-{
-    return InputTypeNames::search;
+bool SearchInputType::NeedsContainer() const {
+  return true;
 }
 
-bool SearchInputType::needsContainer() const
-{
-    return true;
+void SearchInputType::CreateShadowSubtree() {
+  TextFieldInputType::CreateShadowSubtree();
+  Element* container = ContainerElement();
+  Element* view_port = GetElement().UserAgentShadowRoot()->GetElementById(
+      ShadowElementNames::EditingViewPort());
+  DCHECK(container);
+  DCHECK(view_port);
+  container->InsertBefore(
+      SearchFieldCancelButtonElement::Create(GetElement().GetDocument()),
+      view_port->nextSibling());
 }
 
-void SearchInputType::createShadowSubtree()
-{
-    TextFieldInputType::createShadowSubtree();
-    Element* container = containerElement();
-    Element* viewPort = element().userAgentShadowRoot()->getElementById(ShadowElementNames::editingViewPort());
-    DCHECK(container);
-    DCHECK(viewPort);
-    container->insertBefore(SearchFieldCancelButtonElement::create(element().document()), viewPort->nextSibling());
+void SearchInputType::HandleKeydownEvent(KeyboardEvent* event) {
+  if (GetElement().IsDisabledOrReadOnly()) {
+    TextFieldInputType::HandleKeydownEvent(event);
+    return;
+  }
+
+  const String& key = event->key();
+  if (key == "Escape") {
+    GetElement().SetValueForUser("");
+    GetElement().OnSearch();
+    event->SetDefaultHandled();
+    return;
+  }
+  TextFieldInputType::HandleKeydownEvent(event);
 }
 
-void SearchInputType::handleKeydownEvent(KeyboardEvent* event)
-{
-    if (element().isDisabledOrReadOnly()) {
-        TextFieldInputType::handleKeydownEvent(event);
-        return;
-    }
+void SearchInputType::StartSearchEventTimer() {
+  DCHECK(GetElement().GetLayoutObject());
+  unsigned length = GetElement().InnerEditorValue().length();
 
-    const String& key = event->key();
-    if (key == "Escape") {
-        element().setValueForUser("");
-        element().onSearch();
-        event->setDefaultHandled();
-        return;
-    }
-    TextFieldInputType::handleKeydownEvent(event);
+  if (!length) {
+    search_event_timer_.Stop();
+    TaskRunnerHelper::Get(TaskType::kUserInteraction,
+                          &GetElement().GetDocument())
+        ->PostTask(BLINK_FROM_HERE, WTF::Bind(&HTMLInputElement::OnSearch,
+                                              WrapPersistent(&GetElement())));
+    return;
+  }
+
+  // After typing the first key, we wait 0.5 seconds.
+  // After the second key, 0.4 seconds, then 0.3, then 0.2 from then on.
+  search_event_timer_.StartOneShot(max(0.2, 0.6 - 0.1 * length),
+                                   BLINK_FROM_HERE);
 }
 
-void SearchInputType::startSearchEventTimer()
-{
-    DCHECK(element().layoutObject());
-    unsigned length = element().innerEditorValue().length();
-
-    if (!length) {
-        m_searchEventTimer.stop();
-        element().document().postTask(BLINK_FROM_HERE, createSameThreadTask(&HTMLInputElement::onSearch, wrapPersistent(&element())));
-        return;
-    }
-
-    // After typing the first key, we wait 0.5 seconds.
-    // After the second key, 0.4 seconds, then 0.3, then 0.2 from then on.
-    m_searchEventTimer.startOneShot(max(0.2, 0.6 - 0.1 * length), BLINK_FROM_HERE);
+void SearchInputType::DispatchSearchEvent() {
+  search_event_timer_.Stop();
+  GetElement().DispatchEvent(Event::CreateBubble(EventTypeNames::search));
 }
 
-void SearchInputType::dispatchSearchEvent()
-{
-    m_searchEventTimer.stop();
-    element().dispatchEvent(Event::createBubble(EventTypeNames::search));
+void SearchInputType::SearchEventTimerFired(TimerBase*) {
+  GetElement().OnSearch();
 }
 
-void SearchInputType::searchEventTimerFired(Timer<SearchInputType>*)
-{
-    element().onSearch();
+bool SearchInputType::SearchEventsShouldBeDispatched() const {
+  return GetElement().hasAttribute(incrementalAttr);
 }
 
-bool SearchInputType::searchEventsShouldBeDispatched() const
-{
-    return element().hasAttribute(incrementalAttr);
+void SearchInputType::DidSetValueByUserEdit() {
+  UpdateCancelButtonVisibility();
+
+  // If the incremental attribute is set, then dispatch the search event
+  if (SearchEventsShouldBeDispatched())
+    StartSearchEventTimer();
+
+  TextFieldInputType::DidSetValueByUserEdit();
 }
 
-void SearchInputType::didSetValueByUserEdit(ValueChangeState state)
-{
-    updateCancelButtonVisibility();
-
-    // If the incremental attribute is set, then dispatch the search event
-    if (searchEventsShouldBeDispatched())
-        startSearchEventTimer();
-
-    TextFieldInputType::didSetValueByUserEdit(state);
+void SearchInputType::UpdateView() {
+  BaseTextInputType::UpdateView();
+  UpdateCancelButtonVisibility();
 }
 
-void SearchInputType::updateView()
-{
-    BaseTextInputType::updateView();
-    updateCancelButtonVisibility();
+const AtomicString& SearchInputType::DefaultAutocapitalize() const {
+  DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
+  return sentences;
 }
 
-const AtomicString& SearchInputType::defaultAutocapitalize() const
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
-    return sentences;
+void SearchInputType::UpdateCancelButtonVisibility() {
+  Element* button = GetElement().UserAgentShadowRoot()->GetElementById(
+      ShadowElementNames::SearchClearButton());
+  if (!button)
+    return;
+  if (GetElement().value().IsEmpty()) {
+    button->SetInlineStyleProperty(CSSPropertyOpacity, 0.0,
+                                   CSSPrimitiveValue::UnitType::kNumber);
+    button->SetInlineStyleProperty(CSSPropertyPointerEvents, CSSValueNone);
+  } else {
+    button->RemoveInlineStyleProperty(CSSPropertyOpacity);
+    button->RemoveInlineStyleProperty(CSSPropertyPointerEvents);
+  }
 }
 
-void SearchInputType::updateCancelButtonVisibility()
-{
-    Element* button = element().userAgentShadowRoot()->getElementById(ShadowElementNames::clearButton());
-    if (!button)
-        return;
-    if (element().value().isEmpty()) {
-        button->setInlineStyleProperty(CSSPropertyOpacity, 0.0, CSSPrimitiveValue::UnitType::Number);
-        button->setInlineStyleProperty(CSSPropertyPointerEvents, CSSValueNone);
-    } else {
-        button->removeInlineStyleProperty(CSSPropertyOpacity);
-        button->removeInlineStyleProperty(CSSPropertyPointerEvents);
-    }
+bool SearchInputType::SupportsInputModeAttribute() const {
+  return true;
 }
 
-bool SearchInputType::supportsInputModeAttribute() const
-{
-    return true;
-}
-
-} // namespace blink
+}  // namespace blink

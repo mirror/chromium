@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * The {@link GestureEventFilter} used when an overlay panel is being shown. It filters
  * events that happen in the Content View area and propagates them to the appropriate
- * ContentViewCore via {@link EventFilterHost}.
+ * ContentViewCore.
  */
 public class OverlayPanelEventFilter extends GestureEventFilter {
 
@@ -127,11 +127,10 @@ public class OverlayPanelEventFilter extends GestureEventFilter {
     /**
      * Creates a {@link GestureEventFilter} with offset touch events.
      * @param context The {@link Context} for Android.
-     * @param host The {@link EventFilterHost} for this event filter.
      * @param panelManager The {@link OverlayPanelManager} responsible for showing panels.
      */
-    public OverlayPanelEventFilter(Context context, EventFilterHost host, OverlayPanel panel) {
-        super(context, host, panel, false, false);
+    public OverlayPanelEventFilter(Context context, OverlayPanel panel) {
+        super(context, panel, false, false);
 
         mGestureDetector = new GestureDetector(context, new InternalGestureDetector());
         mPanel = panel;
@@ -158,18 +157,21 @@ public class OverlayPanelEventFilter extends GestureEventFilter {
 
     @Override
     public boolean onInterceptTouchEventInternal(MotionEvent e, boolean isKeyboardShowing) {
-        if (!mPanel.isShowing()) return false;
-
-        boolean isTouchInsidePanel =
-                mPanel.isCoordinateInsideOverlayPanel(e.getX() * mPxToDp, e.getY() * mPxToDp);
-
-        if (isTouchInsidePanel
+        if (mPanel.isShowing()
+                && (mPanel.isCoordinateInsideOverlayPanel(e.getX() * mPxToDp, e.getY() * mPxToDp)
                 // When the Panel is opened, all events should be forwarded to the Panel,
                 // even those who are not inside the Panel. This is to prevent any events
                 // being forward to the base page when the Panel is expanded.
-                || mPanel.isPanelOpened()) {
+                || mPanel.isPanelOpened())) {
             return super.onInterceptTouchEventInternal(e, isKeyboardShowing);
         }
+
+        // The event filter will have been recording events before the event target was
+        // determined. Clear this cache if the panel is not showing to prevent sending
+        // motion events that would start a target's stream with something other than
+        // ACTION_DOWN.
+        mRecordedEvents.clear();
+        reset();
 
         return false;
     }
@@ -188,6 +190,7 @@ public class OverlayPanelEventFilter extends GestureEventFilter {
                 mPanel.notifyBarTouched(e.getX() * mPxToDp);
             }
             mSwipeRecognizer.onTouchEvent(e);
+            mGestureDetector.onTouchEvent(e);
             return true;
         }
 
@@ -418,6 +421,9 @@ public class OverlayPanelEventFilter extends GestureEventFilter {
      * @return Whether the event has been consumed.
      */
     protected boolean handleSingleTapUp(MotionEvent e) {
+        // If the panel is peeking then the panel was already notified in #onTouchEventInternal().
+        if (mPanel.getPanelState() == PanelState.PEEKED) return false;
+
         setEventTarget(mPanel.isCoordinateInsideContent(
                 e.getX() * mPxToDp, e.getY() * mPxToDp)
                 ? EventTarget.CONTENT_VIEW : EventTarget.PANEL);
@@ -434,10 +440,8 @@ public class OverlayPanelEventFilter extends GestureEventFilter {
      * @return Whether the event has been consumed.
      */
     protected boolean handleScroll(MotionEvent e1, MotionEvent e2, float distanceY) {
-        // TODO(mdjones): It seems impossible that either of the two MotionEvents passed into this
-        // function would be null provided the InternalGestureDetector checks them. However, it
-        // still seems to be possible...
-        if (e1 == null || e2 == null) return false;
+        // If the panel is peeking then the swipe recognizer will handle the scroll event.
+        if (mPanel.getPanelState() == PanelState.PEEKED) return false;
 
         // Only determines the gesture orientation if it hasn't been determined yet,
         // affectively "locking" the orientation once the gesture has started.
@@ -546,16 +550,17 @@ public class OverlayPanelEventFilter extends GestureEventFilter {
      */
     private class InternalGestureDetector extends GestureDetector.SimpleOnGestureListener {
         @Override
+        public void onShowPress(MotionEvent e) {
+            mPanel.onShowPress(e.getX() * mPxToDp, e.getY() * mPxToDp);
+        }
+
+        @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            // TODO(mdjones): Investigate how this is ever the case. The API docs do not say this
-            // can happen (https://crbug.com/613069).
-            if (e == null) return false;
             return handleSingleTapUp(e);
         }
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (e1 == null || e2 == null) return false;
             return handleScroll(e1, e2, distanceY);
         }
     }

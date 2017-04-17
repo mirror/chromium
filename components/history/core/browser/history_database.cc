@@ -15,13 +15,14 @@
 #include "base/command_line.h"
 #include "base/containers/hash_tables.h"
 #include "base/files/file_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/rand_util.h"
 #include "base/strings/string_util.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "components/history/core/browser/url_utils.h"
+#include "sql/meta_table.h"
 #include "sql/statement.h"
 #include "sql/transaction.h"
 
@@ -36,7 +37,7 @@ namespace {
 // Current version number. We write databases at the "current" version number,
 // but any previous version that can read the "compatible" one can make do with
 // our database without *too* many bad effects.
-const int kCurrentVersionNumber = 32;
+const int kCurrentVersionNumber = 36;
 const int kCompatibleVersionNumber = 16;
 const char kEarlyExpirationThresholdKey[] = "early_expiration_threshold";
 const int kMaxHostsInMemory = 10000;
@@ -55,9 +56,6 @@ HistoryDatabase::~HistoryDatabase() {
 
 sql::InitStatus HistoryDatabase::Init(const base::FilePath& history_name) {
   db_.set_histogram_tag("History");
-
-  // Set the exceptional sqlite error handler.
-  db_.set_error_callback(error_callback_);
 
   // Set the database page size to something a little larger to give us
   // better performance (we're typically seek rather than bandwidth limited).
@@ -99,7 +97,7 @@ sql::InitStatus HistoryDatabase::Init(const base::FilePath& history_name) {
     return sql::INIT_FAILURE;
   if (!CreateURLTable(false) || !InitVisitTable() ||
       !InitKeywordSearchTermsTable() || !InitDownloadTable() ||
-      !InitSegmentTables())
+      !InitSegmentTables() || !InitSyncTable())
     return sql::INIT_FAILURE;
   CreateMainURLIndex();
   CreateKeywordSearchTermsIndices();
@@ -201,8 +199,19 @@ TopHostsList HistoryDatabase::TopHosts(size_t num_hosts) {
       std::max(base::Time::Now() - base::TimeDelta::FromDays(30), base::Time());
 
   sql::Statement url_sql(db_.GetUniqueStatement(
-      "SELECT url, visit_count FROM urls WHERE last_visit_time > ?"));
+      "SELECT u.url, u.visit_count "
+      "FROM urls u JOIN visits v ON u.id = v.url "
+      "WHERE last_visit_time > ? "
+      "AND (v.transition & ?) != 0 "              // CHAIN_END
+      "AND (transition & ?) NOT IN (?, ?, ?)"));  // NO SUBFRAME or
+                                                  // KEYWORD_GENERATED
+
   url_sql.BindInt64(0, one_month_ago.ToInternalValue());
+  url_sql.BindInt(1, ui::PAGE_TRANSITION_CHAIN_END);
+  url_sql.BindInt(2, ui::PAGE_TRANSITION_CORE_MASK);
+  url_sql.BindInt(3, ui::PAGE_TRANSITION_AUTO_SUBFRAME);
+  url_sql.BindInt(4, ui::PAGE_TRANSITION_MANUAL_SUBFRAME);
+  url_sql.BindInt(5, ui::PAGE_TRANSITION_KEYWORD_GENERATED);
 
   // Collect a map from host to visit count.
   base::hash_map<std::string, int> host_count;
@@ -259,7 +268,13 @@ void HistoryDatabase::CommitTransaction() {
 }
 
 void HistoryDatabase::RollbackTransaction() {
-  db_.RollbackTransaction();
+  // If Init() returns with a failure status, the Transaction created there will
+  // be destructed and rolled back. HistoryBackend might try to kill the
+  // database after that, at which point it will try to roll back a non-existing
+  // transaction. This will crash on a DCHECK. So transaction_nesting() is
+  // checked first.
+  if (db_.transaction_nesting())
+    db_.RollbackTransaction();
 }
 
 bool HistoryDatabase::RecreateAllTablesButURL() {
@@ -294,6 +309,11 @@ void HistoryDatabase::TrimMemory(bool aggressively) {
 
 bool HistoryDatabase::Raze() {
   return db_.Raze();
+}
+
+std::string HistoryDatabase::GetDiagnosticInfo(int extended_error,
+                                               sql::Statement* statement) {
+  return db_.GetDiagnosticInfo(extended_error, statement);
 }
 
 bool HistoryDatabase::SetSegmentID(VisitID visit_id, SegmentID segment_id) {
@@ -343,6 +363,10 @@ void HistoryDatabase::UpdateEarlyExpirationThreshold(base::Time threshold) {
 
 sql::Connection& HistoryDatabase::GetDB() {
   return db_;
+}
+
+sql::MetaTable& HistoryDatabase::GetMetaTable() {
+  return meta_table_;
 }
 
 // Migration -------------------------------------------------------------------
@@ -511,6 +535,44 @@ sql::InitStatus HistoryDatabase::EnsureCurrentVersion() {
   if (cur_version == 31) {
     if (!MigrateDownloadSiteInstanceUrl()) {
       LOG(WARNING) << "Unable to migrate history to version 32";
+      return sql::INIT_FAILURE;
+    }
+    cur_version++;
+    meta_table_.SetVersionNumber(cur_version);
+  }
+
+  if (cur_version == 32) {
+    // New download slices table is introduced, no migration needed.
+    cur_version++;
+    meta_table_.SetVersionNumber(cur_version);
+  }
+
+  if (cur_version == 33) {
+    if (!MigrateDownloadLastAccessTime()) {
+      LOG(WARNING) << "Unable to migrate to version 34";
+      return sql::INIT_FAILURE;
+    }
+    cur_version++;
+    meta_table_.SetVersionNumber(cur_version);
+  }
+
+  if (cur_version == 34) {
+    // AUTOINCREMENT is added to urls table PRIMARY KEY(id), need to recreate a
+    // new table and copy all contents over. favicon_id is removed from urls
+    // table since we never use it. Also typed_url_sync_metadata and
+    // autofill_model_type_state tables are introduced, no migration needed for
+    // those two tables.
+    if (!RecreateURLTableWithAllContents()) {
+      LOG(WARNING) << "Unable to update history database to version 35.";
+      return sql::INIT_FAILURE;
+    }
+    cur_version++;
+    meta_table_.SetVersionNumber(cur_version);
+  }
+
+  if (cur_version == 35) {
+    if (!MigrateDownloadTransient()) {
+      LOG(WARNING) << "Unable to migrate to version 36";
       return sql::INIT_FAILURE;
     }
     cur_version++;

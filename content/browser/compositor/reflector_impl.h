@@ -6,16 +6,12 @@
 #define CONTENT_BROWSER_COMPOSITOR_REFLECTOR_IMPL_H_
 
 #include <memory>
+#include <vector>
 
-#include "base/callback.h"
-#include "base/id_map.h"
-#include "base/memory/scoped_vector.h"
-#include "base/memory/weak_ptr.h"
-#include "base/synchronization/lock.h"
+#include "base/macros.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "content/common/content_export.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
-#include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/reflector.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -33,10 +29,7 @@ class BrowserCompositorOutputSurface;
 
 // A reflector implementation that copies the framebuffer content
 // to the texture, then draw it onto the mirroring compositor.
-class CONTENT_EXPORT ReflectorImpl
-    : public base::SupportsWeakPtr<ReflectorImpl>,
-      public ui::Reflector,
-      public ui::CompositorObserver {
+class CONTENT_EXPORT ReflectorImpl : public ui::Reflector {
  public:
   ReflectorImpl(ui::Compositor* mirrored_compositor,
                 ui::Layer* mirroring_layer);
@@ -53,22 +46,14 @@ class CONTENT_EXPORT ReflectorImpl
   void AddMirroringLayer(ui::Layer* layer) override;
   void RemoveMirroringLayer(ui::Layer* layer) override;
 
-  // ui::CompositorObserver:
-  void OnCompositingDidCommit(ui::Compositor* compositor) override {}
-  void OnCompositingStarted(ui::Compositor* compositor,
-                            base::TimeTicks start_time) override;
-  void OnCompositingEnded(ui::Compositor* compositor) override {}
-  void OnCompositingAborted(ui::Compositor* compositor) override {}
-  void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
-  void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
-
   // Called in |BrowserCompositorOutputSurface::SwapBuffers| to copy
   // the full screen image to the |mailbox_| texture.
-  void OnSourceSwapBuffers();
+  void OnSourceSwapBuffers(const gfx::Size& surface_size);
 
   // Called in |BrowserCompositorOutputSurface::PostSubBuffer| copy
   // the sub image given by |rect| to the |mailbox_| texture.
-  void OnSourcePostSubBuffer(const gfx::Rect& rect);
+  void OnSourcePostSubBuffer(const gfx::Rect& swap_rect,
+                             const gfx::Size& surface_size);
 
   // Called when the source surface is bound and available.
   void OnSourceSurfaceReady(BrowserCompositorOutputSurface* surface);
@@ -80,20 +65,20 @@ class CONTENT_EXPORT ReflectorImpl
  private:
   struct LayerData;
 
-  ScopedVector<ReflectorImpl::LayerData>::iterator FindLayerData(
+  std::vector<std::unique_ptr<LayerData>>::iterator FindLayerData(
       ui::Layer* layer);
   void UpdateTexture(LayerData* layer_data,
                      const gfx::Size& size,
                      const gfx::Rect& redraw_rect);
 
   ui::Compositor* mirrored_compositor_;
-  ScopedVector<LayerData> mirroring_layers_;
+  std::vector<std::unique_ptr<LayerData>> mirroring_layers_;
 
   scoped_refptr<OwnedMailbox> mailbox_;
   bool flip_texture_;
-  int composition_count_;
   BrowserCompositorOutputSurface* output_surface_;
-  base::Closure composition_started_callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(ReflectorImpl);
 };
 
 }  // namespace content

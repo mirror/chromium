@@ -11,7 +11,7 @@
 
 #include "base/lazy_instance.h"
 #include "base/location.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -78,7 +78,8 @@ class BackoffPolicy {
 // We use a LazyInstance since one of the the policy values references an
 // extern symbol, which would cause a static initializer to be generated if we
 // just declared the policy struct as a static variable.
-base::LazyInstance<BackoffPolicy> g_backoff_policy = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<BackoffPolicy>::DestructorAtExit g_backoff_policy =
+    LAZY_INSTANCE_INITIALIZER;
 
 BackoffPolicy::BackoffPolicy() {
   policy_ = {
@@ -258,11 +259,11 @@ void ChromeRuntimeAPIDelegate::OpenURL(const GURL& uninstall_url) {
   Profile* profile = Profile::FromBrowserContext(browser_context_);
   Browser* browser = chrome::FindLastActiveWithProfile(profile);
   if (!browser)
-    browser = new Browser(Browser::CreateParams(profile));
+    browser = new Browser(Browser::CreateParams(profile, false));
 
   chrome::NavigateParams params(
       browser, uninstall_url, ui::PAGE_TRANSITION_CLIENT_REDIRECT);
-  params.disposition = NEW_FOREGROUND_TAB;
+  params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   params.user_gesture = false;
   chrome::Navigate(&params);
 }
@@ -324,12 +325,11 @@ bool ChromeRuntimeAPIDelegate::RestartDevice(std::string* error_message) {
   return false;
 }
 
-bool ChromeRuntimeAPIDelegate::OpenOptionsPage(const Extension* extension) {
-  Profile* profile = Profile::FromBrowserContext(browser_context_);
-  Browser* browser = chrome::FindLastActiveWithProfile(profile);
-  if (!browser)
-    return false;
-  return extensions::ExtensionTabUtil::OpenOptionsPage(extension, browser);
+bool ChromeRuntimeAPIDelegate::OpenOptionsPage(
+    const Extension* extension,
+    content::BrowserContext* browser_context) {
+  return extensions::ExtensionTabUtil::OpenOptionsPageFromAPI(extension,
+                                                              browser_context);
 }
 
 void ChromeRuntimeAPIDelegate::Observe(
@@ -337,9 +337,10 @@ void ChromeRuntimeAPIDelegate::Observe(
     const content::NotificationSource& source,
     const content::NotificationDetails& details) {
   DCHECK_EQ(extensions::NOTIFICATION_EXTENSION_UPDATE_FOUND, type);
-  using UpdateDetails = const std::pair<std::string, Version>;
+  using UpdateDetails = const std::pair<std::string, base::Version>;
   const std::string& id = content::Details<UpdateDetails>(details)->first;
-  const Version& version = content::Details<UpdateDetails>(details)->second;
+  const base::Version& version =
+      content::Details<UpdateDetails>(details)->second;
   if (version.IsValid()) {
     CallUpdateCallbacks(
         id, UpdateCheckResult(true, kUpdateFound, version.GetString()));

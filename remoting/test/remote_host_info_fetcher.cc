@@ -13,6 +13,7 @@
 #include "base/values.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_fetcher.h"
 #include "remoting/base/url_request_context_getter.h"
 
@@ -56,8 +57,8 @@ bool RemoteHostInfoFetcher::RetrieveRemoteHostInfo(
       base::ThreadTaskRunnerHandle::Get(),   // network_runner
       base::ThreadTaskRunnerHandle::Get());  // file_runner
 
-  request_ =
-      net::URLFetcher::Create(GURL(service_url), net::URLFetcher::POST, this);
+  request_ = net::URLFetcher::Create(GURL(service_url), net::URLFetcher::POST,
+                                     this, TRAFFIC_ANNOTATION_FOR_TESTS);
   request_->SetRequestContext(request_context_getter_.get());
   request_->AddExtraRequestHeader("Authorization: OAuth " + access_token);
   request_->AddExtraRequestHeader(kRequestTestOrigin);
@@ -90,7 +91,7 @@ void RemoteHostInfoFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   std::unique_ptr<base::Value> response_value(
       base::JSONReader::Read(response_string));
   if (!response_value ||
-      !response_value->IsType(base::Value::TYPE_DICTIONARY)) {
+      !response_value->IsType(base::Value::Type::DICTIONARY)) {
     LOG(ERROR) << "Failed to parse response string to JSON";
     base::ResetAndReturn(&remote_host_info_callback_).Run(remote_host_info);
     return;

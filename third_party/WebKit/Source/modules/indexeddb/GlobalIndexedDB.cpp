@@ -15,52 +15,50 @@ namespace blink {
 namespace {
 
 template <typename T>
-class GlobalIndexedDBImpl final : public GarbageCollected<GlobalIndexedDBImpl<T>>, public Supplement<T> {
-    USING_GARBAGE_COLLECTED_MIXIN(GlobalIndexedDBImpl);
-public:
-    static GlobalIndexedDBImpl& from(T& supplementable)
-    {
-        GlobalIndexedDBImpl* supplement = static_cast<GlobalIndexedDBImpl*>(Supplement<T>::from(supplementable, name()));
-        if (!supplement) {
-            supplement = new GlobalIndexedDBImpl;
-            Supplement<T>::provideTo(supplementable, name(), supplement);
-        }
-        return *supplement;
+class GlobalIndexedDBImpl final
+    : public GarbageCollected<GlobalIndexedDBImpl<T>>,
+      public Supplement<T> {
+  USING_GARBAGE_COLLECTED_MIXIN(GlobalIndexedDBImpl);
+
+ public:
+  static GlobalIndexedDBImpl& From(T& supplementable) {
+    GlobalIndexedDBImpl* supplement = static_cast<GlobalIndexedDBImpl*>(
+        Supplement<T>::From(supplementable, GetName()));
+    if (!supplement) {
+      supplement = new GlobalIndexedDBImpl;
+      Supplement<T>::ProvideTo(supplementable, GetName(), supplement);
     }
+    return *supplement;
+  }
 
-    IDBFactory* idbFactory(T& fetchingScope)
-    {
-        if (!m_idbFactory)
-            m_idbFactory = IDBFactory::create();
-        return m_idbFactory;
-    }
+  IDBFactory* IdbFactory(T& fetching_scope) {
+    if (!idb_factory_)
+      idb_factory_ = IDBFactory::Create();
+    return idb_factory_;
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_idbFactory);
-        Supplement<T>::trace(visitor);
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(idb_factory_);
+    Supplement<T>::Trace(visitor);
+  }
 
-private:
-    GlobalIndexedDBImpl()
-    {
-    }
+ private:
+  GlobalIndexedDBImpl() {}
 
-    static const char* name() { return "IndexedDB"; }
+  static const char* GetName() { return "IndexedDB"; }
 
-    Member<IDBFactory> m_idbFactory;
+  Member<IDBFactory> idb_factory_;
 };
 
-} // namespace
+}  // namespace
 
-IDBFactory* GlobalIndexedDB::indexedDB(DOMWindow& window)
-{
-    return GlobalIndexedDBImpl<LocalDOMWindow>::from(toLocalDOMWindow(window)).idbFactory(toLocalDOMWindow(window));
+IDBFactory* GlobalIndexedDB::indexedDB(LocalDOMWindow& window) {
+  return GlobalIndexedDBImpl<LocalDOMWindow>::From(window).IdbFactory(window);
 }
 
-IDBFactory* GlobalIndexedDB::indexedDB(WorkerGlobalScope& worker)
-{
-    return GlobalIndexedDBImpl<WorkerGlobalScope>::from(worker).idbFactory(worker);
+IDBFactory* GlobalIndexedDB::indexedDB(WorkerGlobalScope& worker) {
+  return GlobalIndexedDBImpl<WorkerGlobalScope>::From(worker).IdbFactory(
+      worker);
 }
 
-} // namespace blink
+}  // namespace blink

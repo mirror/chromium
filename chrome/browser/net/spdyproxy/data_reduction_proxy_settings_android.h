@@ -5,14 +5,20 @@
 #ifndef CHROME_BROWSER_NET_SPDYPROXY_DATA_REDUCTION_PROXY_SETTINGS_ANDROID_H_
 #define CHROME_BROWSER_NET_SPDYPROXY_DATA_REDUCTION_PROXY_SETTINGS_ANDROID_H_
 
-#include <memory>
+#include <jni.h>
 
+#include <memory>
+#include <vector>
+
+#include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/android/jni_weak_ref.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
+#include "components/data_reduction_proxy/proto/data_store.pb.h"
 #include "components/prefs/pref_member.h"
 
 using base::android::ScopedJavaLocalRef;
@@ -28,52 +34,37 @@ class DataReductionProxySettings;
 // be called from there.
 class DataReductionProxySettingsAndroid {
  public:
-  DataReductionProxySettingsAndroid();
+  DataReductionProxySettingsAndroid(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
 
   virtual ~DataReductionProxySettingsAndroid();
 
   void InitDataReductionProxySettings(Profile* profile);
 
   // JNI wrapper interfaces to the indentically-named superclass methods.
-  jboolean IsDataReductionProxyAllowed(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
   jboolean IsDataReductionProxyPromoAllowed(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
   jboolean IsDataReductionProxyEnabled(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
-  jboolean CanUseDataReductionProxy(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj,
-      const base::android::JavaParamRef<jstring>& url);
-  jboolean WasLoFiModeActiveOnMainFrame(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-  jboolean WasLoFiLoadImageRequestedBefore(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-  void SetLoFiLoadImageRequested(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
   jboolean IsDataReductionProxyManaged(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-  void IncrementLoFiSnackbarShown(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-  void IncrementLoFiUserRequestsForImages(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
   void SetDataReductionProxyEnabled(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       jboolean enabled);
-
   jlong GetDataReductionLastUpdateTime(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
+  void ClearDataSavingStatistics(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
+  jlong GetTotalHttpContentLengthSaved(
+        JNIEnv* env,
+        const base::android::JavaParamRef<jobject>& obj);
   ScopedJavaLocalRef<jlongArray> GetDailyOriginalContentLengths(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
@@ -116,18 +107,38 @@ class DataReductionProxySettingsAndroid {
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
 
+  // Gets the historical data usage for |numDays| and adds them to a list that
+  // groups data use by hostname.
+  void QueryDataUsage(JNIEnv* env,
+                      const base::android::JavaParamRef<jobject>& obj,
+                      const base::android::JavaParamRef<jobject>& j_result_obj,
+                      jint num_days);
+  void OnQueryDataUsageComplete(
+      std::unique_ptr<std::vector<data_reduction_proxy::DataUsageBucket>>
+          data_usage);
+
   // Registers the native methods to be call from Java.
   static bool Register(JNIEnv* env);
 
+  JavaObjectWeakGlobalRef j_settings_obj_;
+  base::android::ScopedJavaGlobalRef<jobject> j_query_result_obj_;
+  int num_day_for_query_;
+
  private:
   friend class DataReductionProxySettingsAndroidTest;
+  friend class TestDataReductionProxySettingsAndroid;
   FRIEND_TEST_ALL_PREFIXES(DataReductionProxySettingsAndroidTest,
                            TestGetDailyContentLengths);
+
+  // For testing purposes.
+  DataReductionProxySettingsAndroid();
 
   ScopedJavaLocalRef<jlongArray> GetDailyContentLengths(JNIEnv* env,
                                                         const char* pref_name);
 
   virtual data_reduction_proxy::DataReductionProxySettings* Settings();
+
+  base::WeakPtrFactory<DataReductionProxySettingsAndroid> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DataReductionProxySettingsAndroid);
 };

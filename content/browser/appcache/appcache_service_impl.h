@@ -9,7 +9,6 @@
 
 #include <map>
 #include <memory>
-#include <set>
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -71,12 +70,15 @@ class CONTENT_EXPORT AppCacheServiceImpl
 
   class CONTENT_EXPORT Observer {
    public:
+    // Called just prior to the instance being deleted.
+    virtual void OnServiceDestructionImminent(AppCacheServiceImpl* service) {}
+
     // An observer method to inform consumers of reinitialzation. Managing
     // the lifetime of the old storage instance is a delicate process.
     // Consumers can keep the old disabled instance alive by hanging on to the
     // ref provided.
     virtual void OnServiceReinitialized(
-        AppCacheStorageReference* old_storage_ref) = 0;
+        AppCacheStorageReference* old_storage_ref) {}
     virtual ~Observer() {}
   };
 
@@ -192,8 +194,9 @@ class CONTENT_EXPORT AppCacheServiceImpl
   class GetInfoHelper;
   class CheckResponseHelper;
 
-  typedef std::set<AsyncHelper*> PendingAsyncHelpers;
-  typedef std::map<int, AppCacheBackendImpl*> BackendMap;
+  using PendingAsyncHelpers =
+      std::map<AsyncHelper*, std::unique_ptr<AsyncHelper>>;
+  using BackendMap = std::map<int, AppCacheBackendImpl*>;
 
   void Reinitialize();
 

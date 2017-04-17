@@ -1,3 +1,8 @@
+include_rules = [
+  "+components/payments/mojom/payment_app.mojom.h",
+  "+device/screen_orientation/public/interfaces",
+]
+
 specific_include_rules = {
   ".*\.cc": [
     "+content/browser",

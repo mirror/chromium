@@ -20,7 +20,6 @@ function Runner(outerContainerId, opt_config) {
   this.outerContainerEl = document.querySelector(outerContainerId);
   this.containerEl = null;
   this.snackbarEl = null;
-  this.detailsButton = this.outerContainerEl.querySelector('#details-button');
 
   this.config = opt_config || Runner.config;
 
@@ -43,8 +42,8 @@ function Runner(outerContainerId, opt_config) {
 
   this.obstacles = [];
 
-  this.started = false;
-  this.activated = false;
+  this.activated = false; // Whether the easter egg has been activated.
+  this.playing = false; // Whether the game is currently in play state.
   this.crashed = false;
   this.paused = false;
   this.inverted = false;
@@ -89,11 +88,10 @@ var FPS = 60;
 var IS_HIDPI = window.devicePixelRatio > 1;
 
 /** @const */
-var IS_IOS = window.navigator.userAgent.indexOf('CriOS') > -1 ||
-    window.navigator.userAgent == 'UIWebViewForStaticFileContent';
+var IS_IOS = /iPad|iPhone|iPod/.test(window.navigator.platform);
 
 /** @const */
-var IS_MOBILE = window.navigator.userAgent.indexOf('Mobi') > -1 || IS_IOS;
+var IS_MOBILE = /Android/.test(window.navigator.userAgent) || IS_IOS;
 
 /** @const */
 var IS_TOUCH_ENABLED = 'ontouchstart' in window;
@@ -114,6 +112,7 @@ Runner.config = {
   INITIAL_JUMP_VELOCITY: 12,
   INVERT_FADE_DURATION: 12000,
   INVERT_DISTANCE: 700,
+  MAX_BLINK_COUNT: 3,
   MAX_CLOUDS: 6,
   MAX_OBSTACLE_LENGTH: 3,
   MAX_OBSTACLE_DUPLICATION: 2,
@@ -433,7 +432,7 @@ Runner.prototype = {
       this.tRex.update(0);
 
       // Outer container and distance meter.
-      if (this.activated || this.crashed || this.paused) {
+      if (this.playing || this.crashed || this.paused) {
         this.containerEl.style.width = this.dimensions.WIDTH + 'px';
         this.containerEl.style.height = this.dimensions.HEIGHT + 'px';
         this.distanceMeter.update(0, Math.ceil(this.distanceRan));
@@ -455,7 +454,7 @@ Runner.prototype = {
    * Canvas container width expands out to the full width.
    */
   playIntro: function() {
-    if (!this.started && !this.crashed) {
+    if (!this.activated && !this.crashed) {
       this.playingIntro = true;
       this.tRex.playingIntro = true;
 
@@ -475,8 +474,8 @@ Runner.prototype = {
       if (this.touchController) {
         this.outerContainerEl.appendChild(this.touchController);
       }
+      this.playing = true;
       this.activated = true;
-      this.started = true;
     } else if (this.crashed) {
       this.restart();
     }
@@ -510,16 +509,16 @@ Runner.prototype = {
   },
 
   /**
-   * Update the game frame.
+   * Update the game frame and schedules the next one.
    */
   update: function() {
-    this.drawPending = false;
+    this.updatePending = false;
 
     var now = getTimeStamp();
     var deltaTime = now - (this.time || now);
     this.time = now;
 
-    if (this.activated) {
+    if (this.playing) {
       this.clearCanvas();
 
       if (this.tRex.jumping) {
@@ -538,7 +537,7 @@ Runner.prototype = {
       if (this.playingIntro) {
         this.horizon.update(0, this.currentSpeed, hasObstacles);
       } else {
-        deltaTime = !this.started ? 0 : deltaTime;
+        deltaTime = !this.activated ? 0 : deltaTime;
         this.horizon.update(deltaTime, this.currentSpeed, hasObstacles,
             this.inverted);
       }
@@ -587,9 +586,10 @@ Runner.prototype = {
       }
     }
 
-    if (!this.crashed) {
+    if (this.playing || (!this.activated &&
+        this.tRex.blinkCount < Runner.config.MAX_BLINK_COUNT)) {
       this.tRex.update(deltaTime);
-      this.raq();
+      this.scheduleNextUpdate();
     }
   },
 
@@ -656,42 +656,41 @@ Runner.prototype = {
    */
   onKeyDown: function(e) {
     // Prevent native page scrolling whilst tapping on mobile.
-    if (IS_MOBILE && this.activated) {
+    if (IS_MOBILE && this.playing) {
       e.preventDefault();
     }
 
-    if (e.target != this.detailsButton) {
-      if (!this.crashed && (Runner.keycodes.JUMP[e.keyCode] ||
-           e.type == Runner.events.TOUCHSTART)) {
-        if (!this.activated) {
+    if (!this.crashed && !this.paused) {
+      if (Runner.keycodes.JUMP[e.keyCode] ||
+          e.type == Runner.events.TOUCHSTART) {
+        e.preventDefault();
+        // Starting the game for the first time.
+        if (!this.playing) {
           this.loadSounds();
-          this.activated = true;
+          this.playing = true;
+          this.update();
           if (window.errorPageController) {
             errorPageController.trackEasterEgg();
           }
         }
-
+        // Start jump.
         if (!this.tRex.jumping && !this.tRex.ducking) {
           this.playSound(this.soundFx.BUTTON_PRESS);
           this.tRex.startJump(this.currentSpeed);
         }
+      } else if (this.playing && Runner.keycodes.DUCK[e.keyCode]) {
+        e.preventDefault();
+        if (this.tRex.jumping) {
+          // Speed drop, activated only when jump key is not pressed.
+          this.tRex.setSpeedDrop();
+        } else if (!this.tRex.jumping && !this.tRex.ducking) {
+          // Duck.
+          this.tRex.setDuck(true);
+        }
       }
-
-      if (this.crashed && e.type == Runner.events.TOUCHSTART &&
-          e.currentTarget == this.containerEl) {
-        this.restart();
-      }
-    }
-
-    if (this.activated && !this.crashed && Runner.keycodes.DUCK[e.keyCode]) {
-      e.preventDefault();
-      if (this.tRex.jumping) {
-        // Speed drop, activated only when jump key is not pressed.
-        this.tRex.setSpeedDrop();
-      } else if (!this.tRex.jumping && !this.tRex.ducking) {
-        // Duck.
-        this.tRex.setDuck(true);
-      }
+    } else if (this.crashed && e.type == Runner.events.TOUCHSTART &&
+        e.currentTarget == this.containerEl) {
+      this.restart();
     }
   },
 
@@ -741,9 +740,9 @@ Runner.prototype = {
   /**
    * RequestAnimationFrame wrapper.
    */
-  raq: function() {
-    if (!this.drawPending) {
-      this.drawPending = true;
+  scheduleNextUpdate: function() {
+    if (!this.updatePending) {
+      this.updatePending = true;
       this.raqId = requestAnimationFrame(this.update.bind(this));
     }
   },
@@ -789,7 +788,7 @@ Runner.prototype = {
   },
 
   stop: function() {
-    this.activated = false;
+    this.playing = false;
     this.paused = true;
     cancelAnimationFrame(this.raqId);
     this.raqId = 0;
@@ -797,7 +796,7 @@ Runner.prototype = {
 
   play: function() {
     if (!this.crashed) {
-      this.activated = true;
+      this.playing = true;
       this.paused = false;
       this.tRex.update(0, Trex.status.RUNNING);
       this.time = getTimeStamp();
@@ -809,7 +808,8 @@ Runner.prototype = {
     if (!this.raqId) {
       this.playCount++;
       this.runningTime = 0;
-      this.activated = true;
+      this.playing = true;
+      this.paused = false;
       this.crashed = false;
       this.distanceRan = 0;
       this.setSpeed(this.config.SPEED);
@@ -1488,6 +1488,7 @@ function Trex(canvas, spritePos) {
   this.currentFrame = 0;
   this.currentAnimFrames = [];
   this.blinkDelay = 0;
+  this.blinkCount = 0;
   this.animStartTime = 0;
   this.timer = 0;
   this.msPerFrame = 1000 / FPS;
@@ -1600,7 +1601,6 @@ Trex.prototype = {
    * Sets the t-rex to blink at random intervals.
    */
   init: function() {
-    this.blinkDelay = this.setBlinkDelay();
     this.groundYPos = Runner.defaultDimensions.HEIGHT - this.config.HEIGHT -
         Runner.config.BOTTOM_PAD;
     this.yPos = this.groundYPos;
@@ -1729,6 +1729,7 @@ Trex.prototype = {
         // Set new random delay to blink.
         this.setBlinkDelay();
         this.animStartTime = time;
+        this.blinkCount++;
       }
     }
   },

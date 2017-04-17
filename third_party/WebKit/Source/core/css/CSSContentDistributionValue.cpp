@@ -5,39 +5,47 @@
 #include "core/css/CSSContentDistributionValue.h"
 
 #include "core/css/CSSValueList.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-CSSContentDistributionValue::CSSContentDistributionValue(CSSValueID distribution, CSSValueID position, CSSValueID overflow)
-    : CSSValue(CSSContentDistributionClass)
-    , m_distribution(distribution)
-    , m_position(position)
-    , m_overflow(overflow)
-{
+CSSContentDistributionValue::CSSContentDistributionValue(
+    CSSValueID distribution,
+    CSSValueID position,
+    CSSValueID overflow)
+    : CSSValue(kCSSContentDistributionClass),
+      distribution_(distribution),
+      position_(position),
+      overflow_(overflow) {}
+
+CSSContentDistributionValue::~CSSContentDistributionValue() {}
+
+String CSSContentDistributionValue::CustomCSSText() const {
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+
+  if (distribution_ != CSSValueInvalid)
+    list->Append(*Distribution());
+  if (position_ != CSSValueInvalid) {
+    if (position_ == CSSValueFirstBaseline ||
+        position_ == CSSValueLastBaseline) {
+      CSSValueID preference =
+          position_ == CSSValueFirstBaseline ? CSSValueFirst : CSSValueLast;
+      list->Append(*CSSIdentifierValue::Create(preference));
+      list->Append(*CSSIdentifierValue::Create(CSSValueBaseline));
+    } else {
+      list->Append(*GetPosition());
+    }
+  }
+  if (overflow_ != CSSValueInvalid)
+    list->Append(*Overflow());
+
+  return list->CustomCSSText();
 }
 
-CSSContentDistributionValue::~CSSContentDistributionValue()
-{
+bool CSSContentDistributionValue::Equals(
+    const CSSContentDistributionValue& other) const {
+  return distribution_ == other.distribution_ && position_ == other.position_ &&
+         overflow_ == other.overflow_;
 }
 
-String CSSContentDistributionValue::customCSSText() const
-{
-    CSSValueList* list = CSSValueList::createSpaceSeparated();
-
-    if (m_distribution != CSSValueInvalid)
-        list->append(*distribution());
-    if (m_position != CSSValueInvalid)
-        list->append(*position());
-    if (m_overflow != CSSValueInvalid)
-        list->append(*overflow());
-
-    return list->customCSSText();
-}
-
-bool CSSContentDistributionValue::equals(const CSSContentDistributionValue& other) const
-{
-    return m_distribution == other.m_distribution && m_position == other.m_position && m_overflow == other.m_overflow;
-}
-
-} // namespace blink
+}  // namespace blink

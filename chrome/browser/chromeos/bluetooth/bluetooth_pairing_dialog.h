@@ -5,28 +5,25 @@
 #ifndef CHROME_BROWSER_CHROMEOS_BLUETOOTH_BLUETOOTH_PAIRING_DIALOG_H_
 #define CHROME_BROWSER_CHROMEOS_BLUETOOTH_BLUETOOTH_PAIRING_DIALOG_H_
 
-#include <string>
-
-#include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/strings/string16.h"
 #include "base/values.h"
-#include "ui/gfx/native_widget_types.h"
 #include "ui/web_dialogs/web_dialog_delegate.h"
-
-namespace device {
-class BluetoothDevice;
-}
 
 namespace chromeos {
 
-// Bluetooth device pairing dialog shown form ash tray bubble.
+// Bluetooth device pairing dialog shown from ash tray bubble.
 class BluetoothPairingDialog : public ui::WebDialogDelegate {
  public:
-  BluetoothPairingDialog(gfx::NativeWindow parent_window,
-                         const device::BluetoothDevice* device);
+  BluetoothPairingDialog(const std::string& address,
+                         const base::string16& name_for_display,
+                         bool paired,
+                         bool connected);
   ~BluetoothPairingDialog() override;
 
-  void Show();
+  // Shows the dialog in an ash window container (which must be a system modal
+  // container) on the primary display. See ash/public/cpp/shell_window_ids.h.
+  void ShowInContainer(int container_id);
 
   content::WebUI* GetWebUIForTest() { return webui_; }
 
@@ -49,7 +46,6 @@ class BluetoothPairingDialog : public ui::WebDialogDelegate {
   bool HandleContextMenu(const content::ContextMenuParams& params) override;
 
  private:
-  gfx::NativeWindow parent_window_;
   base::DictionaryValue device_data_;
   content::WebUI* webui_;
 

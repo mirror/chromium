@@ -1,7 +1,5 @@
 {
-  "name": "Content Root Layer",
-  "bounds": [800, 600],
-  "children": [
+  "layers": [
     {
       "name": "LayoutView #document",
       "bounds": [800, 600],
@@ -10,12 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutInline SPAN id='target'",
-          "rect": [8, 8, 26, 24],
-          "reason": "style change"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [8, 8, 26, 19],
+          "rect": [8, 8, 29, 24],
           "reason": "style change"
         }
       ]

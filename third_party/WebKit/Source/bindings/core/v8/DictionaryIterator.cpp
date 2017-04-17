@@ -8,64 +8,106 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8StringResource.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-DictionaryIterator::DictionaryIterator(v8::Local<v8::Object> iterator, v8::Isolate* isolate)
-    : m_isolate(isolate)
-    , m_iterator(iterator)
-    , m_nextKey(v8String(isolate, "next"))
-    , m_doneKey(v8String(isolate, "done"))
-    , m_valueKey(v8String(isolate, "value"))
-    , m_done(false)
-{
-    ASSERT(!iterator.IsEmpty());
+DictionaryIterator::DictionaryIterator(v8::Local<v8::Object> iterator,
+                                       v8::Isolate* isolate)
+    : isolate_(isolate),
+      iterator_(iterator),
+      next_key_(V8String(isolate, "next")),
+      done_key_(V8String(isolate, "done")),
+      value_key_(V8String(isolate, "value")),
+      done_(false) {
+  DCHECK(!iterator.IsEmpty());
 }
 
-bool DictionaryIterator::next(ExecutionContext* executionContext, ExceptionState& exceptionState)
-{
-    ASSERT(!isNull());
+bool DictionaryIterator::Next(ExecutionContext* execution_context,
+                              ExceptionState& exception_state) {
+  DCHECK(!IsNull());
 
-    v8::Local<v8::Value> next;
-    // TODO(alancutter): Support callable objects as well as functions.
-    if (!v8Call(m_iterator->Get(m_isolate->GetCurrentContext(), m_nextKey), next) || !next->IsFunction()) {
-        exceptionState.throwTypeError("Expected next() function on iterator.");
-        m_done = true;
-        return false;
-    }
+  v8::TryCatch try_catch(isolate_);
+  v8::Local<v8::Context> context = isolate_->GetCurrentContext();
 
-    v8::Local<v8::Value> result;
-    if (!v8Call(V8ScriptRunner::callFunction(v8::Local<v8::Function>::Cast(next), executionContext, m_iterator, 0, nullptr, m_isolate), result) || !result->IsObject()) {
-        exceptionState.throwTypeError("Expected iterator.next() to return an Object.");
-        m_done = true;
-        return false;
-    }
-    v8::Local<v8::Object> resultObject = v8::Local<v8::Object>::Cast(result);
+  v8::Local<v8::Value> next;
+  if (!iterator_->Get(context, next_key_).ToLocal(&next)) {
+    CHECK(!try_catch.Exception().IsEmpty());
+    exception_state.RethrowV8Exception(try_catch.Exception());
+    done_ = true;
+    return false;
+  }
+  if (!next->IsFunction()) {
+    exception_state.ThrowTypeError("Expected next() function on iterator.");
+    done_ = true;
+    return false;
+  }
 
-    m_value = resultObject->Get(m_isolate->GetCurrentContext(), m_valueKey);
+  v8::Local<v8::Value> result;
+  if (!V8ScriptRunner::CallFunction(v8::Local<v8::Function>::Cast(next),
+                                    execution_context, iterator_, 0, nullptr,
+                                    isolate_)
+           .ToLocal(&result)) {
+    CHECK(!try_catch.Exception().IsEmpty());
+    exception_state.RethrowV8Exception(try_catch.Exception());
+    done_ = true;
+    return false;
+  }
+  if (!result->IsObject()) {
+    exception_state.ThrowTypeError(
+        "Expected iterator.next() to return an Object.");
+    done_ = true;
+    return false;
+  }
+  v8::Local<v8::Object> result_object = v8::Local<v8::Object>::Cast(result);
 
-    v8::Local<v8::Value> done;
-    if (v8Call(resultObject->Get(m_isolate->GetCurrentContext(), m_doneKey), done)) {
-        v8::Local<v8::Boolean> doneBoolean;
-        m_done = v8Call(done->ToBoolean(m_isolate->GetCurrentContext()), doneBoolean) ? doneBoolean->Value() : false;
-    } else {
-        m_done = false;
-    }
-    return !m_done;
+  value_ = result_object->Get(context, value_key_);
+  if (value_.IsEmpty()) {
+    CHECK(!try_catch.Exception().IsEmpty());
+    exception_state.RethrowV8Exception(try_catch.Exception());
+  }
+
+  v8::Local<v8::Value> done;
+  v8::Local<v8::Boolean> done_boolean;
+  if (!result_object->Get(context, done_key_).ToLocal(&done) ||
+      !done->ToBoolean(context).ToLocal(&done_boolean)) {
+    CHECK(!try_catch.Exception().IsEmpty());
+    exception_state.RethrowV8Exception(try_catch.Exception());
+    done_ = true;
+    return false;
+  }
+
+  done_ = done_boolean->Value();
+  return !done_;
 }
 
-bool DictionaryIterator::valueAsDictionary(Dictionary& result, ExceptionState& exceptionState)
-{
-    ASSERT(!isNull());
-    ASSERT(!m_done);
+bool DictionaryIterator::ValueAsDictionary(Dictionary& result,
+                                           ExceptionState& exception_state) {
+  DCHECK(!IsNull());
+  DCHECK(!done_);
 
-    v8::Local<v8::Value> value;
-    if (!v8Call(m_value, value) || !value->IsObject())
-        return false;
+  v8::Local<v8::Value> value;
+  if (!V8Call(value_, value) || !value->IsObject())
+    return false;
 
-    result = Dictionary(value, m_isolate, exceptionState);
-    return true;
+  result = Dictionary(isolate_, value, exception_state);
+  return true;
 }
 
-} // namespace blink
+bool DictionaryIterator::ValueAsString(String& result) {
+  DCHECK(!IsNull());
+  DCHECK(!done_);
 
+  v8::Local<v8::Value> value;
+  if (!V8Call(value_, value))
+    return false;
+
+  V8StringResource<> string_value(value);
+  if (!string_value.Prepare())
+    return false;
+  result = string_value;
+  return true;
+}
+
+}  // namespace blink

@@ -2,19 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// https://w3c.github.io/mediacapture-image/index.html
+// https://w3c.github.io/mediacapture-image/#ImageCaptureAPI
 
 [
     ActiveScriptWrappable,
     ConstructorCallWith=ExecutionContext,
     Constructor(MediaStreamTrack track),
+    DependentLifetime,
+    MeasureAs=ImageCaptureConstructor,
     RaisesException=Constructor,
     RuntimeEnabled=ImageCapture,
 ] interface ImageCapture {
-    readonly attribute MediaStreamTrack videoStreamTrack;
+    [ImplementedAs=videoStreamTrack] readonly attribute MediaStreamTrack track;
 
-    [CallWith=ScriptState, RaisesException] Promise<PhotoCapabilities> getPhotoCapabilities();
-    [CallWith=ScriptState, RaisesException] Promise<void> setOptions(PhotoSettings photoSettings);
-    [CallWith=ScriptState, RaisesException] Promise<Blob> takePhoto();
-    [CallWith=ScriptState, RaisesException] Promise<ImageBitmap> grabFrame();
+    [CallWith=ScriptState] Promise<PhotoCapabilities> getPhotoCapabilities();
+    [CallWith=ScriptState] Promise<void> setOptions(PhotoSettings photoSettings);
+    [CallWith=ScriptState] Promise<Blob> takePhoto();
+    [CallWith=ScriptState] Promise<ImageBitmap> grabFrame();
 };

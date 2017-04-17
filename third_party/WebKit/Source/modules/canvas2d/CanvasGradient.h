@@ -31,37 +31,47 @@
 #include "modules/ModulesExport.h"
 #include "platform/graphics/Gradient.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class ExceptionState;
 
-class MODULES_EXPORT CanvasGradient final : public GarbageCollectedFinalized<CanvasGradient>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static CanvasGradient* create(const FloatPoint& p0, const FloatPoint& p1)
-    {
-        return new CanvasGradient(p0, p1);
-    }
-    static CanvasGradient* create(const FloatPoint& p0, float r0, const FloatPoint& p1, float r1)
-    {
-        return new CanvasGradient(p0, r0, p1, r1);
-    }
+class MODULES_EXPORT CanvasGradient final
+    : public GarbageCollectedFinalized<CanvasGradient>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    Gradient* getGradient() const { return m_gradient.get(); }
+ public:
+  static CanvasGradient* Create(const FloatPoint& p0, const FloatPoint& p1) {
+    return new CanvasGradient(p0, p1);
+  }
+  static CanvasGradient* Create(const FloatPoint& p0,
+                                float r0,
+                                const FloatPoint& p1,
+                                float r1) {
+    return new CanvasGradient(p0, r0, p1, r1);
+  }
 
-    void addColorStop(float value, const String& color, ExceptionState&);
+  Gradient* GetGradient() const { return gradient_.Get(); }
 
-    DEFINE_INLINE_TRACE() { }
+  void addColorStop(float value, const String& color, ExceptionState&);
 
-private:
-    CanvasGradient(const FloatPoint& p0, const FloatPoint& p1);
-    CanvasGradient(const FloatPoint& p0, float r0, const FloatPoint& p1, float r1);
+  bool IsZeroSize() const { return is_zero_size_; }
 
-    RefPtr<Gradient> m_gradient;
+  DEFINE_INLINE_TRACE() {}
+
+ private:
+  CanvasGradient(const FloatPoint& p0, const FloatPoint& p1);
+  CanvasGradient(const FloatPoint& p0,
+                 float r0,
+                 const FloatPoint& p1,
+                 float r1);
+
+  RefPtr<Gradient> gradient_;
+  const bool is_zero_size_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CanvasGradient_h
+#endif  // CanvasGradient_h

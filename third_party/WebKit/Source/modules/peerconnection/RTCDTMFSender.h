@@ -26,7 +26,7 @@
 #ifndef RTCDTMFSender_h
 #define RTCDTMFSender_h
 
-#include "core/dom/ActiveDOMObject.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "modules/EventTargetModules.h"
 #include "platform/Timer.h"
 #include "public/platform/WebRTCDTMFSenderHandlerClient.h"
@@ -39,60 +39,68 @@ class MediaStreamTrack;
 class WebRTCDTMFSenderHandler;
 class WebRTCPeerConnectionHandler;
 
-class RTCDTMFSender final
-    : public EventTargetWithInlineData
-    , public WebRTCDTMFSenderHandlerClient
-    , public ActiveDOMObject {
-    USING_GARBAGE_COLLECTED_MIXIN(RTCDTMFSender);
-    DEFINE_WRAPPERTYPEINFO();
-    USING_PRE_FINALIZER(RTCDTMFSender, dispose);
-public:
-    static RTCDTMFSender* create(ExecutionContext*, WebRTCPeerConnectionHandler*, MediaStreamTrack*, ExceptionState&);
-    ~RTCDTMFSender() override;
+class RTCDTMFSender final : public EventTargetWithInlineData,
+                            public WebRTCDTMFSenderHandlerClient,
+                            public ContextLifecycleObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(RTCDTMFSender);
+  DEFINE_WRAPPERTYPEINFO();
+  USING_PRE_FINALIZER(RTCDTMFSender, Dispose);
 
-    bool canInsertDTMF() const;
-    MediaStreamTrack* track() const;
-    String toneBuffer() const;
-    int duration() const { return m_duration; }
-    int interToneGap() const { return m_interToneGap; }
+ public:
+  static RTCDTMFSender* Create(ExecutionContext*,
+                               WebRTCPeerConnectionHandler*,
+                               MediaStreamTrack*,
+                               ExceptionState&);
+  ~RTCDTMFSender() override;
 
-    void insertDTMF(const String& tones, ExceptionState&);
-    void insertDTMF(const String& tones, int duration, ExceptionState&);
-    void insertDTMF(const String& tones, int duration, int interToneGap, ExceptionState&);
+  bool canInsertDTMF() const;
+  MediaStreamTrack* track() const;
+  String toneBuffer() const;
+  int duration() const { return duration_; }
+  int interToneGap() const { return inter_tone_gap_; }
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(tonechange);
+  void insertDTMF(const String& tones, ExceptionState&);
+  void insertDTMF(const String& tones, int duration, ExceptionState&);
+  void insertDTMF(const String& tones,
+                  int duration,
+                  int inter_tone_gap,
+                  ExceptionState&);
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(tonechange);
 
-    // ActiveDOMObject
-    void stop() override;
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  // ContextLifecycleObserver
+  void ContextDestroyed(ExecutionContext*) override;
 
-private:
-    RTCDTMFSender(ExecutionContext*, MediaStreamTrack*, std::unique_ptr<WebRTCDTMFSenderHandler>);
-    void dispose();
+  DECLARE_VIRTUAL_TRACE();
 
-    void scheduleDispatchEvent(Event*);
-    void scheduledEventTimerFired(Timer<RTCDTMFSender>*);
+ private:
+  RTCDTMFSender(ExecutionContext*,
+                MediaStreamTrack*,
+                std::unique_ptr<WebRTCDTMFSenderHandler>);
+  void Dispose();
 
-    // WebRTCDTMFSenderHandlerClient
-    void didPlayTone(const WebString&) override;
+  void ScheduleDispatchEvent(Event*);
+  void ScheduledEventTimerFired(TimerBase*);
 
-    Member<MediaStreamTrack> m_track;
-    int m_duration;
-    int m_interToneGap;
+  // WebRTCDTMFSenderHandlerClient
+  void DidPlayTone(const WebString&) override;
 
-    std::unique_ptr<WebRTCDTMFSenderHandler> m_handler;
+  Member<MediaStreamTrack> track_;
+  int duration_;
+  int inter_tone_gap_;
 
-    bool m_stopped;
+  std::unique_ptr<WebRTCDTMFSenderHandler> handler_;
 
-    Timer<RTCDTMFSender> m_scheduledEventTimer;
-    HeapVector<Member<Event>> m_scheduledEvents;
+  bool stopped_;
+
+  TaskRunnerTimer<RTCDTMFSender> scheduled_event_timer_;
+  HeapVector<Member<Event>> scheduled_events_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RTCDTMFSender_h
+#endif  // RTCDTMFSender_h

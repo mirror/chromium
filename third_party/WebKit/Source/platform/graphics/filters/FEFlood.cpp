@@ -29,60 +29,55 @@
 
 namespace blink {
 
-FEFlood::FEFlood(Filter* filter, const Color& floodColor, float floodOpacity)
-    : FilterEffect(filter)
-    , m_floodColor(floodColor)
-    , m_floodOpacity(floodOpacity)
-{
-    FilterEffect::setOperatingColorSpace(ColorSpaceDeviceRGB);
+FEFlood::FEFlood(Filter* filter, const Color& flood_color, float flood_opacity)
+    : FilterEffect(filter),
+      flood_color_(flood_color),
+      flood_opacity_(flood_opacity) {
+  FilterEffect::SetOperatingColorSpace(kColorSpaceDeviceRGB);
 }
 
-FEFlood* FEFlood::create(Filter* filter, const Color& floodColor, float floodOpacity)
-{
-    return new FEFlood(filter, floodColor, floodOpacity);
+FEFlood* FEFlood::Create(Filter* filter,
+                         const Color& flood_color,
+                         float flood_opacity) {
+  return new FEFlood(filter, flood_color, flood_opacity);
 }
 
-Color FEFlood::floodColor() const
-{
-    return m_floodColor;
+Color FEFlood::FloodColor() const {
+  return flood_color_;
 }
 
-bool FEFlood::setFloodColor(const Color& color)
-{
-    if (m_floodColor == color)
-        return false;
-    m_floodColor = color;
-    return true;
+bool FEFlood::SetFloodColor(const Color& color) {
+  if (flood_color_ == color)
+    return false;
+  flood_color_ = color;
+  return true;
 }
 
-float FEFlood::floodOpacity() const
-{
-    return m_floodOpacity;
+float FEFlood::FloodOpacity() const {
+  return flood_opacity_;
 }
 
-bool FEFlood::setFloodOpacity(float floodOpacity)
-{
-    if (m_floodOpacity == floodOpacity)
-        return false;
-    m_floodOpacity = floodOpacity;
-    return true;
+bool FEFlood::SetFloodOpacity(float flood_opacity) {
+  if (flood_opacity_ == flood_opacity)
+    return false;
+  flood_opacity_ = flood_opacity;
+  return true;
 }
 
-sk_sp<SkImageFilter> FEFlood::createImageFilter()
-{
-    Color color = floodColor().combineWithAlpha(floodOpacity());
-    SkImageFilter::CropRect rect = getCropRect();
-    return SkColorFilterImageFilter::Make(SkColorFilter::MakeModeFilter(color.rgb(), SkXfermode::kSrc_Mode), 0, &rect);
+sk_sp<SkImageFilter> FEFlood::CreateImageFilter() {
+  Color color = FloodColor().CombineWithAlpha(FloodOpacity());
+  SkImageFilter::CropRect rect = GetCropRect();
+  return SkColorFilterImageFilter::Make(
+      SkColorFilter::MakeModeFilter(color.Rgb(), SkBlendMode::kSrc), 0, &rect);
 }
 
-TextStream& FEFlood::externalRepresentation(TextStream& ts, int indent) const
-{
-    writeIndent(ts, indent);
-    ts << "[feFlood";
-    FilterEffect::externalRepresentation(ts);
-    ts << " flood-color=\"" << floodColor().nameForLayoutTreeAsText() << "\" "
-       << "flood-opacity=\"" << floodOpacity() << "\"]\n";
-    return ts;
+TextStream& FEFlood::ExternalRepresentation(TextStream& ts, int indent) const {
+  WriteIndent(ts, indent);
+  ts << "[feFlood";
+  FilterEffect::ExternalRepresentation(ts);
+  ts << " flood-color=\"" << FloodColor().NameForLayoutTreeAsText() << "\" "
+     << "flood-opacity=\"" << FloodOpacity() << "\"]\n";
+  return ts;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -13,190 +13,252 @@
 namespace blink {
 namespace {
 
-static int gUniqueId = 0;
+static int g_unique_id = 0;
 // PaymentItem and PaymentShippingOption have identical structure
 // except for the "id" field, which is present only in PaymentShippingOption.
 template <typename PaymentItemOrPaymentShippingOption>
-void setValues(PaymentItemOrPaymentShippingOption& original, PaymentTestDataToChange data, PaymentTestModificationType modificationType, const String& valueToUse)
-{
-    PaymentCurrencyAmount itemAmount;
-    if (data == PaymentTestDataCurrencyCode) {
-        if (modificationType == PaymentTestOverwriteValue)
-            itemAmount.setCurrency(valueToUse);
-    } else {
-        itemAmount.setCurrency("USD");
-    }
-    if (data == PaymentTestDataValue) {
-        if (modificationType == PaymentTestOverwriteValue)
-            itemAmount.setValue(valueToUse);
-    } else {
-        itemAmount.setValue("9.99");
-    }
+void SetValues(PaymentItemOrPaymentShippingOption& original,
+               PaymentTestDataToChange data,
+               PaymentTestModificationType modification_type,
+               const String& value_to_use) {
+  PaymentCurrencyAmount item_amount;
+  if (data == kPaymentTestDataCurrencyCode) {
+    if (modification_type == kPaymentTestOverwriteValue)
+      item_amount.setCurrency(value_to_use);
+  } else {
+    item_amount.setCurrency("USD");
+  }
 
-    if (data != PaymentTestDataAmount || modificationType != PaymentTestRemoveKey)
-        original.setAmount(itemAmount);
-
-    if (data == PaymentTestDataLabel) {
-        if (modificationType == PaymentTestOverwriteValue)
-            original.setLabel(valueToUse);
-    } else {
-        original.setLabel("Label");
-    }
-}
-
-} // namespace
-
-PaymentItem buildPaymentItemForTest(PaymentTestDataToChange data, PaymentTestModificationType modificationType, const String& valueToUse)
-{
-    DCHECK_NE(data, PaymentTestDataId);
-    PaymentItem item;
-    setValues(item, data, modificationType, valueToUse);
-    return item;
-}
-
-PaymentShippingOption buildShippingOptionForTest(PaymentTestDataToChange data, PaymentTestModificationType modificationType, const String& valueToUse)
-{
-    PaymentShippingOption shippingOption;
-    if (data == PaymentTestDataId) {
-        if (modificationType == PaymentTestOverwriteValue)
-            shippingOption.setId(valueToUse);
-    } else {
-        shippingOption.setId("id" + String::number(gUniqueId++));
-    }
-    setValues(shippingOption, data, modificationType, valueToUse);
-    return shippingOption;
-}
-
-PaymentDetailsModifier buildPaymentDetailsModifierForTest(PaymentTestDetailToChange detail, PaymentTestDataToChange data, PaymentTestModificationType modificationType, const String& valueToUse)
-{
-    PaymentItem total;
-    if (detail == PaymentTestDetailModifierTotal)
-        total = buildPaymentItemForTest(data, modificationType, valueToUse);
+  // Currency system is "urn:iso:std:iso:4217" by default.
+  if (data == kPaymentTestDataCurrencySystem) {
+    if (modification_type == kPaymentTestOverwriteValue)
+      item_amount.setCurrencySystem(value_to_use);
     else
-        total = buildPaymentItemForTest();
+      item_amount.setCurrencySystem(String());  // null string.
+  }
 
-    PaymentItem item;
-    if (detail == PaymentTestDetailModifierItem)
-        item = buildPaymentItemForTest(data, modificationType, valueToUse);
-    else
-        item = buildPaymentItemForTest();
+  if (data == kPaymentTestDataValue) {
+    if (modification_type == kPaymentTestOverwriteValue)
+      item_amount.setValue(value_to_use);
+  } else {
+    item_amount.setValue("9.99");
+  }
 
-    PaymentDetailsModifier modifier;
-    modifier.setSupportedMethods(Vector<String>(1, "foo"));
-    modifier.setTotal(total);
-    modifier.setAdditionalDisplayItems(HeapVector<PaymentItem>(1, item));
-    return modifier;
+  if (data != kPaymentTestDataAmount ||
+      modification_type != kPaymentTestRemoveKey)
+    original.setAmount(item_amount);
+
+  if (data == kPaymentTestDataLabel) {
+    if (modification_type == kPaymentTestOverwriteValue)
+      original.setLabel(value_to_use);
+  } else {
+    original.setLabel("Label");
+  }
 }
 
-PaymentDetails buildPaymentDetailsForTest(PaymentTestDetailToChange detail, PaymentTestDataToChange data, PaymentTestModificationType modificationType, const String& valueToUse)
-{
-    PaymentItem total;
-    if (detail == PaymentTestDetailTotal)
-        total = buildPaymentItemForTest(data, modificationType, valueToUse);
-    else
-        total = buildPaymentItemForTest();
+void BuildPaymentDetailsBase(PaymentTestDetailToChange detail,
+                             PaymentTestDataToChange data,
+                             PaymentTestModificationType modification_type,
+                             const String& value_to_use,
+                             PaymentDetailsBase* details) {
+  PaymentItem item;
+  if (detail == kPaymentTestDetailItem)
+    item = BuildPaymentItemForTest(data, modification_type, value_to_use);
+  else
+    item = BuildPaymentItemForTest();
 
-    PaymentItem item;
-    if (detail == PaymentTestDetailItem)
-        item = buildPaymentItemForTest(data, modificationType, valueToUse);
-    else
-        item = buildPaymentItemForTest();
+  PaymentShippingOption shipping_option;
+  if (detail == kPaymentTestDetailShippingOption) {
+    shipping_option =
+        BuildShippingOptionForTest(data, modification_type, value_to_use);
+  } else {
+    shipping_option = BuildShippingOptionForTest();
+  }
 
-    PaymentShippingOption shippingOption;
-    if (detail == PaymentTestDetailShippingOption)
-        shippingOption = buildShippingOptionForTest(data, modificationType, valueToUse);
-    else
-        shippingOption = buildShippingOptionForTest();
+  PaymentDetailsModifier modifier;
+  if (detail == kPaymentTestDetailModifierTotal ||
+      detail == kPaymentTestDetailModifierItem) {
+    modifier = BuildPaymentDetailsModifierForTest(
+        detail, data, modification_type, value_to_use);
+  } else {
+    modifier = BuildPaymentDetailsModifierForTest();
+  }
 
-    PaymentDetailsModifier modifier;
-    if (detail == PaymentTestDetailModifierTotal || detail == PaymentTestDetailModifierItem)
-        modifier = buildPaymentDetailsModifierForTest(detail, data, modificationType, valueToUse);
-    else
-        modifier = buildPaymentDetailsModifierForTest();
-
-    PaymentDetails result;
-    result.setTotal(total);
-    result.setDisplayItems(HeapVector<PaymentItem>(1, item));
-    result.setShippingOptions(HeapVector<PaymentShippingOption>(1, shippingOption));
-    result.setModifiers(HeapVector<PaymentDetailsModifier>(1, modifier));
-
-    return result;
+  details->setDisplayItems(HeapVector<PaymentItem>(1, item));
+  details->setShippingOptions(
+      HeapVector<PaymentShippingOption>(1, shipping_option));
+  details->setModifiers(HeapVector<PaymentDetailsModifier>(1, modifier));
 }
 
-HeapVector<PaymentMethodData> buildPaymentMethodDataForTest()
-{
-    HeapVector<PaymentMethodData> methodData(1, PaymentMethodData());
-    methodData[0].setSupportedMethods(Vector<String>(1, "foo"));
-    return methodData;
+}  // namespace
+
+PaymentItem BuildPaymentItemForTest(
+    PaymentTestDataToChange data,
+    PaymentTestModificationType modification_type,
+    const String& value_to_use) {
+  DCHECK_NE(data, kPaymentTestDataId);
+  PaymentItem item;
+  SetValues(item, data, modification_type, value_to_use);
+  return item;
 }
 
-mojom::blink::PaymentResponsePtr buildPaymentResponseForTest()
-{
-    mojom::blink::PaymentResponsePtr result = mojom::blink::PaymentResponse::New();
-    return result;
+PaymentShippingOption BuildShippingOptionForTest(
+    PaymentTestDataToChange data,
+    PaymentTestModificationType modification_type,
+    const String& value_to_use) {
+  PaymentShippingOption shipping_option;
+  if (data == kPaymentTestDataId) {
+    if (modification_type == kPaymentTestOverwriteValue)
+      shipping_option.setId(value_to_use);
+  } else {
+    shipping_option.setId("id" + String::Number(g_unique_id++));
+  }
+  SetValues(shipping_option, data, modification_type, value_to_use);
+  return shipping_option;
 }
 
-void makePaymentRequestOriginSecure(Document& document)
-{
-    document.setSecurityOrigin(SecurityOrigin::create(KURL(KURL(), "https://www.example.com/")));
+PaymentDetailsModifier BuildPaymentDetailsModifierForTest(
+    PaymentTestDetailToChange detail,
+    PaymentTestDataToChange data,
+    PaymentTestModificationType modification_type,
+    const String& value_to_use) {
+  PaymentItem total;
+  if (detail == kPaymentTestDetailModifierTotal)
+    total = BuildPaymentItemForTest(data, modification_type, value_to_use);
+  else
+    total = BuildPaymentItemForTest();
+
+  PaymentItem item;
+  if (detail == kPaymentTestDetailModifierItem)
+    item = BuildPaymentItemForTest(data, modification_type, value_to_use);
+  else
+    item = BuildPaymentItemForTest();
+
+  PaymentDetailsModifier modifier;
+  modifier.setSupportedMethods(Vector<String>(1, "foo"));
+  modifier.setTotal(total);
+  modifier.setAdditionalDisplayItems(HeapVector<PaymentItem>(1, item));
+  return modifier;
 }
 
-PaymentRequestMockFunctionScope::PaymentRequestMockFunctionScope(ScriptState* scriptState)
-    : m_scriptState(scriptState)
-{
+PaymentDetailsInit BuildPaymentDetailsInitForTest(
+    PaymentTestDetailToChange detail,
+    PaymentTestDataToChange data,
+    PaymentTestModificationType modification_type,
+    const String& value_to_use) {
+  PaymentDetailsInit details;
+  BuildPaymentDetailsBase(detail, data, modification_type, value_to_use,
+                          &details);
+
+  if (detail == kPaymentTestDetailTotal) {
+    details.setTotal(
+        BuildPaymentItemForTest(data, modification_type, value_to_use));
+  } else {
+    details.setTotal(BuildPaymentItemForTest());
+  }
+
+  return details;
 }
 
-PaymentRequestMockFunctionScope::~PaymentRequestMockFunctionScope()
-{
-    v8::MicrotasksScope::PerformCheckpoint(m_scriptState->isolate());
-    for (MockFunction* mockFunction : m_mockFunctions) {
-        testing::Mock::VerifyAndClearExpectations(mockFunction);
-    }
+PaymentDetailsUpdate BuildPaymentDetailsUpdateForTest(
+    PaymentTestDetailToChange detail,
+    PaymentTestDataToChange data,
+    PaymentTestModificationType modification_type,
+    const String& value_to_use) {
+  PaymentDetailsUpdate details;
+  BuildPaymentDetailsBase(detail, data, modification_type, value_to_use,
+                          &details);
+
+  if (detail == kPaymentTestDetailTotal) {
+    details.setTotal(
+        BuildPaymentItemForTest(data, modification_type, value_to_use));
+  } else {
+    details.setTotal(BuildPaymentItemForTest());
+  }
+
+  if (detail == kPaymentTestDetailError)
+    details.setError(value_to_use);
+
+  return details;
 }
 
-v8::Local<v8::Function> PaymentRequestMockFunctionScope::expectCall(String* captor)
-{
-    m_mockFunctions.append(new MockFunction(m_scriptState, captor));
-    EXPECT_CALL(*m_mockFunctions.last(), call(testing::_));
-    return m_mockFunctions.last()->bind();
+PaymentDetailsUpdate BuildPaymentDetailsErrorMsgForTest(
+    const String& value_to_use) {
+  return BuildPaymentDetailsUpdateForTest(
+      kPaymentTestDetailError, kPaymentTestDataNone, kPaymentTestOverwriteValue,
+      value_to_use);
 }
 
-v8::Local<v8::Function> PaymentRequestMockFunctionScope::expectCall()
-{
-    m_mockFunctions.append(new MockFunction(m_scriptState));
-    EXPECT_CALL(*m_mockFunctions.last(), call(testing::_));
-    return m_mockFunctions.last()->bind();
+HeapVector<PaymentMethodData> BuildPaymentMethodDataForTest() {
+  HeapVector<PaymentMethodData> method_data(1, PaymentMethodData());
+  method_data[0].setSupportedMethods(Vector<String>(1, "foo"));
+  return method_data;
 }
 
-v8::Local<v8::Function> PaymentRequestMockFunctionScope::expectNoCall()
-{
-    m_mockFunctions.append(new MockFunction(m_scriptState));
-    EXPECT_CALL(*m_mockFunctions.last(), call(testing::_)).Times(0);
-    return m_mockFunctions.last()->bind();
+payments::mojom::blink::PaymentResponsePtr BuildPaymentResponseForTest() {
+  payments::mojom::blink::PaymentResponsePtr result =
+      payments::mojom::blink::PaymentResponse::New();
+  return result;
 }
 
-ACTION_P(SaveValueIn, captor)
-{
-    *captor = toCoreString(arg0.v8Value()->ToString(arg0.getScriptState()->context()).ToLocalChecked());
+void MakePaymentRequestOriginSecure(Document& document) {
+  document.SetSecurityOrigin(
+      SecurityOrigin::Create(KURL(KURL(), "https://www.example.com/")));
 }
 
-PaymentRequestMockFunctionScope::MockFunction::MockFunction(ScriptState* scriptState)
-    : ScriptFunction(scriptState)
-{
-    ON_CALL(*this, call(testing::_)).WillByDefault(testing::ReturnArg<0>());
+PaymentRequestMockFunctionScope::PaymentRequestMockFunctionScope(
+    ScriptState* script_state)
+    : script_state_(script_state) {}
+
+PaymentRequestMockFunctionScope::~PaymentRequestMockFunctionScope() {
+  v8::MicrotasksScope::PerformCheckpoint(script_state_->GetIsolate());
+  for (MockFunction* mock_function : mock_functions_) {
+    testing::Mock::VerifyAndClearExpectations(mock_function);
+  }
 }
 
-PaymentRequestMockFunctionScope::MockFunction::MockFunction(ScriptState* scriptState, String* captor)
-    : ScriptFunction(scriptState)
-    , m_value(captor)
-{
-    ON_CALL(*this, call(testing::_)).WillByDefault(
-        testing::DoAll(SaveValueIn(m_value), testing::ReturnArg<0>()));
+v8::Local<v8::Function> PaymentRequestMockFunctionScope::ExpectCall(
+    String* captor) {
+  mock_functions_.push_back(new MockFunction(script_state_, captor));
+  EXPECT_CALL(*mock_functions_.back(), Call(testing::_));
+  return mock_functions_.back()->Bind();
 }
 
-v8::Local<v8::Function> PaymentRequestMockFunctionScope::MockFunction::bind()
-{
-    return bindToV8Function();
+v8::Local<v8::Function> PaymentRequestMockFunctionScope::ExpectCall() {
+  mock_functions_.push_back(new MockFunction(script_state_));
+  EXPECT_CALL(*mock_functions_.back(), Call(testing::_));
+  return mock_functions_.back()->Bind();
 }
 
-} // namespace blink
+v8::Local<v8::Function> PaymentRequestMockFunctionScope::ExpectNoCall() {
+  mock_functions_.push_back(new MockFunction(script_state_));
+  EXPECT_CALL(*mock_functions_.back(), Call(testing::_)).Times(0);
+  return mock_functions_.back()->Bind();
+}
+
+ACTION_P(SaveValueIn, captor) {
+  *captor = ToCoreString(arg0.V8Value()
+                             ->ToString(arg0.GetScriptState()->GetContext())
+                             .ToLocalChecked());
+}
+
+PaymentRequestMockFunctionScope::MockFunction::MockFunction(
+    ScriptState* script_state)
+    : ScriptFunction(script_state) {
+  ON_CALL(*this, Call(testing::_)).WillByDefault(testing::ReturnArg<0>());
+}
+
+PaymentRequestMockFunctionScope::MockFunction::MockFunction(
+    ScriptState* script_state,
+    String* captor)
+    : ScriptFunction(script_state), value_(captor) {
+  ON_CALL(*this, Call(testing::_))
+      .WillByDefault(
+          testing::DoAll(SaveValueIn(value_), testing::ReturnArg<0>()));
+}
+
+v8::Local<v8::Function> PaymentRequestMockFunctionScope::MockFunction::Bind() {
+  return BindToV8Function();
+}
+
+}  // namespace blink

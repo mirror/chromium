@@ -4,15 +4,14 @@
 
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 
-#include "ash/common/ash_layout_constants.h"
-#include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
-#include "ash/common/wm_shell.h"
+#include "ash/ash_layout_constants.h"
 #include "ash/frame/caption_buttons/frame_caption_button.h"
+#include "ash/resources/grit/ash_resources.h"
+#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "grit/ash_resources.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/vector_icons_public.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
@@ -72,7 +71,7 @@ class FrameCaptionButtonContainerViewTest : public ash::test::AshTestBase {
         GetAshLayoutSize(AshLayoutSize::NON_BROWSER_CAPTION_BUTTON));
     for (int icon = 0; icon < CAPTION_BUTTON_ICON_COUNT; ++icon) {
       container->SetButtonImage(static_cast<CaptionButtonIcon>(icon),
-                                gfx::VectorIconId::WINDOW_CONTROL_CLOSE);
+                                ash::kWindowControlCloseIcon);
     }
   }
 
@@ -166,7 +165,7 @@ TEST_F(FrameCaptionButtonContainerViewTest,
 
   // Hidden size button should result in minimize button animating to the
   // right. The size button should not be visible, but should not have moved.
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       true);
   container.UpdateSizeButtonVisibility();
   test.EndAnimations();
@@ -186,7 +185,7 @@ TEST_F(FrameCaptionButtonContainerViewTest,
 
   // Revealing the size button should cause the minimize button to return to its
   // original position.
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       false);
   container.UpdateSizeButtonVisibility();
   // Calling code needs to layout in response to size change.

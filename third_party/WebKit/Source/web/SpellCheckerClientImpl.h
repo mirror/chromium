@@ -32,52 +32,46 @@
 #define SpellCheckerClientImpl_h
 
 #include "core/page/SpellCheckerClient.h"
-#include "platform/heap/Handle.h"
-#include "platform/text/TextCheckerClient.h"
 
 namespace blink {
 
 class WebViewImpl;
 
-class SpellCheckerClientImpl final : public SpellCheckerClient, public TextCheckerClient {
-public:
-    explicit SpellCheckerClientImpl(WebViewImpl*);
+// TODO(xiaochengh): Split SpellCheckerClientImpl into two classes according to
+// the split that should be done to its interface.
+class SpellCheckerClientImpl final : public SpellCheckerClient {
+ public:
+  explicit SpellCheckerClientImpl(WebViewImpl*);
 
-    ~SpellCheckerClientImpl() override;
+  ~SpellCheckerClientImpl() override;
 
-    bool isContinuousSpellCheckingEnabled() override;
-    void toggleContinuousSpellChecking() override;
-    void checkSpellingOfString(const String&, int* misspellingLocation, int* misspellingLength) override;
-    void checkGrammarOfString(const String&, Vector<GrammarDetail>&,
-        int* badGrammarLocation, int* badGrammarLength) override;
-    void updateSpellingUIWithMisspelledWord(const String&) override;
-    void showSpellingUI(bool show) override;
-    bool spellingUIIsShowing() override;
-    void requestCheckingOfString(TextCheckingRequest*) override;
+  bool IsSpellCheckingEnabled() override;
+  void ToggleSpellCheckingEnabled() override;
+  void UpdateSpellingUIWithMisspelledWord(const String&) override;
+  void ShowSpellingUI(bool show) override;
+  bool SpellingUIIsShowing() override;
 
-    TextCheckerClient& textChecker() override { return *this; }
+ private:
+  // Returns whether or not the focused control needs spell-checking.
+  // Currently, this function just retrieves the focused node and determines
+  // whether or not it is a <textarea> element or an element whose
+  // contenteditable attribute is true.
+  // FIXME: Bug 740540: This code just implements the default behavior
+  // proposed in this issue. We should also retrieve "spellcheck" attributes
+  // for text fields and create a flag to over-write the default behavior.
+  bool ShouldSpellcheckByDefault();
 
-private:
-    // Returns whether or not the focused control needs spell-checking.
-    // Currently, this function just retrieves the focused node and determines
-    // whether or not it is a <textarea> element or an element whose
-    // contenteditable attribute is true.
-    // FIXME: Bug 740540: This code just implements the default behavior
-    // proposed in this issue. We should also retrieve "spellcheck" attributes
-    // for text fields and create a flag to over-write the default behavior.
-    bool shouldSpellcheckByDefault();
+  WebViewImpl* web_view_;
 
-    WebViewImpl* m_webView;
-
-    // This flag is set to false if spell check for this editor is manually
-    // turned off. The default setting is SpellCheckAutomatic.
-    enum {
-        SpellCheckAutomatic,
-        SpellCheckForcedOn,
-        SpellCheckForcedOff
-    } m_spellCheckThisFieldStatus;
+  // This flag is set to false if spell check for this editor is manually
+  // turned off. The default setting is SpellCheckAutomatic.
+  enum {
+    kSpellCheckAutomatic,
+    kSpellCheckForcedOn,
+    kSpellCheckForcedOff
+  } spell_check_this_field_status_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

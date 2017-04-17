@@ -19,7 +19,7 @@ class MPEG1AudioStreamParserTest
     : public StreamParserTestBase, public testing::Test {
  public:
   MPEG1AudioStreamParserTest()
-      : StreamParserTestBase(base::WrapUnique(new MPEG1AudioStreamParser())) {}
+      : StreamParserTestBase(base::MakeUnique<MPEG1AudioStreamParser>()) {}
 };
 
 // Test parsing with small prime sized chunks to smoke out "power of
@@ -45,6 +45,26 @@ TEST_F(MPEG1AudioStreamParserTest, UnalignedAppend) {
       "{ 0K }"
       "EndOfSegment";
   EXPECT_EQ(expected, ParseFile("sfx.mp3", 17));
+  EXPECT_GT(last_audio_config().codec_delay(), 0);
+}
+
+TEST_F(MPEG1AudioStreamParserTest, UnalignedAppendMP2) {
+  const std::string expected =
+      "NewSegment"
+      "{ 0K }"
+      "{ 0K }"
+      "{ 0K }"
+      "{ 0K }"
+      "EndOfSegment"
+      "NewSegment"
+      "{ 0K }"
+      "{ 0K }"
+      "{ 0K }"
+      "{ 0K }"
+      "{ 0K }"
+      "{ 0K }"
+      "EndOfSegment";
+  EXPECT_EQ(expected, ParseFile("sfx.mp2", 17));
   EXPECT_GT(last_audio_config().codec_delay(), 0);
 }
 

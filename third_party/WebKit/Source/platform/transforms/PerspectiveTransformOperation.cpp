@@ -26,45 +26,50 @@
 #include "platform/transforms/PerspectiveTransformOperation.h"
 
 #include "platform/animation/AnimationUtilities.h"
-#include "wtf/MathExtras.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
-PassRefPtr<TransformOperation> PerspectiveTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
-{
-    if (from && !from->isSameType(*this))
-        return this;
+PassRefPtr<TransformOperation> PerspectiveTransformOperation::Blend(
+    const TransformOperation* from,
+    double progress,
+    bool blend_to_identity) {
+  if (from && !from->IsSameType(*this))
+    return this;
 
-    if (blendToIdentity) {
-        double p = blink::blend(m_p, 1., progress); // FIXME: this seems wrong. https://bugs.webkit.org/show_bug.cgi?id=52700
-        return PerspectiveTransformOperation::create(clampTo<int>(p, 0));
-    }
+  if (blend_to_identity) {
+    // FIXME: this seems wrong.  https://bugs.webkit.org/show_bug.cgi?id=52700
+    double p = blink::Blend(p_, 1., progress);
+    return PerspectiveTransformOperation::Create(clampTo<int>(p, 0));
+  }
 
-    const PerspectiveTransformOperation* fromOp = static_cast<const PerspectiveTransformOperation*>(from);
+  const PerspectiveTransformOperation* from_op =
+      static_cast<const PerspectiveTransformOperation*>(from);
 
-    TransformationMatrix fromT;
-    TransformationMatrix toT;
-    fromT.applyPerspective(fromOp ? fromOp->m_p : 0);
-    toT.applyPerspective(m_p);
-    toT.blend(fromT, progress);
+  TransformationMatrix from_t;
+  TransformationMatrix to_t;
+  from_t.ApplyPerspective(from_op ? from_op->p_ : 0);
+  to_t.ApplyPerspective(p_);
+  to_t.Blend(from_t, progress);
 
-    TransformationMatrix::DecomposedType decomp;
-    if (!toT.decompose(decomp)) {
-        // If we can't decompose, bail out of interpolation.
-        const PerspectiveTransformOperation* usedOperation = progress > 0.5 ? this : fromOp;
-        return PerspectiveTransformOperation::create(usedOperation->perspective());
-    }
+  TransformationMatrix::DecomposedType decomp;
+  if (!to_t.Decompose(decomp)) {
+    // If we can't decompose, bail out of interpolation.
+    const PerspectiveTransformOperation* used_operation =
+        progress > 0.5 ? this : from_op;
+    return PerspectiveTransformOperation::Create(used_operation->Perspective());
+  }
 
-    if (decomp.perspectiveZ) {
-        double val = -1.0 / decomp.perspectiveZ;
-        return PerspectiveTransformOperation::create(clampTo<int>(val, 0));
-    }
-    return PerspectiveTransformOperation::create(0);
+  if (decomp.perspective_z) {
+    double val = -1.0 / decomp.perspective_z;
+    return PerspectiveTransformOperation::Create(clampTo<int>(val, 0));
+  }
+  return PerspectiveTransformOperation::Create(0);
 }
 
-PassRefPtr<TransformOperation> PerspectiveTransformOperation::zoom(double factor)
-{
-    return create(m_p * factor);
+PassRefPtr<TransformOperation> PerspectiveTransformOperation::Zoom(
+    double factor) {
+  return Create(p_ * factor);
 }
 
-} // namespace blink
+}  // namespace blink

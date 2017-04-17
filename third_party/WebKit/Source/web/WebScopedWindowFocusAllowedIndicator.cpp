@@ -36,15 +36,13 @@
 
 namespace blink {
 
-WebScopedWindowFocusAllowedIndicator::WebScopedWindowFocusAllowedIndicator(WebDocument* webDocument)
-{
-    Document* document = webDocument->unwrap<Document>();
-    DCHECK(document);
-    m_private.reset(new ScopedWindowFocusAllowedIndicator(document));
+WebScopedWindowFocusAllowedIndicator::WebScopedWindowFocusAllowedIndicator(
+    WebDocument* web_document) {
+  Document* document = web_document->Unwrap<Document>();
+  DCHECK(document);
+  private_.reset(new ScopedWindowFocusAllowedIndicator(document));
 }
 
-WebScopedWindowFocusAllowedIndicator::~WebScopedWindowFocusAllowedIndicator()
-{
-}
+WebScopedWindowFocusAllowedIndicator::~WebScopedWindowFocusAllowedIndicator() {}
 
-} // namespace blink
+}  // namespace blink

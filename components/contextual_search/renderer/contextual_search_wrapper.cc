@@ -9,7 +9,7 @@
 #include "content/public/renderer/render_frame.h"
 #include "gin/arguments.h"
 #include "gin/object_template_builder.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -37,10 +37,10 @@ void ContextualSearchWrapper::Install(content::RenderFrame* render_frame) {
   // available, e.g. navigator.connect API. See crbug.com/541683.
   // TODO(donnd): refactor some of this boilerplate into a reusable
   // method.  This was cribbed from MemoryBenchmarkingExtension.
-  v8::Isolate* isolate = blink::mainThreadIsolate();
+  v8::Isolate* isolate = blink::MainThreadIsolate();
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context =
-      render_frame->GetWebFrame()->mainWorldScriptContext();
+      render_frame->GetWebFrame()->MainWorldScriptContext();
   if (context.IsEmpty())
     return;
 

@@ -6,9 +6,9 @@
 
 #include <algorithm>
 #include <string>
+#include <utility>
 #include <vector>
 
-#include "ash/display/display_manager.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "base/json/json_string_value_serializer.h"
@@ -18,6 +18,7 @@
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/display/display.h"
+#include "ui/display/manager/display_manager.h"
 #include "ui/events/event.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/canvas.h"
@@ -93,7 +94,7 @@ int GetTrackingId(const ui::TouchEvent& event) {
 struct TouchPointLog {
  public:
   explicit TouchPointLog(const ui::TouchEvent& touch)
-      : id(touch.touch_id()),
+      : id(touch.pointer_details().id),
         type(touch.type()),
         location(touch.root_location()),
         timestamp((touch.time_stamp() - base::TimeTicks()).InMillisecondsF()),
@@ -213,14 +214,14 @@ class TouchLog {
         break;
       next_trace_index_ = (next_trace_index_ + 1) % kMaxPaths;
     } while (next_trace_index_ != old_trace_index);
-    int touch_id = touch.touch_id();
+    int touch_id = touch.pointer_details().id;
     traces_[next_trace_index_].Reset();
     touch_id_to_trace_index_[touch_id] = next_trace_index_;
     next_trace_index_ = (next_trace_index_ + 1) % kMaxPaths;
   }
 
   void AddToTrace(const ui::TouchEvent& touch) {
-    int touch_id = touch.touch_id();
+    int touch_id = touch.pointer_details().id;
     int trace_index = touch_id_to_trace_index_[touch_id];
     traces_[trace_index].AddTouchPoint(touch);
   }
@@ -238,10 +239,10 @@ class TouchHudCanvas : public views::View {
  public:
   explicit TouchHudCanvas(const TouchLog& touch_log)
       : touch_log_(touch_log), scale_(1) {
-    SetPaintToLayer(true);
+    SetPaintToLayer();
     layer()->SetFillsBoundsOpaquely(false);
 
-    paint_.setStyle(SkPaint::kFill_Style);
+    flags_.setStyle(cc::PaintFlags::kFill_Style);
   }
 
   ~TouchHudCanvas() override {}
@@ -299,12 +300,12 @@ class TouchHudCanvas : public views::View {
     for (int i = 0; i < kMaxPaths; ++i) {
       if (paths_[i].countPoints() == 0)
         continue;
-      paint_.setColor(colors_[i]);
-      canvas->DrawPath(paths_[i], paint_);
+      flags_.setColor(colors_[i]);
+      canvas->DrawPath(paths_[i], flags_);
     }
   }
 
-  SkPaint paint_;
+  cc::PaintFlags flags_;
 
   const TouchLog& touch_log_;
   SkPath paths_[kMaxPaths];
@@ -322,7 +323,7 @@ TouchHudDebug::TouchHudDebug(aura::Window* initial_root)
       canvas_(NULL),
       label_container_(NULL) {
   const display::Display& display =
-      Shell::GetInstance()->display_manager()->GetDisplayForId(display_id());
+      Shell::Get()->display_manager()->GetDisplayForId(display_id());
 
   views::View* content = widget()->GetContentsView();
 
@@ -355,7 +356,7 @@ TouchHudDebug::~TouchHudDebug() {}
 // static
 std::unique_ptr<base::DictionaryValue> TouchHudDebug::GetAllAsDictionary() {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  aura::Window::Windows roots = Shell::GetInstance()->GetAllRootWindows();
+  aura::Window::Windows roots = Shell::Get()->GetAllRootWindows();
   for (aura::Window::Windows::iterator iter = roots.begin();
        iter != roots.end(); ++iter) {
     RootWindowController* controller = GetRootWindowController(*iter);
@@ -363,7 +364,7 @@ std::unique_ptr<base::DictionaryValue> TouchHudDebug::GetAllAsDictionary() {
     if (hud) {
       std::unique_ptr<base::ListValue> list = hud->GetLogAsList();
       if (!list->empty())
-        value->Set(base::Int64ToString(hud->display_id()), list.release());
+        value->Set(base::Int64ToString(hud->display_id()), std::move(list));
     }
   }
   return value;
@@ -439,12 +440,12 @@ void TouchHudDebug::UpdateTouchPointLabel(int index) {
 }
 
 void TouchHudDebug::OnTouchEvent(ui::TouchEvent* event) {
-  if (event->touch_id() >= kMaxTouchPoints)
+  if (event->pointer_details().id >= kMaxTouchPoints)
     return;
 
   touch_log_->AddTouchPoint(*event);
-  canvas_->TouchPointAdded(event->touch_id());
-  UpdateTouchPointLabel(event->touch_id());
+  canvas_->TouchPointAdded(event->pointer_details().id);
+  UpdateTouchPointLabel(event->pointer_details().id);
   label_container_->SetSize(label_container_->GetPreferredSize());
 }
 

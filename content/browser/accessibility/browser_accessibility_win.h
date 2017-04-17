@@ -23,6 +23,7 @@
 #include "third_party/isimpledom/ISimpleDOMDocument.h"
 #include "third_party/isimpledom/ISimpleDOMNode.h"
 #include "third_party/isimpledom/ISimpleDOMText.h"
+#include "ui/accessibility/platform/ax_platform_node_win.h"
 
 namespace ui {
 enum TextBoundaryDirection;
@@ -244,12 +245,13 @@ BrowserAccessibilityWin
                     LONG* similar_items_in_group,
                     LONG* position_in_group) override;
 
-  //
-  // IAccessibleEx methods not implemented.
-  //
-  CONTENT_EXPORT STDMETHODIMP get_extendedRole(BSTR* extended_role) override;
   CONTENT_EXPORT STDMETHODIMP
   get_localizedExtendedRole(BSTR* localized_extended_role) override;
+
+  //
+  // IAccessible2 methods not implemented.
+  //
+  CONTENT_EXPORT STDMETHODIMP get_extendedRole(BSTR* extended_role) override;
   CONTENT_EXPORT STDMETHODIMP
   get_nExtendedStates(LONG* n_extended_states) override;
   CONTENT_EXPORT STDMETHODIMP
@@ -718,6 +720,11 @@ BrowserAccessibilityWin
   // embedded child objects.
   CONTENT_EXPORT void ComputeStylesIfNeeded();
 
+  // |offset| could either be a text character or a child index in case of
+  // non-text objects.
+  AXPlatformPosition::AXPositionInstance CreatePositionForSelectionAt(
+      int offset) const;
+
   CONTENT_EXPORT base::string16 GetText() const override;
 
   // Accessors.
@@ -782,6 +789,9 @@ BrowserAccessibilityWin
       base::string16* output);
   FRIEND_TEST_ALL_PREFIXES(BrowserAccessibilityTest,
                            TestSanitizeStringAttributeForIA2);
+
+  // Sets the selection given a start and end offset in IA2 Hypertext.
+  void SetIA2HypertextSelection(LONG start_offset, LONG end_offset);
 
   // If the string attribute |attribute| is present, add its value as an
   // IAccessible2 attribute with the name |ia2_attr|.
@@ -858,7 +868,7 @@ BrowserAccessibilityWin
 
   // If offset is a member of IA2TextSpecialOffsets this function updates the
   // value of offset and returns, otherwise offset remains unchanged.
-  void HandleSpecialTextOffset(const base::string16& text, LONG* offset);
+  void HandleSpecialTextOffset(LONG* offset);
 
   // Convert from a IA2TextBoundaryType to a ui::TextBoundaryType.
   ui::TextBoundaryType IA2TextBoundaryToTextBoundary(IA2TextBoundaryType type);
@@ -908,6 +918,10 @@ BrowserAccessibilityWin
   // Fire a Windows-specific accessibility event notification on this node.
   void FireNativeEvent(LONG win_event_type) const;
 
+  ui::AXPlatformNodeWin* GetPlatformNodeWin() const;
+
+  static bool IsInTreeGrid(const BrowserAccessibility* item);
+
   struct WinAttributes {
     WinAttributes();
     ~WinAttributes();
@@ -935,7 +949,7 @@ BrowserAccessibilityWin
     // Maps each style span to its start offset in hypertext.
     std::map<int, std::vector<base::string16>> offset_to_text_attributes;
 
-    // Maps the |hypertext_| embedded character offset to an index in
+    // Maps an embedded character offset in |hypertext_| to an index in
     // |hyperlinks_|.
     std::map<int32_t, int32_t> hyperlink_offset_to_index;
 

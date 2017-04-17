@@ -30,20 +30,21 @@
 
 #include "platform/ContentSettingCallbacks.h"
 
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-std::unique_ptr<ContentSettingCallbacks> ContentSettingCallbacks::create(std::unique_ptr<WTF::Closure> allowed, std::unique_ptr<WTF::Closure> denied)
-{
-    return wrapUnique(new ContentSettingCallbacks(std::move(allowed), std::move(denied)));
+std::unique_ptr<ContentSettingCallbacks> ContentSettingCallbacks::Create(
+    std::unique_ptr<WTF::Closure> allowed,
+    std::unique_ptr<WTF::Closure> denied) {
+  return WTF::WrapUnique(
+      new ContentSettingCallbacks(std::move(allowed), std::move(denied)));
 }
 
-ContentSettingCallbacks::ContentSettingCallbacks(std::unique_ptr<WTF::Closure> allowed, std::unique_ptr<WTF::Closure> denied)
-    : m_allowed(std::move(allowed))
-    , m_denied(std::move(denied))
-{
-}
+ContentSettingCallbacks::ContentSettingCallbacks(
+    std::unique_ptr<WTF::Closure> allowed,
+    std::unique_ptr<WTF::Closure> denied)
+    : allowed_(std::move(allowed)), denied_(std::move(denied)) {}
 
-} // namespace blink
+}  // namespace blink

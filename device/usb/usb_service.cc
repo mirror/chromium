@@ -5,18 +5,24 @@
 #include "device/usb/usb_service.h"
 
 #include "base/bind.h"
+#include "base/feature_list.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/device_event_log/device_event_log.h"
+#include "device/base/features.h"
 #include "device/usb/usb_device.h"
+#include "device/usb/usb_device_handle.h"
 
 #if defined(OS_ANDROID)
 #include "device/usb/usb_service_android.h"
 #elif defined(USE_UDEV)
 #include "device/usb/usb_service_linux.h"
 #else
+#if defined(OS_WIN)
+#include "device/usb/usb_service_win.h"
+#endif
 #include "device/usb/usb_service_impl.h"
 #endif
 
@@ -43,7 +49,12 @@ std::unique_ptr<UsbService> UsbService::Create(
   return base::WrapUnique(new UsbServiceAndroid(blocking_task_runner));
 #elif defined(USE_UDEV)
   return base::WrapUnique(new UsbServiceLinux(blocking_task_runner));
-#elif defined(OS_WIN) || defined(OS_MACOSX)
+#elif defined(OS_WIN)
+  if (base::FeatureList::IsEnabled(kNewUsbBackend))
+    return base::WrapUnique(new UsbServiceWin(blocking_task_runner));
+  else
+    return base::WrapUnique(new UsbServiceImpl(blocking_task_runner));
+#elif defined(OS_MACOSX)
   return base::WrapUnique(new UsbServiceImpl(blocking_task_runner));
 #else
   return nullptr;
@@ -51,15 +62,21 @@ std::unique_ptr<UsbService> UsbService::Create(
 }
 
 UsbService::~UsbService() {
+#if DCHECK_IS_ON()
+  DCHECK(did_shutdown_);
+#endif
   for (const auto& map_entry : devices_)
     map_entry.second->OnDisconnect();
-  FOR_EACH_OBSERVER(Observer, observer_list_, WillDestroyUsbService());
+  for (auto& observer : observer_list_)
+    observer.WillDestroyUsbService();
 }
 
 UsbService::UsbService(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     scoped_refptr<base::SequencedTaskRunner> blocking_task_runner)
-    : task_runner_(task_runner), blocking_task_runner_(blocking_task_runner) {}
+    : blocking_task_runner_(std::move(blocking_task_runner)) {
+  if (base::ThreadTaskRunnerHandle::IsSet())
+    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+}
 
 scoped_refptr<UsbDevice> UsbService::GetDevice(const std::string& guid) {
   DCHECK(CalledOnValidThread());
@@ -67,6 +84,20 @@ scoped_refptr<UsbDevice> UsbService::GetDevice(const std::string& guid) {
   if (it == devices_.end())
     return nullptr;
   return it->second;
+}
+
+void UsbService::Shutdown() {
+  for (const auto& map_entry : devices_) {
+    // Swap out this list as UsbDevice::HandleClosed() will try to modify it.
+    std::list<UsbDeviceHandle*> handles;
+    handles.swap(map_entry.second->handles());
+    for (auto* handle : handles)
+      handle->Close();
+  }
+#if DCHECK_IS_ON()
+  DCHECK(!did_shutdown_);
+  did_shutdown_ = true;
+#endif
 }
 
 void UsbService::GetDevices(const GetDevicesCallback& callback) {
@@ -90,18 +121,55 @@ void UsbService::RemoveObserver(Observer* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
+void UsbService::AddDeviceForTesting(scoped_refptr<UsbDevice> device) {
+  DCHECK(CalledOnValidThread());
+  DCHECK(!ContainsKey(devices_, device->guid()));
+  devices_[device->guid()] = device;
+  testing_devices_.insert(device->guid());
+  NotifyDeviceAdded(device);
+}
+
+void UsbService::RemoveDeviceForTesting(const std::string& device_guid) {
+  DCHECK(CalledOnValidThread());
+  // Allow only devices added with AddDeviceForTesting to be removed with this
+  // method.
+  auto testing_devices_it = testing_devices_.find(device_guid);
+  if (testing_devices_it != testing_devices_.end()) {
+    auto devices_it = devices_.find(device_guid);
+    DCHECK(devices_it != devices_.end());
+    scoped_refptr<UsbDevice> device = devices_it->second;
+    devices_.erase(devices_it);
+    testing_devices_.erase(testing_devices_it);
+    UsbService::NotifyDeviceRemoved(device);
+  }
+}
+
+void UsbService::GetTestDevices(
+    std::vector<scoped_refptr<UsbDevice>>* devices) {
+  devices->clear();
+  devices->reserve(testing_devices_.size());
+  for (const std::string& guid : testing_devices_) {
+    auto it = devices_.find(guid);
+    DCHECK(it != devices_.end());
+    devices->push_back(it->second);
+  }
+}
+
 void UsbService::NotifyDeviceAdded(scoped_refptr<UsbDevice> device) {
   DCHECK(CalledOnValidThread());
 
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnDeviceAdded(device));
+  for (auto& observer : observer_list_)
+    observer.OnDeviceAdded(device);
 }
 
 void UsbService::NotifyDeviceRemoved(scoped_refptr<UsbDevice> device) {
   DCHECK(CalledOnValidThread());
 
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnDeviceRemoved(device));
+  for (auto& observer : observer_list_)
+    observer.OnDeviceRemoved(device);
   device->NotifyDeviceRemoved();
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnDeviceRemovedCleanup(device));
+  for (auto& observer : observer_list_)
+    observer.OnDeviceRemovedCleanup(device);
 }
 
 }  // namespace device

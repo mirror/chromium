@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -18,14 +19,14 @@
 #include "chrome/browser/ui/bookmarks/bookmark_editor.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/sync/sync_promo_ui.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/sync/bubble_sync_promo_view.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
-#include "content/public/browser/user_metrics.h"
-#include "grit/components_strings.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "components/strings/grit/components_strings.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/views/bubble/bubble_frame_view.h"
@@ -34,9 +35,16 @@
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/textfield/textfield.h"
+#include "ui/views/layout/fill_layout.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/layout/layout_constants.h"
 #include "ui/views/widget/widget.h"
+
+#if defined(OS_WIN)
+#include "chrome/browser/sync/profile_sync_service_factory.h"
+#include "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.h"
+#include "components/browser_sync/profile_sync_service.h"
+#endif
 
 using base::UserMetricsAction;
 using bookmarks::BookmarkModel;
@@ -80,6 +88,10 @@ views::Widget* BookmarkBubbleView::ShowBubble(
   bookmark_bubble_ =
       new BookmarkBubbleView(anchor_view, observer, std::move(delegate),
                              profile, url, !already_bookmarked);
+  // Bookmark bubble should always anchor TOP_RIGHT, but the
+  // LocationBarBubbleDelegateView does not know that and may use different
+  // arrow anchoring.
+  bookmark_bubble_->set_arrow(views::BubbleBorder::TOP_RIGHT);
   if (!anchor_view) {
     bookmark_bubble_->SetAnchorRect(anchor_rect);
     bookmark_bubble_->set_parent_window(parent_window);
@@ -92,7 +104,7 @@ views::Widget* BookmarkBubbleView::ShowBubble(
   bookmark_bubble_->SetArrowPaintType(views::BubbleBorder::PAINT_TRANSPARENT);
 
   if (bookmark_bubble_->observer_) {
-    BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile);
+    BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile);
     const BookmarkNode* node = model->GetMostRecentlyAddedUserNodeForURL(url);
     bookmark_bubble_->observer_->OnBookmarkBubbleShown(node);
   }
@@ -108,7 +120,7 @@ BookmarkBubbleView::~BookmarkBubbleView() {
   if (apply_edits_) {
     ApplyEdits();
   } else if (remove_bookmark_) {
-    BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile_);
+    BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile_);
     const BookmarkNode* node = model->GetMostRecentlyAddedUserNodeForURL(url_);
     if (node)
       model->Remove(node);
@@ -166,15 +178,17 @@ void BookmarkBubbleView::Init() {
   parent_combobox_->SetAccessibleName(
       l10n_util::GetStringUTF16(IDS_BOOKMARK_AX_BUBBLE_FOLDER_TEXT));
 
-  GridLayout* layout = new GridLayout(this);
-  SetLayoutManager(layout);
+  SetLayoutManager(new views::FillLayout);
+  bookmark_details_view_ = base::MakeUnique<View>();
+  GridLayout* layout = new GridLayout(bookmark_details_view_.get());
+  bookmark_details_view_->SetLayoutManager(layout);
 
   // This column set is used for the labels and textfields as well as the
   // buttons at the bottom.
   const int cs_id = 0;
   ColumnSet* cs = layout->AddColumnSet(cs_id);
-  cs->AddColumn(views::kControlLabelGridAlignment, GridLayout::CENTER, 0,
-                GridLayout::USE_PREF, 0, 0);
+  cs->AddColumn(ChromeLayoutProvider::Get()->GetControlLabelGridAlignment(),
+                GridLayout::CENTER, 0, GridLayout::USE_PREF, 0, 0);
   cs->AddPaddingColumn(0, views::kUnrelatedControlHorizontalSpacing);
 
   cs->AddColumn(GridLayout::FILL, GridLayout::CENTER, 0,
@@ -215,9 +229,32 @@ void BookmarkBubbleView::Init() {
   AddAccelerator(ui::Accelerator(ui::VKEY_RETURN, ui::EF_NONE));
   AddAccelerator(ui::Accelerator(ui::VKEY_E, ui::EF_ALT_DOWN));
   AddAccelerator(ui::Accelerator(ui::VKEY_R, ui::EF_ALT_DOWN));
+
+  AddChildView(bookmark_details_view_.get());
+}
+
+gfx::ImageSkia BookmarkBubbleView::GetWindowIcon() {
+#if defined(OS_WIN)
+  if (is_showing_ios_promotion_) {
+    return desktop_ios_promotion::GetPromoImage(
+        GetNativeTheme()->GetSystemColor(
+            ui::NativeTheme::kColorId_TextfieldDefaultColor));
+  }
+#endif
+  return gfx::ImageSkia();
+}
+
+bool BookmarkBubbleView::ShouldShowWindowIcon() const {
+  return is_showing_ios_promotion_;
 }
 
 base::string16 BookmarkBubbleView::GetWindowTitle() const {
+#if defined(OS_WIN)
+  if (is_showing_ios_promotion_) {
+    return desktop_ios_promotion::GetPromoTitle(
+        desktop_ios_promotion::PromotionEntryPoint::BOOKMARKS_BUBBLE);
+  }
+#endif
   return l10n_util::GetStringUTF16(newly_bookmarked_
                                        ? IDS_BOOKMARK_BUBBLE_PAGE_BOOKMARKED
                                        : IDS_BOOKMARK_BUBBLE_PAGE_BOOKMARK);
@@ -235,7 +272,7 @@ views::View* BookmarkBubbleView::CreateFootnoteView() {
   if (!SyncPromoUI::ShouldShowSyncPromo(profile_))
     return nullptr;
 
-  content::RecordAction(
+  base::RecordAction(
       base::UserMetricsAction("Signin_Impression_FromBookmarkBubble"));
 
   return new BubbleSyncPromoView(delegate_.get(), IDS_BOOKMARK_SYNC_PROMO_LINK,
@@ -255,20 +292,22 @@ BookmarkBubbleView::BookmarkBubbleView(
       profile_(profile),
       url_(url),
       newly_bookmarked_(newly_bookmarked),
-      parent_model_(BookmarkModelFactory::GetForProfile(profile_),
-                    BookmarkModelFactory::GetForProfile(profile_)
+      parent_model_(BookmarkModelFactory::GetForBrowserContext(profile_),
+                    BookmarkModelFactory::GetForBrowserContext(profile_)
                         ->GetMostRecentlyAddedUserNodeForURL(url)),
       remove_button_(nullptr),
       edit_button_(nullptr),
       close_button_(nullptr),
       title_tf_(nullptr),
       parent_combobox_(nullptr),
+      ios_promo_view_(nullptr),
       remove_bookmark_(false),
-      apply_edits_(true) {}
+      apply_edits_(true),
+      is_showing_ios_promotion_(false) {}
 
 base::string16 BookmarkBubbleView::GetTitle() {
   BookmarkModel* bookmark_model =
-      BookmarkModelFactory::GetForProfile(profile_);
+      BookmarkModelFactory::GetForBrowserContext(profile_);
   const BookmarkNode* node =
       bookmark_model->GetMostRecentlyAddedUserNodeForURL(url_);
   if (node)
@@ -278,12 +317,11 @@ base::string16 BookmarkBubbleView::GetTitle() {
   return base::string16();
 }
 
-void BookmarkBubbleView::GetAccessibleState(ui::AXViewState* state) {
-  LocationBarBubbleDelegateView::GetAccessibleState(state);
-  state->name =
-      l10n_util::GetStringUTF16(
-          newly_bookmarked_ ? IDS_BOOKMARK_BUBBLE_PAGE_BOOKMARKED :
-                              IDS_BOOKMARK_AX_BUBBLE_PAGE_BOOKMARK);
+void BookmarkBubbleView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  LocationBarBubbleDelegateView::GetAccessibleNodeData(node_data);
+  node_data->SetName(l10n_util::GetStringUTF8(
+      newly_bookmarked_ ? IDS_BOOKMARK_BUBBLE_PAGE_BOOKMARKED
+                        : IDS_BOOKMARK_AX_BUBBLE_PAGE_BOOKMARK));
 }
 
 void BookmarkBubbleView::ButtonPressed(views::Button* sender,
@@ -293,30 +331,44 @@ void BookmarkBubbleView::ButtonPressed(views::Button* sender,
 
 void BookmarkBubbleView::OnPerformAction(views::Combobox* combobox) {
   if (combobox->selected_index() + 1 == parent_model_.GetItemCount()) {
-    content::RecordAction(UserMetricsAction("BookmarkBubble_EditFromCombobox"));
+    base::RecordAction(UserMetricsAction("BookmarkBubble_EditFromCombobox"));
     ShowEditor();
   }
 }
 
 void BookmarkBubbleView::HandleButtonPressed(views::Button* sender) {
   if (sender == remove_button_) {
-    content::RecordAction(UserMetricsAction("BookmarkBubble_Unstar"));
+    base::RecordAction(UserMetricsAction("BookmarkBubble_Unstar"));
     // Set this so we remove the bookmark after the window closes.
     remove_bookmark_ = true;
     apply_edits_ = false;
     GetWidget()->Close();
   } else if (sender == edit_button_) {
-    content::RecordAction(UserMetricsAction("BookmarkBubble_Edit"));
+    base::RecordAction(UserMetricsAction("BookmarkBubble_Edit"));
     ShowEditor();
   } else {
     DCHECK_EQ(close_button_, sender);
+#if defined(OS_WIN)
+    PrefService* prefs = profile_->GetPrefs();
+    const browser_sync::ProfileSyncService* sync_service =
+        ProfileSyncServiceFactory::GetForProfile(profile_);
+    if (desktop_ios_promotion::IsEligibleForIOSPromotion(
+            prefs, sync_service,
+            desktop_ios_promotion::PromotionEntryPoint::BOOKMARKS_BUBBLE)) {
+      ShowIOSPromotion();
+    } else {
+      GetWidget()->Close();
+    }
+#else
     GetWidget()->Close();
+#endif
   }
 }
 
 void BookmarkBubbleView::ShowEditor() {
-  const BookmarkNode* node = BookmarkModelFactory::GetForProfile(
-      profile_)->GetMostRecentlyAddedUserNodeForURL(url_);
+  const BookmarkNode* node =
+      BookmarkModelFactory::GetForBrowserContext(profile_)
+          ->GetMostRecentlyAddedUserNodeForURL(url_);
   gfx::NativeWindow native_parent =
       anchor_widget() ? anchor_widget()->GetNativeWindow()
                       : platform_util::GetTopLevel(parent_window());
@@ -336,15 +388,29 @@ void BookmarkBubbleView::ApplyEdits() {
   // Set this to make sure we don't attempt to apply edits again.
   apply_edits_ = false;
 
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile_);
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile_);
   const BookmarkNode* node = model->GetMostRecentlyAddedUserNodeForURL(url_);
   if (node) {
     const base::string16 new_title = title_tf_->text();
     if (new_title != node->GetTitle()) {
       model->SetTitle(node, new_title);
-      content::RecordAction(
+      base::RecordAction(
           UserMetricsAction("BookmarkBubble_ChangeTitleInBubble"));
     }
     parent_model_.MaybeChangeParent(node, parent_combobox_->selected_index());
   }
 }
+
+#if defined(OS_WIN)
+void BookmarkBubbleView::ShowIOSPromotion() {
+  DCHECK(!is_showing_ios_promotion_);
+  RemoveChildView(bookmark_details_view_.get());
+  is_showing_ios_promotion_ = true;
+  ios_promo_view_ = new DesktopIOSPromotionBubbleView(
+      profile_, desktop_ios_promotion::PromotionEntryPoint::BOOKMARKS_BUBBLE);
+  AddChildView(ios_promo_view_);
+  GetWidget()->UpdateWindowIcon();
+  GetWidget()->UpdateWindowTitle();
+  SizeToContents();
+}
+#endif

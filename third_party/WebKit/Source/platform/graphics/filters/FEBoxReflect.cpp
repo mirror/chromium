@@ -6,37 +6,30 @@
 
 #include "platform/geometry/FloatRect.h"
 #include "platform/graphics/filters/SkiaImageFilterBuilder.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
 FEBoxReflect::FEBoxReflect(Filter* filter, const BoxReflection& reflection)
-    : FilterEffect(filter)
-    , m_reflection(reflection)
-{
+    : FilterEffect(filter), reflection_(reflection) {}
+
+FEBoxReflect::~FEBoxReflect() {}
+
+FloatRect FEBoxReflect::MapEffect(const FloatRect& rect) const {
+  return reflection_.MapRect(rect);
 }
 
-FEBoxReflect::~FEBoxReflect()
-{
+TextStream& FEBoxReflect::ExternalRepresentation(TextStream& ts,
+                                                 int indent) const {
+  // Only called for SVG layout tree printing.
+  NOTREACHED();
+  return ts;
 }
 
-FloatRect FEBoxReflect::mapRect(const FloatRect& rect, bool forward) const
-{
-    // Reflection about any line is self-inverse, so this for both forward and
-    // reverse mapping.
-    return m_reflection.mapRect(rect);
+sk_sp<SkImageFilter> FEBoxReflect::CreateImageFilter() {
+  return SkiaImageFilterBuilder::BuildBoxReflectFilter(
+      reflection_,
+      SkiaImageFilterBuilder::Build(InputEffect(0), OperatingColorSpace()));
 }
 
-TextStream& FEBoxReflect::externalRepresentation(TextStream& ts, int indent) const
-{
-    // Only called for SVG layout tree printing.
-    ASSERT_NOT_REACHED();
-    return ts;
-}
-
-sk_sp<SkImageFilter> FEBoxReflect::createImageFilter()
-{
-    return SkiaImageFilterBuilder::buildBoxReflectFilter(m_reflection, SkiaImageFilterBuilder::build(inputEffect(0), operatingColorSpace()));
-}
-
-} // namespace blink
+}  // namespace blink

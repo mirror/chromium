@@ -28,11 +28,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+// https://www.w3.org/TR/2012/WD-file-system-api-20120417/#idl-def-DirectoryEntry
 [
     NoInterfaceObject
 ] interface DirectoryEntry : Entry {
     DirectoryReader createReader();
-    void getFile([TreatUndefinedAs=NullString] DOMString? path, optional FileSystemFlags options, optional EntryCallback successCallback, optional ErrorCallback errorCallback);
-    void getDirectory([TreatUndefinedAs=NullString] DOMString? path, optional FileSystemFlags options, optional EntryCallback successCallback, optional ErrorCallback errorCallback);
+    void getFile(DOMString? path, optional FileSystemFlags options, optional EntryCallback successCallback, optional ErrorCallback errorCallback);
+    void getDirectory(DOMString? path, optional FileSystemFlags options, optional EntryCallback successCallback, optional ErrorCallback errorCallback);
     void removeRecursively(VoidCallback successCallback, optional ErrorCallback errorCallback);
 };

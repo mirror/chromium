@@ -15,7 +15,6 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "base/memory/weak_ptr.h"
 #include "base/version.h"
 #include "extensions/browser/updater/extension_downloader_delegate.h"
@@ -73,18 +72,28 @@ class ExtensionDownloader : public net::URLFetcherDelegate,
   // In that case, no callbacks will be performed on the |delegate_|.
   // The |request_id| is passed on as is to the various |delegate_| callbacks.
   // This is used for example by ExtensionUpdater to keep track of when
-  // potentially concurrent update checks complete.
-  bool AddExtension(const Extension& extension, int request_id);
+  // potentially concurrent update checks complete. |fetch_priority|
+  // parameter notifies the downloader the priority of this extension update
+  // (either foreground or background).
+  bool AddExtension(const Extension& extension,
+                    int request_id,
+                    ManifestFetchData::FetchPriority fetch_priority);
 
   // Adds extension |id| to the list of extensions to check for updates.
   // Returns false if the |id| can't be updated due to invalid details.
   // In that case, no callbacks will be performed on the |delegate_|.
   // The |request_id| is passed on as is to the various |delegate_| callbacks.
   // This is used for example by ExtensionUpdater to keep track of when
-  // potentially concurrent update checks complete.
+  // potentially concurrent update checks complete. The |is_corrupt_reinstall|
+  // parameter is used to indicate in the request that we detected corruption in
+  // the local copy of the extension and we want to perform a reinstall of it.
+  // |fetch_priority| parameter notifies the downloader the priority of this
+  // extension update (either foreground or background).
   bool AddPendingExtension(const std::string& id,
                            const GURL& update_url,
-                           int request_id);
+                           bool is_corrupt_reinstall,
+                           int request_id,
+                           ManifestFetchData::FetchPriority fetch_priority);
 
   // Schedules a fetch of the manifest of all the extensions added with
   // AddExtension() and AddPendingExtension().
@@ -125,6 +134,16 @@ class ExtensionDownloader : public net::URLFetcherDelegate,
   static const char kBlacklistAppID[];
 
   static const int kMaxRetries = 10;
+
+  // Names of the header fields used for traffic management for extension
+  // updater.
+  static const char kUpdateInteractivityHeader[];
+  static const char kUpdateAppIdHeader[];
+  static const char kUpdateUpdaterHeader[];
+
+  // Header values for foreground/background update requests.
+  static const char kUpdateInteractivityForeground[];
+  static const char kUpdateInteractivityBackground[];
 
  private:
   friend class ExtensionUpdaterTest;
@@ -178,13 +197,25 @@ class ExtensionDownloader : public net::URLFetcherDelegate,
     int oauth2_attempt_count;
   };
 
+  // Parameters for special cases that aren't used for most requests.
+  struct ExtraParams {
+    // Additional data to be passed up in the update request.
+    std::string update_url_data;
+
+    // Indicates whether this extension is being reinstalled due to corruption.
+    bool is_corrupt_reinstall;
+
+    ExtraParams();
+  };
+
   // Helper for AddExtension() and AddPendingExtension().
   bool AddExtensionData(const std::string& id,
                         const base::Version& version,
                         Manifest::Type extension_type,
                         const GURL& extension_update_url,
-                        const std::string& update_url_data,
-                        int request_id);
+                        const ExtraParams& extra,
+                        int request_id,
+                        ManifestFetchData::FetchPriority fetch_priority);
 
   // Adds all recorded stats taken so far to histogram counts.
   void ReportStats() const;
@@ -269,8 +300,10 @@ class ExtensionDownloader : public net::URLFetcherDelegate,
   void OnGetTokenFailure(const OAuth2TokenService::Request* request,
                          const GoogleServiceAuthError& error) override;
 
-  ManifestFetchData* CreateManifestFetchData(const GURL& update_url,
-                                             int request_id);
+  ManifestFetchData* CreateManifestFetchData(
+      const GURL& update_url,
+      int request_id,
+      ManifestFetchData::FetchPriority fetch_priority);
 
   // The delegate that receives the crx files downloaded by the
   // ExtensionDownloader, and that fills in optional ping and update url data.
@@ -286,8 +319,8 @@ class ExtensionDownloader : public net::URLFetcherDelegate,
   // extensions grouped together in one batch to avoid running into the limits
   // on the length of http GET requests, so there might be multiple
   // ManifestFetchData* objects with the same base_url.
-  typedef std::map<std::pair<int, GURL>,
-                   std::vector<linked_ptr<ManifestFetchData>>> FetchMap;
+  using FetchMap = std::map<std::pair<int, GURL>,
+                            std::vector<std::unique_ptr<ManifestFetchData>>>;
   FetchMap fetches_preparing_;
 
   // Outstanding url fetch requests for manifests and updates.

@@ -5,44 +5,48 @@
 #ifndef ServiceWorkerWindowClient_h
 #define ServiceWorkerWindowClient_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptPromise.h"
 #include "modules/ModulesExport.h"
 #include "modules/serviceworkers/ServiceWorkerClient.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include <memory>
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class ScriptPromiseResolver;
 class ScriptState;
 
-class MODULES_EXPORT ServiceWorkerWindowClient final : public ServiceWorkerClient {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    // To be used by CallbackPromiseAdapter.
-    using WebType = std::unique_ptr<WebServiceWorkerClientInfo>;
+class MODULES_EXPORT ServiceWorkerWindowClient final
+    : public ServiceWorkerClient {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static ServiceWorkerWindowClient* take(ScriptPromiseResolver*, std::unique_ptr<WebServiceWorkerClientInfo>);
+ public:
+  // To be used by CallbackPromiseAdapter.
+  using WebType = std::unique_ptr<WebServiceWorkerClientInfo>;
 
-    static ServiceWorkerWindowClient* create(const WebServiceWorkerClientInfo&);
-    ~ServiceWorkerWindowClient() override;
+  static ServiceWorkerWindowClient* Take(
+      ScriptPromiseResolver*,
+      std::unique_ptr<WebServiceWorkerClientInfo>);
 
-    // WindowClient.idl
-    String visibilityState() const;
-    bool focused() const { return m_isFocused; }
-    ScriptPromise focus(ScriptState*);
-    ScriptPromise navigate(ScriptState*, const String& url);
+  static ServiceWorkerWindowClient* Create(const WebServiceWorkerClientInfo&);
+  ~ServiceWorkerWindowClient() override;
 
-    DECLARE_VIRTUAL_TRACE();
+  // WindowClient.idl
+  String visibilityState() const;
+  bool focused() const { return is_focused_; }
+  ScriptPromise focus(ScriptState*);
+  ScriptPromise navigate(ScriptState*, const String& url);
 
-private:
-    explicit ServiceWorkerWindowClient(const WebServiceWorkerClientInfo&);
+  DECLARE_VIRTUAL_TRACE();
 
-    WebPageVisibilityState m_pageVisibilityState;
-    bool m_isFocused;
+ private:
+  explicit ServiceWorkerWindowClient(const WebServiceWorkerClientInfo&);
+
+  WebPageVisibilityState page_visibility_state_;
+  bool is_focused_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ServiceWorkerWindowClient_h
+#endif  // ServiceWorkerWindowClient_h

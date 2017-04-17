@@ -25,38 +25,29 @@
 
 namespace blink {
 
-SourceGraphic::SourceGraphic(Filter* filter)
-    : FilterEffect(filter)
-{
-    setOperatingColorSpace(ColorSpaceDeviceRGB);
+SourceGraphic::SourceGraphic(Filter* filter) : FilterEffect(filter) {
+  SetOperatingColorSpace(kColorSpaceDeviceRGB);
 }
 
-SourceGraphic::~SourceGraphic()
-{
+SourceGraphic::~SourceGraphic() {}
+
+SourceGraphic* SourceGraphic::Create(Filter* filter) {
+  return new SourceGraphic(filter);
 }
 
-SourceGraphic* SourceGraphic::create(Filter* filter)
-{
-    return new SourceGraphic(filter);
+FloatRect SourceGraphic::MapInputs(const FloatRect& rect) const {
+  return !source_rect_.IsEmpty() ? source_rect_ : rect;
 }
 
-FloatRect SourceGraphic::determineAbsolutePaintRect(const FloatRect& requestedRect)
-{
-    FloatRect srcRect = intersection(m_sourceRect, requestedRect);
-    addAbsolutePaintRect(srcRect);
-    return srcRect;
+void SourceGraphic::SetSourceRect(const IntRect& source_rect) {
+  source_rect_ = source_rect;
 }
 
-void SourceGraphic::setSourceRect(const IntRect& sourceRect)
-{
-    m_sourceRect = sourceRect;
+TextStream& SourceGraphic::ExternalRepresentation(TextStream& ts,
+                                                  int indent) const {
+  WriteIndent(ts, indent);
+  ts << "[SourceGraphic]\n";
+  return ts;
 }
 
-TextStream& SourceGraphic::externalRepresentation(TextStream& ts, int indent) const
-{
-    writeIndent(ts, indent);
-    ts << "[SourceGraphic]\n";
-    return ts;
-}
-
-} // namespace blink
+}  // namespace blink

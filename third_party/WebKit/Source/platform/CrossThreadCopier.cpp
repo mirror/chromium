@@ -30,82 +30,80 @@
 
 #include "platform/CrossThreadCopier.h"
 
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceRequest.h"
-#include "platform/network/ResourceResponse.h"
-#include "platform/weborigin/KURL.h"
-#include "wtf/text/WTFString.h"
 #include <memory>
+#include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceResponse.h"
+#include "platform/weborigin/KURL.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-CrossThreadCopier<KURL>::Type CrossThreadCopier<KURL>::copy(const KURL& url)
-{
-    return url.copy();
+CrossThreadCopier<KURL>::Type CrossThreadCopier<KURL>::Copy(const KURL& url) {
+  return url.Copy();
 }
 
-CrossThreadCopier<String>::Type CrossThreadCopier<String>::copy(const String& str)
-{
-    return str.isolatedCopy();
+CrossThreadCopier<String>::Type CrossThreadCopier<String>::Copy(
+    const String& str) {
+  return str.IsolatedCopy();
 }
 
-CrossThreadCopier<ResourceError>::Type CrossThreadCopier<ResourceError>::copy(const ResourceError& error)
-{
-    return error.copy();
+CrossThreadCopier<ResourceError>::Type CrossThreadCopier<ResourceError>::Copy(
+    const ResourceError& error) {
+  return error.Copy();
 }
 
-CrossThreadCopier<ResourceRequest>::Type CrossThreadCopier<ResourceRequest>::copy(const ResourceRequest& request)
-{
-    return passed(request.copyData());
+CrossThreadCopier<ResourceRequest>::Type
+CrossThreadCopier<ResourceRequest>::Copy(const ResourceRequest& request) {
+  return WTF::Passed(request.CopyData());
 }
 
-CrossThreadCopier<ResourceResponse>::Type CrossThreadCopier<ResourceResponse>::copy(const ResourceResponse& response)
-{
-    return passed(response.copyData());
+CrossThreadCopier<ResourceResponse>::Type
+CrossThreadCopier<ResourceResponse>::Copy(const ResourceResponse& response) {
+  return WTF::Passed(response.CopyData());
 }
 
 // Test CrossThreadCopier using static_assert.
 
 // Verify that ThreadSafeRefCounted objects get handled correctly.
-class CopierThreadSafeRefCountedTest : public ThreadSafeRefCounted<CopierThreadSafeRefCountedTest> {
+class CopierThreadSafeRefCountedTest
+    : public ThreadSafeRefCounted<CopierThreadSafeRefCountedTest> {};
+
+// Add a generic specialization which will let's us verify that no other
+// template matches.
+template <typename T>
+struct CrossThreadCopierBase<T, false> {
+  typedef int Type;
 };
 
-// Add a generic specialization which will let's us verify that no other template matches.
-template<typename T> struct CrossThreadCopierBase<T, false> {
-    typedef int Type;
-};
-
-static_assert((std::is_same<
-    PassRefPtr<CopierThreadSafeRefCountedTest>,
-    CrossThreadCopier<PassRefPtr<CopierThreadSafeRefCountedTest>>::Type
-    >::value),
+static_assert(
+    (std::is_same<PassRefPtr<CopierThreadSafeRefCountedTest>,
+                  CrossThreadCopier<PassRefPtr<
+                      CopierThreadSafeRefCountedTest>>::Type>::value),
     "PassRefPtr + ThreadSafeRefCounted should pass CrossThreadCopier");
-static_assert((std::is_same<
-    RefPtr<CopierThreadSafeRefCountedTest>,
-    CrossThreadCopier<RefPtr<CopierThreadSafeRefCountedTest>>::Type
-    >::value),
+static_assert(
+    (std::is_same<RefPtr<CopierThreadSafeRefCountedTest>,
+                  CrossThreadCopier<
+                      RefPtr<CopierThreadSafeRefCountedTest>>::Type>::value),
     "RefPtr + ThreadSafeRefCounted should pass CrossThreadCopier");
-static_assert((std::is_same<
-    int,
-    CrossThreadCopier<CopierThreadSafeRefCountedTest*>::Type
-    >::value),
+static_assert(
+    (std::is_same<
+        int,
+        CrossThreadCopier<CopierThreadSafeRefCountedTest*>::Type>::value),
     "Raw pointer + ThreadSafeRefCounted should NOT pass CrossThreadCopier");
 
-// Verify that RefCounted objects only match our generic template which exposes Type as int.
-class CopierRefCountedTest : public RefCounted<CopierRefCountedTest> {
-};
+// Verify that RefCounted objects only match our generic template which exposes
+// Type as int.
+class CopierRefCountedTest : public RefCounted<CopierRefCountedTest> {};
 
-static_assert((std::is_same<
-    int,
-    CrossThreadCopier<CopierRefCountedTest*>::Type
-    >::value),
+static_assert(
+    (std::is_same<int, CrossThreadCopier<CopierRefCountedTest*>::Type>::value),
     "Raw pointer + RefCounted should NOT pass CrossThreadCopier");
 
 // Verify that std::unique_ptr gets passed through.
-static_assert((std::is_same<
-    std::unique_ptr<float>,
-    CrossThreadCopier<std::unique_ptr<float>>::Type
-    >::value),
+static_assert(
+    (std::is_same<std::unique_ptr<float>,
+                  CrossThreadCopier<std::unique_ptr<float>>::Type>::value),
     "std::unique_ptr test");
 
-} // namespace blink
+}  // namespace blink

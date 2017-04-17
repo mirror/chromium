@@ -27,33 +27,43 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import StringIO
+import urllib2
 
 
 class MockWeb(object):
 
-    def __init__(self, urls=None):
+    def __init__(self, urls=None, responses=None):
         self.urls = urls or {}
         self.urls_fetched = []
+        self.responses = responses or []
 
-    def get_binary(self, url, convert_404_to_None=False):
+    def get_binary(self, url, return_none_on_404=False):
         self.urls_fetched.append(url)
         if url in self.urls:
             return self.urls[url]
-        return "MOCK Web result, convert 404 to None=%s" % convert_404_to_None
+        return 'MOCK Web result, convert 404 to None=%s' % return_none_on_404
+
+    def request(self, method, url, data, headers=None):  # pylint: disable=unused-argument
+        return MockResponse(self.responses.pop(0))
 
 
-# FIXME: Classes which are using Browser probably want to use Web instead.
-class MockBrowser(object):
-    params = {}
+class MockResponse(object):
 
-    def open(self, url):
-        pass
+    def __init__(self, values):
+        self.status_code = values['status_code']
+        self.url = ''
+        self.body = values.get('body', '')
 
-    def select_form(self, name):
-        pass
+        if int(self.status_code) >= 400:
+            raise urllib2.HTTPError(
+                url=self.url,
+                code=self.status_code,
+                msg='Received error status code: {}'.format(self.status_code),
+                hdrs={},
+                fp=None)
 
-    def __setitem__(self, key, value):
-        self.params[key] = value
+    def getcode(self):
+        return self.status_code
 
-    def submit(self):
-        return StringIO.StringIO()
+    def read(self):
+        return self.body

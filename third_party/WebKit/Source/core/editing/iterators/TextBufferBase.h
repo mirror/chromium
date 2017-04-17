@@ -6,52 +6,58 @@
 #define TextBufferBase_h
 
 #include "core/CoreExport.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CORE_EXPORT TextBufferBase {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(TextBufferBase);
-public:
-    void clear() { m_size = 0; }
-    size_t size() const { return m_size; }
-    bool isEmpty() const { return m_size == 0; }
-    size_t capacity() const { return m_buffer.capacity(); }
-    const UChar& operator[](size_t index) const { DCHECK_LT(index, m_size); return data()[index]; }
-    virtual const UChar* data() const = 0;
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(TextBufferBase);
 
-    void pushCharacters(UChar, size_t length);
+ public:
+  void Clear() { size_ = 0; }
+  size_t Size() const { return size_; }
+  bool IsEmpty() const { return size_ == 0; }
+  size_t Capacity() const { return buffer_.Capacity(); }
+  const UChar& operator[](size_t index) const {
+    DCHECK_LT(index, size_);
+    return Data()[index];
+  }
+  virtual const UChar* Data() const = 0;
 
-    template<typename T>
-    void pushRange(const T* other, size_t length)
-    {
-        if (length == 0)
-            return;
-        std::copy(other, other + length, ensureDestination(length));
-    }
+  void PushCharacters(UChar, size_t length);
 
-    void shrink(size_t delta) { DCHECK_LE(delta, m_size); m_size -= delta; }
+  template <typename T>
+  void PushRange(const T* other, size_t length) {
+    if (length == 0)
+      return;
+    std::copy(other, other + length, EnsureDestination(length));
+  }
 
-protected:
-    TextBufferBase();
-    UChar* ensureDestination(size_t length);
-    void grow(size_t demand);
+  void Shrink(size_t delta) {
+    DCHECK_LE(delta, size_);
+    size_ -= delta;
+  }
 
-    virtual UChar* calcDestination(size_t length) = 0;
-    virtual void shiftData(size_t oldCapacity);
+ protected:
+  TextBufferBase();
+  UChar* EnsureDestination(size_t length);
+  void Grow(size_t demand);
 
-    const UChar* bufferBegin() const { return m_buffer.begin(); }
-    const UChar* bufferEnd() const { return m_buffer.end(); }
-    UChar* bufferBegin() { return m_buffer.begin(); }
-    UChar* bufferEnd() { return m_buffer.end(); }
+  virtual UChar* CalcDestination(size_t length) = 0;
+  virtual void ShiftData(size_t old_capacity);
 
-private:
-    size_t m_size = 0;
-    Vector<UChar, 1024> m_buffer;
+  const UChar* BufferBegin() const { return buffer_.begin(); }
+  const UChar* BufferEnd() const { return buffer_.end(); }
+  UChar* BufferBegin() { return buffer_.begin(); }
+  UChar* BufferEnd() { return buffer_.end(); }
+
+ private:
+  size_t size_ = 0;
+  Vector<UChar, 1024> buffer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextBufferBase_h
+#endif  // TextBufferBase_h

@@ -8,7 +8,6 @@
 #include "cc/resources/single_release_callback.h"
 
 namespace cc {
-class ResourceUpdateQueue;
 class TextureMailbox;
 
 class TextureLayerClient {
@@ -18,8 +17,7 @@ class TextureLayerClient {
   // and the old mailbox is to be reused.
   virtual bool PrepareTextureMailbox(
       TextureMailbox* mailbox,
-      std::unique_ptr<SingleReleaseCallback>* release_callback,
-      bool use_shared_memory) = 0;
+      std::unique_ptr<SingleReleaseCallback>* release_callback) = 0;
 
  protected:
   virtual ~TextureLayerClient() {}

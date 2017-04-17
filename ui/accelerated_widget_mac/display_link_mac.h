@@ -16,10 +16,14 @@
 #include "base/timer/timer.h"
 #include "ui/accelerated_widget_mac/accelerated_widget_mac_export.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}
+
 namespace ui {
 
-class ACCELERATED_WIDGET_MAC_EXPORT DisplayLinkMac :
-    public base::RefCounted<DisplayLinkMac> {
+class ACCELERATED_WIDGET_MAC_EXPORT DisplayLinkMac
+    : public base::RefCountedThreadSafe<DisplayLinkMac> {
  public:
   static scoped_refptr<DisplayLinkMac> GetForDisplay(
       CGDirectDisplayID display_id);
@@ -37,7 +41,7 @@ class ACCELERATED_WIDGET_MAC_EXPORT DisplayLinkMac :
   void NotifyCurrentTime(const base::TimeTicks& now);
 
  private:
-  friend class base::RefCounted<DisplayLinkMac>;
+  friend class base::RefCountedThreadSafe<DisplayLinkMac>;
 
   DisplayLinkMac(
       CGDirectDisplayID display_id,
@@ -86,7 +90,7 @@ class ACCELERATED_WIDGET_MAC_EXPORT DisplayLinkMac :
   // Each display link instance consumes a non-negligible number of cycles, so
   // make all display links on the same screen share the same object.
   typedef std::map<CGDirectDisplayID, DisplayLinkMac*> DisplayMap;
-  static base::LazyInstance<DisplayMap> display_map_;
+  static base::LazyInstance<DisplayMap>::DestructorAtExit display_map_;
 };
 
 }  // ui

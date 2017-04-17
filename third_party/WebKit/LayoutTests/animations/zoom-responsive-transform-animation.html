@@ -14,7 +14,9 @@
 }
 </style>
 <div id="container"></div>
+<div id="footer"></div>
 <script>
+'use strict';
 [
   'perspective(200px) translate3D(10px, 10px, 10px)',
   'matrix(0, 1, 1, 0, 10, 10)',
@@ -23,6 +25,11 @@
     '1, 0, 0, 0, ' +
     '0, 0, 1, 0, ' +
     '10, 10, 10, 1)',
+  'matrix3d(' +
+    '0.707106781186548, 0.000000000000000, -0.707106781186547, 0.003535533905933,' +
+    '0.000000000000000, 1.000000000000000, 0.000000000000000, 0.000000000000000,' +
+    '0.707106781186547, 0.000000000000000, 0.707106781186548, -0.003535533905933,' +
+    '0.000000000000000, 0.000000000000000, 0.000000000000000, 1.000000000000000)',
   'perspective(200px) rotateY(45deg)',
   'none',
 ].forEach(transform => {
@@ -42,12 +49,18 @@
 if (window.testRunner)
   testRunner.waitUntilDone();
 
+function waitForCompositor() {
+  return footer.animate({opacity: ['1', '1']}, 1).ready;
+}
+
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
     internals.setZoomFactor(2);
     requestAnimationFrame(() => {
-      if (window.testRunner)
-        testRunner.notifyDone();
+      waitForCompositor().then(() => {
+        if (window.testRunner)
+          testRunner.notifyDone();
+      });
     });
   });
 });

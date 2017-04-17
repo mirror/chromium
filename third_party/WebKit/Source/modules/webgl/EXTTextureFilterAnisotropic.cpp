@@ -27,34 +27,30 @@
 
 namespace blink {
 
-EXTTextureFilterAnisotropic::EXTTextureFilterAnisotropic(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
-    context->extensionsUtil()->ensureExtensionEnabled("GL_EXT_texture_filter_anisotropic");
+EXTTextureFilterAnisotropic::EXTTextureFilterAnisotropic(
+    WebGLRenderingContextBase* context)
+    : WebGLExtension(context) {
+  context->ExtensionsUtil()->EnsureExtensionEnabled(
+      "GL_EXT_texture_filter_anisotropic");
 }
 
-EXTTextureFilterAnisotropic::~EXTTextureFilterAnisotropic()
-{
+WebGLExtensionName EXTTextureFilterAnisotropic::GetName() const {
+  return kEXTTextureFilterAnisotropicName;
 }
 
-WebGLExtensionName EXTTextureFilterAnisotropic::name() const
-{
-    return EXTTextureFilterAnisotropicName;
+EXTTextureFilterAnisotropic* EXTTextureFilterAnisotropic::Create(
+    WebGLRenderingContextBase* context) {
+  return new EXTTextureFilterAnisotropic(context);
 }
 
-EXTTextureFilterAnisotropic* EXTTextureFilterAnisotropic::create(WebGLRenderingContextBase* context)
-{
-    return new EXTTextureFilterAnisotropic(context);
+bool EXTTextureFilterAnisotropic::Supported(
+    WebGLRenderingContextBase* context) {
+  return context->ExtensionsUtil()->SupportsExtension(
+      "GL_EXT_texture_filter_anisotropic");
 }
 
-bool EXTTextureFilterAnisotropic::supported(WebGLRenderingContextBase* context)
-{
-    return context->extensionsUtil()->supportsExtension("GL_EXT_texture_filter_anisotropic");
+const char* EXTTextureFilterAnisotropic::ExtensionName() {
+  return "EXT_texture_filter_anisotropic";
 }
 
-const char* EXTTextureFilterAnisotropic::extensionName()
-{
-    return "EXT_texture_filter_anisotropic";
-}
-
-} // namespace blink
+}  // namespace blink

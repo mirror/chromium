@@ -5,54 +5,124 @@
 #ifndef WindowProxyManager_h
 #define WindowProxyManager_h
 
-#include "core/CoreExport.h"
-#include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
 #include <utility>
-#include <v8.h>
+
+#include "bindings/core/v8/LocalWindowProxy.h"
+#include "bindings/core/v8/RemoteWindowProxy.h"
+#include "core/CoreExport.h"
+#include "core/frame/LocalFrame.h"
+#include "core/frame/RemoteFrame.h"
+#include "platform/heap/Handle.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class DOMWrapperWorld;
-class Frame;
-class ScriptState;
 class SecurityOrigin;
-class WindowProxy;
 
-class CORE_EXPORT WindowProxyManager final : public GarbageCollected<WindowProxyManager> {
-public:
-    static WindowProxyManager* create(Frame&);
+class WindowProxyManager : public GarbageCollected<WindowProxyManager> {
+ public:
+  DECLARE_TRACE();
 
-    DECLARE_TRACE();
+  v8::Isolate* GetIsolate() const { return isolate_; }
 
-    Frame* frame() const { return m_frame.get(); }
-    v8::Isolate* isolate() const { return m_isolate; }
-    WindowProxy* mainWorldProxy() const { return m_windowProxy.get(); }
+  void ClearForClose();
+  void CORE_EXPORT ClearForNavigation();
 
-    WindowProxy* windowProxy(DOMWrapperWorld&);
+  // Global proxies are passed in a vector to maintain their order: global proxy
+  // object for the main world is always first. This is needed to prevent bugs
+  // like https://crbug.com/700077 .
+  using GlobalProxyVector =
+      Vector<std::pair<DOMWrapperWorld*, v8::Local<v8::Object>>>;
+  void CORE_EXPORT ReleaseGlobalProxies(GlobalProxyVector&);
+  void CORE_EXPORT SetGlobalProxies(const GlobalProxyVector&);
 
-    void clearForClose();
-    void clearForNavigation();
+  WindowProxy* MainWorldProxy() {
+    window_proxy_->InitializeIfNeeded();
+    return window_proxy_;
+  }
 
-    // For devtools:
-    WindowProxy* existingWindowProxy(DOMWrapperWorld&);
-    void collectIsolatedContexts(Vector<std::pair<ScriptState*, SecurityOrigin*>>&);
+  WindowProxy* GetWindowProxy(DOMWrapperWorld& world) {
+    WindowProxy* window_proxy = WindowProxyMaybeUninitialized(world);
+    window_proxy->InitializeIfNeeded();
+    return window_proxy;
+  }
 
-    void releaseGlobals(HashMap<DOMWrapperWorld*, v8::Local<v8::Object>>&);
-    void setGlobals(const HashMap<DOMWrapperWorld*, v8::Local<v8::Object>>&);
+ protected:
+  using IsolatedWorldMap = HeapHashMap<int, Member<WindowProxy>>;
+  enum class FrameType { kLocal, kRemote };
 
-private:
-    typedef HeapHashMap<int, Member<WindowProxy>> IsolatedWorldMap;
+  WindowProxyManager(Frame&, FrameType);
 
-    explicit WindowProxyManager(Frame&);
+ private:
+  // Creates an uninitialized WindowProxy.
+  WindowProxy* CreateWindowProxy(DOMWrapperWorld&);
+  WindowProxy* WindowProxyMaybeUninitialized(DOMWrapperWorld&);
 
-    Member<Frame> m_frame;
-    v8::Isolate* const m_isolate;
+  v8::Isolate* const isolate_;
+  const Member<Frame> frame_;
+  const FrameType frame_type_;
 
-    const Member<WindowProxy> m_windowProxy;
-    IsolatedWorldMap m_isolatedWorlds;
+ protected:
+  const Member<WindowProxy> window_proxy_;
+  IsolatedWorldMap isolated_worlds_;
 };
 
-} // namespace blink
+template <typename FrameType, typename ProxyType>
+class WindowProxyManagerImplHelper : public WindowProxyManager {
+ private:
+  using Base = WindowProxyManager;
 
-#endif // WindowProxyManager_h
+ public:
+  ProxyType* MainWorldProxy() {
+    return static_cast<ProxyType*>(Base::MainWorldProxy());
+  }
+  ProxyType* WindowProxy(DOMWrapperWorld& world) {
+    return static_cast<ProxyType*>(Base::GetWindowProxy(world));
+  }
+
+ protected:
+  WindowProxyManagerImplHelper(Frame& frame, FrameType frame_type)
+      : WindowProxyManager(frame, frame_type) {}
+};
+
+class LocalWindowProxyManager
+    : public WindowProxyManagerImplHelper<LocalFrame, LocalWindowProxy> {
+ public:
+  static LocalWindowProxyManager* Create(LocalFrame& frame) {
+    return new LocalWindowProxyManager(frame);
+  }
+
+  // TODO(yukishiino): Remove this method.
+  LocalWindowProxy* MainWorldProxyMaybeUninitialized() {
+    return static_cast<LocalWindowProxy*>(window_proxy_.Get());
+  }
+
+  // Sets the given security origin to the main world's context.  Also updates
+  // the security origin of the context for each isolated world.
+  void UpdateSecurityOrigin(SecurityOrigin*);
+
+ private:
+  explicit LocalWindowProxyManager(LocalFrame& frame)
+      : WindowProxyManagerImplHelper<LocalFrame, LocalWindowProxy>(
+            frame,
+            FrameType::kLocal) {}
+};
+
+class RemoteWindowProxyManager
+    : public WindowProxyManagerImplHelper<RemoteFrame, RemoteWindowProxy> {
+ public:
+  static RemoteWindowProxyManager* Create(RemoteFrame& frame) {
+    return new RemoteWindowProxyManager(frame);
+  }
+
+ private:
+  explicit RemoteWindowProxyManager(RemoteFrame& frame)
+      : WindowProxyManagerImplHelper<RemoteFrame, RemoteWindowProxy>(
+            frame,
+            FrameType::kRemote) {}
+};
+
+}  // namespace blink
+
+#endif  // WindowProxyManager_h

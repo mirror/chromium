@@ -10,22 +10,25 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "platform/graphics/GraphicsLayer.h"
 
+#include <memory>
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/animation/CompositorAnimation.h"
+#include "platform/animation/CompositorAnimationHost.h"
 #include "platform/animation/CompositorAnimationPlayer.h"
 #include "platform/animation/CompositorAnimationPlayerClient.h"
 #include "platform/animation/CompositorAnimationTimeline.h"
@@ -39,169 +42,164 @@
 #include "platform/transforms/Matrix3DTransformOperation.h"
 #include "platform/transforms/RotateTransformOperation.h"
 #include "platform/transforms/TranslateTransformOperation.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositorSupport.h"
 #include "public/platform/WebLayer.h"
 #include "public/platform/WebLayerTreeView.h"
+#include "public/platform/WebScheduler.h"
+#include "public/platform/WebThread.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
 class GraphicsLayerTest : public testing::Test {
-public:
-    GraphicsLayerTest()
-    {
-        m_clipLayer = wrapUnique(new FakeGraphicsLayer(&m_client));
-        m_scrollElasticityLayer = wrapUnique(new FakeGraphicsLayer(&m_client));
-        m_graphicsLayer = wrapUnique(new FakeGraphicsLayer(&m_client));
-        m_clipLayer->addChild(m_scrollElasticityLayer.get());
-        m_scrollElasticityLayer->addChild(m_graphicsLayer.get());
-        m_graphicsLayer->platformLayer()->setScrollClipLayer(
-            m_clipLayer->platformLayer());
-        m_platformLayer = m_graphicsLayer->platformLayer();
-        m_layerTreeView = wrapUnique(new WebLayerTreeViewImplForTesting);
-        ASSERT(m_layerTreeView);
-        m_layerTreeView->setRootLayer(*m_clipLayer->platformLayer());
-        m_layerTreeView->registerViewportLayers(
-            m_scrollElasticityLayer->platformLayer(), m_clipLayer->platformLayer(), m_graphicsLayer->platformLayer(), 0);
-        m_layerTreeView->setViewportSize(WebSize(1, 1));
-    }
+ public:
+  GraphicsLayerTest() {
+    clip_layer_ = WTF::WrapUnique(new FakeGraphicsLayer(&client_));
+    scroll_elasticity_layer_ = WTF::WrapUnique(new FakeGraphicsLayer(&client_));
+    graphics_layer_ = WTF::WrapUnique(new FakeGraphicsLayer(&client_));
+    clip_layer_->AddChild(scroll_elasticity_layer_.get());
+    scroll_elasticity_layer_->AddChild(graphics_layer_.get());
+    graphics_layer_->PlatformLayer()->SetScrollClipLayer(
+        clip_layer_->PlatformLayer());
+    platform_layer_ = graphics_layer_->PlatformLayer();
+    layer_tree_view_ = WTF::WrapUnique(new WebLayerTreeViewImplForTesting);
+    DCHECK(layer_tree_view_);
+    layer_tree_view_->SetRootLayer(*clip_layer_->PlatformLayer());
+    layer_tree_view_->RegisterViewportLayers(
+        scroll_elasticity_layer_->PlatformLayer(), clip_layer_->PlatformLayer(),
+        graphics_layer_->PlatformLayer(), 0);
+    layer_tree_view_->SetViewportSize(WebSize(1, 1));
+  }
 
-    ~GraphicsLayerTest() override
-    {
-        m_graphicsLayer.reset();
-        m_layerTreeView.reset();
-    }
+  ~GraphicsLayerTest() override {
+    graphics_layer_.reset();
+    layer_tree_view_.reset();
+  }
 
-    WebLayerTreeView* layerTreeView() { return m_layerTreeView.get(); }
+  WebLayerTreeView* LayerTreeView() { return layer_tree_view_.get(); }
 
-protected:
-    WebLayer* m_platformLayer;
-    std::unique_ptr<FakeGraphicsLayer> m_graphicsLayer;
-    std::unique_ptr<FakeGraphicsLayer> m_scrollElasticityLayer;
-    std::unique_ptr<FakeGraphicsLayer> m_clipLayer;
+ protected:
+  WebLayer* platform_layer_;
+  std::unique_ptr<FakeGraphicsLayer> graphics_layer_;
+  std::unique_ptr<FakeGraphicsLayer> scroll_elasticity_layer_;
+  std::unique_ptr<FakeGraphicsLayer> clip_layer_;
 
-private:
-    std::unique_ptr<WebLayerTreeView> m_layerTreeView;
-    FakeGraphicsLayerClient m_client;
+ private:
+  std::unique_ptr<WebLayerTreeView> layer_tree_view_;
+  FakeGraphicsLayerClient client_;
 };
 
 class AnimationPlayerForTesting : public CompositorAnimationPlayerClient {
-public:
-    AnimationPlayerForTesting()
-    {
-        m_compositorPlayer = CompositorAnimationPlayer::create();
-    }
+ public:
+  AnimationPlayerForTesting() {
+    compositor_player_ = CompositorAnimationPlayer::Create();
+  }
 
-    CompositorAnimationPlayer* compositorPlayer() const override
-    {
-        return m_compositorPlayer.get();
-    }
+  CompositorAnimationPlayer* CompositorPlayer() const override {
+    return compositor_player_.get();
+  }
 
-    std::unique_ptr<CompositorAnimationPlayer> m_compositorPlayer;
+  std::unique_ptr<CompositorAnimationPlayer> compositor_player_;
 };
 
-TEST_F(GraphicsLayerTest, updateLayerShouldFlattenTransformWithAnimations)
-{
-    ASSERT_FALSE(m_platformLayer->hasActiveAnimationForTesting());
+TEST_F(GraphicsLayerTest, updateLayerShouldFlattenTransformWithAnimations) {
+  ASSERT_FALSE(platform_layer_->HasTickingAnimationForTesting());
 
-    std::unique_ptr<CompositorFloatAnimationCurve> curve = CompositorFloatAnimationCurve::create();
-    curve->addCubicBezierKeyframe(CompositorFloatKeyframe(0.0, 0.0), CubicBezierTimingFunction::EaseType::EASE);
-    std::unique_ptr<CompositorAnimation> floatAnimation(CompositorAnimation::create(*curve, CompositorTargetProperty::OPACITY, 0, 0));
-    int animationId = floatAnimation->id();
+  std::unique_ptr<CompositorFloatAnimationCurve> curve =
+      CompositorFloatAnimationCurve::Create();
+  curve->AddKeyframe(
+      CompositorFloatKeyframe(0.0, 0.0,
+                              *CubicBezierTimingFunction::Preset(
+                                  CubicBezierTimingFunction::EaseType::EASE)));
+  std::unique_ptr<CompositorAnimation> float_animation(
+      CompositorAnimation::Create(*curve, CompositorTargetProperty::OPACITY, 0,
+                                  0));
+  int animation_id = float_animation->Id();
 
-    std::unique_ptr<CompositorAnimationTimeline> compositorTimeline = CompositorAnimationTimeline::create();
-    AnimationPlayerForTesting player;
+  std::unique_ptr<CompositorAnimationTimeline> compositor_timeline =
+      CompositorAnimationTimeline::Create();
+  AnimationPlayerForTesting player;
 
-    layerTreeView()->attachCompositorAnimationTimeline(compositorTimeline->animationTimeline());
-    compositorTimeline->playerAttached(player);
+  CompositorAnimationHost host(LayerTreeView()->CompositorAnimationHost());
 
-    m_platformLayer->setElementId(CompositorElementId(m_platformLayer->id(), 0));
+  host.AddTimeline(*compositor_timeline);
+  compositor_timeline->PlayerAttached(player);
 
-    player.compositorPlayer()->attachElement(m_platformLayer->elementId());
-    ASSERT_TRUE(player.compositorPlayer()->isElementAttached());
+  platform_layer_->SetElementId(CompositorElementId(platform_layer_->Id(), 0));
 
-    player.compositorPlayer()->addAnimation(floatAnimation.release());
+  player.CompositorPlayer()->AttachElement(platform_layer_->GetElementId());
+  ASSERT_TRUE(player.CompositorPlayer()->IsElementAttached());
 
-    ASSERT_TRUE(m_platformLayer->hasActiveAnimationForTesting());
+  player.CompositorPlayer()->AddAnimation(std::move(float_animation));
 
-    m_graphicsLayer->setShouldFlattenTransform(false);
+  ASSERT_TRUE(platform_layer_->HasTickingAnimationForTesting());
 
-    m_platformLayer = m_graphicsLayer->platformLayer();
-    ASSERT_TRUE(m_platformLayer);
+  graphics_layer_->SetShouldFlattenTransform(false);
 
-    ASSERT_TRUE(m_platformLayer->hasActiveAnimationForTesting());
-    player.compositorPlayer()->removeAnimation(animationId);
-    ASSERT_FALSE(m_platformLayer->hasActiveAnimationForTesting());
+  platform_layer_ = graphics_layer_->PlatformLayer();
+  ASSERT_TRUE(platform_layer_);
 
-    m_graphicsLayer->setShouldFlattenTransform(true);
+  ASSERT_TRUE(platform_layer_->HasTickingAnimationForTesting());
+  player.CompositorPlayer()->RemoveAnimation(animation_id);
+  ASSERT_FALSE(platform_layer_->HasTickingAnimationForTesting());
 
-    m_platformLayer = m_graphicsLayer->platformLayer();
-    ASSERT_TRUE(m_platformLayer);
+  graphics_layer_->SetShouldFlattenTransform(true);
 
-    ASSERT_FALSE(m_platformLayer->hasActiveAnimationForTesting());
+  platform_layer_ = graphics_layer_->PlatformLayer();
+  ASSERT_TRUE(platform_layer_);
 
-    player.compositorPlayer()->detachElement();
-    ASSERT_FALSE(player.compositorPlayer()->isElementAttached());
+  ASSERT_FALSE(platform_layer_->HasTickingAnimationForTesting());
 
-    compositorTimeline->playerDestroyed(player);
-    layerTreeView()->detachCompositorAnimationTimeline(compositorTimeline->animationTimeline());
+  player.CompositorPlayer()->DetachElement();
+  ASSERT_FALSE(player.CompositorPlayer()->IsElementAttached());
+
+  compositor_timeline->PlayerDestroyed(player);
+  host.RemoveTimeline(*compositor_timeline.get());
 }
 
-class FakeScrollableArea : public GarbageCollectedFinalized<FakeScrollableArea>, public ScrollableArea {
-    USING_GARBAGE_COLLECTED_MIXIN(FakeScrollableArea);
-public:
-    static FakeScrollableArea* create()
-    {
-        return new FakeScrollableArea;
-    }
+class FakeScrollableArea : public GarbageCollectedFinalized<FakeScrollableArea>,
+                           public ScrollableArea {
+  USING_GARBAGE_COLLECTED_MIXIN(FakeScrollableArea);
 
-    LayoutRect visualRectForScrollbarParts() const override { return LayoutRect(); }
-    bool isActive() const override { return false; }
-    int scrollSize(ScrollbarOrientation) const override { return 100; }
-    bool isScrollCornerVisible() const override { return false; }
-    IntRect scrollCornerRect() const override { return IntRect(); }
-    int visibleWidth() const override { return 10; }
-    int visibleHeight() const override { return 10; }
-    IntSize contentsSize() const override { return IntSize(100, 100); }
-    bool scrollbarsCanBeActive() const override { return false; }
-    IntRect scrollableAreaBoundingBox() const override { return IntRect(); }
-    void scrollControlWasSetNeedsPaintInvalidation() override { }
-    bool userInputScrollable(ScrollbarOrientation) const override { return true; }
-    bool shouldPlaceVerticalScrollbarOnLeft() const override { return false; }
-    int pageStep(ScrollbarOrientation) const override { return 0; }
-    IntPoint minimumScrollPosition() const override { return IntPoint(); }
-    IntPoint maximumScrollPosition() const override
-    {
-        return IntPoint(contentsSize().width() - visibleWidth(), contentsSize().height() - visibleHeight());
-    }
+ public:
+  static FakeScrollableArea* Create() { return new FakeScrollableArea; }
 
-    void setScrollOffset(const DoublePoint& scrollOffset, ScrollType) override { m_scrollPosition = scrollOffset; }
-    DoublePoint scrollPositionDouble() const override { return m_scrollPosition; }
-    IntPoint scrollPosition() const override { return flooredIntPoint(m_scrollPosition); }
+  bool IsActive() const override { return false; }
+  int ScrollSize(ScrollbarOrientation) const override { return 100; }
+  bool IsScrollCornerVisible() const override { return false; }
+  IntRect ScrollCornerRect() const override { return IntRect(); }
+  int VisibleWidth() const override { return 10; }
+  int VisibleHeight() const override { return 10; }
+  IntSize ContentsSize() const override { return IntSize(100, 100); }
+  bool ScrollbarsCanBeActive() const override { return false; }
+  IntRect ScrollableAreaBoundingBox() const override { return IntRect(); }
+  void ScrollControlWasSetNeedsPaintInvalidation() override {}
+  bool UserInputScrollable(ScrollbarOrientation) const override { return true; }
+  bool ShouldPlaceVerticalScrollbarOnLeft() const override { return false; }
+  int PageStep(ScrollbarOrientation) const override { return 0; }
+  IntSize MinimumScrollOffsetInt() const override { return IntSize(); }
+  IntSize MaximumScrollOffsetInt() const override {
+    return ContentsSize() - IntSize(VisibleWidth(), VisibleHeight());
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        ScrollableArea::trace(visitor);
-    }
+  void UpdateScrollOffset(const ScrollOffset& offset, ScrollType) override {
+    scroll_offset_ = offset;
+  }
+  ScrollOffset GetScrollOffset() const override { return scroll_offset_; }
+  IntSize ScrollOffsetInt() const override {
+    return FlooredIntSize(scroll_offset_);
+  }
 
-private:
-    DoublePoint m_scrollPosition;
+  RefPtr<WebTaskRunner> GetTimerTaskRunner() const final {
+    return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() { ScrollableArea::Trace(visitor); }
+
+ private:
+  ScrollOffset scroll_offset_;
 };
 
-TEST_F(GraphicsLayerTest, applyScrollToScrollableArea)
-{
-    FakeScrollableArea* scrollableArea = FakeScrollableArea::create();
-    m_graphicsLayer->setScrollableArea(scrollableArea, false);
-
-    WebDoublePoint scrollPosition(7, 9);
-    m_platformLayer->setScrollPositionDouble(scrollPosition);
-    m_graphicsLayer->didScroll();
-
-    EXPECT_FLOAT_EQ(scrollPosition.x, scrollableArea->scrollPositionDouble().x());
-    EXPECT_FLOAT_EQ(scrollPosition.y, scrollableArea->scrollPositionDouble().y());
-}
-
-} // namespace blink
+}  // namespace blink

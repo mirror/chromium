@@ -9,6 +9,8 @@
 
 namespace autofill {
 
+class AutofillDriver;
+
 // An interface for interaction with AutofillPopupController. Will be notified
 // of events by the controller.
 class AutofillPopupDelegate {
@@ -43,6 +45,12 @@ class AutofillPopupDelegate {
 
   // Informs the delegate that the Autofill previewed form should be cleared.
   virtual void ClearPreviewedForm() = 0;
+
+  // Returns true if popup is for credit card.
+  virtual bool IsCreditCardPopup() = 0;
+
+  // Returns the associated AutofillDriver.
+  virtual AutofillDriver* GetAutofillDriver() = 0;
 };
 
 }  // namespace autofill

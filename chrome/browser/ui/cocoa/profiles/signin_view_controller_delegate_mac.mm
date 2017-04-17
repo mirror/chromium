@@ -15,6 +15,7 @@
 #include "chrome/browser/ui/cocoa/constrained_window/constrained_window_custom_sheet.h"
 #include "chrome/browser/ui/cocoa/constrained_window/constrained_window_custom_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/webui/signin/sync_confirmation_ui.h"
 #include "chrome/common/url_constants.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "content/public/browser/native_web_keyboard_event.h"
@@ -35,23 +36,38 @@ const int kModalDialogWidth = 448;
 // flow. It matches the dimensions of the server content the dialog displays.
 const CGFloat kFixedGaiaViewHeight = 612;
 
-// Initial height of the sync confirmation t
+// Initial height of the sync confirmation modal dialog.
 const int kSyncConfirmationDialogHeight = 351;
+
+// Initial height of the signin error modal dialog.
+const int kSigninErrorDialogHeight = 164;
+
+CGFloat GetSyncConfirmationDialogPreferredHeight(Profile* profile) {
+  // If sync is disabled, then the sync confirmation dialog looks like an error
+  // dialog and thus it has the same preferred size.
+  return profile->IsSyncAllowed() ? kSyncConfirmationDialogHeight
+                                  : kSigninErrorDialogHeight;
+}
 
 }  // namespace
 
 SigninViewControllerDelegateMac::SigninViewControllerDelegateMac(
     SigninViewController* signin_view_controller,
     std::unique_ptr<content::WebContents> web_contents,
-    content::WebContents* host_web_contents,
+    Browser* browser,
     NSRect frame,
+    ui::ModalType dialog_modal_type,
     bool wait_for_size)
     : SigninViewControllerDelegate(signin_view_controller, web_contents.get()),
       web_contents_(std::move(web_contents)),
-      wait_for_size_(wait_for_size),
-      host_web_contents_(host_web_contents),
+      browser_(browser),
+      dialog_modal_type_(dialog_modal_type),
       window_frame_(frame) {
-  if (!wait_for_size_)
+  DCHECK(browser_);
+  DCHECK(browser_->tab_strip_model()->GetActiveWebContents())
+      << "A tab must be active to present the sign-in modal dialog.";
+
+  if (!wait_for_size)
     DisplayModal();
 }
 
@@ -59,8 +75,7 @@ SigninViewControllerDelegateMac::~SigninViewControllerDelegateMac() {}
 
 void SigninViewControllerDelegateMac::OnConstrainedWindowClosed(
     ConstrainedWindowMac* window) {
-  ResetSigninViewControllerDelegate();
-  delete this;
+  CleanupAndDeleteThis();
 }
 
 // static
@@ -100,46 +115,98 @@ SigninViewControllerDelegateMac::CreateGaiaWebContents(
 // static
 std::unique_ptr<content::WebContents>
 SigninViewControllerDelegateMac::CreateSyncConfirmationWebContents(
+    Browser* browser) {
+  std::unique_ptr<content::WebContents> web_contents(
+      content::WebContents::Create(
+          content::WebContents::CreateParams(browser->profile())));
+  web_contents->GetController().LoadURL(
+      GURL(chrome::kChromeUISyncConfirmationURL), content::Referrer(),
+      ui::PAGE_TRANSITION_AUTO_TOPLEVEL, std::string());
+  SyncConfirmationUI* sync_confirmation_ui = static_cast<SyncConfirmationUI*>(
+      web_contents->GetWebUI()->GetController());
+  sync_confirmation_ui->InitializeMessageHandlerWithBrowser(browser);
+
+  NSView* webview = web_contents->GetNativeView();
+  [webview setFrameSize:NSMakeSize(kModalDialogWidth,
+                                   GetSyncConfirmationDialogPreferredHeight(
+                                       browser->profile()))];
+
+  return web_contents;
+}
+
+// static
+std::unique_ptr<content::WebContents>
+SigninViewControllerDelegateMac::CreateSigninErrorWebContents(
     Profile* profile) {
   std::unique_ptr<content::WebContents> web_contents(
       content::WebContents::Create(
           content::WebContents::CreateParams(profile)));
   web_contents->GetController().LoadURL(
-      GURL(chrome::kChromeUISyncConfirmationURL), content::Referrer(),
+      GURL(chrome::kChromeUISigninErrorURL), content::Referrer(),
       ui::PAGE_TRANSITION_AUTO_TOPLEVEL, std::string());
 
   NSView* webview = web_contents->GetNativeView();
-  [webview setFrameSize:NSMakeSize(kModalDialogWidth,
-                                   kSyncConfirmationDialogHeight)];
+  [webview
+      setFrameSize:NSMakeSize(kModalDialogWidth, kSigninErrorDialogHeight)];
 
   return web_contents;
 }
 
 void SigninViewControllerDelegateMac::PerformClose() {
-  if (constrained_window_.get())
-    constrained_window_->CloseWebContentsModalDialog();
+  switch (dialog_modal_type_) {
+    case ui::MODAL_TYPE_CHILD:
+      if (constrained_window_.get())
+        constrained_window_->CloseWebContentsModalDialog();
+      break;
+    case ui::MODAL_TYPE_WINDOW:
+      if (window_.get()) {
+        [window_.get().sheetParent endSheet:window_];
+        window_.reset(nil);
+        CleanupAndDeleteThis();
+      }
+      break;
+    default:
+      NOTREACHED() << "Unsupported dialog modal type " << dialog_modal_type_;
+  }
 }
 
 void SigninViewControllerDelegateMac::ResizeNativeView(int height) {
-  if (wait_for_size_) {
-    [window_.get().contentView
-        setFrameSize:NSMakeSize(kModalDialogWidth,
-                                height)];
+  if (!window_) {
     window_frame_.size = NSMakeSize(kModalDialogWidth, height);
     DisplayModal();
   }
 }
 
 void SigninViewControllerDelegateMac::DisplayModal() {
+  DCHECK(!window_);
+
+  content::WebContents* host_web_contents =
+      browser_->tab_strip_model()->GetActiveWebContents();
+
+  // Avoid displaying the sign-in modal view if there are no active web
+  // contents. This happens if the user closes the browser window before this
+  // dialog has a chance to be displayed.
+  if (!host_web_contents)
+    return;
+
   window_.reset(
       [[ConstrainedWindowCustomWindow alloc]
           initWithContentRect:window_frame_]);
-
   window_.get().contentView = web_contents_->GetNativeView();
   base::scoped_nsobject<CustomConstrainedWindowSheet> sheet(
       [[CustomConstrainedWindowSheet alloc] initWithCustomWindow:window_]);
-  constrained_window_ =
-      CreateAndShowWebModalDialogMac(this, host_web_contents_, sheet);
+  switch (dialog_modal_type_) {
+    case ui::MODAL_TYPE_CHILD:
+      constrained_window_ =
+          CreateAndShowWebModalDialogMac(this, host_web_contents, sheet);
+      break;
+    case ui::MODAL_TYPE_WINDOW:
+      [host_web_contents->GetTopLevelNativeWindow() beginSheet:window_
+                                             completionHandler:nil];
+      break;
+    default:
+      NOTREACHED() << "Unsupported dialog modal type " << dialog_modal_type_;
+  }
 }
 
 void SigninViewControllerDelegateMac::HandleKeyboardEvent(
@@ -155,6 +222,11 @@ void SigninViewControllerDelegateMac::HandleKeyboardEvent(
   }
 }
 
+void SigninViewControllerDelegateMac::CleanupAndDeleteThis() {
+  ResetSigninViewControllerDelegate();
+  delete this;
+}
+
 // static
 SigninViewControllerDelegate*
 SigninViewControllerDelegate::CreateModalSigninDelegate(
@@ -163,12 +235,11 @@ SigninViewControllerDelegate::CreateModalSigninDelegate(
     Browser* browser,
     signin_metrics::AccessPoint access_point) {
   return new SigninViewControllerDelegateMac(
-          signin_view_controller,
-          SigninViewControllerDelegateMac::CreateGaiaWebContents(
-              nullptr, mode, browser->profile(), access_point),
-          browser->tab_strip_model()->GetActiveWebContents(),
-          NSMakeRect(0, 0, kModalDialogWidth, kFixedGaiaViewHeight),
-          false);
+      signin_view_controller,
+      SigninViewControllerDelegateMac::CreateGaiaWebContents(
+          nullptr, mode, browser->profile(), access_point),
+      browser, NSMakeRect(0, 0, kModalDialogWidth, kFixedGaiaViewHeight),
+      ui::MODAL_TYPE_CHILD, false /* wait_for_size */);
 }
 
 // static
@@ -179,9 +250,22 @@ SigninViewControllerDelegate::CreateSyncConfirmationDelegate(
   return new SigninViewControllerDelegateMac(
       signin_view_controller,
       SigninViewControllerDelegateMac::CreateSyncConfirmationWebContents(
-          browser->profile()),
-      browser->tab_strip_model()->GetActiveWebContents(),
+          browser),
+      browser,
       NSMakeRect(0, 0, kModalDialogWidth,
-                 kSyncConfirmationDialogHeight),
-      true);
+                 GetSyncConfirmationDialogPreferredHeight(browser->profile())),
+      ui::MODAL_TYPE_WINDOW, true /* wait_for_size */);
+}
+
+// static
+SigninViewControllerDelegate*
+SigninViewControllerDelegate::CreateSigninErrorDelegate(
+    SigninViewController* signin_view_controller,
+    Browser* browser) {
+  return new SigninViewControllerDelegateMac(
+      signin_view_controller,
+      SigninViewControllerDelegateMac::CreateSigninErrorWebContents(
+          browser->profile()),
+      browser, NSMakeRect(0, 0, kModalDialogWidth, kSigninErrorDialogHeight),
+      ui::MODAL_TYPE_WINDOW, true /* wait_for_size */);
 }

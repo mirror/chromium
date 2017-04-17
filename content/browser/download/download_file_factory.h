@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_DOWNLOAD_DOWNLOAD_FILE_FACTORY_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/files/file.h"
 #include "base/files/file_path.h"
@@ -14,12 +15,8 @@
 #include "content/common/content_export.h"
 #include "url/gurl.h"
 
-namespace crypto {
-class SecureHash;
-}
-
 namespace net {
-class BoundNetLog;
+class NetLogWithSource;
 }
 
 namespace content {
@@ -27,7 +24,6 @@ namespace content {
 class ByteStreamReader;
 class DownloadDestinationObserver;
 class DownloadFile;
-class DownloadManager;
 struct DownloadSaveInfo;
 
 class CONTENT_EXPORT DownloadFileFactory {
@@ -38,7 +34,7 @@ class CONTENT_EXPORT DownloadFileFactory {
       std::unique_ptr<DownloadSaveInfo> save_info,
       const base::FilePath& default_downloads_directory,
       std::unique_ptr<ByteStreamReader> byte_stream,
-      const net::BoundNetLog& bound_net_log,
+      const net::NetLogWithSource& net_log,
       base::WeakPtr<DownloadDestinationObserver> observer);
 };
 

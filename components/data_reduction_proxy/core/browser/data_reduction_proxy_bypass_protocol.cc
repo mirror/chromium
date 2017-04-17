@@ -85,6 +85,7 @@ bool DataReductionProxyBypassProtocol::MaybeBypassProxyAndPrepareToRetry(
     net::URLRequest* request,
     DataReductionProxyBypassType* proxy_bypass_type,
     DataReductionProxyInfo* data_reduction_proxy_info) {
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(request);
   const net::HttpResponseHeaders* response_headers =
       request->response_info().headers.get();
@@ -93,7 +94,9 @@ bool DataReductionProxyBypassProtocol::MaybeBypassProxyAndPrepareToRetry(
 
   // Empty implies either that the request was served from cache or that
   // request was served directly from the origin.
-  if (request->proxy_server().IsEmpty()) {
+  if (!request->proxy_server().is_valid() ||
+      request->proxy_server().is_direct() ||
+      request->proxy_server().host_port_pair().IsEmpty()) {
     ReportResponseProxyServerStatusHistogram(
         RESPONSE_PROXY_SERVER_STATUS_EMPTY);
     return false;
@@ -102,7 +105,7 @@ bool DataReductionProxyBypassProtocol::MaybeBypassProxyAndPrepareToRetry(
   DataReductionProxyTypeInfo data_reduction_proxy_type_info;
   if (!config_->WasDataReductionProxyUsed(request,
                                           &data_reduction_proxy_type_info)) {
-    if (!HasDataReductionProxyViaHeader(response_headers, nullptr)) {
+    if (!HasDataReductionProxyViaHeader(*response_headers, nullptr)) {
       ReportResponseProxyServerStatusHistogram(
           RESPONSE_PROXY_SERVER_STATUS_NON_DRP_NO_VIA);
       return false;
@@ -115,10 +118,15 @@ bool DataReductionProxyBypassProtocol::MaybeBypassProxyAndPrepareToRetry(
     // then apply the bypass logic regardless.
     // TODO(sclittle): Remove this workaround once http://crbug.com/476610 is
     // fixed.
-    data_reduction_proxy_type_info.proxy_servers.push_back(net::ProxyServer(
-        net::ProxyServer::SCHEME_HTTPS, request->proxy_server()));
-    data_reduction_proxy_type_info.proxy_servers.push_back(net::ProxyServer(
-        net::ProxyServer::SCHEME_HTTP, request->proxy_server()));
+    const net::HostPortPair host_port_pair =
+        !request->proxy_server().is_valid() ||
+                request->proxy_server().is_direct()
+            ? net::HostPortPair()
+            : request->proxy_server().host_port_pair();
+    data_reduction_proxy_type_info.proxy_servers.push_back(
+        net::ProxyServer(net::ProxyServer::SCHEME_HTTPS, host_port_pair));
+    data_reduction_proxy_type_info.proxy_servers.push_back(
+        net::ProxyServer(net::ProxyServer::SCHEME_HTTP, host_port_pair));
     data_reduction_proxy_type_info.proxy_index = 0;
   } else {
     ReportResponseProxyServerStatusHistogram(RESPONSE_PROXY_SERVER_STATUS_DRP);
@@ -130,12 +138,12 @@ bool DataReductionProxyBypassProtocol::MaybeBypassProxyAndPrepareToRetry(
   // At this point, the response is expected to have the data reduction proxy
   // via header, so detect and report cases where the via header is missing.
   DataReductionProxyBypassStats::DetectAndRecordMissingViaHeaderResponseCode(
-      data_reduction_proxy_type_info.proxy_index == 0, response_headers);
+      data_reduction_proxy_type_info.proxy_index == 0, *response_headers);
 
   // GetDataReductionProxyBypassType will only log a net_log event if a bypass
   // command was sent via the data reduction proxy headers
   DataReductionProxyBypassType bypass_type = GetDataReductionProxyBypassType(
-      response_headers, data_reduction_proxy_info);
+      request->url_chain(), *response_headers, data_reduction_proxy_info);
 
   if (proxy_bypass_type)
     *proxy_bypass_type = bypass_type;

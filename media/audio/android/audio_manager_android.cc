@@ -27,6 +27,7 @@ using base::android::AppendJavaStringArrayToStringVector;
 using base::android::AttachCurrentThread;
 using base::android::ConvertJavaStringToUTF8;
 using base::android::ConvertUTF8ToJavaString;
+using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
 
 namespace media {
@@ -75,15 +76,15 @@ AudioManagerAndroid::~AudioManagerAndroid() {
     return;
   DVLOG(2) << "Destroying Java part of the audio manager";
   Java_AudioManagerAndroid_close(base::android::AttachCurrentThread(),
-                                 j_audio_manager_.obj());
+                                 j_audio_manager_);
   j_audio_manager_.Reset();
 }
 
 void AudioManagerAndroid::InitializeIfNeeded() {
   GetTaskRunner()->PostTask(
-      FROM_HERE, base::Bind(base::Bind(base::IgnoreResult(
-                                &AudioManagerAndroid::GetJavaAudioManager)),
-                            base::Unretained(this)));
+      FROM_HERE,
+      base::Bind(base::IgnoreResult(&AudioManagerAndroid::GetJavaAudioManager),
+                 base::Unretained(this)));
 }
 
 bool AudioManagerAndroid::HasAudioOutputDevices() {
@@ -118,10 +119,10 @@ void AudioManagerAndroid::GetAudioInputDeviceNames(
     ScopedJavaLocalRef<jobject> j_device(
         env, env->GetObjectArrayElement(j_device_array.obj(), i));
     ScopedJavaLocalRef<jstring> j_device_name =
-        Java_AudioDeviceName_name(env, j_device.obj());
+        Java_AudioDeviceName_name(env, j_device);
     ConvertJavaStringToUTF8(env, j_device_name.obj(), &device.device_name);
     ScopedJavaLocalRef<jstring> j_device_id =
-        Java_AudioDeviceName_id(env, j_device.obj());
+        Java_AudioDeviceName_id(env, j_device);
     ConvertJavaStringToUTF8(env, j_device_id.obj(), &device.unique_id);
     device_names->push_back(device);
   }
@@ -160,6 +161,10 @@ AudioParameters AudioManagerAndroid::GetInputStreamParameters(
   return params;
 }
 
+const char* AudioManagerAndroid::GetName() {
+  return "Android";
+}
+
 AudioOutputStream* AudioManagerAndroid::MakeAudioOutputStream(
     const AudioParameters& params,
     const std::string& device_id,
@@ -167,7 +172,8 @@ AudioOutputStream* AudioManagerAndroid::MakeAudioOutputStream(
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   AudioOutputStream* stream = AudioManagerBase::MakeAudioOutputStream(
       params, std::string(), AudioManager::LogCallback());
-  streams_.insert(static_cast<OpenSLESOutputStream*>(stream));
+  if (stream)
+    streams_.insert(static_cast<OpenSLESOutputStream*>(stream));
   return stream;
 }
 
@@ -262,12 +268,7 @@ AudioInputStream* AudioManagerAndroid::MakeLowLatencyInputStream(
   if (params.effects() != AudioParameters::NO_EFFECTS) {
     // Platform effects can only be enabled through the AudioRecord path.
     // An effect should only have been requested here if recommended by
-    // AudioManagerAndroid.shouldUse<Effect>.
-    //
-    // Creating this class requires Jelly Bean, which is already guaranteed by
-    // shouldUse<Effect>. Only DCHECK on that condition to allow tests to use
-    // the effect settings as a way to select the input path.
-    DCHECK_GE(base::android::BuildInfo::GetInstance()->sdk_int(), 16);
+    // AudioManagerAndroid#shouldUse...().
     DVLOG(1) << "Creating AudioRecordInputStream";
     return new AudioRecordInputStream(this, params);
   }
@@ -360,7 +361,7 @@ jobject AudioManagerAndroid::GetJavaAudioManager() {
     // Prepare the list of audio devices and register receivers for device
     // notifications.
     Java_AudioManagerAndroid_init(base::android::AttachCurrentThread(),
-                                  j_audio_manager_.obj());
+                                  j_audio_manager_);
   }
   return j_audio_manager_.obj();
 }
@@ -381,7 +382,7 @@ bool AudioManagerAndroid::SetAudioDevice(const std::string& device_id) {
       env, device_id == AudioDeviceDescription::kDefaultDeviceId ? std::string()
                                                                  : device_id);
   return Java_AudioManagerAndroid_setDevice(env, GetJavaAudioManager(),
-                                            j_device_id.obj());
+                                            j_device_id);
 }
 
 int AudioManagerAndroid::GetNativeOutputSampleRate() {

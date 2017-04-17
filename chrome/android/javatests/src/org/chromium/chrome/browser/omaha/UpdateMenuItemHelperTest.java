@@ -5,13 +5,14 @@
 package org.chromium.chrome.browser.omaha;
 
 import android.content.Context;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
 import android.view.View;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.test.ChromeTabbedActivityTestBase;
@@ -52,8 +53,7 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
         }
 
         @Override
-        public String getLatestKnownVersion(
-                Context applicationContext, String prefPackage, String prefLatestVersion) {
+        public String getLatestKnownVersion(Context applicationContext) {
             assertNotNull("Never set the latest version", mLatestVersion);
             mAskedForLatestVersion = true;
             return mLatestVersion;
@@ -77,8 +77,7 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
         }
 
         @Override
-        public String getMarketURL(
-                Context applicationContext, String prefPackage, String prefMarketUrl) {
+        protected String getMarketUrlInternal(Context context) {
             return mURL;
         }
     }
@@ -91,7 +90,7 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
         super.setUp();
 
         // This test explicitly tests for the menu item, so turn it on.
-        OmahaClient.setEnableUpdateDetection(true);
+        VersionNumberGetter.setEnableUpdateDetection(true);
     }
 
     @Override
@@ -109,12 +108,12 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
             throws Exception {
         // Report fake versions back to Main when it asks.
         mMockVersionNumberGetter = new MockVersionNumberGetter(currentVersion, latestVersion);
-        OmahaClient.setVersionNumberGetterForTests(mMockVersionNumberGetter);
+        VersionNumberGetter.setInstanceForTests(mMockVersionNumberGetter);
 
         // Report a dummy URL to Omaha.
         mMockMarketURLGetter = new MockMarketURLGetter(
                 "https://play.google.com/store/apps/details?id=com.android.chrome");
-        OmahaClient.setMarketURLGetterForTests(mMockMarketURLGetter);
+        MarketURLGetter.setInstanceForTests(mMockMarketURLGetter);
 
         // Start up main.
         startMainActivityWithURL(UrlConstants.NTP_URL);
@@ -161,12 +160,14 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
 
     @MediumTest
     @Feature({"Omaha"})
+    @RetryOnFailure
     public void testCurrentVersionIsOlder() throws Exception {
         checkUpdateMenuItemIsShowing("0.0.0.0", "1.2.3.4");
     }
 
     @MediumTest
     @Feature({"Omaha"})
+    @RetryOnFailure
     public void testCurrentVersionIsSame() throws Exception {
         checkUpdateMenuItemIsNotShowing("1.2.3.4", "1.2.3.4");
     }
@@ -179,6 +180,7 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
 
     @MediumTest
     @Feature({"Omaha"})
+    @RetryOnFailure
     public void testNoVersionKnown() throws Exception {
         checkUpdateMenuItemIsNotShowing("1.2.3.4", "0");
     }
@@ -186,6 +188,7 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
     @MediumTest
     @Feature({"Omaha"})
     @Restriction(ChromeRestriction.RESTRICTION_TYPE_PHONE)
+    @RetryOnFailure
     public void testMenuItemNotShownInOverview() throws Exception {
         checkUpdateMenuItemIsShowing("0.0.0.0", "1.2.3.4");
 
@@ -205,7 +208,7 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
                         R.id.update_menu_id).isVisible());
     }
 
-    private void showAppMenuAndAssertMenuShown() throws InterruptedException {
+    private void showAppMenuAndAssertMenuShown() {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -220,7 +223,7 @@ public class UpdateMenuItemHelperTest extends ChromeTabbedActivityTestBase {
         });
     }
 
-    private void hideAppMenuAndAssertMenuShown() throws InterruptedException {
+    private void hideAppMenuAndAssertMenuShown() {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {

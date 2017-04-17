@@ -31,67 +31,86 @@
 #ifndef UserMediaRequest_h
 #define UserMediaRequest_h
 
-#include "core/dom/ActiveDOMObject.h"
+#include "core/dom/SuspendableObject.h"
 #include "modules/ModulesExport.h"
 #include "modules/mediastream/NavigatorUserMediaErrorCallback.h"
 #include "modules/mediastream/NavigatorUserMediaSuccessCallback.h"
 #include "platform/mediastream/MediaStreamSource.h"
+#include "platform/wtf/Forward.h"
 #include "public/platform/WebMediaConstraints.h"
-#include "wtf/Forward.h"
 
 namespace blink {
 
-class Dictionary;
 class Document;
 class MediaErrorState;
 class MediaStreamConstraints;
 class MediaStreamDescriptor;
 class UserMediaController;
 
-class MODULES_EXPORT UserMediaRequest final : public GarbageCollectedFinalized<UserMediaRequest>, public ContextLifecycleObserver {
-    USING_GARBAGE_COLLECTED_MIXIN(UserMediaRequest);
-public:
-    static UserMediaRequest* create(ExecutionContext*, UserMediaController*, const MediaStreamConstraints& options, NavigatorUserMediaSuccessCallback*, NavigatorUserMediaErrorCallback*, MediaErrorState&);
-    static UserMediaRequest* createForTesting(const WebMediaConstraints& audio, const WebMediaConstraints& video);
-    virtual ~UserMediaRequest();
+class MODULES_EXPORT UserMediaRequest final
+    : public GarbageCollectedFinalized<UserMediaRequest>,
+      public ContextLifecycleObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(UserMediaRequest);
 
-    NavigatorUserMediaSuccessCallback* successCallback() const { return m_successCallback.get(); }
-    NavigatorUserMediaErrorCallback* errorCallback() const { return m_errorCallback.get(); }
-    Document* ownerDocument();
+ public:
+  static UserMediaRequest* Create(ExecutionContext*,
+                                  UserMediaController*,
+                                  const MediaStreamConstraints& options,
+                                  NavigatorUserMediaSuccessCallback*,
+                                  NavigatorUserMediaErrorCallback*,
+                                  MediaErrorState&);
+  static UserMediaRequest* CreateForTesting(const WebMediaConstraints& audio,
+                                            const WebMediaConstraints& video);
+  virtual ~UserMediaRequest();
 
-    void start();
+  NavigatorUserMediaSuccessCallback* SuccessCallback() const {
+    return success_callback_.Get();
+  }
+  NavigatorUserMediaErrorCallback* ErrorCallback() const {
+    return error_callback_.Get();
+  }
+  Document* OwnerDocument();
 
-    void succeed(MediaStreamDescriptor*);
-    void failPermissionDenied(const String& message);
-    void failConstraint(const String& constraintName, const String& message);
-    void failUASpecific(const String& name, const String& message, const String& constraintName);
+  void Start();
 
-    bool audio() const;
-    bool video() const;
-    WebMediaConstraints audioConstraints() const;
-    WebMediaConstraints videoConstraints() const;
+  void Succeed(MediaStreamDescriptor*);
+  void FailPermissionDenied(const String& message);
+  void FailConstraint(const String& constraint_name, const String& message);
+  void FailUASpecific(const String& name,
+                      const String& message,
+                      const String& constraint_name);
 
-    // errorMessage is only set if requestIsPrivilegedContext() returns |false|.
-    // Caller is responsible for properly setting errors and canceling request.
-    bool isSecureContextUse(String& errorMessage);
+  bool Audio() const;
+  bool Video() const;
+  WebMediaConstraints AudioConstraints() const;
+  WebMediaConstraints VideoConstraints() const;
 
-    // ContextLifecycleObserver
-    void contextDestroyed() override;
+  // errorMessage is only set if requestIsPrivilegedContext() returns |false|.
+  // Caller is responsible for properly setting errors and canceling request.
+  bool IsSecureContextUse(String& error_message);
 
-    DECLARE_VIRTUAL_TRACE();
+  // ContextLifecycleObserver
+  void ContextDestroyed(ExecutionContext*) override;
 
-private:
-    UserMediaRequest(ExecutionContext*, UserMediaController*, WebMediaConstraints audio, WebMediaConstraints video, NavigatorUserMediaSuccessCallback*, NavigatorUserMediaErrorCallback*);
+  DECLARE_VIRTUAL_TRACE();
 
-    WebMediaConstraints m_audio;
-    WebMediaConstraints m_video;
+ private:
+  UserMediaRequest(ExecutionContext*,
+                   UserMediaController*,
+                   WebMediaConstraints audio,
+                   WebMediaConstraints video,
+                   NavigatorUserMediaSuccessCallback*,
+                   NavigatorUserMediaErrorCallback*);
 
-    Member<UserMediaController> m_controller;
+  WebMediaConstraints audio_;
+  WebMediaConstraints video_;
 
-    Member<NavigatorUserMediaSuccessCallback> m_successCallback;
-    Member<NavigatorUserMediaErrorCallback> m_errorCallback;
+  Member<UserMediaController> controller_;
+
+  Member<NavigatorUserMediaSuccessCallback> success_callback_;
+  Member<NavigatorUserMediaErrorCallback> error_callback_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // UserMediaRequest_h
+#endif  // UserMediaRequest_h

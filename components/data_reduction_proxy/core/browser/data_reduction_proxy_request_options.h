@@ -13,6 +13,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
@@ -20,11 +21,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 
 namespace net {
-class HostPortPair;
 class HttpRequestHeaders;
-class HttpResponseHeaders;
-class ProxyServer;
-class URLRequest;
 }
 
 namespace data_reduction_proxy {
@@ -56,12 +53,14 @@ class DataReductionProxyRequestOptions {
 
   // Sets |key_| to the default key and initializes the credentials, version,
   // client, and lo-fi header values. Generates the |header_value_| string,
-  // which is concatenated to the Chrome-proxy header.
+  // which is concatenated to the Chrome-proxy header. Called on the UI thread.
   void Init();
 
   // Adds a 'Chrome-Proxy' header to |request_headers| with the data reduction
-  // proxy authentication credentials.
-  void AddRequestHeader(net::HttpRequestHeaders* request_headers);
+  // proxy authentication credentials. |page_id| should only be non-empty for
+  // main frame requests.
+  void AddRequestHeader(net::HttpRequestHeaders* request_headers,
+                        base::Optional<uint64_t> page_id);
 
   // Stores the supplied key and sets up credentials suitable for authenticating
   // with the data reduction proxy.
@@ -85,6 +84,9 @@ class DataReductionProxyRequestOptions {
   std::string GetSessionKeyFromRequestHeaders(
       const net::HttpRequestHeaders& request_headers) const;
 
+  // Creates and returns a new unique page ID (unique per session).
+  uint64_t GeneratePageId();
+
  protected:
   // Returns a UTF16 string that's the hash of the configured authentication
   // |key| and |salt|. Returns an empty UTF16 string if no key is configured or
@@ -102,9 +104,18 @@ class DataReductionProxyRequestOptions {
                                    const std::string& version,
                                    DataReductionProxyConfig* config);
 
+  // Returns the chrome proxy header. Protected so that it is available for
+  // testing.
+  std::string GetHeaderValueForTesting() const;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(DataReductionProxyRequestOptionsTest,
                            AuthHashForSalt);
+
+  // Resets the page ID for a new session.
+  // TODO(ryansturm): Create a session object to store this and other data saver
+  // session info. crbug.com/709624
+  void ResetPageId();
 
   // Updates the value of the experiments to be run and regenerate the header if
   // necessary.
@@ -151,6 +162,9 @@ class DataReductionProxyRequestOptions {
 
   // Must outlive |this|.
   DataReductionProxyConfig* data_reduction_proxy_config_;
+
+  // The page identifier that was last generated for data saver proxy server.
+  uint64_t current_page_id_;
 
   // Enforce usage on the IO thread.
   base::ThreadChecker thread_checker_;

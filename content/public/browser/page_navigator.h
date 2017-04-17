@@ -15,8 +15,10 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/site_instance.h"
+#include "content/public/common/child_process_host.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_request_body.h"
+#include "ipc/ipc_message.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
@@ -31,6 +33,12 @@ struct CONTENT_EXPORT OpenURLParams {
                 WindowOpenDisposition disposition,
                 ui::PageTransition transition,
                 bool is_renderer_initiated);
+  OpenURLParams(const GURL& url,
+                const Referrer& referrer,
+                WindowOpenDisposition disposition,
+                ui::PageTransition transition,
+                bool is_renderer_initiated,
+                bool started_from_context_menu);
   OpenURLParams(const GURL& url,
                 const Referrer& referrer,
                 int frame_tree_node_id,
@@ -65,6 +73,12 @@ struct CONTENT_EXPORT OpenURLParams {
   // The browser-global FrameTreeNode ID or -1 to indicate the main frame.
   int frame_tree_node_id;
 
+  // Routing id of the source RenderFrameHost.
+  int source_render_frame_id = MSG_ROUTING_NONE;
+
+  // Process id of the source RenderFrameHost.
+  int source_render_process_id = ChildProcessHost::kInvalidUniqueID;
+
   // The disposition requested by the navigation source.
   WindowOpenDisposition disposition;
 
@@ -81,6 +95,9 @@ struct CONTENT_EXPORT OpenURLParams {
   // Indicates whether this navigation was triggered while processing a user
   // gesture if the navigation was initiated by the renderer.
   bool user_gesture;
+
+  // Indicates whether this navigation was started via context menu.
+  bool started_from_context_menu;
 
  private:
   OpenURLParams();

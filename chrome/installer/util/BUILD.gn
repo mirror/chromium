@@ -26,12 +26,12 @@ import("//testing/test.gni")
 # with grit pak strings.
 #
 # In both of these cases, link to the ":with_no_strings" variant. However, this
-# is obviously a fragile and confusing situation. In the "I don't use strings
-# at all case", there is no definition of what works and doesn't work, and this
-# may also change over time. As an example at the time of this writing,
-# chrome.exe calls BrowserDistribution::GetRegistryPath. This function doesn't
-# use any strings, but lots of other functions in BrowserDistribution do use
-# localized strings.
+# is obviously a fragile and confusing situation. In the "I don't use strings at
+# all case", there is no definition of what works and doesn't work, and this may
+# also change over time. As an example at the time of this writing, chrome.exe
+# calls GoogleUpdateSettings::UpdateDidRunState. This function doesn't use any
+# strings, but lots of other functions in BrowserDistribution do use localized
+# strings.
 #
 # Ideally, this should be cleaved in two parts: the main "installer util" and
 # some kind of mini installer util that just contains the functions needed by
@@ -53,24 +53,14 @@ static_library("with_no_strings") {
 
   if (is_win) {
     sources = [
-      "chrome_binaries_operations.cc",
-      "chrome_binaries_operations.h",
       "chrome_browser_operations.cc",
       "chrome_browser_operations.h",
-      "chrome_browser_sxs_operations.cc",
-      "chrome_browser_sxs_operations.h",
-      "chrome_frame_operations.cc",
-      "chrome_frame_operations.h",
-      "compat_checks.cc",
-      "compat_checks.h",
       "delete_after_reboot_helper.cc",
       "delete_after_reboot_helper.h",
       "google_chrome_distribution.cc",
       "google_chrome_distribution.h",
       "html_dialog.h",
       "html_dialog_impl.cc",
-      "installation_validator.cc",
-      "installation_validator.h",
       "logging_installer.cc",
       "logging_installer.h",
       "lzma_file_allocator.cc",
@@ -108,6 +98,7 @@ static_library("with_no_strings") {
       "//components/metrics",
       "//courgette:courgette_lib",
       "//crypto",
+      "//rlz/features",
       "//third_party/bspatch",
       "//third_party/crashpad/crashpad/client",
       "//third_party/icu",
@@ -145,10 +136,6 @@ static_library("with_no_strings") {
       "callback_work_item.h",
       "channel_info.cc",
       "channel_info.h",
-      "chrome_frame_distribution.cc",
-      "chrome_frame_distribution.h",
-      "chromium_binaries_distribution.cc",
-      "chromium_binaries_distribution.h",
       "conditional_work_item_list.cc",
       "conditional_work_item_list.h",
       "copy_tree_work_item.cc",
@@ -157,6 +144,8 @@ static_library("with_no_strings") {
       "create_dir_work_item.h",
       "create_reg_key_work_item.cc",
       "create_reg_key_work_item.h",
+      "delete_old_versions.cc",
+      "delete_old_versions.h",
       "delete_reg_key_work_item.cc",
       "delete_reg_key_work_item.h",
       "delete_reg_value_work_item.cc",
@@ -167,10 +156,6 @@ static_library("with_no_strings") {
       "duplicate_tree_detector.h",
       "firewall_manager_win.cc",
       "firewall_manager_win.h",
-      "google_chrome_binaries_distribution.cc",
-      "google_chrome_binaries_distribution.h",
-      "google_chrome_sxs_distribution.cc",
-      "google_chrome_sxs_distribution.h",
       "google_update_constants.cc",
       "google_update_constants.h",
       "google_update_settings.cc",
@@ -183,8 +168,6 @@ static_library("with_no_strings") {
       "install_util.h",
       "installation_state.cc",
       "installation_state.h",
-      "installer_state.cc",
-      "installer_state.h",
       "l10n_string_util.cc",
       "l10n_string_util.h",
       "language_selector.cc",
@@ -193,8 +176,6 @@ static_library("with_no_strings") {
       "legacy_firewall_manager_win.h",
       "master_preferences_constants.cc",
       "master_preferences_constants.h",
-      "module_util_win.cc",
-      "module_util_win.h",
       "move_tree_work_item.cc",
       "move_tree_work_item.h",
       "non_updating_app_registration_data.cc",
@@ -260,6 +241,8 @@ action("generate_strings") {
   ]
 
   args = [
+    "-b",
+    "$branding_path_component",
     "-i",
     rebase_path(grdfile, root_build_dir) + ":resources",
     "-n",
@@ -278,9 +261,20 @@ source_set("strings") {
 }
 
 if (is_win) {
+  source_set("test_support") {
+    testonly = true
+    sources = [
+      "fake_installation_state.h",
+      "fake_product_state.h",
+    ]
+    deps = [
+      ":with_no_strings",
+      "//base",
+    ]
+  }
+
   test("installer_util_unittests") {
     sources = [
-      "../setup/compat_checks_unittest.cc",
       "advanced_firewall_manager_win_unittest.cc",
       "beacons_unittest.cc",
       "callback_work_item_unittest.cc",
@@ -290,20 +284,16 @@ if (is_win) {
       "create_dir_work_item_unittest.cc",
       "create_reg_key_work_item_unittest.cc",
       "delete_after_reboot_helper_unittest.cc",
+      "delete_old_versions_unittest.cc",
       "delete_reg_key_work_item_unittest.cc",
       "delete_reg_value_work_item_unittest.cc",
       "delete_tree_work_item_unittest.cc",
       "duplicate_tree_detector_unittest.cc",
-      "fake_installation_state.h",
-      "fake_product_state.h",
       "google_update_settings_unittest.cc",
       "install_util_unittest.cc",
-      "installation_validation_helper.cc",
-      "installation_validation_helper.h",
-      "installation_validator_unittest.cc",
-      "installer_state_unittest.cc",
       "installer_util_test_common.cc",
       "installer_util_test_common.h",
+      "l10n_string_util_unittest.cc",
       "language_selector_unittest.cc",
       "legacy_firewall_manager_win_unittest.cc",
       "logging_installer_unittest.cc",
@@ -332,15 +322,18 @@ if (is_win) {
     ]
 
     deps = [
+      ":test_support",
       ":with_rc_strings",
       "//base",
       "//base:i18n",
       "//base/test:test_support",
       "//chrome:other_version",
       "//chrome/install_static:install_static_util",
+      "//chrome/install_static/test:test_support",
       "//chrome/installer/setup:lib",
       "//chrome/installer/test:alternate_version_generator_lib",
       "//components/variations",
+      "//rlz/features",
       "//testing/gmock",
       "//testing/gtest",
     ]

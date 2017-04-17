@@ -9,19 +9,14 @@
 #include "components/browsing_data/core/browsing_data_utils.h"
 #include "components/browsing_data/core/counters/browsing_data_counter.h"
 
-class Profile;
-
 // Whether the browsing data counters experiment is enabled.
 bool AreCountersEnabled();
 
-// Constructs the text to be displayed by a counter from the given |result|.
-base::string16 GetCounterTextFromResult(
-    const browsing_data::BrowsingDataCounter::Result* result);
+// Whether the site data counter is enabled.
+bool IsSiteDataCounterEnabled();
 
-// Copies the name of the deletion preference corresponding to the given
-// |data_type| to |out_pref|. Returns false if no such preference exists.
-bool GetDeletionPreferenceFromDataType(
-    browsing_data::BrowsingDataType data_type,
-    std::string* out_pref);
+// Constructs the text to be displayed by a counter from the given |result|.
+base::string16 GetChromeCounterTextFromResult(
+    const browsing_data::BrowsingDataCounter::Result* result);
 
 #endif  // CHROME_BROWSER_BROWSING_DATA_BROWSING_DATA_COUNTER_UTILS_H_

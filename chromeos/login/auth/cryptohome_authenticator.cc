@@ -25,11 +25,11 @@
 #include "chromeos/login/auth/key.h"
 #include "chromeos/login/auth/user_context.h"
 #include "chromeos/login/login_state.h"
-#include "chromeos/login/user_names.h"
 #include "chromeos/login_event_recorder.h"
 #include "components/device_event_log/device_event_log.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/known_user.h"
+#include "components/user_manager/user_names.h"
 #include "components/user_manager/user_type.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
@@ -174,6 +174,8 @@ void DoMount(const base::WeakPtr<AuthAttemptState>& attempt,
         kCryptohomeGAIAKeyLabel,
         cryptohome::PRIV_DEFAULT));
   }
+  mount.force_dircrypto_if_available =
+      attempt->user_context.IsForcingDircrypto();
 
   cryptohome::HomedirMethods::GetInstance()->MountEx(
       cryptohome::Identification(attempt->user_context.GetAccountId()),
@@ -212,6 +214,11 @@ void EnsureCryptohomeMigratedToGaiaId(
     scoped_refptr<CryptohomeAuthenticator> resolver,
     bool ephemeral,
     bool create_if_nonexistent) {
+  if (attempt->user_context.GetAccountId().GetAccountType() ==
+      AccountType::ACTIVE_DIRECTORY) {
+    cryptohome::SetGaiaIdMigrationStatusDone(
+        attempt->user_context.GetAccountId());
+  }
   const bool is_gaiaid_migration_started = switches::IsGaiaIdMigrationStarted();
   if (!is_gaiaid_migration_started) {
     UMACryptohomeMigrationToGaiaId(CryptohomeMigrationToGaiaId::NOT_STARTED);
@@ -220,12 +227,12 @@ void EnsureCryptohomeMigratedToGaiaId(
   }
   const bool already_migrated = cryptohome::GetGaiaIdMigrationStatus(
       attempt->user_context.GetAccountId());
-  const bool has_gaia_id =
-      !attempt->user_context.GetAccountId().GetGaiaId().empty();
+  const bool has_account_key =
+      attempt->user_context.GetAccountId().HasAccountIdKey();
 
   bool need_migration = false;
   if (!create_if_nonexistent && !already_migrated) {
-    if (has_gaia_id) {
+    if (has_account_key) {
       need_migration = true;
     } else {
       LOG(WARNING) << "Account '"
@@ -239,7 +246,7 @@ void EnsureCryptohomeMigratedToGaiaId(
     const std::string& cryptohome_id_from =
         attempt->user_context.GetAccountId().GetUserEmail();  // Migrated
     const std::string cryptohome_id_to =
-        attempt->user_context.GetAccountId().GetGaiaIdKey();
+        attempt->user_context.GetAccountId().GetAccountIdKey();
 
     cryptohome::HomedirMethods::GetInstance()->RenameCryptohome(
         cryptohome::Identification::FromString(cryptohome_id_from),
@@ -248,7 +255,7 @@ void EnsureCryptohomeMigratedToGaiaId(
                    create_if_nonexistent));
     return;
   }
-  if (!already_migrated && has_gaia_id) {
+  if (!already_migrated && has_account_key) {
     // Mark new users migrated.
     cryptohome::SetGaiaIdMigrationStatusDone(
         attempt->user_context.GetAccountId());
@@ -501,7 +508,9 @@ void CryptohomeAuthenticator::AuthenticateToLogin(
 
 void CryptohomeAuthenticator::CompleteLogin(content::BrowserContext* context,
                                             const UserContext& user_context) {
-  DCHECK_EQ(user_manager::USER_TYPE_REGULAR, user_context.GetUserType());
+  DCHECK(user_context.GetUserType() == user_manager::USER_TYPE_REGULAR ||
+         user_context.GetUserType() ==
+             user_manager::USER_TYPE_ACTIVE_DIRECTORY);
   authentication_context_ = context;
   current_state_.reset(new AuthAttemptState(user_context,
                                             true,   // unlock
@@ -555,11 +564,12 @@ void CryptohomeAuthenticator::LoginAsSupervisedUser(
 
 void CryptohomeAuthenticator::LoginOffTheRecord() {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  current_state_.reset(new AuthAttemptState(
-      UserContext(user_manager::USER_TYPE_GUEST, login::GuestAccountId()),
-      false,    // unlock
-      false,    // online_complete
-      false));  // user_is_new
+  current_state_.reset(
+      new AuthAttemptState(UserContext(user_manager::USER_TYPE_GUEST,
+                                       user_manager::GuestAccountId()),
+                           false,    // unlock
+                           false,    // online_complete
+                           false));  // user_is_new
   remove_user_data_on_failure_ = false;
   ephemeral_mount_attempted_ = true;
   MountGuestAndGetHash(current_state_->AsWeakPtr(),
@@ -589,7 +599,7 @@ void CryptohomeAuthenticator::LoginAsKioskAccount(
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
 
   const AccountId& account_id =
-      use_guest_mount ? login::GuestAccountId() : app_account_id;
+      use_guest_mount ? user_manager::GuestAccountId() : app_account_id;
   current_state_.reset(new AuthAttemptState(
       UserContext(user_manager::USER_TYPE_KIOSK_APP, account_id),
       false,    // unlock
@@ -606,6 +616,22 @@ void CryptohomeAuthenticator::LoginAsKioskAccount(
     MountGuestAndGetHash(current_state_->AsWeakPtr(),
                          scoped_refptr<CryptohomeAuthenticator>(this));
   }
+}
+
+void CryptohomeAuthenticator::LoginAsArcKioskAccount(
+    const AccountId& app_account_id) {
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
+
+  current_state_.reset(new AuthAttemptState(
+      UserContext(user_manager::USER_TYPE_ARC_KIOSK_APP, app_account_id),
+      false,    // unlock
+      false,    // online_complete
+      false));  // user_is_new
+
+  remove_user_data_on_failure_ = true;
+  MountPublic(current_state_->AsWeakPtr(),
+              scoped_refptr<CryptohomeAuthenticator>(this),
+              cryptohome::CREATE_IF_MISSING);
 }
 
 void CryptohomeAuthenticator::OnAuthSuccess() {
@@ -632,6 +658,15 @@ void CryptohomeAuthenticator::OnPasswordChangeDetected() {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
   if (consumer_)
     consumer_->OnPasswordChangeDetected();
+}
+
+void CryptohomeAuthenticator::OnOldEncryptionDetected(
+    bool has_incomplete_migration) {
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
+  if (consumer_) {
+    consumer_->OnOldEncryptionDetected(current_state_->user_context,
+                                       has_incomplete_migration);
+  }
 }
 
 void CryptohomeAuthenticator::OnAuthFailure(const AuthFailure& error) {
@@ -699,6 +734,15 @@ void CryptohomeAuthenticator::OnOwnershipChecked(bool is_owner) {
   Resolve();
 }
 
+void CryptohomeAuthenticator::OnUnmount(DBusMethodCallStatus call_status,
+                                        bool success) {
+  if (call_status != DBUS_METHOD_CALL_SUCCESS || !success) {
+    // Maybe we should reboot immediately here?
+    LOGIN_LOG(ERROR) << "Couldn't unmount users home!";
+  }
+  OnAuthFailure(AuthFailure(AuthFailure::OWNER_REQUIRED));
+}
+
 void CryptohomeAuthenticator::Resolve() {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
   bool create_if_nonexistent = false;
@@ -722,7 +766,7 @@ void CryptohomeAuthenticator::Resolve() {
                      AuthFailure(AuthFailure::COULD_NOT_MOUNT_CRYPTOHOME)));
       break;
     case FAILED_REMOVE:
-      // In this case, we tried to remove the user's old cryptohome at her
+      // In this case, we tried to remove the user's old cryptohome at their
       // request, and the remove failed.
       remove_user_data_on_failure_ = false;
       task_runner_->PostTask(
@@ -819,19 +863,20 @@ void CryptohomeAuthenticator::Resolve() {
       break;
     case OWNER_REQUIRED: {
       current_state_->ResetCryptohomeStatus();
-      bool success = false;
-      DBusThreadManager::Get()->GetCryptohomeClient()->Unmount(&success);
-      if (!success) {
-        // Maybe we should reboot immediately here?
-        LOGIN_LOG(ERROR) << "Couldn't unmount users home!";
-      }
-      task_runner_->PostTask(
-          FROM_HERE,
-          base::Bind(&CryptohomeAuthenticator::OnAuthFailure,
-                     this,
-                     AuthFailure(AuthFailure::OWNER_REQUIRED)));
+      DBusThreadManager::Get()->GetCryptohomeClient()->Unmount(
+          base::Bind(&CryptohomeAuthenticator::OnUnmount, this));
       break;
     }
+    case FAILED_OLD_ENCRYPTION:
+    case FAILED_PREVIOUS_MIGRATION_INCOMPLETE:
+      // In this case, we tried to create/mount cryptohome and failed
+      // because the file system is encrypted in old format.
+      // Chrome will show a screen which asks user to migrate the encryption.
+      task_runner_->PostTask(
+          FROM_HERE,
+          base::Bind(&CryptohomeAuthenticator::OnOldEncryptionDetected, this,
+                     state == FAILED_PREVIOUS_MIGRATION_INCOMPLETE));
+      break;
     default:
       NOTREACHED();
       break;
@@ -904,6 +949,15 @@ CryptohomeAuthenticator::ResolveCryptohomeFailureState() {
     return FAILED_TPM;
   }
 
+  if (current_state_->cryptohome_code() ==
+      cryptohome::MOUNT_ERROR_OLD_ENCRYPTION) {
+    return FAILED_OLD_ENCRYPTION;
+  }
+  if (current_state_->cryptohome_code() ==
+      cryptohome::MOUNT_ERROR_PREVIOUS_MIGRATION_INCOMPLETE) {
+    return FAILED_PREVIOUS_MIGRATION_INCOMPLETE;
+  }
+
   // Return intermediate states in the following case:
   // when there is an online result to use;
   // This is the case after user finishes Gaia login;
@@ -911,7 +965,7 @@ CryptohomeAuthenticator::ResolveCryptohomeFailureState() {
     if (current_state_->cryptohome_code() ==
         cryptohome::MOUNT_ERROR_KEY_FAILURE) {
       // If we tried a mount but they used the wrong key, we may need to
-      // ask the user for her old password.  We'll only know once we've
+      // ask the user for their old password.  We'll only know once we've
       // done the online check.
       return POSSIBLE_PW_CHANGE;
     }

@@ -33,194 +33,202 @@
 
 namespace blink {
 
-CSSImageGeneratorValue::CSSImageGeneratorValue(ClassType classType)
-    : CSSValue(classType)
-{
+CSSImageGeneratorValue::CSSImageGeneratorValue(ClassType class_type)
+    : CSSValue(class_type) {}
+
+CSSImageGeneratorValue::~CSSImageGeneratorValue() {}
+
+void CSSImageGeneratorValue::AddClient(const LayoutObject* layout_object,
+                                       const IntSize& size) {
+  DCHECK(layout_object);
+  if (clients_.IsEmpty()) {
+    DCHECK(!keep_alive_);
+    keep_alive_ = this;
+  }
+
+  if (!size.IsEmpty())
+    sizes_.insert(size);
+
+  LayoutObjectSizeCountMap::iterator it = clients_.Find(layout_object);
+  if (it == clients_.end()) {
+    clients_.insert(layout_object, SizeAndCount(size, 1));
+  } else {
+    SizeAndCount& size_count = it->value;
+    ++size_count.count;
+  }
 }
 
-CSSImageGeneratorValue::~CSSImageGeneratorValue()
-{
+CSSImageGeneratorValue* CSSImageGeneratorValue::ValueWithURLsMadeAbsolute() {
+  if (IsCrossfadeValue())
+    return ToCSSCrossfadeValue(this)->ValueWithURLsMadeAbsolute();
+  return this;
 }
 
-void CSSImageGeneratorValue::addClient(const LayoutObject* layoutObject, const IntSize& size)
-{
-    ASSERT(layoutObject);
-    if (m_clients.isEmpty()) {
-        ASSERT(!m_keepAlive);
-        m_keepAlive = this;
+void CSSImageGeneratorValue::RemoveClient(const LayoutObject* layout_object) {
+  DCHECK(layout_object);
+  LayoutObjectSizeCountMap::iterator it = clients_.Find(layout_object);
+  SECURITY_DCHECK(it != clients_.end());
+
+  IntSize removed_image_size;
+  SizeAndCount& size_count = it->value;
+  IntSize size = size_count.size;
+  if (!size.IsEmpty()) {
+    sizes_.erase(size);
+    if (!sizes_.Contains(size))
+      images_.erase(size);
+  }
+
+  if (!--size_count.count)
+    clients_.erase(layout_object);
+
+  if (clients_.IsEmpty()) {
+    DCHECK(keep_alive_);
+    keep_alive_.Clear();
+  }
+}
+
+Image* CSSImageGeneratorValue::GetImage(const LayoutObject* layout_object,
+                                        const IntSize& size) {
+  LayoutObjectSizeCountMap::iterator it = clients_.Find(layout_object);
+  if (it != clients_.end()) {
+    SizeAndCount& size_count = it->value;
+    IntSize old_size = size_count.size;
+    if (old_size != size) {
+      RemoveClient(layout_object);
+      AddClient(layout_object, size);
     }
+  }
 
-    if (!size.isEmpty())
-        m_sizes.add(size);
-
-    LayoutObjectSizeCountMap::iterator it = m_clients.find(layoutObject);
-    if (it == m_clients.end()) {
-        m_clients.add(layoutObject, SizeAndCount(size, 1));
-    } else {
-        SizeAndCount& sizeCount = it->value;
-        ++sizeCount.count;
-    }
-}
-
-CSSImageGeneratorValue* CSSImageGeneratorValue::valueWithURLsMadeAbsolute()
-{
-    if (isCrossfadeValue())
-        return toCSSCrossfadeValue(this)->valueWithURLsMadeAbsolute();
-    return this;
-}
-
-void CSSImageGeneratorValue::removeClient(const LayoutObject* layoutObject)
-{
-    ASSERT(layoutObject);
-    LayoutObjectSizeCountMap::iterator it = m_clients.find(layoutObject);
-    ASSERT_WITH_SECURITY_IMPLICATION(it != m_clients.end());
-
-    IntSize removedImageSize;
-    SizeAndCount& sizeCount = it->value;
-    IntSize size = sizeCount.size;
-    if (!size.isEmpty()) {
-        m_sizes.remove(size);
-        if (!m_sizes.contains(size))
-            m_images.remove(size);
-    }
-
-    if (!--sizeCount.count)
-        m_clients.remove(layoutObject);
-
-    if (m_clients.isEmpty()) {
-        ASSERT(m_keepAlive);
-        m_keepAlive.clear();
-    }
-}
-
-Image* CSSImageGeneratorValue::getImage(const LayoutObject* layoutObject, const IntSize& size)
-{
-    LayoutObjectSizeCountMap::iterator it = m_clients.find(layoutObject);
-    if (it != m_clients.end()) {
-        SizeAndCount& sizeCount = it->value;
-        IntSize oldSize = sizeCount.size;
-        if (oldSize != size) {
-            removeClient(layoutObject);
-            addClient(layoutObject, size);
-        }
-    }
-
-    // Don't generate an image for empty sizes.
-    if (size.isEmpty())
-        return nullptr;
-
-    // Look up the image in our cache.
-    return m_images.get(size);
-}
-
-void CSSImageGeneratorValue::putImage(const IntSize& size, PassRefPtr<Image> image)
-{
-    m_images.add(size, image);
-}
-
-PassRefPtr<Image> CSSImageGeneratorValue::image(const LayoutObject& layoutObject, const IntSize& size, float zoom)
-{
-    switch (getClassType()) {
-    case CrossfadeClass:
-        return toCSSCrossfadeValue(this)->image(layoutObject, size);
-    case LinearGradientClass:
-        return toCSSLinearGradientValue(this)->image(layoutObject, size);
-    case PaintClass:
-        return toCSSPaintValue(this)->image(layoutObject, size, zoom);
-    case RadialGradientClass:
-        return toCSSRadialGradientValue(this)->image(layoutObject, size);
-    default:
-        ASSERT_NOT_REACHED();
-    }
+  // Don't generate an image for empty sizes.
+  if (size.IsEmpty())
     return nullptr;
+
+  // Look up the image in our cache.
+  return images_.at(size);
 }
 
-bool CSSImageGeneratorValue::isFixedSize() const
-{
-    switch (getClassType()) {
-    case CrossfadeClass:
-        return toCSSCrossfadeValue(this)->isFixedSize();
-    case LinearGradientClass:
-        return toCSSLinearGradientValue(this)->isFixedSize();
-    case PaintClass:
-        return toCSSPaintValue(this)->isFixedSize();
-    case RadialGradientClass:
-        return toCSSRadialGradientValue(this)->isFixedSize();
+void CSSImageGeneratorValue::PutImage(const IntSize& size,
+                                      PassRefPtr<Image> image) {
+  images_.insert(size, std::move(image));
+}
+
+PassRefPtr<Image> CSSImageGeneratorValue::GetImage(
+    const LayoutObject& layout_object,
+    const IntSize& size,
+    float zoom) {
+  switch (GetClassType()) {
+    case kCrossfadeClass:
+      return ToCSSCrossfadeValue(this)->GetImage(layout_object, size);
+    case kLinearGradientClass:
+      return ToCSSLinearGradientValue(this)->GetImage(layout_object, size);
+    case kPaintClass:
+      return ToCSSPaintValue(this)->GetImage(layout_object, size, zoom);
+    case kRadialGradientClass:
+      return ToCSSRadialGradientValue(this)->GetImage(layout_object, size);
+    case kConicGradientClass:
+      return ToCSSConicGradientValue(this)->GetImage(layout_object, size);
     default:
-        ASSERT_NOT_REACHED();
-    }
-    return false;
+      NOTREACHED();
+  }
+  return nullptr;
 }
 
-IntSize CSSImageGeneratorValue::fixedSize(const LayoutObject& layoutObject, const FloatSize& defaultObjectSize)
-{
-    switch (getClassType()) {
-    case CrossfadeClass:
-        return toCSSCrossfadeValue(this)->fixedSize(layoutObject, defaultObjectSize);
-    case LinearGradientClass:
-        return toCSSLinearGradientValue(this)->fixedSize(layoutObject);
-    case PaintClass:
-        return toCSSPaintValue(this)->fixedSize(layoutObject);
-    case RadialGradientClass:
-        return toCSSRadialGradientValue(this)->fixedSize(layoutObject);
+bool CSSImageGeneratorValue::IsFixedSize() const {
+  switch (GetClassType()) {
+    case kCrossfadeClass:
+      return ToCSSCrossfadeValue(this)->IsFixedSize();
+    case kLinearGradientClass:
+      return ToCSSLinearGradientValue(this)->IsFixedSize();
+    case kPaintClass:
+      return ToCSSPaintValue(this)->IsFixedSize();
+    case kRadialGradientClass:
+      return ToCSSRadialGradientValue(this)->IsFixedSize();
+    case kConicGradientClass:
+      return ToCSSConicGradientValue(this)->IsFixedSize();
     default:
-        ASSERT_NOT_REACHED();
-    }
-    return IntSize();
+      NOTREACHED();
+  }
+  return false;
 }
 
-bool CSSImageGeneratorValue::isPending() const
-{
-    switch (getClassType()) {
-    case CrossfadeClass:
-        return toCSSCrossfadeValue(this)->isPending();
-    case LinearGradientClass:
-        return toCSSLinearGradientValue(this)->isPending();
-    case PaintClass:
-        return toCSSPaintValue(this)->isPending();
-    case RadialGradientClass:
-        return toCSSRadialGradientValue(this)->isPending();
+IntSize CSSImageGeneratorValue::FixedSize(
+    const LayoutObject& layout_object,
+    const FloatSize& default_object_size) {
+  switch (GetClassType()) {
+    case kCrossfadeClass:
+      return ToCSSCrossfadeValue(this)->FixedSize(layout_object,
+                                                  default_object_size);
+    case kLinearGradientClass:
+      return ToCSSLinearGradientValue(this)->FixedSize(layout_object);
+    case kPaintClass:
+      return ToCSSPaintValue(this)->FixedSize(layout_object);
+    case kRadialGradientClass:
+      return ToCSSRadialGradientValue(this)->FixedSize(layout_object);
+    case kConicGradientClass:
+      return ToCSSConicGradientValue(this)->FixedSize(layout_object);
     default:
-        ASSERT_NOT_REACHED();
-    }
-    return false;
+      NOTREACHED();
+  }
+  return IntSize();
 }
 
-bool CSSImageGeneratorValue::knownToBeOpaque(const LayoutObject& layoutObject) const
-{
-    switch (getClassType()) {
-    case CrossfadeClass:
-        return toCSSCrossfadeValue(this)->knownToBeOpaque(layoutObject);
-    case LinearGradientClass:
-        return toCSSLinearGradientValue(this)->knownToBeOpaque(layoutObject);
-    case PaintClass:
-        return toCSSPaintValue(this)->knownToBeOpaque(layoutObject);
-    case RadialGradientClass:
-        return toCSSRadialGradientValue(this)->knownToBeOpaque(layoutObject);
+bool CSSImageGeneratorValue::IsPending() const {
+  switch (GetClassType()) {
+    case kCrossfadeClass:
+      return ToCSSCrossfadeValue(this)->IsPending();
+    case kLinearGradientClass:
+      return ToCSSLinearGradientValue(this)->IsPending();
+    case kPaintClass:
+      return ToCSSPaintValue(this)->IsPending();
+    case kRadialGradientClass:
+      return ToCSSRadialGradientValue(this)->IsPending();
+    case kConicGradientClass:
+      return ToCSSConicGradientValue(this)->IsPending();
     default:
-        ASSERT_NOT_REACHED();
-    }
-    return false;
+      NOTREACHED();
+  }
+  return false;
 }
 
-void CSSImageGeneratorValue::loadSubimages(Document* document)
-{
-    switch (getClassType()) {
-    case CrossfadeClass:
-        toCSSCrossfadeValue(this)->loadSubimages(document);
-        break;
-    case LinearGradientClass:
-        toCSSLinearGradientValue(this)->loadSubimages(document);
-        break;
-    case PaintClass:
-        toCSSPaintValue(this)->loadSubimages(document);
-        break;
-    case RadialGradientClass:
-        toCSSRadialGradientValue(this)->loadSubimages(document);
-        break;
+bool CSSImageGeneratorValue::KnownToBeOpaque(
+    const LayoutObject& layout_object) const {
+  switch (GetClassType()) {
+    case kCrossfadeClass:
+      return ToCSSCrossfadeValue(this)->KnownToBeOpaque(layout_object);
+    case kLinearGradientClass:
+      return ToCSSLinearGradientValue(this)->KnownToBeOpaque(layout_object);
+    case kPaintClass:
+      return ToCSSPaintValue(this)->KnownToBeOpaque(layout_object);
+    case kRadialGradientClass:
+      return ToCSSRadialGradientValue(this)->KnownToBeOpaque(layout_object);
+    case kConicGradientClass:
+      return ToCSSConicGradientValue(this)->KnownToBeOpaque(layout_object);
     default:
-        ASSERT_NOT_REACHED();
-    }
+      NOTREACHED();
+  }
+  return false;
 }
 
-} // namespace blink
+void CSSImageGeneratorValue::LoadSubimages(const Document& document) {
+  switch (GetClassType()) {
+    case kCrossfadeClass:
+      ToCSSCrossfadeValue(this)->LoadSubimages(document);
+      break;
+    case kLinearGradientClass:
+      ToCSSLinearGradientValue(this)->LoadSubimages(document);
+      break;
+    case kPaintClass:
+      ToCSSPaintValue(this)->LoadSubimages(document);
+      break;
+    case kRadialGradientClass:
+      ToCSSRadialGradientValue(this)->LoadSubimages(document);
+      break;
+    case kConicGradientClass:
+      ToCSSConicGradientValue(this)->LoadSubimages(document);
+      break;
+    default:
+      NOTREACHED();
+  }
+}
+
+}  // namespace blink

@@ -5,36 +5,37 @@
 #ifndef SymbolsIterator_h
 #define SymbolsIterator_h
 
+#include <memory>
 #include "platform/fonts/FontFallbackPriority.h"
 #include "platform/fonts/FontOrientation.h"
 #include "platform/fonts/ScriptRunIterator.h"
 #include "platform/fonts/UTF16TextIterator.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT SymbolsIterator {
-    USING_FAST_MALLOC(SymbolsIterator);
-    WTF_MAKE_NONCOPYABLE(SymbolsIterator);
-public:
-    SymbolsIterator(const UChar* buffer, unsigned bufferSize);
+  USING_FAST_MALLOC(SymbolsIterator);
+  WTF_MAKE_NONCOPYABLE(SymbolsIterator);
 
-    bool consume(unsigned* symbolsLimit, FontFallbackPriority*);
+ public:
+  SymbolsIterator(const UChar* buffer, unsigned buffer_size);
 
-private:
-    FontFallbackPriority fontFallbackPriorityForCharacter(UChar32);
+  bool Consume(unsigned* symbols_limit, FontFallbackPriority*);
 
-    std::unique_ptr<UTF16TextIterator> m_utf16Iterator;
-    unsigned m_bufferSize;
-    UChar32 m_nextChar;
-    bool m_atEnd;
+ private:
+  FontFallbackPriority FontFallbackPriorityForCharacter(UChar32);
 
-    FontFallbackPriority m_currentFontFallbackPriority;
-    FontFallbackPriority m_previousFontFallbackPriority;
+  std::unique_ptr<UTF16TextIterator> utf16_iterator_;
+  unsigned buffer_size_;
+  UChar32 next_char_;
+  bool at_end_;
+
+  FontFallbackPriority current_font_fallback_priority_;
+  FontFallbackPriority previous_font_fallback_priority_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

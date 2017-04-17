@@ -35,19 +35,20 @@
 
 namespace blink {
 
-VideoPlaybackQuality* HTMLVideoElementMediaSource::getVideoPlaybackQuality(HTMLVideoElement& videoElement)
-{
-    unsigned total = 0;
-    unsigned dropped = 0;
-    unsigned corrupted = 0;
-    WebMediaPlayer* webMediaPlayer = videoElement.webMediaPlayer();
-    if (webMediaPlayer) {
-        total = webMediaPlayer->decodedFrameCount();
-        dropped = webMediaPlayer->droppedFrameCount();
-        corrupted = webMediaPlayer->corruptedFrameCount();
-    }
+VideoPlaybackQuality* HTMLVideoElementMediaSource::getVideoPlaybackQuality(
+    HTMLVideoElement& video_element) {
+  unsigned total = 0;
+  unsigned dropped = 0;
+  unsigned corrupted = 0;
+  WebMediaPlayer* web_media_player = video_element.GetWebMediaPlayer();
+  if (web_media_player) {
+    total = web_media_player->DecodedFrameCount();
+    dropped = web_media_player->DroppedFrameCount();
+    corrupted = web_media_player->CorruptedFrameCount();
+  }
 
-    return VideoPlaybackQuality::create(videoElement.document(), total, dropped, corrupted);
+  return VideoPlaybackQuality::Create(video_element.GetDocument(), total,
+                                      dropped, corrupted);
 }
 
-} // namespace blink
+}  // namespace blink

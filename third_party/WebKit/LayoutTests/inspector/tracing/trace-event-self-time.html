@@ -260,36 +260,38 @@ function test()
     ];
 
     var cpuProfile = {
-        startTime: 420,
-        endTime: 430,
-        head: {
-            callFrame: { functionName: "(root)" },
-            id: 1,
-            children: [{
+        startTime: 420e3,
+        endTime: 430e3,
+        nodes: [
+            {
+                callFrame: { functionName: "(root)" },
+                id: 1,
+                children: [2]
+            },
+            {
                 callFrame: { functionName: "foo" },
                 id: 2,
-                children: [{
-                    callFrame: { functionName: "bar" },
-                    id: 3,
-                    children: []
-                },
-                {
-                    callFrame: { functionName: "baz" },
-                    id: 4,
-                    children: []
-                }]
-            }]
-        },
-        timestamps: [421000, 422000, 423000, 424000, 425000, 426000, 427000, 428000, 429000],
-        samples: [2, 2, 3, 3, 3, 4, 4, 2, 2 ]
+                children: [3, 4]
+            },
+            {
+                callFrame: { functionName: "bar" },
+                id: 3
+            },
+            {
+                callFrame: { functionName: "baz" },
+                id: 4
+            }
+        ],
+        timeDeltas: new Array(9).fill(1000),
+        samples: [2, 2, 3, 3, 3, 4, 4, 2, 2]
     };
 
     var timelineController = InspectorTest.timelineController();
-    timelineController._addCpuProfile(WebInspector.targetManager.mainTarget().id(), null, cpuProfile);
+    timelineController._addCpuProfile(SDK.targetManager.mainTarget().id(), cpuProfile);
     timelineController.traceEventsCollected(rawTraceEvents);
-    timelineController._allSourcesFinished();
-    var events = InspectorTest.timelineModel().inspectedTargetEvents();
-    events.forEach(e => InspectorTest.addResult(e.name + ": " + e.startTime + " " + (e.selfTime || 0).toFixed(2) + "/" + (e.duration || 0).toFixed(2)));
+    timelineController._finalizeTrace();
+    var events = timelineController._performanceModel.timelineModel().inspectedTargetEvents();
+    events.forEach(e => InspectorTest.addResult(`${e.name}: ${e.startTime} ${(e.selfTime || 0).toFixed(2)}/${(e.duration || 0).toFixed(2)}`));
     InspectorTest.completeTest();
 }
 

@@ -8,7 +8,7 @@
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/usb/web_usb_detector.h"
-#include "device/core/mock_device_client.h"
+#include "device/base/mock_device_client.h"
 #include "device/usb/mock_usb_device.h"
 #include "device/usb/mock_usb_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -17,6 +17,10 @@
 #include "ui/message_center/notification_delegate.h"
 #include "url/gurl.h"
 
+// These tests are disabled because WebUsbDetector::Initialize is a noop on
+// Windows due to jank and hangs caused by enumerating devices.
+// https://crbug.com/656702
+#if !defined(OS_WIN)
 namespace {
 
 // USB device product name.
@@ -60,6 +64,7 @@ TEST_F(WebUsbDetectorTest, UsbDeviceAddedAndRemoved) {
   std::string guid = device->guid();
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 
   device_client_.usb_service()->AddDevice(device);
   message_center::Notification* notification =
@@ -87,6 +92,7 @@ TEST_F(WebUsbDetectorTest, UsbDeviceWithoutProductNameAddedAndRemoved) {
   std::string guid = device->guid();
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 
   device_client_.usb_service()->AddDevice(device);
   // For device without product name, no notification is generated.
@@ -103,6 +109,7 @@ TEST_F(WebUsbDetectorTest, UsbDeviceWithoutLandingPageAddedAndRemoved) {
   std::string guid = device->guid();
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 
   device_client_.usb_service()->AddDevice(device);
   // For device without landing page, no notification is generated.
@@ -123,6 +130,7 @@ TEST_F(WebUsbDetectorTest, UsbDeviceWasThereBeforeAndThenRemoved) {
   EXPECT_EQ(nullptr, message_center_->FindVisibleNotificationById(guid));
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 
   device_client_.usb_service()->RemoveDevice(device);
   EXPECT_EQ(nullptr, message_center_->FindVisibleNotificationById(guid));
@@ -166,6 +174,7 @@ TEST_F(
   EXPECT_EQ(nullptr, message_center_->FindVisibleNotificationById(guid_3));
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 }
 
 TEST_F(
@@ -198,6 +207,7 @@ TEST_F(
   EXPECT_EQ(nullptr, message_center_->FindVisibleNotificationById(guid_3));
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 
   device_client_.usb_service()->RemoveDevice(device_1);
   EXPECT_EQ(nullptr, message_center_->FindVisibleNotificationById(guid_1));
@@ -234,6 +244,7 @@ TEST_F(WebUsbDetectorTest,
   EXPECT_EQ(nullptr, message_center_->FindVisibleNotificationById(guid_3));
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 
   device_client_.usb_service()->RemoveDevice(device_1);
   EXPECT_EQ(nullptr, message_center_->FindVisibleNotificationById(guid_1));
@@ -277,6 +288,7 @@ TEST_F(WebUsbDetectorTest, ThreeUsbDevicesAddedAndRemoved) {
   std::string guid_3 = device_3->guid();
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 
   device_client_.usb_service()->AddDevice(device_1);
   message_center::Notification* notification_1 =
@@ -344,6 +356,7 @@ TEST_F(WebUsbDetectorTest, ThreeUsbDeviceAddedAndRemovedDifferentOrder) {
   std::string guid_3 = device_3->guid();
 
   WebUsbDetector web_usb_detector;
+  web_usb_detector.Initialize();
 
   device_client_.usb_service()->AddDevice(device_1);
   message_center::Notification* notification_1 =
@@ -390,3 +403,4 @@ TEST_F(WebUsbDetectorTest, ThreeUsbDeviceAddedAndRemovedDifferentOrder) {
   device_client_.usb_service()->RemoveDevice(device_3);
   EXPECT_EQ(nullptr, message_center_->FindVisibleNotificationById(guid_3));
 }
+#endif  // !OS_WIN

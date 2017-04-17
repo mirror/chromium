@@ -4,6 +4,9 @@
 
 #include "chrome/browser/chromeos/login/app_launch_signin_screen.h"
 
+#include <utility>
+
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/login/help_app_launcher.h"
 #include "chrome/browser/chromeos/login/screens/user_selection_screen.h"
@@ -35,8 +38,7 @@ AppLaunchSigninScreen::~AppLaunchSigninScreen() {
 void AppLaunchSigninScreen::Show() {
   InitOwnerUserList();
   oobe_ui_->web_ui()->CallJavascriptFunctionUnsafe(
-      "login.AccountPickerScreen.setShouldShowApps",
-      base::FundamentalValue(false));
+      "login.AccountPickerScreen.setShouldShowApps", base::Value(false));
   oobe_ui_->ShowSigninScreen(LoginScreenContext(), this, NULL);
 }
 
@@ -51,7 +53,7 @@ void AppLaunchSigninScreen::InitOwnerUserList() {
        it != all_users.end();
        ++it) {
     user_manager::User* user = *it;
-    if (user->email() == owner_email) {
+    if (user->GetAccountId().GetUserEmail() == owner_email) {
       owner_user_list_.push_back(user);
       break;
     }
@@ -104,6 +106,8 @@ void AppLaunchSigninScreen::LoadSigninWallpaper() {
 
 void AppLaunchSigninScreen::OnSigninScreenReady() {
 }
+
+void AppLaunchSigninScreen::OnGaiaScreenReady() {}
 
 void AppLaunchSigninScreen::RemoveUser(const AccountId& account_id) {
   NOTREACHED();
@@ -184,6 +188,12 @@ void AppLaunchSigninScreen::SetDisplayEmail(const std::string& email) {
   return;
 }
 
+void AppLaunchSigninScreen::SetDisplayAndGivenName(
+    const std::string& display_name,
+    const std::string& given_name) {
+  NOTREACHED();
+}
+
 void AppLaunchSigninScreen::Signout() {
   NOTREACHED();
 }
@@ -211,15 +221,13 @@ void AppLaunchSigninScreen::HandleGetUsers() {
         UserSelectionScreen::ShouldForceOnlineSignIn(*it)
             ? proximity_auth::ScreenlockBridge::LockHandler::ONLINE_SIGN_IN
             : proximity_auth::ScreenlockBridge::LockHandler::OFFLINE_PASSWORD;
-    base::DictionaryValue* user_dict = new base::DictionaryValue();
+    auto user_dict = base::MakeUnique<base::DictionaryValue>();
     UserSelectionScreen::FillUserDictionary(
-        *it,
-        true,   /* is_owner */
-        false,  /* is_signin_to_add */
-        initial_auth_type,
-        NULL,   /* public_session_recommended_locales */
-        user_dict);
-    users_list.Append(user_dict);
+        *it, true,               /* is_owner */
+        false,                   /* is_signin_to_add */
+        initial_auth_type, NULL, /* public_session_recommended_locales */
+        user_dict.get());
+    users_list.Append(std::move(user_dict));
   }
 
   webui_handler_->LoadUsers(users_list, false);

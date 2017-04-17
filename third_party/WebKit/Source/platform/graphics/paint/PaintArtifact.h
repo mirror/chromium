@@ -7,15 +7,15 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/graphics/paint/DisplayItemList.h"
+#include "platform/graphics/paint/PaintCanvas.h"
 #include "platform/graphics/paint/PaintChunk.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class GraphicsContext;
-class GraphicsLayer;
 class WebDisplayItemList;
 
 // The output of painting, consisting of a series of drawings in paint order,
@@ -31,49 +31,67 @@ class WebDisplayItemList;
 // Reminder: moved-from objects may not be in a known state. They can only
 // safely be assigned to or destroyed.
 class PLATFORM_EXPORT PaintArtifact final {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(PaintArtifact);
-public:
-    PaintArtifact();
-    PaintArtifact(DisplayItemList, Vector<PaintChunk>, bool isSuitableForGpuRasterization);
-    PaintArtifact(PaintArtifact&&);
-    ~PaintArtifact();
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(PaintArtifact);
 
-    PaintArtifact& operator=(PaintArtifact&&);
+ public:
+  PaintArtifact();
+  PaintArtifact(DisplayItemList,
+                Vector<PaintChunk>,
+                bool is_suitable_for_gpu_rasterization);
+  PaintArtifact(PaintArtifact&&);
+  ~PaintArtifact();
 
-    bool isEmpty() const { return m_displayItemList.isEmpty(); }
+  PaintArtifact& operator=(PaintArtifact&&);
 
-    DisplayItemList& getDisplayItemList() { return m_displayItemList; }
-    const DisplayItemList& getDisplayItemList() const { return m_displayItemList; }
+  bool IsEmpty() const { return display_item_list_.IsEmpty(); }
 
-    Vector<PaintChunk>& paintChunks() { return m_paintChunks; }
-    const Vector<PaintChunk>& paintChunks() const { return m_paintChunks; }
+  DisplayItemList& GetDisplayItemList() { return display_item_list_; }
+  const DisplayItemList& GetDisplayItemList() const {
+    return display_item_list_;
+  }
 
-    Vector<PaintChunk>::const_iterator findChunkByDisplayItemIndex(size_t) const;
+  Vector<PaintChunk>& PaintChunks() { return paint_chunks_; }
+  const Vector<PaintChunk>& PaintChunks() const { return paint_chunks_; }
 
-    bool isSuitableForGpuRasterization() const { return m_isSuitableForGpuRasterization; }
+  Vector<PaintChunk>::const_iterator FindChunkByDisplayItemIndex(
+      size_t index) const {
+    return FindChunkInVectorByDisplayItemIndex(paint_chunks_, index);
+  }
 
-    // Resets to an empty paint artifact.
-    void reset();
+  bool IsSuitableForGpuRasterization() const {
+    return is_suitable_for_gpu_rasterization_;
+  }
 
-    // Returns the approximate memory usage, excluding memory likely to be
-    // shared with the embedder after copying to WebDisplayItemList.
-    size_t approximateUnsharedMemoryUsage() const;
+  // Resets to an empty paint artifact.
+  void Reset();
 
-    // Draws the paint artifact to a GraphicsContext.
-    void replay(GraphicsContext&) const;
+  // Returns the approximate memory usage, excluding memory likely to be
+  // shared with the embedder after copying to WebDisplayItemList.
+  size_t ApproximateUnsharedMemoryUsage() const;
 
-    // Writes the paint artifact into a WebDisplayItemList.
-    void appendToWebDisplayItemList(WebDisplayItemList*) const;
+  // Draws the paint artifact to a GraphicsContext.
+  // |bounds| is the bounding box of the paint artifact's display list.
+  void Replay(const FloatRect& bounds, GraphicsContext&) const;
 
-private:
-    DisplayItemList m_displayItemList;
-    Vector<PaintChunk> m_paintChunks;
-    bool m_isSuitableForGpuRasterization;
+  // Draws the paint artifact to a PaintCanvas.
+  // |bounds| is the bounding box of the paint artifact's display list.
+  // SPv2 only.
+  // In SPv2 mode, replays into the ancestor state given by |replayState|.
+  void Replay(
+      const FloatRect& bounds,
+      PaintCanvas&,
+      const PropertyTreeState& replay_state = PropertyTreeState::Root()) const;
 
-    friend class PaintControllerTest;
+  // Writes the paint artifact into a WebDisplayItemList.
+  void AppendToWebDisplayItemList(WebDisplayItemList*) const;
+
+ private:
+  DisplayItemList display_item_list_;
+  Vector<PaintChunk> paint_chunks_;
+  bool is_suitable_for_gpu_rasterization_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaintArtifact_h
+#endif  // PaintArtifact_h

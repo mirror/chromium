@@ -9,10 +9,10 @@
 #include "base/logging.h"
 #include "net/spdy/hpack/hpack_constants.h"
 #include "net/spdy/hpack/hpack_static_table.h"
+#include "net/spdy/platform/api/spdy_estimate_memory_usage.h"
+#include "net/spdy/spdy_flags.h"
 
 namespace net {
-
-using base::StringPiece;
 
 size_t HpackHeaderTable::EntryHasher::operator()(
     const HpackEntry* entry) const {
@@ -61,7 +61,7 @@ const HpackEntry* HpackHeaderTable::GetByIndex(size_t index) {
   return NULL;
 }
 
-const HpackEntry* HpackHeaderTable::GetByName(StringPiece name) {
+const HpackEntry* HpackHeaderTable::GetByName(SpdyStringPiece name) {
   {
     NameToEntryMap::const_iterator it = static_name_index_.find(name);
     if (it != static_name_index_.end()) {
@@ -81,8 +81,8 @@ const HpackEntry* HpackHeaderTable::GetByName(StringPiece name) {
   return NULL;
 }
 
-const HpackEntry* HpackHeaderTable::GetByNameAndValue(StringPiece name,
-                                                      StringPiece value) {
+const HpackEntry* HpackHeaderTable::GetByNameAndValue(SpdyStringPiece name,
+                                                      SpdyStringPiece value) {
   HpackEntry query(name, value);
   {
     UnorderedEntrySet::const_iterator it = static_index_.find(&query);
@@ -125,13 +125,11 @@ void HpackHeaderTable::SetMaxSize(size_t max_size) {
 
 void HpackHeaderTable::SetSettingsHeaderTableSize(size_t settings_size) {
   settings_size_bound_ = settings_size;
-  if (settings_size_bound_ < max_size_) {
-    SetMaxSize(settings_size_bound_);
-  }
+  SetMaxSize(settings_size_bound_);
 }
 
-void HpackHeaderTable::EvictionSet(StringPiece name,
-                                   StringPiece value,
+void HpackHeaderTable::EvictionSet(SpdyStringPiece name,
+                                   SpdyStringPiece value,
                                    EntryTable::iterator* begin_out,
                                    EntryTable::iterator* end_out) {
   size_t eviction_count = EvictionCountForEntry(name, value);
@@ -139,8 +137,8 @@ void HpackHeaderTable::EvictionSet(StringPiece name,
   *end_out = dynamic_entries_.end();
 }
 
-size_t HpackHeaderTable::EvictionCountForEntry(StringPiece name,
-                                               StringPiece value) const {
+size_t HpackHeaderTable::EvictionCountForEntry(SpdyStringPiece name,
+                                               SpdyStringPiece value) const {
   size_t available_size = max_size_ - size_;
   size_t entry_size = HpackEntry::Size(name, value);
 
@@ -186,8 +184,8 @@ void HpackHeaderTable::Evict(size_t count) {
   }
 }
 
-const HpackEntry* HpackHeaderTable::TryAddEntry(StringPiece name,
-                                                StringPiece value) {
+const HpackEntry* HpackHeaderTable::TryAddEntry(SpdyStringPiece name,
+                                                SpdyStringPiece value) {
   Evict(EvictionCountForEntry(name, value));
 
   size_t entry_size = HpackEntry::Size(name, value);
@@ -236,6 +234,10 @@ const HpackEntry* HpackHeaderTable::TryAddEntry(StringPiece name,
     // Call |debug_visitor_->OnNewEntry()| to get the current time.
     HpackEntry& entry = dynamic_entries_.front();
     entry.set_time_added(debug_visitor_->OnNewEntry(entry));
+    DVLOG(2) << "HpackHeaderTable::OnNewEntry: name=" << entry.name()
+             << ",  value=" << entry.value()
+             << ",  insert_index=" << entry.InsertionIndex()
+             << ",  time_added=" << entry.time_added();
   }
 
   return &dynamic_entries_.front();
@@ -263,6 +265,12 @@ void HpackHeaderTable::DebugLogTableState() const {
   for (const auto it : dynamic_name_index_) {
     DVLOG(2) << "  " << it.first << ": " << it.second->GetDebugString();
   }
+}
+
+size_t HpackHeaderTable::EstimateMemoryUsage() const {
+  return SpdyEstimateMemoryUsage(dynamic_entries_) +
+         SpdyEstimateMemoryUsage(dynamic_index_) +
+         SpdyEstimateMemoryUsage(dynamic_name_index_);
 }
 
 }  // namespace net

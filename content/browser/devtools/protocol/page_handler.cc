@@ -4,21 +4,28 @@
 
 #include "content/browser/devtools/protocol/page_handler.h"
 
+#include <algorithm>
+#include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/memory/ref_counted.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "base/threading/worker_pool.h"
+#include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/page_navigation_throttle.h"
-#include "content/browser/devtools/protocol/color_picker.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/javascript_dialog_manager.h"
@@ -30,18 +37,18 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/referrer.h"
-#include "third_party/WebKit/public/platform/WebScreenInfo.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/gfx/codec/jpeg_codec.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/geometry/size_conversions.h"
+#include "ui/gfx/image/image.h"
+#include "ui/gfx/image/image_util.h"
 #include "ui/snapshot/snapshot.h"
 #include "url/gurl.h"
 
 namespace content {
-namespace devtools {
-namespace page {
+namespace protocol {
 
 namespace {
 
@@ -52,37 +59,27 @@ static int kFrameRetryDelayMs = 100;
 static int kCaptureRetryLimit = 2;
 static int kMaxScreencastFramesInFlight = 2;
 
-std::string EncodeScreencastFrame(const SkBitmap& bitmap,
-                                  const std::string& format,
-                                  int quality) {
-  std::vector<unsigned char> data;
-  SkAutoLockPixels lock_image(bitmap);
-  bool encoded;
+std::string EncodeImage(const gfx::Image& image,
+                        const std::string& format,
+                        int quality) {
+  DCHECK(!image.IsEmpty());
+
+  scoped_refptr<base::RefCountedMemory> data;
   if (format == kPng) {
-    encoded = gfx::PNGCodec::Encode(
-        reinterpret_cast<unsigned char*>(bitmap.getAddr32(0, 0)),
-        gfx::PNGCodec::FORMAT_SkBitmap,
-        gfx::Size(bitmap.width(), bitmap.height()),
-        bitmap.width() * bitmap.bytesPerPixel(),
-        false, std::vector<gfx::PNGCodec::Comment>(), &data);
+    data = image.As1xPNGBytes();
   } else if (format == kJpeg) {
-    encoded = gfx::JPEGCodec::Encode(
-        reinterpret_cast<unsigned char*>(bitmap.getAddr32(0, 0)),
-        gfx::JPEGCodec::FORMAT_SkBitmap,
-        bitmap.width(),
-        bitmap.height(),
-        bitmap.width() * bitmap.bytesPerPixel(),
-        quality, &data);
-  } else {
-    encoded = false;
+    scoped_refptr<base::RefCountedBytes> bytes(new base::RefCountedBytes());
+    if (gfx::JPEG1xEncodedDataFromImage(image, quality, &bytes->data()))
+      data = bytes;
   }
 
-  if (!encoded)
+  if (!data || !data->front())
     return std::string();
 
   std::string base_64_data;
   base::Base64Encode(
-      base::StringPiece(reinterpret_cast<char*>(&data[0]), data.size()),
+      base::StringPiece(reinterpret_cast<const char*>(data->front()),
+                        data->size()),
       &base_64_data);
 
   return base_64_data;
@@ -90,10 +87,9 @@ std::string EncodeScreencastFrame(const SkBitmap& bitmap,
 
 }  // namespace
 
-typedef DevToolsProtocolClient::Response Response;
-
 PageHandler::PageHandler()
-    : enabled_(false),
+    : DevToolsDomainHandler(Page::Metainfo::domainName),
+      enabled_(false),
       screencast_enabled_(false),
       screencast_quality_(kDefaultScreenshotQuality),
       screencast_max_width_(-1),
@@ -104,14 +100,18 @@ PageHandler::PageHandler()
       session_id_(0),
       frame_counter_(0),
       frames_in_flight_(0),
-      color_picker_(new ColorPicker(
-          base::Bind(&PageHandler::OnColorPicked, base::Unretained(this)))),
       navigation_throttle_enabled_(false),
       next_navigation_id_(0),
       host_(nullptr),
       weak_factory_(this) {}
 
 PageHandler::~PageHandler() {
+}
+
+// static
+PageHandler* PageHandler::FromSession(DevToolsSession* session) {
+  return static_cast<PageHandler*>(
+      session->GetHandlerByName(Page::Metainfo::domainName));
 }
 
 void PageHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
@@ -129,7 +129,6 @@ void PageHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
 
   host_ = host;
   widget_host = host_ ? host_->GetRenderWidgetHost() : nullptr;
-  color_picker_->SetRenderWidgetHost(widget_host);
 
   if (widget_host) {
     registrar_.Add(
@@ -139,12 +138,9 @@ void PageHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
   }
 }
 
-void PageHandler::SetClient(std::unique_ptr<Client> client) {
-  client_.swap(client);
-}
-
-void PageHandler::Detached() {
-  Disable();
+void PageHandler::Wire(UberDispatcher* dispatcher) {
+  frontend_.reset(new Page::Frontend(dispatcher->channel()));
+  Page::Dispatcher::wire(dispatcher, this);
 }
 
 void PageHandler::OnSwapCompositorFrame(
@@ -154,7 +150,6 @@ void PageHandler::OnSwapCompositorFrame(
 
   if (screencast_enabled_)
     InnerSwapCompositorFrame();
-  color_picker_->OnSwapCompositorFrame();
 }
 
 void PageHandler::OnSynchronousSwapCompositorFrame(
@@ -171,7 +166,6 @@ void PageHandler::OnSynchronousSwapCompositorFrame(
 
   if (screencast_enabled_)
     InnerSwapCompositorFrame();
-  color_picker_->OnSwapCompositorFrame();
 }
 
 void PageHandler::Observe(int type,
@@ -187,17 +181,19 @@ void PageHandler::Observe(int type,
 void PageHandler::DidAttachInterstitialPage() {
   if (!enabled_)
     return;
-  client_->InterstitialShown(InterstitialShownParams::Create());
+  frontend_->InterstitialShown();
 }
 
 void PageHandler::DidDetachInterstitialPage() {
   if (!enabled_)
     return;
-  client_->InterstitialHidden(InterstitialHiddenParams::Create());
+  frontend_->InterstitialHidden();
 }
 
 Response PageHandler::Enable() {
   enabled_ = true;
+  if (GetWebContents() && GetWebContents()->ShowingInterstitialPage())
+    frontend_->InterstitialShown();
   return Response::FallThrough();
 }
 
@@ -205,24 +201,22 @@ Response PageHandler::Disable() {
   enabled_ = false;
   screencast_enabled_ = false;
   SetControlNavigations(false);
-  color_picker_->SetEnabled(false);
   return Response::FallThrough();
 }
 
-Response PageHandler::Reload(const bool* bypassCache,
-                             const std::string* script_to_evaluate_on_load,
-                             const std::string* script_preprocessor) {
+Response PageHandler::Reload(Maybe<bool> bypassCache,
+                             Maybe<std::string> script_to_evaluate_on_load) {
   WebContentsImpl* web_contents = GetWebContents();
   if (!web_contents)
-    return Response::InternalError("Could not connect to view");
+    return Response::InternalError();
 
   if (web_contents->IsCrashed() ||
       (web_contents->GetController().GetVisibleEntry() &&
        web_contents->GetController().GetVisibleEntry()->IsViewSourceMode())) {
-    if (bypassCache && *bypassCache)
-      web_contents->GetController().ReloadBypassingCache(false);
-    else
-      web_contents->GetController().Reload(false);
+    web_contents->GetController().Reload(bypassCache.fromMaybe(false)
+                                             ? ReloadType::BYPASSING_CACHE
+                                             : ReloadType::NORMAL,
+                                         false);
     return Response::OK();
   } else {
     // Handle reload in renderer except for crashed and view source mode.
@@ -231,34 +225,39 @@ Response PageHandler::Reload(const bool* bypassCache,
 }
 
 Response PageHandler::Navigate(const std::string& url,
-                               FrameId* frame_id) {
+                               Maybe<std::string> referrer,
+                               Page::FrameId* frame_id) {
   GURL gurl(url);
   if (!gurl.is_valid())
-    return Response::InternalError("Cannot navigate to invalid URL");
+    return Response::Error("Cannot navigate to invalid URL");
 
   WebContentsImpl* web_contents = GetWebContents();
   if (!web_contents)
-    return Response::InternalError("Could not connect to view");
+    return Response::InternalError();
 
-  web_contents->GetController()
-      .LoadURL(gurl, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
+  web_contents->GetController().LoadURL(
+      gurl,
+      Referrer(GURL(referrer.fromMaybe("")), blink::kWebReferrerPolicyDefault),
+      ui::PAGE_TRANSITION_TYPED, std::string());
   return Response::FallThrough();
 }
 
-Response PageHandler::GetNavigationHistory(int* current_index,
-                                           NavigationEntries* entries) {
+Response PageHandler::GetNavigationHistory(
+    int* current_index,
+    std::unique_ptr<NavigationEntries>* entries) {
   WebContentsImpl* web_contents = GetWebContents();
   if (!web_contents)
-    return Response::InternalError("Could not connect to view");
+    return Response::InternalError();
 
   NavigationController& controller = web_contents->GetController();
   *current_index = controller.GetCurrentEntryIndex();
+  *entries = NavigationEntries::create();
   for (int i = 0; i != controller.GetEntryCount(); ++i) {
-    entries->push_back(NavigationEntry::Create()
-        ->set_id(controller.GetEntryAtIndex(i)->GetUniqueID())
-        ->set_url(controller.GetEntryAtIndex(i)->GetURL().spec())
-        ->set_title(
-            base::UTF16ToUTF8(controller.GetEntryAtIndex(i)->GetTitle())));
+    (*entries)->addItem(Page::NavigationEntry::Create()
+        .SetId(controller.GetEntryAtIndex(i)->GetUniqueID())
+        .SetUrl(controller.GetEntryAtIndex(i)->GetURL().spec())
+        .SetTitle(base::UTF16ToUTF8(controller.GetEntryAtIndex(i)->GetTitle()))
+        .Build());
   }
   return Response::OK();
 }
@@ -266,7 +265,7 @@ Response PageHandler::GetNavigationHistory(int* current_index,
 Response PageHandler::NavigateToHistoryEntry(int entry_id) {
   WebContentsImpl* web_contents = GetWebContents();
   if (!web_contents)
-    return Response::InternalError("Could not connect to view");
+    return Response::InternalError();
 
   NavigationController& controller = web_contents->GetController();
   for (int i = 0; i != controller.GetEntryCount(); ++i) {
@@ -279,38 +278,52 @@ Response PageHandler::NavigateToHistoryEntry(int entry_id) {
   return Response::InvalidParams("No entry with passed id");
 }
 
-Response PageHandler::CaptureScreenshot(DevToolsCommandId command_id) {
-  if (!host_ || !host_->GetRenderWidgetHost())
-    return Response::InternalError("Could not connect to view");
+void PageHandler::CaptureScreenshot(
+    Maybe<std::string> format,
+    Maybe<int> quality,
+    Maybe<bool> from_surface,
+    std::unique_ptr<CaptureScreenshotCallback> callback) {
+  if (!host_ || !host_->GetRenderWidgetHost()) {
+    callback->sendFailure(Response::InternalError());
+    return;
+  }
+
+  std::string screenshot_format = format.fromMaybe(kPng);
+  int screenshot_quality = quality.fromMaybe(kDefaultScreenshotQuality);
 
   host_->GetRenderWidgetHost()->GetSnapshotFromBrowser(
-      base::Bind(&PageHandler::ScreenshotCaptured,
-          weak_factory_.GetWeakPtr(), command_id));
-  return Response::OK();
+      base::Bind(&PageHandler::ScreenshotCaptured, weak_factory_.GetWeakPtr(),
+                 base::Passed(std::move(callback)), screenshot_format,
+                 screenshot_quality),
+      from_surface.fromMaybe(false));
 }
 
-Response PageHandler::StartScreencast(const std::string* format,
-                                      const int* quality,
-                                      const int* max_width,
-                                      const int* max_height,
-                                      const int* every_nth_frame) {
+void PageHandler::PrintToPDF(std::unique_ptr<PrintToPDFCallback> callback) {
+  callback->sendFailure(Response::Error("PrintToPDF is not implemented"));
+  return;
+}
+
+Response PageHandler::StartScreencast(Maybe<std::string> format,
+                                      Maybe<int> quality,
+                                      Maybe<int> max_width,
+                                      Maybe<int> max_height,
+                                      Maybe<int> every_nth_frame) {
   RenderWidgetHostImpl* widget_host =
       host_ ? host_->GetRenderWidgetHost() : nullptr;
   if (!widget_host)
-    return Response::InternalError("Could not connect to view");
+    return Response::InternalError();
 
   screencast_enabled_ = true;
-  screencast_format_ = format ? *format : kPng;
-  screencast_quality_ = quality ? *quality : kDefaultScreenshotQuality;
+  screencast_format_ = format.fromMaybe(kPng);
+  screencast_quality_ = quality.fromMaybe(kDefaultScreenshotQuality);
   if (screencast_quality_ < 0 || screencast_quality_ > 100)
     screencast_quality_ = kDefaultScreenshotQuality;
-  screencast_max_width_ = max_width ? *max_width : -1;
-  screencast_max_height_ = max_height ? *max_height : -1;
+  screencast_max_width_ = max_width.fromMaybe(-1);
+  screencast_max_height_ = max_height.fromMaybe(-1);
   ++session_id_;
   frame_counter_ = 0;
   frames_in_flight_ = 0;
-  capture_every_nth_frame_ =
-      every_nth_frame && *every_nth_frame ? *every_nth_frame : 1;
+  capture_every_nth_frame_ = every_nth_frame.fromMaybe(1);
 
   bool visible = !widget_host->is_hidden();
   NotifyScreencastVisibility(visible);
@@ -318,8 +331,8 @@ Response PageHandler::StartScreencast(const std::string* format,
     if (has_compositor_frame_metadata_) {
       InnerSwapCompositorFrame();
     } else {
-      widget_host->Send(
-          new ViewMsg_ForceRedraw(widget_host->GetRoutingID(), 0));
+      widget_host->Send(new ViewMsg_ForceRedraw(widget_host->GetRoutingID(),
+                                                ui::LatencyInfo()));
     }
   }
   return Response::FallThrough();
@@ -337,42 +350,30 @@ Response PageHandler::ScreencastFrameAck(int session_id) {
 }
 
 Response PageHandler::HandleJavaScriptDialog(bool accept,
-                                             const std::string* prompt_text) {
+                                             Maybe<std::string> prompt_text) {
   base::string16 prompt_override;
-  if (prompt_text)
-    prompt_override = base::UTF8ToUTF16(*prompt_text);
+  if (prompt_text.isJust())
+    prompt_override = base::UTF8ToUTF16(prompt_text.fromJust());
 
   WebContentsImpl* web_contents = GetWebContents();
   if (!web_contents)
-    return Response::InternalError("Could not connect to view");
+    return Response::InternalError();
 
   JavaScriptDialogManager* manager =
       web_contents->GetDelegate()->GetJavaScriptDialogManager(web_contents);
   if (manager && manager->HandleJavaScriptDialog(
-          web_contents, accept, prompt_text ? &prompt_override : nullptr)) {
+          web_contents, accept,
+          prompt_text.isJust() ? &prompt_override : nullptr)) {
     return Response::OK();
   }
 
-  return Response::InternalError("Could not handle JavaScript dialog");
-}
-
-Response PageHandler::QueryUsageAndQuota(DevToolsCommandId command_id,
-                                         const std::string& security_origin) {
-  return Response::OK();
-}
-
-Response PageHandler::SetColorPickerEnabled(bool enabled) {
-  if (!host_)
-    return Response::InternalError("Could not connect to view");
-
-  color_picker_->SetEnabled(enabled);
-  return Response::OK();
+  return Response::Error("Could not handle JavaScript dialog");
 }
 
 Response PageHandler::RequestAppBanner() {
   WebContentsImpl* web_contents = GetWebContents();
   if (!web_contents)
-    return Response::InternalError("Could not connect to view");
+    return Response::InternalError();
   web_contents->GetDelegate()->RequestAppBannerFromDevTools(web_contents);
   return Response::OK();
 }
@@ -394,13 +395,13 @@ Response PageHandler::ProcessNavigation(const std::string& response,
   if (it == navigation_throttles_.end())
     return Response::InvalidParams("Unknown navigation id");
 
-  if (response == kNavigationResponseProceed) {
+  if (response == Page::NavigationResponseEnum::Proceed) {
     it->second->Resume();
     return Response::OK();
-  } else if (response == kNavigationResponseCancel) {
+  } else if (response == Page::NavigationResponseEnum::Cancel) {
     it->second->CancelDeferredNavigation(content::NavigationThrottle::CANCEL);
     return Response::OK();
-  } else if (response == kNavigationResponseCancelAndIgnore) {
+  } else if (response == Page::NavigationResponseEnum::CancelAndIgnore) {
     it->second->CancelDeferredNavigation(
         content::NavigationThrottle::CANCEL_AND_IGNORE);
     return Response::OK();
@@ -428,12 +429,11 @@ void PageHandler::OnPageNavigationThrottleDisposed(int navigation_id) {
 
 void PageHandler::NavigationRequested(const PageNavigationThrottle* throttle) {
   NavigationHandle* navigation_handle = throttle->navigation_handle();
-  client_->NavigationRequested(
-      NavigationRequestedParams::Create()
-          ->set_is_in_main_frame(navigation_handle->IsInMainFrame())
-          ->set_is_redirect(navigation_handle->WasServerRedirect())
-          ->set_navigation_id(throttle->navigation_id())
-          ->set_url(navigation_handle->GetURL().spec()));
+  frontend_->NavigationRequested(
+      navigation_handle->IsInMainFrame(),
+      navigation_handle->WasServerRedirect(),
+      throttle->navigation_id(),
+      navigation_handle->GetURL().spec());
 }
 
 WebContentsImpl* PageHandler::GetWebContents() {
@@ -445,8 +445,7 @@ WebContentsImpl* PageHandler::GetWebContents() {
 void PageHandler::NotifyScreencastVisibility(bool visible) {
   if (visible)
     capture_retry_count_ = kCaptureRetryLimit;
-  client_->ScreencastVisibilityChanged(
-      ScreencastVisibilityChangedParams::Create()->set_visible(visible));
+  frontend_->ScreencastVisibilityChanged(visible);
 }
 
 void PageHandler::InnerSwapCompositorFrame() {
@@ -462,6 +461,8 @@ void PageHandler::InnerSwapCompositorFrame() {
   RenderWidgetHostViewBase* view = static_cast<RenderWidgetHostViewBase*>(
       host_->GetView());
   // TODO(vkuzkokov): do not use previous frame metadata.
+  // TODO(miu): RWHV to provide an API to provide actual rendering size.
+  // http://crbug.com/73362
   cc::CompositorFrameMetadata& metadata = last_compositor_frame_metadata_;
 
   gfx::SizeF viewport_size_dip = gfx::ScaleSize(
@@ -470,9 +471,9 @@ void PageHandler::InnerSwapCompositorFrame() {
       gfx::ScaleSize(gfx::SizeF(view->GetPhysicalBackingSize()),
                      1 / metadata.device_scale_factor);
 
-  blink::WebScreenInfo screen_info;
-  view->GetScreenInfo(&screen_info);
-  double device_scale_factor = screen_info.deviceScaleFactor;
+  content::ScreenInfo screen_info;
+  GetWebContents()->GetView()->GetScreenInfo(&screen_info);
+  double device_scale_factor = screen_info.device_scale_factor;
   double scale = 1;
 
   if (screencast_max_width_ > 0) {
@@ -491,9 +492,8 @@ void PageHandler::InnerSwapCompositorFrame() {
       gfx::ScaleSize(viewport_size_dip, scale)));
 
   if (snapshot_size_dip.width() > 0 && snapshot_size_dip.height() > 0) {
-    gfx::Rect viewport_bounds_dip(gfx::ToRoundedSize(viewport_size_dip));
-    view->CopyFromCompositingSurface(
-        viewport_bounds_dip, snapshot_size_dip,
+    view->CopyFromSurface(
+        gfx::Rect(), snapshot_size_dip,
         base::Bind(&PageHandler::ScreencastFrameCaptured,
                    weak_factory_.GetWeakPtr(),
                    base::Passed(last_compositor_frame_metadata_.Clone())),
@@ -516,10 +516,11 @@ void PageHandler::ScreencastFrameCaptured(cc::CompositorFrameMetadata metadata,
     --frames_in_flight_;
     return;
   }
-  base::PostTaskAndReplyWithResult(
-      base::WorkerPool::GetTaskRunner(true).get(), FROM_HERE,
-      base::Bind(&EncodeScreencastFrame, bitmap, screencast_format_,
-                 screencast_quality_),
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, base::TaskTraits().WithShutdownBehavior(
+                     base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN),
+      base::Bind(&EncodeImage, gfx::Image::CreateFrom1xBitmap(bitmap),
+                 screencast_format_, screencast_quality_),
       base::Bind(&PageHandler::ScreencastFrameEncoded,
                  weak_factory_.GetWeakPtr(), base::Passed(&metadata),
                  base::Time::Now()));
@@ -544,45 +545,40 @@ void PageHandler::ScreencastFrameEncoded(cc::CompositorFrameMetadata metadata,
   gfx::SizeF screen_size_dip =
       gfx::ScaleSize(gfx::SizeF(view->GetPhysicalBackingSize()),
                      1 / metadata.device_scale_factor);
-  scoped_refptr<ScreencastFrameMetadata> param_metadata =
-      ScreencastFrameMetadata::Create()
-          ->set_page_scale_factor(metadata.page_scale_factor)
-          ->set_offset_top(metadata.location_bar_content_translation.y())
-          ->set_device_width(screen_size_dip.width())
-          ->set_device_height(screen_size_dip.height())
-          ->set_scroll_offset_x(metadata.root_scroll_offset.x())
-          ->set_scroll_offset_y(metadata.root_scroll_offset.y())
-          ->set_timestamp(timestamp.ToDoubleT());
-  client_->ScreencastFrame(ScreencastFrameParams::Create()
-      ->set_data(data)
-      ->set_metadata(param_metadata)
-      ->set_session_id(session_id_));
+  std::unique_ptr<Page::ScreencastFrameMetadata> param_metadata =
+      Page::ScreencastFrameMetadata::Create()
+          .SetPageScaleFactor(metadata.page_scale_factor)
+          .SetOffsetTop(metadata.top_controls_height *
+                        metadata.top_controls_shown_ratio)
+          .SetDeviceWidth(screen_size_dip.width())
+          .SetDeviceHeight(screen_size_dip.height())
+          .SetScrollOffsetX(metadata.root_scroll_offset.x())
+          .SetScrollOffsetY(metadata.root_scroll_offset.y())
+          .SetTimestamp(timestamp.ToDoubleT())
+          .Build();
+  frontend_->ScreencastFrame(data, std::move(param_metadata), session_id_);
 }
 
-void PageHandler::ScreenshotCaptured(DevToolsCommandId command_id,
-                                     const unsigned char* png_data,
-                                     size_t png_size) {
-  if (!png_data || !png_size) {
-    client_->SendError(command_id,
-                       Response::InternalError("Unable to capture screenshot"));
+void PageHandler::ScreenshotCaptured(
+    std::unique_ptr<CaptureScreenshotCallback> callback,
+    const std::string& format,
+    int quality,
+    const gfx::Image& image) {
+  if (image.IsEmpty()) {
+    callback->sendFailure(Response::Error("Unable to capture screenshot"));
     return;
   }
 
-  std::string base_64_data;
-  base::Base64Encode(
-      base::StringPiece(reinterpret_cast<const char*>(png_data), png_size),
-      &base_64_data);
-
-  client_->SendCaptureScreenshotResponse(command_id,
-      CaptureScreenshotResponse::Create()->set_data(base_64_data));
+  callback->sendSuccess(EncodeImage(image, format, quality));
 }
 
-void PageHandler::OnColorPicked(int r, int g, int b, int a) {
-  scoped_refptr<dom::RGBA> color =
-      dom::RGBA::Create()->set_r(r)->set_g(g)->set_b(b)->set_a(a);
-  client_->ColorPicked(ColorPickedParams::Create()->set_color(color));
+Response PageHandler::StopLoading() {
+  WebContentsImpl* web_contents = GetWebContents();
+  if (!web_contents)
+    return Response::InternalError();
+  web_contents->Stop();
+  return Response::OK();
 }
 
-}  // namespace page
-}  // namespace devtools
+}  // namespace protocol
 }  // namespace content

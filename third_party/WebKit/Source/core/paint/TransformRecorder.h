@@ -7,7 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "platform/graphics/paint/DisplayItem.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -15,17 +15,20 @@ class GraphicsContext;
 class AffineTransform;
 
 class CORE_EXPORT TransformRecorder {
-    STACK_ALLOCATED();
-public:
-    TransformRecorder(GraphicsContext&, const DisplayItemClient&, const AffineTransform&);
-    ~TransformRecorder();
+  STACK_ALLOCATED();
 
-private:
-    GraphicsContext& m_context;
-    const DisplayItemClient& m_client;
-    bool m_skipRecordingForIdentityTransform;
+ public:
+  TransformRecorder(GraphicsContext&,
+                    const DisplayItemClient&,
+                    const AffineTransform&);
+  ~TransformRecorder();
+
+ private:
+  GraphicsContext& context_;
+  const DisplayItemClient& client_;
+  bool skip_recording_for_identity_transform_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TransformRecorder_h
+#endif  // TransformRecorder_h

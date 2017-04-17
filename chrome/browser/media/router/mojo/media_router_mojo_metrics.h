@@ -43,9 +43,10 @@ enum class MediaRouteProviderWakeReason {
   ENABLE_MDNS_DISCOVERY = 15,
   UPDATE_MEDIA_SINKS = 16,
   SEARCH_SINKS = 17,
+  PROVIDE_SINKS = 18,
 
   // NOTE: Add entries only immediately above this line.
-  TOTAL_COUNT = 18
+  TOTAL_COUNT = 19
 };
 
 // The install status of the Media Router component extension.
@@ -86,6 +87,16 @@ class MediaRouterMojoMetrics {
   // Records the outcome of an attempt to wake the Media Router component event
   // page.
   static void RecordMediaRouteProviderWakeup(MediaRouteProviderWakeup wakeup);
+
+  // Records the outcome of a create route request to the Media Route Provider
+  // Manager.
+  static void RecordCreateRouteResultCode(
+      RouteRequestResult::ResultCode result_code);
+
+  // Records the outcome of a join route request to the Media Route Provider
+  // Manager.
+  static void RecordJoinRouteResultCode(
+      RouteRequestResult::ResultCode result_code);
 
   // Records the outcome of a call to terminateRoute() on the Media Route
   // Provider Manager.

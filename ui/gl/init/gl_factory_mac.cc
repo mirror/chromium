@@ -16,6 +16,7 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/gl_surface_osmesa.h"
 #include "ui/gl/gl_surface_stub.h"
+#include "ui/gl/gl_switches.h"
 
 namespace gl {
 namespace init {
@@ -31,7 +32,7 @@ class NoOpGLSurface : public GLSurface {
   explicit NoOpGLSurface(const gfx::Size& size) : size_(size) {}
 
   // Implement GLSurface.
-  bool Initialize(GLSurface::Format format) override { return true; }
+  bool Initialize(GLSurfaceFormat format) override { return true; }
   void Destroy() override {}
   bool IsOffscreen() override { return true; }
   gfx::SwapResult SwapBuffers() override {
@@ -42,6 +43,7 @@ class NoOpGLSurface : public GLSurface {
   void* GetHandle() override { return nullptr; }
   void* GetDisplay() override { return nullptr; }
   bool IsSurfaceless() const override { return true; }
+  GLSurfaceFormat GetFormat() override { return GLSurfaceFormat(); }
 
  protected:
   ~NoOpGLSurface() override {}
@@ -54,9 +56,22 @@ class NoOpGLSurface : public GLSurface {
 
 }  // namespace
 
+std::vector<GLImplementation> GetAllowedGLImplementations() {
+  std::vector<GLImplementation> impls;
+  impls.push_back(kGLImplementationDesktopGLCoreProfile);
+  impls.push_back(kGLImplementationDesktopGL);
+  impls.push_back(kGLImplementationAppleGL);
+  impls.push_back(kGLImplementationOSMesaGL);
+  return impls;
+}
+
+bool GetGLWindowSystemBindingInfo(GLWindowSystemBindingInfo* info) {
+  return false;
+}
+
 scoped_refptr<GLContext> CreateGLContext(GLShareGroup* share_group,
                                          GLSurface* compatible_surface,
-                                         GpuPreference gpu_preference) {
+                                         const GLContextAttribs& attribs) {
   TRACE_EVENT0("gpu", "gl::init::CreateGLContext");
   switch (GetGLImplementation()) {
     case kGLImplementationDesktopGL:
@@ -67,12 +82,18 @@ scoped_refptr<GLContext> CreateGLContext(GLShareGroup* share_group,
       // always be creating the context with an offscreen surface first.
       DCHECK(compatible_surface->IsOffscreen());
       return InitializeGLContext(new GLContextCGL(share_group),
-                                 compatible_surface, gpu_preference);
+                                 compatible_surface, attribs);
     case kGLImplementationOSMesaGL:
       return InitializeGLContext(new GLContextOSMesa(share_group),
-                                 compatible_surface, gpu_preference);
+                                 compatible_surface, attribs);
     case kGLImplementationMockGL:
       return new GLContextStub(share_group);
+    case kGLImplementationStubGL: {
+      scoped_refptr<GLContextStub> stub_context =
+          new GLContextStub(share_group);
+      stub_context->SetUseStubApi(true);
+      return stub_context;
+    }
     default:
       NOTREACHED();
       return nullptr;
@@ -92,6 +113,7 @@ scoped_refptr<GLSurface> CreateViewGLSurface(gfx::AcceleratedWidget window) {
       return InitializeGLSurface(new GLSurfaceOSMesaHeadless());
     }
     case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
       return new GLSurfaceStub;
     default:
       NOTREACHED();
@@ -99,17 +121,21 @@ scoped_refptr<GLSurface> CreateViewGLSurface(gfx::AcceleratedWidget window) {
   }
 }
 
-scoped_refptr<GLSurface> CreateOffscreenGLSurface(const gfx::Size& size) {
+scoped_refptr<GLSurface> CreateOffscreenGLSurfaceWithFormat(
+    const gfx::Size& size, GLSurfaceFormat format) {
   TRACE_EVENT0("gpu", "gl::init::CreateOffscreenGLSurface");
   switch (GetGLImplementation()) {
     case kGLImplementationOSMesaGL:
-      return InitializeGLSurface(
-          new GLSurfaceOSMesa(GLSurface::SURFACE_OSMESA_RGBA, size));
+      format.SetDefaultPixelLayout(GLSurfaceFormat::PIXEL_LAYOUT_RGBA);
+      return InitializeGLSurfaceWithFormat(
+          new GLSurfaceOSMesa(format, size), format);
     case kGLImplementationDesktopGL:
     case kGLImplementationDesktopGLCoreProfile:
     case kGLImplementationAppleGL:
-      return InitializeGLSurface(new NoOpGLSurface(size));
+      return InitializeGLSurfaceWithFormat(
+          new NoOpGLSurface(size), format);
     case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
       return new GLSurfaceStub;
     default:
       NOTREACHED();

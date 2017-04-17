@@ -12,17 +12,12 @@
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
 
-class ExtensionAction;
 class LocationBarTesting;
 class OmniboxView;
 class Profile;
 
 namespace content {
 class WebContents;
-}
-
-namespace extensions {
-class Extension;
 }
 
 // The LocationBar class is a virtual interface, defining access to the
@@ -60,24 +55,12 @@ class LocationBar {
   // Updates the visibility and toggled state of the save credit card icon.
   virtual void UpdateSaveCreditCardIcon() = 0;
 
-  // Updates the state of the page actions.
-  virtual void UpdatePageActions() = 0;
-
   // Updates the visibility of the bookmark star.
   virtual void UpdateBookmarkStarVisibility() = 0;
 
   // Updates the visibility of the location bar. Animates the transition if
   // |animate| is true.
   virtual void UpdateLocationBarVisibility(bool visible, bool animate) = 0;
-
-  // Shows the popup for the given |extension| and, if |grant_active_tab| is
-  // true, grants the extension active tab permissions.
-  // Returns true if a popup was shown.
-  virtual bool ShowPageActionPopup(const extensions::Extension* extension,
-                                   bool grant_active_tab) = 0;
-
-  // Updates the state of the button to open a PDF in Adobe Reader.
-  virtual void UpdateOpenPDFInReaderPrompt() = 0;
 
   // Saves the state of the location bar to the specified WebContents, so that
   // it can be restored later. (Done when switching tabs).
@@ -100,31 +83,30 @@ class LocationBar {
   // Checks if any extension has requested that the bookmark star be hidden.
   bool IsBookmarkStarHiddenByExtension() const;
 
+  // If |url| is an extension URL, returns the name of the associated extension,
+  // with whitespace collapsed. Otherwise, returns empty string. |web_contents|
+  // is used to get at the extension registry.
+  static base::string16 GetExtensionName(const GURL& url,
+                                         content::WebContents* web_contents);
+
  private:
+  class ExtensionLoadObserver;
+
   Profile* profile_;
+
+  std::unique_ptr<ExtensionLoadObserver> extension_load_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(LocationBar);
 };
 
 class LocationBarTesting {
  public:
-  // Returns the total number of page actions in the Omnibox.
-  virtual int PageActionCount() = 0;
-
-  // Returns the number of visible page actions in the Omnibox.
-  virtual int PageActionVisibleCount() = 0;
-
-  // Returns the ExtensionAction at |index|.
-  virtual ExtensionAction* GetPageAction(size_t index) = 0;
-
-  // Returns the visible ExtensionAction at |index|.
-  virtual ExtensionAction* GetVisiblePageAction(size_t index) = 0;
-
-  // Simulates a left mouse pressed on the visible page action at |index|.
-  virtual void TestPageActionPressed(size_t index) = 0;
-
   // Returns whether or not the bookmark star decoration is visible.
   virtual bool GetBookmarkStarVisibility() = 0;
+
+  // Invokes the content setting image at |index|, displaying the bubble.
+  // Returns false if there is none.
+  virtual bool TestContentSettingImagePressed(size_t index) = 0;
 
  protected:
   virtual ~LocationBarTesting() {}

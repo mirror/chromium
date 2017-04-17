@@ -4,7 +4,7 @@
 
 # GN version: third_party/closure_compiler/closure_args.gni
 {
-  'closure_args': [
+  'default_closure_args': [
     'compilation_level=SIMPLE_OPTIMIZATIONS',
 
     # Keep this in sync with chrome/browser/web_dev_style/js_checker.py.
@@ -36,18 +36,21 @@
     'jscomp_error=uselessCode',
     'jscomp_error=visibility',
 
-    'language_in=ECMASCRIPT6_STRICT',
+    'language_in=ECMASCRIPT_NEXT',
     'language_out=ECMASCRIPT5_STRICT',
 
+    'checks_only',
+    'chrome_pass',
     'polymer_pass',
 
     'source_map_format=V3',
   ],
+
   'default_disabled_closure_args': [
     # TODO(dbeam): happens when the same file is <include>d multiple times.
     'jscomp_off=duplicate',
     # TODO(fukino): happens when cr.defineProperty() has a type annotation.
     # Avoiding parse-time warnings needs 2 pass compiling. crbug.com/421562.
     'jscomp_off=misplacedTypeAnnotation',
-  ]
+  ],
 }

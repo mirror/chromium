@@ -6,33 +6,36 @@
 
 #include "core/svg/graphics/SVGImage.h"
 #include "core/svg/graphics/SVGImageForContainer.h"
+#include "platform/geometry/LayoutSize.h"
 
 namespace blink {
 
-LayoutSize StyleImage::applyZoom(const LayoutSize& size, float multiplier)
-{
-    if (multiplier == 1.0f)
-        return size;
+LayoutSize StyleImage::ApplyZoom(const LayoutSize& size, float multiplier) {
+  if (multiplier == 1.0f)
+    return size;
 
-    LayoutUnit width(size.width() * multiplier);
-    LayoutUnit height(size.height() * multiplier);
+  LayoutUnit width(size.Width() * multiplier);
+  LayoutUnit height(size.Height() * multiplier);
 
-    // Don't let images that have a width/height >= 1 shrink below 1 when zoomed.
-    if (size.width() > LayoutUnit())
-        width = std::max(LayoutUnit(1), width);
+  // Don't let images that have a width/height >= 1 shrink below 1 when zoomed.
+  if (size.Width() > LayoutUnit())
+    width = std::max(LayoutUnit(1), width);
 
-    if (size.height() > LayoutUnit())
-        height = std::max(LayoutUnit(1), height);
+  if (size.Height() > LayoutUnit())
+    height = std::max(LayoutUnit(1), height);
 
-    return LayoutSize(width, height);
+  return LayoutSize(width, height);
 }
 
-LayoutSize StyleImage::imageSizeForSVGImage(SVGImage* svgImage, float multiplier, const LayoutSize& defaultObjectSize) const
-{
-    FloatSize unzoomedDefaultObjectSize(defaultObjectSize);
-    unzoomedDefaultObjectSize.scale(1 / multiplier);
-    LayoutSize imageSize(roundedIntSize(svgImage->concreteObjectSize(unzoomedDefaultObjectSize)));
-    return applyZoom(imageSize, multiplier);
+LayoutSize StyleImage::ImageSizeForSVGImage(
+    SVGImage* svg_image,
+    float multiplier,
+    const LayoutSize& default_object_size) const {
+  FloatSize unzoomed_default_object_size(default_object_size);
+  unzoomed_default_object_size.Scale(1 / multiplier);
+  LayoutSize image_size(RoundedIntSize(
+      svg_image->ConcreteObjectSize(unzoomed_default_object_size)));
+  return ApplyZoom(image_size, multiplier);
 }
 
-} // namespace blink
+}  // namespace blink

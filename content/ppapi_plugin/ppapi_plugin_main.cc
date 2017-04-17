@@ -11,11 +11,11 @@
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/threading/platform_thread.h"
 #include "build/build_config.h"
 #include "content/child/child_process.h"
 #include "content/common/content_constants_internal.h"
-#include "content/common/sandbox_linux/sandbox_linux.h"
 #include "content/ppapi_plugin/ppapi_thread.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
@@ -32,7 +32,6 @@
 #include "sandbox/win/src/sandbox.h"
 #include "third_party/WebKit/public/web/win/WebFontRendering.h"
 #include "third_party/skia/include/ports/SkTypeface_win.h"
-#include "ui/display/win/dpi.h"
 #include "ui/gfx/font_render_params.h"
 #include "ui/gfx/win/direct_write.h"
 #endif
@@ -42,6 +41,7 @@
 #endif
 
 #if defined(OS_LINUX)
+#include "content/common/sandbox_linux/sandbox_linux.h"
 #include "content/public/common/sandbox_init.h"
 #endif
 
@@ -133,14 +133,25 @@ int PpapiPluginMain(const MainFunctionParams& parameters) {
     gfx::win::MaybeInitializeDirectWrite();
   InitializeDWriteFontProxy();
 
-  blink::WebFontRendering::setDeviceScaleFactor(display::win::GetDPIScale());
+  double device_scale_factor = 1.0;
+  base::StringToDouble(
+      command_line.GetSwitchValueASCII(switches::kDeviceScaleFactor),
+      &device_scale_factor);
+  blink::WebFontRendering::SetDeviceScaleFactor(device_scale_factor);
 
-  const gfx::FontRenderParams font_params =
-      gfx::GetFontRenderParams(gfx::FontRenderParamsQuery(), nullptr);
-  blink::WebFontRendering::setAntialiasedTextEnabled(font_params.antialiasing);
-  blink::WebFontRendering::setLCDTextEnabled(
-      font_params.subpixel_rendering !=
-      gfx::FontRenderParams::SUBPIXEL_RENDERING_NONE);
+  int antialiasing_enabled = 1;
+  base::StringToInt(
+      command_line.GetSwitchValueASCII(switches::kPpapiAntialiasedTextEnabled),
+      &antialiasing_enabled);
+  blink::WebFontRendering::SetAntialiasedTextEnabled(
+      antialiasing_enabled ? true : false);
+
+  int subpixel_rendering = 0;
+  base::StringToInt(command_line.GetSwitchValueASCII(
+                        switches::kPpapiSubpixelRenderingSetting),
+                    &subpixel_rendering);
+  blink::WebFontRendering::SetLCDTextEnabled(
+      subpixel_rendering != gfx::FontRenderParams::SUBPIXEL_RENDERING_NONE);
 #endif
 
   base::RunLoop().Run();

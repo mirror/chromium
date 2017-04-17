@@ -13,70 +13,79 @@
 
 namespace blink {
 
-CanvasCaptureMediaStreamTrack* CanvasCaptureMediaStreamTrack::create(MediaStreamComponent* component, HTMLCanvasElement* element, std::unique_ptr<WebCanvasCaptureHandler> handler)
-{
-    return new CanvasCaptureMediaStreamTrack(component, element, std::move(handler));
+CanvasCaptureMediaStreamTrack* CanvasCaptureMediaStreamTrack::Create(
+    MediaStreamComponent* component,
+    HTMLCanvasElement* element,
+    std::unique_ptr<WebCanvasCaptureHandler> handler) {
+  return new CanvasCaptureMediaStreamTrack(component, element,
+                                           std::move(handler));
 }
 
-CanvasCaptureMediaStreamTrack* CanvasCaptureMediaStreamTrack::create(MediaStreamComponent* component, HTMLCanvasElement* element, std::unique_ptr<WebCanvasCaptureHandler> handler, double frameRate)
-{
-    return new CanvasCaptureMediaStreamTrack(component, element, std::move(handler), frameRate);
+CanvasCaptureMediaStreamTrack* CanvasCaptureMediaStreamTrack::Create(
+    MediaStreamComponent* component,
+    HTMLCanvasElement* element,
+    std::unique_ptr<WebCanvasCaptureHandler> handler,
+    double frame_rate) {
+  return new CanvasCaptureMediaStreamTrack(component, element,
+                                           std::move(handler), frame_rate);
 }
 
-HTMLCanvasElement* CanvasCaptureMediaStreamTrack::canvas() const
-{
-    return m_canvasElement.get();
+HTMLCanvasElement* CanvasCaptureMediaStreamTrack::canvas() const {
+  return canvas_element_.Get();
 }
 
-void CanvasCaptureMediaStreamTrack::requestFrame()
-{
-    m_drawListener->requestFrame();
+void CanvasCaptureMediaStreamTrack::requestFrame() {
+  draw_listener_->RequestFrame();
 }
 
-CanvasCaptureMediaStreamTrack* CanvasCaptureMediaStreamTrack::clone(ExecutionContext* context)
-{
-    MediaStreamComponent* clonedComponent = MediaStreamComponent::create(component()->source());
-    CanvasCaptureMediaStreamTrack* clonedTrack = new CanvasCaptureMediaStreamTrack(*this, clonedComponent);
-    MediaStreamCenter::instance().didCreateMediaStreamTrack(clonedComponent);
-    return clonedTrack;
+CanvasCaptureMediaStreamTrack* CanvasCaptureMediaStreamTrack::clone(
+    ScriptState* script_state) {
+  MediaStreamComponent* cloned_component = Component()->Clone();
+  CanvasCaptureMediaStreamTrack* cloned_track =
+      new CanvasCaptureMediaStreamTrack(*this, cloned_component);
+  MediaStreamCenter::Instance().DidCreateMediaStreamTrack(cloned_component);
+  return cloned_track;
 }
 
-DEFINE_TRACE(CanvasCaptureMediaStreamTrack)
-{
-    visitor->trace(m_canvasElement);
-    visitor->trace(m_drawListener);
-    MediaStreamTrack::trace(visitor);
+DEFINE_TRACE(CanvasCaptureMediaStreamTrack) {
+  visitor->Trace(canvas_element_);
+  visitor->Trace(draw_listener_);
+  MediaStreamTrack::Trace(visitor);
 }
 
-CanvasCaptureMediaStreamTrack::CanvasCaptureMediaStreamTrack(const CanvasCaptureMediaStreamTrack& track, MediaStreamComponent* component)
-    :MediaStreamTrack(track.m_canvasElement->getExecutionContext(), component)
-    , m_canvasElement(track.m_canvasElement)
-    , m_drawListener(track.m_drawListener)
-{
-    suspendIfNeeded();
-    m_canvasElement->addListener(m_drawListener.get());
+CanvasCaptureMediaStreamTrack::CanvasCaptureMediaStreamTrack(
+    const CanvasCaptureMediaStreamTrack& track,
+    MediaStreamComponent* component)
+    : MediaStreamTrack(track.canvas_element_->GetExecutionContext(), component),
+      canvas_element_(track.canvas_element_),
+      draw_listener_(track.draw_listener_) {
+  canvas_element_->AddListener(draw_listener_.Get());
 }
 
-CanvasCaptureMediaStreamTrack::CanvasCaptureMediaStreamTrack(MediaStreamComponent* component, HTMLCanvasElement* element, std::unique_ptr<WebCanvasCaptureHandler> handler)
-    : MediaStreamTrack(element->getExecutionContext(), component)
-    , m_canvasElement(element)
-{
-    suspendIfNeeded();
-    m_drawListener = AutoCanvasDrawListener::create(std::move(handler));
-    m_canvasElement->addListener(m_drawListener.get());
+CanvasCaptureMediaStreamTrack::CanvasCaptureMediaStreamTrack(
+    MediaStreamComponent* component,
+    HTMLCanvasElement* element,
+    std::unique_ptr<WebCanvasCaptureHandler> handler)
+    : MediaStreamTrack(element->GetExecutionContext(), component),
+      canvas_element_(element) {
+  draw_listener_ = AutoCanvasDrawListener::Create(std::move(handler));
+  canvas_element_->AddListener(draw_listener_.Get());
 }
 
-CanvasCaptureMediaStreamTrack::CanvasCaptureMediaStreamTrack(MediaStreamComponent* component, HTMLCanvasElement* element, std::unique_ptr<WebCanvasCaptureHandler> handler, double frameRate)
-    : MediaStreamTrack(element->getExecutionContext(), component)
-    , m_canvasElement(element)
-{
-    suspendIfNeeded();
-    if (frameRate == 0) {
-        m_drawListener = OnRequestCanvasDrawListener::create(std::move(handler));
-    } else {
-        m_drawListener = TimedCanvasDrawListener::create(std::move(handler), frameRate);
-    }
-    m_canvasElement->addListener(m_drawListener.get());
+CanvasCaptureMediaStreamTrack::CanvasCaptureMediaStreamTrack(
+    MediaStreamComponent* component,
+    HTMLCanvasElement* element,
+    std::unique_ptr<WebCanvasCaptureHandler> handler,
+    double frame_rate)
+    : MediaStreamTrack(element->GetExecutionContext(), component),
+      canvas_element_(element) {
+  if (frame_rate == 0) {
+    draw_listener_ = OnRequestCanvasDrawListener::Create(std::move(handler));
+  } else {
+    draw_listener_ =
+        TimedCanvasDrawListener::Create(std::move(handler), frame_rate);
+  }
+  canvas_element_->AddListener(draw_listener_.Get());
 }
 
-} // namespace blink
+}  // namespace blink

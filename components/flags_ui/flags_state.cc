@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
 #include "base/stl_util.h"
+#include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -105,7 +106,7 @@ void AddInternalName(const FeatureEntry& e, std::set<std::string>* names) {
     case FeatureEntry::MULTI_VALUE:
     case FeatureEntry::ENABLE_DISABLE_VALUE:
     case FeatureEntry::FEATURE_VALUE:
-    case FeatureEntry::FEATURE_WITH_VARIATIONS_VALUE:
+    case FeatureEntry::FEATURE_WITH_PARAMS_VALUE:
       for (int i = 0; i < e.num_options; ++i)
         names->insert(e.NameForOption(i));
       break;
@@ -140,7 +141,7 @@ bool ValidateFeatureEntry(const FeatureEntry& e) {
       DCHECK(!e.choices);
       DCHECK(e.feature);
       return true;
-    case FeatureEntry::FEATURE_WITH_VARIATIONS_VALUE:
+    case FeatureEntry::FEATURE_WITH_PARAMS_VALUE:
       DCHECK_GT(e.num_options, 2);
       DCHECK(!e.choices);
       DCHECK(e.feature);
@@ -162,7 +163,7 @@ bool IsDefaultValue(const FeatureEntry& entry,
     case FeatureEntry::MULTI_VALUE:
     case FeatureEntry::ENABLE_DISABLE_VALUE:
     case FeatureEntry::FEATURE_VALUE:
-    case FeatureEntry::FEATURE_WITH_VARIATIONS_VALUE:
+    case FeatureEntry::FEATURE_WITH_PARAMS_VALUE:
       for (int i = 0; i < entry.num_options; ++i) {
         if (enabled_entries.count(entry.NameForOption(i)) > 0)
           return false;
@@ -179,7 +180,7 @@ base::Value* CreateOptionsData(const FeatureEntry& entry,
   DCHECK(entry.type == FeatureEntry::MULTI_VALUE ||
          entry.type == FeatureEntry::ENABLE_DISABLE_VALUE ||
          entry.type == FeatureEntry::FEATURE_VALUE ||
-         entry.type == FeatureEntry::FEATURE_WITH_VARIATIONS_VALUE);
+         entry.type == FeatureEntry::FEATURE_WITH_PARAMS_VALUE);
   base::ListValue* result = new base::ListValue;
   for (int i = 0; i < entry.num_options; ++i) {
     std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue);
@@ -192,25 +193,17 @@ base::Value* CreateOptionsData(const FeatureEntry& entry,
   return result;
 }
 
-// Registers variation parameters specified by |feature_variation| for the field
-// trial named |feature_trial_name|, unless a group for this trial has already
-// been created (e.g. via command-line switches that take precedence over
-// about:flags). In the trial, the function creates a new constant group called
-// |kTrialGroupAboutFlags|.
+// Registers variation parameters specified by |feature_variation_params| for
+// the field trial named |feature_trial_name|, unless a group for this trial has
+// already been created (e.g. via command-line switches that take precedence
+// over about:flags). In the trial, the function creates a new constant group
+// called |kTrialGroupAboutFlags|.
 base::FieldTrial* RegisterFeatureVariationParameters(
     const std::string& feature_trial_name,
-    const FeatureEntry::FeatureVariation* feature_variation) {
-  std::map<std::string, std::string> params;
-  if (feature_variation) {
-    // Copy the parameters for non-null variations.
-    for (int i = 0; i < feature_variation->num_params; ++i) {
-      params[feature_variation->params[i].param_name] =
-          feature_variation->params[i].param_value;
-    }
-  }
-
+    const std::map<std::string, std::string>& feature_variation_params) {
   bool success = variations::AssociateVariationParams(
-      feature_trial_name, internal::kTrialGroupAboutFlags, params);
+      feature_trial_name, internal::kTrialGroupAboutFlags,
+      feature_variation_params);
   if (!success)
     return nullptr;
   // Successful association also means that no group is created and selected
@@ -228,9 +221,7 @@ base::FieldTrial* RegisterFeatureVariationParameters(
 
 }  // namespace
 
-// Keeps track of affected switches for each FeatureEntry, based on which
-// choice is selected for it.
-struct SwitchEntry {
+struct FlagsState::SwitchEntry {
   // Corresponding base::Feature to toggle.
   std::string feature_name;
 
@@ -261,53 +252,54 @@ void FlagsState::ConvertFlagsToSwitches(
     const char* enable_features_flag_name,
     const char* disable_features_flag_name) {
   std::set<std::string> enabled_entries;
-
-  GetSanitizedEnabledFlagsForCurrentPlatform(flags_storage, &enabled_entries);
-
   std::map<std::string, SwitchEntry> name_to_switch_map;
-  for (size_t i = 0; i < num_feature_entries_; ++i) {
-    const FeatureEntry& e = feature_entries_[i];
-    switch (e.type) {
-      case FeatureEntry::SINGLE_VALUE:
-      case FeatureEntry::SINGLE_DISABLE_VALUE:
-        AddSwitchMapping(e.internal_name, e.command_line_switch,
-                         e.command_line_value, &name_to_switch_map);
-        break;
-      case FeatureEntry::MULTI_VALUE:
-        for (int j = 0; j < e.num_options; ++j) {
-          AddSwitchMapping(
-              e.NameForOption(j), e.ChoiceForOption(j).command_line_switch,
-              e.ChoiceForOption(j).command_line_value, &name_to_switch_map);
-        }
-        break;
-      case FeatureEntry::ENABLE_DISABLE_VALUE:
-        AddSwitchMapping(e.NameForOption(0), std::string(), std::string(),
-                         &name_to_switch_map);
-        AddSwitchMapping(e.NameForOption(1), e.command_line_switch,
-                         e.command_line_value, &name_to_switch_map);
-        AddSwitchMapping(e.NameForOption(2), e.disable_command_line_switch,
-                         e.disable_command_line_value, &name_to_switch_map);
-        break;
-      case FeatureEntry::FEATURE_VALUE:
-      case FeatureEntry::FEATURE_WITH_VARIATIONS_VALUE:
-        for (int j = 0; j < e.num_options; ++j) {
-          FeatureEntry::FeatureState state = e.StateForOption(j);
-          if (state == FeatureEntry::FeatureState::DEFAULT) {
-            AddFeatureMapping(e.NameForOption(j), std::string(), false,
-                              &name_to_switch_map);
-          } else {
-            AddFeatureMapping(e.NameForOption(j), e.feature->name,
-                              state == FeatureEntry::FeatureState::ENABLED,
-                              &name_to_switch_map);
-          }
-        }
-        break;
-    }
-  }
-
+  GenerateFlagsToSwitchesMapping(flags_storage, &enabled_entries,
+                                 &name_to_switch_map);
   AddSwitchesToCommandLine(enabled_entries, name_to_switch_map, sentinels,
                            command_line, enable_features_flag_name,
                            disable_features_flag_name);
+}
+
+std::set<std::string> FlagsState::GetSwitchesFromFlags(
+    FlagsStorage* flags_storage) {
+  std::set<std::string> enabled_entries;
+  std::map<std::string, SwitchEntry> name_to_switch_map;
+  GenerateFlagsToSwitchesMapping(flags_storage, &enabled_entries,
+                                 &name_to_switch_map);
+
+  std::set<std::string> switches;
+  for (const std::string& entry_name : enabled_entries) {
+    const auto& entry_it = name_to_switch_map.find(entry_name);
+    DCHECK(entry_it != name_to_switch_map.end());
+
+    const SwitchEntry& entry = entry_it->second;
+    if (!entry.switch_name.empty())
+      switches.insert("--" + entry.switch_name);
+  }
+  return switches;
+}
+
+std::set<std::string> FlagsState::GetFeaturesFromFlags(
+    FlagsStorage* flags_storage) {
+  std::set<std::string> enabled_entries;
+  std::map<std::string, SwitchEntry> name_to_switch_map;
+  GenerateFlagsToSwitchesMapping(flags_storage, &enabled_entries,
+                                 &name_to_switch_map);
+
+  std::set<std::string> features;
+  for (const std::string& entry_name : enabled_entries) {
+    const auto& entry_it = name_to_switch_map.find(entry_name);
+    DCHECK(entry_it != name_to_switch_map.end());
+
+    const SwitchEntry& entry = entry_it->second;
+    if (!entry.feature_name.empty()) {
+      if (entry.feature_state)
+        features.insert(entry.feature_name + ":enabled");
+      else
+        features.insert(entry.feature_name + ":disabled");
+    }
+  }
+  return features;
 }
 
 bool FlagsState::IsRestartNeededToCommitChanges() {
@@ -398,13 +390,13 @@ void FlagsState::RemoveFlagsSwitches(
     const std::string& existing_value_utf8 = existing_value;
 #endif
 
-    std::vector<std::string> features =
+    std::vector<base::StringPiece> features =
         base::FeatureList::SplitFeatureListString(existing_value_utf8);
-    std::vector<std::string> remaining_features;
+    std::vector<base::StringPiece> remaining_features;
     // For any featrue name in |features| that is not in |switch_added_values| -
     // i.e. it wasn't added by about_flags code, add it to |remaining_features|.
-    for (const std::string& feature : features) {
-      if (!ContainsKey(switch_added_values, feature))
+    for (const auto& feature : features) {
+      if (!base::ContainsKey(switch_added_values, feature.as_string()))
         remaining_features.push_back(feature);
     }
 
@@ -436,34 +428,69 @@ void FlagsState::Reset() {
   appended_switches_.clear();
 }
 
-void FlagsState::RegisterAllFeatureVariationParameters(
+std::vector<std::string> FlagsState::RegisterAllFeatureVariationParameters(
     FlagsStorage* flags_storage,
     base::FeatureList* feature_list) {
   std::set<std::string> enabled_entries;
   GetSanitizedEnabledFlagsForCurrentPlatform(flags_storage, &enabled_entries);
+  std::vector<std::string> variation_ids;
+  std::map<std::string, std::set<std::string>> enabled_features_by_trial_name;
+  std::map<std::string, std::map<std::string, std::string>>
+      params_by_trial_name;
 
+  // First collect all the data for each trial.
   for (size_t i = 0; i < num_feature_entries_; ++i) {
     const FeatureEntry& e = feature_entries_[i];
-    if (e.type == FeatureEntry::FEATURE_WITH_VARIATIONS_VALUE) {
+    if (e.type == FeatureEntry::FEATURE_WITH_PARAMS_VALUE) {
       for (int j = 0; j < e.num_options; ++j) {
-        const FeatureEntry::FeatureVariation* variation =
-            e.VariationForOption(j);
         if (e.StateForOption(j) == FeatureEntry::FeatureState::ENABLED &&
             enabled_entries.count(e.NameForOption(j))) {
-          // If the option is selected by the user & has variation, register it.
-          base::FieldTrial* field_trial = RegisterFeatureVariationParameters(
-              e.feature_trial_name, variation);
+          std::string trial_name = e.feature_trial_name;
+          // The user has chosen to enable the feature by this option.
+          enabled_features_by_trial_name[trial_name].insert(e.feature->name);
 
-          if (!field_trial)
+          const FeatureEntry::FeatureVariation* variation =
+              e.VariationForOption(j);
+          if (!variation)
             continue;
-          feature_list->RegisterFieldTrialOverride(
-              e.feature->name,
-              base::FeatureList::OverrideState::OVERRIDE_ENABLE_FEATURE,
-              field_trial);
+
+          // The selected variation is non-default, collect its params & id.
+
+          for (int i = 0; i < variation->num_params; ++i) {
+            auto insert_result = params_by_trial_name[trial_name].insert(
+                std::make_pair(variation->params[i].param_name,
+                               variation->params[i].param_value));
+            DCHECK(insert_result.second)
+                << "Multiple values for the same parameter '"
+                << variation->params[i].param_name
+                << "' are specified in chrome://flags!";
+          }
+          if (variation->variation_id)
+            variation_ids.push_back(variation->variation_id);
         }
       }
     }
   }
+
+  // Now create the trials and associate the features to them.
+  for (const auto& kv : enabled_features_by_trial_name) {
+    const std::string& trial_name = kv.first;
+    const std::set<std::string>& trial_features = kv.second;
+
+    base::FieldTrial* field_trial = RegisterFeatureVariationParameters(
+        trial_name, params_by_trial_name[trial_name]);
+    if (!field_trial)
+      continue;
+
+    for (const std::string& feature_name : trial_features) {
+      feature_list->RegisterFieldTrialOverride(
+          feature_name,
+          base::FeatureList::OverrideState::OVERRIDE_ENABLE_FEATURE,
+          field_trial);
+    }
+  }
+
+  return variation_ids;
 }
 
 void FlagsState::GetFlagFeatureEntries(
@@ -482,11 +509,11 @@ void FlagsState::GetFlagFeatureEntries(
     if (skip_feature_entry.Run(entry))
       continue;
 
-    base::DictionaryValue* data = new base::DictionaryValue();
+    std::unique_ptr<base::DictionaryValue> data(new base::DictionaryValue());
     data->SetString("internal_name", entry.internal_name);
-    data->SetString("name", l10n_util::GetStringUTF16(entry.visible_name_id));
+    data->SetString("name", base::StringPiece(entry.visible_name));
     data->SetString("description",
-                    l10n_util::GetStringUTF16(entry.visible_description_id));
+                    base::StringPiece(entry.visible_description));
 
     base::ListValue* supported_platforms = new base::ListValue();
     AddOsStrings(entry.supported_platforms, supported_platforms);
@@ -507,7 +534,7 @@ void FlagsState::GetFlagFeatureEntries(
       case FeatureEntry::MULTI_VALUE:
       case FeatureEntry::ENABLE_DISABLE_VALUE:
       case FeatureEntry::FEATURE_VALUE:
-      case FeatureEntry::FEATURE_WITH_VARIATIONS_VALUE:
+      case FeatureEntry::FEATURE_WITH_PARAMS_VALUE:
         data->Set("options", CreateOptionsData(entry, enabled_entries));
         break;
     }
@@ -524,9 +551,9 @@ void FlagsState::GetFlagFeatureEntries(
       supported = ((entry.supported_platforms & kOsIosAppleReview) != 0);
 #endif
     if (supported)
-      supported_entries->Append(data);
+      supported_entries->Append(std::move(data));
     else
-      unsupported_entries->Append(data);
+      unsupported_entries->Append(std::move(data));
   }
 }
 
@@ -587,7 +614,7 @@ void FlagsState::AddSwitchMapping(
     const std::string& switch_name,
     const std::string& switch_value,
     std::map<std::string, SwitchEntry>* name_to_switch_map) {
-  DCHECK(!ContainsKey(*name_to_switch_map, key));
+  DCHECK(!base::ContainsKey(*name_to_switch_map, key));
 
   SwitchEntry* entry = &(*name_to_switch_map)[key];
   entry->switch_name = switch_name;
@@ -599,7 +626,7 @@ void FlagsState::AddFeatureMapping(
     const std::string& feature_name,
     bool feature_state,
     std::map<std::string, SwitchEntry>* name_to_switch_map) {
-  DCHECK(!ContainsKey(*name_to_switch_map, key));
+  DCHECK(!base::ContainsKey(*name_to_switch_map, key));
 
   SwitchEntry* entry = &(*name_to_switch_map)[key];
   entry->feature_name = feature_name;
@@ -657,14 +684,14 @@ void FlagsState::MergeFeatureCommandLineSwitch(
     base::CommandLine* command_line) {
   std::string original_switch_value =
       command_line->GetSwitchValueASCII(switch_name);
-  std::vector<std::string> features =
+  std::vector<base::StringPiece> features =
       base::FeatureList::SplitFeatureListString(original_switch_value);
   // Only add features that don't already exist in the lists.
-  // Note: The ContainsValue() call results in O(n^2) performance, but in
+  // Note: The base::ContainsValue() call results in O(n^2) performance, but in
   // practice n should be very small.
   for (const auto& entry : feature_switches) {
     if (entry.second == feature_state &&
-        !ContainsValue(features, entry.first)) {
+        !base::ContainsValue(features, entry.first)) {
       features.push_back(entry.first);
       appended_switches_[switch_name].insert(entry.first);
     }
@@ -725,6 +752,53 @@ void FlagsState::GetSanitizedEnabledFlagsForCurrentPlatform(
                                                       *result);
 
   result->swap(new_enabled_entries);
+}
+
+void FlagsState::GenerateFlagsToSwitchesMapping(
+    FlagsStorage* flags_storage,
+    std::set<std::string>* enabled_entries,
+    std::map<std::string, SwitchEntry>* name_to_switch_map) {
+  GetSanitizedEnabledFlagsForCurrentPlatform(flags_storage, enabled_entries);
+
+  for (size_t i = 0; i < num_feature_entries_; ++i) {
+    const FeatureEntry& e = feature_entries_[i];
+    switch (e.type) {
+      case FeatureEntry::SINGLE_VALUE:
+      case FeatureEntry::SINGLE_DISABLE_VALUE:
+        AddSwitchMapping(e.internal_name, e.command_line_switch,
+                         e.command_line_value, name_to_switch_map);
+        break;
+      case FeatureEntry::MULTI_VALUE:
+        for (int j = 0; j < e.num_options; ++j) {
+          AddSwitchMapping(
+              e.NameForOption(j), e.ChoiceForOption(j).command_line_switch,
+              e.ChoiceForOption(j).command_line_value, name_to_switch_map);
+        }
+        break;
+      case FeatureEntry::ENABLE_DISABLE_VALUE:
+        AddSwitchMapping(e.NameForOption(0), std::string(), std::string(),
+                         name_to_switch_map);
+        AddSwitchMapping(e.NameForOption(1), e.command_line_switch,
+                         e.command_line_value, name_to_switch_map);
+        AddSwitchMapping(e.NameForOption(2), e.disable_command_line_switch,
+                         e.disable_command_line_value, name_to_switch_map);
+        break;
+      case FeatureEntry::FEATURE_VALUE:
+      case FeatureEntry::FEATURE_WITH_PARAMS_VALUE:
+        for (int j = 0; j < e.num_options; ++j) {
+          FeatureEntry::FeatureState state = e.StateForOption(j);
+          if (state == FeatureEntry::FeatureState::DEFAULT) {
+            AddFeatureMapping(e.NameForOption(j), std::string(), false,
+                              name_to_switch_map);
+          } else {
+            AddFeatureMapping(e.NameForOption(j), e.feature->name,
+                              state == FeatureEntry::FeatureState::ENABLED,
+                              name_to_switch_map);
+          }
+        }
+        break;
+    }
+  }
 }
 
 }  // namespace flags_ui

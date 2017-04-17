@@ -5,22 +5,20 @@
 #ifndef CC_IPC_RENDER_PASS_STRUCT_TRAITS_H_
 #define CC_IPC_RENDER_PASS_STRUCT_TRAITS_H_
 
+#include "base/logging.h"
 #include "cc/ipc/quads_struct_traits.h"
-#include "cc/ipc/render_pass.mojom.h"
-#include "cc/ipc/render_pass_id_struct_traits.h"
+#include "cc/ipc/render_pass.mojom-shared.h"
 #include "cc/quads/render_pass.h"
+#include "ui/gfx/ipc/color/gfx_param_traits.h"
 #include "ui/gfx/mojo/transform_struct_traits.h"
 
 namespace mojo {
 
 template <>
-struct StructTraits<cc::mojom::RenderPass, std::unique_ptr<cc::RenderPass>> {
-  static void* SetUpContext(const std::unique_ptr<cc::RenderPass>& input);
-  static void TearDownContext(const std::unique_ptr<cc::RenderPass>& input,
-                              void* context);
-
-  static const cc::RenderPassId& id(
-      const std::unique_ptr<cc::RenderPass>& input) {
+struct StructTraits<cc::mojom::RenderPassDataView,
+                    std::unique_ptr<cc::RenderPass>> {
+  static int32_t id(const std::unique_ptr<cc::RenderPass>& input) {
+    DCHECK(input->id);
     return input->id;
   }
 
@@ -39,6 +37,21 @@ struct StructTraits<cc::mojom::RenderPass, std::unique_ptr<cc::RenderPass>> {
     return input->transform_to_root_target;
   }
 
+  static const cc::FilterOperations& filters(
+      const std::unique_ptr<cc::RenderPass>& input) {
+    return input->filters;
+  }
+
+  static const cc::FilterOperations& background_filters(
+      const std::unique_ptr<cc::RenderPass>& input) {
+    return input->background_filters;
+  }
+
+  static const gfx::ColorSpace& color_space(
+      const std::unique_ptr<cc::RenderPass>& input) {
+    return input->color_space;
+  }
+
   static bool has_transparent_background(
       const std::unique_ptr<cc::RenderPass>& input) {
     return input->has_transparent_background;
@@ -47,17 +60,6 @@ struct StructTraits<cc::mojom::RenderPass, std::unique_ptr<cc::RenderPass>> {
   static const cc::QuadList& quad_list(
       const std::unique_ptr<cc::RenderPass>& input) {
     return input->quad_list;
-  }
-
-  static const mojo::Array<uint32_t>& shared_quad_state_references(
-      const std::unique_ptr<cc::RenderPass>& input,
-      void* context) {
-    return *static_cast<mojo::Array<uint32_t>*>(context);
-  }
-
-  static const cc::SharedQuadStateList& shared_quad_state_list(
-      const std::unique_ptr<cc::RenderPass>& input) {
-    return input->shared_quad_state_list;
   }
 
   static bool Read(cc::mojom::RenderPassDataView data,

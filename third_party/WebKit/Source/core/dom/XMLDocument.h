@@ -27,34 +27,35 @@
 #define XMLDocument_h
 
 #include "core/dom/Document.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class XMLDocument final : public Document {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static XMLDocument* create(const DocumentInit& initializer = DocumentInit())
-    {
-        return new XMLDocument(initializer, XMLDocumentClass);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    static XMLDocument* createXHTML(const DocumentInit& initializer = DocumentInit())
-    {
-        return new XMLDocument(initializer, XMLDocumentClass | XHTMLDocumentClass);
-    }
+ public:
+  static XMLDocument* Create(const DocumentInit& initializer = DocumentInit()) {
+    return new XMLDocument(initializer, kXMLDocumentClass);
+  }
 
-    static XMLDocument* createSVG(const DocumentInit& initializer = DocumentInit())
-    {
-        return new XMLDocument(initializer, XMLDocumentClass | SVGDocumentClass);
-    }
+  static XMLDocument* CreateXHTML(
+      const DocumentInit& initializer = DocumentInit()) {
+    return new XMLDocument(initializer,
+                           kXMLDocumentClass | kXHTMLDocumentClass);
+  }
 
-protected:
-    XMLDocument(const DocumentInit&, DocumentClassFlags documentClasses);
+  static XMLDocument* CreateSVG(
+      const DocumentInit& initializer = DocumentInit()) {
+    return new XMLDocument(initializer, kXMLDocumentClass | kSVGDocumentClass);
+  }
+
+ protected:
+  XMLDocument(const DocumentInit&, DocumentClassFlags document_classes);
 };
 
 DEFINE_DOCUMENT_TYPE_CASTS(XMLDocument);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XMLDocument_h
+#endif  // XMLDocument_h

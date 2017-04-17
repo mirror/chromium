@@ -88,22 +88,24 @@ cr.define('settings_search_engines_page', function() {
       // Tests the dialog to add a new search engine. Specifically
       //  - paper-input elements are empty initially.
       //  - action button initially disabled.
-      //  - validation is triggered on 'focus'. 'change' is not teted because
-      //    MockInteractions does not currently provide a way to trigger such
-      //    events.
+      //  - validation is triggered on 'input' event.
       //  - action button is enabled when all fields are valid.
       //  - action button triggers appropriate browser signal when tapped.
       test('DialogAddSearchEngine', function() {
         /**
-         * Focuses the given paper-input element and checks that validation is
-         * triggered.
+         * Triggers an 'input' event on the paper-input element and checks that
+         * validation is triggered.
          * @param {string} inputId
          * @return {!Promise}
          */
-        var focusAndValidate = function(inputId) {
+        var inputAndValidate = function(inputId) {
+          var inputElement = dialog.$[inputId];
           browserProxy.resetResolver('validateSearchEngineInput');
-          MockInteractions.focus(dialog.$[inputId]);
-          return browserProxy.whenCalled('validateSearchEngineInput');
+          inputElement.fire('input');
+          return inputElement.value != '' ?
+              // Expeting validation only on non-empty values.
+              browserProxy.whenCalled('validateSearchEngineInput') :
+              Promise.resolve();
         };
 
         assertEquals('', dialog.$.searchEngine.value);
@@ -112,20 +114,17 @@ cr.define('settings_search_engines_page', function() {
         var actionButton = dialog.$.actionButton;
         assertTrue(actionButton.disabled);
 
-        return focusAndValidate('searchEngine').then(function() {
-          return focusAndValidate('keyword');
+        return inputAndValidate('searchEngine').then(function() {
+          return inputAndValidate('keyword');
         }).then(function() {
-          return focusAndValidate('queryUrl');
+          return inputAndValidate('queryUrl');
         }).then(function() {
           // Manually set the text to a non-empty string for all fields.
           dialog.$.searchEngine.value = 'foo';
           dialog.$.keyword.value = 'bar';
           dialog.$.queryUrl.value = 'baz';
 
-          // MockInteractions does not provide a way to trigger a 'change' event
-          // yet. Triggering the 'focus' event instead, to update the state of
-          // the action button.
-          return focusAndValidate('searchEngine');
+          return inputAndValidate('searchEngine');
         }).then(function() {
           // Assert that the action button has been enabled now that all input
           // is valid and non-empty.
@@ -163,42 +162,57 @@ cr.define('settings_search_engines_page', function() {
       // Test that the <search-engine-entry> is populated according to its
       // underlying SearchEngine model.
       test('Initialization', function() {
-        var nameElement = entry.$$('.name');
-        assertTrue(!!nameElement);
-        assertEquals(searchEngine.displayName, nameElement.textContent);
-
-        var keywordElement = entry.$$('.keyword-column');
-        assertTrue(!!keywordElement);
-        assertEquals(searchEngine.keyword, keywordElement.textContent);
-
-        var urlElement = entry.$$('.url-column');
-        assertTrue(!!urlElement);
-        assertEquals(searchEngine.url, urlElement.textContent);
+        assertEquals(
+            searchEngine.displayName,
+            entry.root.querySelector('#name-column').textContent.trim());
+        assertEquals(
+            searchEngine.keyword,
+            entry.root.querySelector('#keyword-column').textContent);
+        assertEquals(
+            searchEngine.url,
+            entry.root.querySelector('#url-column').textContent);
       });
 
       test('Remove_Enabled', function() {
+        // Open action menu.
+        MockInteractions.tap(entry.$$('paper-icon-button'));
+        var menu = entry.$$('dialog[is=cr-action-menu]');
+        assertTrue(menu.open);
+
         var deleteButton = entry.$.delete;
         assertTrue(!!deleteButton);
         assertFalse(deleteButton.hidden);
         MockInteractions.tap(deleteButton);
         return browserProxy.whenCalled('removeSearchEngine').then(
             function(modelIndex) {
+              assertFalse(menu.open);
               assertEquals(entry.engine.modelIndex, modelIndex);
             });
       });
 
       test('MakeDefault_Enabled', function() {
+        // Open action menu.
+        MockInteractions.tap(entry.$$('paper-icon-button'));
+        var menu = entry.$$('dialog[is=cr-action-menu]');
+        assertTrue(menu.open);
+
         var makeDefaultButton = entry.$.makeDefault;
         assertTrue(!!makeDefaultButton);
         MockInteractions.tap(makeDefaultButton);
         return browserProxy.whenCalled('setDefaultSearchEngine').then(
             function(modelIndex) {
+              assertFalse(menu.open);
               assertEquals(entry.engine.modelIndex, modelIndex);
             });
       });
 
       // Test that clicking the "edit" button brings up a dialog.
       test('Edit_Enabled', function() {
+        // Open action menu.
+        MockInteractions.tap(entry.$$('paper-icon-button'));
+        var menu = entry.$$('dialog[is=cr-action-menu]');
+        assertTrue(menu.open);
+
         var engine = entry.engine;
         var editButton = entry.$.edit;
         assertTrue(!!editButton);
@@ -245,6 +259,16 @@ cr.define('settings_search_engines_page', function() {
       test('Edit_Disabled', function() {
         testButtonDisabled(createSampleSearchEngine(true, false, true), 'edit');
       });
+
+      test('All_Disabled', function() {
+        entry.engine = createSampleSearchEngine(true, false, false);
+        Polymer.dom.flush();
+        assertTrue(entry.hasAttribute('show-dots_'));
+
+        entry.engine = createSampleSearchEngine(false, false, false);
+        Polymer.dom.flush();
+        assertFalse(entry.hasAttribute('show-dots_'));
+      });
     });
   }
 
@@ -269,6 +293,7 @@ cr.define('settings_search_engines_page', function() {
         PolymerTest.clearBody();
         page = document.createElement('settings-search-engines-page');
         document.body.appendChild(page);
+        return browserProxy.whenCalled('getSearchEnginesList');
       });
 
       teardown(function() { page.remove(); });
@@ -276,29 +301,44 @@ cr.define('settings_search_engines_page', function() {
       // Tests that the page is querying and displaying search engine info on
       // startup.
       test('Initialization', function() {
-        return browserProxy.whenCalled('getSearchEnginesList').then(function() {
-          var searchEnginesLists = Polymer.dom(page.shadowRoot).
-              querySelectorAll('settings-search-engines-list');
-          assertEquals(2, searchEnginesLists.length);
+        var searchEnginesLists = page.shadowRoot.
+            querySelectorAll('settings-search-engines-list');
+        assertEquals(2, searchEnginesLists.length);
 
-          Polymer.dom.flush();
-          var defaultsList = searchEnginesLists[0];
-          var defaultsEntries = Polymer.dom(defaultsList.shadowRoot).
-              querySelectorAll('settings-search-engine-entry');
-          assertEquals(
-              searchEnginesInfo.defaults.length, defaultsEntries.length);
+        // Note: iron-list may create hidden children, so test the length
+        // if IronList.items instead of the child nodes.
+        Polymer.dom.flush();
+        var defaultsList = searchEnginesLists[0];
+        var defaultsEntries = Polymer.dom(defaultsList.shadowRoot).
+            querySelector('iron-list').items;
+        assertEquals(
+            searchEnginesInfo.defaults.length, defaultsEntries.length);
 
-          var othersList = searchEnginesLists[1];
-          var othersEntries = Polymer.dom(othersList.shadowRoot).
-              querySelectorAll('settings-search-engine-entry');
-          assertEquals(
-              searchEnginesInfo.others.length, othersEntries.length);
+        var othersList = searchEnginesLists[1];
+        var othersEntries = Polymer.dom(othersList.shadowRoot).
+            querySelector('iron-list').items;
+        assertEquals(
+            searchEnginesInfo.others.length, othersEntries.length);
 
-          var extensionEntries = Polymer.dom(page.shadowRoot).
-              querySelectorAll('settings-omnibox-extension-entry');
-          assertEquals(
-              searchEnginesInfo.extensions.length, extensionEntries.length);
+        var extensionEntries = Polymer.dom(page.shadowRoot).
+            querySelector('iron-list').items;
+        assertEquals(
+            searchEnginesInfo.extensions.length, extensionEntries.length);
+      });
+
+      // Test that the "no other search engines" message is shown/hidden as
+      // expected.
+      test('NoOtherSearchEnginesMessage', function() {
+        var message = page.root.querySelector('#noOtherEngines');
+        assertTrue(!!message);
+        assertFalse(message.hasAttribute('hidden'));
+
+        cr.webUIListenerCallback('search-engines-changed', {
+          defaults: [],
+          others: [createSampleSearchEngine()],
+          extensions: [],
         });
+        assertTrue(message.hasAttribute('hidden'));
       });
 
       // Tests that the add search engine dialog opens when the corresponding
@@ -323,12 +363,15 @@ cr.define('settings_search_engines_page', function() {
       var browserProxy = null;
 
       setup(function() {
-        browserProxy = new settings_search.TestSearchEnginesBrowserProxy();
-        settings.SearchEnginesBrowserProxyImpl.instance_ = browserProxy;
+        browserProxy = new TestExtensionControlBrowserProxy();
+        settings.ExtensionControlBrowserProxyImpl.instance_ = browserProxy;
         PolymerTest.clearBody();
         entry = document.createElement('settings-omnibox-extension-entry');
         entry.set('engine', createSampleOmniboxExtension());
         document.body.appendChild(entry);
+
+        // Open action menu.
+        MockInteractions.tap(entry.$$('paper-icon-button'));
       });
 
       teardown(function() { entry.remove(); });

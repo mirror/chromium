@@ -9,36 +9,37 @@
 #include "core/dom/DOMDataView.h"
 #include "modules/webusb/USBIsochronousOutTransferPacket.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class USBIsochronousOutTransferResult final : public GarbageCollectedFinalized<USBIsochronousOutTransferResult>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static USBIsochronousOutTransferResult* create(const HeapVector<Member<USBIsochronousOutTransferPacket>>& packets)
-    {
-        return new USBIsochronousOutTransferResult(packets);
-    }
+class USBIsochronousOutTransferResult final
+    : public GarbageCollectedFinalized<USBIsochronousOutTransferResult>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    USBIsochronousOutTransferResult(const HeapVector<Member<USBIsochronousOutTransferPacket>>& packets)
-        : m_packets(packets)
-    {
-    }
+ public:
+  static USBIsochronousOutTransferResult* Create(
+      const HeapVector<Member<USBIsochronousOutTransferPacket>>& packets) {
+    return new USBIsochronousOutTransferResult(packets);
+  }
 
-    virtual ~USBIsochronousOutTransferResult() {}
+  USBIsochronousOutTransferResult(
+      const HeapVector<Member<USBIsochronousOutTransferPacket>>& packets)
+      : packets_(packets) {}
 
-    const HeapVector<Member<USBIsochronousOutTransferPacket>>& packets() const
-    {
-        return m_packets;
-    }
+  virtual ~USBIsochronousOutTransferResult() {}
 
-    DEFINE_INLINE_TRACE() { visitor->trace(m_packets); }
+  const HeapVector<Member<USBIsochronousOutTransferPacket>>& packets() const {
+    return packets_;
+  }
 
-private:
-    const HeapVector<Member<USBIsochronousOutTransferPacket>> m_packets;
+  DEFINE_INLINE_TRACE() { visitor->Trace(packets_); }
+
+ private:
+  const HeapVector<Member<USBIsochronousOutTransferPacket>> packets_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // USBIsochronousOutTransferResult_h
+#endif  // USBIsochronousOutTransferResult_h

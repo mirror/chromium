@@ -31,15 +31,15 @@
 #ifndef TextDecoder_h
 #define TextDecoder_h
 
+#include <memory>
 #include "bindings/core/v8/ArrayBufferOrArrayBufferView.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/encoding/TextDecodeOptions.h"
 #include "modules/encoding/TextDecoderOptions.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/TextCodec.h"
-#include "wtf/text/TextEncoding.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
+#include "platform/wtf/text/TextCodec.h"
+#include "platform/wtf/text/TextEncoding.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -47,33 +47,40 @@ class ExceptionState;
 
 typedef ArrayBufferOrArrayBufferView BufferSource;
 
-class TextDecoder final : public GarbageCollectedFinalized<TextDecoder>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static TextDecoder* create(const String& label, const TextDecoderOptions&, ExceptionState&);
-    ~TextDecoder();
+class TextDecoder final : public GarbageCollectedFinalized<TextDecoder>,
+                          public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Implement the IDL
-    String encoding() const;
-    bool fatal() const { return m_fatal; }
-    bool ignoreBOM() const { return m_ignoreBOM; }
-    String decode(const BufferSource&, const TextDecodeOptions&, ExceptionState&);
-    String decode(ExceptionState&);
+ public:
+  static TextDecoder* Create(const String& label,
+                             const TextDecoderOptions&,
+                             ExceptionState&);
+  ~TextDecoder();
 
-    DEFINE_INLINE_TRACE() { }
+  // Implement the IDL
+  String encoding() const;
+  bool fatal() const { return fatal_; }
+  bool ignoreBOM() const { return ignore_bom_; }
+  String decode(const BufferSource&, const TextDecodeOptions&, ExceptionState&);
+  String decode(ExceptionState&);
 
-private:
-    TextDecoder(const WTF::TextEncoding&, bool fatal, bool ignoreBOM);
+  DEFINE_INLINE_TRACE() {}
 
-    String decode(const char* start, size_t length, const TextDecodeOptions&, ExceptionState&);
+ private:
+  TextDecoder(const WTF::TextEncoding&, bool fatal, bool ignore_bom);
 
-    WTF::TextEncoding m_encoding;
-    std::unique_ptr<WTF::TextCodec> m_codec;
-    bool m_fatal;
-    bool m_ignoreBOM;
-    bool m_bomSeen;
+  String decode(const char* start,
+                size_t length,
+                const TextDecodeOptions&,
+                ExceptionState&);
+
+  WTF::TextEncoding encoding_;
+  std::unique_ptr<WTF::TextCodec> codec_;
+  bool fatal_;
+  bool ignore_bom_;
+  bool bom_seen_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextDecoder_h
+#endif  // TextDecoder_h

@@ -22,6 +22,8 @@
 
 namespace media {
 
+class MediaLog;
+
 // VideoRendererAlgorithm manages a queue of VideoFrames from which it chooses
 // frames with the goal of providing a smooth playback experience.  I.e., the
 // selection process results in the best possible uniformity for displayed frame
@@ -48,8 +50,8 @@ namespace media {
 // Combined these three approaches enforce optimal smoothness in many cases.
 class MEDIA_EXPORT VideoRendererAlgorithm {
  public:
-  explicit VideoRendererAlgorithm(
-      const TimeSource::WallClockTimeCB& wall_clock_time_cb);
+  VideoRendererAlgorithm(const TimeSource::WallClockTimeCB& wall_clock_time_cb,
+                         scoped_refptr<MediaLog> media_log);
   ~VideoRendererAlgorithm();
 
   // Chooses the best frame for the interval [deadline_min, deadline_max] based
@@ -135,8 +137,6 @@ class MEDIA_EXPORT VideoRendererAlgorithm {
   void set_time_stopped() { was_time_moving_ = false; }
 
   size_t frames_queued() const { return frame_queue_.size(); }
-
-  scoped_refptr<VideoFrame> first_frame() { return frame_queue_.front().frame; }
 
   // Returns the average of the duration of all frames in |frame_queue_|
   // as measured in wall clock (not media) time.
@@ -263,17 +263,16 @@ class MEDIA_EXPORT VideoRendererAlgorithm {
   // ReadyFrame within the queue changes.
   void UpdateEffectiveFramesQueued();
 
+  // Computes the unclamped count of effective frames.  Used by
+  // UpdateEffectiveFramesQueued().
+  size_t CountEffectiveFramesQueued() const;
+
+  scoped_refptr<MediaLog> media_log_;
+  int out_of_order_frame_logs_ = 0;
+
   // Queue of incoming frames waiting for rendering.
   using VideoFrameQueue = std::deque<ReadyFrame>;
   VideoFrameQueue frame_queue_;
-
-  // The index of the last frame rendered; presumed to be the first frame if no
-  // frame has been rendered yet. Updated by Render() and EnqueueFrame() if any
-  // frames are added or removed.
-  //
-  // In most cases this value is zero, but when out of order timestamps are
-  // present, the last rendered frame may be moved.
-  size_t last_frame_index_;
 
   // Handles cadence detection and frame cadence assignments.
   VideoCadenceEstimator cadence_estimator_;

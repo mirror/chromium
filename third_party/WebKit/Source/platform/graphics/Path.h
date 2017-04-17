@@ -32,10 +32,10 @@
 #include "platform/PlatformExport.h"
 #include "platform/geometry/FloatRoundedRect.h"
 #include "platform/graphics/GraphicsTypes.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "third_party/skia/include/core/SkPathMeasure.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
 
 namespace blink {
 
@@ -46,129 +46,166 @@ class FloatSize;
 class StrokeData;
 
 enum PathElementType {
-    PathElementMoveToPoint, // The points member will contain 1 value.
-    PathElementAddLineToPoint, // The points member will contain 1 value.
-    PathElementAddQuadCurveToPoint, // The points member will contain 2 values.
-    PathElementAddCurveToPoint, // The points member will contain 3 values.
-    PathElementCloseSubpath // The points member will contain no values.
+  kPathElementMoveToPoint,          // The points member will contain 1 value.
+  kPathElementAddLineToPoint,       // The points member will contain 1 value.
+  kPathElementAddQuadCurveToPoint,  // The points member will contain 2 values.
+  kPathElementAddCurveToPoint,      // The points member will contain 3 values.
+  kPathElementCloseSubpath          // The points member will contain no values.
 };
 
 // The points in the structure are the same as those that would be used with the
-// add... method. For example, a line returns the endpoint, while a cubic returns
-// two tangent points and the endpoint.
+// add... method. For example, a line returns the endpoint, while a cubic
+// returns two tangent points and the endpoint.
 struct PathElement {
-    PathElementType type;
-    FloatPoint* points;
+  PathElementType type;
+  FloatPoint* points;
 };
 
 typedef void (*PathApplierFunction)(void* info, const PathElement*);
 
 class PLATFORM_EXPORT Path {
-    USING_FAST_MALLOC(Path);
-public:
-    Path();
-    ~Path();
+  USING_FAST_MALLOC(Path);
 
-    Path(const Path&);
-    Path(const SkPath&);
-    Path& operator=(const Path&);
-    Path& operator=(const SkPath&);
-    bool operator==(const Path&) const;
+ public:
+  Path();
+  ~Path();
 
-    bool contains(const FloatPoint&) const;
-    bool contains(const FloatPoint&, WindRule) const;
-    bool strokeContains(const FloatPoint&, const StrokeData&) const;
+  Path(const Path&);
+  Path(const SkPath&);
+  Path& operator=(const Path&);
+  Path& operator=(const SkPath&);
+  bool operator==(const Path&) const;
 
-    enum class BoundsType {
-        Conservative, // Fast version, includes control points.
-        Exact, // Tight, slower version.
-    };
-    FloatRect boundingRect(BoundsType = BoundsType::Conservative) const;
-    FloatRect strokeBoundingRect(const StrokeData&, BoundsType = BoundsType::Conservative) const;
+  bool Contains(const FloatPoint&) const;
+  bool Contains(const FloatPoint&, WindRule) const;
+  bool StrokeContains(const FloatPoint&, const StrokeData&) const;
 
-    float length() const;
-    FloatPoint pointAtLength(float length) const;
-    void pointAndNormalAtLength(float length, FloatPoint&, float&) const;
+  enum class BoundsType {
+    kConservative,  // Fast version, includes control points.
+    kExact,         // Tight, slower version.
+  };
+  FloatRect BoundingRect(BoundsType = BoundsType::kConservative) const;
+  FloatRect StrokeBoundingRect(const StrokeData&,
+                               BoundsType = BoundsType::kConservative) const;
 
-    // Helper for computing a sequence of positions and normals (normal angles) on a path.
-    // The best possible access pattern will be one where the |length| value is
-    // strictly increasing.
-    // For other access patterns, performance will vary depending on curvature
-    // and number of segments, but should never be worse than that of the
-    // state-less method on Path.
-    class PLATFORM_EXPORT PositionCalculator {
-        WTF_MAKE_NONCOPYABLE(PositionCalculator);
-        USING_FAST_MALLOC(PositionCalculator);
-    public:
-        explicit PositionCalculator(const Path&);
+  float length() const;
+  FloatPoint PointAtLength(float length) const;
+  void PointAndNormalAtLength(float length, FloatPoint&, float&) const;
 
-        void pointAndNormalAtLength(float length, FloatPoint&, float&);
+  // Helper for computing a sequence of positions and normals (normal angles) on
+  // a path. The best possible access pattern will be one where the |length|
+  // value is strictly increasing. For other access patterns, performance will
+  // vary depending on curvature and number of segments, but should never be
+  // worse than that of the state-less method on Path.
+  class PLATFORM_EXPORT PositionCalculator {
+    WTF_MAKE_NONCOPYABLE(PositionCalculator);
+    USING_FAST_MALLOC(PositionCalculator);
 
-    private:
-        SkPath m_path;
-        SkPathMeasure m_pathMeasure;
-        SkScalar m_accumulatedLength;
-    };
+   public:
+    explicit PositionCalculator(const Path&);
 
-    void clear();
-    bool isEmpty() const;
-    bool isClosed() const;
-    // Specify whether this path is volatile. Temporary paths that are discarded or
-    // modified after use should be marked as volatile. This is a hint to the device
-    // to not cache this path.
-    void setIsVolatile(bool);
-    // Gets the current point of the current path, which is conceptually the final point reached by the path so far.
-    // Note the Path can be empty (isEmpty() == true) and still have a current point.
-    bool hasCurrentPoint() const;
-    FloatPoint currentPoint() const;
+    void PointAndNormalAtLength(float length, FloatPoint&, float&);
 
-    void setWindRule(const WindRule);
+   private:
+    SkPath path_;
+    SkPathMeasure path_measure_;
+    SkScalar accumulated_length_;
+  };
 
-    void moveTo(const FloatPoint&);
-    void addLineTo(const FloatPoint&);
-    void addQuadCurveTo(const FloatPoint& controlPoint, const FloatPoint& endPoint);
-    void addBezierCurveTo(const FloatPoint& controlPoint1, const FloatPoint& controlPoint2, const FloatPoint& endPoint);
-    void addArcTo(const FloatPoint&, const FloatPoint&, float radius);
-    void addArcTo(const FloatPoint&, const FloatSize& r, float xRotate, bool largeArc, bool sweep);
-    void closeSubpath();
+  void Clear();
+  bool IsEmpty() const;
+  bool IsClosed() const;
 
-    void addArc(const FloatPoint&, float radius, float startAngle, float endAngle, bool anticlockwise);
-    void addRect(const FloatRect&);
-    void addEllipse(const FloatPoint&, float radiusX, float radiusY, float rotation, float startAngle, float endAngle, bool anticlockwise);
-    void addEllipse(const FloatRect&);
+  // Specify whether this path is volatile. Temporary paths that are discarded
+  // or modified after use should be marked as volatile. This is a hint to the
+  // device to not cache this path.
+  void SetIsVolatile(bool);
 
-    void addRoundedRect(const FloatRect&, const FloatSize& roundingRadii);
-    void addRoundedRect(const FloatRect&, const FloatSize& topLeftRadius, const FloatSize& topRightRadius, const FloatSize& bottomLeftRadius, const FloatSize& bottomRightRadius);
-    void addRoundedRect(const FloatRoundedRect&);
+  // Gets the current point of the current path, which is conceptually the final
+  // point reached by the path so far. Note the Path can be empty
+  // (isEmpty() == true) and still have a current point.
+  bool HasCurrentPoint() const;
+  FloatPoint CurrentPoint() const;
 
-    void addPath(const Path&, const AffineTransform&);
+  void SetWindRule(const WindRule);
 
-    void translate(const FloatSize&);
+  void MoveTo(const FloatPoint&);
+  void AddLineTo(const FloatPoint&);
+  void AddQuadCurveTo(const FloatPoint& control_point,
+                      const FloatPoint& end_point);
+  void AddBezierCurveTo(const FloatPoint& control_point1,
+                        const FloatPoint& control_point2,
+                        const FloatPoint& end_point);
+  void AddArcTo(const FloatPoint&, const FloatPoint&, float radius);
+  void AddArcTo(const FloatPoint&,
+                const FloatSize& r,
+                float x_rotate,
+                bool large_arc,
+                bool sweep);
+  void CloseSubpath();
 
-    const SkPath& getSkPath() const { return m_path; }
+  void AddArc(const FloatPoint&,
+              float radius,
+              float start_angle,
+              float end_angle,
+              bool anticlockwise);
+  void AddRect(const FloatRect&);
+  void AddEllipse(const FloatPoint&,
+                  float radius_x,
+                  float radius_y,
+                  float rotation,
+                  float start_angle,
+                  float end_angle,
+                  bool anticlockwise);
+  void AddEllipse(const FloatRect&);
 
-    void apply(void* info, PathApplierFunction) const;
-    void transform(const AffineTransform&);
+  void AddRoundedRect(const FloatRect&, const FloatSize& rounding_radii);
+  void AddRoundedRect(const FloatRect&,
+                      const FloatSize& top_left_radius,
+                      const FloatSize& top_right_radius,
+                      const FloatSize& bottom_left_radius,
+                      const FloatSize& bottom_right_radius);
+  void AddRoundedRect(const FloatRoundedRect&);
 
-    void addPathForRoundedRect(const FloatRect&, const FloatSize& topLeftRadius, const FloatSize& topRightRadius, const FloatSize& bottomLeftRadius, const FloatSize& bottomRightRadius);
+  void AddPath(const Path&, const AffineTransform&);
 
-    bool subtractPath(const Path&);
+  void Translate(const FloatSize&);
 
-    // Updates the path to the union (inclusive-or) of itself with the given argument.
-    bool unionPath(const Path& other);
-    bool intersectPath(const Path& other);
+  const SkPath& GetSkPath() const { return path_; }
 
-private:
-    void addEllipse(const FloatPoint&, float radiusX, float radiusY, float startAngle, float endAngle, bool anticlockwise);
-    SkPath strokePath(const StrokeData&) const;
+  void Apply(void* info, PathApplierFunction) const;
+  void Transform(const AffineTransform&);
 
-    SkPath m_path;
+  void AddPathForRoundedRect(const FloatRect&,
+                             const FloatSize& top_left_radius,
+                             const FloatSize& top_right_radius,
+                             const FloatSize& bottom_left_radius,
+                             const FloatSize& bottom_right_radius);
+
+  bool SubtractPath(const Path&);
+
+  // Updates the path to the union (inclusive-or) of itself with the given
+  // argument.
+  bool UnionPath(const Path& other);
+
+  bool IntersectPath(const Path& other);
+
+ private:
+  void AddEllipse(const FloatPoint&,
+                  float radius_x,
+                  float radius_y,
+                  float start_angle,
+                  float end_angle,
+                  bool anticlockwise);
+  SkPath StrokePath(const StrokeData&) const;
+
+  SkPath path_;
 };
 
-#if ENABLE(ASSERT)
-PLATFORM_EXPORT bool ellipseIsRenderable(float startAngle, float endAngle);
+#if DCHECK_IS_ON()
+PLATFORM_EXPORT bool EllipseIsRenderable(float start_angle, float end_angle);
 #endif
 
-} // namespace blink
+}  // namespace blink
 
 #endif

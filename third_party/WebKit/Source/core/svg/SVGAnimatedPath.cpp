@@ -30,15 +30,25 @@
 
 #include "core/svg/SVGAnimatedPath.h"
 
+#include "core/css/CSSIdentifierValue.h"
+
 namespace blink {
 
-SVGAnimatedPath::SVGAnimatedPath(SVGElement* contextElement, const QualifiedName& attributeName)
-    : SVGAnimatedProperty<SVGPath>(contextElement, attributeName, SVGPath::create())
-{
+SVGAnimatedPath::SVGAnimatedPath(SVGElement* context_element,
+                                 const QualifiedName& attribute_name,
+                                 CSSPropertyID css_property_id)
+    : SVGAnimatedProperty<SVGPath>(context_element,
+                                   attribute_name,
+                                   SVGPath::Create(),
+                                   css_property_id) {}
+
+SVGAnimatedPath::~SVGAnimatedPath() {}
+
+const CSSValue* SVGAnimatedPath::CssValue() const {
+  const CSSPathValue* path_value = CurrentValue()->PathValue();
+  if (path_value->GetStylePath()->ByteStream().IsEmpty())
+    return CSSIdentifierValue::Create(CSSValueNone);
+  return path_value;
 }
 
-SVGAnimatedPath::~SVGAnimatedPath()
-{
-}
-
-} // namespace blink
+}  // namespace blink

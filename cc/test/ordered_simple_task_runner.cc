@@ -11,6 +11,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/auto_reset.h"
@@ -35,13 +36,22 @@ TestOrderablePendingTask::TestOrderablePendingTask()
 
 TestOrderablePendingTask::TestOrderablePendingTask(
     const tracked_objects::Location& location,
-    const base::Closure& task,
+    base::OnceClosure task,
     base::TimeTicks post_time,
     base::TimeDelta delay,
     TestNestability nestability)
-    : base::TestPendingTask(location, task, post_time, delay, nestability),
-      task_id_(TestOrderablePendingTask::task_id_counter++) {
-}
+    : base::TestPendingTask(location,
+                            std::move(task),
+                            post_time,
+                            delay,
+                            nestability),
+      task_id_(TestOrderablePendingTask::task_id_counter++) {}
+
+TestOrderablePendingTask::TestOrderablePendingTask(TestOrderablePendingTask&&) =
+    default;
+
+TestOrderablePendingTask& TestOrderablePendingTask::operator=(
+    TestOrderablePendingTask&&) = default;
 
 size_t TestOrderablePendingTask::task_id_counter = 0;
 
@@ -99,27 +109,27 @@ base::TimeTicks OrderedSimpleTaskRunner::AbsoluteMaxNow() {
 // base::TestSimpleTaskRunner implementation
 bool OrderedSimpleTaskRunner::PostDelayedTask(
     const tracked_objects::Location& from_here,
-    const base::Closure& task,
+    base::OnceClosure task,
     base::TimeDelta delay) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TestOrderablePendingTask pt(from_here, task, now_src_->NowTicks(), delay,
-                              base::TestPendingTask::NESTABLE);
+  TestOrderablePendingTask pt(from_here, std::move(task), now_src_->NowTicks(),
+                              delay, base::TestPendingTask::NESTABLE);
 
   TRACE_TASK("OrderedSimpleTaskRunner::PostDelayedTask", pt);
-  pending_tasks_.insert(pt);
+  pending_tasks_.insert(std::move(pt));
   return true;
 }
 
 bool OrderedSimpleTaskRunner::PostNonNestableDelayedTask(
     const tracked_objects::Location& from_here,
-    const base::Closure& task,
+    base::OnceClosure task,
     base::TimeDelta delay) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TestOrderablePendingTask pt(from_here, task, now_src_->NowTicks(), delay,
-                              base::TestPendingTask::NON_NESTABLE);
+  TestOrderablePendingTask pt(from_here, std::move(task), now_src_->NowTicks(),
+                              delay, base::TestPendingTask::NON_NESTABLE);
 
   TRACE_TASK("OrderedSimpleTaskRunner::PostNonNestableDelayedTask", pt);
-  pending_tasks_.insert(pt);
+  pending_tasks_.insert(std::move(pt));
   return true;
 }
 
@@ -137,6 +147,8 @@ bool OrderedSimpleTaskRunner::HasPendingTasks() const {
 }
 
 base::TimeTicks OrderedSimpleTaskRunner::NextTaskTime() {
+  RemoveCancelledTasks();
+
   if (pending_tasks_.size() <= 0) {
     return AbsoluteMaxNow();
   }
@@ -146,6 +158,7 @@ base::TimeTicks OrderedSimpleTaskRunner::NextTaskTime() {
 
 base::TimeDelta OrderedSimpleTaskRunner::DelayToNextTaskTime() {
   DCHECK(thread_checker_.CalledOnValidThread());
+  RemoveCancelledTasks();
 
   if (pending_tasks_.size() <= 0) {
     return AbsoluteMaxNow() - base::TimeTicks();
@@ -198,6 +211,11 @@ bool OrderedSimpleTaskRunner::RunTasksWhile(
   }
 
   while (pending_tasks_.size() > 0) {
+    // Skip canceled tasks.
+    if (pending_tasks_.begin()->task.IsCancelled()) {
+      pending_tasks_.erase(pending_tasks_.begin());
+      continue;
+    }
     // Check if we should continue to run pending tasks.
     bool condition_success = true;
     for (std::vector<base::Callback<bool(void)>>::iterator it =
@@ -222,7 +240,11 @@ bool OrderedSimpleTaskRunner::RunTasksWhile(
                    "OrderedSimpleTaskRunner::RunPendingTasks running",
                    "task",
                    task_to_run->AsValue());
-      task_to_run->task.Run();
+      // It's safe to remove const and consume |task| here, since |task| is not
+      // used for ordering the item.
+      base::OnceClosure& task =
+          const_cast<base::OnceClosure&>(task_to_run->task);
+      std::move(task).Run();
     }
 
     pending_tasks_.erase(task_to_run);
@@ -247,9 +269,11 @@ bool OrderedSimpleTaskRunner::RunUntilTime(base::TimeTicks time) {
   // Run tasks
   bool result = RunTasksWhile(NowBefore(time));
 
+  bool has_reached_task_limit = HasPendingTasks() && NextTaskTime() <= time;
+
   // If the next task is after the stopping time and auto-advancing now, then
   // force time to be the stopping time.
-  if (!result && advance_now_ && now_src_->NowTicks() < time) {
+  if (!has_reached_task_limit && advance_now_ && now_src_->NowTicks() < time) {
     now_src_->Advance(time - now_src_->NowTicks());
   }
 
@@ -308,15 +332,18 @@ bool OrderedSimpleTaskRunner::TaskRunCountBelowCallback(size_t max_tasks,
 }
 
 base::Callback<bool(void)> OrderedSimpleTaskRunner::TaskExistedInitially() {
-  // base::Bind takes a copy of pending_tasks_
+  std::set<size_t> task_ids;
+  for (const auto& task : pending_tasks_)
+    task_ids.insert(task.task_id());
+
   return base::Bind(&OrderedSimpleTaskRunner::TaskExistedInitiallyCallback,
-                    base::Unretained(this),
-                    pending_tasks_);
+                    base::Unretained(this), std::move(task_ids));
 }
 
 bool OrderedSimpleTaskRunner::TaskExistedInitiallyCallback(
-    const std::set<TestOrderablePendingTask>& existing_tasks) {
-  return existing_tasks.find(*pending_tasks_.begin()) != existing_tasks.end();
+    const std::set<size_t>& existing_tasks) {
+  return existing_tasks.find(pending_tasks_.begin()->task_id()) !=
+         existing_tasks.end();
 }
 
 base::Callback<bool(void)> OrderedSimpleTaskRunner::NowBefore(
@@ -340,6 +367,17 @@ bool OrderedSimpleTaskRunner::AdvanceNowCallback() {
     now_src_->Advance(next_task_time - now_src_->NowTicks());
   }
   return true;
+}
+
+void OrderedSimpleTaskRunner::RemoveCancelledTasks() {
+  std::set<TestOrderablePendingTask>::iterator it = pending_tasks_.begin();
+  while (it != pending_tasks_.end()) {
+    if (it->task.IsCancelled()) {
+      it = pending_tasks_.erase(it);
+    } else {
+      it++;
+    }
+  }
 }
 
 }  // namespace cc

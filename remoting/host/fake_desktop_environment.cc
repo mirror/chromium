@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "remoting/host/audio_capturer.h"
+#include "remoting/host/desktop_capturer_proxy.h"
 #include "remoting/host/input_injector.h"
 #include "remoting/proto/event.pb.h"
 #include "remoting/protocol/fake_desktop_capturer.h"
@@ -53,9 +54,12 @@ void FakeScreenControls::SetScreenResolution(
     const ScreenResolution& resolution) {
 }
 
-FakeDesktopEnvironment::FakeDesktopEnvironment() {}
+FakeDesktopEnvironment::FakeDesktopEnvironment(
+    scoped_refptr<base::SingleThreadTaskRunner> capture_thread,
+    const DesktopEnvironmentOptions& options)
+    : capture_thread_(std::move(capture_thread)), options_(options) {}
 
-FakeDesktopEnvironment::~FakeDesktopEnvironment() {}
+FakeDesktopEnvironment::~FakeDesktopEnvironment() = default;
 
 // DesktopEnvironment implementation.
 std::unique_ptr<AudioCapturer> FakeDesktopEnvironment::CreateAudioCapturer() {
@@ -69,21 +73,25 @@ std::unique_ptr<InputInjector> FakeDesktopEnvironment::CreateInputInjector() {
 }
 
 std::unique_ptr<ScreenControls> FakeDesktopEnvironment::CreateScreenControls() {
-  return base::WrapUnique(new FakeScreenControls());
+  return base::MakeUnique<FakeScreenControls>();
 }
 
 std::unique_ptr<webrtc::DesktopCapturer>
 FakeDesktopEnvironment::CreateVideoCapturer() {
-  std::unique_ptr<protocol::FakeDesktopCapturer> result(
+  std::unique_ptr<protocol::FakeDesktopCapturer> fake_capturer(
       new protocol::FakeDesktopCapturer());
   if (!frame_generator_.is_null())
-    result->set_frame_generator(frame_generator_);
+    fake_capturer->set_frame_generator(frame_generator_);
+
+  std::unique_ptr<DesktopCapturerProxy> result(
+      new DesktopCapturerProxy(capture_thread_));
+  result->set_capturer(std::move(fake_capturer));
   return std::move(result);
 }
 
 std::unique_ptr<webrtc::MouseCursorMonitor>
 FakeDesktopEnvironment::CreateMouseCursorMonitor() {
-  return base::WrapUnique(new FakeMouseCursorMonitor());
+  return base::MakeUnique<FakeMouseCursorMonitor>();
 }
 
 std::string FakeDesktopEnvironment::GetCapabilities() const {
@@ -96,19 +104,26 @@ uint32_t FakeDesktopEnvironment::GetDesktopSessionId() const {
   return UINT32_MAX;
 }
 
-FakeDesktopEnvironmentFactory::FakeDesktopEnvironmentFactory() {}
-FakeDesktopEnvironmentFactory::~FakeDesktopEnvironmentFactory() {}
+const DesktopEnvironmentOptions& FakeDesktopEnvironment::options() const {
+  return options_;
+}
+
+FakeDesktopEnvironmentFactory::FakeDesktopEnvironmentFactory(
+    scoped_refptr<base::SingleThreadTaskRunner> capture_thread)
+    : capture_thread_(std::move(capture_thread)) {}
+
+FakeDesktopEnvironmentFactory::~FakeDesktopEnvironmentFactory() = default;
 
 // DesktopEnvironmentFactory implementation.
 std::unique_ptr<DesktopEnvironment> FakeDesktopEnvironmentFactory::Create(
-    base::WeakPtr<ClientSessionControl> client_session_control) {
-  std::unique_ptr<FakeDesktopEnvironment> result(new FakeDesktopEnvironment());
+    base::WeakPtr<ClientSessionControl> client_session_control,
+    const DesktopEnvironmentOptions& options) {
+  std::unique_ptr<FakeDesktopEnvironment> result(
+      new FakeDesktopEnvironment(capture_thread_, options));
   result->set_frame_generator(frame_generator_);
   last_desktop_environment_ = result->AsWeakPtr();
   return std::move(result);
 }
-
-void FakeDesktopEnvironmentFactory::SetEnableCurtaining(bool enable) {}
 
 bool FakeDesktopEnvironmentFactory::SupportsAudioCapture() const {
   return false;

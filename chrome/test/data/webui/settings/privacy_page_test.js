@@ -6,24 +6,6 @@ cr.define('settings_privacy_page', function() {
   /**
    * @constructor
    * @extends {TestBrowserProxy}
-   * @implements {settings.PrivacyPageBrowserProxy}
-   */
-  function TestPrivacyPageBrowserProxy() {
-    settings.TestBrowserProxy.call(this, ['showManageSSLCertificates']);
-  }
-
-  TestPrivacyPageBrowserProxy.prototype = {
-    __proto__: settings.TestBrowserProxy.prototype,
-
-    /** @override */
-    showManageSSLCertificates: function() {
-      this.methodCalled('showManageSSLCertificates');
-    },
-  };
-
-  /**
-   * @constructor
-   * @extends {TestBrowserProxy}
    * @implements {settings.ClearBrowsingDataBrowserProxy}
    */
   function TestClearBrowsingDataBrowserProxy() {
@@ -72,10 +54,6 @@ cr.define('settings_privacy_page', function() {
       /** @type {SettingsPrivacyPageElement} */
       var page;
 
-      suiteSetup(function() {
-        settings.main.rendered = Promise.resolve();
-      });
-
       setup(function() {
         testBrowserProxy = new TestPrivacyPageBrowserProxy();
         settings.PrivacyPageBrowserProxyImpl.instance_ = testBrowserProxy;
@@ -89,6 +67,34 @@ cr.define('settings_privacy_page', function() {
       test('NativeCertificateManager', function() {
         MockInteractions.tap(page.$.manageCertificates);
         return testBrowserProxy.whenCalled('showManageSSLCertificates');
+      });
+    });
+  }
+
+  function registerPrivacyPageTests() {
+    suite('PrivacyPage', function() {
+      /** @type {SettingsPrivacyPageElement} */
+      var page;
+
+      setup(function() {
+        page = document.createElement('settings-privacy-page');
+        document.body.appendChild(page);
+      });
+
+      teardown(function() { page.remove(); });
+
+      test('showClearBrowsingDataDialog', function() {
+        assertFalse(!!page.$$('settings-clear-browsing-data-dialog'));
+        MockInteractions.tap(page.$.clearBrowsingData);
+        Polymer.dom.flush();
+
+        var dialog = page.$$('settings-clear-browsing-data-dialog');
+        assertTrue(!!dialog);
+
+        // Ensure that the dialog is fully opened before returning from this
+        // test, otherwise asynchronous code run in attached() can cause flaky
+        // errors.
+        return test_util.whenAttributeIs(dialog.$.dialog, 'open', true);
       });
     });
   }
@@ -113,7 +119,7 @@ cr.define('settings_privacy_page', function() {
       teardown(function() { element.remove(); });
 
       test('ClearBrowsingDataTap', function() {
-        assertTrue(element.$.dialog.opened);
+        assertTrue(element.$.dialog.open);
 
         var cancelButton = element.$$('.cancel-button');
         assertTrue(!!cancelButton);
@@ -132,7 +138,7 @@ cr.define('settings_privacy_page', function() {
 
         return testBrowserProxy.whenCalled('clearBrowsingData').then(
             function() {
-              assertTrue(element.$.dialog.opened);
+              assertTrue(element.$.dialog.open);
               assertTrue(cancelButton.disabled);
               assertTrue(actionButton.disabled);
               assertTrue(spinner.active);
@@ -145,7 +151,7 @@ cr.define('settings_privacy_page', function() {
               // Promise that was just resolved to execute before the
               // assertions.
             }).then(function() {
-              assertFalse(element.$.dialog.opened);
+              assertFalse(element.$.dialog.open);
               assertFalse(cancelButton.disabled);
               assertFalse(actionButton.disabled);
               assertFalse(spinner.active);
@@ -154,7 +160,7 @@ cr.define('settings_privacy_page', function() {
       });
 
       test('showHistoryDeletionDialog', function() {
-        assertTrue(element.$.dialog.opened);
+        assertTrue(element.$.dialog.open);
         var actionButton = element.$$('.action-button');
         assertTrue(!!actionButton);
 
@@ -178,25 +184,28 @@ cr.define('settings_privacy_page', function() {
               var noticeActionButton = notice.$$('.action-button');
               assertTrue(!!noticeActionButton);
 
-              assertTrue(element.$.dialog.opened);
-              assertTrue(notice.$.dialog.opened);
+              assertTrue(element.$.dialog.open);
+              assertTrue(notice.$.dialog.open);
 
               MockInteractions.tap(noticeActionButton);
 
-              // Tapping the action button will close the notice. Move to the
-              // end of the message loop to allow the closing event to propagate
-              // to the parent dialog. The parent dialog should subsequently
-              // close as well.
-              setTimeout(function() {
-                var notice = element.$$('#notice');
-                assertFalse(!!notice);
-                assertFalse(element.$.dialog.opened);
-              }, 0);
+              return new Promise(function(resolve, reject) {
+                // Tapping the action button will close the notice. Move to the
+                // end of the message loop to allow the closing event to
+                // propagate to the parent dialog. The parent dialog should
+                // subsequently close as well.
+                setTimeout(function() {
+                  var notice = element.$$('#notice');
+                  assertFalse(!!notice);
+                  assertFalse(element.$.dialog.open);
+                  resolve();
+                }, 0);
+              });
             });
       });
 
       test('Counters', function() {
-        assertTrue(element.$.dialog.opened);
+        assertTrue(element.$.dialog.open);
 
         // Initialize the browsing history pref, which should belong to the
         // first checkbox in the dialog.
@@ -219,12 +228,47 @@ cr.define('settings_privacy_page', function() {
         cr.webUIListenerCallback(
             'update-counter-text', checkbox.pref.key, 'result');
         assertEquals('result', checkbox.subLabel);
+      });
+    });
+  }
 
-        // Unchecking the checkbox will hide its sublabel.
-        var subLabelStyle = window.getComputedStyle(checkbox.$$('.secondary'));
-        assertNotEquals('none', subLabelStyle.display);
-        checkbox.checked = false;
-        assertEquals('none', subLabelStyle.display);
+  function registerSafeBrowsingExtendedReportingTests() {
+    suite('SafeBrowsingExtendedReporting', function() {
+      /** @type {settings.TestPrivacyPageBrowserProxy} */
+      var testBrowserProxy;
+
+      /** @type {SettingsPrivacyPageElement} */
+      var page;
+
+      setup(function() {
+        testBrowserProxy = new TestPrivacyPageBrowserProxy();
+        settings.PrivacyPageBrowserProxyImpl.instance_ = testBrowserProxy;
+        PolymerTest.clearBody();
+        page = document.createElement('settings-privacy-page');
+      });
+
+      teardown(function() { page.remove(); });
+
+      test('test whether extended reporting is enabled/managed', function() {
+        return testBrowserProxy.whenCalled(
+            'getSafeBrowsingExtendedReporting').then(function() {
+          Polymer.dom.flush();
+
+          // Control starts checked by default
+          var control = page.$.safeBrowsingExtendedReportingControl;
+          assertEquals(true, control.checked);
+
+          // Notification from browser can uncheck the box
+          cr.webUIListenerCallback('safe-browsing-extended-reporting-change',
+                                   false);
+          Polymer.dom.flush();
+          assertEquals(false, control.checked);
+
+          // Tapping on the box will check it again.
+          MockInteractions.tap(control);
+          return testBrowserProxy.whenCalled('getSafeBrowsingExtendedReporting',
+                                             true);
+        });
       });
     });
   }
@@ -235,6 +279,8 @@ cr.define('settings_privacy_page', function() {
         registerNativeCertificateManagerTests();
 
       registerClearBrowsingDataTests();
+      registerPrivacyPageTests();
+      registerSafeBrowsingExtendedReportingTests();
     },
   };
 });

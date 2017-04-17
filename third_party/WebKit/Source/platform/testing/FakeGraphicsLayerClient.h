@@ -11,23 +11,30 @@ namespace blink {
 
 // A simple GraphicsLayerClient implementation suitable for use in unit tests.
 class FakeGraphicsLayerClient : public GraphicsLayerClient {
-public:
-    // GraphicsLayerClient implementation.
-    IntRect computeInterestRect(const GraphicsLayer*, const IntRect&) const override { return IntRect(); }
-    String debugName(const GraphicsLayer*) const override { return String(); }
-    bool isTrackingPaintInvalidations() const override { return m_isTrackingPaintInvalidations; }
-    bool needsRepaint(const GraphicsLayer&) const override { return true; }
-    void paintContents(const GraphicsLayer*, GraphicsContext&, GraphicsLayerPaintingPhase, const IntRect&) const override { }
+ public:
+  // GraphicsLayerClient implementation.
+  IntRect ComputeInterestRect(const GraphicsLayer*,
+                              const IntRect&) const override {
+    return IntRect();
+  }
+  String DebugName(const GraphicsLayer*) const override { return String(); }
+  bool IsTrackingRasterInvalidations() const override {
+    return is_tracking_raster_invalidations_;
+  }
+  bool NeedsRepaint(const GraphicsLayer&) const override { return true; }
+  void PaintContents(const GraphicsLayer*,
+                     GraphicsContext&,
+                     GraphicsLayerPaintingPhase,
+                     const IntRect&) const override {}
 
-    void setIsTrackingPaintInvalidations(bool isTrackingPaintInvalidations)
-    {
-        m_isTrackingPaintInvalidations = isTrackingPaintInvalidations;
-    }
+  void SetIsTrackingRasterInvalidations(bool is_tracking_raster_invalidations) {
+    is_tracking_raster_invalidations_ = is_tracking_raster_invalidations;
+  }
 
-private:
-    bool m_isTrackingPaintInvalidations = false;
+ private:
+  bool is_tracking_raster_invalidations_ = false;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FakeGraphicsLayerClient_h
+#endif  // FakeGraphicsLayerClient_h

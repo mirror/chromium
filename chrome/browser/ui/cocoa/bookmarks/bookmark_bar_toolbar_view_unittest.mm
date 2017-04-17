@@ -10,7 +10,7 @@
 #include "chrome/browser/themes/theme_service.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_controller.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_toolbar_view.h"
-#import "chrome/browser/ui/cocoa/cocoa_test_helper.h"
+#import "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
@@ -23,17 +23,6 @@ using ::testing::DoAll;
 using ::testing::NiceMock;
 using ::testing::Return;
 using ::testing::SetArgumentPointee;
-
-// Allows us to inject our fake controller below.
-@interface BookmarkBarToolbarView (TestingAPI)
--(void)setController:(id<BookmarkBarToolbarViewController>)controller;
-@end
-
-@implementation BookmarkBarToolbarView (TestingAPI)
--(void)setController:(id<BookmarkBarToolbarViewController>)controller {
-  controller_ = controller;
-}
-@end
 
 // Allows us to control which way the view is rendered.
 @interface DrawDetachedBarFakeController :

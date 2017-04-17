@@ -12,23 +12,22 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversion_utils.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/autofill/password_generation_popup_observer.h"
 #include "chrome/browser/ui/autofill/password_generation_popup_view.h"
 #include "chrome/browser/ui/autofill/popup_constants.h"
 #include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/chrome_pages.h"
-#include "chrome/common/features.h"
+#include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/autofill/content/common/autofill_messages.h"
+#include "components/autofill/content/browser/content_autofill_driver.h"
+#include "components/autofill/content/browser/content_autofill_driver_factory.h"
 #include "components/autofill/core/browser/password_generator.h"
 #include "components/autofill/core/browser/suggestion.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
 #include "components/password_manager/core/browser/password_bubble_experiment.h"
 #include "components/password_manager/core/browser/password_manager.h"
+#include "components/password_manager/core/browser/password_manager_constants.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
@@ -37,8 +36,8 @@
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/text_utils.h"
 
-#if BUILDFLAG(ANDROID_JAVA_UI)
-#include "chrome/browser/android/chrome_application.h"
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/preferences/preferences_launcher.h"
 #endif
 
 namespace autofill {
@@ -54,9 +53,8 @@ PasswordGenerationPopupControllerImpl::GetOrCreate(
     PasswordGenerationPopupObserver* observer,
     content::WebContents* web_contents,
     gfx::NativeView container_view) {
-  if (previous.get() &&
-      previous->element_bounds() == bounds &&
-      previous->web_contents() == web_contents &&
+  if (previous.get() && previous->element_bounds() == bounds &&
+      previous->web_contents_ == web_contents &&
       previous->container_view() == container_view) {
     return previous;
   }
@@ -87,30 +85,16 @@ PasswordGenerationPopupControllerImpl::PasswordGenerationPopupControllerImpl(
       observer_(observer),
       generator_(new PasswordGenerator(max_length)),
       // TODO(estade): use correct text direction.
-      controller_common_(bounds,
-                         base::i18n::LEFT_TO_RIGHT,
-                         container_view,
-                         web_contents),
+      controller_common_(bounds, base::i18n::LEFT_TO_RIGHT, container_view),
       password_selected_(false),
       display_password_(false),
+      web_contents_(web_contents),
       weak_ptr_factory_(this) {
-  controller_common_.SetKeyPressCallback(
-      base::Bind(&PasswordGenerationPopupControllerImpl::HandleKeyPressEvent,
-                 base::Unretained(this)));
-
-  int link_id = IDS_MANAGE_PASSWORDS_LINK;
-  int help_text_id = IDS_PASSWORD_GENERATION_PROMPT;
-  const ProfileSyncService* sync_service =
-      ProfileSyncServiceFactory::GetForProfile(
-          Profile::FromBrowserContext(web_contents->GetBrowserContext()));
-  if (password_bubble_experiment::IsSmartLockBrandingEnabled(sync_service)) {
-    help_text_id = IDS_PASSWORD_GENERATION_SMART_LOCK_PROMPT;
-    link_id = IDS_PASSWORD_MANAGER_SMART_LOCK_FOR_PASSWORDS;
-  }
-
-  base::string16 link = l10n_util::GetStringUTF16(link_id);
-  size_t offset;
-  help_text_ = l10n_util::GetStringFUTF16(help_text_id, link, &offset);
+  base::string16 link =
+      l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_SMART_LOCK);
+  size_t offset = 0;
+  help_text_ =
+      l10n_util::GetStringFUTF16(IDS_PASSWORD_GENERATION_PROMPT, link, &offset);
   link_range_ = gfx::Range(offset, offset + link.length());
 }
 
@@ -124,7 +108,7 @@ PasswordGenerationPopupControllerImpl::GetWeakPtr() {
 
 bool PasswordGenerationPopupControllerImpl::HandleKeyPressEvent(
     const content::NativeWebKeyboardEvent& event) {
-  switch (event.windowsKeyCode) {
+  switch (event.windows_key_code) {
     case ui::VKEY_UP:
     case ui::VKEY_DOWN:
       PasswordSelected(true);
@@ -207,7 +191,10 @@ void PasswordGenerationPopupControllerImpl::Show(bool display_password) {
     view_->UpdateBoundsAndRedrawPopup();
   }
 
-  controller_common_.RegisterKeyPressCallback();
+  static_cast<ContentAutofillDriver*>(driver_->GetAutofillDriver())
+      ->RegisterKeyPressHandler(base::Bind(
+          &PasswordGenerationPopupControllerImpl::HandleKeyPressEvent,
+          base::Unretained(this)));
 
   if (observer_)
     observer_->OnPopupShown(display_password_);
@@ -218,7 +205,8 @@ void PasswordGenerationPopupControllerImpl::HideAndDestroy() {
 }
 
 void PasswordGenerationPopupControllerImpl::Hide() {
-  controller_common_.RemoveKeyPressCallback();
+  static_cast<ContentAutofillDriver*>(driver_->GetAutofillDriver())
+      ->RemoveKeyPressHandler();
 
   if (view_)
     view_->Hide();
@@ -236,12 +224,15 @@ void PasswordGenerationPopupControllerImpl::ViewDestroyed() {
 }
 
 void PasswordGenerationPopupControllerImpl::OnSavedPasswordsLinkClicked() {
-#if BUILDFLAG(ANDROID_JAVA_UI)
-  chrome::android::ChromeApplication::ShowPasswordSettings();
+#if defined(OS_ANDROID)
+  chrome::android::PreferencesLauncher::ShowPasswordSettings();
 #else
-  chrome::ShowSettingsSubPage(
-      chrome::FindBrowserWithWebContents(controller_common_.web_contents()),
-      chrome::kPasswordManagerSubPage);
+  chrome::NavigateParams params(
+      chrome::FindBrowserWithWebContents(web_contents_),
+      GURL(password_manager::kPasswordManagerAccountDashboardURL),
+      ui::PAGE_TRANSITION_LINK);
+  params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
+  chrome::Navigate(&params);
 #endif
 }
 
@@ -263,7 +254,7 @@ void PasswordGenerationPopupControllerImpl::SelectionCleared() {
 }
 
 gfx::NativeView PasswordGenerationPopupControllerImpl::container_view() {
-  return controller_common_.container_view();
+  return controller_common_.container_view;
 }
 
 gfx::Rect PasswordGenerationPopupControllerImpl::popup_bounds() const {
@@ -272,7 +263,7 @@ gfx::Rect PasswordGenerationPopupControllerImpl::popup_bounds() const {
 
 const gfx::RectF& PasswordGenerationPopupControllerImpl::element_bounds()
     const {
-  return controller_common_.element_bounds();
+  return controller_common_.element_bounds;
 }
 
 bool PasswordGenerationPopupControllerImpl::IsRTL() const {
@@ -285,13 +276,11 @@ PasswordGenerationPopupControllerImpl::GetSuggestions() {
 }
 
 #if !defined(OS_ANDROID)
-int PasswordGenerationPopupControllerImpl::GetElidedValueWidthForRow(
-    size_t row) {
+int PasswordGenerationPopupControllerImpl::GetElidedValueWidthForRow(int row) {
   return 0;
 }
 
-int PasswordGenerationPopupControllerImpl::GetElidedLabelWidthForRow(
-    size_t row) {
+int PasswordGenerationPopupControllerImpl::GetElidedLabelWidthForRow(int row) {
   return 0;
 }
 #endif

@@ -48,12 +48,16 @@ class POLICY_EXPORT CloudPolicyRefreshScheduler
   ~CloudPolicyRefreshScheduler() override;
 
   base::Time last_refresh() const { return last_refresh_; }
-  int64_t refresh_delay() const { return refresh_delay_ms_; }
 
-  // Sets the refresh delay to |refresh_delay| (subject to min/max clamping).
-  void SetRefreshDelay(int64_t refresh_delay);
+  // Sets the refresh delay to |refresh_delay| (actual refresh delay may vary
+  // due to min/max clamping, changes to delay due to invalidations, etc).
+  void SetDesiredRefreshDelay(int64_t refresh_delay);
 
-  // Requests a policy refresh to be performed soon.
+  // Returns the current fixed refresh delay (can vary depending on whether
+  // invalidations are available or not).
+  int64_t GetActualRefreshDelay() const;
+
+  // Schedules a refresh to be performed immediately.
   void RefreshSoon();
 
   // The refresh scheduler starts by assuming that invalidations are not
@@ -79,6 +83,7 @@ class POLICY_EXPORT CloudPolicyRefreshScheduler
   void OnStoreError(CloudPolicyStore* store) override;
 
   // net::NetworkChangeNotifier::IPAddressObserver:
+  // Triggered also when the device wakes up.
   void OnIPAddressChanged() override;
 
  private:
@@ -89,9 +94,6 @@ class POLICY_EXPORT CloudPolicyRefreshScheduler
   // a refresh on every restart.
   void UpdateLastRefreshFromPolicy();
 
-  // Schedules a refresh to be performed immediately.
-  void RefreshNow();
-
   // Evaluates when the next refresh is pending and updates the callback to
   // execute that refresh at the appropriate time.
   void ScheduleRefresh();
@@ -99,9 +101,15 @@ class POLICY_EXPORT CloudPolicyRefreshScheduler
   // Triggers a policy refresh.
   void PerformRefresh();
 
-  // Schedules a policy refresh to happen after |delta_ms| milliseconds,
-  // relative to |last_refresh_|.
+  // Schedules a policy refresh to happen no later than |delta_ms| msecs after
+  // |last_refresh_| or |last_refresh_ticks_| whichever is sooner.
   void RefreshAfter(int delta_ms);
+
+  // Cancels the scheduled policy refresh.
+  void CancelRefresh();
+
+  // Sets the |last_refresh_| and |last_refresh_ticks_| to current time.
+  void UpdateLastRefresh();
 
   CloudPolicyClient* client_;
   CloudPolicyStore* store_;
@@ -112,8 +120,18 @@ class POLICY_EXPORT CloudPolicyRefreshScheduler
   // The delayed refresh callback.
   base::CancelableClosure refresh_callback_;
 
-  // The last time a refresh callback completed.
+  // Whether the refresh is scheduled for soon (using |RefreshSoon| or
+  // |RefreshNow|).
+  bool is_scheduled_for_soon_ = false;
+
+  // The last time a refresh callback completed. Is null in case the client is
+  // not registered.
   base::Time last_refresh_;
+
+  // The same |last_refresh_|, but based on TimeTicks. This allows to schedule
+  // the refresh times based on both, system time and TimeTicks, providing a
+  // protection against changes in system time.
+  base::TimeTicks last_refresh_ticks_;
 
   // Error retry delay in milliseconds.
   int64_t error_retry_delay_ms_;

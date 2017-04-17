@@ -22,7 +22,7 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -33,47 +33,50 @@ class MediaQueryEvaluator;
 class MediaQuerySet;
 
 // MediaQueryMatcher class is responsible for keeping a vector of pairs
-// MediaQueryList x MediaQueryListListener. It is responsible for evaluating the queries
-// whenever it is needed and to call the listeners if the corresponding query has changed.
-// The listeners must be called in the very same order in which they have been added.
+// MediaQueryList x MediaQueryListListener. It is responsible for evaluating the
+// queries whenever it is needed and to call the listeners if the corresponding
+// query has changed. The listeners must be called in the very same order in
+// which they have been added.
 
-class CORE_EXPORT MediaQueryMatcher final : public GarbageCollectedFinalized<MediaQueryMatcher> {
-    WTF_MAKE_NONCOPYABLE(MediaQueryMatcher);
-public:
-    static MediaQueryMatcher* create(Document&);
-    ~MediaQueryMatcher();
+class CORE_EXPORT MediaQueryMatcher final
+    : public GarbageCollectedFinalized<MediaQueryMatcher> {
+  WTF_MAKE_NONCOPYABLE(MediaQueryMatcher);
 
-    void documentDetached();
+ public:
+  static MediaQueryMatcher* Create(Document&);
+  ~MediaQueryMatcher();
 
-    void addMediaQueryList(MediaQueryList*);
-    void removeMediaQueryList(MediaQueryList*);
+  void DocumentDetached();
 
-    void addViewportListener(MediaQueryListListener*);
-    void removeViewportListener(MediaQueryListListener*);
+  void AddMediaQueryList(MediaQueryList*);
+  void RemoveMediaQueryList(MediaQueryList*);
 
-    MediaQueryList* matchMedia(const String&);
+  void AddViewportListener(MediaQueryListListener*);
+  void RemoveViewportListener(MediaQueryListListener*);
 
-    void mediaFeaturesChanged();
-    void viewportChanged();
-    bool evaluate(const MediaQuerySet*);
+  MediaQueryList* MatchMedia(const String&);
 
-    DECLARE_TRACE();
+  void MediaFeaturesChanged();
+  void ViewportChanged();
+  bool Evaluate(const MediaQuerySet*);
 
-private:
-    explicit MediaQueryMatcher(Document&);
+  DECLARE_TRACE();
 
-    MediaQueryEvaluator* createEvaluator() const;
+ private:
+  explicit MediaQueryMatcher(Document&);
 
-    Member<Document> m_document;
-    Member<MediaQueryEvaluator> m_evaluator;
+  MediaQueryEvaluator* CreateEvaluator() const;
 
-    using MediaQueryListSet = HeapLinkedHashSet<WeakMember<MediaQueryList>>;
-    MediaQueryListSet m_mediaLists;
+  Member<Document> document_;
+  Member<MediaQueryEvaluator> evaluator_;
 
-    using ViewportListenerSet = HeapLinkedHashSet<Member<MediaQueryListListener>>;
-    ViewportListenerSet m_viewportListeners;
+  using MediaQueryListSet = HeapLinkedHashSet<WeakMember<MediaQueryList>>;
+  MediaQueryListSet media_lists_;
+
+  using ViewportListenerSet = HeapLinkedHashSet<Member<MediaQueryListListener>>;
+  ViewportListenerSet viewport_listeners_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaQueryMatcher_h
+#endif  // MediaQueryMatcher_h

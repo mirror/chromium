@@ -4,6 +4,7 @@
 
 #include "core/animation/CSSTransformInterpolationType.h"
 
+#include <memory>
 #include "core/animation/LengthUnitsChecker.h"
 #include "core/css/CSSFunctionValue.h"
 #include "core/css/CSSPrimitiveValue.h"
@@ -12,84 +13,105 @@
 #include "core/css/resolver/TransformBuilder.h"
 #include "platform/transforms/TransformOperations.h"
 #include "platform/transforms/TranslateTransformOperation.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 class CSSTransformNonInterpolableValue : public NonInterpolableValue {
-public:
-    static PassRefPtr<CSSTransformNonInterpolableValue> create(TransformOperations&& transform)
-    {
-        return adoptRef(new CSSTransformNonInterpolableValue(true, std::move(transform), EmptyTransformOperations(), false, false));
+ public:
+  static PassRefPtr<CSSTransformNonInterpolableValue> Create(
+      TransformOperations&& transform) {
+    return AdoptRef(new CSSTransformNonInterpolableValue(
+        true, std::move(transform), EmptyTransformOperations(), false, false));
+  }
+
+  static PassRefPtr<CSSTransformNonInterpolableValue> Create(
+      CSSTransformNonInterpolableValue&& start,
+      double start_fraction,
+      CSSTransformNonInterpolableValue&& end,
+      double end_fraction) {
+    return AdoptRef(new CSSTransformNonInterpolableValue(
+        false, start.GetInterpolatedTransform(start_fraction),
+        end.GetInterpolatedTransform(end_fraction), start.IsAdditive(),
+        end.IsAdditive()));
+  }
+
+  PassRefPtr<CSSTransformNonInterpolableValue> Composite(
+      const CSSTransformNonInterpolableValue& other,
+      double other_progress) {
+    DCHECK(!IsAdditive());
+    if (other.is_single_) {
+      DCHECK_EQ(other_progress, 0);
+      DCHECK(other.IsAdditive());
+      TransformOperations result;
+      result.Operations() = Concat(Transform(), other.Transform());
+      return Create(std::move(result));
     }
 
-    static PassRefPtr<CSSTransformNonInterpolableValue> create(CSSTransformNonInterpolableValue&& start, CSSTransformNonInterpolableValue&& end)
-    {
-        return adoptRef(new CSSTransformNonInterpolableValue(false, std::move(start.transform()), std::move(end.transform()), start.isAdditive(), end.isAdditive()));
-    }
+    DCHECK(other.is_start_additive_ || other.is_end_additive_);
+    TransformOperations start;
+    start.Operations() = other.is_start_additive_
+                             ? Concat(Transform(), other.start_)
+                             : other.start_.Operations();
+    TransformOperations end;
+    end.Operations() = other.is_end_additive_ ? Concat(Transform(), other.end_)
+                                              : other.end_.Operations();
+    return Create(end.Blend(start, other_progress));
+  }
 
-    PassRefPtr<CSSTransformNonInterpolableValue> composite(const CSSTransformNonInterpolableValue& other, double otherProgress)
-    {
-        ASSERT(!isAdditive());
-        if (other.m_isSingle) {
-            ASSERT(otherProgress == 0);
-            ASSERT(other.isAdditive());
-            TransformOperations result;
-            result.operations() = concat(transform(), other.transform());
-            return create(std::move(result));
-        }
+  void SetSingleAdditive() {
+    DCHECK(is_single_);
+    is_start_additive_ = true;
+    is_end_additive_ = true;
+  }
 
-        ASSERT(other.m_isStartAdditive || other.m_isEndAdditive);
-        TransformOperations start;
-        start.operations() = other.m_isStartAdditive ? concat(transform(), other.m_start) : other.m_start.operations();
-        TransformOperations end;
-        end.operations() = other.m_isEndAdditive ? concat(transform(), other.m_end) : other.m_end.operations();
-        return create(end.blend(start, otherProgress));
-    }
+  TransformOperations GetInterpolatedTransform(double progress) const {
+    if (progress == 0)
+      return start_;
+    if (progress == 1)
+      return end_;
+    DCHECK(!IsAdditive());
+    return end_.Blend(start_, progress);
+  }
 
-    void setSingleAdditive() { ASSERT(m_isSingle); m_isStartAdditive = true; }
+  DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
 
-    TransformOperations getInterpolatedTransform(double progress) const
-    {
-        ASSERT(!m_isStartAdditive && !m_isEndAdditive);
-        ASSERT(!m_isSingle || progress == 0);
-        if (progress == 0)
-            return m_start;
-        if (progress == 1)
-            return m_end;
-        return m_end.blend(m_start, progress);
-    }
+ private:
+  CSSTransformNonInterpolableValue(bool is_single,
+                                   TransformOperations&& start,
+                                   TransformOperations&& end,
+                                   bool is_start_additive,
+                                   bool is_end_additive)
+      : is_single_(is_single),
+        start_(std::move(start)),
+        end_(std::move(end)),
+        is_start_additive_(is_start_additive),
+        is_end_additive_(is_end_additive) {}
 
-    DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
+  const TransformOperations& Transform() const {
+    DCHECK(is_single_);
+    return start_;
+  }
+  bool IsAdditive() const {
+    bool result = is_start_additive_ || is_end_additive_;
+    DCHECK(!result || is_single_);
+    return result;
+  }
 
-private:
-    CSSTransformNonInterpolableValue(bool isSingle, TransformOperations&& start, TransformOperations&& end, bool isStartAdditive, bool isEndAdditive)
-        : m_isSingle(isSingle)
-        , m_start(std::move(start))
-        , m_end(std::move(end))
-        , m_isStartAdditive(isStartAdditive)
-        , m_isEndAdditive(isEndAdditive)
-    { }
+  Vector<RefPtr<TransformOperation>> Concat(const TransformOperations& a,
+                                            const TransformOperations& b) {
+    Vector<RefPtr<TransformOperation>> result;
+    result.ReserveCapacity(a.size() + b.size());
+    result.AppendVector(a.Operations());
+    result.AppendVector(b.Operations());
+    return result;
+  }
 
-    const TransformOperations& transform() const { ASSERT(m_isSingle); return m_start; }
-    TransformOperations& transform() { ASSERT(m_isSingle); return m_start; }
-    bool isAdditive() const { ASSERT(m_isSingle); return m_isStartAdditive; }
-
-    Vector<RefPtr<TransformOperation>> concat(const TransformOperations& a, const TransformOperations& b)
-    {
-        Vector<RefPtr<TransformOperation>> result;
-        result.reserveCapacity(a.size() + b.size());
-        result.appendVector(a.operations());
-        result.appendVector(b.operations());
-        return result;
-    }
-
-    bool m_isSingle;
-    TransformOperations m_start;
-    TransformOperations m_end;
-    bool m_isStartAdditive;
-    bool m_isEndAdditive;
+  bool is_single_;
+  TransformOperations start_;
+  TransformOperations end_;
+  bool is_start_additive_;
+  bool is_end_additive_;
 };
 
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE(CSSTransformNonInterpolableValue);
@@ -97,120 +119,149 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSTransformNonInterpolableValue);
 
 namespace {
 
-InterpolationValue convertTransform(TransformOperations&& transform)
-{
-    return InterpolationValue(InterpolableNumber::create(0), CSSTransformNonInterpolableValue::create(std::move(transform)));
+InterpolationValue ConvertTransform(TransformOperations&& transform) {
+  return InterpolationValue(
+      InterpolableNumber::Create(0),
+      CSSTransformNonInterpolableValue::Create(std::move(transform)));
 }
 
-InterpolationValue convertTransform(const TransformOperations& transform)
-{
-    return convertTransform(TransformOperations(transform));
+InterpolationValue ConvertTransform(const TransformOperations& transform) {
+  return ConvertTransform(TransformOperations(transform));
 }
 
 class InheritedTransformChecker : public InterpolationType::ConversionChecker {
-public:
-    static std::unique_ptr<InheritedTransformChecker> create(const TransformOperations& inheritedTransform)
-    {
-        return wrapUnique(new InheritedTransformChecker(inheritedTransform));
-    }
+ public:
+  static std::unique_ptr<InheritedTransformChecker> Create(
+      const TransformOperations& inherited_transform) {
+    return WTF::WrapUnique(new InheritedTransformChecker(inherited_transform));
+  }
 
-    bool isValid(const InterpolationEnvironment& environment, const InterpolationValue& underlying) const final
-    {
-        return m_inheritedTransform == environment.state().parentStyle()->transform();
-    }
-private:
-    InheritedTransformChecker(const TransformOperations& inheritedTransform)
-        : m_inheritedTransform(inheritedTransform)
-    { }
+  bool IsValid(const InterpolationEnvironment& environment,
+               const InterpolationValue& underlying) const final {
+    return inherited_transform_ ==
+           environment.GetState().ParentStyle()->Transform();
+  }
 
-    const TransformOperations m_inheritedTransform;
+ private:
+  InheritedTransformChecker(const TransformOperations& inherited_transform)
+      : inherited_transform_(inherited_transform) {}
+
+  const TransformOperations inherited_transform_;
 };
 
-} // namespace
+}  // namespace
 
-InterpolationValue CSSTransformInterpolationType::maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers&) const
-{
-    return convertTransform(EmptyTransformOperations());
+InterpolationValue CSSTransformInterpolationType::MaybeConvertNeutral(
+    const InterpolationValue& underlying,
+    ConversionCheckers&) const {
+  return ConvertTransform(EmptyTransformOperations());
 }
 
-InterpolationValue CSSTransformInterpolationType::maybeConvertInitial(const StyleResolverState&, ConversionCheckers&) const
-{
-    return convertTransform(ComputedStyle::initialStyle().transform());
+InterpolationValue CSSTransformInterpolationType::MaybeConvertInitial(
+    const StyleResolverState&,
+    ConversionCheckers&) const {
+  return ConvertTransform(ComputedStyle::InitialStyle().Transform());
 }
 
-InterpolationValue CSSTransformInterpolationType::maybeConvertInherit(const StyleResolverState& state, ConversionCheckers& conversionCheckers) const
-{
-    const TransformOperations& inheritedTransform = state.parentStyle()->transform();
-    conversionCheckers.append(InheritedTransformChecker::create(inheritedTransform));
-    return convertTransform(inheritedTransform);
+InterpolationValue CSSTransformInterpolationType::MaybeConvertInherit(
+    const StyleResolverState& state,
+    ConversionCheckers& conversion_checkers) const {
+  const TransformOperations& inherited_transform =
+      state.ParentStyle()->Transform();
+  conversion_checkers.push_back(
+      InheritedTransformChecker::Create(inherited_transform));
+  return ConvertTransform(inherited_transform);
 }
 
-InterpolationValue CSSTransformInterpolationType::maybeConvertValue(const CSSValue& value, const StyleResolverState& state, ConversionCheckers& conversionCheckers) const
-{
-    if (value.isValueList()) {
-        CSSLengthArray lengthArray;
-        for (const CSSValue* item : toCSSValueList(value)) {
-            const CSSFunctionValue& transformFunction = toCSSFunctionValue(*item);
-            if (transformFunction.functionType() == CSSValueMatrix || transformFunction.functionType() == CSSValueMatrix3d) {
-                lengthArray.typeFlags.set(CSSPrimitiveValue::UnitTypePixels);
-                continue;
-            }
-            for (const CSSValue* argument : transformFunction) {
-                const CSSPrimitiveValue& primitiveValue = toCSSPrimitiveValue(*argument);
-                if (!primitiveValue.isLength())
-                    continue;
-                primitiveValue.accumulateLengthArray(lengthArray);
-            }
-        }
-        std::unique_ptr<InterpolationType::ConversionChecker> lengthUnitsChecker = LengthUnitsChecker::maybeCreate(std::move(lengthArray), state);
-
-        if (lengthUnitsChecker)
-            conversionCheckers.append(std::move(lengthUnitsChecker));
+InterpolationValue CSSTransformInterpolationType::MaybeConvertValue(
+    const CSSValue& value,
+    const StyleResolverState* state,
+    ConversionCheckers& conversion_checkers) const {
+  DCHECK(state);
+  if (value.IsValueList()) {
+    CSSLengthArray length_array;
+    for (const CSSValue* item : ToCSSValueList(value)) {
+      const CSSFunctionValue& transform_function = ToCSSFunctionValue(*item);
+      if (transform_function.FunctionType() == CSSValueMatrix ||
+          transform_function.FunctionType() == CSSValueMatrix3d) {
+        length_array.type_flags.Set(CSSPrimitiveValue::kUnitTypePixels);
+        continue;
+      }
+      for (const CSSValue* argument : transform_function) {
+        const CSSPrimitiveValue& primitive_value =
+            ToCSSPrimitiveValue(*argument);
+        if (!primitive_value.IsLength())
+          continue;
+        primitive_value.AccumulateLengthArray(length_array);
+      }
     }
+    std::unique_ptr<InterpolationType::ConversionChecker> length_units_checker =
+        LengthUnitsChecker::MaybeCreate(std::move(length_array), *state);
 
-    TransformOperations transform;
-    TransformBuilder::createTransformOperations(value, state.cssToLengthConversionData(), transform);
-    return convertTransform(std::move(transform));
+    if (length_units_checker)
+      conversion_checkers.push_back(std::move(length_units_checker));
+  }
+
+  DCHECK(state);
+  TransformOperations transform = TransformBuilder::CreateTransformOperations(
+      value, state->CssToLengthConversionData());
+  return ConvertTransform(std::move(transform));
 }
 
-InterpolationValue CSSTransformInterpolationType::maybeConvertSingle(const PropertySpecificKeyframe& keyframe, const InterpolationEnvironment& environment, const InterpolationValue& underlying, ConversionCheckers& conversionCheckers) const
-{
-    InterpolationValue result = CSSInterpolationType::maybeConvertSingle(keyframe, environment, underlying, conversionCheckers);
-    if (!result)
-        return nullptr;
-    if (keyframe.composite() != EffectModel::CompositeReplace)
-        toCSSTransformNonInterpolableValue(*result.nonInterpolableValue).setSingleAdditive();
-    return result;
+void CSSTransformInterpolationType::AdditiveKeyframeHook(
+    InterpolationValue& value) const {
+  ToCSSTransformNonInterpolableValue(*value.non_interpolable_value)
+      .SetSingleAdditive();
 }
 
-PairwiseInterpolationValue CSSTransformInterpolationType::maybeMergeSingles(InterpolationValue&& start, InterpolationValue&& end) const
-{
-    return PairwiseInterpolationValue(
-        InterpolableNumber::create(0),
-        InterpolableNumber::create(1),
-        CSSTransformNonInterpolableValue::create(
-            std::move(toCSSTransformNonInterpolableValue(*start.nonInterpolableValue)),
-            std::move(toCSSTransformNonInterpolableValue(*end.nonInterpolableValue))));
+PairwiseInterpolationValue CSSTransformInterpolationType::MaybeMergeSingles(
+    InterpolationValue&& start,
+    InterpolationValue&& end) const {
+  double start_fraction =
+      ToInterpolableNumber(*start.interpolable_value).Value();
+  double end_fraction = ToInterpolableNumber(*end.interpolable_value).Value();
+  return PairwiseInterpolationValue(
+      InterpolableNumber::Create(0), InterpolableNumber::Create(1),
+      CSSTransformNonInterpolableValue::Create(
+          std::move(ToCSSTransformNonInterpolableValue(
+              *start.non_interpolable_value)),
+          start_fraction,
+          std::move(
+              ToCSSTransformNonInterpolableValue(*end.non_interpolable_value)),
+          end_fraction));
 }
 
-InterpolationValue CSSTransformInterpolationType::maybeConvertUnderlyingValue(const InterpolationEnvironment& environment) const
-{
-    return convertTransform(environment.state().style()->transform());
+InterpolationValue
+CSSTransformInterpolationType::MaybeConvertStandardPropertyUnderlyingValue(
+    const ComputedStyle& style) const {
+  return ConvertTransform(style.Transform());
 }
 
-void CSSTransformInterpolationType::composite(UnderlyingValueOwner& underlyingValueOwner, double underlyingFraction, const InterpolationValue& value, double interpolationFraction) const
-{
-    CSSTransformNonInterpolableValue& underlyingNonInterpolableValue = toCSSTransformNonInterpolableValue(*underlyingValueOwner.value().nonInterpolableValue);
-    const CSSTransformNonInterpolableValue& nonInterpolableValue = toCSSTransformNonInterpolableValue(*value.nonInterpolableValue);
-    double progress = toInterpolableNumber(*value.interpolableValue).value();
-    underlyingValueOwner.mutableValue().nonInterpolableValue = underlyingNonInterpolableValue.composite(nonInterpolableValue, progress);
+void CSSTransformInterpolationType::Composite(
+    UnderlyingValueOwner& underlying_value_owner,
+    double underlying_fraction,
+    const InterpolationValue& value,
+    double interpolation_fraction) const {
+  CSSTransformNonInterpolableValue& underlying_non_interpolable_value =
+      ToCSSTransformNonInterpolableValue(
+          *underlying_value_owner.Value().non_interpolable_value);
+  const CSSTransformNonInterpolableValue& non_interpolable_value =
+      ToCSSTransformNonInterpolableValue(*value.non_interpolable_value);
+  double progress = ToInterpolableNumber(*value.interpolable_value).Value();
+  underlying_value_owner.MutableValue().non_interpolable_value =
+      underlying_non_interpolable_value.Composite(non_interpolable_value,
+                                                  progress);
 }
 
-void CSSTransformInterpolationType::apply(const InterpolableValue& interpolableValue, const NonInterpolableValue* untypedNonInterpolableValue, InterpolationEnvironment& environment) const
-{
-    double progress = toInterpolableNumber(interpolableValue).value();
-    const CSSTransformNonInterpolableValue& nonInterpolableValue = toCSSTransformNonInterpolableValue(*untypedNonInterpolableValue);
-    environment.state().style()->setTransform(nonInterpolableValue.getInterpolatedTransform(progress));
+void CSSTransformInterpolationType::ApplyStandardPropertyValue(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue* untyped_non_interpolable_value,
+    StyleResolverState& state) const {
+  double progress = ToInterpolableNumber(interpolable_value).Value();
+  const CSSTransformNonInterpolableValue& non_interpolable_value =
+      ToCSSTransformNonInterpolableValue(*untyped_non_interpolable_value);
+  state.Style()->SetTransform(
+      non_interpolable_value.GetInterpolatedTransform(progress));
 }
 
-} // namespace blink
+}  // namespace blink

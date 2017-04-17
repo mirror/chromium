@@ -4,6 +4,8 @@
 
 #include "chromeos/network/onc/onc_mapper.h"
 
+#include <utility>
+
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
@@ -24,13 +26,13 @@ std::unique_ptr<base::Value> Mapper::MapValue(
     bool* error) {
   std::unique_ptr<base::Value> result_value;
   switch (onc_value.GetType()) {
-    case base::Value::TYPE_DICTIONARY: {
+    case base::Value::Type::DICTIONARY: {
       const base::DictionaryValue* dict = NULL;
       onc_value.GetAsDictionary(&dict);
       result_value = MapObject(signature, *dict, error);
       break;
     }
-    case base::Value::TYPE_LIST: {
+    case base::Value::Type::LIST: {
       const base::ListValue* list = NULL;
       onc_value.GetAsList(&list);
       result_value = MapArray(signature, *list, error);
@@ -118,12 +120,11 @@ std::unique_ptr<base::ListValue> Mapper::MapArray(
   int original_index = 0;
   for (const auto& entry : onc_array) {
     std::unique_ptr<base::Value> result_entry;
-    result_entry = MapEntry(original_index,
-                            *array_signature.onc_array_entry_signature,
-                            *entry,
-                            nested_error);
+    result_entry =
+        MapEntry(original_index, *array_signature.onc_array_entry_signature,
+                 entry, nested_error);
     if (result_entry.get() != NULL)
-      result_array->Append(result_entry.release());
+      result_array->Append(std::move(result_entry));
     else
       DCHECK(*nested_error);
     ++original_index;

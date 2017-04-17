@@ -8,8 +8,10 @@
 #include <string>
 #include <vector>
 
+#include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
 #include "net/proxy/proxy_server.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -24,20 +26,21 @@ class DataReductionProxyConfiguratorTest : public testing::Test {
         test_context_->net_log(), test_context_->event_creator()));
   }
 
-  std::vector<net::ProxyServer> BuildProxyList(const std::string& first,
-                                               const std::string& second) {
-    std::vector<net::ProxyServer> proxies;
+  std::vector<DataReductionProxyServer> BuildProxyList(
+      const std::string& first,
+      const std::string& second) {
+    std::vector<DataReductionProxyServer> proxies;
     if (!first.empty()) {
       net::ProxyServer proxy =
           net::ProxyServer::FromURI(first, net::ProxyServer::SCHEME_HTTP);
       EXPECT_TRUE(proxy.is_valid()) << first;
-      proxies.push_back(proxy);
+      proxies.push_back(DataReductionProxyServer(proxy, ProxyServer::CORE));
     }
     if (!second.empty()) {
       net::ProxyServer proxy =
           net::ProxyServer::FromURI(second, net::ProxyServer::SCHEME_HTTP);
       EXPECT_TRUE(proxy.is_valid()) << second;
-      proxies.push_back(proxy);
+      proxies.push_back(DataReductionProxyServer(proxy, ProxyServer::CORE));
     }
     return proxies;
   }
@@ -58,7 +61,7 @@ class DataReductionProxyConfiguratorTest : public testing::Test {
     }
   }
 
-  base::MessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<DataReductionProxyTestContext> test_context_;
   std::unique_ptr<DataReductionProxyConfigurator> config_;
 };

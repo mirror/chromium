@@ -17,14 +17,14 @@ void RenderViewImpl::UpdateFontRenderingFromRendererPrefs() {
   const RendererPreferences& prefs = renderer_preferences_;
 
   // Cache the system font metrics in blink.
-  blink::WebFontRendering::setMenuFontMetrics(
+  blink::WebFontRendering::SetMenuFontMetrics(
       prefs.menu_font_family_name.c_str(), prefs.menu_font_height);
 
-  blink::WebFontRendering::setSmallCaptionFontMetrics(
+  blink::WebFontRendering::SetSmallCaptionFontMetrics(
       prefs.small_caption_font_family_name.c_str(),
       prefs.small_caption_font_height);
 
-  blink::WebFontRendering::setStatusFontMetrics(
+  blink::WebFontRendering::SetStatusFontMetrics(
       prefs.status_font_family_name.c_str(), prefs.status_font_height);
 
   SkFontLCDConfig::SetSubpixelOrder(
@@ -34,10 +34,19 @@ void RenderViewImpl::UpdateFontRenderingFromRendererPrefs() {
       gfx::FontRenderParams::SubpixelRenderingToSkiaLCDOrientation(
           prefs.subpixel_rendering));
 
-  blink::WebFontRendering::setAntialiasedTextEnabled(
+  blink::WebFontRendering::SetAntialiasedTextEnabled(
       prefs.should_antialias_text);
-  blink::WebFontRendering::setLCDTextEnabled(prefs.subpixel_rendering
-      != gfx::FontRenderParams::SUBPIXEL_RENDERING_NONE);
+  blink::WebFontRendering::SetLCDTextEnabled(
+      prefs.subpixel_rendering !=
+      gfx::FontRenderParams::SUBPIXEL_RENDERING_NONE);
+}
+
+void RenderViewImpl::UpdateThemePrefs() {
+  WebThemeEngineImpl::cacheScrollBarMetrics(
+      renderer_preferences_.vertical_scroll_bar_width_in_dips,
+      renderer_preferences_.horizontal_scroll_bar_height_in_dips,
+      renderer_preferences_.arrow_bitmap_height_vertical_scroll_bar_in_dips,
+      renderer_preferences_.arrow_bitmap_width_horizontal_scroll_bar_in_dips);
 }
 
 }  // namespace content

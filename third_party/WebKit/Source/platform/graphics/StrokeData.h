@@ -34,63 +34,91 @@
 #include "platform/graphics/Gradient.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/Pattern.h"
+#include "platform/graphics/paint/PaintFlags.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPathEffect.h"
-#include "wtf/Allocator.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
 
 namespace blink {
 
 // Encapsulates stroke geometry information.
 // It is pulled out of GraphicsContextState to enable other methods to use it.
 class PLATFORM_EXPORT StrokeData final {
-    DISALLOW_NEW();
-public:
-    StrokeData()
-        : m_style(SolidStroke)
-        , m_thickness(0)
-        , m_lineCap(SkPaint::kDefault_Cap)
-        , m_lineJoin(SkPaint::kDefault_Join)
-        , m_miterLimit(4)
-    {
-    }
+  DISALLOW_NEW();
 
-    StrokeStyle style() const { return m_style; }
-    void setStyle(StrokeStyle style) { m_style = style; }
+ public:
+  StrokeData()
+      : style_(kSolidStroke),
+        thickness_(0),
+        line_cap_(PaintFlags::kDefault_Cap),
+        line_join_(PaintFlags::kDefault_Join),
+        miter_limit_(4) {}
 
-    float thickness() const { return m_thickness; }
-    void setThickness(float thickness) { m_thickness = thickness; }
+  StrokeStyle Style() const { return style_; }
+  void SetStyle(StrokeStyle style) { style_ = style; }
 
-    void setLineCap(LineCap cap) { m_lineCap = (SkPaint::Cap)cap; }
+  float Thickness() const { return thickness_; }
+  void SetThickness(float thickness) { thickness_ = thickness; }
 
-    void setLineJoin(LineJoin join) { m_lineJoin = (SkPaint::Join)join; }
+  void SetLineCap(LineCap cap) { line_cap_ = (PaintFlags::Cap)cap; }
 
-    float miterLimit() const { return m_miterLimit; }
-    void setMiterLimit(float miterLimit) { m_miterLimit = miterLimit; }
+  void SetLineJoin(LineJoin join) { line_join_ = (PaintFlags::Join)join; }
 
-    void setLineDash(const DashArray&, float);
+  float MiterLimit() const { return miter_limit_; }
+  void SetMiterLimit(float miter_limit) { miter_limit_ = miter_limit; }
 
-    // Sets everything on the paint except the pattern, gradient and color.
-    // If a non-zero length is provided, the number of dashes/dots on a
-    // dashed/dotted line will be adjusted to start and end that length with a
-    // dash/dot.
-    void setupPaint(SkPaint*, int length = 0) const;
+  void SetLineDash(const DashArray&, float);
 
-    // Setup any DashPathEffect on the paint. If a non-zero length is provided,
-    // and no line dash has been set, the number of dashes/dots on a dashed/dotted
-    // line will be adjusted to start and end that length with a dash/dot.
-    void setupPaintDashPathEffect(SkPaint*, int) const;
+  // Sets everything on the paint except the pattern, gradient and color.
+  // If a non-zero length is provided, the number of dashes/dots on a
+  // dashed/dotted line will be adjusted to start and end that length with a
+  // dash/dot.
+  void SetupPaint(PaintFlags*, int length = 0) const;
 
-private:
-    StrokeStyle m_style;
-    float m_thickness;
-    SkPaint::Cap m_lineCap;
-    SkPaint::Join m_lineJoin;
-    float m_miterLimit;
-    sk_sp<SkPathEffect> m_dash;
+  // Setup any DashPathEffect on the paint. If a non-zero length is provided,
+  // and no line dash has been set, the number of dashes/dots on a dashed/dotted
+  // line will be adjusted to start and end that length with a dash/dot.
+  void SetupPaintDashPathEffect(PaintFlags*, int) const;
+
+  // Determine whether a stroked line should be drawn using dashes. In practice,
+  // we draw dashes when a dashed stroke is specified or when a dotted stroke
+  // is specified but the line width is too small to draw circles.
+  static bool StrokeIsDashed(float width, StrokeStyle);
+
+  // The length of the dash relative to the line thickness for dashed stroking.
+  // A different dash length may be used when dashes are adjusted to better
+  // fit a given length path. Thin lines need longer dashes to avoid
+  // looking like dots when drawn.
+  static float DashLengthRatio(float thickness) {
+    return thickness >= 3 ? 2.0 : 3.0;
+  }
+
+  // The length of the gap between dashes relative to the line thickness for
+  // dashed stroking. A different gap may be used when dashes are adjusted to
+  // better fit a given length path. Thin lines need longer gaps to avoid
+  // looking like a continuous line when drawn.
+  static float DashGapRatio(float thickness) {
+    return thickness >= 3 ? 1.0 : 2.0;
+  }
+
+  // Return a dash gap size that places dashes at each end of a stroke that is
+  // strokeLength long, given preferred dash and gap sizes. The gap returned is
+  // the one that minimizes deviation from the preferred gap length.
+  static float SelectBestDashGap(float stroke_length,
+                                 float dash_length,
+                                 float gap_length);
+
+ private:
+  StrokeStyle style_;
+  float thickness_;
+  PaintFlags::Cap line_cap_;
+  PaintFlags::Join line_join_;
+  float miter_limit_;
+  sk_sp<SkPathEffect> dash_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StrokeData_h
+#endif  // StrokeData_h

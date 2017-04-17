@@ -17,7 +17,7 @@
 #include "url/url_util.h"
 
 #if defined(OS_ANDROID)
-#include "chromecast/common/media/cast_media_client_android.h"
+#include "chromecast/common/media/cast_media_drm_bridge_client.h"
 #endif
 
 namespace chromecast {
@@ -56,10 +56,6 @@ std::string BuildAndroidOsInfo() {
 }
 #endif
 
-const url::SchemeWithType kChromeResourceSchemeWithType = {
-  kChromeResourceScheme, url::SCHEME_WITHOUT_PORT
-};
-
 }  // namespace
 
 std::string GetUserAgent() {
@@ -83,11 +79,8 @@ std::string GetUserAgent() {
 CastContentClient::~CastContentClient() {
 }
 
-void CastContentClient::AddAdditionalSchemes(
-    std::vector<url::SchemeWithType>* standard_schemes,
-    std::vector<url::SchemeWithType>* referrer_schemes,
-    std::vector<std::string>* savable_schemes) {
-  standard_schemes->push_back(kChromeResourceSchemeWithType);
+void CastContentClient::AddAdditionalSchemes(Schemes* schemes) {
+  schemes->standard_schemes.push_back(kChromeResourceScheme);
 }
 
 std::string CastContentClient::GetUserAgent() const {
@@ -107,7 +100,7 @@ base::StringPiece CastContentClient::GetDataResource(
 
 base::RefCountedMemory* CastContentClient::GetDataResourceBytes(
     int resource_id) const {
-  return ui::ResourceBundle::GetSharedInstance().LoadDataResourceBytes(
+  return ui::ResourceBundle::GetSharedInstance().LoadLocalizedResourceBytes(
       resource_id);
 }
 
@@ -117,8 +110,8 @@ gfx::Image& CastContentClient::GetNativeImageNamed(int resource_id) const {
 }
 
 #if defined(OS_ANDROID)
-::media::MediaClientAndroid* CastContentClient::GetMediaClientAndroid() {
-  return new media::CastMediaClientAndroid();
+::media::MediaDrmBridgeClient* CastContentClient::GetMediaDrmBridgeClient() {
+  return new media::CastMediaDrmBridgeClient();
 }
 #endif  // OS_ANDROID
 

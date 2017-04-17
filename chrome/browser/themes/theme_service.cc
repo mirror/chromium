@@ -9,8 +9,10 @@
 #include <algorithm>
 
 #include "base/bind.h"
+#include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/memory/ref_counted_memory.h"
+#include "base/metrics/user_metrics.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
@@ -26,31 +28,31 @@
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/themes/theme_syncable_service.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/notification_service.h"
-#include "content/public/browser/user_metrics.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
-#include "grit/components_scaled_resources.h"
-#include "grit/theme_resources.h"
+#include "extensions/features/features.h"
 #include "ui/base/layout.h"
-#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/native_theme/common_theme.h"
 #include "ui/native_theme/native_theme.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/browser/extension_registry_observer.h"
 #endif
 
-#if defined(ENABLE_SUPERVISED_USERS)
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
 #include "chrome/browser/supervised_user/supervised_user_theme.h"
 #endif
 
@@ -86,9 +88,16 @@ SkColor IncreaseLightness(SkColor color, double percent) {
 
 // Writes the theme pack to disk on a separate thread.
 void WritePackToDiskCallback(BrowserThemePack* pack,
-                             const base::FilePath& path) {
+                             const base::FilePath& directory) {
+  base::FilePath path = directory.Append(chrome::kThemePackFilename);
   if (!pack->WriteToDisk(path))
     NOTREACHED() << "Could not write theme pack to disk";
+
+  // Clean up any theme .pak that was generated during the Material Design
+  // transitional period.
+  // TODO(estade): remove this line in Q2 2017.
+  base::DeleteFile(directory.AppendASCII("Cached Theme Material Design.pak"),
+                   false);
 }
 
 // Heuristic to determine if color is grayscale. This is used to decide whether
@@ -148,7 +157,7 @@ base::RefCountedMemory* ThemeService::BrowserThemeProvider::GetRawData(
 
 // ThemeService::ThemeObserver ------------------------------------------------
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 class ThemeService::ThemeObserver
     : public extensions::ExtensionRegistryObserver {
  public:
@@ -197,7 +206,7 @@ class ThemeService::ThemeObserver
 
   ThemeService* theme_service_;
 };
-#endif  // defined(ENABLE_EXTENSIONS)
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 
 // ThemeService ---------------------------------------------------------------
@@ -234,7 +243,7 @@ void ThemeService::Init(Profile* profile) {
 }
 
 void ThemeService::Shutdown() {
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   theme_observer_.reset();
 #endif
 }
@@ -282,7 +291,7 @@ void ThemeService::SetTheme(const Extension* extension) {
   SaveThemeID(extension->id());
 
   NotifyThemeChanged();
-  content::RecordAction(UserMetricsAction("Themes_Installed"));
+  base::RecordAction(UserMetricsAction("Themes_Installed"));
 
   if (previous_theme_id != kDefaultThemeID &&
       previous_theme_id != extension->id() &&
@@ -300,8 +309,8 @@ void ThemeService::SetTheme(const Extension* extension) {
 
 void ThemeService::UseDefaultTheme() {
   if (ready_)
-    content::RecordAction(UserMetricsAction("Themes_Reset"));
-#if defined(ENABLE_SUPERVISED_USERS)
+    base::RecordAction(UserMetricsAction("Themes_Reset"));
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   if (IsSupervisedUser()) {
     SetSupervisedUserTheme();
     return;
@@ -425,10 +434,12 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
           gfx::kChromeIconGrey,
           GetTint(ThemeProperties::TINT_BUTTONS, incognito));
     case ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON_INACTIVE:
-      // The active color is overridden in Gtk2UI.
+      // The active color is overridden in GtkUi.
       return SkColorSetA(
           GetColor(ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON, incognito),
           0x33);
+    case ThemeProperties::COLOR_LOCATION_BAR_BORDER:
+      return SkColorSetA(SK_ColorBLACK, 0x4D);
     case ThemeProperties::COLOR_TOOLBAR_TOP_SEPARATOR:
     case ThemeProperties::COLOR_TOOLBAR_TOP_SEPARATOR_INACTIVE: {
       const SkColor tab_color =
@@ -478,14 +489,6 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
       // Use 50% of bookmark text color as separator color.
       return SkColorSetA(
           GetColor(ThemeProperties::COLOR_BOOKMARK_TEXT, incognito), 128);
-    case ThemeProperties::COLOR_NTP_SECTION_HEADER_TEXT:
-      return IncreaseLightness(GetColor(kNtpText, incognito), 0.30);
-    case ThemeProperties::COLOR_NTP_SECTION_HEADER_TEXT_HOVER:
-      return GetColor(kNtpText, incognito);
-    case ThemeProperties::COLOR_NTP_SECTION_HEADER_RULE:
-      return IncreaseLightness(GetColor(kNtpText, incognito), 0.70);
-    case ThemeProperties::COLOR_NTP_SECTION_HEADER_RULE_LIGHT:
-      return IncreaseLightness(GetColor(kNtpText, incognito), 0.86);
     case ThemeProperties::COLOR_NTP_TEXT_LIGHT:
       return IncreaseLightness(GetColor(kNtpText, incognito), 0.40);
     case ThemeProperties::COLOR_TAB_THROBBER_SPINNING:
@@ -498,7 +501,7 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
       color_utils::HSL hsl = GetTint(ThemeProperties::TINT_BUTTONS, incognito);
       return color_utils::HSLShift(base_color, hsl);
     }
-#if defined(ENABLE_SUPERVISED_USERS)
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
     case ThemeProperties::COLOR_SUPERVISED_USER_LABEL:
       return color_utils::GetReadableColor(
           SK_ColorWHITE, GetColor(kLabelBackground, incognito));
@@ -555,7 +558,7 @@ void ThemeService::LoadThemePrefs() {
 
   std::string current_id = GetThemeID();
   if (current_id == kDefaultThemeID) {
-#if defined(ENABLE_SUPERVISED_USERS)
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
     // Supervised users have a different default theme.
     if (IsSupervisedUser()) {
       SetSupervisedUserTheme();
@@ -573,20 +576,17 @@ void ThemeService::LoadThemePrefs() {
 
   bool loaded_pack = false;
 
-  // If we don't have a file pack, we're updating from an old version, or the
-  // pack was created for an alternative MaterialDesignController::Mode.
+  // If we don't have a file pack, we're updating from an old version.
   base::FilePath path = prefs->GetFilePath(prefs::kCurrentThemePackFilename);
   if (path != base::FilePath()) {
-    path = path.Append(ui::MaterialDesignController::IsModeMaterial()
-                           ? chrome::kThemePackMaterialDesignFilename
-                           : chrome::kThemePackFilename);
+    path = path.Append(chrome::kThemePackFilename);
     SwapThemeSupplier(BrowserThemePack::BuildFromDataPack(path, current_id));
     if (theme_supplier_)
       loaded_pack = true;
   }
 
   if (loaded_pack) {
-    content::RecordAction(UserMetricsAction("Themes.Loaded"));
+    base::RecordAction(UserMetricsAction("Themes.Loaded"));
     set_ready();
   }
   // Else: wait for the extension service to be ready so that the theme pack
@@ -791,7 +791,7 @@ void ThemeService::OnExtensionServiceReady() {
     NotifyThemeChanged();
   }
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   theme_observer_.reset(new ThemeObserver(this));
 #endif
 
@@ -815,11 +815,11 @@ void ThemeService::MigrateTheme() {
   if (extension) {
     DLOG(ERROR) << "Migrating theme";
     BuildFromExtension(extension);
-    content::RecordAction(UserMetricsAction("Themes.Migrated"));
+    base::RecordAction(UserMetricsAction("Themes.Migrated"));
   } else {
     DLOG(ERROR) << "Theme is mysteriously gone.";
     ClearAllThemeData();
-    content::RecordAction(UserMetricsAction("Themes.Gone"));
+    base::RecordAction(UserMetricsAction("Themes.Gone"));
   }
 }
 
@@ -857,21 +857,17 @@ void ThemeService::BuildFromExtension(const Extension* extension) {
     return;
 
   // Write the packed file to disk.
-  base::FilePath pack_path =
-      extension->path().Append(ui::MaterialDesignController::IsModeMaterial()
-                                   ? chrome::kThemePackMaterialDesignFilename
-                                   : chrome::kThemePackFilename);
   service->GetFileTaskRunner()->PostTask(
-      FROM_HERE,
-      base::Bind(&WritePackToDiskCallback, base::RetainedRef(pack), pack_path));
+      FROM_HERE, base::Bind(&WritePackToDiskCallback, base::RetainedRef(pack),
+                            extension->path()));
 
-  // Save only the extension path. The packed file which matches the
-  // MaterialDesignController::Mode will be loaded via LoadThemePrefs().
+  // Save only the extension path. The packed file will be loaded via
+  // LoadThemePrefs().
   SavePackName(extension->path());
   SwapThemeSupplier(pack);
 }
 
-#if defined(ENABLE_SUPERVISED_USERS)
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
 bool ThemeService::IsSupervisedUser() const {
   return profile_->IsSupervised();
 }

@@ -16,7 +16,8 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -25,7 +26,6 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
-#include "components/session_manager/core/session_manager.h"
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/remove_user_delegate.h"
 #include "components/user_manager/user_type.h"
@@ -161,6 +161,8 @@ void UserManagerBase::UserLoggedIn(const AccountId& account_id,
       PublicAccountUserLoggedIn(user);
     } else if (user && user->GetType() == USER_TYPE_KIOSK_APP) {
       KioskAppLoggedIn(user);
+    } else if (user && user->GetType() == USER_TYPE_ARC_KIOSK_APP) {
+      ArcKioskAppLoggedIn(user);
     } else if ((user && user->GetType() == USER_TYPE_SUPERVISED) ||
                (!user && IsSupervisedAccountId(account_id))) {
       SupervisedUserLoggedIn(account_id);
@@ -180,14 +182,19 @@ void UserManagerBase::UserLoggedIn(const AccountId& account_id,
   active_user_->set_is_active(true);
   active_user_->set_username_hash(username_hash);
 
-  // Place user who just signed in to the top of the logged in users.
-  logged_in_users_.insert(logged_in_users_.begin(), active_user_);
+  logged_in_users_.push_back(active_user_);
   SetLRUUser(active_user_);
 
   if (!primary_user_) {
     primary_user_ = active_user_;
     if (primary_user_->HasGaiaAccount())
       SendGaiaUserLoginMetrics(account_id);
+  } else if (primary_user_ != active_user_) {
+    // This is only needed for tests where a new user session is created
+    // for non-existent user. The new user is created and automatically set
+    // to active and there will be no pending user switch in such case.
+    SetIsCurrentUserNew(true);
+    NotifyUserAddedToSession(active_user_, false /* user switch pending */);
   }
 
   UMA_HISTOGRAM_ENUMERATION(
@@ -235,13 +242,15 @@ void UserManagerBase::SwitchActiveUser(const AccountId& account_id) {
 
   NotifyActiveUserHashChanged(active_user_->username_hash());
   NotifyActiveUserChanged(active_user_);
+  CallUpdateLoginState();
 }
 
 void UserManagerBase::SwitchToLastActiveUser() {
   if (!last_session_active_account_id_.is_valid())
     return;
 
-  if (AccountId::FromUserEmail(GetActiveUser()->email()) !=
+  if (AccountId::FromUserEmail(
+          GetActiveUser()->GetAccountId().GetUserEmail()) !=
       last_session_active_account_id_)
     SwitchActiveUser(last_session_active_account_id_);
 
@@ -249,14 +258,20 @@ void UserManagerBase::SwitchToLastActiveUser() {
   last_session_active_account_id_.clear();
 }
 
-void UserManagerBase::SessionStarted() {
+void UserManagerBase::OnSessionStarted() {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  session_started_ = true;
 
   CallUpdateLoginState();
-  session_manager::SessionManager::Get()->SetSessionState(
-      session_manager::SESSION_STATE_ACTIVE);
+  GetLocalState()->CommitPendingWrite();
+}
 
+void UserManagerBase::OnProfileInitialized(User* user) {
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
+
+  // Mark the user as having an initialized session and persist this in
+  // the known_user DB.
+  user->set_profile_ever_initialized(true);
+  known_user::SetProfileEverInitialized(user->GetAccountId(), true);
   GetLocalState()->CommitPendingWrite();
 }
 
@@ -297,7 +312,7 @@ void UserManagerBase::RemoveUserFromList(const AccountId& account_id) {
     // Special case, removing partially-constructed supervised user or
     // boostrapping user during user list loading.
     ListPrefUpdate users_update(GetLocalState(), kRegularUsers);
-    users_update->Remove(base::StringValue(account_id.GetUserEmail()), nullptr);
+    users_update->Remove(base::Value(account_id.GetUserEmail()), nullptr);
     OnUserRemoved(account_id);
   } else {
     NOTREACHED() << "Users are not loaded yet.";
@@ -324,16 +339,6 @@ User* UserManagerBase::FindUserAndModify(const AccountId& account_id) {
   if (active_user_ && active_user_->GetAccountId() == account_id)
     return active_user_;
   return FindUserInListAndModify(account_id);
-}
-
-const User* UserManagerBase::GetLoggedInUser() const {
-  DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  return active_user_;
-}
-
-User* UserManagerBase::GetLoggedInUser() {
-  DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  return active_user_;
 }
 
 const User* UserManagerBase::GetActiveUser() const {
@@ -371,7 +376,7 @@ void UserManagerBase::SaveUserOAuthStatus(
                                              kUserOAuthTokenStatus);
     oauth_status_update->SetWithoutPathExpansion(
         account_id.GetUserEmail(),
-        new base::FundamentalValue(static_cast<int>(oauth_token_status)));
+        new base::Value(static_cast<int>(oauth_token_status)));
   }
   GetLocalState()->CommitPendingWrite();
 }
@@ -407,7 +412,7 @@ void UserManagerBase::SaveUserDisplayName(const AccountId& account_id,
       DictionaryPrefUpdate display_name_update(GetLocalState(),
                                                kUserDisplayName);
       display_name_update->SetWithoutPathExpansion(
-          account_id.GetUserEmail(), new base::StringValue(display_name));
+          account_id.GetUserEmail(), new base::Value(display_name));
     }
   }
 }
@@ -436,8 +441,8 @@ void UserManagerBase::SaveUserDisplayEmail(const AccountId& account_id,
     return;
 
   DictionaryPrefUpdate display_email_update(GetLocalState(), kUserDisplayEmail);
-  display_email_update->SetWithoutPathExpansion(
-      account_id.GetUserEmail(), new base::StringValue(display_email));
+  display_email_update->SetWithoutPathExpansion(account_id.GetUserEmail(),
+                                                new base::Value(display_email));
 }
 
 std::string UserManagerBase::GetUserDisplayEmail(
@@ -463,8 +468,7 @@ void UserManagerBase::SaveUserType(const AccountId& account_id,
 
   DictionaryPrefUpdate user_type_update(GetLocalState(), kUserType);
   user_type_update->SetWithoutPathExpansion(
-      account_id.GetUserEmail(),
-      new base::FundamentalValue(static_cast<int>(user_type)));
+      account_id.GetUserEmail(), new base::Value(static_cast<int>(user_type)));
   GetLocalState()->CommitPendingWrite();
 }
 
@@ -480,8 +484,8 @@ void UserManagerBase::UpdateUserAccountData(
     user->set_given_name(given_name);
     if (!IsUserNonCryptohomeDataEphemeral(account_id)) {
       DictionaryPrefUpdate given_name_update(GetLocalState(), kUserGivenName);
-      given_name_update->SetWithoutPathExpansion(
-          account_id.GetUserEmail(), new base::StringValue(given_name));
+      given_name_update->SetWithoutPathExpansion(account_id.GetUserEmail(),
+                                                 new base::Value(given_name));
     }
   }
 
@@ -501,7 +505,8 @@ void UserManagerBase::ParseUserList(const base::ListValue& users_list,
       continue;
     }
 
-    const AccountId account_id = known_user::GetAccountId(email, std::string());
+    const AccountId account_id = known_user::GetAccountId(
+        email, std::string() /* id */, AccountType::UNKNOWN);
 
     if (existing_users.find(account_id) != existing_users.end() ||
         !users_set->insert(account_id).second) {
@@ -514,17 +519,8 @@ void UserManagerBase::ParseUserList(const base::ListValue& users_list,
 
 bool UserManagerBase::IsCurrentUserOwner() const {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  base::AutoLock lk(is_current_user_owner_lock_);
-  return is_current_user_owner_;
-}
-
-void UserManagerBase::SetCurrentUserIsOwner(bool is_current_user_owner) {
-  DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  {
-    base::AutoLock lk(is_current_user_owner_lock_);
-    is_current_user_owner_ = is_current_user_owner;
-  }
-  CallUpdateLoginState();
+  return !owner_account_id_.empty() && active_user_ &&
+         active_user_->GetAccountId() == owner_account_id_;
 }
 
 bool UserManagerBase::IsCurrentUserNew() const {
@@ -535,7 +531,7 @@ bool UserManagerBase::IsCurrentUserNew() const {
 bool UserManagerBase::IsCurrentUserNonCryptohomeDataEphemeral() const {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
   return IsUserLoggedIn() &&
-         IsUserNonCryptohomeDataEphemeral(GetLoggedInUser()->GetAccountId());
+         IsUserNonCryptohomeDataEphemeral(GetActiveUser()->GetAccountId());
 }
 
 bool UserManagerBase::IsCurrentUserCryptohomeDataEphemeral() const {
@@ -585,14 +581,14 @@ bool UserManagerBase::IsLoggedInAsKioskApp() const {
   return IsUserLoggedIn() && active_user_->GetType() == USER_TYPE_KIOSK_APP;
 }
 
+bool UserManagerBase::IsLoggedInAsArcKioskApp() const {
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
+  return IsUserLoggedIn() && active_user_->GetType() == USER_TYPE_ARC_KIOSK_APP;
+}
+
 bool UserManagerBase::IsLoggedInAsStub() const {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
   return IsUserLoggedIn() && IsStubAccountId(active_user_->GetAccountId());
-}
-
-bool UserManagerBase::IsSessionStarted() const {
-  DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  return session_started_;
 }
 
 bool UserManagerBase::IsUserNonCryptohomeDataEphemeral(
@@ -613,7 +609,7 @@ bool UserManagerBase::IsUserNonCryptohomeDataEphemeral(
   //    policy was enabled.
   //    - or -
   // b) The user logged into any other account type.
-  if (IsUserLoggedIn() && (account_id == GetLoggedInUser()->GetAccountId()) &&
+  if (IsUserLoggedIn() && (account_id == GetActiveUser()->GetAccountId()) &&
       (is_current_user_ephemeral_regular_user_ ||
        !IsLoggedInAsUserWithGaiaAccount())) {
     return true;
@@ -676,13 +672,35 @@ void UserManagerBase::RemoveSessionStateObserver(
 
 void UserManagerBase::NotifyLocalStateChanged() {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  FOR_EACH_OBSERVER(
-      UserManager::Observer, observer_list_, LocalStateChanged(this));
+  for (auto& observer : observer_list_)
+    observer.LocalStateChanged(this);
+}
+
+void UserManagerBase::NotifyUserImageChanged(const User& user) {
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
+  for (auto& observer : observer_list_)
+    observer.OnUserImageChanged(user);
+}
+
+void UserManagerBase::NotifyUserProfileImageUpdateFailed(const User& user) {
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
+  for (auto& observer : observer_list_)
+    observer.OnUserProfileImageUpdateFailed(user);
+}
+
+void UserManagerBase::NotifyUserProfileImageUpdated(
+    const User& user,
+    const gfx::ImageSkia& profile_image) {
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
+  for (auto& observer : observer_list_)
+    observer.OnUserProfileImageUpdated(user, profile_image);
 }
 
 bool UserManagerBase::CanUserBeRemoved(const User* user) const {
   // Only regular and supervised users are allowed to be manually removed.
-  if (!user || !(user->HasGaiaAccount() || user->IsSupervised()))
+  if (!user ||
+      !(user->HasGaiaAccount() || user->IsSupervised() ||
+        user->IsActiveDirectoryUser()))
     return false;
 
   // Sanity check: we must not remove single user unless it's an enterprise
@@ -698,7 +716,7 @@ bool UserManagerBase::CanUserBeRemoved(const User* user) const {
   for (UserList::const_iterator it = logged_in_users_.begin();
        it != logged_in_users_.end();
        ++it) {
-    if ((*it)->email() == user->email())
+    if ((*it)->GetAccountId() == user->GetAccountId())
       return false;
   }
 
@@ -723,6 +741,7 @@ bool UserManagerBase::HasPendingBootstrap(const AccountId& account_id) const {
 
 void UserManagerBase::SetOwnerId(const AccountId& owner_account_id) {
   owner_account_id_ = owner_account_id;
+  CallUpdateLoginState();
 }
 
 const AccountId& UserManagerBase::GetPendingUserSwitchID() const {
@@ -783,6 +802,8 @@ void UserManagerBase::EnsureUsersLoaded() {
     const AccountId account_id = user->GetAccountId();
     user->set_oauth_token_status(LoadUserOAuthStatus(*it));
     user->set_force_online_signin(LoadForceOnlineSignin(*it));
+    user->set_profile_ever_initialized(
+        known_user::WasProfileEverInitialized(*it));
     user->set_using_saml(known_user::IsUsingSAML(*it));
     users_.push_back(user);
 
@@ -804,7 +825,6 @@ void UserManagerBase::EnsureUsersLoaded() {
       user->set_display_email(display_email);
     }
   }
-
   user_loading_stage_ = STAGE_LOADED;
 
   PerformPostUserListLoadingActions();
@@ -851,7 +871,8 @@ void UserManagerBase::GuestUserLoggedIn() {
 void UserManagerBase::AddUserRecord(User* user) {
   // Add the user to the front of the user list.
   ListPrefUpdate prefs_users_update(GetLocalState(), kRegularUsers);
-  prefs_users_update->Insert(0, new base::StringValue(user->email()));
+  prefs_users_update->Insert(
+      0, base::MakeUnique<base::Value>(user->GetAccountId().GetUserEmail()));
   users_.insert(users_.begin(), user);
 }
 
@@ -866,6 +887,8 @@ void UserManagerBase::RegularUserLoggedIn(const AccountId& account_id) {
     active_user_->set_oauth_token_status(LoadUserOAuthStatus(account_id));
     SaveUserDisplayName(active_user_->GetAccountId(),
                         base::UTF8ToUTF16(active_user_->GetAccountName(true)));
+    known_user::SetProfileEverInitialized(
+        active_user_->GetAccountId(), active_user_->profile_ever_initialized());
   }
 
   AddUserRecord(active_user_);
@@ -962,9 +985,10 @@ User* UserManagerBase::RemoveRegularOrSupervisedUserFromList(
       user = *it;
       it = users_.erase(it);
     } else {
-      if ((*it)->HasGaiaAccount() || (*it)->IsSupervised()) {
-        const std::string user_email = (*it)->email();
-        prefs_users_update->Append(new base::StringValue(user_email));
+      if ((*it)->HasGaiaAccount() || (*it)->IsSupervised() ||
+          (*it)->IsActiveDirectoryUser()) {
+        const std::string user_email = (*it)->GetAccountId().GetUserEmail();
+        prefs_users_update->AppendString(user_email);
       }
       ++it;
     }
@@ -975,24 +999,21 @@ User* UserManagerBase::RemoveRegularOrSupervisedUserFromList(
 
 void UserManagerBase::NotifyActiveUserChanged(const User* active_user) {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  FOR_EACH_OBSERVER(UserManager::UserSessionStateObserver,
-                    session_state_observer_list_,
-                    ActiveUserChanged(active_user));
+  for (auto& observer : session_state_observer_list_)
+    observer.ActiveUserChanged(active_user);
 }
 
 void UserManagerBase::NotifyUserAddedToSession(const User* added_user,
                                                bool user_switch_pending) {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  FOR_EACH_OBSERVER(UserManager::UserSessionStateObserver,
-                    session_state_observer_list_,
-                    UserAddedToSession(added_user));
+  for (auto& observer : session_state_observer_list_)
+    observer.UserAddedToSession(added_user);
 }
 
 void UserManagerBase::NotifyActiveUserHashChanged(const std::string& hash) {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
-  FOR_EACH_OBSERVER(UserManager::UserSessionStateObserver,
-                    session_state_observer_list_,
-                    ActiveUserHashChanged(hash));
+  for (auto& observer : session_state_observer_list_)
+    observer.ActiveUserHashChanged(hash);
 }
 
 void UserManagerBase::ChangeUserChildStatus(User* user, bool is_child) {
@@ -1003,9 +1024,8 @@ void UserManagerBase::ChangeUserChildStatus(User* user, bool is_child) {
   SaveUserType(user->GetAccountId(), is_child
                                          ? user_manager::USER_TYPE_CHILD
                                          : user_manager::USER_TYPE_REGULAR);
-  FOR_EACH_OBSERVER(UserManager::UserSessionStateObserver,
-                    session_state_observer_list_,
-                    UserChangedChildStatus(user));
+  for (auto& observer : session_state_observer_list_)
+    observer.UserChangedChildStatus(user);
 }
 
 void UserManagerBase::Initialize() {
@@ -1014,11 +1034,12 @@ void UserManagerBase::Initialize() {
 }
 
 void UserManagerBase::CallUpdateLoginState() {
-  UpdateLoginState(active_user_, primary_user_, is_current_user_owner_);
+  UpdateLoginState(active_user_, primary_user_, IsCurrentUserOwner());
 }
 
 void UserManagerBase::SetLRUUser(User* user) {
-  GetLocalState()->SetString(kLastActiveUser, user->email());
+  GetLocalState()->SetString(kLastActiveUser,
+                             user->GetAccountId().GetUserEmail());
   GetLocalState()->CommitPendingWrite();
 
   UserList::iterator it =
@@ -1042,7 +1063,7 @@ void UserManagerBase::SendGaiaUserLoginMetrics(const AccountId& account_id) {
       account_id != AccountId::FromUserEmail(last_email) &&
       time_to_login.InSeconds() <= kLogoutToLoginDelayMaxSec) {
     UMA_HISTOGRAM_CUSTOM_COUNTS("UserManager.LogoutToLoginDelay",
-                                time_to_login.InSeconds(), 0,
+                                time_to_login.InSeconds(), 1,
                                 kLogoutToLoginDelayMaxSec, 50);
   }
 }

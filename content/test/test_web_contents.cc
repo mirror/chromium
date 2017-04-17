@@ -15,6 +15,7 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/site_instance_impl.h"
 #include "content/common/frame_messages.h"
+#include "content/common/render_message_filter.mojom.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/notification_registrar.h"
@@ -22,6 +23,7 @@
 #include "content/public/browser/notification_types.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/page_state.h"
+#include "content/public/test/browser_side_navigation_test_utils.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/test/test_render_view_host.h"
 #include "ui/base/page_transition_types.h"
@@ -73,11 +75,12 @@ void TestWebContents::StartNavigation(const GURL& url) {
   BrowserURLHandlerImpl::GetInstance()->RewriteURLIfNecessary(
       &loaded_url, GetBrowserContext(), &reverse_on_redirect);
 
+  if (GetMainFrame()->is_waiting_for_beforeunload_ack())
+    GetMainFrame()->SendBeforeUnloadACK(true);
+
   // This will simulate receiving the DidStartProvisionalLoad IPC from the
   // renderer.
   if (!IsBrowserSideNavigationEnabled()) {
-    if (GetMainFrame()->is_waiting_for_beforeunload_ack())
-      GetMainFrame()->SendBeforeUnloadACK(true);
     TestRenderFrameHost* rfh =
         GetPendingMainFrame() ? GetPendingMainFrame() : GetMainFrame();
     rfh->SimulateNavigationStart(url);
@@ -90,17 +93,18 @@ int TestWebContents::DownloadImage(const GURL& url,
                                    bool bypass_cache,
                                    const ImageDownloadCallback& callback) {
   static int g_next_image_download_id = 0;
-  return ++g_next_image_download_id;
+  ++g_next_image_download_id;
+  pending_image_downloads_[url].emplace_back(g_next_image_download_id,
+                                             callback);
+  return g_next_image_download_id;
 }
 
 void TestWebContents::TestDidNavigate(RenderFrameHost* render_frame_host,
-                                      int page_id,
                                       int nav_entry_id,
                                       bool did_create_new_entry,
                                       const GURL& url,
                                       ui::PageTransition transition) {
   TestDidNavigateWithReferrer(render_frame_host,
-                              page_id,
                               nav_entry_id,
                               did_create_new_entry,
                               url,
@@ -110,12 +114,26 @@ void TestWebContents::TestDidNavigate(RenderFrameHost* render_frame_host,
 
 void TestWebContents::TestDidNavigateWithReferrer(
     RenderFrameHost* render_frame_host,
-    int page_id,
     int nav_entry_id,
     bool did_create_new_entry,
     const GURL& url,
     const Referrer& referrer,
     ui::PageTransition transition) {
+  TestDidNavigateWithSequenceNumber(render_frame_host, nav_entry_id,
+                                    did_create_new_entry, url, referrer,
+                                    transition, false, -1, -1);
+}
+
+void TestWebContents::TestDidNavigateWithSequenceNumber(
+    RenderFrameHost* render_frame_host,
+    int nav_entry_id,
+    bool did_create_new_entry,
+    const GURL& url,
+    const Referrer& referrer,
+    ui::PageTransition transition,
+    bool was_within_same_document,
+    int item_sequence_number,
+    int document_sequence_number) {
   TestRenderFrameHost* rfh =
       static_cast<TestRenderFrameHost*>(render_frame_host);
   rfh->InitializeRenderFrameIfNeeded();
@@ -125,28 +143,68 @@ void TestWebContents::TestDidNavigateWithReferrer(
 
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
 
-  params.page_id = page_id;
   params.nav_entry_id = nav_entry_id;
+  params.frame_unique_name = std::string();
+  params.item_sequence_number = item_sequence_number;
+  params.document_sequence_number = document_sequence_number;
   params.url = url;
+  params.base_url = GURL();
   params.referrer = referrer;
   params.transition = transition;
   params.redirects = std::vector<GURL>();
-  params.should_update_history = false;
+  params.should_update_history = true;
+  params.contents_mime_type = std::string("text/html");
+  params.socket_address = net::HostPortPair();
+  params.intended_as_new_entry = did_create_new_entry;
+  params.did_create_new_entry = did_create_new_entry;
+  params.should_replace_current_entry = false;
+  params.gesture = NavigationGestureUser;
+  params.method = "GET";
+  params.post_id = 0;
+  params.was_within_same_document = was_within_same_document;
+  params.http_status_code = 200;
+  params.url_is_unreachable = false;
+  if (item_sequence_number != -1 && document_sequence_number != -1) {
+    params.page_state = PageState::CreateForTestingWithSequenceNumbers(
+        url, item_sequence_number, document_sequence_number);
+  } else {
+    params.page_state = PageState::CreateFromURL(url);
+  }
+  params.original_request_url = GURL();
+  params.is_overriding_user_agent = false;
+  params.history_list_was_cleared = false;
+  params.render_view_routing_id = 0;
+  params.origin = url::Origin();
+  params.report_type = FrameMsg_UILoadMetricsReportType::NO_REPORT;
+  params.ui_timestamp = base::TimeTicks();
+  params.insecure_request_policy = blink::kLeaveInsecureRequestsAlone;
+  params.has_potentially_trustworthy_unique_origin = false;
   params.searchable_form_url = GURL();
   params.searchable_form_encoding = std::string();
-  params.did_create_new_entry = did_create_new_entry;
-  params.security_info = std::string();
-  params.gesture = NavigationGestureUser;
-  params.was_within_same_page = false;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url);
-  params.contents_mime_type = std::string("text/html");
 
   rfh->SendNavigateWithParams(&params);
 }
 
 const std::string& TestWebContents::GetSaveFrameHeaders() {
   return save_frame_headers_;
+}
+
+bool TestWebContents::HasPendingDownloadImage(const GURL& url) {
+  return !pending_image_downloads_[url].empty();
+}
+
+bool TestWebContents::TestDidDownloadImage(
+    const GURL& url,
+    int http_status_code,
+    const std::vector<SkBitmap>& bitmaps,
+    const std::vector<gfx::Size>& original_bitmap_sizes) {
+  if (!HasPendingDownloadImage(url))
+    return false;
+  int id = pending_image_downloads_[url].front().first;
+  ImageDownloadCallback callback = pending_image_downloads_[url].front().second;
+  pending_image_downloads_[url].pop_front();
+  callback.Run(id, http_status_code, url, bitmaps, original_bitmap_sizes);
+  return true;
 }
 
 bool TestWebContents::CrossProcessNavigationPending() {
@@ -161,10 +219,9 @@ bool TestWebContents::CreateRenderViewForRenderManager(
     int opener_frame_routing_id,
     int proxy_routing_id,
     const FrameReplicationState& replicated_frame_state) {
-  UpdateMaxPageIDIfNecessary(render_view_host);
   // This will go to a TestRenderViewHost.
   static_cast<RenderViewHostImpl*>(render_view_host)
-      ->CreateRenderView(opener_frame_routing_id, proxy_routing_id, -1,
+      ->CreateRenderView(opener_frame_routing_id, proxy_routing_id,
                          replicated_frame_state, false);
   return true;
 }
@@ -203,7 +260,7 @@ void TestWebContents::TestSetIsLoading(bool value) {
             node->render_manager()->speculative_frame_host();
         if (speculative_frame_host)
           speculative_frame_host->ResetLoadingState();
-        node->ResetNavigationRequest(false);
+        node->ResetNavigationRequest(false, true);
       } else {
         RenderFrameHostImpl* pending_frame_host =
             node->render_manager()->pending_frame_host();
@@ -218,44 +275,32 @@ void TestWebContents::CommitPendingNavigation() {
   const NavigationEntry* entry = GetController().GetPendingEntry();
   DCHECK(entry);
 
-  // If we are doing a cross-site navigation, this simulates the current RFH
-  // notifying that it has unloaded so the pending RFH is resumed and can
-  // navigate.
-  // PlzNavigate: the pending RFH is not created before the navigation commit,
-  // so it is necessary to simulate the IO thread response here to commit in the
-  // proper renderer. It is necessary to call PrepareForCommit before getting
-  // the main and the pending frame because when we are trying to navigate to a
-  // webui from a new tab, a RenderFrameHost is created to display it that is
-  // committed immediately (since it is a new tab). Therefore the main frame is
-  // replaced without a pending frame being created, and we don't get the right
-  // values for the RFH to navigate: we try to use the old one that has been
-  // deleted in the meantime.
-  // Note that for some synchronous navigations (about:blank, javascript
-  // urls, etc.) there will be no NavigationRequest, and no simulation of the
-  // network stack is required.
-  bool browser_side_navigation = IsBrowserSideNavigationEnabled();
-  if (!browser_side_navigation ||
-      GetMainFrame()->frame_tree_node()->navigation_request()) {
-    GetMainFrame()->PrepareForCommit();
-  }
-
   TestRenderFrameHost* old_rfh = GetMainFrame();
+
+  // PlzNavigate: the pending RenderFrameHost is not created before the
+  // navigation commit, so it is necessary to simulate the IO thread response
+  // here to commit in the proper renderer. It is necessary to call
+  // PrepareForCommit before getting the main and the pending frame because when
+  // we are trying to navigate to a webui from a new tab, a RenderFrameHost is
+  // created to display it that is committed immediately (since it is a new
+  // tab). Therefore the main frame is replaced without a pending frame being
+  // created, and we don't get the right values for the RenderFrameHost to
+  // navigate: we try to use the old one that has been deleted in the meantime.
+  // Note that for some synchronous navigations (about:blank, javascript urls,
+  // etc.), no simulation of the network stack is required.
+  old_rfh->PrepareForCommitIfNecessary();
+
   TestRenderFrameHost* rfh = GetPendingMainFrame();
   if (!rfh)
     rfh = old_rfh;
+  const bool browser_side_navigation = IsBrowserSideNavigationEnabled();
   CHECK(!browser_side_navigation || rfh->is_loading());
   CHECK(!browser_side_navigation ||
         !rfh->frame_tree_node()->navigation_request());
 
-  int page_id = entry->GetPageID();
-  if (page_id == -1) {
-    // It's a new navigation, assign a never-seen page id to it.
-    page_id = GetMaxPageIDForSiteInstance(rfh->GetSiteInstance()) + 1;
-  }
-
-  rfh->SendNavigate(page_id, entry->GetUniqueID(),
-                    GetController().GetPendingEntryIndex() == -1,
-                    entry->GetURL());
+  rfh->SendNavigateWithTransition(entry->GetUniqueID(),
+                                  GetController().GetPendingEntryIndex() == -1,
+                                  entry->GetURL(), entry->GetTransitionType());
   // Simulate the SwapOut_ACK. This is needed when cross-site navigation
   // happens.
   if (old_rfh != rfh)
@@ -330,7 +375,7 @@ void TestWebContents::CreateNewWindow(
     int32_t route_id,
     int32_t main_frame_route_id,
     int32_t main_frame_widget_route_id,
-    const ViewHostMsg_CreateWindow_Params& params,
+    const mojom::CreateNewWindowParams& params,
     SessionStorageNamespace* session_storage_namespace) {}
 
 void TestWebContents::CreateNewWidget(int32_t render_process_id,

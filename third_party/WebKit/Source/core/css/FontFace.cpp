@@ -39,7 +39,7 @@
 #include "core/css/CSSFontFaceSrcValue.h"
 #include "core/css/CSSFontFamilyValue.h"
 #include "core/css/CSSFontSelector.h"
-#include "core/css/CSSPrimitiveValue.h"
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSUnicodeRangeValue.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/FontFaceDescriptors.h"
@@ -53,578 +53,632 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/dom/StyleEngine.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "platform/FontFamilyNames.h"
 #include "platform/Histogram.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/SharedBuffer.h"
+#include "platform/WebTaskRunner.h"
 
 namespace blink {
 
-static const CSSValue* parseCSSValue(const Document* document, const String& value, CSSPropertyID propertyID)
-{
-    CSSParserContext context(*document, UseCounter::getFrom(document));
-    return CSSParser::parseFontFaceDescriptor(propertyID, value, context);
+static const CSSValue* ParseCSSValue(const Document* document,
+                                     const String& value,
+                                     CSSPropertyID property_id) {
+  CSSParserContext* context = CSSParserContext::Create(*document);
+  return CSSParser::ParseFontFaceDescriptor(property_id, value, context);
 }
 
-FontFace* FontFace::create(ExecutionContext* context, const AtomicString& family, StringOrArrayBufferOrArrayBufferView& source, const FontFaceDescriptors& descriptors)
-{
-    if (source.isString())
-        return create(context, family, source.getAsString(), descriptors);
-    if (source.isArrayBuffer())
-        return create(context, family, source.getAsArrayBuffer(), descriptors);
-    if (source.isArrayBufferView())
-        return create(context, family, source.getAsArrayBufferView(), descriptors);
-    ASSERT_NOT_REACHED();
+FontFace* FontFace::Create(ExecutionContext* context,
+                           const AtomicString& family,
+                           StringOrArrayBufferOrArrayBufferView& source,
+                           const FontFaceDescriptors& descriptors) {
+  if (source.isString())
+    return Create(context, family, source.getAsString(), descriptors);
+  if (source.isArrayBuffer())
+    return Create(context, family, source.getAsArrayBuffer(), descriptors);
+  if (source.isArrayBufferView()) {
+    return Create(context, family, source.getAsArrayBufferView().View(),
+                  descriptors);
+  }
+  NOTREACHED();
+  return nullptr;
+}
+
+FontFace* FontFace::Create(ExecutionContext* context,
+                           const AtomicString& family,
+                           const String& source,
+                           const FontFaceDescriptors& descriptors) {
+  FontFace* font_face = new FontFace(context, family, descriptors);
+
+  const CSSValue* src =
+      ParseCSSValue(ToDocument(context), source, CSSPropertySrc);
+  if (!src || !src->IsValueList())
+    font_face->SetError(DOMException::Create(
+        kSyntaxError, "The source provided ('" + source +
+                          "') could not be parsed as a value list."));
+
+  font_face->InitCSSFontFace(ToDocument(context), src);
+  return font_face;
+}
+
+FontFace* FontFace::Create(ExecutionContext* context,
+                           const AtomicString& family,
+                           DOMArrayBuffer* source,
+                           const FontFaceDescriptors& descriptors) {
+  FontFace* font_face = new FontFace(context, family, descriptors);
+  font_face->InitCSSFontFace(static_cast<const unsigned char*>(source->Data()),
+                             source->ByteLength());
+  return font_face;
+}
+
+FontFace* FontFace::Create(ExecutionContext* context,
+                           const AtomicString& family,
+                           DOMArrayBufferView* source,
+                           const FontFaceDescriptors& descriptors) {
+  FontFace* font_face = new FontFace(context, family, descriptors);
+  font_face->InitCSSFontFace(
+      static_cast<const unsigned char*>(source->BaseAddress()),
+      source->byteLength());
+  return font_face;
+}
+
+FontFace* FontFace::Create(Document* document,
+                           const StyleRuleFontFace* font_face_rule) {
+  const StylePropertySet& properties = font_face_rule->Properties();
+
+  // Obtain the font-family property and the src property. Both must be defined.
+  const CSSValue* family =
+      properties.GetPropertyCSSValue(CSSPropertyFontFamily);
+  if (!family || (!family->IsFontFamilyValue() && !family->IsIdentifierValue()))
     return nullptr;
-}
-
-FontFace* FontFace::create(ExecutionContext* context, const AtomicString& family, const String& source, const FontFaceDescriptors& descriptors)
-{
-    FontFace* fontFace = new FontFace(context, family, descriptors);
-
-    const CSSValue* src = parseCSSValue(toDocument(context), source, CSSPropertySrc);
-    if (!src || !src->isValueList())
-        fontFace->setError(DOMException::create(SyntaxError, "The source provided ('" + source + "') could not be parsed as a value list."));
-
-    fontFace->initCSSFontFace(toDocument(context), src);
-    return fontFace;
-}
-
-FontFace* FontFace::create(ExecutionContext* context, const AtomicString& family, DOMArrayBuffer* source, const FontFaceDescriptors& descriptors)
-{
-    FontFace* fontFace = new FontFace(context, family, descriptors);
-    fontFace->initCSSFontFace(static_cast<const unsigned char*>(source->data()), source->byteLength());
-    return fontFace;
-}
-
-FontFace* FontFace::create(ExecutionContext* context, const AtomicString& family, DOMArrayBufferView* source, const FontFaceDescriptors& descriptors)
-{
-    FontFace* fontFace = new FontFace(context, family, descriptors);
-    fontFace->initCSSFontFace(static_cast<const unsigned char*>(source->baseAddress()), source->byteLength());
-    return fontFace;
-}
-
-FontFace* FontFace::create(Document* document, const StyleRuleFontFace* fontFaceRule)
-{
-    const StylePropertySet& properties = fontFaceRule->properties();
-
-    // Obtain the font-family property and the src property. Both must be defined.
-    const CSSValue* family = properties.getPropertyCSSValue(CSSPropertyFontFamily);
-    if (!family || (!family->isFontFamilyValue() && !family->isPrimitiveValue()))
-        return nullptr;
-    const CSSValue* src = properties.getPropertyCSSValue(CSSPropertySrc);
-    if (!src || !src->isValueList())
-        return nullptr;
-
-    FontFace* fontFace = new FontFace(document);
-
-    if (fontFace->setFamilyValue(*family)
-        && fontFace->setPropertyFromStyle(properties, CSSPropertyFontStyle)
-        && fontFace->setPropertyFromStyle(properties, CSSPropertyFontWeight)
-        && fontFace->setPropertyFromStyle(properties, CSSPropertyFontStretch)
-        && fontFace->setPropertyFromStyle(properties, CSSPropertyUnicodeRange)
-        && fontFace->setPropertyFromStyle(properties, CSSPropertyFontVariant)
-        && fontFace->setPropertyFromStyle(properties, CSSPropertyFontFeatureSettings)
-        && fontFace->setPropertyFromStyle(properties, CSSPropertyFontDisplay)
-        && !fontFace->family().isEmpty()
-        && fontFace->traits().bitfield()) {
-        fontFace->initCSSFontFace(document, src);
-        return fontFace;
-    }
+  const CSSValue* src = properties.GetPropertyCSSValue(CSSPropertySrc);
+  if (!src || !src->IsValueList())
     return nullptr;
+
+  FontFace* font_face = new FontFace(document);
+
+  if (font_face->SetFamilyValue(*family) &&
+      font_face->SetPropertyFromStyle(properties, CSSPropertyFontStyle) &&
+      font_face->SetPropertyFromStyle(properties, CSSPropertyFontWeight) &&
+      font_face->SetPropertyFromStyle(properties, CSSPropertyFontStretch) &&
+      font_face->SetPropertyFromStyle(properties, CSSPropertyUnicodeRange) &&
+      font_face->SetPropertyFromStyle(properties, CSSPropertyFontVariant) &&
+      font_face->SetPropertyFromStyle(properties,
+                                      CSSPropertyFontFeatureSettings) &&
+      font_face->SetPropertyFromStyle(properties, CSSPropertyFontDisplay) &&
+      !font_face->family().IsEmpty() && font_face->Traits().Bitfield()) {
+    font_face->InitCSSFontFace(document, src);
+    return font_face;
+  }
+  return nullptr;
 }
 
 FontFace::FontFace(ExecutionContext* context)
-    : ActiveScriptWrappable(this)
-    , ActiveDOMObject(context)
-    , m_status(Unloaded)
-{
-    suspendIfNeeded();
+    : ContextClient(context), status_(kUnloaded) {}
+
+FontFace::FontFace(ExecutionContext* context,
+                   const AtomicString& family,
+                   const FontFaceDescriptors& descriptors)
+    : ContextClient(context), family_(family), status_(kUnloaded) {
+  Document* document = ToDocument(context);
+  SetPropertyFromString(document, descriptors.style(), CSSPropertyFontStyle);
+  SetPropertyFromString(document, descriptors.weight(), CSSPropertyFontWeight);
+  SetPropertyFromString(document, descriptors.stretch(),
+                        CSSPropertyFontStretch);
+  SetPropertyFromString(document, descriptors.unicodeRange(),
+                        CSSPropertyUnicodeRange);
+  SetPropertyFromString(document, descriptors.variant(),
+                        CSSPropertyFontVariant);
+  SetPropertyFromString(document, descriptors.featureSettings(),
+                        CSSPropertyFontFeatureSettings);
+  if (RuntimeEnabledFeatures::cssFontDisplayEnabled()) {
+    SetPropertyFromString(document, descriptors.display(),
+                          CSSPropertyFontDisplay);
+  }
 }
 
-FontFace::FontFace(ExecutionContext* context, const AtomicString& family, const FontFaceDescriptors& descriptors)
-    : ActiveScriptWrappable(this)
-    , ActiveDOMObject(context)
-    , m_family(family)
-    , m_status(Unloaded)
-{
-    Document* document = toDocument(context);
-    setPropertyFromString(document, descriptors.style(), CSSPropertyFontStyle);
-    setPropertyFromString(document, descriptors.weight(), CSSPropertyFontWeight);
-    setPropertyFromString(document, descriptors.stretch(), CSSPropertyFontStretch);
-    setPropertyFromString(document, descriptors.unicodeRange(), CSSPropertyUnicodeRange);
-    setPropertyFromString(document, descriptors.variant(), CSSPropertyFontVariant);
-    setPropertyFromString(document, descriptors.featureSettings(), CSSPropertyFontFeatureSettings);
+FontFace::~FontFace() {}
 
-    suspendIfNeeded();
+String FontFace::style() const {
+  return style_ ? style_->CssText() : "normal";
 }
 
-FontFace::~FontFace()
-{
+String FontFace::weight() const {
+  return weight_ ? weight_->CssText() : "normal";
 }
 
-String FontFace::style() const
-{
-    return m_style ? m_style->cssText() : "normal";
+String FontFace::stretch() const {
+  return stretch_ ? stretch_->CssText() : "normal";
 }
 
-String FontFace::weight() const
-{
-    return m_weight ? m_weight->cssText() : "normal";
+String FontFace::unicodeRange() const {
+  return unicode_range_ ? unicode_range_->CssText() : "U+0-10FFFF";
 }
 
-String FontFace::stretch() const
-{
-    return m_stretch ? m_stretch->cssText() : "normal";
+String FontFace::variant() const {
+  return variant_ ? variant_->CssText() : "normal";
 }
 
-String FontFace::unicodeRange() const
-{
-    return m_unicodeRange ? m_unicodeRange->cssText() : "U+0-10FFFF";
+String FontFace::featureSettings() const {
+  return feature_settings_ ? feature_settings_->CssText() : "normal";
 }
 
-String FontFace::variant() const
-{
-    return m_variant ? m_variant->cssText() : "normal";
+String FontFace::display() const {
+  return display_ ? display_->CssText() : "auto";
 }
 
-String FontFace::featureSettings() const
-{
-    return m_featureSettings ? m_featureSettings->cssText() : "normal";
+void FontFace::setStyle(ExecutionContext* context,
+                        const String& s,
+                        ExceptionState& exception_state) {
+  SetPropertyFromString(ToDocument(context), s, CSSPropertyFontStyle,
+                        &exception_state);
 }
 
-void FontFace::setStyle(ExecutionContext* context, const String& s, ExceptionState& exceptionState)
-{
-    setPropertyFromString(toDocument(context), s, CSSPropertyFontStyle, &exceptionState);
+void FontFace::setWeight(ExecutionContext* context,
+                         const String& s,
+                         ExceptionState& exception_state) {
+  SetPropertyFromString(ToDocument(context), s, CSSPropertyFontWeight,
+                        &exception_state);
 }
 
-void FontFace::setWeight(ExecutionContext* context, const String& s, ExceptionState& exceptionState)
-{
-    setPropertyFromString(toDocument(context), s, CSSPropertyFontWeight, &exceptionState);
+void FontFace::setStretch(ExecutionContext* context,
+                          const String& s,
+                          ExceptionState& exception_state) {
+  SetPropertyFromString(ToDocument(context), s, CSSPropertyFontStretch,
+                        &exception_state);
 }
 
-void FontFace::setStretch(ExecutionContext* context, const String& s, ExceptionState& exceptionState)
-{
-    setPropertyFromString(toDocument(context), s, CSSPropertyFontStretch, &exceptionState);
+void FontFace::setUnicodeRange(ExecutionContext* context,
+                               const String& s,
+                               ExceptionState& exception_state) {
+  SetPropertyFromString(ToDocument(context), s, CSSPropertyUnicodeRange,
+                        &exception_state);
 }
 
-void FontFace::setUnicodeRange(ExecutionContext* context, const String& s, ExceptionState& exceptionState)
-{
-    setPropertyFromString(toDocument(context), s, CSSPropertyUnicodeRange, &exceptionState);
+void FontFace::setVariant(ExecutionContext* context,
+                          const String& s,
+                          ExceptionState& exception_state) {
+  SetPropertyFromString(ToDocument(context), s, CSSPropertyFontVariant,
+                        &exception_state);
 }
 
-void FontFace::setVariant(ExecutionContext* context, const String& s, ExceptionState& exceptionState)
-{
-    setPropertyFromString(toDocument(context), s, CSSPropertyFontVariant, &exceptionState);
+void FontFace::setFeatureSettings(ExecutionContext* context,
+                                  const String& s,
+                                  ExceptionState& exception_state) {
+  SetPropertyFromString(ToDocument(context), s, CSSPropertyFontFeatureSettings,
+                        &exception_state);
 }
 
-void FontFace::setFeatureSettings(ExecutionContext* context, const String& s, ExceptionState& exceptionState)
-{
-    setPropertyFromString(toDocument(context), s, CSSPropertyFontFeatureSettings, &exceptionState);
+void FontFace::setDisplay(ExecutionContext* context,
+                          const String& s,
+                          ExceptionState& exception_state) {
+  SetPropertyFromString(ToDocument(context), s, CSSPropertyFontDisplay,
+                        &exception_state);
 }
 
-void FontFace::setPropertyFromString(const Document* document, const String& s, CSSPropertyID propertyID, ExceptionState* exceptionState)
-{
-    const CSSValue* value = parseCSSValue(document, s, propertyID);
-    if (value && setPropertyValue(value, propertyID))
-        return;
+void FontFace::SetPropertyFromString(const Document* document,
+                                     const String& s,
+                                     CSSPropertyID property_id,
+                                     ExceptionState* exception_state) {
+  const CSSValue* value = ParseCSSValue(document, s, property_id);
+  if (value && SetPropertyValue(value, property_id))
+    return;
 
-    String message = "Failed to set '" + s + "' as a property value.";
-    if (exceptionState)
-        exceptionState->throwDOMException(SyntaxError, message);
-    else
-        setError(DOMException::create(SyntaxError, message));
+  String message = "Failed to set '" + s + "' as a property value.";
+  if (exception_state)
+    exception_state->ThrowDOMException(kSyntaxError, message);
+  else
+    SetError(DOMException::Create(kSyntaxError, message));
 }
 
-bool FontFace::setPropertyFromStyle(const StylePropertySet& properties, CSSPropertyID propertyID)
-{
-    return setPropertyValue(properties.getPropertyCSSValue(propertyID), propertyID);
+bool FontFace::SetPropertyFromStyle(const StylePropertySet& properties,
+                                    CSSPropertyID property_id) {
+  return SetPropertyValue(properties.GetPropertyCSSValue(property_id),
+                          property_id);
 }
 
-bool FontFace::setPropertyValue(const CSSValue* value, CSSPropertyID propertyID)
-{
-    switch (propertyID) {
+bool FontFace::SetPropertyValue(const CSSValue* value,
+                                CSSPropertyID property_id) {
+  switch (property_id) {
     case CSSPropertyFontStyle:
-        m_style = value;
-        break;
+      style_ = value;
+      break;
     case CSSPropertyFontWeight:
-        m_weight = value;
-        break;
+      weight_ = value;
+      break;
     case CSSPropertyFontStretch:
-        m_stretch = value;
-        break;
+      stretch_ = value;
+      break;
     case CSSPropertyUnicodeRange:
-        if (value && !value->isValueList())
-            return false;
-        m_unicodeRange = value;
-        break;
+      if (value && !value->IsValueList())
+        return false;
+      unicode_range_ = value;
+      break;
     case CSSPropertyFontVariant:
-        m_variant = value;
-        break;
+      variant_ = value;
+      break;
     case CSSPropertyFontFeatureSettings:
-        m_featureSettings = value;
-        break;
+      feature_settings_ = value;
+      break;
     case CSSPropertyFontDisplay:
-        m_display = value;
-        break;
+      display_ = value;
+      break;
     default:
-        ASSERT_NOT_REACHED();
+      NOTREACHED();
+      return false;
+  }
+  return true;
+}
+
+bool FontFace::SetFamilyValue(const CSSValue& family_value) {
+  AtomicString family;
+  if (family_value.IsFontFamilyValue()) {
+    family = AtomicString(ToCSSFontFamilyValue(family_value).Value());
+  } else if (family_value.IsIdentifierValue()) {
+    // We need to use the raw text for all the generic family types, since
+    // @font-face is a way of actually defining what font to use for those
+    // types.
+    switch (ToCSSIdentifierValue(family_value).GetValueID()) {
+      case CSSValueSerif:
+        family = FontFamilyNames::webkit_serif;
+        break;
+      case CSSValueSansSerif:
+        family = FontFamilyNames::webkit_sans_serif;
+        break;
+      case CSSValueCursive:
+        family = FontFamilyNames::webkit_cursive;
+        break;
+      case CSSValueFantasy:
+        family = FontFamilyNames::webkit_fantasy;
+        break;
+      case CSSValueMonospace:
+        family = FontFamilyNames::webkit_monospace;
+        break;
+      case CSSValueWebkitPictograph:
+        family = FontFamilyNames::webkit_pictograph;
+        break;
+      default:
         return false;
     }
-    return true;
+  }
+  family_ = family;
+  return true;
 }
 
-bool FontFace::setFamilyValue(const CSSValue& familyValue)
-{
-    AtomicString family;
-    if (familyValue.isFontFamilyValue()) {
-        family = AtomicString(toCSSFontFamilyValue(familyValue).value());
-    } else if (toCSSPrimitiveValue(familyValue).isValueID()) {
-        // We need to use the raw text for all the generic family types, since @font-face is a way of actually
-        // defining what font to use for those types.
-        switch (toCSSPrimitiveValue(familyValue).getValueID()) {
-        case CSSValueSerif:
-            family =  FontFamilyNames::webkit_serif;
-            break;
-        case CSSValueSansSerif:
-            family =  FontFamilyNames::webkit_sans_serif;
-            break;
-        case CSSValueCursive:
-            family =  FontFamilyNames::webkit_cursive;
-            break;
-        case CSSValueFantasy:
-            family =  FontFamilyNames::webkit_fantasy;
-            break;
-        case CSSValueMonospace:
-            family =  FontFamilyNames::webkit_monospace;
-            break;
-        case CSSValueWebkitPictograph:
-            family =  FontFamilyNames::webkit_pictograph;
-            break;
-        default:
-            return false;
-        }
-    }
-    m_family = family;
-    return true;
-}
-
-String FontFace::status() const
-{
-    switch (m_status) {
-    case Unloaded:
-        return "unloaded";
-    case Loading:
-        return "loading";
-    case Loaded:
-        return "loaded";
-    case Error:
-        return "error";
+String FontFace::status() const {
+  switch (status_) {
+    case kUnloaded:
+      return "unloaded";
+    case kLoading:
+      return "loading";
+    case kLoaded:
+      return "loaded";
+    case kError:
+      return "error";
     default:
-        ASSERT_NOT_REACHED();
+      NOTREACHED();
+  }
+  return g_empty_string;
+}
+
+void FontFace::SetLoadStatus(LoadStatusType status) {
+  status_ = status;
+  DCHECK(status_ != kError || error_);
+
+  // When promises are resolved with 'thenables', instead of the object being
+  // returned directly, the 'then' method is executed (the resolver tries to
+  // resolve the thenable). This can lead to synchronous script execution, so we
+  // post a task. This does not apply to promise rejection (i.e. a thenable
+  // would be returned as is).
+  if (status_ == kLoaded || status_ == kError) {
+    if (loaded_property_) {
+      if (status_ == kLoaded) {
+        GetTaskRunner()->PostTask(
+            BLINK_FROM_HERE, WTF::Bind(&LoadedProperty::Resolve<FontFace*>,
+                                       WrapPersistent(loaded_property_.Get()),
+                                       WrapPersistent(this)));
+      } else
+        loaded_property_->Reject(error_.Get());
     }
-    return emptyString();
+
+    GetTaskRunner()->PostTask(
+        BLINK_FROM_HERE,
+        WTF::Bind(&FontFace::RunCallbacks, WrapPersistent(this)));
+  }
 }
 
-void FontFace::setLoadStatus(LoadStatusType status)
-{
-    m_status = status;
-    ASSERT(m_status != Error || m_error);
-
-    if (m_status == Loaded || m_status == Error) {
-        if (m_loadedProperty) {
-            if (m_status == Loaded)
-                m_loadedProperty->resolve(this);
-            else
-                m_loadedProperty->reject(m_error.get());
-        }
-
-        HeapVector<Member<LoadFontCallback>> callbacks;
-        m_callbacks.swap(callbacks);
-        for (size_t i = 0; i < callbacks.size(); ++i) {
-            if (m_status == Loaded)
-                callbacks[i]->notifyLoaded(this);
-            else
-                callbacks[i]->notifyError(this);
-        }
-    }
+WebTaskRunner* FontFace::GetTaskRunner() {
+  return TaskRunnerHelper::Get(TaskType::kDOMManipulation,
+                               GetExecutionContext())
+      .Get();
 }
 
-void FontFace::setError(DOMException* error)
-{
-    if (!m_error)
-        m_error = error ? error : DOMException::create(NetworkError);
-    setLoadStatus(Error);
-}
-
-ScriptPromise FontFace::fontStatusPromise(ScriptState* scriptState)
-{
-    if (!m_loadedProperty) {
-        m_loadedProperty = new LoadedProperty(scriptState->getExecutionContext(), this, LoadedProperty::Loaded);
-        if (m_status == Loaded)
-            m_loadedProperty->resolve(this);
-        else if (m_status == Error)
-            m_loadedProperty->reject(m_error.get());
-    }
-    return m_loadedProperty->promise(scriptState->world());
-}
-
-ScriptPromise FontFace::load(ScriptState* scriptState)
-{
-    loadInternal(scriptState->getExecutionContext());
-    return fontStatusPromise(scriptState);
-}
-
-void FontFace::loadWithCallback(LoadFontCallback* callback, ExecutionContext* context)
-{
-    loadInternal(context);
-    if (m_status == Loaded)
-        callback->notifyLoaded(this);
-    else if (m_status == Error)
-        callback->notifyError(this);
+void FontFace::RunCallbacks() {
+  HeapVector<Member<LoadFontCallback>> callbacks;
+  callbacks_.Swap(callbacks);
+  for (size_t i = 0; i < callbacks.size(); ++i) {
+    if (status_ == kLoaded)
+      callbacks[i]->NotifyLoaded(this);
     else
-        m_callbacks.append(callback);
+      callbacks[i]->NotifyError(this);
+  }
 }
 
-void FontFace::loadInternal(ExecutionContext* context)
-{
-    if (m_status != Unloaded)
-        return;
-
-    m_cssFontFace->load();
+void FontFace::SetError(DOMException* error) {
+  if (!error_)
+    error_ = error ? error : DOMException::Create(kNetworkError);
+  SetLoadStatus(kError);
 }
 
-FontTraits FontFace::traits() const
-{
-    FontStretch stretch = FontStretchNormal;
-    if (m_stretch) {
-        if (!m_stretch->isPrimitiveValue())
-            return 0;
+ScriptPromise FontFace::FontStatusPromise(ScriptState* script_state) {
+  if (!loaded_property_) {
+    loaded_property_ = new LoadedProperty(ExecutionContext::From(script_state),
+                                          this, LoadedProperty::kLoaded);
+    if (status_ == kLoaded)
+      loaded_property_->Resolve(this);
+    else if (status_ == kError)
+      loaded_property_->Reject(error_.Get());
+  }
+  return loaded_property_->Promise(script_state->World());
+}
 
-        switch (toCSSPrimitiveValue(m_stretch.get())->getValueID()) {
-        case CSSValueUltraCondensed:
-            stretch = FontStretchUltraCondensed;
-            break;
-        case CSSValueExtraCondensed:
-            stretch = FontStretchExtraCondensed;
-            break;
-        case CSSValueCondensed:
-            stretch = FontStretchCondensed;
-            break;
-        case CSSValueSemiCondensed:
-            stretch = FontStretchSemiCondensed;
-            break;
-        case CSSValueSemiExpanded:
-            stretch = FontStretchSemiExpanded;
-            break;
-        case CSSValueExpanded:
-            stretch = FontStretchExpanded;
-            break;
-        case CSSValueExtraExpanded:
-            stretch = FontStretchExtraExpanded;
-            break;
-        case CSSValueUltraExpanded:
-            stretch = FontStretchUltraExpanded;
-            break;
-        default:
-            break;
+ScriptPromise FontFace::load(ScriptState* script_state) {
+  if (status_ == kUnloaded)
+    css_font_face_->Load();
+  return FontStatusPromise(script_state);
+}
+
+void FontFace::LoadWithCallback(LoadFontCallback* callback) {
+  if (status_ == kUnloaded)
+    css_font_face_->Load();
+  AddCallback(callback);
+}
+
+void FontFace::AddCallback(LoadFontCallback* callback) {
+  if (status_ == kLoaded)
+    callback->NotifyLoaded(this);
+  else if (status_ == kError)
+    callback->NotifyError(this);
+  else
+    callbacks_.push_back(callback);
+}
+
+FontTraits FontFace::Traits() const {
+  FontStretch stretch = kFontStretchNormal;
+  if (stretch_) {
+    if (!stretch_->IsIdentifierValue())
+      return 0;
+
+    switch (ToCSSIdentifierValue(stretch_.Get())->GetValueID()) {
+      case CSSValueUltraCondensed:
+        stretch = kFontStretchUltraCondensed;
+        break;
+      case CSSValueExtraCondensed:
+        stretch = kFontStretchExtraCondensed;
+        break;
+      case CSSValueCondensed:
+        stretch = kFontStretchCondensed;
+        break;
+      case CSSValueSemiCondensed:
+        stretch = kFontStretchSemiCondensed;
+        break;
+      case CSSValueSemiExpanded:
+        stretch = kFontStretchSemiExpanded;
+        break;
+      case CSSValueExpanded:
+        stretch = kFontStretchExpanded;
+        break;
+      case CSSValueExtraExpanded:
+        stretch = kFontStretchExtraExpanded;
+        break;
+      case CSSValueUltraExpanded:
+        stretch = kFontStretchUltraExpanded;
+        break;
+      default:
+        break;
+    }
+  }
+
+  FontStyle style = kFontStyleNormal;
+  if (style_) {
+    if (!style_->IsIdentifierValue())
+      return 0;
+
+    switch (ToCSSIdentifierValue(style_.Get())->GetValueID()) {
+      case CSSValueNormal:
+        style = kFontStyleNormal;
+        break;
+      case CSSValueOblique:
+        style = kFontStyleOblique;
+        break;
+      case CSSValueItalic:
+        style = kFontStyleItalic;
+        break;
+      default:
+        break;
+    }
+  }
+
+  FontWeight weight = kFontWeight400;
+  if (weight_) {
+    if (!weight_->IsIdentifierValue())
+      return 0;
+
+    switch (ToCSSIdentifierValue(weight_.Get())->GetValueID()) {
+      case CSSValueBold:
+      case CSSValue700:
+        weight = kFontWeight700;
+        break;
+      case CSSValueNormal:
+      case CSSValue400:
+        weight = kFontWeight400;
+        break;
+      case CSSValue900:
+        weight = kFontWeight900;
+        break;
+      case CSSValue800:
+        weight = kFontWeight800;
+        break;
+      case CSSValue600:
+        weight = kFontWeight600;
+        break;
+      case CSSValue500:
+        weight = kFontWeight500;
+        break;
+      case CSSValue300:
+        weight = kFontWeight300;
+        break;
+      case CSSValue200:
+        weight = kFontWeight200;
+        break;
+      case CSSValue100:
+        weight = kFontWeight100;
+        break;
+      // Although 'lighter' and 'bolder' are valid keywords for font-weights,
+      // they are invalid inside font-face rules so they are ignored. Reference:
+      // http://www.w3.org/TR/css3-fonts/#descdef-font-weight.
+      case CSSValueLighter:
+      case CSSValueBolder:
+        break;
+      default:
+        NOTREACHED();
+        break;
+    }
+  }
+
+  return FontTraits(style, weight, stretch);
+}
+
+size_t FontFace::ApproximateBlankCharacterCount() const {
+  if (status_ == kLoading)
+    return css_font_face_->ApproximateBlankCharacterCount();
+  return 0;
+}
+
+static FontDisplay CSSValueToFontDisplay(const CSSValue* value) {
+  if (value && value->IsIdentifierValue()) {
+    switch (ToCSSIdentifierValue(value)->GetValueID()) {
+      case CSSValueAuto:
+        return kFontDisplayAuto;
+      case CSSValueBlock:
+        return kFontDisplayBlock;
+      case CSSValueSwap:
+        return kFontDisplaySwap;
+      case CSSValueFallback:
+        return kFontDisplayFallback;
+      case CSSValueOptional:
+        return kFontDisplayOptional;
+      default:
+        break;
+    }
+  }
+  return kFontDisplayAuto;
+}
+
+static CSSFontFace* CreateCSSFontFace(FontFace* font_face,
+                                      const CSSValue* unicode_range) {
+  Vector<UnicodeRange> ranges;
+  if (const CSSValueList* range_list = ToCSSValueList(unicode_range)) {
+    unsigned num_ranges = range_list->length();
+    for (unsigned i = 0; i < num_ranges; i++) {
+      const CSSUnicodeRangeValue& range =
+          ToCSSUnicodeRangeValue(range_list->Item(i));
+      ranges.push_back(UnicodeRange(range.From(), range.To()));
+    }
+  }
+
+  return new CSSFontFace(font_face, ranges);
+}
+
+void FontFace::InitCSSFontFace(Document* document, const CSSValue* src) {
+  css_font_face_ = CreateCSSFontFace(this, unicode_range_.Get());
+  if (error_)
+    return;
+
+  // Each item in the src property's list is a single CSSFontFaceSource. Put
+  // them all into a CSSFontFace.
+  DCHECK(src);
+  DCHECK(src->IsValueList());
+  const CSSValueList* src_list = ToCSSValueList(src);
+  int src_length = src_list->length();
+
+  for (int i = 0; i < src_length; i++) {
+    // An item in the list either specifies a string (local font name) or a URL
+    // (remote font to download).
+    const CSSFontFaceSrcValue& item = ToCSSFontFaceSrcValue(src_list->Item(i));
+    CSSFontFaceSource* source = nullptr;
+
+    if (!item.IsLocal()) {
+      const Settings* settings = document ? document->GetSettings() : nullptr;
+      bool allow_downloading =
+          settings && settings->GetDownloadableBinaryFontsEnabled();
+      if (allow_downloading && item.IsSupportedFormat() && document) {
+        FontResource* fetched = item.Fetch(document);
+        if (fetched) {
+          CSSFontSelector* font_selector =
+              document->GetStyleEngine().FontSelector();
+          source = new RemoteFontFaceSource(
+              fetched, font_selector, CSSValueToFontDisplay(display_.Get()));
         }
+      }
+    } else {
+      source = new LocalFontFaceSource(item.GetResource());
     }
 
-    FontStyle style = FontStyleNormal;
-    if (m_style) {
-        if (!m_style->isPrimitiveValue())
-            return 0;
+    if (source)
+      css_font_face_->AddSource(source);
+  }
 
-        switch (toCSSPrimitiveValue(m_style.get())->getValueID()) {
-        case CSSValueNormal:
-            style = FontStyleNormal;
-            break;
-        case CSSValueOblique:
-            style = FontStyleOblique;
-            break;
-        case CSSValueItalic:
-            style = FontStyleItalic;
-            break;
-        default:
-            break;
-        }
-    }
-
-    FontWeight weight = FontWeight400;
-    if (m_weight) {
-        if (!m_weight->isPrimitiveValue())
-            return 0;
-
-        switch (toCSSPrimitiveValue(m_weight.get())->getValueID()) {
-        case CSSValueBold:
-        case CSSValue700:
-            weight = FontWeight700;
-            break;
-        case CSSValueNormal:
-        case CSSValue400:
-            weight = FontWeight400;
-            break;
-        case CSSValue900:
-            weight = FontWeight900;
-            break;
-        case CSSValue800:
-            weight = FontWeight800;
-            break;
-        case CSSValue600:
-            weight = FontWeight600;
-            break;
-        case CSSValue500:
-            weight = FontWeight500;
-            break;
-        case CSSValue300:
-            weight = FontWeight300;
-            break;
-        case CSSValue200:
-            weight = FontWeight200;
-            break;
-        case CSSValue100:
-            weight = FontWeight100;
-            break;
-        // Although 'lighter' and 'bolder' are valid keywords for font-weights, they are invalid
-        // inside font-face rules so they are ignored. Reference: http://www.w3.org/TR/css3-fonts/#descdef-font-weight.
-        case CSSValueLighter:
-        case CSSValueBolder:
-            break;
-        default:
-            ASSERT_NOT_REACHED();
-            break;
-        }
-    }
-
-    return FontTraits(style, weight, stretch);
+  if (display_) {
+    DEFINE_STATIC_LOCAL(EnumerationHistogram, font_display_histogram,
+                        ("WebFont.FontDisplayValue", kFontDisplayEnumMax));
+    font_display_histogram.Count(CSSValueToFontDisplay(display_.Get()));
+  }
 }
 
-size_t FontFace::approximateBlankCharacterCount() const
-{
-    if (m_status == Loading)
-        return m_cssFontFace->approximateBlankCharacterCount();
-    return 0;
+void FontFace::InitCSSFontFace(const unsigned char* data, size_t size) {
+  css_font_face_ = CreateCSSFontFace(this, unicode_range_.Get());
+  if (error_)
+    return;
+
+  RefPtr<SharedBuffer> buffer = SharedBuffer::Create(data, size);
+  BinaryDataFontFaceSource* source =
+      new BinaryDataFontFaceSource(buffer.Get(), ots_parse_message_);
+  if (source->IsValid())
+    SetLoadStatus(kLoaded);
+  else
+    SetError(DOMException::Create(kSyntaxError,
+                                  "Invalid font data in ArrayBuffer."));
+  css_font_face_->AddSource(source);
 }
 
-static FontDisplay CSSValueToFontDisplay(const CSSValue* value)
-{
-    if (value && value->isPrimitiveValue()) {
-        switch (toCSSPrimitiveValue(value)->getValueID()) {
-        case CSSValueAuto:
-            return FontDisplayAuto;
-        case CSSValueBlock:
-            return FontDisplayBlock;
-        case CSSValueSwap:
-            return FontDisplaySwap;
-        case CSSValueFallback:
-            return FontDisplayFallback;
-        case CSSValueOptional:
-            return FontDisplayOptional;
-        default:
-            break;
-        }
-    }
-    return FontDisplayAuto;
+DEFINE_TRACE(FontFace) {
+  visitor->Trace(style_);
+  visitor->Trace(weight_);
+  visitor->Trace(stretch_);
+  visitor->Trace(unicode_range_);
+  visitor->Trace(variant_);
+  visitor->Trace(feature_settings_);
+  visitor->Trace(display_);
+  visitor->Trace(error_);
+  visitor->Trace(loaded_property_);
+  visitor->Trace(css_font_face_);
+  visitor->Trace(callbacks_);
+  ContextClient::Trace(visitor);
 }
 
-static CSSFontFace* createCSSFontFace(FontFace* fontFace, const CSSValue* unicodeRange)
-{
-    Vector<UnicodeRange> ranges;
-    if (const CSSValueList* rangeList = toCSSValueList(unicodeRange)) {
-        unsigned numRanges = rangeList->length();
-        for (unsigned i = 0; i < numRanges; i++) {
-            const CSSUnicodeRangeValue& range = toCSSUnicodeRangeValue(rangeList->item(i));
-            ranges.append(UnicodeRange(range.from(), range.to()));
-        }
-    }
-
-    return new CSSFontFace(fontFace, ranges);
+bool FontFace::HadBlankText() const {
+  return css_font_face_->HadBlankText();
 }
 
-void FontFace::initCSSFontFace(Document* document, const CSSValue* src)
-{
-    m_cssFontFace = createCSSFontFace(this, m_unicodeRange.get());
-    if (m_error)
-        return;
-
-    // Each item in the src property's list is a single CSSFontFaceSource. Put them all into a CSSFontFace.
-    ASSERT(src);
-    ASSERT(src->isValueList());
-    const CSSValueList* srcList = toCSSValueList(src);
-    int srcLength = srcList->length();
-
-    for (int i = 0; i < srcLength; i++) {
-        // An item in the list either specifies a string (local font name) or a URL (remote font to download).
-        const CSSFontFaceSrcValue& item = toCSSFontFaceSrcValue(srcList->item(i));
-        CSSFontFaceSource* source = nullptr;
-
-        if (!item.isLocal()) {
-            const Settings* settings = document ? document->settings() : nullptr;
-            bool allowDownloading = settings && settings->downloadableBinaryFontsEnabled();
-            if (allowDownloading && item.isSupportedFormat() && document) {
-                FontResource* fetched = item.fetch(document);
-                if (fetched) {
-                    CSSFontSelector* fontSelector = document->styleEngine().fontSelector();
-                    source = new RemoteFontFaceSource(fetched, fontSelector, CSSValueToFontDisplay(m_display.get()));
-                }
-            }
-        } else {
-            source = new LocalFontFaceSource(item.resource());
-        }
-
-        if (source)
-            m_cssFontFace->addSource(source);
-    }
-
-    if (m_display) {
-        DEFINE_STATIC_LOCAL(EnumerationHistogram, fontDisplayHistogram, ("WebFont.FontDisplayValue", FontDisplayEnumMax));
-        fontDisplayHistogram.count(CSSValueToFontDisplay(m_display.get()));
-    }
+bool FontFace::HasPendingActivity() const {
+  return status_ == kLoading && GetExecutionContext();
 }
 
-void FontFace::initCSSFontFace(const unsigned char* data, size_t size)
-{
-    m_cssFontFace = createCSSFontFace(this, m_unicodeRange.get());
-    if (m_error)
-        return;
-
-    RefPtr<SharedBuffer> buffer = SharedBuffer::create(data, size);
-    BinaryDataFontFaceSource* source = new BinaryDataFontFaceSource(buffer.get(), m_otsParseMessage);
-    if (source->isValid())
-        setLoadStatus(Loaded);
-    else
-        setError(DOMException::create(SyntaxError, "Invalid font data in ArrayBuffer."));
-    m_cssFontFace->addSource(source);
-}
-
-DEFINE_TRACE(FontFace)
-{
-    visitor->trace(m_style);
-    visitor->trace(m_weight);
-    visitor->trace(m_stretch);
-    visitor->trace(m_unicodeRange);
-    visitor->trace(m_variant);
-    visitor->trace(m_featureSettings);
-    visitor->trace(m_display);
-    visitor->trace(m_error);
-    visitor->trace(m_loadedProperty);
-    visitor->trace(m_cssFontFace);
-    visitor->trace(m_callbacks);
-    ActiveDOMObject::trace(visitor);
-}
-
-bool FontFace::hadBlankText() const
-{
-    return m_cssFontFace->hadBlankText();
-}
-
-bool FontFace::hasPendingActivity() const
-{
-    return m_status == Loading && getExecutionContext() && !getExecutionContext()->activeDOMObjectsAreStopped();
-}
-
-} // namespace blink
+}  // namespace blink

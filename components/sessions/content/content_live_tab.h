@@ -14,8 +14,6 @@
 
 namespace content {
 class NavigationController;
-class NavigationEntry;
-class SessionStorageNamespace;
 }
 
 class PersistentTabRestoreServiceTest;
@@ -43,7 +41,6 @@ class SESSIONS_EXPORT ContentLiveTab
   int GetEntryCount() override;
   std::unique_ptr<PlatformSpecificTabData> GetPlatformSpecificTabData()
       override;
-  void LoadIfNecessary() override;
   const std::string& GetUserAgentOverride() const override;
 
   content::WebContents* web_contents() { return web_contents_; }

@@ -15,7 +15,7 @@
 #include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/media_stream_registry_interface.h"
 #include "media/base/bind_to_current_loop.h"
-#include "media/base/video_capture_types.h"
+#include "media/capture/video_capture_types.h"
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebMediaStreamRegistry.h"
@@ -80,7 +80,7 @@ bool VideoTrackToPepperAdapter::Open(const std::string& url,
                               FrameReaderInterface* reader) {
   DCHECK(thread_checker_.CalledOnValidThread());
   const blink::WebMediaStreamTrack& track = GetFirstVideoTrack(url);
-  if (track.isNull())
+  if (track.IsNull())
     return false;
   reader_to_receiver_[reader] = new SourceInfo(track, reader);
   return true;
@@ -99,19 +99,20 @@ bool VideoTrackToPepperAdapter::Close(FrameReaderInterface* reader) {
 blink::WebMediaStreamTrack VideoTrackToPepperAdapter::GetFirstVideoTrack(
     const std::string& url) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  const blink::WebMediaStream stream = registry_
-      ? registry_->GetMediaStream(url)
-      : blink::WebMediaStreamRegistry::lookupMediaStreamDescriptor(GURL(url));
+  const blink::WebMediaStream stream =
+      registry_ ? registry_->GetMediaStream(url)
+                : blink::WebMediaStreamRegistry::LookupMediaStreamDescriptor(
+                      GURL(url));
 
-  if (stream.isNull()) {
+  if (stream.IsNull()) {
     LOG(ERROR) << "GetFirstVideoSource - invalid url: " << url;
     return blink::WebMediaStreamTrack();
   }
 
   // Get the first video track from the stream.
   blink::WebVector<blink::WebMediaStreamTrack> video_tracks;
-  stream.videoTracks(video_tracks);
-  if (video_tracks.isEmpty()) {
+  stream.VideoTracks(video_tracks);
+  if (video_tracks.IsEmpty()) {
     LOG(ERROR) << "GetFirstVideoSource - no video tracks. url: " << url;
     return blink::WebMediaStreamTrack();
   }

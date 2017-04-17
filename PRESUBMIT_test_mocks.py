@@ -22,6 +22,7 @@ class MockInputApi(object):
     self.os_path = os.path
     self.platform = sys.platform
     self.python_executable = sys.executable
+    self.platform = sys.platform
     self.subprocess = subprocess
     self.files = []
     self.is_committing = False
@@ -98,6 +99,10 @@ class MockFile(object):
     self._new_contents = new_contents
     self._changed_contents = [(i + 1, l) for i, l in enumerate(new_contents)]
     self._action = action
+    self._scm_diff = "--- /dev/null\n+++ %s\n@@ -0,0 +1,%d @@\n" % (local_path,
+      len(new_contents))
+    for l in new_contents:
+      self._scm_diff += "+%s\n" % l
 
   def Action(self):
     return self._action
@@ -114,6 +119,9 @@ class MockFile(object):
   def AbsoluteLocalPath(self):
     return self._local_path
 
+  def GenerateScmDiff(self):
+    return self._scm_diff
+
   def rfind(self, p):
     """os.path.basename is called on MockFile so we need an rfind method."""
     return self._local_path.rfind(p)
@@ -121,6 +129,10 @@ class MockFile(object):
   def __getitem__(self, i):
     """os.path.basename is called on MockFile so we need a get method."""
     return self._local_path[i]
+
+  def __len__(self):
+    """os.path.basename is called on MockFile so we need a len method."""
+    return len(self._local_path)
 
 
 class MockAffectedFile(MockFile):

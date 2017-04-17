@@ -11,14 +11,13 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "cc/paint/paint_canvas.h"
 #include "printing/metafile.h"
 #include "skia/ext/platform_canvas.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
 #endif
-
-class SkCanvas;
 
 namespace printing {
 
@@ -38,7 +37,7 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
 
   // Metafile methods.
   bool Init() override;
-  bool InitFromData(const void* src_buffer, uint32_t src_buffer_size) override;
+  bool InitFromData(const void* src_buffer, size_t src_buffer_size) override;
 
   void StartPage(const gfx::Size& page_size,
                  const gfx::Rect& content_area,
@@ -52,17 +51,10 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
   gfx::Rect GetPageBounds(unsigned int page_number) const override;
   unsigned int GetPageCount() const override;
 
-  gfx::NativeDrawingContext context() const override;
+  skia::NativeDrawingContext context() const override;
 
 #if defined(OS_WIN)
-  bool Playback(gfx::NativeDrawingContext hdc,
-                const RECT* rect) const override;
-  bool SafePlayback(gfx::NativeDrawingContext hdc) const override;
-#elif defined(OS_MACOSX)
-  bool RenderPage(unsigned int page_number,
-                  gfx::NativeDrawingContext context,
-                  const CGRect rect,
-                  const MacRenderPageParams& params) const override;
+  bool SafePlayback(skia::NativeDrawingContext hdc) const override;
 #endif
 
   bool SaveTo(base::File* file) const override;
@@ -73,13 +65,13 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
 
   // This method calls StartPage and then returns an appropriate
   // PlatformCanvas implementation bound to the context created by
-  // StartPage or NULL on error.  The SkCanvas pointer that
+  // StartPage or NULL on error.  The PaintCanvas pointer that
   // is returned is owned by this PdfMetafileSkia object and does not
   // need to be ref()ed or unref()ed.  The canvas will remain valid
   // until FinishPage() or FinishDocument() is called.
-  SkCanvas* GetVectorCanvasForNewPage(const gfx::Size& page_size,
-                                      const gfx::Rect& content_area,
-                                      const float& scale_factor);
+  cc::PaintCanvas* GetVectorCanvasForNewPage(const gfx::Size& page_size,
+                                             const gfx::Rect& content_area,
+                                             const float& scale_factor);
 
  private:
   std::unique_ptr<PdfMetafileSkiaData> data_;

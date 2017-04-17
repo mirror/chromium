@@ -18,11 +18,12 @@
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -136,8 +137,8 @@ static const base::FilePath::CharType kLoginTimes[] = FPL("login-times");
 // Name of file collecting logout times.
 static const char kLogoutTimes[] = "logout-times";
 
-static base::LazyInstance<BootTimesRecorder> g_boot_times_recorder =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BootTimesRecorder>::DestructorAtExit
+    g_boot_times_recorder = LAZY_INSTANCE_INITIALIZER;
 
 // static
 BootTimesRecorder::Stats BootTimesRecorder::Stats::GetCurrentStats() {
@@ -209,28 +210,26 @@ bool BootTimesRecorder::Stats::UptimeDouble(double* result) const {
 }
 
 void BootTimesRecorder::Stats::RecordStats(const std::string& name) const {
-  BrowserThread::PostBlockingPoolTask(
-      FROM_HERE,
-      base::Bind(&BootTimesRecorder::Stats::RecordStatsImpl,
-                 base::Owned(new Stats(*this)),
-                 name));
+  base::PostTaskWithTraits(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::BACKGROUND),
+      base::Bind(&BootTimesRecorder::Stats::RecordStatsAsync,
+                 base::Owned(new Stats(*this)), name));
 }
 
 void BootTimesRecorder::Stats::RecordStatsWithCallback(
     const std::string& name,
     const base::Closure& callback) const {
-  BrowserThread::PostBlockingPoolTaskAndReply(
-      FROM_HERE,
-      base::Bind(&BootTimesRecorder::Stats::RecordStatsImpl,
-                 base::Owned(new Stats(*this)),
-                 name),
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::BACKGROUND),
+      base::Bind(&BootTimesRecorder::Stats::RecordStatsAsync,
+                 base::Owned(new Stats(*this)), name),
       callback);
 }
 
-void BootTimesRecorder::Stats::RecordStatsImpl(
+void BootTimesRecorder::Stats::RecordStatsAsync(
     const base::FilePath::StringType& name) const {
-  DCHECK(content::BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
-
   const base::FilePath log_path(kLogPath);
   const base::FilePath uptime_output =
       log_path.Append(base::FilePath(kUptimePrefix + name));
@@ -356,8 +355,8 @@ void BootTimesRecorder::WriteLogoutTimes() {
   // Either we're on the browser thread, or (more likely) Chrome is in the
   // process of shutting down and we're on the main thread but the message loop
   // has already been terminated.
-  DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI) ||
-         !BrowserThread::IsMessageLoopValid(BrowserThread::UI));
+  DCHECK(!BrowserThread::IsMessageLoopValid(BrowserThread::UI) ||
+         BrowserThread::CurrentlyOn(BrowserThread::UI));
 
   WriteTimes(kLogoutTimes,
              (restart_requested_ ? kUmaRestart : kUmaLogout),
@@ -462,8 +461,8 @@ void BootTimesRecorder::AddMarker(std::vector<TimeMarker>* vector,
   // The marker vectors can only be safely manipulated on the main thread.
   // If we're late in the process of shutting down (eg. as can be the case at
   // logout), then we have to assume we're on the main thread already.
-  if (BrowserThread::CurrentlyOn(BrowserThread::UI) ||
-      !BrowserThread::IsMessageLoopValid(BrowserThread::UI)) {
+  if (!BrowserThread::IsMessageLoopValid(BrowserThread::UI) ||
+      BrowserThread::CurrentlyOn(BrowserThread::UI)) {
     vector->push_back(marker);
   } else {
     // Add the marker on the UI thread.

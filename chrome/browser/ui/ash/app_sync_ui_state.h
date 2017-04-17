@@ -10,25 +10,28 @@
 #include "base/observer_list.h"
 #include "base/timer/timer.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "components/sync_driver/sync_service_observer.h"
+#include "components/sync/driver/sync_service_observer.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "extensions/browser/extension_registry_observer.h"
 
 class AppSyncUIStateObserver;
 class Profile;
+
+namespace browser_sync {
 class ProfileSyncService;
+}  // namespace browser_sync
 
 namespace extensions {
 class ExtensionRegistry;
-}
+}  // namespace extensions
 
 // AppSyncUIState watches app sync and installation and change its state
 // accordingly. Its status is for UI display only. It only watches for new
 // normal user profile (i.e. it does not watch for guest profile or exsiting
 // user profile) and lasts for at the most 1 minute.
 class AppSyncUIState : public KeyedService,
-                       public sync_driver::SyncServiceObserver,
+                       public syncer::SyncServiceObserver,
                        public extensions::ExtensionRegistryObserver {
  public:
   enum Status {
@@ -67,15 +70,15 @@ class AppSyncUIState : public KeyedService,
   // Invoked when |max_syncing_status_timer_| fires.
   void OnMaxSyncingTimer();
 
-  // sync_driver::SyncServiceObserver overrides:
-  void OnStateChanged() override;
+  // syncer::SyncServiceObserver overrides:
+  void OnStateChanged(syncer::SyncService* sync) override;
 
   // extensions::ExtensionRegistryObserver overrides:
   void OnExtensionLoaded(content::BrowserContext* browser_context,
                          const extensions::Extension* extension) override;
 
   Profile* profile_;
-  ProfileSyncService* sync_service_;
+  browser_sync::ProfileSyncService* sync_service_;
 
   // Timer to limit how much time STATUS_SYNCING is allowed.
   base::OneShotTimer max_syncing_status_timer_;

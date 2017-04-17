@@ -28,77 +28,121 @@
 
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "core/CoreExport.h"
-#include "core/fetch/ResourceOwner.h"
-#include "core/fetch/ScriptResource.h"
+#include "core/dom/ScriptElementBase.h"
+#include "core/loader/resource/ScriptResource.h"
+#include "platform/MemoryCoordinator.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/TextPosition.h"
+#include "platform/loader/fetch/ResourceOwner.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/TextPosition.h"
 
 namespace blink {
 
-class Element;
-class ScriptSourceCode;
+class PendingScript;
+class ClassicScript;
+
+class CORE_EXPORT PendingScriptClient : public GarbageCollectedMixin {
+ public:
+  virtual ~PendingScriptClient() {}
+
+  // Invoked when the pending script has finished loading. This could be during
+  // |watchForLoad| (if the pending script was already ready), or when the
+  // resource loads (if script streaming is not occurring), or when script
+  // streaming finishes.
+  virtual void PendingScriptFinished(PendingScript*) = 0;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+};
 
 // A container for an external script which may be loaded and executed.
 //
-// TODO(kochi): The comment below is from pre-oilpan age and may not be correct now.
-// A RefPtr alone does not prevent the underlying Resource
-// from purging its data buffer. This class holds a dummy client open for its
-// lifetime in order to guarantee that the data buffer will not be purged.
-class CORE_EXPORT PendingScript final : public GarbageCollectedFinalized<PendingScript>, public ResourceOwner<ScriptResource> {
-    USING_GARBAGE_COLLECTED_MIXIN(PendingScript);
-    USING_PRE_FINALIZER(PendingScript, dispose);
-    WTF_MAKE_NONCOPYABLE(PendingScript);
-public:
-    static PendingScript* create(Element*, ScriptResource*);
-    ~PendingScript() override;
+// TODO(kochi): The comment below is from pre-oilpan age and may not be correct
+// now.
+// A RefPtr alone does not prevent the underlying Resource from purging its data
+// buffer. This class holds a dummy client open for its lifetime in order to
+// guarantee that the data buffer will not be purged.
+class CORE_EXPORT PendingScript final
+    : public GarbageCollectedFinalized<PendingScript>,
+      public ResourceOwner<ScriptResource>,
+      public MemoryCoordinatorClient {
+  USING_GARBAGE_COLLECTED_MIXIN(PendingScript);
+  USING_PRE_FINALIZER(PendingScript, Dispose);
+  WTF_MAKE_NONCOPYABLE(PendingScript);
 
-    TextPosition startingPosition() const { return m_startingPosition; }
-    void setStartingPosition(const TextPosition& position) { m_startingPosition = position; }
-    void markParserBlockingLoadStartTime();
-    // Returns the time the load of this script started blocking the parser, or
-    // zero if this script hasn't yet blocked the parser, in
-    // monotonicallyIncreasingTime.
-    double parserBlockingLoadStartTime() const { return m_parserBlockingLoadStartTime; }
+ public:
+  // For script from an external file.
+  static PendingScript* Create(ScriptElementBase*, ScriptResource*);
+  // For inline script.
+  static PendingScript* Create(ScriptElementBase*, const TextPosition&);
 
-    void watchForLoad(ScriptResourceClient*);
-    void stopWatchingForLoad();
+  static PendingScript* CreateForTesting(ScriptResource*);
 
-    Element* element() const { return m_element.get(); }
-    void setElement(Element*);
-    Element* releaseElementAndClear();
+  ~PendingScript() override;
 
-    void setScriptResource(ScriptResource*);
+  TextPosition StartingPosition() const { return starting_position_; }
+  void MarkParserBlockingLoadStartTime();
+  // Returns the time the load of this script started blocking the parser, or
+  // zero if this script hasn't yet blocked the parser, in
+  // monotonicallyIncreasingTime.
+  double ParserBlockingLoadStartTime() const {
+    return parser_blocking_load_start_time_;
+  }
 
-    void notifyFinished(Resource*) override;
-    String debugName() const override { return "PendingScript"; }
-    void notifyAppendData(ScriptResource*) override;
+  void WatchForLoad(PendingScriptClient*);
+  void StopWatchingForLoad();
 
-    DECLARE_TRACE();
+  ScriptElementBase* GetElement() const;
 
-    ScriptSourceCode getSource(const KURL& documentURL, bool& errorOccurred) const;
+  DECLARE_TRACE();
 
-    void setStreamer(ScriptStreamer*);
-    void streamingFinished();
+  ClassicScript* GetSource(const KURL& document_url,
+                           bool& error_occurred) const;
 
-    bool isReady() const;
-    bool errorOccurred() const;
+  void SetStreamer(ScriptStreamer*);
+  void StreamingFinished();
 
-    void dispose();
+  bool IsReady() const;
+  bool ErrorOccurred() const;
 
-private:
-    PendingScript(Element*, ScriptResource*);
+  void StartStreamingIfPossible(Document*, ScriptStreamer::Type);
+  void Dispose();
 
-    bool m_watchingForLoad;
-    Member<Element> m_element;
-    TextPosition m_startingPosition; // Only used for inline script tags.
-    bool m_integrityFailure;
-    double m_parserBlockingLoadStartTime;
+ private:
+  PendingScript(ScriptElementBase*,
+                ScriptResource*,
+                const TextPosition&,
+                bool is_for_testing = false);
+  PendingScript() = delete;
 
-    Member<ScriptStreamer> m_streamer;
-    Member<ScriptResourceClient> m_client;
+  void CheckState() const;
+
+  // ScriptResourceClient
+  void NotifyFinished(Resource*) override;
+  String DebugName() const override { return "PendingScript"; }
+  void NotifyAppendData(ScriptResource*) override;
+
+  // MemoryCoordinatorClient
+  void OnPurgeMemory() override;
+
+  bool watching_for_load_;
+
+  // |m_element| must points to the corresponding ScriptLoader's
+  // ScriptElementBase and thus must be non-null before dispose() is called
+  // (except for unit tests).
+  Member<ScriptElementBase> element_;
+
+  TextPosition starting_position_;  // Only used for inline script tags.
+  bool integrity_failure_;
+  double parser_blocking_load_start_time_;
+
+  Member<ScriptStreamer> streamer_;
+  Member<PendingScriptClient> client_;
+
+  // This flag is used to skip non-null checks of |m_element| in unit
+  // tests, because |m_element| can be null in unit tests.
+  const bool is_for_testing_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PendingScript_h
+#endif  // PendingScript_h

@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/strings/string16.h"
+#include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_export.h"
 
 namespace ui {
@@ -48,7 +49,17 @@ size_t AX_EXPORT
                                const std::vector<int>& line_breaks,
                                TextBoundaryType boundary,
                                size_t start_offset,
-                               TextBoundaryDirection direction);
+                               TextBoundaryDirection direction,
+                               AXTextAffinity affinity);
+
+// Returns a string ID that corresponds to the name of the given action.
+base::string16 AX_EXPORT
+ActionToString(const AXSupportedAction supported_action);
+
+// Returns the non-localized string representation of a supported action.
+// Some APIs on Linux and Windows need to return non-localized action names.
+base::string16 AX_EXPORT
+ActionToUnlocalizedString(const AXSupportedAction supported_action);
 
 }  // namespace ui
 

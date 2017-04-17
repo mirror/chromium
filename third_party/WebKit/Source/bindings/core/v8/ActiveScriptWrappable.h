@@ -7,7 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace v8 {
 class Isolate;
@@ -23,21 +23,47 @@ class ScriptWrappableVisitor;
  * thread-specific list. They keep their wrappers and dependant objects alive
  * as long as they have pending activity.
  */
-class CORE_EXPORT ActiveScriptWrappable : public GarbageCollectedMixin {
-    WTF_MAKE_NONCOPYABLE(ActiveScriptWrappable);
-public:
-    explicit ActiveScriptWrappable(ScriptWrappable*);
+class CORE_EXPORT ActiveScriptWrappableBase : public GarbageCollectedMixin {
+  WTF_MAKE_NONCOPYABLE(ActiveScriptWrappableBase);
 
-    static void traceActiveScriptWrappables(v8::Isolate*, ScriptWrappableVisitor*);
+ public:
+  ActiveScriptWrappableBase();
 
-    virtual bool hasPendingActivity() const = 0;
+  static void TraceActiveScriptWrappables(v8::Isolate*,
+                                          ScriptWrappableVisitor*);
 
-    ScriptWrappable* toScriptWrappable() const { return m_scriptWrappable; }
-
-private:
-    ScriptWrappable* m_scriptWrappable;
+ protected:
+  virtual bool IsContextDestroyed(ActiveScriptWrappableBase*) const = 0;
+  virtual bool DispatchHasPendingActivity(ActiveScriptWrappableBase*) const = 0;
+  virtual ScriptWrappable* ToScriptWrappable(
+      ActiveScriptWrappableBase*) const = 0;
 };
 
-} // namespace blink
+template <typename T>
+class ActiveScriptWrappable : public ActiveScriptWrappableBase {
+  WTF_MAKE_NONCOPYABLE(ActiveScriptWrappable);
 
-#endif // ActiveScriptWrappable_h
+ public:
+  ActiveScriptWrappable() {}
+
+ protected:
+  bool IsContextDestroyed(ActiveScriptWrappableBase* object) const final {
+    return !(static_cast<T*>(object)->T::GetExecutionContext)() ||
+           (static_cast<T*>(object)->T::GetExecutionContext)()
+               ->IsContextDestroyed();
+  }
+
+  bool DispatchHasPendingActivity(
+      ActiveScriptWrappableBase* object) const final {
+    return static_cast<T*>(object)->T::HasPendingActivity();
+  }
+
+  ScriptWrappable* ToScriptWrappable(
+      ActiveScriptWrappableBase* object) const final {
+    return static_cast<T*>(object);
+  }
+};
+
+}  // namespace blink
+
+#endif  // ActiveScriptWrappable_h

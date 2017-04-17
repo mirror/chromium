@@ -45,6 +45,35 @@ chrome.system.display.Insets;
 
 /**
  * @typedef {{
+ *   x: number,
+ *   y: number
+ * }}
+ * @see https://developer.chrome.com/extensions/system.display#type-Point
+ */
+chrome.system.display.Point;
+
+/**
+ * @typedef {{
+ *   displayPoint: !chrome.system.display.Point,
+ *   touchPoint: !chrome.system.display.Point
+ * }}
+ * @see https://developer.chrome.com/extensions/system.display#type-TouchCalibrationPair
+ */
+chrome.system.display.TouchCalibrationPair;
+
+/**
+ * @typedef {{
+ *   pair1: !chrome.system.display.TouchCalibrationPair,
+ *   pair2: !chrome.system.display.TouchCalibrationPair,
+ *   pair3: !chrome.system.display.TouchCalibrationPair,
+ *   pair4: !chrome.system.display.TouchCalibrationPair
+ * }}
+ * @see https://developer.chrome.com/extensions/system.display#type-TouchCalibrationPairQuad
+ */
+chrome.system.display.TouchCalibrationPairQuad;
+
+/**
+ * @typedef {{
  *   width: number,
  *   height: number,
  *   widthInNativePixels: number,
@@ -88,13 +117,15 @@ chrome.system.display.DisplayLayout;
  *   isPrimary: boolean,
  *   isInternal: boolean,
  *   isEnabled: boolean,
+ *   isUnified: boolean,
  *   dpiX: number,
  *   dpiY: number,
  *   rotation: number,
  *   bounds: !chrome.system.display.Bounds,
  *   overscan: !chrome.system.display.Insets,
  *   workArea: !chrome.system.display.Bounds,
- *   modes: !Array<!chrome.system.display.DisplayMode>
+ *   modes: !Array<!chrome.system.display.DisplayMode>,
+ *   hasTouchSupport: boolean
  * }}
  * @see https://developer.chrome.com/extensions/system.display#type-DisplayUnitInfo
  */
@@ -102,6 +133,7 @@ chrome.system.display.DisplayUnitInfo;
 
 /**
  * @typedef {{
+ *   isUnified: (boolean|undefined),
  *   mirroringSourceId: (string|undefined),
  *   isPrimary: (boolean|undefined),
  *   overscan: (!chrome.system.display.Insets|undefined),
@@ -115,17 +147,28 @@ chrome.system.display.DisplayUnitInfo;
 chrome.system.display.DisplayProperties;
 
 /**
- * Get the information of all attached display devices.
- * @param {function(!Array<!chrome.system.display.DisplayUnitInfo>):void}
- *     callback
- * @see https://developer.chrome.com/extensions/system.display#method-getInfo
+ * @typedef {{
+ *   singleUnified: (boolean|undefined)
+ * }}
+ * @see https://developer.chrome.com/extensions/system.display#type-GetInfoFlags
  */
-chrome.system.display.getInfo = function(callback) {};
+chrome.system.display.GetInfoFlags;
 
 /**
- * Get the layout info for all displays. NOTE: This is only available to Chrome
- * OS Kiosk apps and Web UI.
+ * Requests the information for all attached display devices.
+ * @param {!chrome.system.display.GetInfoFlags} flags Options affecting how the
+ *     information is returned.
+ * @param {function(!Array<!chrome.system.display.DisplayUnitInfo>):void}
+ *     callback The callback to invoke with the results.
+ * @see https://developer.chrome.com/extensions/system.display#method-getInfo
+ */
+chrome.system.display.getInfo = function(flags, callback) {};
+
+/**
+ * Requests the layout info for all displays. NOTE: This is only available to
+ * Chrome OS Kiosk apps and Web UI.
  * @param {function(!Array<!chrome.system.display.DisplayLayout>):void} callback
+ *     The callback to invoke with the results.
  * @see https://developer.chrome.com/extensions/system.display#method-getDisplayLayout
  */
 chrome.system.display.getDisplayLayout = function(callback) {};
@@ -206,6 +249,52 @@ chrome.system.display.overscanCalibrationReset = function(id) {};
  * @see https://developer.chrome.com/extensions/system.display#method-overscanCalibrationComplete
  */
 chrome.system.display.overscanCalibrationComplete = function(id) {};
+
+/**
+ * Displays the native touch calibration UX for the display with |id| as display
+ * id. This will show an overlay on the screen with required instructions on how
+ * to proceed. The callback will be invoked in case of successful calibraion
+ * only. If the calibration fails, this will throw an error.
+ * @param {string} id The display's unique identifier.
+ * @param {function(boolean):void=} callback Optional callback to inform the
+ *     caller that the touch      calibration has ended. The argument of the
+ *     callback informs if the      calibration was a success or not.
+ * @see https://developer.chrome.com/extensions/system.display#method-showNativeTouchCalibration
+ */
+chrome.system.display.showNativeTouchCalibration = function(id, callback) {};
+
+/**
+ * Starts custom touch calibration for a display. This should be called when
+ * using a custom UX for collecting calibration data. If another touch
+ * calibration is already in progress this will throw an error.
+ * @param {string} id The display's unique identifier.
+ * @see https://developer.chrome.com/extensions/system.display#method-startCustomTouchCalibration
+ */
+chrome.system.display.startCustomTouchCalibration = function(id) {};
+
+/**
+ * Sets the touch calibration pairs for a display. These |pairs| would be used
+ * to calibrate the touch screen for display with |id| called in
+ * startCustomTouchCalibration(). Always call |startCustomTouchCalibration|
+ * before calling this method. If another touch calibration is already in
+ * progress this will throw an error.
+ * @param {!chrome.system.display.TouchCalibrationPairQuad} pairs The pairs of
+ *     point used to calibrate the display.
+ * @param {!chrome.system.display.Bounds} bounds Bounds of the display when the
+ *     touch calibration was performed.     |bounds.left| and |bounds.top|
+ *     values are ignored.
+ * @see https://developer.chrome.com/extensions/system.display#method-completeCustomTouchCalibration
+ */
+chrome.system.display.completeCustomTouchCalibration = function(pairs, bounds) {};
+
+/**
+ * Resets the touch calibration for the display and brings it back to its
+ * default state by clearing any touch calibration data associated with the
+ * display.
+ * @param {string} id The display's unique identifier.
+ * @see https://developer.chrome.com/extensions/system.display#method-clearTouchCalibration
+ */
+chrome.system.display.clearTouchCalibration = function(id) {};
 
 /**
  * Fired when anything changes to the display configuration.

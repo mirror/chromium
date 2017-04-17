@@ -34,35 +34,39 @@
 
 namespace blink {
 
-static int nextUnusedId = 1;
+static int g_next_unused_id = 1;
 
-InspectorDatabaseResource* InspectorDatabaseResource::create(Database* database, const String& domain, const String& name, const String& version)
-{
-    return new InspectorDatabaseResource(database, domain, name, version);
+InspectorDatabaseResource* InspectorDatabaseResource::Create(
+    Database* database,
+    const String& domain,
+    const String& name,
+    const String& version) {
+  return new InspectorDatabaseResource(database, domain, name, version);
 }
 
-InspectorDatabaseResource::InspectorDatabaseResource(Database* database, const String& domain, const String& name, const String& version)
-    : m_database(database)
-    , m_id(String::number(nextUnusedId++))
-    , m_domain(domain)
-    , m_name(name)
-    , m_version(version)
-{
+InspectorDatabaseResource::InspectorDatabaseResource(Database* database,
+                                                     const String& domain,
+                                                     const String& name,
+                                                     const String& version)
+    : database_(database),
+      id_(String::Number(g_next_unused_id++)),
+      domain_(domain),
+      name_(name),
+      version_(version) {}
+
+DEFINE_TRACE(InspectorDatabaseResource) {
+  visitor->Trace(database_);
 }
 
-DEFINE_TRACE(InspectorDatabaseResource)
-{
-    visitor->trace(m_database);
+void InspectorDatabaseResource::Bind(protocol::Database::Frontend* frontend) {
+  std::unique_ptr<protocol::Database::Database> json_object =
+      protocol::Database::Database::create()
+          .setId(id_)
+          .setDomain(domain_)
+          .setName(name_)
+          .setVersion(version_)
+          .build();
+  frontend->addDatabase(std::move(json_object));
 }
 
-void InspectorDatabaseResource::bind(protocol::Database::Frontend* frontend)
-{
-    std::unique_ptr<protocol::Database::Database> jsonObject = protocol::Database::Database::create()
-        .setId(m_id)
-        .setDomain(m_domain)
-        .setName(m_name)
-        .setVersion(m_version).build();
-    frontend->addDatabase(std::move(jsonObject));
-}
-
-} // namespace blink
+}  // namespace blink

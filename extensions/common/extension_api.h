@@ -11,7 +11,6 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "base/memory/singleton.h"
 #include "base/strings/string_piece.h"
 #include "base/values.h"
@@ -21,7 +20,6 @@
 
 namespace base {
 class DictionaryValue;
-class Value;
 }
 
 class GURL;
@@ -29,7 +27,18 @@ class GURL;
 namespace extensions {
 
 class Extension;
+class ExtensionsClient;
 class Feature;
+
+// Used when testing Feature availability to specify whether feature aliases
+// should be ignored or not - i.e. if a feature exposed only through an alias
+// should be considered available.
+enum class CheckAliasStatus {
+  // Includes aliases in an availability check.
+  ALLOWED,
+  // Ignores aliases during an availability check.
+  NOT_ALLOWED
+};
 
 // C++ Wrapper for the JSON API definitions in chrome/common/extensions/api/.
 //
@@ -66,13 +75,10 @@ class ExtensionAPI {
     ExtensionAPI* original_api_;
   };
 
-  // Creates a completely clean instance. Configure using RegisterSchema() and
+  // Creates a completely clean instance. Configure using
   // RegisterDependencyProvider before use.
   ExtensionAPI();
   virtual ~ExtensionAPI();
-
-  // Add a (non-generated) API schema resource.
-  void RegisterSchemaResource(const std::string& api_name, int resource_id);
 
   // Add a FeatureProvider for APIs. The features are used to specify
   // dependencies and constraints on the availability of APIs.
@@ -89,26 +95,37 @@ class ExtensionAPI {
   // |extension| or |url| (or both) may determine its availability, but this is
   // up to the configuration of the individual feature.
   //
+  // |check_alias| determines whether it should be tested whether the API
+  // is available through an alias.
+  //
   // TODO(kalman): This is just an unnecessary combination of finding a Feature
   // then calling Feature::IsAvailableToContext(..) on it. Just provide that
   // FindFeature function and let callers compose if they want.
   Feature::Availability IsAvailable(const std::string& api_full_name,
                                     const Extension* extension,
                                     Feature::Context context,
-                                    const GURL& url);
+                                    const GURL& url,
+                                    CheckAliasStatus check_alias);
 
-  // Determines whether an API, or any parts of that API, are available in
+  // Determines whether an API, or any parts of that API, can be exposed to
   // |context|.
+  //
+  // |check_alias| determines whether it should be tested whether the API
+  // is available through an alias.
+  //
   bool IsAnyFeatureAvailableToContext(const Feature& api,
                                       const Extension* extension,
                                       Feature::Context context,
-                                      const GURL& url);
+                                      const GURL& url,
+                                      CheckAliasStatus check_alias);
 
-  // Returns true if |name| is available to WebUI contexts on |url|.
-  bool IsAvailableToWebUI(const std::string& name, const GURL& url);
+  // Gets the StringPiece for the schema specified by |api_name|.
+  base::StringPiece GetSchemaStringPiece(const std::string& api_name);
 
   // Gets the schema for the extension API with namespace |full_name|.
   // Ownership remains with this object.
+  // TODO(devlin): Now that we use GetSchemaStringPiece() in the renderer, we
+  // may not really need this anymore.
   const base::DictionaryValue* GetSchema(const std::string& full_name);
 
   // Splits a full name from the extension API into its API and child name
@@ -129,25 +146,34 @@ class ExtensionAPI {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ExtensionAPITest, DefaultConfigurationFeatures);
-  FRIEND_TEST_ALL_PREFIXES(ExtensionAPITest, TypesHaveNamespace);
   friend struct base::DefaultSingletonTraits<ExtensionAPI>;
 
   void InitDefaultConfiguration();
+
+  // Returns true if there exists an API with |name|. Declared virtual for
+  // testing purposes.
+  virtual bool IsKnownAPI(const std::string& name, ExtensionsClient* client);
+
+  // Checks if |full_name| is available to provided context and extension under
+  // associated API's alias name.
+  Feature::Availability IsAliasAvailable(const std::string& full_name,
+                                         Feature* feature,
+                                         const Extension* extension,
+                                         Feature::Context context,
+                                         const GURL& url);
 
   bool default_configuration_initialized_;
 
   // Loads a schema.
   void LoadSchema(const std::string& name, const base::StringPiece& schema);
 
-  // Map from each API that hasn't been loaded yet to the schema which defines
-  // it. Note that there may be multiple APIs per schema.
-  typedef std::map<std::string, int> UnloadedSchemaMap;
-  UnloadedSchemaMap unloaded_schemas_;
-
   // Schemas for each namespace.
-  typedef std::map<std::string, linked_ptr<const base::DictionaryValue> >
-        SchemaMap;
+  using SchemaMap =
+      std::map<std::string, std::unique_ptr<const base::DictionaryValue>>;
   SchemaMap schemas_;
+
+  using StringPieceMap = std::map<std::string, base::StringPiece>;
+  StringPieceMap schema_strings_;
 
   // FeatureProviders used for resolving dependencies.
   typedef std::map<std::string, const FeatureProvider*> FeatureProviderMap;

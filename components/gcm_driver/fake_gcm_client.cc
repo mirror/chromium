@@ -80,6 +80,8 @@ void FakeGCMClient::Initialize(
         url_request_context_getter,
     std::unique_ptr<Encryptor> encryptor,
     Delegate* delegate) {
+  product_category_for_subtypes_ =
+      chrome_build_info.product_category_for_subtypes;
   delegate_ = delegate;
 }
 
@@ -137,6 +139,12 @@ void FakeGCMClient::Register(
       FROM_HERE, base::Bind(&FakeGCMClient::RegisterFinished,
                             weak_ptr_factory_.GetWeakPtr(), registration_info,
                             registration_id));
+}
+
+bool FakeGCMClient::ValidateRegistration(
+    const linked_ptr<RegistrationInfo>& registration_info,
+    const std::string& registration_id) {
+  return true;
 }
 
 void FakeGCMClient::Unregister(

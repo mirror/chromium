@@ -28,55 +28,56 @@
 
 #include "net/base/port_util.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/text/StringUTF8Adaptor.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/StringUTF8Adaptor.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-bool isDefaultPortForProtocol(unsigned short port, const WTF::String& protocol)
-{
-    if (protocol.isEmpty())
-        return false;
-
-    switch (port) {
-    case 80:
-        return protocol == "http" || protocol == "ws";
-    case 443:
-        return protocol == "https" || protocol == "wss";
-    case 21:
-        return protocol == "ftp";
-    case 990:
-        return protocol == "ftps";
-    }
+bool IsDefaultPortForProtocol(unsigned short port,
+                              const WTF::String& protocol) {
+  if (protocol.IsEmpty())
     return false;
+
+  switch (port) {
+    case 80:
+      return protocol == "http" || protocol == "ws";
+    case 443:
+      return protocol == "https" || protocol == "wss";
+    case 21:
+      return protocol == "ftp";
+    case 990:
+      return protocol == "ftps";
+  }
+  return false;
 }
 
-unsigned short defaultPortForProtocol(const WTF::String& protocol)
-{
-    if (protocol == "http" || protocol == "ws")
-        return 80;
-    if (protocol == "https" || protocol == "wss")
-        return 443;
-    if (protocol == "ftp")
-        return 21;
-    if (protocol == "ftps")
-        return 990;
+unsigned short DefaultPortForProtocol(const WTF::String& protocol) {
+  if (protocol == "http" || protocol == "ws")
+    return 80;
+  if (protocol == "https" || protocol == "wss")
+    return 443;
+  if (protocol == "ftp")
+    return 21;
+  if (protocol == "ftps")
+    return 990;
 
-    return 0;
+  return 0;
 }
 
-bool isPortAllowedForScheme(const KURL& url)
-{
-    // Returns true for URLs without a port specified. This is needed to let
-    // through non-network schemes that don't go over the network.
-    if (!url.hasPort())
-        return true;
-    String protocol = url.protocol().isNull() ? "" : url.protocol().lower();
-    unsigned short effectivePort = url.port();
-    if (!effectivePort)
-        effectivePort = defaultPortForProtocol(protocol);
-    StringUTF8Adaptor utf8(protocol);
-    return net::IsPortAllowedForScheme(effectivePort, std::string(utf8.data(), utf8.length()));
+bool IsPortAllowedForScheme(const KURL& url) {
+  // Returns true for URLs without a port specified. This is needed to let
+  // through non-network schemes that don't go over the network.
+  if (!url.HasPort())
+    return true;
+  String protocol = url.Protocol();
+  if (protocol.IsNull())
+    protocol = g_empty_string;
+  unsigned short effective_port = url.Port();
+  if (!effective_port)
+    effective_port = DefaultPortForProtocol(protocol);
+  StringUTF8Adaptor utf8(protocol);
+  return net::IsPortAllowedForScheme(effective_port,
+                                     std::string(utf8.Data(), utf8.length()));
 }
 
-} // namespace blink
+}  // namespace blink

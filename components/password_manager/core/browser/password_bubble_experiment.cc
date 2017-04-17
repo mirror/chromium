@@ -13,24 +13,15 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
-#include "components/sync_driver/sync_service.h"
+#include "components/sync/driver/sync_service.h"
 #include "components/variations/variations_associated_data.h"
 
 namespace password_bubble_experiment {
 
-const char kBrandingExperimentName[] = "PasswordBranding";
-const char kChromeSignInPasswordPromoExperimentName[] = "SignInPasswordPromo";
-const char kChromeSignInPasswordPromoThresholdParam[] = "dismissal_threshold";
 const char kSmartBubbleExperimentName[] = "PasswordSmartBubble";
 const char kSmartBubbleThresholdParam[] = "dismissal_count";
-const char kSmartLockBrandingGroupName[] = "SmartLockBranding";
-const char kSmartLockBrandingSavePromptOnlyGroupName[] =
-    "SmartLockBrandingSavePromptOnly";
 
 void RegisterPrefs(PrefRegistrySimple* registry) {
-  registry->RegisterBooleanPref(
-      password_manager::prefs::kWasSavePrompFirstRunExperienceShown, false);
-
   registry->RegisterBooleanPref(
       password_manager::prefs::kWasAutoSignInFirstRunExperienceShown, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
@@ -46,46 +37,13 @@ int GetSmartBubbleDismissalThreshold() {
   std::string param = variations::GetVariationParamValue(
       kSmartBubbleExperimentName, kSmartBubbleThresholdParam);
   int threshold = 0;
-  return base::StringToInt(param, &threshold) ? threshold : 0;
+  // 3 is the default magic number that proved to show the best result.
+  return base::StringToInt(param, &threshold) ? threshold : 3;
 }
 
-bool IsSmartLockUser(const sync_driver::SyncService* sync_service) {
+bool IsSmartLockUser(const syncer::SyncService* sync_service) {
   return password_manager_util::GetPasswordSyncState(sync_service) ==
          password_manager::SYNCING_NORMAL_ENCRYPTION;
-}
-
-SmartLockBranding GetSmartLockBrandingState(
-    const sync_driver::SyncService* sync_service) {
-  // Query the group first for correct UMA reporting.
-  std::string group_name =
-      base::FieldTrialList::FindFullName(kBrandingExperimentName);
-  if (!IsSmartLockUser(sync_service))
-    return SmartLockBranding::NONE;
-  if (group_name == kSmartLockBrandingGroupName)
-    return SmartLockBranding::FULL;
-  if (group_name == kSmartLockBrandingSavePromptOnlyGroupName)
-    return SmartLockBranding::SAVE_PROMPT_ONLY;
-  return SmartLockBranding::NONE;
-}
-
-bool IsSmartLockBrandingEnabled(const sync_driver::SyncService* sync_service) {
-  return GetSmartLockBrandingState(sync_service) == SmartLockBranding::FULL;
-}
-
-bool IsSmartLockBrandingSavePromptEnabled(
-    const sync_driver::SyncService* sync_service) {
-  return GetSmartLockBrandingState(sync_service) != SmartLockBranding::NONE;
-}
-
-bool ShouldShowSavePromptFirstRunExperience(
-    const sync_driver::SyncService* sync_service,
-    PrefService* prefs) {
-  return false;
-}
-
-void RecordSavePromptFirstRunExperienceWasShown(PrefService* prefs) {
-  prefs->SetBoolean(
-      password_manager::prefs::kWasSavePrompFirstRunExperienceShown, true);
 }
 
 bool ShouldShowAutoSignInPromptFirstRunExperience(PrefService* prefs) {
@@ -105,21 +63,17 @@ void TurnOffAutoSignin(PrefService* prefs) {
 
 bool ShouldShowChromeSignInPasswordPromo(
     PrefService* prefs,
-    const sync_driver::SyncService* sync_service) {
-  // Query the group first for correct UMA reporting.
-  std::string param = variations::GetVariationParamValue(
-      kChromeSignInPasswordPromoExperimentName,
-      kChromeSignInPasswordPromoThresholdParam);
+    const syncer::SyncService* sync_service) {
   if (!sync_service || !sync_service->IsSyncAllowed() ||
       sync_service->IsFirstSetupComplete())
     return false;
-  int threshold = 0;
-  return base::StringToInt(param, &threshold) &&
-         !prefs->GetBoolean(
+  // Don't show the promo more than 3 times.
+  constexpr int kThreshold = 3;
+  return !prefs->GetBoolean(
              password_manager::prefs::kWasSignInPasswordPromoClicked) &&
          prefs->GetInteger(
              password_manager::prefs::kNumberSignInPasswordPromoShown) <
-             threshold;
+             kThreshold;
 }
 
 }  // namespace password_bubble_experiment

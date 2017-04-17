@@ -14,59 +14,74 @@ namespace blink {
 
 template <typename Strategy>
 class CORE_TEMPLATE_CLASS_EXPORT PositionWithAffinityTemplate {
-    DISALLOW_NEW();
-public:
-    // TODO(yosin) We should have single parameter constructor not to use
-    // default parameter for avoiding include "TextAffinity.h"
-    PositionWithAffinityTemplate(const PositionTemplate<Strategy>&, TextAffinity = TextAffinity::Downstream);
-    PositionWithAffinityTemplate();
-    ~PositionWithAffinityTemplate();
+  DISALLOW_NEW();
 
-    TextAffinity affinity() const { return m_affinity; }
-    const PositionTemplate<Strategy>& position() const { return m_position; }
+ public:
+  // TODO(yosin) We should have single parameter constructor not to use
+  // default parameter for avoiding include "TextAffinity.h"
+  PositionWithAffinityTemplate(const PositionTemplate<Strategy>&,
+                               TextAffinity = TextAffinity::kDownstream);
+  PositionWithAffinityTemplate();
+  ~PositionWithAffinityTemplate();
 
-    // Returns true if both |this| and |other| is null or both |m_position|
-    // and |m_affinity| equal.
-    bool operator==(const PositionWithAffinityTemplate& other) const;
-    bool operator!=(const PositionWithAffinityTemplate& other) const { return !operator==(other); }
+  TextAffinity Affinity() const { return affinity_; }
+  const PositionTemplate<Strategy>& GetPosition() const { return position_; }
 
-    bool isNotNull() const { return m_position.isNotNull(); }
-    bool isNull() const { return m_position.isNull(); }
+  // Returns true if both |this| and |other| is null or both |m_position|
+  // and |m_affinity| equal.
+  bool operator==(const PositionWithAffinityTemplate& other) const;
+  bool operator!=(const PositionWithAffinityTemplate& other) const {
+    return !operator==(other);
+  }
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_position);
-    }
+  bool IsNotNull() const { return position_.IsNotNull(); }
+  bool IsNull() const { return position_.IsNull(); }
+  bool IsOrphan() const { return position_.IsOrphan(); }
+  bool IsConnected() const { return position_.IsConnected(); }
 
-private:
-    PositionTemplate<Strategy> m_position;
-    TextAffinity m_affinity;
+  Node* AnchorNode() const { return position_.AnchorNode(); }
+  Document* GetDocument() const { return position_.GetDocument(); }
+
+  DECLARE_TRACE();
+
+ private:
+  PositionTemplate<Strategy> position_;
+  TextAffinity affinity_;
 };
 
-extern template class CORE_EXTERN_TEMPLATE_EXPORT PositionWithAffinityTemplate<EditingStrategy>;
-extern template class CORE_EXTERN_TEMPLATE_EXPORT PositionWithAffinityTemplate<EditingInFlatTreeStrategy>;
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    PositionWithAffinityTemplate<EditingStrategy>;
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    PositionWithAffinityTemplate<EditingInFlatTreeStrategy>;
 
 using PositionWithAffinity = PositionWithAffinityTemplate<EditingStrategy>;
-using PositionInFlatTreeWithAffinity = PositionWithAffinityTemplate<EditingInFlatTreeStrategy>;
+using PositionInFlatTreeWithAffinity =
+    PositionWithAffinityTemplate<EditingInFlatTreeStrategy>;
 
 template <typename Strategy>
-PositionWithAffinityTemplate<Strategy> fromPositionInDOMTree(const PositionWithAffinity&);
+PositionWithAffinityTemplate<Strategy> FromPositionInDOMTree(
+    const PositionWithAffinity&);
 
 template <>
-inline PositionWithAffinity fromPositionInDOMTree<EditingStrategy>(const PositionWithAffinity& positionWithAffinity)
-{
-    return positionWithAffinity;
+inline PositionWithAffinity FromPositionInDOMTree<EditingStrategy>(
+    const PositionWithAffinity& position_with_affinity) {
+  return position_with_affinity;
 }
 
 template <>
-inline PositionInFlatTreeWithAffinity fromPositionInDOMTree<EditingInFlatTreeStrategy>(const PositionWithAffinity& positionWithAffinity)
-{
-    return PositionInFlatTreeWithAffinity(toPositionInFlatTree(positionWithAffinity.position()), positionWithAffinity.affinity());
+inline PositionInFlatTreeWithAffinity
+FromPositionInDOMTree<EditingInFlatTreeStrategy>(
+    const PositionWithAffinity& position_with_affinity) {
+  return PositionInFlatTreeWithAffinity(
+      ToPositionInFlatTree(position_with_affinity.GetPosition()),
+      position_with_affinity.Affinity());
 }
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const PositionWithAffinity&);
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const PositionInFlatTreeWithAffinity&);
+CORE_EXPORT std::ostream& operator<<(std::ostream&,
+                                     const PositionWithAffinity&);
+CORE_EXPORT std::ostream& operator<<(std::ostream&,
+                                     const PositionInFlatTreeWithAffinity&);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PositionWithAffinity_h
+#endif  // PositionWithAffinity_h

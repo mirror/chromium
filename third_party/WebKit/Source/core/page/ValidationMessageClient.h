@@ -28,7 +28,7 @@
 
 #include "platform/heap/Handle.h"
 #include "platform/text/TextDirection.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -36,29 +36,34 @@ class Document;
 class Element;
 
 class ValidationMessageClient : public GarbageCollectedMixin {
-public:
-    virtual ~ValidationMessageClient() { }
+ public:
+  virtual ~ValidationMessageClient() {}
 
-    // Show validation message for the specified anchor element. An
-    // implementation of this function may hide the message automatically after
-    // some period.
-    virtual void showValidationMessage(const Element& anchor, const String& mainMessage, TextDirection, const String& subMessage, TextDirection) = 0;
+  // Show validation message for the specified anchor element. An
+  // implementation of this function may hide the message automatically after
+  // some period.
+  virtual void ShowValidationMessage(const Element& anchor,
+                                     const String& main_message,
+                                     TextDirection,
+                                     const String& sub_message,
+                                     TextDirection) = 0;
 
-    // Hide validation message for the specified anchor if the message for the
-    // anchor is already visible.
-    virtual void hideValidationMessage(const Element& anchor) = 0;
+  // Hide validation message for the specified anchor if the message for the
+  // anchor is already visible.
+  virtual void HideValidationMessage(const Element& anchor) = 0;
 
-    // Returns true if the validation message for the specified anchor element
-    // is visible.
-    virtual bool isValidationMessageVisible(const Element& anchor) = 0;
+  // Returns true if the validation message for the specified anchor element
+  // is visible.
+  virtual bool IsValidationMessageVisible(const Element& anchor) = 0;
 
-    virtual void documentDetached(const Document&) = 0;
+  virtual void WillUnloadDocument(const Document&) = 0;
+  virtual void DocumentDetached(const Document&) = 0;
 
-    virtual void willBeDestroyed() = 0;
+  virtual void WillBeDestroyed() = 0;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

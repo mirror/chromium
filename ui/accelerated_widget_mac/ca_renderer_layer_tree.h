@@ -14,12 +14,12 @@
 
 #include "base/mac/scoped_cftyperef.h"
 #include "base/mac/scoped_nsobject.h"
+#include "base/memory/ref_counted.h"
 #include "ui/accelerated_widget_mac/accelerated_widget_mac_export.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/mac/io_surface.h"
 #include "ui/gfx/transform.h"
-#include "ui/gl/ca_renderer_layer_params.h"
 
 @class AVSampleBufferDisplayLayer;
 
@@ -33,7 +33,8 @@ struct CARendererLayerParams;
 // https://docs.google.com/document/d/1DtSN9zzvCF44_FQPM7ie01UxGHagQ66zfF5L9HnigQY/edit?usp=sharing
 class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
  public:
-  CARendererLayerTree();
+  CARendererLayerTree(bool allow_av_sample_buffer_display_layer,
+                      bool allow_solid_color_layers);
 
   // This will remove all CALayers from this tree from their superlayer.
   ~CARendererLayerTree();
@@ -59,11 +60,20 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
   bool CommitFullscreenLowPowerLayer(
       AVSampleBufferDisplayLayer* fullscreen_low_power_layer);
 
+  // Returns the contents used for a given solid color.
+  id ContentsForSolidColorForTesting(unsigned int color);
+
+  // If there exists only a single content layer, return the IOSurface of that
+  // layer.
+  IOSurfaceRef GetContentIOSurface() const;
+
  private:
+  class SolidColorContents;
   struct RootLayer;
   struct ClipAndSortingLayer;
   struct TransformLayer;
   struct ContentLayer;
+  friend struct ContentLayer;
 
   struct RootLayer {
     RootLayer();
@@ -74,7 +84,8 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
 
     // Append a new content layer, without modifying the actual CALayer
     // structure.
-    bool AddContentLayer(const CARendererLayerParams& params);
+    bool AddContentLayer(CARendererLayerTree* tree,
+                         const CARendererLayerParams& params);
 
     // Allocate CALayers for this layer and its children, and set their
     // properties appropriately. Re-use the CALayers from |old_layer| if
@@ -100,7 +111,8 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     // See the behavior of RootLayer for the effects of these functions on the
     // |ca_layer| member and |old_layer| argument.
     ~ClipAndSortingLayer();
-    void AddContentLayer(const CARendererLayerParams& params);
+    void AddContentLayer(CARendererLayerTree* tree,
+                         const CARendererLayerParams& params);
     void CommitToCA(CALayer* superlayer,
                     ClipAndSortingLayer* old_layer,
                     float scale_factor);
@@ -122,7 +134,8 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     // See the behavior of RootLayer for the effects of these functions on the
     // |ca_layer| member and |old_layer| argument.
     ~TransformLayer();
-    void AddContentLayer(const CARendererLayerParams& params);
+    void AddContentLayer(CARendererLayerTree* tree,
+                         const CARendererLayerParams& params);
     void CommitToCA(CALayer* superlayer,
                     TransformLayer* old_layer,
                     float scale_factor);
@@ -135,15 +148,15 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     DISALLOW_COPY_AND_ASSIGN(TransformLayer);
   };
   struct ContentLayer {
-    ContentLayer(base::ScopedCFTypeRef<IOSurfaceRef> io_surface,
+    ContentLayer(CARendererLayerTree* tree,
+                 base::ScopedCFTypeRef<IOSurfaceRef> io_surface,
                  base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer,
                  const gfx::RectF& contents_rect,
                  const gfx::Rect& rect,
                  unsigned background_color,
                  unsigned edge_aa_mask,
                  float opacity,
-                 unsigned filter,
-                 const CARendererLayerParams::FilterEffects& filter_effects);
+                 unsigned filter);
     ContentLayer(ContentLayer&& layer);
 
     // See the behavior of RootLayer for the effects of these functions on the
@@ -158,6 +171,7 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     // their use count.
     const gfx::ScopedInUseIOSurface io_surface;
     const base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer;
+    scoped_refptr<SolidColorContents> solid_color_contents;
     gfx::RectF contents_rect;
     gfx::Rect rect;
     unsigned background_color = 0;
@@ -173,9 +187,6 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     base::scoped_nsobject<AVSampleBufferDisplayLayer> av_layer;
     bool use_av_layer = false;
 
-    // Filter effects to apply to this layer.
-    CARendererLayerParams::FilterEffects filter_effects;
-
    private:
     DISALLOW_COPY_AND_ASSIGN(ContentLayer);
   };
@@ -183,6 +194,8 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
   RootLayer root_layer_;
   float scale_factor_ = 1;
   bool has_committed_ = false;
+  const bool allow_av_sample_buffer_display_layer_ = true;
+  const bool allow_solid_color_layers_ = true;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CARendererLayerTree);

@@ -15,73 +15,67 @@ namespace blink {
 static const V0CustomElementCallbackQueue::ElementQueueId kMicrotaskQueueId = 0;
 
 V0CustomElementMicrotaskDispatcher::V0CustomElementMicrotaskDispatcher()
-    : m_hasScheduledMicrotask(false)
-    , m_phase(Quiescent)
-{
+    : has_scheduled_microtask_(false), phase_(kQuiescent) {}
+
+V0CustomElementMicrotaskDispatcher&
+V0CustomElementMicrotaskDispatcher::Instance() {
+  DEFINE_STATIC_LOCAL(V0CustomElementMicrotaskDispatcher, instance,
+                      (new V0CustomElementMicrotaskDispatcher));
+  return instance;
 }
 
-V0CustomElementMicrotaskDispatcher& V0CustomElementMicrotaskDispatcher::instance()
-{
-    DEFINE_STATIC_LOCAL(V0CustomElementMicrotaskDispatcher, instance, (new V0CustomElementMicrotaskDispatcher));
-    return instance;
+void V0CustomElementMicrotaskDispatcher::Enqueue(
+    V0CustomElementCallbackQueue* queue) {
+  EnsureMicrotaskScheduledForElementQueue();
+  queue->SetOwner(kMicrotaskQueueId);
+  elements_.push_back(queue);
 }
 
-void V0CustomElementMicrotaskDispatcher::enqueue(V0CustomElementCallbackQueue* queue)
-{
-    ensureMicrotaskScheduledForElementQueue();
-    queue->setOwner(kMicrotaskQueueId);
-    m_elements.append(queue);
+void V0CustomElementMicrotaskDispatcher::
+    EnsureMicrotaskScheduledForElementQueue() {
+  DCHECK(phase_ == kQuiescent || phase_ == kResolving);
+  EnsureMicrotaskScheduled();
 }
 
-void V0CustomElementMicrotaskDispatcher::ensureMicrotaskScheduledForElementQueue()
-{
-    DCHECK(m_phase == Quiescent || m_phase == Resolving);
-    ensureMicrotaskScheduled();
+void V0CustomElementMicrotaskDispatcher::EnsureMicrotaskScheduled() {
+  if (!has_scheduled_microtask_) {
+    Microtask::EnqueueMicrotask(WTF::Bind(&Dispatch));
+    has_scheduled_microtask_ = true;
+  }
 }
 
-void V0CustomElementMicrotaskDispatcher::ensureMicrotaskScheduled()
-{
-    if (!m_hasScheduledMicrotask) {
-        Microtask::enqueueMicrotask(WTF::bind(&dispatch));
-        m_hasScheduledMicrotask = true;
-    }
+void V0CustomElementMicrotaskDispatcher::Dispatch() {
+  Instance().DoDispatch();
 }
 
-void V0CustomElementMicrotaskDispatcher::dispatch()
-{
-    instance().doDispatch();
+void V0CustomElementMicrotaskDispatcher::DoDispatch() {
+  DCHECK(IsMainThread());
+
+  DCHECK(phase_ == kQuiescent);
+  DCHECK(has_scheduled_microtask_);
+  has_scheduled_microtask_ = false;
+
+  // Finishing microtask work deletes all
+  // V0CustomElementCallbackQueues. Being in a callback delivery scope
+  // implies those queues could still be in use.
+  SECURITY_DCHECK(!V0CustomElementProcessingStack::InCallbackDeliveryScope());
+
+  phase_ = kResolving;
+
+  phase_ = kDispatchingCallbacks;
+  for (const auto& element : elements_) {
+    // Created callback may enqueue an attached callback.
+    V0CustomElementProcessingStack::CallbackDeliveryScope scope;
+    element->ProcessInElementQueue(kMicrotaskQueueId);
+  }
+
+  elements_.Clear();
+  V0CustomElementScheduler::MicrotaskDispatcherDidFinish();
+  phase_ = kQuiescent;
 }
 
-void V0CustomElementMicrotaskDispatcher::doDispatch()
-{
-    DCHECK(isMainThread());
-
-    DCHECK(m_phase == Quiescent);
-    DCHECK(m_hasScheduledMicrotask);
-    m_hasScheduledMicrotask = false;
-
-    // Finishing microtask work deletes all
-    // V0CustomElementCallbackQueues. Being in a callback delivery scope
-    // implies those queues could still be in use.
-    ASSERT_WITH_SECURITY_IMPLICATION(!V0CustomElementProcessingStack::inCallbackDeliveryScope());
-
-    m_phase = Resolving;
-
-    m_phase = DispatchingCallbacks;
-    for (const auto& element : m_elements) {
-        // Created callback may enqueue an attached callback.
-        V0CustomElementProcessingStack::CallbackDeliveryScope scope;
-        element->processInElementQueue(kMicrotaskQueueId);
-    }
-
-    m_elements.clear();
-    V0CustomElementScheduler::microtaskDispatcherDidFinish();
-    m_phase = Quiescent;
+DEFINE_TRACE(V0CustomElementMicrotaskDispatcher) {
+  visitor->Trace(elements_);
 }
 
-DEFINE_TRACE(V0CustomElementMicrotaskDispatcher)
-{
-    visitor->trace(m_elements);
-}
-
-} // namespace blink
+}  // namespace blink

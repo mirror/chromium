@@ -53,39 +53,40 @@ class WebRTCSessionDescriptionPrivate;
 //  and what the remote party should send.
 
 class WebRTCSessionDescription {
-public:
-    WebRTCSessionDescription() { }
-    WebRTCSessionDescription(const WebRTCSessionDescription& other) { assign(other); }
-    ~WebRTCSessionDescription() { reset(); }
+ public:
+  WebRTCSessionDescription() {}
+  WebRTCSessionDescription(const WebRTCSessionDescription& other) {
+    Assign(other);
+  }
+  ~WebRTCSessionDescription() { Reset(); }
 
-    WebRTCSessionDescription& operator=(const WebRTCSessionDescription& other)
-    {
-        assign(other);
-        return *this;
-    }
+  WebRTCSessionDescription& operator=(const WebRTCSessionDescription& other) {
+    Assign(other);
+    return *this;
+  }
 
-    BLINK_PLATFORM_EXPORT void assign(const WebRTCSessionDescription&);
+  BLINK_PLATFORM_EXPORT void Assign(const WebRTCSessionDescription&);
 
-    BLINK_PLATFORM_EXPORT void initialize(const WebString& type, const WebString& sdp);
-    BLINK_PLATFORM_EXPORT void reset();
-    bool isNull() const { return m_private.isNull(); }
+  BLINK_PLATFORM_EXPORT void Initialize(const WebString& type,
+                                        const WebString& sdp);
+  BLINK_PLATFORM_EXPORT void Reset();
+  bool IsNull() const { return private_.IsNull(); }
 
-    BLINK_PLATFORM_EXPORT WebString type() const;
-    BLINK_PLATFORM_EXPORT void setType(const WebString&);
-    BLINK_PLATFORM_EXPORT WebString sdp() const;
-    BLINK_PLATFORM_EXPORT void setSDP(const WebString&);
+  BLINK_PLATFORM_EXPORT WebString GetType() const;
+  BLINK_PLATFORM_EXPORT void SetType(const WebString&);
+  BLINK_PLATFORM_EXPORT WebString Sdp() const;
+  BLINK_PLATFORM_EXPORT void SetSDP(const WebString&);
 
 #if BLINK_IMPLEMENTATION
-    WebRTCSessionDescription(WebString type, WebString sdp)
-    {
-        this->initialize(type, sdp);
-    }
+  WebRTCSessionDescription(WebString type, WebString sdp) {
+    this->Initialize(type, sdp);
+  }
 #endif
 
-private:
-    WebPrivatePtr<WebRTCSessionDescriptionPrivate> m_private;
+ private:
+  WebPrivatePtr<WebRTCSessionDescriptionPrivate> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebRTCSessionDescription_h
+#endif  // WebRTCSessionDescription_h

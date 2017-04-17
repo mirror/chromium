@@ -4,14 +4,16 @@
 
 package org.chromium.chrome.browser;
 
-import android.os.Environment;
 import android.preference.PreferenceScreen;
-import android.test.suitebuilder.annotation.LargeTest;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.LargeTest;
+import android.support.test.filters.MediumTest;
 import android.util.JsonReader;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.CallbackHelper;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.preferences.ButtonPreference;
 import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.privacy.ClearBrowsingDataPreferences;
@@ -21,7 +23,6 @@ import org.chromium.chrome.browser.tab.TabObserver;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.chrome.test.util.ActivityUtils;
 import org.chromium.content.browser.ContentViewCore;
-import org.chromium.content.browser.test.util.CallbackHelper;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
@@ -35,8 +36,8 @@ import java.util.concurrent.TimeoutException;
 /**
  * UI Tests for the history page.
  */
+@CommandLineFlags.Add("disable-features=AndroidHistoryManager")
 public class HistoryUITest extends ChromeActivityTestCaseBase<ChromeActivity> {
-
     private static final String HISTORY_URL = "chrome://history-frame/";
 
     private EmbeddedTestServer mTestServer;
@@ -48,8 +49,7 @@ public class HistoryUITest extends ChromeActivityTestCaseBase<ChromeActivity> {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mTestServer = EmbeddedTestServer.createAndStartFileServer(
-                getInstrumentation().getContext(), Environment.getExternalStorageDirectory());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
     }
 
     @Override
@@ -126,10 +126,8 @@ public class HistoryUITest extends ChromeActivityTestCaseBase<ChromeActivity> {
     /**
      * Wait for the UI to show the expected number of results.
      * @param expected The number of results that should be loaded.
-     * @throws InterruptedException
      */
-    private void waitForResultCount(final ContentViewCore cvc, final int expected)
-            throws InterruptedException {
+    private void waitForResultCount(final ContentViewCore cvc, final int expected) {
         CriteriaHelper.pollInstrumentationThread(
                 new Criteria() {
                     @Override
@@ -149,6 +147,7 @@ public class HistoryUITest extends ChromeActivityTestCaseBase<ChromeActivity> {
 
     @MediumTest
     @Feature({"History"})
+    @RetryOnFailure
     public void testSearchHistory() throws InterruptedException, TimeoutException {
         // Introduce some entries in the history page.
         loadUrl(mTestServer.getURL("/chrome/test/data/android/about.html"));
@@ -218,6 +217,7 @@ public class HistoryUITest extends ChromeActivityTestCaseBase<ChromeActivity> {
 
     @LargeTest
     @Feature({"History"})
+    @RetryOnFailure
     public void testClearBrowsingData() throws InterruptedException, TimeoutException {
         // Introduce some entries in the history page.
         loadUrl(mTestServer.getURL("/chrome/test/data/android/google.html"));

@@ -49,6 +49,7 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   bool IsRelatedSiteInstance(const SiteInstance* instance) override;
   size_t GetRelatedActiveContentsCount() override;
   bool RequiresDedicatedProcess() override;
+  bool IsDefaultSubframeSiteInstance() const override;
 
   // Returns the SiteInstance, related to this one, that should be used
   // for subframes when an oopif is required, but a dedicated process is not.
@@ -100,10 +101,6 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  bool is_default_subframe_site_instance() {
-    return is_default_subframe_site_instance_;
-  }
-
   // Sets the global factory used to create new RenderProcessHosts.  It may be
   // NULL, in which case the default RenderProcessHost will be created (this is
   // the behavior if you don't call this function).  The factory must be set
@@ -120,14 +117,12 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   static GURL GetEffectiveURL(BrowserContext* browser_context,
                               const GURL& url);
 
-  // Returns true if pages loaded from |effective_url| ought to be handled only
-  // by a renderer process isolated from other sites. If --site-per-process is
-  // on the command line, this is true for all sites. In other site isolation
-  // modes, only a subset of sites will require dedicated processes.
-  //
-  // |effective_url| must be an effective URL.
+  // Returns true if pages loaded from |url| ought to be handled only by a
+  // renderer process isolated from other sites. If --site-per-process is on the
+  // command line, this is true for all sites. In other site isolation modes,
+  // only a subset of sites will require dedicated processes.
   static bool DoesSiteRequireDedicatedProcess(BrowserContext* browser_context,
-                                              const GURL& effective_url);
+                                              const GURL& url);
 
  private:
   friend class BrowsingInstance;
@@ -148,6 +143,11 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
 
   // Used to restrict a process' origin access rights.
   void LockToOrigin();
+
+  // This gets the render process to use for default subframe site instances.
+  RenderProcessHost* GetDefaultSubframeProcessHost(
+      BrowserContext* browser_context,
+      bool is_for_guests_only);
 
   void set_is_default_subframe_site_instance() {
     is_default_subframe_site_instance_ = true;

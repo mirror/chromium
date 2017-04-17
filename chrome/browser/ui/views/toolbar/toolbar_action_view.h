@@ -15,16 +15,6 @@
 #include "ui/views/drag_controller.h"
 #include "ui/views/view.h"
 
-class ExtensionAction;
-
-namespace extensions {
-class Extension;
-}
-
-namespace gfx {
-class Image;
-}
-
 namespace views {
 class MenuItemView;
 class MenuModelAdapter;
@@ -69,12 +59,12 @@ class ToolbarActionView : public views::MenuButton,
   ~ToolbarActionView() override;
 
   // views::MenuButton:
-  void GetAccessibleState(ui::AXViewState* state) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   std::unique_ptr<views::LabelButtonBorder> CreateDefaultBorder()
       const override;
   bool IsTriggerableEvent(const ui::Event& event) override;
   SkColor GetInkDropBaseColor() const override;
-  bool ShouldShowInkDropHighlight() const override;
+  std::unique_ptr<views::InkDrop> CreateInkDrop() override;
 
   // ToolbarActionViewDelegateViews:
   content::WebContents* GetCurrentWebContents() const override;
@@ -92,12 +82,9 @@ class ToolbarActionView : public views::MenuButton,
   // Returns button icon so it can be accessed during tests.
   gfx::ImageSkia GetIconForTest();
 
-  bool wants_to_run_for_testing() const { return wants_to_run_; }
+  bool IsMenuRunningForTesting() const;
 
-  // Set a callback to be called directly before the context menu is shown.
-  // The toolbar action opening the menu will be passed in.
-  static void set_context_menu_callback_for_testing(
-      ContextMenuCallback* callback);
+  bool wants_to_run_for_testing() const { return wants_to_run_; }
 
   views::MenuItemView* menu_for_testing() { return menu_; }
 

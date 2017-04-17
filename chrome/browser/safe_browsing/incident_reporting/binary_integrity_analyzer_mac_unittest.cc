@@ -16,7 +16,7 @@
 #include "chrome/browser/safe_browsing/incident_reporting/incident.h"
 #include "chrome/browser/safe_browsing/incident_reporting/mock_incident_receiver.h"
 #include "chrome/common/chrome_paths.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -64,7 +64,7 @@ void BinaryIntegrityAnalyzerMacTest::SetUp() {
   base::FilePath signed_bundle_path =
       base::FilePath(test_data_dir_).Append(kBundleBase);
   base::FilePath copied_bundle_path =
-      base::FilePath(temp_dir_.path()).Append(kBundleBase);
+      base::FilePath(temp_dir_.GetPath()).Append(kBundleBase);
   ASSERT_TRUE(
       base::CopyDirectory(signed_bundle_path, copied_bundle_path, true));
 }
@@ -94,7 +94,7 @@ TEST_F(BinaryIntegrityAnalyzerMacTest, GetCriticalPathsAndRequirements) {
 TEST_F(BinaryIntegrityAnalyzerMacTest, VerifyBinaryIntegrityForTesting) {
   std::unique_ptr<MockIncidentReceiver> mock_receiver(
       new StrictMock<MockIncidentReceiver>());
-  base::FilePath bundle = temp_dir_.path().Append(kBundleBase);
+  base::FilePath bundle = temp_dir_.GetPath().Append(kBundleBase);
   std::string requirement(
       "certificate leaf[subject.CN]=\"untrusted@goat.local\"");
 
@@ -108,7 +108,7 @@ TEST_F(BinaryIntegrityAnalyzerMacTest, VerifyBinaryIntegrityForTesting) {
   ASSERT_EQ(IncidentType::BINARY_INTEGRITY, incident_to_clear->GetType());
   ASSERT_EQ(incident_to_clear->GetKey(), "test-bundle.app");
 
-  base::FilePath exe_path = temp_dir_.path().Append(kBundleURL);
+  base::FilePath exe_path = temp_dir_.GetPath().Append(kBundleURL);
   ASSERT_TRUE(CorruptFileContent(exe_path));
 
   std::unique_ptr<Incident> incident;

@@ -5,7 +5,7 @@
 #include "services/ui/ws/display_binding.h"
 
 #include "base/memory/ptr_util.h"
-#include "services/shell/public/interfaces/connector.mojom.h"
+#include "services/service_manager/public/interfaces/connector.mojom.h"
 #include "services/ui/ws/display.h"
 #include "services/ui/ws/window_manager_access_policy.h"
 #include "services/ui/ws/window_server.h"
@@ -31,7 +31,8 @@ WindowTree* DisplayBindingImpl::CreateWindowTree(ServerWindow* root) {
   WindowTree* tree = window_server_->EmbedAtWindow(
       root, user_id_, std::move(client_), embed_flags,
       base::WrapUnique(new WindowManagerAccessPolicy));
-  tree->ConfigureWindowManager();
+  const bool automatically_create_display_roots = true;
+  tree->ConfigureWindowManager(automatically_create_display_roots);
   return tree;
 }
 

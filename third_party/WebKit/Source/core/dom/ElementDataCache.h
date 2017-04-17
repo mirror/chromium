@@ -28,30 +28,32 @@
 #define ElementDataCache_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
 class Attribute;
 class ShareableElementData;
 
-class ElementDataCache final : public GarbageCollected<ElementDataCache>  {
-public:
-    static ElementDataCache* create() { return new ElementDataCache; }
+class ElementDataCache final : public GarbageCollected<ElementDataCache> {
+ public:
+  static ElementDataCache* Create() { return new ElementDataCache; }
 
-    ShareableElementData* cachedShareableElementDataWithAttributes(const Vector<Attribute>&);
+  ShareableElementData* CachedShareableElementDataWithAttributes(
+      const Vector<Attribute>&);
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    ElementDataCache();
+ private:
+  ElementDataCache();
 
-    typedef HeapHashMap<unsigned, Member<ShareableElementData>, AlreadyHashed> ShareableElementDataCache;
-    ShareableElementDataCache m_shareableElementDataCache;
+  typedef HeapHashMap<unsigned, Member<ShareableElementData>, AlreadyHashed>
+      ShareableElementDataCache;
+  ShareableElementDataCache shareable_element_data_cache_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

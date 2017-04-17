@@ -29,33 +29,38 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/speech/PlatformSpeechSynthesisVoice.h"
-#include "wtf/Forward.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class SpeechSynthesisVoice final : public GarbageCollectedFinalized<SpeechSynthesisVoice>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SpeechSynthesisVoice* create(PassRefPtr<PlatformSpeechSynthesisVoice>);
-    ~SpeechSynthesisVoice();
+class SpeechSynthesisVoice final
+    : public GarbageCollectedFinalized<SpeechSynthesisVoice>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    const String& voiceURI() const { return m_platformVoice->voiceURI(); }
-    const String& name() const { return m_platformVoice->name(); }
-    const String& lang() const { return m_platformVoice->lang(); }
-    bool localService() const { return m_platformVoice->localService(); }
-    bool isDefault() const { return m_platformVoice->isDefault(); }
+ public:
+  static SpeechSynthesisVoice* Create(PassRefPtr<PlatformSpeechSynthesisVoice>);
+  ~SpeechSynthesisVoice();
 
-    PlatformSpeechSynthesisVoice* platformVoice() const { return m_platformVoice.get(); }
+  const String& voiceURI() const { return platform_voice_->VoiceURI(); }
+  const String& name() const { return platform_voice_->GetName(); }
+  const String& lang() const { return platform_voice_->Lang(); }
+  bool localService() const { return platform_voice_->LocalService(); }
+  bool isDefault() const { return platform_voice_->IsDefault(); }
 
-    DEFINE_INLINE_TRACE() { }
+  PlatformSpeechSynthesisVoice* PlatformVoice() const {
+    return platform_voice_.Get();
+  }
 
-private:
-    explicit SpeechSynthesisVoice(PassRefPtr<PlatformSpeechSynthesisVoice>);
+  DEFINE_INLINE_TRACE() {}
 
-    RefPtr<PlatformSpeechSynthesisVoice> m_platformVoice;
+ private:
+  explicit SpeechSynthesisVoice(PassRefPtr<PlatformSpeechSynthesisVoice>);
+
+  RefPtr<PlatformSpeechSynthesisVoice> platform_voice_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SpeechSynthesisVoice_h
+#endif  // SpeechSynthesisVoice_h

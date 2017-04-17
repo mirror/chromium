@@ -36,12 +36,14 @@ class NtpOverriddenBubbleDelegate
   base::string16 GetActionButtonLabel() const override;
   base::string16 GetDismissButtonLabel() const override;
   bool ShouldCloseOnDeactivate() const override;
+  bool ShouldAcknowledgeOnDeactivate() const override;
   bool ShouldShowExtensionList() const override;
   bool ShouldHighlightExtensions() const override;
   bool ShouldLimitToEnabledExtensions() const override;
   void LogExtensionCount(size_t count) override;
   void LogAction(ExtensionMessageBubbleController::BubbleAction) override;
   const char* GetKey() override;
+  bool SupportsPolicyIndicator() override;
 
  private:
   // The ID of the extension we are showing the bubble for.

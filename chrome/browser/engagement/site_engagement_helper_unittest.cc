@@ -61,11 +61,13 @@ class SiteEngagementHelperTest : public ChromeRenderViewHostTestHarness {
 
   void MediaStartedPlaying(SiteEngagementService::Helper* helper) {
     helper->media_tracker_.MediaStartedPlaying(
+        content::WebContentsObserver::MediaPlayerInfo(false),
         content::WebContentsObserver::MediaPlayerId(nullptr, 1));
   }
 
   void MediaStoppedPlaying(SiteEngagementService::Helper* helper) {
     helper->media_tracker_.MediaStoppedPlaying(
+        content::WebContentsObserver::MediaPlayerInfo(false),
         content::WebContentsObserver::MediaPlayerId(nullptr, 1));
   }
 
@@ -90,7 +92,7 @@ class SiteEngagementHelperTest : public ChromeRenderViewHostTestHarness {
                          std::string());
     int pending_id = controller().GetPendingEntry()->GetUniqueID();
     content::WebContentsTester::For(web_contents())
-        ->TestDidNavigate(web_contents()->GetMainFrame(), 1, pending_id, true,
+        ->TestDidNavigate(web_contents()->GetMainFrame(), pending_id, true,
                           url, ui::PAGE_TRANSITION_TYPED);
   }
 
@@ -140,19 +142,19 @@ class SiteEngagementHelperTest : public ChromeRenderViewHostTestHarness {
 };
 
 TEST_F(SiteEngagementHelperTest, KeyPressEngagementAccumulation) {
-  UserInputAccumulation(blink::WebInputEvent::RawKeyDown);
+  UserInputAccumulation(blink::WebInputEvent::kRawKeyDown);
 }
 
 TEST_F(SiteEngagementHelperTest, MouseDownEventEngagementAccumulation) {
-  UserInputAccumulation(blink::WebInputEvent::MouseDown);
+  UserInputAccumulation(blink::WebInputEvent::kMouseDown);
 }
 
 TEST_F(SiteEngagementHelperTest, ScrollEventEngagementAccumulation) {
-  UserInputAccumulation(blink::WebInputEvent::GestureScrollBegin);
+  UserInputAccumulation(blink::WebInputEvent::kGestureScrollBegin);
 }
 
-TEST_F(SiteEngagementHelperTest, GestureEngagementAccumulation) {
-  UserInputAccumulation(blink::WebInputEvent::GestureTapDown);
+TEST_F(SiteEngagementHelperTest, TouchEngagementAccumulation) {
+  UserInputAccumulation(blink::WebInputEvent::kTouchStart);
 }
 
 TEST_F(SiteEngagementHelperTest, MediaEngagementAccumulation) {
@@ -306,13 +308,11 @@ TEST_F(SiteEngagementHelperTest, MixedInputEngagementAccumulation) {
       SiteEngagementMetrics::kEngagementTypeHistogram,
       SiteEngagementMetrics::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 1);
 
-  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::RawKeyDown);
-  HandleUserInputAndRestartTracking(helper,
-                                    blink::WebInputEvent::GestureTapDown);
-  HandleUserInputAndRestartTracking(helper,
-                                    blink::WebInputEvent::GestureTapDown);
-  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::RawKeyDown);
-  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::MouseDown);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kRawKeyDown);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kTouchStart);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kTouchStart);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kRawKeyDown);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kMouseDown);
 
   EXPECT_DOUBLE_EQ(0.75, service->GetScore(url1));
   EXPECT_EQ(0, service->GetScore(url2));
@@ -332,11 +332,10 @@ TEST_F(SiteEngagementHelperTest, MixedInputEngagementAccumulation) {
       SiteEngagementMetrics::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 1);
 
   HandleUserInputAndRestartTracking(helper,
-                                    blink::WebInputEvent::GestureScrollBegin);
-  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::MouseDown);
+                                    blink::WebInputEvent::kGestureScrollBegin);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kMouseDown);
   HandleMediaPlaying(helper, true);
-  HandleUserInputAndRestartTracking(helper,
-                                    blink::WebInputEvent::GestureTapDown);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kTouchStart);
   HandleMediaPlaying(helper, false);
 
   EXPECT_DOUBLE_EQ(0.93, service->GetScore(url1));
@@ -367,9 +366,8 @@ TEST_F(SiteEngagementHelperTest, MixedInputEngagementAccumulation) {
   EXPECT_DOUBLE_EQ(0.5, service->GetScore(url2));
   EXPECT_DOUBLE_EQ(1.43, service->GetTotalEngagementPoints());
 
-  HandleUserInputAndRestartTracking(helper,
-                                    blink::WebInputEvent::GestureTapDown);
-  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::RawKeyDown);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kTouchStart);
+  HandleUserInputAndRestartTracking(helper, blink::WebInputEvent::kRawKeyDown);
 
   EXPECT_DOUBLE_EQ(0.93, service->GetScore(url1));
   EXPECT_DOUBLE_EQ(0.6, service->GetScore(url2));
@@ -427,7 +425,7 @@ TEST_F(SiteEngagementHelperTest, CheckTimerAndCallbacks) {
   EXPECT_TRUE(IsTrackingInput(helper));
   EXPECT_TRUE(media_tracker_timer->IsRunning());
 
-  HandleUserInput(helper, blink::WebInputEvent::RawKeyDown);
+  HandleUserInput(helper, blink::WebInputEvent::kRawKeyDown);
   EXPECT_TRUE(input_tracker_timer->IsRunning());
   EXPECT_FALSE(IsTrackingInput(helper));
   EXPECT_TRUE(media_tracker_timer->IsRunning());
@@ -441,7 +439,7 @@ TEST_F(SiteEngagementHelperTest, CheckTimerAndCallbacks) {
   EXPECT_TRUE(media_tracker_timer->IsRunning());
 
   // Timer should start running again after input.
-  HandleUserInput(helper, blink::WebInputEvent::GestureTapDown);
+  HandleUserInput(helper, blink::WebInputEvent::kTouchStart);
   EXPECT_TRUE(input_tracker_timer->IsRunning());
   EXPECT_FALSE(IsTrackingInput(helper));
   EXPECT_TRUE(media_tracker_timer->IsRunning());
@@ -473,7 +471,7 @@ TEST_F(SiteEngagementHelperTest, CheckTimerAndCallbacks) {
   EXPECT_TRUE(IsTrackingInput(helper));
   EXPECT_FALSE(media_tracker_timer->IsRunning());
 
-  HandleUserInput(helper, blink::WebInputEvent::MouseDown);
+  HandleUserInput(helper, blink::WebInputEvent::kMouseDown);
   EXPECT_TRUE(input_tracker_timer->IsRunning());
   EXPECT_FALSE(IsTrackingInput(helper));
   EXPECT_FALSE(media_tracker_timer->IsRunning());

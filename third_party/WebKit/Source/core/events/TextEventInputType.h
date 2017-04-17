@@ -29,16 +29,17 @@
 namespace blink {
 
 enum TextEventInputType {
-    TextEventInputKeyboard, // any newline characters in the text are line breaks only, not paragraph separators.
-    TextEventInputLineBreak, // any tab characters in the text are backtabs.
-    TextEventInputComposition,
-    TextEventInputBackTab,
-    TextEventInputPaste,
-    TextEventInputDrop,
-    TextEventInputDictation,
-    TextEventInputOther,
+  // Any newline characters in the text are line breaks only, not paragraph
+  // separators.
+  kTextEventInputKeyboard,
+  // Any tab characters in the text are backtabs.
+  kTextEventInputLineBreak,
+  kTextEventInputComposition,
+  kTextEventInputPaste,
+  kTextEventInputDrop,
+  kTextEventInputIncrementalInsertion,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextEventInputType_h
+#endif  // TextEventInputType_h

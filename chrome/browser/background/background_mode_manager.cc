@@ -16,7 +16,9 @@
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -50,19 +52,18 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/grit/chrome_unscaled_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/notification_service.h"
-#include "content/public/browser/user_metrics.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_handlers/options_page_info.h"
 #include "extensions/common/one_shot_event.h"
 #include "extensions/common/permissions/permission_set.h"
-#include "grit/chrome_unscaled_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
@@ -175,7 +176,7 @@ void BackgroundModeManager::BackgroundModeData::BuildProfileMenu(
     }
 
     // Add a menu item for each trigger.
-    for (const auto& trigger : registered_triggers_) {
+    for (auto* trigger : registered_triggers_) {
       const gfx::ImageSkia* icon = trigger->GetIcon();
       const base::string16& name = trigger->GetName();
       int command_id = command_id_handler_vector_->size();
@@ -400,7 +401,8 @@ void BackgroundModeManager::LaunchBackgroundApplication(
     Profile* profile,
     const Extension* extension) {
   OpenApplication(CreateAppLaunchParamsUserContainer(
-      profile, extension, NEW_FOREGROUND_TAB, extensions::SOURCE_BACKGROUND));
+      profile, extension, WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      extensions::SOURCE_BACKGROUND));
 }
 
 // static
@@ -411,6 +413,22 @@ Browser* BackgroundModeManager::GetBrowserWindowForProfile(Profile* profile) {
 
 bool BackgroundModeManager::IsBackgroundModeActive() {
   return in_background_mode_;
+}
+
+bool BackgroundModeManager::IsBackgroundWithoutWindows() const {
+  return KeepAliveRegistry::GetInstance()->WouldRestartWithout({
+      // Transient startup related KeepAlives, not related to any UI.
+      KeepAliveOrigin::SESSION_RESTORE,
+      KeepAliveOrigin::BACKGROUND_MODE_MANAGER_STARTUP,
+
+      // Notification KeepAlives are not dependent on the Chrome UI being
+      // loaded, and can be registered when we were in pure background mode.
+      // They just block it to avoid issues. Ignore them when determining if we
+      // are in that mode.
+      KeepAliveOrigin::NOTIFICATION,
+      KeepAliveOrigin::PENDING_NOTIFICATION_CLICK_EVENT,
+      KeepAliveOrigin::IN_FLIGHT_PUSH_MESSAGE,
+  });
 }
 
 int BackgroundModeManager::NumberOfBackgroundModeData() {
@@ -524,7 +542,7 @@ void BackgroundModeManager::OnApplicationListChanged(Profile* profile) {
   // Get the new apps (if any) and process them.
   std::set<const extensions::Extension*> new_apps = bmd->GetNewBackgroundApps();
   std::vector<base::string16> new_names;
-  for (const auto& app : new_apps)
+  for (auto* app : new_apps)
     new_names.push_back(base::UTF8ToUTF16(app->name()));
   OnClientsChanged(profile, new_names);
 }
@@ -641,7 +659,7 @@ void BackgroundModeManager::ExecuteCommand(int command_id, int event_flags) {
       break;
     case IDC_EXIT:
       RecordMenuItemClick(MENU_ITEM_EXIT);
-      content::RecordAction(UserMetricsAction("Exit"));
+      base::RecordAction(UserMetricsAction("Exit"));
       chrome::CloseAllBrowsers();
       break;
     case IDC_STATUS_TRAY_KEEP_CHROME_RUNNING_IN_BACKGROUND: {
@@ -954,15 +972,14 @@ void BackgroundModeManager::UpdateStatusTrayIconContextMenu() {
     std::sort(bmd_vector.begin(), bmd_vector.end(),
               &BackgroundModeData::BackgroundModeDataCompare);
     int profiles_using_background_mode = 0;
-    for (const auto& bmd : bmd_vector) {
+    for (auto* bmd : bmd_vector) {
       // We should only display the profile in the status icon if it has at
       // least one background app.
       if (bmd->GetBackgroundClientCount() > 0) {
-        StatusIconMenuModel* submenu = new StatusIconMenuModel(bmd);
         // The submenu constructor caller owns the lifetime of the submenu.
         // The containing menu does not handle the lifetime.
-        submenus.push_back(submenu);
-        bmd->BuildProfileMenu(submenu, menu.get());
+        submenus.push_back(base::MakeUnique<StatusIconMenuModel>(bmd));
+        bmd->BuildProfileMenu(submenus.back().get(), menu.get());
         profiles_using_background_mode++;
       }
     }

@@ -16,33 +16,13 @@
 #include "base/hash.h"
 #include "base/macros.h"
 #include "base/trace_event/memory_dump_provider.h"
+#include "content/browser/gpu/gpu_process_host.h"
 #include "content/common/content_export.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "gpu/ipc/common/surface_handle.h"
+#include "gpu/ipc/host/gpu_memory_buffer_support.h"
 
 namespace content {
-
-using GpuMemoryBufferConfigurationKey =
-    std::pair<gfx::BufferFormat, gfx::BufferUsage>;
-using GpuMemoryBufferConfigurationSet =
-    base::hash_set<GpuMemoryBufferConfigurationKey>;
-
-}  // content
-
-namespace BASE_HASH_NAMESPACE {
-
-template <>
-struct hash<content::GpuMemoryBufferConfigurationKey> {
-  size_t operator()(const content::GpuMemoryBufferConfigurationKey& key) const {
-    return base::HashInts(static_cast<int>(key.first),
-                          static_cast<int>(key.second));
-  }
-};
-
-}  // namespace BASE_HASH_NAMESPACE
-
-namespace content {
-class GpuProcessHost;
 
 class CONTENT_EXPORT BrowserGpuMemoryBufferManager
     : public gpu::GpuMemoryBufferManager,
@@ -58,23 +38,12 @@ class CONTENT_EXPORT BrowserGpuMemoryBufferManager
 
   static BrowserGpuMemoryBufferManager* current();
 
-  static bool IsNativeGpuMemoryBuffersEnabled();
-
-  static uint32_t GetImageTextureTarget(gfx::BufferFormat format,
-                                        gfx::BufferUsage usage);
-
   // Overridden from gpu::GpuMemoryBufferManager:
-  std::unique_ptr<gfx::GpuMemoryBuffer> AllocateGpuMemoryBuffer(
+  std::unique_ptr<gfx::GpuMemoryBuffer> CreateGpuMemoryBuffer(
       const gfx::Size& size,
       gfx::BufferFormat format,
       gfx::BufferUsage usage,
       gpu::SurfaceHandle surface_handle) override;
-  std::unique_ptr<gfx::GpuMemoryBuffer> CreateGpuMemoryBufferFromHandle(
-      const gfx::GpuMemoryBufferHandle& handle,
-      const gfx::Size& size,
-      gfx::BufferFormat format) override;
-  gfx::GpuMemoryBuffer* GpuMemoryBufferFromClientBuffer(
-      ClientBuffer buffer) override;
   void SetDestructionSyncToken(gfx::GpuMemoryBuffer* buffer,
                                const gpu::SyncToken& sync_token) override;
 
@@ -87,15 +56,13 @@ class CONTENT_EXPORT BrowserGpuMemoryBufferManager
       const gfx::Size& size,
       gfx::BufferFormat format,
       gfx::BufferUsage usage,
-      base::ProcessHandle child_process_handle,
       int child_client_id,
       const AllocationCallback& callback);
   void ChildProcessDeletedGpuMemoryBuffer(
       gfx::GpuMemoryBufferId id,
-      base::ProcessHandle child_process_handle,
       int child_client_id,
       const gpu::SyncToken& sync_token);
-  void ProcessRemoved(base::ProcessHandle process_handle, int client_id);
+  void ProcessRemoved(int client_id);
 
   bool IsNativeGpuMemoryBufferConfiguration(gfx::BufferFormat format,
                                             gfx::BufferUsage usage) const;
@@ -119,15 +86,6 @@ class CONTENT_EXPORT BrowserGpuMemoryBufferManager
   };
 
   struct CreateGpuMemoryBufferRequest;
-  struct CreateGpuMemoryBufferFromHandleRequest;
-
-  using CreateDelegate = base::Callback<void(GpuProcessHost* host,
-                                             gfx::GpuMemoryBufferId id,
-                                             const gfx::Size& size,
-                                             gfx::BufferFormat format,
-                                             gfx::BufferUsage usage,
-                                             int client_id,
-                                             const CreateCallback& callback)>;
 
   std::unique_ptr<gfx::GpuMemoryBuffer> AllocateGpuMemoryBufferForSurface(
       const gfx::Size& size,
@@ -137,40 +95,34 @@ class CONTENT_EXPORT BrowserGpuMemoryBufferManager
 
   // Functions that handle synchronous buffer creation requests.
   void HandleCreateGpuMemoryBufferOnIO(CreateGpuMemoryBufferRequest* request);
-  void HandleCreateGpuMemoryBufferFromHandleOnIO(
-      CreateGpuMemoryBufferFromHandleRequest* request);
   void HandleGpuMemoryBufferCreatedOnIO(
       CreateGpuMemoryBufferRequest* request,
       const gfx::GpuMemoryBufferHandle& handle);
 
   // Functions that implement asynchronous buffer creation.
-  void CreateGpuMemoryBufferOnIO(const CreateDelegate& create_delegate,
-                                 gfx::GpuMemoryBufferId id,
+  void CreateGpuMemoryBufferOnIO(gfx::GpuMemoryBufferId id,
                                  const gfx::Size& size,
                                  gfx::BufferFormat format,
                                  gfx::BufferUsage usage,
+                                 gpu::SurfaceHandle surface_handle,
                                  int client_id,
-                                 bool reused_gpu_process,
                                  const CreateCallback& callback);
-  void GpuMemoryBufferCreatedOnIO(const CreateDelegate& create_delegate,
-                                  gfx::GpuMemoryBufferId id,
+  void GpuMemoryBufferCreatedOnIO(gfx::GpuMemoryBufferId id,
+                                  gpu::SurfaceHandle surface_handle,
                                   int client_id,
                                   int gpu_host_id,
-                                  bool reused_gpu_process,
                                   const CreateCallback& callback,
-                                  const gfx::GpuMemoryBufferHandle& handle);
+                                  const gfx::GpuMemoryBufferHandle& handle,
+                                  GpuProcessHost::BufferCreationStatus status);
   void DestroyGpuMemoryBufferOnIO(gfx::GpuMemoryBufferId id,
                                   int client_id,
                                   const gpu::SyncToken& sync_token);
 
   uint64_t ClientIdToTracingProcessId(int client_id) const;
 
-  const GpuMemoryBufferConfigurationSet native_configurations_;
+  const gpu::GpuMemoryBufferConfigurationSet native_configurations_;
   const int gpu_client_id_;
   const uint64_t gpu_client_tracing_id_;
-
-  // The GPU process host ID. This should only be accessed on the IO thread.
-  int gpu_host_id_;
 
   // Stores info about buffers for all clients. This should only be accessed
   // on the IO thread.

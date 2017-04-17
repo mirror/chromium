@@ -36,27 +36,27 @@ namespace blink {
 class AXObjectCacheImpl;
 
 class AXListBox final : public AXLayoutObject {
-    WTF_MAKE_NONCOPYABLE(AXListBox);
+  WTF_MAKE_NONCOPYABLE(AXListBox);
 
-private:
-    AXListBox(LayoutObject*, AXObjectCacheImpl&);
+ private:
+  AXListBox(LayoutObject*, AXObjectCacheImpl&);
 
-public:
-    static AXListBox* create(LayoutObject*, AXObjectCacheImpl&);
-    ~AXListBox() override;
+ public:
+  static AXListBox* Create(LayoutObject*, AXObjectCacheImpl&);
+  ~AXListBox() override;
 
-    AccessibilityRole determineAccessibilityRole() final;
-    bool isAXListBox() const override { return true; }
-    AXObject* activeDescendant() final;
+  AccessibilityRole DetermineAccessibilityRole() final;
+  bool IsAXListBox() const override { return true; }
+  AXObject* ActiveDescendant() final;
 
-    void activeIndexChanged();
+  void ActiveIndexChanged();
 
-private:
-    int m_activeIndex;
+ private:
+  int active_index_;
 };
 
-DEFINE_AX_OBJECT_TYPE_CASTS(AXListBox, isAXListBox());
+DEFINE_AX_OBJECT_TYPE_CASTS(AXListBox, IsAXListBox());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AXListBox_h
+#endif  // AXListBox_h

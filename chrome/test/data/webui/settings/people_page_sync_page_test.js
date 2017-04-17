@@ -106,16 +106,15 @@ cr.define('settings_people_page_sync_page', function() {
 
         PolymerTest.clearBody();
         syncPage = document.createElement('settings-sync-page');
-        syncPage.currentRoute = {
-          section: 'people',
-          subpage: ['sync'],
-        };
+        settings.navigateTo(settings.Route.SYNC);
 
         document.body.appendChild(syncPage);
 
         cr.webUIListenerCallback('page-status-changed',
                                  settings.PageStatus.CONFIGURE);
-        assertEquals(settings.PageStatus.CONFIGURE, syncPage.$.pages.selected);
+        assertFalse(syncPage.$$('#' + settings.PageStatus.CONFIGURE).hidden);
+        assertTrue(syncPage.$$('#' + settings.PageStatus.TIMEOUT).hidden);
+        assertTrue(syncPage.$$('#' + settings.PageStatus.SPINNER).hidden);
 
         // Start with Sync All with no encryption selected.
         cr.webUIListenerCallback('sync-prefs-changed', getSyncAllPrefs());
@@ -133,19 +132,13 @@ cr.define('settings_people_page_sync_page', function() {
 
       test('NotifiesHandlerOfNavigation', function() {
         function testNavigateAway() {
-          syncPage.currentRoute = {
-            section: 'people',
-            subpage: [],
-          };
+          settings.navigateTo(settings.Route.PEOPLE);
           return browserProxy.whenCalled('didNavigateAwayFromSyncPage');
         }
 
         function testNavigateBack() {
           browserProxy.resetResolver('didNavigateToSyncPage');
-          syncPage.currentRoute = {
-            section: 'people',
-            subpage: ['sync'],
-          };
+          settings.navigateTo(settings.Route.SYNC);
           return browserProxy.whenCalled('didNavigateToSyncPage');
         }
 
@@ -158,10 +151,7 @@ cr.define('settings_people_page_sync_page', function() {
         function testRecreate() {
           browserProxy.resetResolver('didNavigateToSyncPage');
           syncPage = document.createElement('settings-sync-page');
-          syncPage.currentRoute = {
-            section: 'people',
-            subpage: ['sync'],
-          };
+          settings.navigateTo(settings.Route.SYNC);
 
           document.body.appendChild(syncPage);
           return browserProxy.whenCalled('didNavigateToSyncPage');
@@ -175,38 +165,52 @@ cr.define('settings_people_page_sync_page', function() {
       }),
 
       test('LoadingAndTimeout', function() {
+        var configurePage = syncPage.$$('#' + settings.PageStatus.CONFIGURE);
+        var spinnerPage = syncPage.$$('#' + settings.PageStatus.SPINNER);
+        var timeoutPage = syncPage.$$('#' + settings.PageStatus.TIMEOUT);
+
         cr.webUIListenerCallback('page-status-changed',
                                  settings.PageStatus.SPINNER);
-        assertEquals(settings.PageStatus.SPINNER, syncPage.$.pages.selected);
+        assertTrue(configurePage.hidden);
+        assertTrue(timeoutPage.hidden);
+        assertFalse(spinnerPage.hidden);
+
         cr.webUIListenerCallback('page-status-changed',
                                  settings.PageStatus.TIMEOUT);
-        assertEquals(settings.PageStatus.TIMEOUT, syncPage.$.pages.selected);
+        assertTrue(configurePage.hidden);
+        assertFalse(timeoutPage.hidden);
+        assertTrue(spinnerPage.hidden);
+
         cr.webUIListenerCallback('page-status-changed',
                                  settings.PageStatus.CONFIGURE);
-        assertEquals(settings.PageStatus.CONFIGURE, syncPage.$.pages.selected);
+        assertFalse(configurePage.hidden);
+        assertTrue(timeoutPage.hidden);
+        assertTrue(spinnerPage.hidden);
 
         // Should remain on the CONFIGURE page even if the passphrase failed.
         cr.webUIListenerCallback('page-status-changed',
                                  settings.PageStatus.PASSPHRASE_FAILED);
-        assertEquals(settings.PageStatus.CONFIGURE, syncPage.$.pages.selected);
+        assertFalse(configurePage.hidden);
+        assertTrue(timeoutPage.hidden);
+        assertTrue(spinnerPage.hidden);
       });
 
       test('SettingIndividualDatatypes', function() {
-        var syncAllDataTypesCheckbox = syncPage.$.syncAllDataTypesCheckbox;
-        assertFalse(syncAllDataTypesCheckbox.disabled);
-        assertTrue(syncAllDataTypesCheckbox.checked);
+        var syncAllDataTypesControl = syncPage.$.syncAllDataTypesControl;
+        assertFalse(syncAllDataTypesControl.disabled);
+        assertTrue(syncAllDataTypesControl.checked);
 
-        // Assert that all the individual datatype checkboxes are disabled.
-        var datatypeCheckboxes = syncPage
+        // Assert that all the individual datatype controls are disabled.
+        var datatypeControls = syncPage
             .$$('#configure')
-            .querySelectorAll('paper-checkbox.list-item');
-        for (var box of datatypeCheckboxes) {
-          assertTrue(box.disabled);
-          assertTrue(box.checked);
+            .querySelectorAll('.list-item paper-toggle-button');
+        for (var control of datatypeControls) {
+          assertTrue(control.disabled);
+          assertTrue(control.checked);
         }
 
-        // Uncheck the Sync All checkbox.
-        MockInteractions.tap(syncAllDataTypesCheckbox);
+        // Uncheck the Sync All control.
+        MockInteractions.tap(syncAllDataTypesControl);
 
         function verifyPrefs(prefs) {
           var expected = getSyncAllPrefs();
@@ -215,16 +219,16 @@ cr.define('settings_people_page_sync_page', function() {
 
           cr.webUIListenerCallback('sync-prefs-changed', expected);
 
-          // Assert that all the individual datatype checkboxes are enabled.
-          for (var box of datatypeCheckboxes) {
-            assertFalse(box.disabled);
-            assertTrue(box.checked);
+          // Assert that all the individual datatype controls are enabled.
+          for (var control of datatypeControls) {
+            assertFalse(control.disabled);
+            assertTrue(control.checked);
           }
 
           browserProxy.resetResolver('setSyncDatatypes');
 
-          // Test an arbitrarily-selected checkbox (extensions synced checkbox).
-          MockInteractions.tap(datatypeCheckboxes[3]);
+          // Test an arbitrarily-selected control (extensions synced control).
+          MockInteractions.tap(datatypeControls[3]);
           return browserProxy.whenCalled('setSyncDatatypes').then(
               function(prefs) {
                 var expected = getSyncAllPrefs();
@@ -259,27 +263,47 @@ cr.define('settings_people_page_sync_page', function() {
         assertTrue(encryptWithPassphrase.checked);
       });
 
-      test('CreatingPassphraseEmptyPassphrase', function() {
+      test('ClickingLinkDoesNotChangeRadioValue', function() {
+        assertFalse(encryptWithPassphrase.disabled);
+        assertFalse(encryptWithPassphrase.checked);
+
+        var link = encryptWithPassphrase.querySelector('a[href]');
+        assertTrue(!!link);
+
+        // Suppress opening a new tab, since then the test will continue running
+        // on a background tab (which has throttled timers) and will timeout.
+        link.target = '';
+        link.href = '#';
+        // Prevent the link from triggering a page navigation when tapped.
+        // Breaks the test in Vulcanized mode.
+        link.addEventListener('tap', function(e) { e.preventDefault(); });
+
+        MockInteractions.tap(link);
+
+        assertFalse(encryptWithPassphrase.checked);
+      });
+
+      test('SaveButtonDisabledWhenPassphraseOrConfirmationEmpty', function() {
         MockInteractions.tap(encryptWithPassphrase);
         Polymer.dom.flush();
 
         assertTrue(!!syncPage.$$('#create-password-box'));
         var saveNewPassphrase = syncPage.$$('#saveNewPassphrase');
-        assertTrue(!!saveNewPassphrase);
-
-        MockInteractions.tap(saveNewPassphrase);
-        Polymer.dom.flush();
-
         var passphraseInput = syncPage.$$('#passphraseInput');
         var passphraseConfirmationInput =
             syncPage.$$('#passphraseConfirmationInput');
-        assertTrue(!!passphraseInput);
-        assertTrue(!!passphraseConfirmationInput);
 
-        assertTrue(passphraseInput.invalid);
-        assertFalse(passphraseConfirmationInput.invalid);
+        passphraseInput.value = '';
+        passphraseConfirmationInput.value = '';
+        assertTrue(saveNewPassphrase.disabled);
 
-        assertFalse(syncPage.syncPrefs.encryptAllData);
+        passphraseInput.value = 'foo';
+        passphraseConfirmationInput.value = '';
+        assertTrue(saveNewPassphrase.disabled);
+
+        passphraseInput.value = 'foo';
+        passphraseConfirmationInput.value = 'bar';
+        assertFalse(saveNewPassphrase.disabled);
       });
 
       test('CreatingPassphraseMismatchedPassphrase', function() {
@@ -348,7 +372,27 @@ cr.define('settings_people_page_sync_page', function() {
 
         Polymer.dom.flush();
 
+        assertTrue(syncPage.$.encryptionDescription.hidden);
         assertTrue(syncPage.$.encryptionRadioGroupContainer.hidden);
+      });
+
+      test('ExistingPassphraseSubmitButtonDisabledWhenExistingPassphraseEmpty',
+           function() {
+        var prefs = getSyncAllPrefs();
+        prefs.encryptAllData = true;
+        prefs.passphraseRequired = true;
+        cr.webUIListenerCallback('sync-prefs-changed', prefs);
+
+        Polymer.dom.flush();
+
+        var existingPassphraseInput = syncPage.$$('#existingPassphraseInput');
+        var submitExistingPassphrase = syncPage.$$('#submitExistingPassphrase');
+
+        existingPassphraseInput.value = '';
+        assertTrue(submitExistingPassphrase.disabled);
+
+        existingPassphraseInput.value = 'foo';
+        assertFalse(submitExistingPassphrase.disabled);
       });
 
       test('EnterExistingWrongPassphrase', function() {

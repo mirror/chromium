@@ -26,10 +26,10 @@
 #ifndef DashArray_h
 #define DashArray_h
 
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 typedef float DashArrayElement;
 
 typedef Vector<DashArrayElement> DashArray;
 
-#endif // DashArray_h
+#endif  // DashArray_h

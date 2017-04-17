@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/embedded_worker_test_helper.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
@@ -180,6 +181,42 @@ TEST_F(ServiceWorkerRegistrationTest, FailedRegistrationNoCrash) {
   // Don't crash when handle gets destructed.
 }
 
+TEST_F(ServiceWorkerRegistrationTest, NavigationPreload) {
+  const GURL kScope("http://www.example.not/");
+  const GURL kScript("https://www.example.not/service_worker.js");
+  // Setup.
+  scoped_refptr<ServiceWorkerRegistration> registration =
+      new ServiceWorkerRegistration(kScope, storage()->NewRegistrationId(),
+                                    context()->AsWeakPtr());
+  scoped_refptr<ServiceWorkerVersion> version_1 = new ServiceWorkerVersion(
+      registration.get(), kScript, storage()->NewVersionId(),
+      context()->AsWeakPtr());
+  version_1->set_fetch_handler_existence(
+      ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
+  registration->SetActiveVersion(version_1);
+  version_1->SetStatus(ServiceWorkerVersion::ACTIVATED);
+  scoped_refptr<ServiceWorkerVersion> version_2 = new ServiceWorkerVersion(
+      registration.get(), kScript, storage()->NewVersionId(),
+      context()->AsWeakPtr());
+  version_2->set_fetch_handler_existence(
+      ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
+  registration->SetWaitingVersion(version_2);
+  version_2->SetStatus(ServiceWorkerVersion::INSTALLED);
+
+  // Navigation preload is disabled by default.
+  EXPECT_FALSE(version_1->navigation_preload_state().enabled);
+  // Enabling it sets the flag on the active version.
+  registration->EnableNavigationPreload(true);
+  EXPECT_TRUE(version_1->navigation_preload_state().enabled);
+  // A new active version gets the flag.
+  registration->SetActiveVersion(version_2);
+  version_2->SetStatus(ServiceWorkerVersion::ACTIVATING);
+  EXPECT_TRUE(version_2->navigation_preload_state().enabled);
+  // Disabling it unsets the flag on the active version.
+  registration->EnableNavigationPreload(false);
+  EXPECT_FALSE(version_2->navigation_preload_state().enabled);
+}
+
 // Sets up a registration with a waiting worker, and an active worker
 // with a controllee and an inflight request.
 class ServiceWorkerActivationTest : public ServiceWorkerRegistrationTest {
@@ -199,6 +236,8 @@ class ServiceWorkerActivationTest : public ServiceWorkerRegistrationTest {
     scoped_refptr<ServiceWorkerVersion> version_1 = new ServiceWorkerVersion(
         registration_.get(), kScript, storage()->NewVersionId(),
         context()->AsWeakPtr());
+    version_1->set_fetch_handler_existence(
+        ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
     registration_->SetActiveVersion(version_1);
     version_1->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
@@ -207,6 +246,8 @@ class ServiceWorkerActivationTest : public ServiceWorkerRegistrationTest {
     records.push_back(ServiceWorkerDatabase::ResourceRecord(
         10, version_1->script_url(), 100));
     version_1->script_cache_map()->SetResources(records);
+    version_1->SetMainScriptHttpResponseInfo(
+        EmbeddedWorkerTestHelper::CreateHttpResponseInfo());
     ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
     context()->storage()->StoreRegistration(
         registration_.get(), version_1.get(),
@@ -215,12 +256,9 @@ class ServiceWorkerActivationTest : public ServiceWorkerRegistrationTest {
     ASSERT_EQ(SERVICE_WORKER_OK, status);
 
     // Give the active version a controllee.
-    host_.reset(new ServiceWorkerProviderHost(
-        33 /* dummy render process id */,
-        MSG_ROUTING_NONE /* render_frame_id */, 1 /* dummy provider_id */,
-        SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-        ServiceWorkerProviderHost::FrameSecurityLevel::SECURE,
-        context()->AsWeakPtr(), nullptr));
+    host_ = CreateProviderHostForWindow(
+        33 /* dummy render process id */, 1 /* dummy provider_id */,
+        true /* is_parent_frame_secure */, context()->AsWeakPtr());
     version_1->AddControllee(host_.get());
 
     // Give the active version an in-flight request.
@@ -230,6 +268,8 @@ class ServiceWorkerActivationTest : public ServiceWorkerRegistrationTest {
     scoped_refptr<ServiceWorkerVersion> version_2 = new ServiceWorkerVersion(
         registration_.get(), kScript, storage()->NewVersionId(),
         context()->AsWeakPtr());
+    version_2->set_fetch_handler_existence(
+        ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
     registration_->SetWaitingVersion(version_2);
     version_2->SetStatus(ServiceWorkerVersion::INSTALLED);
 
@@ -268,7 +308,8 @@ TEST_F(ServiceWorkerActivationTest, NoInflightRequest) {
   EXPECT_EQ(version_1.get(), reg->active_version());
 
   // Finish the request. Activation should happen.
-  version_1->FinishRequest(inflight_request_id(), true /* was_handled */);
+  version_1->FinishRequest(inflight_request_id(), true /* was_handled */,
+                           base::Time::Now());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(version_2.get(), reg->active_version());
 }
@@ -281,7 +322,8 @@ TEST_F(ServiceWorkerActivationTest, NoControllee) {
 
   // Finish the request. Since there is a controllee, activation should not yet
   // happen.
-  version_1->FinishRequest(inflight_request_id(), true /* was_handled */);
+  version_1->FinishRequest(inflight_request_id(), true /* was_handled */,
+                           base::Time::Now());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(version_1.get(), reg->active_version());
 
@@ -299,7 +341,8 @@ TEST_F(ServiceWorkerActivationTest, SkipWaiting) {
 
   // Finish the in-flight request. Since there is a controllee,
   // activation should not happen.
-  version_1->FinishRequest(inflight_request_id(), true /* was_handled */);
+  version_1->FinishRequest(inflight_request_id(), true /* was_handled */,
+                           base::Time::Now());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(version_1.get(), reg->active_version());
 
@@ -322,7 +365,8 @@ TEST_F(ServiceWorkerActivationTest, SkipWaitingWithInflightRequest) {
   EXPECT_EQ(version_1.get(), reg->active_version());
 
   // Finish the request. Activation should happen.
-  version_1->FinishRequest(inflight_request_id(), true /* was_handled */);
+  version_1->FinishRequest(inflight_request_id(), true /* was_handled */,
+                           base::Time::Now());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(version_2.get(), reg->active_version());
 }

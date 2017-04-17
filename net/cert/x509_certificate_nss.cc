@@ -26,41 +26,18 @@
 
 namespace net {
 
-void X509Certificate::Initialize() {
-  x509_util::ParsePrincipal(&cert_handle_->subject, &subject_);
-  x509_util::ParsePrincipal(&cert_handle_->issuer, &issuer_);
-
-  x509_util::ParseDate(&cert_handle_->validity.notBefore, &valid_start_);
-  x509_util::ParseDate(&cert_handle_->validity.notAfter, &valid_expiry_);
-
+bool X509Certificate::Initialize() {
   serial_number_ = x509_util::ParseSerialNumber(cert_handle_);
-}
 
-// static
-scoped_refptr<X509Certificate> X509Certificate::CreateFromBytesWithNickname(
-    const char* data,
-    size_t length,
-    const char* nickname) {
-  OSCertHandle cert_handle = CreateOSCertHandleFromBytesWithNickname(data,
-                                                                     length,
-                                                                     nickname);
-  if (!cert_handle)
-    return NULL;
-
-  scoped_refptr<X509Certificate> cert =
-      CreateFromHandle(cert_handle, OSCertHandles());
-  FreeOSCertHandle(cert_handle);
-
-  if (nickname)
-    cert->default_nickname_ = nickname;
-
-  return cert;
+  return (
+      !serial_number_.empty() &&
+      x509_util::ParsePrincipal(&cert_handle_->subject, &subject_) &&
+      x509_util::ParsePrincipal(&cert_handle_->issuer, &issuer_) &&
+      x509_util::ParseDate(&cert_handle_->validity.notBefore, &valid_start_) &&
+      x509_util::ParseDate(&cert_handle_->validity.notAfter, &valid_expiry_));
 }
 
 std::string X509Certificate::GetDefaultNickname(CertType type) const {
-  if (!default_nickname_.empty())
-    return default_nickname_;
-
   std::string result;
   if (type == USER_CERT && cert_handle_->slot) {
     // Find the private key for this certificate and see if it has a
@@ -112,10 +89,10 @@ std::string X509Certificate::GetDefaultNickname(CertType type) const {
   return result;
 }
 
-void X509Certificate::GetSubjectAltName(
+bool X509Certificate::GetSubjectAltName(
     std::vector<std::string>* dns_names,
     std::vector<std::string>* ip_addrs) const {
-  x509_util::GetSubjectAltName(cert_handle_, dns_names, ip_addrs);
+  return x509_util::GetSubjectAltName(cert_handle_, dns_names, ip_addrs);
 }
 
 bool X509Certificate::IsIssuedByEncoded(

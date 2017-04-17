@@ -13,7 +13,10 @@ component("keyboard") {
     "keyboard_controller.cc",
     "keyboard_controller.h",
     "keyboard_controller_observer.h",
+    "keyboard_event_filter.cc",
+    "keyboard_event_filter.h",
     "keyboard_export.h",
+    "keyboard_layout_delegate.h",
     "keyboard_layout_manager.cc",
     "keyboard_layout_manager.h",
     "keyboard_switches.cc",
@@ -22,6 +25,8 @@ component("keyboard") {
     "keyboard_ui.h",
     "keyboard_util.cc",
     "keyboard_util.h",
+    "scoped_keyboard_disabler.cc",
+    "scoped_keyboard_disabler.h",
   ]
 
   defines = [ "KEYBOARD_IMPLEMENTATION" ]
@@ -29,12 +34,12 @@ component("keyboard") {
   deps = [
     "//base",
     "//base/third_party/dynamic_annotations",
-    "//media",
     "//skia",
     "//ui/aura",
     "//ui/base",
     "//ui/base/ime",
     "//ui/compositor",
+    "//ui/display:display",
     "//ui/events",
     "//ui/events:dom_keycode_converter",
     "//ui/events:events_base",
@@ -88,6 +93,20 @@ component("keyboard_with_content") {
   ]
 }
 
+static_library("test_support") {
+  testonly = true
+  sources = [
+    "keyboard_test_util.cc",
+    "keyboard_test_util.h",
+  ]
+  deps = [
+    ":keyboard",
+    "//base",
+    "//skia",
+    "//ui/aura",
+  ]
+}
+
 grit("resources_grit") {
   source = "keyboard_resources.grd"
   outputs = [
@@ -138,13 +157,12 @@ mojom("mojom") {
   deps = [
     "//ui/gfx/geometry/mojo",
   ]
-
-  use_new_wrapper_types = false
 }
 
 test("keyboard_unittests") {
   sources = [
     "keyboard_controller_unittest.cc",
+    "keyboard_event_filter_unittest.cc",
     "keyboard_util_unittest.cc",
     "test/run_all_unittests.cc",
   ]
@@ -164,6 +182,7 @@ test("keyboard_unittests") {
     "//ui/gfx",
     "//ui/gfx/geometry",
     "//ui/gl:test_support",
+    "//ui/resources:ui_test_pak",
     "//ui/wm",
   ]
 }

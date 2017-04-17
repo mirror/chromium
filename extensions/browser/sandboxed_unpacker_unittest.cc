@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "extensions/browser/sandboxed_unpacker.h"
+
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -16,7 +18,6 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/extensions_test.h"
-#include "extensions/browser/sandboxed_unpacker.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_paths.h"
@@ -44,7 +45,7 @@ class MockSandboxedUnpackerClient : public SandboxedUnpackerClient {
 
   void OnUnpackSuccess(const base::FilePath& temp_dir,
                        const base::FilePath& extension_root,
-                       const base::DictionaryValue* original_manifest,
+                       std::unique_ptr<base::DictionaryValue> original_manifest,
                        const Extension* extension,
                        const SkBitmap& install_icon) override {
     temp_dir_ = temp_dir;
@@ -74,7 +75,7 @@ class SandboxedUnpackerTest : public ExtensionsTest {
     client_ = new MockSandboxedUnpackerClient;
 
     sandboxed_unpacker_ = new SandboxedUnpacker(
-        Manifest::INTERNAL, Extension::NO_FLAGS, extensions_dir_.path(),
+        Manifest::INTERNAL, Extension::NO_FLAGS, extensions_dir_.GetPath(),
         base::ThreadTaskRunnerHandle::Get(), client_);
   }
 
@@ -109,15 +110,15 @@ class SandboxedUnpackerTest : public ExtensionsTest {
     base::ScopedTempDir temp_dir;
     ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
     base::FilePath crx_path = GetCrxFullPath(crx_name);
-    ASSERT_TRUE(zip::Unzip(crx_path, temp_dir.path()));
+    ASSERT_TRUE(zip::Unzip(crx_path, temp_dir.GetPath()));
 
     std::string fake_id = crx_file::id_util::GenerateId(crx_name);
     std::string fake_public_key;
     base::Base64Encode(std::string(2048, 'k'), &fake_public_key);
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&SandboxedUnpacker::StartWithDirectory,
-                              sandboxed_unpacker_.get(), fake_id,
-                              fake_public_key, temp_dir.Take()));
+        FROM_HERE,
+        base::Bind(&SandboxedUnpacker::StartWithDirectory, sandboxed_unpacker_,
+                   fake_id, fake_public_key, temp_dir.Take()));
     client_->WaitForUnpack();
   }
 

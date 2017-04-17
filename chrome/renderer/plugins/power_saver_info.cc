@@ -9,6 +9,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/renderer/plugins/power_saver_info.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/webplugininfo.h"
 #include "content/public/renderer/render_frame.h"
@@ -39,10 +40,10 @@ void RecordPosterParamPresence(PosterParamPresence presence) {
 
 void TrackPosterParamPresence(const blink::WebPluginParams& params,
                               bool power_saver_enabled) {
-  DCHECK_EQ(params.attributeNames.size(), params.attributeValues.size());
+  DCHECK_EQ(params.attribute_names.size(), params.attribute_values.size());
 
-  for (size_t i = 0; i < params.attributeNames.size(); ++i) {
-    if (params.attributeNames[i].utf8() == "poster") {
+  for (size_t i = 0; i < params.attribute_names.size(); ++i) {
+    if (params.attribute_names[i].Utf8() == "poster") {
       RecordPosterParamPresence(
           power_saver_enabled ? POSTER_PRESENCE_PARAM_EXISTS_PPS_ENABLED
                               : POSTER_PRESENCE_PARAM_EXISTS_PPS_DISABLED);
@@ -57,12 +58,12 @@ void TrackPosterParamPresence(const blink::WebPluginParams& params,
 
 std::string GetPluginInstancePosterAttribute(
     const blink::WebPluginParams& params) {
-  DCHECK_EQ(params.attributeNames.size(), params.attributeValues.size());
+  DCHECK_EQ(params.attribute_names.size(), params.attribute_values.size());
 
-  for (size_t i = 0; i < params.attributeNames.size(); ++i) {
-    if (params.attributeNames[i].utf8() == "poster" &&
-        !params.attributeValues[i].isEmpty()) {
-      return params.attributeValues[i].utf8();
+  for (size_t i = 0; i < params.attribute_names.size(); ++i) {
+    if (params.attribute_names[i].Utf8() == "poster" &&
+        !params.attribute_values[i].IsEmpty()) {
+      return params.attribute_values[i].Utf8();
     }
   }
   return std::string();
@@ -90,8 +91,7 @@ PowerSaverInfo PowerSaverInfo::Get(content::RenderFrame* render_frame,
       plugin_info.name == base::ASCIIToUTF16(content::kFlashPluginName);
 
   PowerSaverInfo info;
-  bool is_eligible = power_saver_setting_on &&
-                     (is_flash || override_for_testing == "ignore-list");
+  bool is_eligible = power_saver_setting_on && is_flash;
   info.power_saver_enabled = override_for_testing == "always" ||
                              (power_saver_setting_on && is_eligible);
 
@@ -101,18 +101,21 @@ PowerSaverInfo PowerSaverInfo::Get(content::RenderFrame* render_frame,
     info.blocked_for_background_tab = render_frame->IsHidden();
 
     auto status = render_frame->GetPeripheralContentStatus(
-        render_frame->GetWebFrame()->top()->getSecurityOrigin(),
-        url::Origin(params.url), gfx::Size());
+        render_frame->GetWebFrame()->Top()->GetSecurityOrigin(),
+        url::Origin(params.url), gfx::Size(),
+        content::RenderFrame::RECORD_DECISION);
 
     // Early-exit from the whole Power Saver system if the content is
     // same-origin or whitelisted-origin. We ignore the other possibilities,
     // because we don't know the unobscured size of the plugin content yet.
+    // If we are filtering same-origin tiny content, we cannot early exit here.
     //
     // Once the plugin is loaded, the peripheral content status is re-tested
     // with the actual unobscured plugin size.
-    if (status == content::RenderFrame::CONTENT_STATUS_ESSENTIAL_SAME_ORIGIN ||
-        status == content::RenderFrame::
-                      CONTENT_STATUS_ESSENTIAL_CROSS_ORIGIN_WHITELISTED) {
+    if (!base::FeatureList::IsEnabled(features::kFilterSameOriginTinyPlugin) &&
+        (status == content::RenderFrame::CONTENT_STATUS_ESSENTIAL_SAME_ORIGIN ||
+         status == content::RenderFrame::
+                       CONTENT_STATUS_ESSENTIAL_CROSS_ORIGIN_WHITELISTED)) {
       info.power_saver_enabled = false;
     } else {
       info.poster_attribute = GetPluginInstancePosterAttribute(params);

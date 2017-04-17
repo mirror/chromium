@@ -5,39 +5,69 @@
 #ifndef LegacyStyleInterpolation_h
 #define LegacyStyleInterpolation_h
 
-#include "core/animation/StyleInterpolation.h"
-#include "core/css/resolver/AnimatedStyleBuilder.h"
+#include "core/CSSPropertyNames.h"
+#include "core/CoreExport.h"
+#include "core/animation/Interpolation.h"
+#include "core/animation/PropertyHandle.h"
 #include <memory>
 
 namespace blink {
 
-class LegacyStyleInterpolation : public StyleInterpolation {
-public:
-    static PassRefPtr<LegacyStyleInterpolation> create(PassRefPtr<AnimatableValue> start, PassRefPtr<AnimatableValue> end, CSSPropertyID id)
-    {
-        return adoptRef(new LegacyStyleInterpolation(InterpolableAnimatableValue::create(start), InterpolableAnimatableValue::create(end), id));
-    }
+class StyleResolverState;
 
-    void apply(StyleResolverState& state) const override
-    {
-        AnimatedStyleBuilder::applyProperty(m_id, state, currentValue().get());
-    }
+class CORE_EXPORT LegacyStyleInterpolation : public Interpolation {
+ public:
+  static PassRefPtr<LegacyStyleInterpolation> Create(
+      PassRefPtr<AnimatableValue> start,
+      PassRefPtr<AnimatableValue> end,
+      CSSPropertyID id) {
+    return AdoptRef(new LegacyStyleInterpolation(
+        InterpolableAnimatableValue::Create(std::move(start)),
+        InterpolableAnimatableValue::Create(std::move(end)), id));
+  }
 
-    bool isLegacyStyleInterpolation() const final { return true; }
-    PassRefPtr<AnimatableValue> currentValue() const
-    {
-        return toInterpolableAnimatableValue(m_cachedValue.get())->value();
-    }
+  void Apply(StyleResolverState&) const;
 
-private:
-    LegacyStyleInterpolation(std::unique_ptr<InterpolableValue> start, std::unique_ptr<InterpolableValue> end, CSSPropertyID id)
-        : StyleInterpolation(std::move(start), std::move(end), id)
-    {
-    }
+  bool IsLegacyStyleInterpolation() const final { return true; }
+
+  PassRefPtr<AnimatableValue> CurrentValue() const {
+    return ToInterpolableAnimatableValue(cached_value_.get())->Value();
+  }
+
+  CSSPropertyID Id() const { return property_.CssProperty(); }
+
+  const PropertyHandle& GetProperty() const final { return property_; }
+
+  void Interpolate(int iteration, double fraction) final;
+
+ protected:
+  LegacyStyleInterpolation(std::unique_ptr<InterpolableValue> start,
+                           std::unique_ptr<InterpolableValue> end,
+                           CSSPropertyID);
+
+ private:
+  const std::unique_ptr<InterpolableValue> start_;
+  const std::unique_ptr<InterpolableValue> end_;
+  PropertyHandle property_;
+
+  mutable double cached_fraction_;
+  mutable int cached_iteration_;
+  mutable std::unique_ptr<InterpolableValue> cached_value_;
+
+  InterpolableValue* GetCachedValueForTesting() const {
+    return cached_value_.get();
+  }
+
+  friend class AnimationInterpolableValueTest;
+  friend class AnimationInterpolationEffectTest;
 };
 
-DEFINE_TYPE_CASTS(LegacyStyleInterpolation, Interpolation, value, value->isLegacyStyleInterpolation(), value.isLegacyStyleInterpolation());
+DEFINE_TYPE_CASTS(LegacyStyleInterpolation,
+                  Interpolation,
+                  value,
+                  value->IsLegacyStyleInterpolation(),
+                  value.IsLegacyStyleInterpolation());
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -36,11 +36,9 @@
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
-#include "platform/text/CompressibleString.h"
-#include "wtf/Allocator.h"
-#include "wtf/ThreadingPrimitives.h"
-#include "wtf/text/TextPosition.h"
-#include <v8.h>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/TextPosition.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -50,81 +48,89 @@ class ExceptionState;
 class ScriptSourceCode;
 class WorkerOrWorkletGlobalScope;
 
-class CORE_EXPORT WorkerOrWorkletScriptController : public GarbageCollectedFinalized<WorkerOrWorkletScriptController> {
-    WTF_MAKE_NONCOPYABLE(WorkerOrWorkletScriptController);
-public:
-    static WorkerOrWorkletScriptController* create(WorkerOrWorkletGlobalScope*, v8::Isolate*);
-    virtual ~WorkerOrWorkletScriptController();
-    void dispose();
+class CORE_EXPORT WorkerOrWorkletScriptController
+    : public GarbageCollectedFinalized<WorkerOrWorkletScriptController> {
+  WTF_MAKE_NONCOPYABLE(WorkerOrWorkletScriptController);
 
-    bool isExecutionForbidden() const;
-    bool isExecutionTerminating() const;
+ public:
+  static WorkerOrWorkletScriptController* Create(WorkerOrWorkletGlobalScope*,
+                                                 v8::Isolate*);
+  virtual ~WorkerOrWorkletScriptController();
+  void Dispose();
 
-    // Returns true if the evaluation completed with no uncaught exception.
-    bool evaluate(const ScriptSourceCode&, ErrorEvent** = nullptr, CachedMetadataHandler* = nullptr, V8CacheOptions = V8CacheOptionsDefault);
+  bool IsExecutionForbidden() const;
 
-    // Prevents future JavaScript execution. See
-    // willScheduleExecutionTermination, isExecutionForbidden.
-    void forbidExecution();
+  // Returns true if the evaluation completed with no uncaught exception.
+  bool Evaluate(const ScriptSourceCode&,
+                ErrorEvent** = nullptr,
+                CachedMetadataHandler* = nullptr,
+                V8CacheOptions = kV8CacheOptionsDefault);
 
-    // Used by WorkerThread:
-    bool initializeContextIfNeeded();
-    // Async request to terminate future JavaScript execution on the worker
-    // thread. JavaScript evaluation exits with a non-continuable exception and
-    // WorkerOrWorkletScriptController calls forbidExecution to prevent further
-    // JavaScript execution. Use forbidExecution()/isExecutionForbidden() to
-    // guard against reentry into JavaScript.
-    void willScheduleExecutionTermination();
+  // Prevents future JavaScript execution.
+  void ForbidExecution();
 
-    // Used by WorkerGlobalScope:
-    void rethrowExceptionFromImportedScript(ErrorEvent*, ExceptionState&);
-    void disableEval(const String&);
+  // Used by WorkerThread. Returns true if the context is successfully
+  // initialized or already initialized.
+  bool InitializeContextIfNeeded();
 
-    // Used by Inspector agents:
-    ScriptState* getScriptState() { return m_scriptState.get(); }
+  // Used by WorkerGlobalScope:
+  void RethrowExceptionFromImportedScript(ErrorEvent*, ExceptionState&);
+  void DisableEval(const String&);
 
-    // Used by V8 bindings:
-    v8::Local<v8::Context> context() { return m_scriptState ? m_scriptState->context() : v8::Local<v8::Context>(); }
+  // Used by Inspector agents:
+  ScriptState* GetScriptState() { return script_state_.Get(); }
 
-    RejectedPromises* getRejectedPromises() const { return m_rejectedPromises.get(); }
+  // Used by V8 bindings:
+  v8::Local<v8::Context> GetContext() {
+    return script_state_ ? script_state_->GetContext()
+                         : v8::Local<v8::Context>();
+  }
 
-    DECLARE_TRACE();
+  RejectedPromises* GetRejectedPromises() const {
+    return rejected_promises_.Get();
+  }
 
-    bool isContextInitialized() const { return m_scriptState && !!m_scriptState->perContextData(); }
+  DECLARE_TRACE();
 
-private:
-    WorkerOrWorkletScriptController(WorkerOrWorkletGlobalScope*, v8::Isolate*);
-    class ExecutionState;
+  bool IsContextInitialized() const {
+    return script_state_ && !!script_state_->PerContextData();
+  }
 
-    // Evaluate a script file in the current execution environment.
-    ScriptValue evaluate(const CompressibleString& script, const String& fileName, const TextPosition& scriptStartPosition, CachedMetadataHandler*, V8CacheOptions);
-    void disposeContextIfNeeded();
+ private:
+  WorkerOrWorkletScriptController(WorkerOrWorkletGlobalScope*, v8::Isolate*);
+  class ExecutionState;
 
-    Member<WorkerOrWorkletGlobalScope> m_globalScope;
+  // Evaluate a script file in the current execution environment.
+  ScriptValue Evaluate(const String& script,
+                       const String& file_name,
+                       const TextPosition& script_start_position,
+                       CachedMetadataHandler*,
+                       V8CacheOptions);
+  void DisposeContextIfNeeded();
 
-    // The v8 isolate associated to the (worker or worklet) global scope. For
-    // workers this should be the worker thread's isolate, while for worklets
-    // usually the main thread's isolate is used.
-    v8::Isolate* m_isolate;
+  Member<WorkerOrWorkletGlobalScope> global_scope_;
 
-    RefPtr<ScriptState> m_scriptState;
-    RefPtr<DOMWrapperWorld> m_world;
-    String m_disableEvalPending;
-    bool m_executionForbidden;
-    bool m_executionScheduledToTerminate;
-    mutable Mutex m_scheduledTerminationMutex;
+  // The v8 isolate associated to the (worker or worklet) global scope. For
+  // workers this should be the worker thread's isolate, while for worklets
+  // usually the main thread's isolate is used.
+  v8::Isolate* isolate_;
 
-    RefPtr<RejectedPromises> m_rejectedPromises;
+  RefPtr<ScriptState> script_state_;
+  RefPtr<DOMWrapperWorld> world_;
+  String disable_eval_pending_;
+  bool execution_forbidden_;
 
-    // |m_executionState| refers to a stack object that evaluate() allocates;
-    // evaluate() ensuring that the pointer reference to it is removed upon
-    // returning. Hence kept as a bare pointer here, and not a Persistent with
-    // Oilpan enabled; stack scanning will visit the object and
-    // trace its on-heap fields.
-    GC_PLUGIN_IGNORE("394615")
-    ExecutionState* m_executionState;
+  RefPtr<RejectedPromises> rejected_promises_;
+
+  // |m_executionState| refers to a stack object that evaluate() allocates;
+  // evaluate() ensuring that the pointer reference to it is removed upon
+  // returning. Hence kept as a bare pointer here, and not a Persistent with
+  // Oilpan enabled; stack scanning will visit the object and
+  // trace its on-heap fields.
+  GC_PLUGIN_IGNORE("394615")
+  ExecutionState* execution_state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerOrWorkletScriptController_h
+#endif  // WorkerOrWorkletScriptController_h

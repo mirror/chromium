@@ -10,62 +10,62 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef WaveShaperProcessor_h
 #define WaveShaperProcessor_h
 
+#include <memory>
 #include "core/dom/DOMTypedArray.h"
 #include "modules/webaudio/AudioNode.h"
 #include "platform/audio/AudioDSPKernel.h"
 #include "platform/audio/AudioDSPKernelProcessor.h"
-#include "wtf/RefPtr.h"
-#include "wtf/ThreadingPrimitives.h"
-#include <memory>
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 
 namespace blink {
 
-// WaveShaperProcessor is an AudioDSPKernelProcessor which uses WaveShaperDSPKernel objects to implement non-linear distortion effects.
+// WaveShaperProcessor is an AudioDSPKernelProcessor which uses
+// WaveShaperDSPKernel objects to implement non-linear distortion effects.
 
 class WaveShaperProcessor final : public AudioDSPKernelProcessor {
-public:
-    enum OverSampleType {
-        OverSampleNone,
-        OverSample2x,
-        OverSample4x
-    };
+ public:
+  enum OverSampleType { kOverSampleNone, kOverSample2x, kOverSample4x };
 
-    WaveShaperProcessor(float sampleRate, size_t numberOfChannels);
+  WaveShaperProcessor(float sample_rate, size_t number_of_channels);
 
-    ~WaveShaperProcessor() override;
+  ~WaveShaperProcessor() override;
 
-    std::unique_ptr<AudioDSPKernel> createKernel() override;
+  std::unique_ptr<AudioDSPKernel> CreateKernel() override;
 
-    void process(const AudioBus* source, AudioBus* destination, size_t framesToProcess) override;
+  void Process(const AudioBus* source,
+               AudioBus* destination,
+               size_t frames_to_process) override;
 
-    void setCurve(DOMFloat32Array*);
-    DOMFloat32Array* curve() { return m_curve.get(); }
+  void SetCurve(const float* curve_data, unsigned curve_length);
+  Vector<float>* Curve() const { return curve_.get(); };
 
-    void setOversample(OverSampleType);
-    OverSampleType oversample() const { return m_oversample; }
+  void SetOversample(OverSampleType);
+  OverSampleType Oversample() const { return oversample_; }
 
-private:
-    // m_curve represents the non-linear shaping curve.
-    CrossThreadPersistent<DOMFloat32Array> m_curve;
+ private:
+  // m_curve represents the non-linear shaping curve.
+  std::unique_ptr<Vector<float>> curve_;
 
-    OverSampleType m_oversample;
+  OverSampleType oversample_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WaveShaperProcessor_h
+#endif  // WaveShaperProcessor_h

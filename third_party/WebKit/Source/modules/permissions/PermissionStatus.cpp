@@ -8,110 +8,111 @@
 #include "core/dom/Document.h"
 #include "core/events/Event.h"
 #include "modules/EventTargetModulesNames.h"
-#include "modules/permissions/Permissions.h"
+#include "modules/permissions/PermissionUtils.h"
+#include "platform/wtf/Functional.h"
 #include "public/platform/Platform.h"
-#include "wtf/Functional.h"
 
 namespace blink {
 
 // static
-PermissionStatus* PermissionStatus::take(ScriptPromiseResolver* resolver, MojoPermissionStatus status, MojoPermissionName name)
-{
-    return PermissionStatus::createAndListen(resolver->getExecutionContext(), status, name);
+PermissionStatus* PermissionStatus::Take(ScriptPromiseResolver* resolver,
+                                         MojoPermissionStatus status,
+                                         MojoPermissionDescriptor descriptor) {
+  return PermissionStatus::CreateAndListen(resolver->GetExecutionContext(),
+                                           status, std::move(descriptor));
 }
 
-PermissionStatus* PermissionStatus::createAndListen(ExecutionContext* executionContext, MojoPermissionStatus status, MojoPermissionName name)
-{
-    PermissionStatus* permissionStatus = new PermissionStatus(executionContext, status, name);
-    permissionStatus->suspendIfNeeded();
-    permissionStatus->startListening();
-    return permissionStatus;
+PermissionStatus* PermissionStatus::CreateAndListen(
+    ExecutionContext* execution_context,
+    MojoPermissionStatus status,
+    MojoPermissionDescriptor descriptor) {
+  PermissionStatus* permission_status =
+      new PermissionStatus(execution_context, status, std::move(descriptor));
+  permission_status->SuspendIfNeeded();
+  permission_status->StartListening();
+  return permission_status;
 }
 
-PermissionStatus::PermissionStatus(ExecutionContext* executionContext, MojoPermissionStatus status, MojoPermissionName name)
-    : ActiveScriptWrappable(this)
-    , ActiveDOMObject(executionContext)
-    , m_status(status)
-    , m_name(name)
-{
+PermissionStatus::PermissionStatus(ExecutionContext* execution_context,
+                                   MojoPermissionStatus status,
+                                   MojoPermissionDescriptor descriptor)
+    : SuspendableObject(execution_context),
+      status_(status),
+      descriptor_(std::move(descriptor)),
+      binding_(this) {}
+
+PermissionStatus::~PermissionStatus() = default;
+
+void PermissionStatus::Dispose() {
+  StopListening();
 }
 
-PermissionStatus::~PermissionStatus()
-{
-    stopListening();
+const AtomicString& PermissionStatus::InterfaceName() const {
+  return EventTargetNames::PermissionStatus;
 }
 
-const AtomicString& PermissionStatus::interfaceName() const
-{
-    return EventTargetNames::PermissionStatus;
+ExecutionContext* PermissionStatus::GetExecutionContext() const {
+  return SuspendableObject::GetExecutionContext();
 }
 
-ExecutionContext* PermissionStatus::getExecutionContext() const
-{
-    return ActiveDOMObject::getExecutionContext();
+bool PermissionStatus::HasPendingActivity() const {
+  return binding_.is_bound();
 }
 
-void PermissionStatus::permissionChanged(MojoPermissionStatus status)
-{
-    if (m_status == status)
-        return;
-
-    m_status = status;
-    dispatchEvent(Event::create(EventTypeNames::change));
-    m_service->GetNextPermissionChange(m_name, getExecutionContext()->getSecurityOrigin()->toString(), m_status, convertToBaseCallback(WTF::bind(&PermissionStatus::permissionChanged, wrapWeakPersistent(this))));
+void PermissionStatus::Resume() {
+  StartListening();
 }
 
-bool PermissionStatus::hasPendingActivity() const
-{
-    return m_service;
+void PermissionStatus::Suspend() {
+  StopListening();
 }
 
-void PermissionStatus::resume()
-{
-    startListening();
+void PermissionStatus::ContextDestroyed(ExecutionContext*) {
+  StopListening();
 }
 
-void PermissionStatus::suspend()
-{
-    stopListening();
-}
-
-void PermissionStatus::stop()
-{
-    stopListening();
-}
-
-void PermissionStatus::startListening()
-{
-    DCHECK(!m_service);
-    Permissions::connectToService(getExecutionContext(), mojo::GetProxy(&m_service));
-    m_service->GetNextPermissionChange(m_name, getExecutionContext()->getSecurityOrigin()->toString(), m_status, convertToBaseCallback(WTF::bind(&PermissionStatus::permissionChanged, wrapWeakPersistent(this))));
-}
-
-void PermissionStatus::stopListening()
-{
-    m_service.reset();
-}
-
-String PermissionStatus::state() const
-{
-    switch (m_status) {
+String PermissionStatus::state() const {
+  switch (status_) {
     case MojoPermissionStatus::GRANTED:
-        return "granted";
+      return "granted";
     case MojoPermissionStatus::DENIED:
-        return "denied";
+      return "denied";
     case MojoPermissionStatus::ASK:
-        return "prompt";
-    }
+      return "prompt";
+  }
 
-    ASSERT_NOT_REACHED();
-    return "denied";
+  ASSERT_NOT_REACHED();
+  return "denied";
 }
 
-DEFINE_TRACE(PermissionStatus)
-{
-    EventTargetWithInlineData::trace(visitor);
-    ActiveDOMObject::trace(visitor);
+void PermissionStatus::StartListening() {
+  DCHECK(!binding_.is_bound());
+  mojom::blink::PermissionObserverPtr observer;
+  binding_.Bind(mojo::MakeRequest(&observer));
+
+  mojom::blink::PermissionServicePtr service;
+  ConnectToPermissionService(GetExecutionContext(),
+                             mojo::MakeRequest(&service));
+  service->AddPermissionObserver(descriptor_->Clone(),
+                                 GetExecutionContext()->GetSecurityOrigin(),
+                                 status_, std::move(observer));
 }
 
-} // namespace blink
+void PermissionStatus::StopListening() {
+  binding_.Close();
+}
+
+void PermissionStatus::OnPermissionStatusChange(MojoPermissionStatus status) {
+  if (status_ == status)
+    return;
+
+  status_ = status;
+  DispatchEvent(Event::Create(EventTypeNames::change));
+}
+
+DEFINE_TRACE(PermissionStatus) {
+  EventTargetWithInlineData::Trace(visitor);
+  SuspendableObject::Trace(visitor);
+}
+
+}  // namespace blink

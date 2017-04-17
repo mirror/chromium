@@ -39,53 +39,46 @@ namespace blink {
 using namespace HTMLNames;
 
 inline HTMLTemplateElement::HTMLTemplateElement(Document& document)
-    : HTMLElement(templateTag, document)
-{
-}
+    : HTMLElement(templateTag, document), content_(this, nullptr) {}
 
 DEFINE_NODE_FACTORY(HTMLTemplateElement)
 
-HTMLTemplateElement::~HTMLTemplateElement()
-{
+HTMLTemplateElement::~HTMLTemplateElement() {}
+
+DocumentFragment* HTMLTemplateElement::content() const {
+  if (!content_)
+    content_ = TemplateContentDocumentFragment::Create(
+        GetDocument().EnsureTemplateDocument(),
+        const_cast<HTMLTemplateElement*>(this));
+
+  return content_.Get();
 }
 
-DocumentFragment* HTMLTemplateElement::content() const
-{
-    if (!m_content)
-        m_content = TemplateContentDocumentFragment::create(document().ensureTemplateDocument(), const_cast<HTMLTemplateElement*>(this));
+Node* HTMLTemplateElement::cloneNode(bool deep, ExceptionState&) {
+  if (!deep)
+    return CloneElementWithoutChildren();
 
-    return m_content.get();
+  Node* clone = CloneElementWithChildren();
+  if (content_)
+    content()->CloneChildNodes(toHTMLTemplateElement(clone)->content());
+  return clone;
 }
 
-Node* HTMLTemplateElement::cloneNode(bool deep)
-{
-    if (!deep)
-        return cloneElementWithoutChildren();
-
-    Node* clone = cloneElementWithChildren();
-    if (m_content)
-        content()->cloneChildNodes(toHTMLTemplateElement(clone)->content());
-    return clone;
+void HTMLTemplateElement::DidMoveToNewDocument(Document& old_document) {
+  HTMLElement::DidMoveToNewDocument(old_document);
+  if (!content_)
+    return;
+  GetDocument().EnsureTemplateDocument().AdoptIfNeeded(*content_);
 }
 
-void HTMLTemplateElement::didMoveToNewDocument(Document& oldDocument)
-{
-    HTMLElement::didMoveToNewDocument(oldDocument);
-    if (!m_content)
-        return;
-    document().ensureTemplateDocument().adoptIfNeeded(*m_content);
+DEFINE_TRACE(HTMLTemplateElement) {
+  visitor->Trace(content_);
+  HTMLElement::Trace(visitor);
 }
 
-DEFINE_TRACE(HTMLTemplateElement)
-{
-    visitor->trace(m_content);
-    HTMLElement::trace(visitor);
+DEFINE_TRACE_WRAPPERS(HTMLTemplateElement) {
+  visitor->TraceWrappers(content_);
+  HTMLElement::TraceWrappers(visitor);
 }
 
-DEFINE_TRACE_WRAPPERS(HTMLTemplateElement)
-{
-    visitor->traceWrappers(m_content);
-    HTMLElement::traceWrappers(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

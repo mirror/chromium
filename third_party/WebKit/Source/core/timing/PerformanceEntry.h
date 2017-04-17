@@ -34,8 +34,9 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
+#include "core/dom/DOMHighResTimeStamp.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -43,59 +44,73 @@ class ScriptState;
 class ScriptValue;
 class V8ObjectBuilder;
 
-using PerformanceEntryType = unsigned char;
-using PerformanceEntryTypeMask = unsigned char;
+using PerformanceEntryType = unsigned;
+using PerformanceEntryTypeMask = unsigned;
 
-class CORE_EXPORT PerformanceEntry : public GarbageCollectedFinalized<PerformanceEntry>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    virtual ~PerformanceEntry();
+class CORE_EXPORT PerformanceEntry
+    : public GarbageCollectedFinalized<PerformanceEntry>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    enum EntryType {
-        Invalid = 0,
-        Composite = 1 << 1,
-        Mark = 1 << 2,
-        Measure = 1 << 3,
-        Render = 1 << 4,
-        Resource = 1 << 5,
-    };
+ public:
+  virtual ~PerformanceEntry();
 
-    String name() const;
-    String entryType() const;
-    double startTime() const;
-    double duration() const;
+  enum EntryType : PerformanceEntryType {
+    kInvalid = 0,
+    kNavigation = 1 << 0,
+    kComposite = 1 << 1,
+    kMark = 1 << 2,
+    kMeasure = 1 << 3,
+    kRender = 1 << 4,
+    kResource = 1 << 5,
+    kLongTask = 1 << 6,
+    kTaskAttribution = 1 << 7,
+    kPaint = 1 << 8
+  };
 
-    ScriptValue toJSONForBinding(ScriptState*) const;
+  String name() const;
+  String entryType() const;
+  DOMHighResTimeStamp startTime() const;
+  // PerformanceNavigationTiming will override this due to
+  // the nature of reporting it early, which means not having a
+  // finish time available at construction time.
+  // Other classes must NOT override this.
+  virtual DOMHighResTimeStamp duration() const;
 
-    PerformanceEntryType entryTypeEnum() const { return m_entryTypeEnum; }
+  ScriptValue toJSONForBinding(ScriptState*) const;
 
-    bool isResource() const { return m_entryTypeEnum == Resource; }
-    bool isRender()  const { return m_entryTypeEnum == Render; }
-    bool isComposite()  const { return m_entryTypeEnum == Composite; }
-    bool isMark()  const { return m_entryTypeEnum == Mark; }
-    bool isMeasure()  const { return m_entryTypeEnum == Measure; }
+  PerformanceEntryType EntryTypeEnum() const { return entry_type_enum_; }
 
-    static bool startTimeCompareLessThan(PerformanceEntry* a, PerformanceEntry* b)
-    {
-        return a->startTime() < b->startTime();
-    }
+  bool IsResource() const { return entry_type_enum_ == kResource; }
+  bool IsRender() const { return entry_type_enum_ == kRender; }
+  bool IsComposite() const { return entry_type_enum_ == kComposite; }
+  bool IsMark() const { return entry_type_enum_ == kMark; }
+  bool IsMeasure() const { return entry_type_enum_ == kMeasure; }
 
-    static EntryType toEntryTypeEnum(const String& entryType);
+  static bool StartTimeCompareLessThan(PerformanceEntry* a,
+                                       PerformanceEntry* b) {
+    return a->startTime() < b->startTime();
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  static PerformanceEntry::EntryType ToEntryTypeEnum(const String& entry_type);
 
-protected:
-    PerformanceEntry(const String& name, const String& entryType, double startTime, double finishTime);
-    virtual void buildJSONValue(V8ObjectBuilder&) const;
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-private:
-    const String m_name;
-    const String m_entryType;
-    const double m_startTime;
-    const double m_duration;
-    const PerformanceEntryType m_entryTypeEnum;
+ protected:
+  PerformanceEntry(const String& name,
+                   const String& entry_type,
+                   double start_time,
+                   double finish_time);
+  virtual void BuildJSONValue(V8ObjectBuilder&) const;
+
+ private:
+  const String name_;
+  const String entry_type_;
+  const double start_time_;
+  const double duration_;
+  const PerformanceEntryType entry_type_enum_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PerformanceEntry_h
+#endif  // PerformanceEntry_h

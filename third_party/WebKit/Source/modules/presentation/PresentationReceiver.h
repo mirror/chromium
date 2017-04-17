@@ -6,36 +6,66 @@
 #define PresentationReceiver_h
 
 #include "bindings/core/v8/ScriptPromise.h"
-#include "core/events/EventTarget.h"
-#include "core/frame/DOMWindowProperty.h"
+#include "bindings/core/v8/ScriptPromiseProperty.h"
+#include "bindings/core/v8/ScriptWrappable.h"
+#include "core/dom/ContextLifecycleObserver.h"
+#include "core/dom/DOMException.h"
+#include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/Heap.h"
+#include "public/platform/modules/presentation/WebPresentationReceiver.h"
 
 namespace blink {
 
+class Document;
+class PresentationConnection;
+class PresentationConnectionList;
+class WebPresentationClient;
+
 // Implements the PresentationReceiver interface from the Presentation API from
-// which websites can implement the receiving side of a presentation session.
-class PresentationReceiver final
-    : public EventTargetWithInlineData
-    , DOMWindowProperty {
-    USING_GARBAGE_COLLECTED_MIXIN(PresentationReceiver);
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    PresentationReceiver(LocalFrame*);
-    ~PresentationReceiver() = default;
+// which websites can implement the receiving side of a presentation. This needs
+// to be eagerly created in order to have the receiver associated with the
+// client.
+class MODULES_EXPORT PresentationReceiver final
+    : public GarbageCollectedFinalized<PresentationReceiver>,
+      public ScriptWrappable,
+      public ContextClient,
+      public WebPresentationReceiver {
+  USING_GARBAGE_COLLECTED_MIXIN(PresentationReceiver);
+  DEFINE_WRAPPERTYPEINFO();
+  using ConnectionListProperty =
+      ScriptPromiseProperty<Member<PresentationReceiver>,
+                            Member<PresentationConnectionList>,
+                            Member<DOMException>>;
 
-    // EventTarget implementation.
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
+ public:
+  PresentationReceiver(LocalFrame*, WebPresentationClient*);
+  ~PresentationReceiver() = default;
 
-    ScriptPromise getConnection(ScriptState*);
-    ScriptPromise getConnections(ScriptState*);
+  static PresentationReceiver* From(Document&);
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(connectionavailable);
+  // PresentationReceiver.idl implementation
+  ScriptPromise connectionList(ScriptState*);
 
-    DECLARE_VIRTUAL_TRACE();
+  // Implementation of WebPresentationController.
+  WebPresentationConnection* OnReceiverConnectionAvailable(
+      const WebPresentationInfo&) override;
+  void DidChangeConnectionState(WebPresentationConnectionState) override;
+  void TerminateConnection() override;
+
+  void RegisterConnection(PresentationConnection*);
+
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  friend class PresentationReceiverTest;
+
+  void RecordOriginTypeAccess(Document*) const;
+
+  Member<ConnectionListProperty> connection_list_property_;
+  Member<PresentationConnectionList> connection_list_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PresentationReceiver_h
+#endif  // PresentationReceiver_h

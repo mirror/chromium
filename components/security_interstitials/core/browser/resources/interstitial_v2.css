@@ -61,6 +61,13 @@ button:hover {
   margin-top: 1em;
 }
 
+.debugging-content-fixed-width {
+  display: block;
+  font-family: monospace;
+  font-size: 1.2em;
+  margin-top: 0.5em;
+}
+
 .debugging-title {
   font-weight: bold;
 }
@@ -89,11 +96,11 @@ button:hover {
 }
 
 .error-code {
-  color: #696969;
+  color: #646464;
   display: inline;
   font-size: .86667em;
   margin-top: 15px;
-  opacity: .5;
+  opacity: 1;
   text-transform: uppercase;
 }
 
@@ -159,6 +166,8 @@ input[type=checkbox]:focus ~ .checkbox {
 
 #extended-reporting-opt-in label {
   position: relative;
+  display: flex;
+  align-items: flex-start;
 }
 
 .nav-wrapper {
@@ -193,16 +202,10 @@ input[type=checkbox]:focus ~ .checkbox {
   display: none;
 }
 
-.safe-browsing .new-icons {
+.safe-browsing .icon {
   background-image: -webkit-image-set(
       url(images/1x/triangle_white.png) 1x,
       url(images/2x/triangle_white.png) 2x);
-}
-
-.safe-browsing .old-icons {
-  background-image: -webkit-image-set(
-      url(images/1x/stop_sign.png) 1x,
-      url(images/2x/stop_sign.png) 2x);
 }
 
 .small-link {
@@ -210,22 +213,20 @@ input[type=checkbox]:focus ~ .checkbox {
   font-size: .875em;
 }
 
-.ssl .new-icons {
+.ssl .icon {
   background-image: -webkit-image-set(
       url(images/1x/triangle_red.png) 1x,
       url(images/2x/triangle_red.png) 2x);
-}
-
-.ssl .old-icons {
-  background-image: -webkit-image-set(
-      url(images/1x/brokenssl_red.png) 1x,
-      url(images/2x/brokenssl_red.png) 2x);
 }
 
 .captive-portal .icon {
   background-image: -webkit-image-set(
       url(images/1x/captive_portal_page_icon.png) 1x,
       url(images/2x/captive_portal_page_icon.png) 2x);
+}
+
+.checkboxes {
+  flex: 0 0 24px;
 }
 
 .checkbox {
@@ -237,7 +238,7 @@ input[type=checkbox]:focus ~ .checkbox {
   left: 0;
   position: absolute;
   right: 0;
-  top: -1px;
+  top: 3px;
   width: 14px;
 }
 
@@ -357,7 +358,7 @@ input[type=checkbox]:checked ~ .checkbox::before {
     padding-left: 24px;
     padding-right: 24px;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
   }
 
   body.safe-browsing .nav-wrapper {
@@ -389,6 +390,7 @@ input[type=checkbox]:checked ~ .checkbox::before {
     font-weight: 600;
     margin: 6px 0;
     text-transform: uppercase;
+    transform: translatez(0);
   }
 
   .nav-wrapper {

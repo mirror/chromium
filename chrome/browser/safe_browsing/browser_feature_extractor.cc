@@ -22,9 +22,9 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/safe_browsing/browser_features.h"
 #include "chrome/browser/safe_browsing/client_side_detection_host.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/history_types.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "components/safe_browsing_db/database_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
@@ -212,7 +212,7 @@ void BrowserFeatureExtractor::ExtractFeatures(const BrowseInfo* info,
       // be cautious.
       url_index = index;
     } else if (index < url_index) {
-      if (entry->GetURL().host() == request_url.host()) {
+      if (entry->GetURL().host_piece() == request_url.host_piece()) {
         first_host_index = index;
       } else {
         // We have found the possibly phishing url, but we are no longer on the

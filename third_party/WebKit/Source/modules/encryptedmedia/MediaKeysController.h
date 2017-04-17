@@ -14,27 +14,32 @@ class ExecutionContext;
 class MediaKeysClient;
 class WebEncryptedMediaClient;
 
-class MODULES_EXPORT MediaKeysController final : public GarbageCollected<MediaKeysController>, public Supplement<Page> {
-    USING_GARBAGE_COLLECTED_MIXIN(MediaKeysController);
-public:
-    WebEncryptedMediaClient* encryptedMediaClient(ExecutionContext*);
+class MODULES_EXPORT MediaKeysController final
+    : public GarbageCollected<MediaKeysController>,
+      public Supplement<Page> {
+  USING_GARBAGE_COLLECTED_MIXIN(MediaKeysController);
 
-    static void provideMediaKeysTo(Page&, MediaKeysClient*);
-    static MediaKeysController* from(Page* page) { return static_cast<MediaKeysController*>(Supplement<Page>::from(page, supplementName())); }
+ public:
+  WebEncryptedMediaClient* EncryptedMediaClient(ExecutionContext*);
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<Page>::trace(visitor); }
+  static void ProvideMediaKeysTo(Page&, MediaKeysClient*);
+  static MediaKeysController* From(Page* page) {
+    return static_cast<MediaKeysController*>(
+        Supplement<Page>::From(page, SupplementName()));
+  }
 
-private:
-    explicit MediaKeysController(MediaKeysClient*);
-    static const char* supplementName();
+  DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<Page>::Trace(visitor); }
 
-    // Raw reference to the client implementation, which is currently owned
-    // by the WebView. Its lifetime extends past any m_client accesses.
-    // It is not on the Oilpan heap.
-    MediaKeysClient* m_client;
+ private:
+  explicit MediaKeysController(MediaKeysClient*);
+  static const char* SupplementName();
+
+  // Raw reference to the client implementation, which is currently owned
+  // by the WebView. Its lifetime extends past any m_client accesses.
+  // It is not on the Oilpan heap.
+  MediaKeysClient* client_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaKeysController_h
-
+#endif  // MediaKeysController_h

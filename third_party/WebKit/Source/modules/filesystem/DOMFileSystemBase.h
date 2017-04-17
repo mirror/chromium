@@ -37,7 +37,7 @@
 #include "platform/FileSystemType.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 class WebFileSystem;
@@ -58,82 +58,129 @@ class SecurityOrigin;
 class VoidCallback;
 
 // A common base class for DOMFileSystem and DOMFileSystemSync.
-class MODULES_EXPORT DOMFileSystemBase : public GarbageCollectedFinalized<DOMFileSystemBase> {
-public:
-    enum SynchronousType {
-        Synchronous,
-        Asynchronous,
-    };
+class MODULES_EXPORT DOMFileSystemBase
+    : public GarbageCollectedFinalized<DOMFileSystemBase> {
+ public:
+  enum SynchronousType {
+    kSynchronous,
+    kAsynchronous,
+  };
 
-    // Path prefixes that are used in the filesystem URLs (that can be obtained by toURL()).
-    // http://www.w3.org/TR/file-system-api/#widl-Entry-toURL
-    static const char persistentPathPrefix[];
-    static const char temporaryPathPrefix[];
-    static const char isolatedPathPrefix[];
-    static const char externalPathPrefix[];
+  // Path prefixes that are used in the filesystem URLs (that can be obtained by
+  // toURL()).  http://www.w3.org/TR/file-system-api/#widl-Entry-toURL
+  static const char kPersistentPathPrefix[];
+  static const char kTemporaryPathPrefix[];
+  static const char kIsolatedPathPrefix[];
+  static const char kExternalPathPrefix[];
 
-    virtual ~DOMFileSystemBase();
+  virtual ~DOMFileSystemBase();
 
-    // These are called when a new callback is created and resolved in
-    // FileSystem API, so that subclasses can track the number of pending
-    // callbacks if necessary.
-    virtual void addPendingCallbacks() { }
-    virtual void removePendingCallbacks() { }
+  // These are called when a new callback is created and resolved in
+  // FileSystem API, so that subclasses can track the number of pending
+  // callbacks if necessary.
+  virtual void AddPendingCallbacks() {}
+  virtual void RemovePendingCallbacks() {}
 
-    // Overridden by subclasses to handle sync vs async error-handling.
-    virtual void reportError(ErrorCallbackBase*, FileError::ErrorCode) = 0;
+  // Overridden by subclasses to handle sync vs async error-handling.
+  virtual void ReportError(ErrorCallbackBase*, FileError::ErrorCode) = 0;
 
-    const String& name() const { return m_name; }
-    FileSystemType type() const { return m_type; }
-    KURL rootURL() const { return m_filesystemRootURL; }
-    WebFileSystem* fileSystem() const;
-    SecurityOrigin* getSecurityOrigin() const;
+  const String& name() const { return name_; }
+  FileSystemType GetType() const { return type_; }
+  KURL RootURL() const { return filesystem_root_url_; }
+  WebFileSystem* FileSystem() const;
+  SecurityOrigin* GetSecurityOrigin() const;
 
-    // The clonable flag is used in the structured clone algorithm to test
-    // whether the FileSystem API object is permitted to be cloned. It defaults
-    // to false, and must be explicitly set by internal code permit cloning.
-    void makeClonable() { m_clonable = true; }
-    bool clonable() const { return m_clonable; }
+  // The clonable flag is used in the structured clone algorithm to test
+  // whether the FileSystem API object is permitted to be cloned. It defaults
+  // to false, and must be explicitly set by internal code permit cloning.
+  void MakeClonable() { clonable_ = true; }
+  bool Clonable() const { return clonable_; }
 
-    static bool isValidType(FileSystemType);
-    static bool crackFileSystemURL(const KURL&, FileSystemType&, String& filePath);
-    static KURL createFileSystemRootURL(const String& origin, FileSystemType);
-    bool supportsToURL() const;
-    KURL createFileSystemURL(const EntryBase*) const;
-    KURL createFileSystemURL(const String& fullPath) const;
-    static bool pathToAbsolutePath(FileSystemType, const EntryBase*, String path, String& absolutePath);
-    static bool pathPrefixToFileSystemType(const String& pathPrefix, FileSystemType&);
-    static File* createFile(const FileMetadata&, const KURL& fileSystemURL, FileSystemType, const String name);
+  static bool IsValidType(FileSystemType);
+  static KURL CreateFileSystemRootURL(const String& origin, FileSystemType);
+  bool SupportsToURL() const;
+  KURL CreateFileSystemURL(const EntryBase*) const;
+  KURL CreateFileSystemURL(const String& full_path) const;
+  static bool PathToAbsolutePath(FileSystemType,
+                                 const EntryBase*,
+                                 String path,
+                                 String& absolute_path);
+  static bool PathPrefixToFileSystemType(const String& path_prefix,
+                                         FileSystemType&);
+  static File* CreateFile(const FileMetadata&,
+                          const KURL& file_system_url,
+                          FileSystemType,
+                          const String name);
 
-    // Actual FileSystem API implementations. All the validity checks on virtual paths are done at this level.
-    void getMetadata(const EntryBase*, MetadataCallback*, ErrorCallbackBase*, SynchronousType = Asynchronous);
-    void move(const EntryBase* source, EntryBase* parent, const String& name, EntryCallback*, ErrorCallbackBase*, SynchronousType = Asynchronous);
-    void copy(const EntryBase* source, EntryBase* parent, const String& name, EntryCallback*, ErrorCallbackBase*, SynchronousType = Asynchronous);
-    void remove(const EntryBase*, VoidCallback*, ErrorCallbackBase*, SynchronousType = Asynchronous);
-    void removeRecursively(const EntryBase*, VoidCallback*, ErrorCallbackBase*, SynchronousType = Asynchronous);
-    void getParent(const EntryBase*, EntryCallback*, ErrorCallbackBase*);
-    void getFile(const EntryBase*, const String& path, const FileSystemFlags&, EntryCallback*, ErrorCallbackBase*, SynchronousType = Asynchronous);
-    void getDirectory(const EntryBase*, const String& path, const FileSystemFlags&, EntryCallback*, ErrorCallbackBase*, SynchronousType = Asynchronous);
-    int readDirectory(DirectoryReaderBase*, const String& path, EntriesCallback*, ErrorCallbackBase*, SynchronousType = Asynchronous);
-    bool waitForAdditionalResult(int callbacksId);
+  // Actual FileSystem API implementations. All the validity checks on virtual
+  // paths are done at this level.
+  void GetMetadata(const EntryBase*,
+                   MetadataCallback*,
+                   ErrorCallbackBase*,
+                   SynchronousType = kAsynchronous);
+  void Move(const EntryBase* source,
+            EntryBase* parent,
+            const String& name,
+            EntryCallback*,
+            ErrorCallbackBase*,
+            SynchronousType = kAsynchronous);
+  void Copy(const EntryBase* source,
+            EntryBase* parent,
+            const String& name,
+            EntryCallback*,
+            ErrorCallbackBase*,
+            SynchronousType = kAsynchronous);
+  void Remove(const EntryBase*,
+              VoidCallback*,
+              ErrorCallbackBase*,
+              SynchronousType = kAsynchronous);
+  void RemoveRecursively(const EntryBase*,
+                         VoidCallback*,
+                         ErrorCallbackBase*,
+                         SynchronousType = kAsynchronous);
+  void GetParent(const EntryBase*, EntryCallback*, ErrorCallbackBase*);
+  void GetFile(const EntryBase*,
+               const String& path,
+               const FileSystemFlags&,
+               EntryCallback*,
+               ErrorCallbackBase*,
+               SynchronousType = kAsynchronous);
+  void GetDirectory(const EntryBase*,
+                    const String& path,
+                    const FileSystemFlags&,
+                    EntryCallback*,
+                    ErrorCallbackBase*,
+                    SynchronousType = kAsynchronous);
+  int ReadDirectory(DirectoryReaderBase*,
+                    const String& path,
+                    EntriesCallback*,
+                    ErrorCallbackBase*,
+                    SynchronousType = kAsynchronous);
+  bool WaitForAdditionalResult(int callbacks_id);
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    DOMFileSystemBase(ExecutionContext*, const String& name, FileSystemType, const KURL& rootURL);
+ protected:
+  DOMFileSystemBase(ExecutionContext*,
+                    const String& name,
+                    FileSystemType,
+                    const KURL& root_url);
 
-    friend class DOMFileSystemBaseTest;
-    friend class DOMFileSystemSync;
+  friend class DOMFileSystemBaseTest;
+  friend class DOMFileSystemSync;
 
-    Member<ExecutionContext> m_context;
-    String m_name;
-    FileSystemType m_type;
-    KURL m_filesystemRootURL;
-    bool m_clonable;
+  Member<ExecutionContext> context_;
+  String name_;
+  FileSystemType type_;
+  KURL filesystem_root_url_;
+  bool clonable_;
 };
 
-inline bool operator==(const DOMFileSystemBase& a, const DOMFileSystemBase& b) { return a.name() == b.name() && a.type() == b.type() && a.rootURL() == b.rootURL(); }
+inline bool operator==(const DOMFileSystemBase& a, const DOMFileSystemBase& b) {
+  return a.name() == b.name() && a.GetType() == b.GetType() &&
+         a.RootURL() == b.RootURL();
+}
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMFileSystemBase_h
+#endif  // DOMFileSystemBase_h

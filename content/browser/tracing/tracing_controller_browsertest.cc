@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/run_loop.h"
 #include "base/strings/pattern.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "content/browser/tracing/tracing_controller_impl.h"
 #include "content/public/browser/browser_thread.h"
@@ -152,10 +153,13 @@ class TracingControllerTest : public ContentBrowserTest {
   void StopTracingFileDoneCallbackTest(base::Closure quit_callback,
                                             const base::FilePath& file_path) {
     disable_recording_done_callback_count_++;
-    EXPECT_TRUE(PathExists(file_path));
-    int64_t file_size;
-    base::GetFileSize(file_path, &file_size);
-    EXPECT_TRUE(file_size > 0);
+    {
+      base::ThreadRestrictions::ScopedAllowIO allow_io_for_test_verifications;
+      EXPECT_TRUE(PathExists(file_path));
+      int64_t file_size;
+      base::GetFileSize(file_path, &file_size);
+      EXPECT_GT(file_size, 0);
+    }
     quit_callback.Run();
     last_actual_recording_file_path_ = file_path;
   }
@@ -376,9 +380,17 @@ IN_PROC_BROWSER_TEST_F(TracingControllerTest, DisableRecordingStoresMetadata) {
   std::string cpu_brand;
   last_metadata()->GetString("cpu-brand", &cpu_brand);
   EXPECT_TRUE(cpu_brand.length() > 0);
+  std::string command_line;
+  last_metadata()->GetString("command_line", &command_line);
+  EXPECT_TRUE(command_line.length() > 0);
+  std::string trace_config;
+  last_metadata()->GetString("trace-config", &trace_config);
+  EXPECT_EQ(TraceConfig().ToString(), trace_config);
 }
 
-IN_PROC_BROWSER_TEST_F(TracingControllerTest, NotWhitelistedMetadataStripped) {
+// TODO(crbug.com/642991) Disabled for flakiness.
+IN_PROC_BROWSER_TEST_F(TracingControllerTest,
+                       DISABLED_NotWhitelistedMetadataStripped) {
   TestStartAndStopTracingStringWithFilter();
   // Check that a number of important keys exist in the metadata dictionary.
   EXPECT_TRUE(last_metadata() != NULL);
@@ -419,7 +431,10 @@ IN_PROC_BROWSER_TEST_F(TracingControllerTest, NotWhitelistedMetadataStripped) {
 IN_PROC_BROWSER_TEST_F(TracingControllerTest,
                        EnableAndStopTracingWithFilePath) {
   base::FilePath file_path;
-  base::CreateTemporaryFile(&file_path);
+  {
+    base::ThreadRestrictions::ScopedAllowIO allow_io_for_creating_test_file;
+    base::CreateTemporaryFile(&file_path);
+  }
   TestStartAndStopTracingFile(file_path);
   EXPECT_EQ(file_path.value(), last_actual_recording_file_path().value());
 }

@@ -21,7 +21,6 @@
 #define SVGMaskElement_h
 
 #include "core/SVGNames.h"
-#include "core/svg/SVGAnimatedBoolean.h"
 #include "core/svg/SVGAnimatedEnumeration.h"
 #include "core/svg/SVGAnimatedLength.h"
 #include "core/svg/SVGElement.h"
@@ -31,46 +30,50 @@
 
 namespace blink {
 
-class SVGMaskElement final : public SVGElement,
-                             public SVGTests {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGMaskElement);
-public:
-    DECLARE_NODE_FACTORY(SVGMaskElement);
+class SVGMaskElement final : public SVGElement, public SVGTests {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGMaskElement);
 
-    SVGAnimatedLength* x() const { return m_x.get(); }
-    SVGAnimatedLength* y() const { return m_y.get(); }
-    SVGAnimatedLength* width() const { return m_width.get(); }
-    SVGAnimatedLength* height() const { return m_height.get(); }
-    SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* maskUnits() { return m_maskUnits.get(); }
-    SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* maskContentUnits() { return m_maskContentUnits.get(); }
+ public:
+  DECLARE_NODE_FACTORY(SVGMaskElement);
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedLength* x() const { return x_.Get(); }
+  SVGAnimatedLength* y() const { return y_.Get(); }
+  SVGAnimatedLength* width() const { return width_.Get(); }
+  SVGAnimatedLength* height() const { return height_.Get(); }
+  SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* maskUnits() {
+    return mask_units_.Get();
+  }
+  SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>* maskContentUnits() {
+    return mask_content_units_.Get();
+  }
 
-private:
-    explicit SVGMaskElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    bool isValid() const override { return SVGTests::isValid(); }
-    bool needsPendingResourceHandling() const override { return false; }
+ private:
+  explicit SVGMaskElement(Document&);
 
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    bool isPresentationAttributeWithSVGDOM(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
-    void svgAttributeChanged(const QualifiedName&) override;
-    void childrenChanged(const ChildrenChange&) override;
+  bool IsValid() const override { return SVGTests::IsValid(); }
+  bool NeedsPendingResourceHandling() const override { return false; }
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
+  void ChildrenChanged(const ChildrenChange&) override;
 
-    bool selfHasRelativeLengths() const override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    Member<SVGAnimatedLength> m_x;
-    Member<SVGAnimatedLength> m_y;
-    Member<SVGAnimatedLength> m_width;
-    Member<SVGAnimatedLength> m_height;
-    Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> m_maskUnits;
-    Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> m_maskContentUnits;
+  bool SelfHasRelativeLengths() const override;
+
+  Member<SVGAnimatedLength> x_;
+  Member<SVGAnimatedLength> y_;
+  Member<SVGAnimatedLength> width_;
+  Member<SVGAnimatedLength> height_;
+  Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> mask_units_;
+  Member<SVGAnimatedEnumeration<SVGUnitTypes::SVGUnitType>> mask_content_units_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGMaskElement_h
+#endif  // SVGMaskElement_h

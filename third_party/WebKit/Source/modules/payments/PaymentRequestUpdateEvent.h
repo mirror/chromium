@@ -16,35 +16,41 @@
 namespace blink {
 
 class ExceptionState;
+class ExecutionContext;
 class PaymentUpdater;
 class ScriptState;
 
 class MODULES_EXPORT PaymentRequestUpdateEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    ~PaymentRequestUpdateEvent() override;
+ public:
+  ~PaymentRequestUpdateEvent() override;
 
-    static PaymentRequestUpdateEvent* create();
-    static PaymentRequestUpdateEvent* create(const AtomicString& type, const PaymentRequestUpdateEventInit& = PaymentRequestUpdateEventInit());
+  static PaymentRequestUpdateEvent* Create(
+      ExecutionContext*,
+      const AtomicString& type,
+      const PaymentRequestUpdateEventInit& = PaymentRequestUpdateEventInit());
 
-    void setPaymentDetailsUpdater(PaymentUpdater*);
+  void SetPaymentDetailsUpdater(PaymentUpdater*);
 
-    void updateWith(ScriptState*, ScriptPromise, ExceptionState&);
+  void updateWith(ScriptState*, ScriptPromise, ExceptionState&);
 
-    void onTimerFired(Timer<PaymentRequestUpdateEvent>*);
+  DECLARE_VIRTUAL_TRACE();
 
-    DECLARE_VIRTUAL_TRACE();
+  void OnUpdateEventTimeoutForTesting();
 
-private:
-    PaymentRequestUpdateEvent();
-    PaymentRequestUpdateEvent(const AtomicString& type, const PaymentRequestUpdateEventInit&);
+ private:
+  PaymentRequestUpdateEvent(ExecutionContext*,
+                            const AtomicString& type,
+                            const PaymentRequestUpdateEventInit&);
 
-    Member<PaymentUpdater> m_updater;
-    bool m_waitForUpdate;
-    Timer<PaymentRequestUpdateEvent> m_abortTimer;
+  void OnUpdateEventTimeout(TimerBase*);
+
+  Member<PaymentUpdater> updater_;
+  bool wait_for_update_;
+  TaskRunnerTimer<PaymentRequestUpdateEvent> abort_timer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaymentRequestUpdateEvent_h
+#endif  // PaymentRequestUpdateEvent_h

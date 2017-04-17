@@ -4,29 +4,57 @@
 
 #include "modules/app_banner/AppBannerController.h"
 
+#include <memory>
+#include <utility>
 #include "core/EventTypeNames.h"
 #include "core/dom/Document.h"
 #include "core/frame/DOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "modules/app_banner/BeforeInstallPromptEvent.h"
-#include "public/platform/WebVector.h"
-#include "public/platform/modules/app_banner/WebAppBannerClient.h"
-#include "public/platform/modules/app_banner/WebAppBannerPromptReply.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "platform/weborigin/KURL.h"
+#include "platform/weborigin/Referrer.h"
+#include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
-// static
-void AppBannerController::willShowInstallBannerPrompt(int requestId, WebAppBannerClient* client, LocalFrame* frame, const WebVector<WebString>& platforms, WebAppBannerPromptReply* reply)
-{
-    Vector<String> wtfPlatforms;
-    for (const WebString& platform : platforms)
-        wtfPlatforms.append(platform);
+AppBannerController::AppBannerController(LocalFrame& frame) : frame_(frame) {}
 
-    // dispatchEvent() returns whether the default behavior can happen. In other
-    // words, it returns false if preventDefault() was called.
-    *reply = frame->domWindow()->dispatchEvent(BeforeInstallPromptEvent::create(EventTypeNames::beforeinstallprompt, frame->document(), wtfPlatforms, requestId, client)) == DispatchEventResult::NotCanceled
-        ? WebAppBannerPromptReply::None
-        : WebAppBannerPromptReply::Cancel;
+void AppBannerController::BindMojoRequest(
+    LocalFrame* frame,
+    mojom::blink::AppBannerControllerRequest request) {
+  DCHECK(frame);
+
+  mojo::MakeStrongBinding(WTF::WrapUnique(new AppBannerController(*frame)),
+                          std::move(request));
 }
 
-} // namespace blink
+void AppBannerController::BannerPromptRequest(
+    mojom::blink::AppBannerServicePtr service_ptr,
+    mojom::blink::AppBannerEventRequest event_request,
+    const Vector<String>& platforms,
+    const BannerPromptRequestCallback& callback) {
+  if (!frame_ || !frame_->GetDocument()) {
+    callback.Run(mojom::blink::AppBannerPromptReply::NONE, "");
+    return;
+  }
+
+  mojom::AppBannerPromptReply reply =
+      frame_->DomWindow()->DispatchEvent(BeforeInstallPromptEvent::Create(
+          EventTypeNames::beforeinstallprompt, *frame_, std::move(service_ptr),
+          std::move(event_request), platforms)) ==
+              DispatchEventResult::kNotCanceled
+          ? mojom::AppBannerPromptReply::NONE
+          : mojom::AppBannerPromptReply::CANCEL;
+
+  AtomicString referrer = SecurityPolicy::GenerateReferrer(
+                              frame_->GetDocument()->GetReferrerPolicy(),
+                              KURL(), frame_->GetDocument()->OutgoingReferrer())
+                              .referrer;
+
+  callback.Run(reply, referrer.IsNull() ? g_empty_string : referrer);
+}
+
+}  // namespace blink

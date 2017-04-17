@@ -35,7 +35,6 @@
 
 class PrefRegistrySimple;
 class PrefService;
-class ProfileSyncService;
 
 namespace gfx {
 class ImageSkia;
@@ -84,7 +83,6 @@ class ChromeUserManagerImpl
   user_manager::UserList GetUsersAllowedForSupervisedUsersCreation()
       const override;
   user_manager::UserList GetUnlockUsers() const override;
-  void SessionStarted() override;
   void SaveUserOAuthStatus(
       const AccountId& account_id,
       user_manager::User::OAuthTokenStatus oauth_token_status) override;
@@ -167,6 +165,7 @@ class ChromeUserManagerImpl
   void DemoAccountLoggedIn() override;
   void GuestUserLoggedIn() override;
   void KioskAppLoggedIn(user_manager::User* user) override;
+  void ArcKioskAppLoggedIn(user_manager::User* user) override;
   void PublicAccountUserLoggedIn(user_manager::User* user) override;
   void RegularUserLoggedIn(const AccountId& account_id) override;
   void RegularUserLoggedInAsEphemeral(const AccountId& account_id) override;
@@ -188,9 +187,6 @@ class ChromeUserManagerImpl
   // list if ephemeral users are enabled. Schedules a callback to itself if
   // trusted device policies are not yet available.
   void RetrieveTrustedDevicePolicies();
-
-  // Updates current user ownership on UI thread.
-  void UpdateOwnership();
 
   // If data for a device local account is marked as pending removal and the
   // user is no longer logged into that account, removes the data.

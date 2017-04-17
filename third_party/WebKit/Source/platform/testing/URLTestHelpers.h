@@ -33,32 +33,50 @@
 
 #include "platform/weborigin/KURL.h"
 #include "public/platform/WebString.h"
+#include "public/platform/WebURL.h"
+#include "public/platform/WebURLResponse.h"
 
 namespace blink {
-
-class WebURL;
-class WebURLResponse;
-
 namespace URLTestHelpers {
 
-inline blink::KURL toKURL(const std::string& url)
-{
-    WTF::String wtfString(url.c_str());
-    return blink::KURL(blink::ParsedURLString, wtfString);
+inline blink::KURL ToKURL(const std::string& url) {
+  WTF::String wtf_string(url.c_str());
+  return blink::KURL(blink::kParsedURLString, wtf_string);
 }
 
-// Helper functions for mock URLs. These functions set up the desired URL and mimeType, with a 200 OK return status.
-// For the mock URL, fullURL == baseURL + fileName.
-// For the actual file path:  <WebKit root directory> + relativeBaseDirectory + fileName,
-// or, if the relative base directory is not specified:  <WebKit root directory> + fileName.
+// Avoid directly using these methods, instead please use ScopedMockedURL (or
+// define a variant of ScopedMockedURL classes if necessary) in new code.
 //
-void registerMockedURLFromBaseURL(const WebString& baseURL, const WebString& fileName, const WebString& mimeType = WebString::fromUTF8("text/html"));
-void registerMockedURLLoad(const WebURL& fullURL, const WebString& fileName, const WebString& mimeType = WebString::fromUTF8("text/html"));
-void registerMockedURLLoad(const WebURL& fullURL, const WebString& fileName, const WebString& relativeBaseDirectory, const WebString& mimeType);
-void registerMockedURLLoadWithCustomResponse(const WebURL& fullURL, const WebString& fileName, const WebString& relativeBaseDirectory, WebURLResponse);
-void registerMockedErrorURLLoad(const WebURL& fullURL);
+// Helper functions for mock URLs. These functions set up the desired URL and
+// mimeType, with a 200 OK return status.
+// webTestDataPath() or platformTestDataPath() in UnitTestHelpers can be used to
+// get the appropriate |basePath| and |filePath| for test data directories.
+//  - For the mock URL, fullURL == baseURL + fileName.
+//  - For the file path, filePath == basePath + ("/" +) fileName.
 
-} // namespace URLTestHelpers
-} // namespace blink
+// Registers from a base URL and a base file path, and returns a calculated full
+// URL.
+WebURL RegisterMockedURLLoadFromBase(
+    const WebString& base_url,
+    const WebString& base_path,
+    const WebString& file_name,
+    const WebString& mime_type = WebString::FromUTF8("text/html"));
+
+// Registers from a full URL and a full file path.
+void RegisterMockedURLLoad(
+    const WebURL& full_url,
+    const WebString& file_path,
+    const WebString& mime_type = WebString::FromUTF8("text/html"));
+
+// Registers with a custom response.
+void RegisterMockedURLLoadWithCustomResponse(const WebURL& full_url,
+                                             const WebString& file_path,
+                                             WebURLResponse);
+
+// Registers a mock URL that returns a 404 error.
+void RegisterMockedErrorURLLoad(const WebURL& full_url);
+
+}  // namespace URLTestHelpers
+}  // namespace blink
 
 #endif

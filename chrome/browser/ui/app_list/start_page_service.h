@@ -28,8 +28,6 @@
 #include "ui/app_list/speech_ui_model_observer.h"
 
 namespace content {
-struct FrameNavigateParams;
-struct LoadCommittedDetails;
 struct SpeechRecognitionSessionPreamble;
 }
 
@@ -118,11 +116,9 @@ class StartPageService : public KeyedService,
   // getUserMedia() request from the web contents.
   class StartPageWebContentsDelegate;
 
-#if defined(OS_CHROMEOS)
   // This class observes the change of audio input device availability and
   // checks if currently the system has valid audio input.
   class AudioStatus;
-#endif
 
   // This class observes network change events and disables/enables voice search
   // based on network connectivity.
@@ -144,14 +140,8 @@ class StartPageService : public KeyedService,
   void Shutdown() override;
 
   // contents::WebContentsObserver overrides;
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override;
-  void DidFailProvisionalLoad(content::RenderFrameHost* render_frame_host,
-                              const GURL& validated_url,
-                              int error_code,
-                              const base::string16& error_description,
-                              bool was_ignored_by_handler) override;
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
 
   // Change the known microphone availability. |available| should be true if
   // the microphone exists and is available for use.
@@ -183,9 +173,7 @@ class StartPageService : public KeyedService,
 
   bool network_available_;
   bool microphone_available_;
-#if defined(OS_CHROMEOS)
   std::unique_ptr<AudioStatus> audio_status_;
-#endif
   std::unique_ptr<NetworkChangeObserver> network_change_observer_;
 
   bool search_engine_is_google_;

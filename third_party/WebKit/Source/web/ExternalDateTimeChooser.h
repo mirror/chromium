@@ -36,26 +36,30 @@ class WebString;
 class WebViewClient;
 
 class ExternalDateTimeChooser final : public DateTimeChooser {
-public:
-    static ExternalDateTimeChooser* create(ChromeClientImpl*, WebViewClient*, DateTimeChooserClient*, const DateTimeChooserParameters&);
-    ~ExternalDateTimeChooser() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static ExternalDateTimeChooser* Create(ChromeClientImpl*,
+                                         WebViewClient*,
+                                         DateTimeChooserClient*,
+                                         const DateTimeChooserParameters&);
+  ~ExternalDateTimeChooser() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    // The following functions are for DateTimeChooserCompletion.
-    void didChooseValue(const WebString&);
-    void didChooseValue(double);
-    void didCancelChooser();
+  // The following functions are for DateTimeChooserCompletion.
+  void DidChooseValue(const WebString&);
+  void DidChooseValue(double);
+  void DidCancelChooser();
 
-private:
-    ExternalDateTimeChooser(DateTimeChooserClient*);
-    bool openDateTimeChooser(ChromeClientImpl*, WebViewClient*, const DateTimeChooserParameters&);
+ private:
+  ExternalDateTimeChooser(DateTimeChooserClient*);
+  bool OpenDateTimeChooser(ChromeClientImpl*,
+                           WebViewClient*,
+                           const DateTimeChooserParameters&);
 
-    // DateTimeChooser function:
-    void endChooser() override;
-    AXObject* rootAXObject() override;
+  // DateTimeChooser function:
+  void EndChooser() override;
+  AXObject* RootAXObject() override;
 
-    Member<DateTimeChooserClient> m_client;
+  Member<DateTimeChooserClient> client_;
 };
-
 }
 #endif

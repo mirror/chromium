@@ -4,312 +4,386 @@
 
 #include "core/workers/WorkerThread.h"
 
+#include <memory>
+#include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThreadTestHelper.h"
+#include "platform/WaitableEvent.h"
 #include "platform/testing/UnitTestHelpers.h"
+#include "platform/wtf/PtrUtil.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 using testing::_;
 using testing::AtMost;
 
 namespace blink {
 
+using ExitCode = WorkerThread::ExitCode;
+
 namespace {
 
-// Called from WorkerThread::startRunningDebuggerTasksOnPauseOnWorkerThread as a
-// debugger task.
-void waitForTermination(WorkerThread* workerThread)
-{
-    EXPECT_TRUE(workerThread->isCurrentThread());
+class MockWorkerReportingProxy final : public WorkerReportingProxy {
+ public:
+  MockWorkerReportingProxy() = default;
+  ~MockWorkerReportingProxy() override = default;
 
-    // Notify the main thread that the debugger task is waiting for termination.
-    Platform::current()->mainThread()->getWebTaskRunner()->postTask(BLINK_FROM_HERE, crossThreadBind(&testing::exitRunLoop));
-    workerThread->terminationEvent()->wait();
-}
+  MOCK_METHOD1(DidCreateWorkerGlobalScope, void(WorkerOrWorkletGlobalScope*));
+  MOCK_METHOD0(DidInitializeWorkerContext, void());
+  MOCK_METHOD2(WillEvaluateWorkerScriptMock,
+               void(size_t scriptSize, size_t cachedMetadataSize));
+  MOCK_METHOD1(DidEvaluateWorkerScript, void(bool success));
+  MOCK_METHOD0(DidCloseWorkerGlobalScope, void());
+  MOCK_METHOD0(WillDestroyWorkerGlobalScope, void());
+  MOCK_METHOD0(DidTerminateWorkerThread, void());
 
-} // namespace
+  void WillEvaluateWorkerScript(size_t script_size,
+                                size_t cached_metadata_size) override {
+    script_evaluation_event_.Signal();
+    WillEvaluateWorkerScriptMock(script_size, cached_metadata_size);
+  }
 
-class WorkerThreadTest : public ::testing::Test {
-public:
-    void SetUp() override
-    {
-        m_mockWorkerLoaderProxyProvider = wrapUnique(new MockWorkerLoaderProxyProvider());
-        m_mockWorkerReportingProxy = wrapUnique(new MockWorkerReportingProxy());
-        m_securityOrigin = SecurityOrigin::create(KURL(ParsedURLString, "http://fake.url/"));
-        m_workerThread = wrapUnique(new WorkerThreadForTest(
-            m_mockWorkerLoaderProxyProvider.get(),
-            *m_mockWorkerReportingProxy));
-        m_mockWorkerThreadLifecycleObserver = new MockWorkerThreadLifecycleObserver(m_workerThread->getWorkerThreadLifecycleContext());
-    }
+  void WaitUntilScriptEvaluation() { script_evaluation_event_.Wait(); }
 
-    void TearDown() override
-    {
-        m_workerThread->workerLoaderProxy()->detachProvider(m_mockWorkerLoaderProxyProvider.get());
-    }
-
-    void start()
-    {
-        m_workerThread->startWithSourceCode(m_securityOrigin.get(), "//fake source code");
-    }
-
-    void startWithSourceCodeNotToFinish()
-    {
-        // Use a JavaScript source code that makes an infinite loop so that we
-        // can catch some kind of issues as a timeout.
-        m_workerThread->startWithSourceCode(m_securityOrigin.get(), "while(true) {}");
-    }
-
-    void setForceTerminationDelayInMs(long long forceTerminationDelayInMs)
-    {
-        m_workerThread->m_forceTerminationDelayInMs = forceTerminationDelayInMs;
-    }
-
-    bool isForceTerminationTaskScheduled()
-    {
-        return m_workerThread->m_scheduledForceTerminationTask.get();
-    }
-
-protected:
-    void expectReportingCalls()
-    {
-        EXPECT_CALL(*m_mockWorkerReportingProxy, workerGlobalScopeStarted(_)).Times(1);
-        EXPECT_CALL(*m_mockWorkerReportingProxy, didEvaluateWorkerScript(true)).Times(1);
-        EXPECT_CALL(*m_mockWorkerReportingProxy, workerThreadTerminated()).Times(1);
-        EXPECT_CALL(*m_mockWorkerReportingProxy, willDestroyWorkerGlobalScope()).Times(1);
-        EXPECT_CALL(*m_mockWorkerThreadLifecycleObserver, contextDestroyed()).Times(1);
-    }
-
-    void expectReportingCallsForWorkerPossiblyTerminatedBeforeInitialization()
-    {
-        EXPECT_CALL(*m_mockWorkerReportingProxy, workerGlobalScopeStarted(_)).Times(AtMost(1));
-        EXPECT_CALL(*m_mockWorkerReportingProxy, didEvaluateWorkerScript(_)).Times(AtMost(1));
-        EXPECT_CALL(*m_mockWorkerReportingProxy, workerThreadTerminated()).Times(1);
-        EXPECT_CALL(*m_mockWorkerReportingProxy, willDestroyWorkerGlobalScope()).Times(AtMost(1));
-        EXPECT_CALL(*m_mockWorkerThreadLifecycleObserver, contextDestroyed()).Times(1);
-    }
-
-    void expectReportingCallsForWorkerForciblyTerminated()
-    {
-        EXPECT_CALL(*m_mockWorkerReportingProxy, workerGlobalScopeStarted(_)).Times(1);
-        EXPECT_CALL(*m_mockWorkerReportingProxy, didEvaluateWorkerScript(false)).Times(1);
-        EXPECT_CALL(*m_mockWorkerReportingProxy, workerThreadTerminated()).Times(1);
-        EXPECT_CALL(*m_mockWorkerReportingProxy, willDestroyWorkerGlobalScope()).Times(1);
-        EXPECT_CALL(*m_mockWorkerThreadLifecycleObserver, contextDestroyed()).Times(1);
-    }
-
-    RefPtr<SecurityOrigin> m_securityOrigin;
-    std::unique_ptr<MockWorkerLoaderProxyProvider> m_mockWorkerLoaderProxyProvider;
-    std::unique_ptr<MockWorkerReportingProxy> m_mockWorkerReportingProxy;
-    std::unique_ptr<WorkerThreadForTest> m_workerThread;
-    Persistent<MockWorkerThreadLifecycleObserver> m_mockWorkerThreadLifecycleObserver;
+ private:
+  WaitableEvent script_evaluation_event_;
 };
 
-TEST_F(WorkerThreadTest, StartAndTerminate_AsyncTerminate)
-{
-    expectReportingCalls();
-    start();
-    m_workerThread->waitForInit();
+// Used as a debugger task. Waits for a signal from the main thread.
+void WaitForSignalTask(WorkerThread* worker_thread,
+                       WaitableEvent* waitable_event) {
+  EXPECT_TRUE(worker_thread->IsCurrentThread());
 
-    // The worker thread is not being blocked, so the worker thread should be
-    // gracefully shut down.
-    m_workerThread->terminate();
-    EXPECT_TRUE(isForceTerminationTaskScheduled());
-    m_workerThread->waitForShutdownForTesting();
-    EXPECT_EQ(WorkerThread::ExitCode::GracefullyTerminated, m_workerThread->getExitCode());
+  // Notify the main thread that the debugger task is waiting for the signal.
+  worker_thread->GetParentFrameTaskRunners()
+      ->Get(TaskType::kUnspecedTimer)
+      ->PostTask(BLINK_FROM_HERE, CrossThreadBind(&testing::ExitRunLoop));
+  waitable_event->Wait();
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminate_SyncTerminate)
-{
-    expectReportingCalls();
-    start();
-    m_workerThread->waitForInit();
-    m_workerThread->terminateAndWait();
-    EXPECT_EQ(WorkerThread::ExitCode::SyncForciblyTerminated, m_workerThread->getExitCode());
+}  // namespace
+
+class WorkerThreadTest : public ::testing::Test {
+ public:
+  WorkerThreadTest() {}
+
+  void SetUp() override {
+    loader_proxy_provider_ = WTF::MakeUnique<MockWorkerLoaderProxyProvider>();
+    reporting_proxy_ = WTF::MakeUnique<MockWorkerReportingProxy>();
+    security_origin_ =
+        SecurityOrigin::Create(KURL(kParsedURLString, "http://fake.url/"));
+    worker_thread_ = WTF::WrapUnique(new WorkerThreadForTest(
+        loader_proxy_provider_.get(), *reporting_proxy_));
+    lifecycle_observer_ = new MockWorkerThreadLifecycleObserver(
+        worker_thread_->GetWorkerThreadLifecycleContext());
+  }
+
+  void TearDown() override {
+    worker_thread_->GetWorkerLoaderProxy()->DetachProvider(
+        loader_proxy_provider_.get());
+  }
+
+  void Start() {
+    worker_thread_->StartWithSourceCode(
+        security_origin_.Get(), "//fake source code",
+        ParentFrameTaskRunners::Create(nullptr));
+  }
+
+  void StartWithSourceCodeNotToFinish() {
+    // Use a JavaScript source code that makes an infinite loop so that we
+    // can catch some kind of issues as a timeout.
+    worker_thread_->StartWithSourceCode(
+        security_origin_.Get(), "while(true) {}",
+        ParentFrameTaskRunners::Create(nullptr));
+  }
+
+  void SetForcibleTerminationDelayInMs(
+      long long forcible_termination_delay_in_ms) {
+    worker_thread_->forcible_termination_delay_in_ms_ =
+        forcible_termination_delay_in_ms;
+  }
+
+  bool IsForcibleTerminationTaskScheduled() {
+    return worker_thread_->forcible_termination_task_handle_.IsActive();
+  }
+
+ protected:
+  void ExpectReportingCalls() {
+    EXPECT_CALL(*reporting_proxy_, DidCreateWorkerGlobalScope(_)).Times(1);
+    EXPECT_CALL(*reporting_proxy_, DidInitializeWorkerContext()).Times(1);
+    EXPECT_CALL(*reporting_proxy_, WillEvaluateWorkerScriptMock(_, _)).Times(1);
+    EXPECT_CALL(*reporting_proxy_, DidEvaluateWorkerScript(true)).Times(1);
+    EXPECT_CALL(*reporting_proxy_, WillDestroyWorkerGlobalScope()).Times(1);
+    EXPECT_CALL(*reporting_proxy_, DidTerminateWorkerThread()).Times(1);
+    EXPECT_CALL(*lifecycle_observer_, ContextDestroyed(_)).Times(1);
+  }
+
+  void ExpectReportingCallsForWorkerPossiblyTerminatedBeforeInitialization() {
+    EXPECT_CALL(*reporting_proxy_, DidCreateWorkerGlobalScope(_)).Times(1);
+    EXPECT_CALL(*reporting_proxy_, DidInitializeWorkerContext())
+        .Times(AtMost(1));
+    EXPECT_CALL(*reporting_proxy_, WillEvaluateWorkerScriptMock(_, _))
+        .Times(AtMost(1));
+    EXPECT_CALL(*reporting_proxy_, DidEvaluateWorkerScript(_)).Times(AtMost(1));
+    EXPECT_CALL(*reporting_proxy_, WillDestroyWorkerGlobalScope())
+        .Times(AtMost(1));
+    EXPECT_CALL(*reporting_proxy_, DidTerminateWorkerThread()).Times(1);
+    EXPECT_CALL(*lifecycle_observer_, ContextDestroyed(_)).Times(1);
+  }
+
+  void ExpectReportingCallsForWorkerForciblyTerminated() {
+    EXPECT_CALL(*reporting_proxy_, DidCreateWorkerGlobalScope(_)).Times(1);
+    EXPECT_CALL(*reporting_proxy_, DidInitializeWorkerContext()).Times(1);
+    EXPECT_CALL(*reporting_proxy_, WillEvaluateWorkerScriptMock(_, _)).Times(1);
+    EXPECT_CALL(*reporting_proxy_, DidEvaluateWorkerScript(false)).Times(1);
+    EXPECT_CALL(*reporting_proxy_, WillDestroyWorkerGlobalScope()).Times(1);
+    EXPECT_CALL(*reporting_proxy_, DidTerminateWorkerThread()).Times(1);
+    EXPECT_CALL(*lifecycle_observer_, ContextDestroyed(_)).Times(1);
+  }
+
+  ExitCode GetExitCode() { return worker_thread_->GetExitCodeForTesting(); }
+
+  RefPtr<SecurityOrigin> security_origin_;
+  std::unique_ptr<MockWorkerLoaderProxyProvider> loader_proxy_provider_;
+  std::unique_ptr<MockWorkerReportingProxy> reporting_proxy_;
+  std::unique_ptr<WorkerThreadForTest> worker_thread_;
+  Persistent<MockWorkerThreadLifecycleObserver> lifecycle_observer_;
+};
+
+TEST_F(WorkerThreadTest, ShouldScheduleToTerminateExecution) {
+  using ThreadState = WorkerThread::ThreadState;
+  MutexLocker dummy_lock(worker_thread_->thread_state_mutex_);
+
+  EXPECT_EQ(ThreadState::kNotStarted, worker_thread_->thread_state_);
+  EXPECT_FALSE(worker_thread_->ShouldScheduleToTerminateExecution(dummy_lock));
+
+  worker_thread_->SetThreadState(dummy_lock, ThreadState::kRunning);
+  EXPECT_FALSE(worker_thread_->running_debugger_task_);
+  EXPECT_TRUE(worker_thread_->ShouldScheduleToTerminateExecution(dummy_lock));
+
+  worker_thread_->running_debugger_task_ = true;
+  EXPECT_FALSE(worker_thread_->ShouldScheduleToTerminateExecution(dummy_lock));
+
+  worker_thread_->SetThreadState(dummy_lock, ThreadState::kReadyToShutdown);
+  EXPECT_FALSE(worker_thread_->ShouldScheduleToTerminateExecution(dummy_lock));
+
+  // This is necessary to satisfy DCHECK in the dtor of WorkerThread.
+  worker_thread_->SetExitCode(dummy_lock, ExitCode::kGracefullyTerminated);
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminateImmediately_AsyncTerminate)
-{
-    expectReportingCallsForWorkerPossiblyTerminatedBeforeInitialization();
-    start();
+TEST_F(WorkerThreadTest, AsyncTerminate_OnIdle) {
+  ExpectReportingCalls();
+  Start();
 
-    // There are two possible cases depending on timing:
-    // (1) If the thread hasn't been initialized on the worker thread yet,
-    // terminate() should not attempt to shut down the thread.
-    // (2) If the thread has already been initialized on the worker thread,
-    // terminate() should gracefully shut down the thread.
-    m_workerThread->terminate();
-    m_workerThread->waitForShutdownForTesting();
-    WorkerThread::ExitCode exitCode = m_workerThread->getExitCode();
-    EXPECT_EQ(WorkerThread::ExitCode::GracefullyTerminated, exitCode);
+  // Wait until the initialization completes and the worker thread becomes
+  // idle.
+  worker_thread_->WaitForInit();
+
+  // The worker thread is not being blocked, so the worker thread should be
+  // gracefully shut down.
+  worker_thread_->Terminate();
+  EXPECT_TRUE(IsForcibleTerminationTaskScheduled());
+  worker_thread_->WaitForShutdownForTesting();
+  EXPECT_EQ(ExitCode::kGracefullyTerminated, GetExitCode());
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminateImmediately_SyncTerminate)
-{
-    expectReportingCallsForWorkerPossiblyTerminatedBeforeInitialization();
-    start();
+TEST_F(WorkerThreadTest, SyncTerminate_OnIdle) {
+  ExpectReportingCalls();
+  Start();
 
-    // There are two possible cases depending on timing:
-    // (1) If the thread hasn't been initialized on the worker thread yet,
-    // terminateAndWait() should not attempt to shut down the thread.
-    // (2) If the thread has already been initialized on the worker thread,
-    // terminateAndWait() should synchronously forcibly terminates the worker
-    // execution.
-    m_workerThread->terminateAndWait();
-    WorkerThread::ExitCode exitCode = m_workerThread->getExitCode();
-    EXPECT_TRUE(WorkerThread::ExitCode::GracefullyTerminated == exitCode || WorkerThread::ExitCode::SyncForciblyTerminated == exitCode);
+  // Wait until the initialization completes and the worker thread becomes
+  // idle.
+  worker_thread_->WaitForInit();
+
+  worker_thread_->TerminateAndWait();
+  EXPECT_EQ(ExitCode::kSyncForciblyTerminated, GetExitCode());
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminateOnInitialization_TerminateWhileDebuggerTaskIsRunning)
-{
-    EXPECT_CALL(*m_mockWorkerReportingProxy, workerGlobalScopeStarted(_)).Times(1);
-    EXPECT_CALL(*m_mockWorkerReportingProxy, workerThreadTerminated()).Times(1);
-    EXPECT_CALL(*m_mockWorkerReportingProxy, willDestroyWorkerGlobalScope()).Times(1);
-    EXPECT_CALL(*m_mockWorkerThreadLifecycleObserver, contextDestroyed()).Times(1);
+TEST_F(WorkerThreadTest, AsyncTerminate_ImmediatelyAfterStart) {
+  ExpectReportingCallsForWorkerPossiblyTerminatedBeforeInitialization();
+  Start();
 
-    std::unique_ptr<Vector<CSPHeaderAndType>> headers = wrapUnique(new Vector<CSPHeaderAndType>());
-    CSPHeaderAndType headerAndType("contentSecurityPolicy", ContentSecurityPolicyHeaderTypeReport);
-    headers->append(headerAndType);
-
-    // Specify PauseWorkerGlobalScopeOnStart so that the worker thread can pause
-    // on initialziation to run debugger tasks.
-    std::unique_ptr<WorkerThreadStartupData> startupData = WorkerThreadStartupData::create(
-        KURL(ParsedURLString, "http://fake.url/"),
-        "fake user agent",
-        "//fake source code",
-        nullptr, /* cachedMetaData */
-        PauseWorkerGlobalScopeOnStart,
-        headers.get(),
-        "",
-        m_securityOrigin.get(),
-        nullptr, /* workerClients */
-        WebAddressSpaceLocal,
-        nullptr /* originTrialToken */,
-        nullptr /* WorkerSettings */,
-        V8CacheOptionsDefault);
-    m_workerThread->start(std::move(startupData));
-
-    m_workerThread->appendDebuggerTask(crossThreadBind(&waitForTermination, crossThreadUnretained(m_workerThread.get())));
-
-    // Wait for the debugger task.
-    testing::enterRunLoop();
-
-    // Start termination while the debugger task is running.
-    EXPECT_TRUE(m_workerThread->m_runningDebuggerTask);
-    m_workerThread->terminateAndWait();
-    EXPECT_EQ(WorkerThread::ExitCode::GracefullyTerminated, m_workerThread->getExitCode());
+  // The worker thread is not being blocked, so the worker thread should be
+  // gracefully shut down.
+  worker_thread_->Terminate();
+  worker_thread_->WaitForShutdownForTesting();
+  EXPECT_EQ(ExitCode::kGracefullyTerminated, GetExitCode());
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminateOnScriptLoaded_SyncForciblyTerminate)
-{
-    expectReportingCallsForWorkerForciblyTerminated();
-    startWithSourceCodeNotToFinish();
-    m_workerThread->waitUntilScriptLoaded();
+TEST_F(WorkerThreadTest, SyncTerminate_ImmediatelyAfterStart) {
+  ExpectReportingCallsForWorkerPossiblyTerminatedBeforeInitialization();
+  Start();
 
-    // terminateAndWait() synchronously terminates the worker execution.
-    m_workerThread->terminateAndWait();
-    EXPECT_EQ(WorkerThread::ExitCode::SyncForciblyTerminated, m_workerThread->getExitCode());
+  // There are two possible cases depending on timing:
+  // (1) If the thread hasn't been initialized on the worker thread yet,
+  // terminateAndWait() should wait for initialization and shut down the
+  // thread immediately after that.
+  // (2) If the thread has already been initialized on the worker thread,
+  // terminateAndWait() should synchronously forcibly terminates the worker
+  // execution.
+  // TODO(nhiroki): Make this test deterministically pass through the case 1),
+  // that is, terminateAndWait() is called before initializeOnWorkerThread().
+  // Then, rename this test to SyncTerminate_BeforeInitialization.
+  worker_thread_->TerminateAndWait();
+  ExitCode exit_code = GetExitCode();
+  EXPECT_TRUE(ExitCode::kGracefullyTerminated == exit_code ||
+              ExitCode::kSyncForciblyTerminated == exit_code);
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminateOnScriptLoaded_AsyncForciblyTerminate)
-{
-    const long long kForceTerminationDelayInMs = 10;
-    setForceTerminationDelayInMs(kForceTerminationDelayInMs);
+TEST_F(WorkerThreadTest, AsyncTerminate_WhileTaskIsRunning) {
+  const long long kForcibleTerminationDelayInMs = 10;
+  SetForcibleTerminationDelayInMs(kForcibleTerminationDelayInMs);
 
-    expectReportingCallsForWorkerForciblyTerminated();
-    startWithSourceCodeNotToFinish();
-    m_workerThread->waitUntilScriptLoaded();
+  ExpectReportingCallsForWorkerForciblyTerminated();
+  StartWithSourceCodeNotToFinish();
+  reporting_proxy_->WaitUntilScriptEvaluation();
 
-    // terminate() schedules a force termination task.
-    m_workerThread->terminate();
-    EXPECT_TRUE(isForceTerminationTaskScheduled());
-    EXPECT_EQ(WorkerThread::ExitCode::NotTerminated, m_workerThread->getExitCode());
+  // terminate() schedules a force termination task.
+  worker_thread_->Terminate();
+  EXPECT_TRUE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
 
-    // Wait until the force termination task runs.
-    testing::runDelayedTasks(kForceTerminationDelayInMs);
-    m_workerThread->waitForShutdownForTesting();
-    EXPECT_EQ(WorkerThread::ExitCode::AsyncForciblyTerminated, m_workerThread->getExitCode());
+  // Multiple terminate() calls should not take effect.
+  worker_thread_->Terminate();
+  worker_thread_->Terminate();
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
+
+  // Wait until the force termination task runs.
+  testing::RunDelayedTasks(kForcibleTerminationDelayInMs);
+  worker_thread_->WaitForShutdownForTesting();
+  EXPECT_EQ(ExitCode::kAsyncForciblyTerminated, GetExitCode());
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminateOnScriptLoaded_AsyncForciblyTerminate_MultipleTimes)
-{
-    const long long kForceTerminationDelayInMs = 10;
-    setForceTerminationDelayInMs(kForceTerminationDelayInMs);
+TEST_F(WorkerThreadTest, SyncTerminate_WhileTaskIsRunning) {
+  ExpectReportingCallsForWorkerForciblyTerminated();
+  StartWithSourceCodeNotToFinish();
+  reporting_proxy_->WaitUntilScriptEvaluation();
 
-    expectReportingCallsForWorkerForciblyTerminated();
-    startWithSourceCodeNotToFinish();
-    m_workerThread->waitUntilScriptLoaded();
-
-    // terminate() schedules a force termination task.
-    m_workerThread->terminate();
-    EXPECT_TRUE(isForceTerminationTaskScheduled());
-    EXPECT_EQ(WorkerThread::ExitCode::NotTerminated, m_workerThread->getExitCode());
-
-    // Multiple terminate() calls should not take effect.
-    m_workerThread->terminate();
-    m_workerThread->terminate();
-    EXPECT_EQ(WorkerThread::ExitCode::NotTerminated, m_workerThread->getExitCode());
-
-    // Wait until the force termination task runs.
-    testing::runDelayedTasks(kForceTerminationDelayInMs);
-    m_workerThread->waitForShutdownForTesting();
-    EXPECT_EQ(WorkerThread::ExitCode::AsyncForciblyTerminated, m_workerThread->getExitCode());
+  // terminateAndWait() synchronously terminates the worker execution.
+  worker_thread_->TerminateAndWait();
+  EXPECT_EQ(ExitCode::kSyncForciblyTerminated, GetExitCode());
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminateOnScriptLoaded_SyncForciblyTerminateAfterTerminationTaskIsScheduled)
-{
-    const long long kForceTerminationDelayInMs = 10;
-    setForceTerminationDelayInMs(kForceTerminationDelayInMs);
+TEST_F(WorkerThreadTest,
+       AsyncTerminateAndThenSyncTerminate_WhileTaskIsRunning) {
+  const long long kForcibleTerminationDelayInMs = 10;
+  SetForcibleTerminationDelayInMs(kForcibleTerminationDelayInMs);
 
-    expectReportingCallsForWorkerForciblyTerminated();
-    startWithSourceCodeNotToFinish();
-    m_workerThread->waitUntilScriptLoaded();
+  ExpectReportingCallsForWorkerForciblyTerminated();
+  StartWithSourceCodeNotToFinish();
+  reporting_proxy_->WaitUntilScriptEvaluation();
 
-    // terminate() schedules a force termination task.
-    m_workerThread->terminate();
-    EXPECT_TRUE(isForceTerminationTaskScheduled());
-    EXPECT_EQ(WorkerThread::ExitCode::NotTerminated, m_workerThread->getExitCode());
+  // terminate() schedules a force termination task.
+  worker_thread_->Terminate();
+  EXPECT_TRUE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
 
-    // terminateAndWait() should overtake the scheduled force termination task.
-    m_workerThread->terminateAndWait();
-    EXPECT_FALSE(isForceTerminationTaskScheduled());
-    EXPECT_EQ(WorkerThread::ExitCode::SyncForciblyTerminated, m_workerThread->getExitCode());
+  // terminateAndWait() should overtake the scheduled force termination task.
+  worker_thread_->TerminateAndWait();
+  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kSyncForciblyTerminated, GetExitCode());
 }
 
-TEST_F(WorkerThreadTest, StartAndTerminateOnScriptLoaded_TerminateWhileDebuggerTaskIsRunning)
-{
-    expectReportingCallsForWorkerForciblyTerminated();
-    startWithSourceCodeNotToFinish();
-    m_workerThread->waitUntilScriptLoaded();
+TEST_F(WorkerThreadTest, Terminate_WhileDebuggerTaskIsRunningOnInitialization) {
+  EXPECT_CALL(*reporting_proxy_, DidCreateWorkerGlobalScope(_)).Times(1);
+  EXPECT_CALL(*reporting_proxy_, DidInitializeWorkerContext()).Times(1);
+  EXPECT_CALL(*reporting_proxy_, WillDestroyWorkerGlobalScope()).Times(1);
+  EXPECT_CALL(*reporting_proxy_, DidTerminateWorkerThread()).Times(1);
+  EXPECT_CALL(*lifecycle_observer_, ContextDestroyed(_)).Times(1);
 
-    // Simulate that a debugger task is running.
-    m_workerThread->m_runningDebuggerTask = true;
+  std::unique_ptr<Vector<CSPHeaderAndType>> headers =
+      WTF::MakeUnique<Vector<CSPHeaderAndType>>();
+  CSPHeaderAndType header_and_type("contentSecurityPolicy",
+                                   kContentSecurityPolicyHeaderTypeReport);
+  headers->push_back(header_and_type);
 
-    // terminate() should not schedule a force termination task because there is
-    // a running debugger task.
-    m_workerThread->terminate();
-    EXPECT_FALSE(isForceTerminationTaskScheduled());
-    EXPECT_EQ(WorkerThread::ExitCode::NotTerminated, m_workerThread->getExitCode());
+  // Specify PauseWorkerGlobalScopeOnStart so that the worker thread can pause
+  // on initialziation to run debugger tasks.
+  std::unique_ptr<WorkerThreadStartupData> startup_data =
+      WorkerThreadStartupData::Create(
+          KURL(kParsedURLString, "http://fake.url/"), "fake user agent",
+          "//fake source code", nullptr, /* cachedMetaData */
+          kPauseWorkerGlobalScopeOnStart, headers.get(), "",
+          security_origin_.Get(), nullptr, /* workerClients */
+          kWebAddressSpaceLocal, nullptr /* originTrialToken */,
+          nullptr /* WorkerSettings */, WorkerV8Settings::Default());
+  worker_thread_->Start(std::move(startup_data),
+                        ParentFrameTaskRunners::Create(nullptr));
 
-    // Multiple terminate() calls should not take effect.
-    m_workerThread->terminate();
-    m_workerThread->terminate();
-    EXPECT_FALSE(isForceTerminationTaskScheduled());
-    EXPECT_EQ(WorkerThread::ExitCode::NotTerminated, m_workerThread->getExitCode());
+  // Used to wait for worker thread termination in a debugger task on the
+  // worker thread.
+  WaitableEvent waitable_event;
+  worker_thread_->AppendDebuggerTask(CrossThreadBind(
+      &WaitForSignalTask, CrossThreadUnretained(worker_thread_.get()),
+      CrossThreadUnretained(&waitable_event)));
 
-    // Focible termination request should also respect the running debugger
-    // task.
-    m_workerThread->terminateInternal(WorkerThread::TerminationMode::Forcible);
-    EXPECT_FALSE(isForceTerminationTaskScheduled());
-    EXPECT_EQ(WorkerThread::ExitCode::NotTerminated, m_workerThread->getExitCode());
+  // Wait for the debugger task.
+  testing::EnterRunLoop();
+  EXPECT_TRUE(worker_thread_->running_debugger_task_);
 
-    // Clean up in order to satisfy DCHECKs in dtors.
-    m_workerThread->m_runningDebuggerTask = false;
-    m_workerThread->forciblyTerminateExecution();
-    m_workerThread->waitForShutdownForTesting();
+  // terminate() should not schedule a force termination task because there is
+  // a running debugger task.
+  worker_thread_->Terminate();
+  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
+
+  // Multiple terminate() calls should not take effect.
+  worker_thread_->Terminate();
+  worker_thread_->Terminate();
+  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
+
+  // Focible termination request should also respect the running debugger
+  // task.
+  worker_thread_->TerminateInternal(WorkerThread::TerminationMode::kForcible);
+  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
+
+  // Resume the debugger task. Shutdown starts after that.
+  waitable_event.Signal();
+  worker_thread_->WaitForShutdownForTesting();
+  EXPECT_EQ(ExitCode::kGracefullyTerminated, GetExitCode());
+}
+
+TEST_F(WorkerThreadTest, Terminate_WhileDebuggerTaskIsRunning) {
+  ExpectReportingCalls();
+  Start();
+  worker_thread_->WaitForInit();
+
+  // Used to wait for worker thread termination in a debugger task on the
+  // worker thread.
+  WaitableEvent waitable_event;
+  worker_thread_->AppendDebuggerTask(CrossThreadBind(
+      &WaitForSignalTask, CrossThreadUnretained(worker_thread_.get()),
+      CrossThreadUnretained(&waitable_event)));
+
+  // Wait for the debugger task.
+  testing::EnterRunLoop();
+  EXPECT_TRUE(worker_thread_->running_debugger_task_);
+
+  // terminate() should not schedule a force termination task because there is
+  // a running debugger task.
+  worker_thread_->Terminate();
+  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
+
+  // Multiple terminate() calls should not take effect.
+  worker_thread_->Terminate();
+  worker_thread_->Terminate();
+  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
+
+  // Focible termination request should also respect the running debugger
+  // task.
+  worker_thread_->TerminateInternal(WorkerThread::TerminationMode::kForcible);
+  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
+
+  // Resume the debugger task. Shutdown starts after that.
+  waitable_event.Signal();
+  worker_thread_->WaitForShutdownForTesting();
+  EXPECT_EQ(ExitCode::kGracefullyTerminated, GetExitCode());
 }
 
 // TODO(nhiroki): Add tests for terminateAndWaitForAllWorkers.
 
-} // namespace blink
+}  // namespace blink

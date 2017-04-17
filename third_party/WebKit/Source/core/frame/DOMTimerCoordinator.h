@@ -5,9 +5,9 @@
 #ifndef DOMTimerCoordinator_h
 #define DOMTimerCoordinator_h
 
-#include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
 #include <memory>
+#include "platform/heap/Handle.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -22,46 +22,52 @@ class WebTaskRunner;
 // also tracks recursive creation or iterative scheduling of timers,
 // which is used as a signal for throttling repetitive timers.
 class DOMTimerCoordinator {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(DOMTimerCoordinator);
-public:
-    explicit DOMTimerCoordinator(std::unique_ptr<WebTaskRunner>);
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(DOMTimerCoordinator);
 
-    // Creates and installs a new timer. Returns the assigned ID.
-    int installNewTimeout(ExecutionContext*, ScheduledAction*, int timeout, bool singleShot);
+ public:
+  explicit DOMTimerCoordinator(RefPtr<WebTaskRunner>);
 
-    // Removes and disposes the timer with the specified ID, if any. This may
-    // destroy the timer.
-    DOMTimer* removeTimeoutByID(int id);
+  // Creates and installs a new timer. Returns the assigned ID.
+  int InstallNewTimeout(ExecutionContext*,
+                        ScheduledAction*,
+                        int timeout,
+                        bool single_shot);
 
-    // Timers created during the execution of other timers, and
-    // repeating timers, are throttled. Timer nesting level tracks the
-    // number of linked timers or repetitions of a timer. See
-    // https://html.spec.whatwg.org/#timers
-    int timerNestingLevel() { return m_timerNestingLevel; }
+  // Removes and disposes the timer with the specified ID, if any. This may
+  // destroy the timer.
+  DOMTimer* RemoveTimeoutByID(int id);
 
-    // Sets the timer nesting level. Set when a timer executes so that
-    // any timers created while the timer is executing will incur a
-    // deeper timer nesting level, see DOMTimer::DOMTimer.
-    void setTimerNestingLevel(int level) { m_timerNestingLevel = level; }
+  bool HasInstalledTimeout() const;
 
-    void setTimerTaskRunner(std::unique_ptr<WebTaskRunner>);
+  // Timers created during the execution of other timers, and
+  // repeating timers, are throttled. Timer nesting level tracks the
+  // number of linked timers or repetitions of a timer. See
+  // https://html.spec.whatwg.org/#timers
+  int TimerNestingLevel() { return timer_nesting_level_; }
 
-    WebTaskRunner* timerTaskRunner() const { return m_timerTaskRunner.get(); }
+  // Sets the timer nesting level. Set when a timer executes so that
+  // any timers created while the timer is executing will incur a
+  // deeper timer nesting level, see DOMTimer::DOMTimer.
+  void SetTimerNestingLevel(int level) { timer_nesting_level_ = level; }
 
-    DECLARE_TRACE(); // Oilpan.
+  void SetTimerTaskRunner(RefPtr<WebTaskRunner>);
 
-private:
-    int nextID();
+  RefPtr<WebTaskRunner> TimerTaskRunner() const { return timer_task_runner_; }
 
-    using TimeoutMap = HeapHashMap<int, Member<DOMTimer>>;
-    TimeoutMap m_timers;
+  DECLARE_TRACE();  // Oilpan.
 
-    int m_circularSequentialID;
-    int m_timerNestingLevel;
-    std::unique_ptr<WebTaskRunner> m_timerTaskRunner;
+ private:
+  int NextID();
+
+  using TimeoutMap = HeapHashMap<int, Member<DOMTimer>>;
+  TimeoutMap timers_;
+
+  int circular_sequential_id_;
+  int timer_nesting_level_;
+  RefPtr<WebTaskRunner> timer_task_runner_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMTimerCoordinator_h
+#endif  // DOMTimerCoordinator_h

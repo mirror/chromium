@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,75 +26,106 @@
 #include "core/css/StylePropertySet.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeComputedStyle.h"
-#include "core/frame/FrameHost.h"
+#include "core/layout/api/LayoutViewItem.h"
 
 namespace blink {
 
-StyleResolverState::StyleResolverState(Document& document, const ElementResolveContext& elementContext, const ComputedStyle* parentStyle)
-    : m_elementContext(elementContext)
-    , m_document(document)
-    , m_style(nullptr)
-    // TODO(jchaffraix): We should make m_parentStyle const (https://crbug.com/468152)
-    , m_parentStyle(const_cast<ComputedStyle*>(parentStyle))
-    , m_applyPropertyToRegularStyle(true)
-    , m_applyPropertyToVisitedLinkStyle(false)
-    , m_hasDirAutoAttribute(false)
-    , m_fontBuilder(document)
-    , m_elementStyleResources(document, document.devicePixelRatio())
-{
-    if (!m_parentStyle) {
-        // TODO(jchaffraix): We should make m_parentStyle const (https://crbug.com/468152)
-        m_parentStyle = const_cast<ComputedStyle*>(m_elementContext.parentStyle());
-    }
+StyleResolverState::StyleResolverState(
+    Document& document,
+    const ElementResolveContext& element_context,
+    const ComputedStyle* parent_style,
+    const ComputedStyle* layout_parent_style)
+    : element_context_(element_context),
+      document_(document),
+      style_(nullptr),
+      // TODO(jchaffraix): We should make parent_style_ const
+      // (https://crbug.com/468152)
+      parent_style_(const_cast<ComputedStyle*>(parent_style)),
+      layout_parent_style_(layout_parent_style),
+      is_animation_interpolation_map_ready_(false),
+      is_animating_custom_properties_(false),
+      apply_property_to_regular_style_(true),
+      apply_property_to_visited_link_style_(false),
+      has_dir_auto_attribute_(false),
+      font_builder_(document),
+      element_style_resources_(document, document.DevicePixelRatio()) {
+  DCHECK(!!parent_style_ == !!layout_parent_style_);
 
-    ASSERT(document.isActive());
+  if (!parent_style_) {
+    // TODO(jchaffraix): We should make parent_style_ const
+    // (https://crbug.com/468152)
+    parent_style_ = const_cast<ComputedStyle*>(element_context_.ParentStyle());
+  }
+
+  if (!layout_parent_style_)
+    layout_parent_style_ = element_context_.LayoutParentStyle();
+
+  if (!layout_parent_style_)
+    layout_parent_style_ = parent_style_;
+
+  DCHECK(document.IsActive());
 }
 
-StyleResolverState::StyleResolverState(Document& document, Element* element, const ComputedStyle* parentStyle)
-    : StyleResolverState(document, element ? ElementResolveContext(*element) : ElementResolveContext(document), parentStyle)
-{
+StyleResolverState::StyleResolverState(Document& document,
+                                       Element* element,
+                                       const ComputedStyle* parent_style,
+                                       const ComputedStyle* layout_parent_style)
+    : StyleResolverState(document,
+                         element ? ElementResolveContext(*element)
+                                 : ElementResolveContext(document),
+                         parent_style,
+                         layout_parent_style) {}
+
+StyleResolverState::~StyleResolverState() {
+  // For performance reasons, explicitly clear HeapVectors and
+  // HeapHashMaps to avoid giving a pressure on Oilpan's GC.
+  animation_update_.Clear();
 }
 
-StyleResolverState::~StyleResolverState()
-{
-    // For performance reasons, explicitly clear HeapVectors and
-    // HeapHashMaps to avoid giving a pressure on Oilpan's GC.
-    m_animationUpdate.clear();
+void StyleResolverState::SetStyle(PassRefPtr<ComputedStyle> style) {
+  // FIXME: Improve RAII of StyleResolverState to remove this function.
+  style_ = std::move(style);
+  css_to_length_conversion_data_ = CSSToLengthConversionData(
+      style_.Get(), RootElementStyle(), GetDocument().GetLayoutViewItem(),
+      style_->EffectiveZoom());
 }
 
-CSSToLengthConversionData StyleResolverState::fontSizeConversionData() const
-{
-    float em = parentStyle()->specifiedFontSize();
-    float rem = rootElementStyle() ? rootElementStyle()->specifiedFontSize() : 1;
-    CSSToLengthConversionData::FontSizes fontSizes(em, rem, &parentStyle()->font());
-    CSSToLengthConversionData::ViewportSize viewportSize(document().layoutViewItem());
+CSSToLengthConversionData StyleResolverState::FontSizeConversionData() const {
+  float em = ParentStyle()->SpecifiedFontSize();
+  float rem = RootElementStyle() ? RootElementStyle()->SpecifiedFontSize() : 1;
+  CSSToLengthConversionData::FontSizes font_sizes(em, rem,
+                                                  &ParentStyle()->GetFont());
+  CSSToLengthConversionData::ViewportSize viewport_size(
+      GetDocument().GetLayoutViewItem());
 
-    return CSSToLengthConversionData(style(), fontSizes, viewportSize, 1);
+  return CSSToLengthConversionData(Style(), font_sizes, viewport_size, 1);
 }
 
-void StyleResolverState::loadPendingResources()
-{
-    m_elementStyleResources.loadPendingResources(style());
+void StyleResolverState::LoadPendingResources() {
+  element_style_resources_.LoadPendingResources(Style());
 }
 
-void StyleResolverState::setCustomPropertySetForApplyAtRule(const String& string, StylePropertySet* customPropertySet)
-{
-    m_customPropertySetsForApplyAtRule.set(string, customPropertySet);
+void StyleResolverState::SetCustomPropertySetForApplyAtRule(
+    const String& string,
+    StylePropertySet* custom_property_set) {
+  custom_property_sets_for_apply_at_rule_.Set(string, custom_property_set);
 }
 
-StylePropertySet* StyleResolverState::customPropertySetForApplyAtRule(const String& string)
-{
-    return m_customPropertySetsForApplyAtRule.get(string);
+StylePropertySet* StyleResolverState::CustomPropertySetForApplyAtRule(
+    const String& string) {
+  return custom_property_sets_for_apply_at_rule_.at(string);
 }
 
-HeapHashMap<CSSPropertyID, Member<const CSSValue>>& StyleResolverState::parsedPropertiesForPendingSubstitution(const CSSPendingSubstitutionValue& value)
-{
-    HeapHashMap<CSSPropertyID, Member<const CSSValue>>* map = m_parsedPropertiesForPendingSubstitution.get(&value);
-    if (!map) {
-        map = new HeapHashMap<CSSPropertyID, Member<const CSSValue>>;
-        m_parsedPropertiesForPendingSubstitution.set(&value, map);
-    }
-    return *map;
+HeapHashMap<CSSPropertyID, Member<const CSSValue>>&
+StyleResolverState::ParsedPropertiesForPendingSubstitutionCache(
+    const CSSPendingSubstitutionValue& value) const {
+  HeapHashMap<CSSPropertyID, Member<const CSSValue>>* map =
+      parsed_properties_for_pending_substitution_cache_.at(&value);
+  if (!map) {
+    map = new HeapHashMap<CSSPropertyID, Member<const CSSValue>>;
+    parsed_properties_for_pending_substitution_cache_.Set(&value, map);
+  }
+  return *map;
 }
 
-} // namespace blink
+}  // namespace blink

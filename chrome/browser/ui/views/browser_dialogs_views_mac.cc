@@ -9,8 +9,9 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
 #include "chrome/browser/ui/views/content_setting_bubble_contents.h"
-#include "chrome/browser/ui/views/new_task_manager_view.h"
-#include "chrome/browser/ui/views/website_settings/website_settings_popup_view.h"
+#include "chrome/browser/ui/views/page_info/page_info_bubble_view.h"
+#include "chrome/browser/ui/views/task_manager_view.h"
+#include "chrome/browser/ui/views/update_recommended_message_box.h"
 
 // This file provides definitions of desktop browser dialog-creation methods for
 // Mac where a Cocoa browser is using Views dialogs. I.e. it is included in the
@@ -20,25 +21,27 @@
 
 namespace chrome {
 
-void ShowWebsiteSettingsBubbleViewsAtPoint(
+void ShowPageInfoBubbleViewsAtPoint(
     const gfx::Point& anchor_point,
     Profile* profile,
     content::WebContents* web_contents,
     const GURL& virtual_url,
-    const security_state::SecurityStateModel::SecurityInfo& security_info) {
+    const security_state::SecurityInfo& security_info) {
   // Don't show the bubble again if it's already showing. A second click on the
   // location icon in the omnibox will dismiss an open bubble. This behaviour is
   // consistent with the non-Mac views implementation.
-  // Note that when the browser is toolkit-views, IsPopupShowing() is checked
-  // earlier because the popup is shown on mouse release (but dismissed on
+  // Note that when the browser is toolkit-views, IsBubbleShowing() is checked
+  // earlier because the bubble is shown on mouse release (but dismissed on
   // mouse pressed). A Cocoa browser does both on mouse pressed, so a check
   // when showing is sufficient.
-  if (WebsiteSettingsPopupView::IsPopupShowing())
+  if (PageInfoBubbleView::GetShownBubbleType() !=
+      PageInfoBubbleView::BUBBLE_NONE) {
     return;
+  }
 
-  WebsiteSettingsPopupView::ShowPopup(
-      nullptr, gfx::Rect(anchor_point, gfx::Size()), profile, web_contents,
-      virtual_url, security_info);
+  PageInfoBubbleView::ShowBubble(nullptr, gfx::Rect(anchor_point, gfx::Size()),
+                                 profile, web_contents, virtual_url,
+                                 security_info);
 }
 
 void ShowBookmarkBubbleViewsAtPoint(const gfx::Point& anchor_point,
@@ -56,15 +59,12 @@ void ShowBookmarkBubbleViewsAtPoint(const gfx::Point& anchor_point,
       std::move(delegate), browser->profile(), virtual_url, already_bookmarked);
 }
 
-task_management::TaskManagerTableModel* ShowTaskManagerViews(Browser* browser) {
-  // On platforms other than Mac, the new task manager is shown unless
-  // explicitly disabled. Assume that running with ToolkitViewsDialogsEnabled()
-  // on Mac also means the new task manager is desired.
-  return task_management::NewTaskManagerView::Show(browser);
+task_manager::TaskManagerTableModel* ShowTaskManagerViews(Browser* browser) {
+  return task_manager::TaskManagerView::Show(browser);
 }
 
 void HideTaskManagerViews() {
-  task_management::NewTaskManagerView::Hide();
+  task_manager::TaskManagerView::Hide();
 }
 
 void ContentSettingBubbleViewsBridge::Show(gfx::NativeView parent_view,
@@ -77,6 +77,10 @@ void ContentSettingBubbleViewsBridge::Show(gfx::NativeView parent_view,
   contents->set_parent_window(parent_view);
   contents->SetAnchorRect(gfx::Rect(anchor, gfx::Size()));
   views::BubbleDialogDelegateView::CreateBubble(contents)->Show();
+}
+
+void ShowUpdateChromeDialogViews(gfx::NativeWindow parent) {
+  UpdateRecommendedMessageBox::Show(parent);
 }
 
 }  // namespace chrome

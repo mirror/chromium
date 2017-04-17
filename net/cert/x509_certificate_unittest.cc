@@ -167,12 +167,11 @@ TEST(X509CertificateTest, WebkitCertParsing) {
   EXPECT_EQ("webkit.org", dns_names[1]);
 
   // Test that the wildcard cert matches properly.
-  bool unused = false;
-  EXPECT_TRUE(webkit_cert->VerifyNameMatch("www.webkit.org", &unused));
-  EXPECT_TRUE(webkit_cert->VerifyNameMatch("foo.webkit.org", &unused));
-  EXPECT_TRUE(webkit_cert->VerifyNameMatch("webkit.org", &unused));
-  EXPECT_FALSE(webkit_cert->VerifyNameMatch("www.webkit.com", &unused));
-  EXPECT_FALSE(webkit_cert->VerifyNameMatch("www.foo.webkit.com", &unused));
+  EXPECT_TRUE(webkit_cert->VerifyNameMatch("www.webkit.org", false));
+  EXPECT_TRUE(webkit_cert->VerifyNameMatch("foo.webkit.org", false));
+  EXPECT_TRUE(webkit_cert->VerifyNameMatch("webkit.org", false));
+  EXPECT_FALSE(webkit_cert->VerifyNameMatch("www.webkit.com", false));
+  EXPECT_FALSE(webkit_cert->VerifyNameMatch("www.foo.webkit.com", false));
 }
 
 TEST(X509CertificateTest, ThawteCertParsing) {
@@ -272,6 +271,7 @@ TEST(X509CertificateTest, SerialNumbers) {
   scoped_refptr<X509Certificate> google_cert(
       X509Certificate::CreateFromBytes(
           reinterpret_cast<const char*>(google_der), sizeof(google_der)));
+  ASSERT_TRUE(google_cert);
 
   static const uint8_t google_serial[16] = {
     0x01,0x2a,0x39,0x76,0x0d,0x3f,0x4f,0xc9,
@@ -282,23 +282,30 @@ TEST(X509CertificateTest, SerialNumbers) {
   EXPECT_TRUE(memcmp(google_cert->serial_number().data(), google_serial,
                      sizeof(google_serial)) == 0);
 
-  // We also want to check a serial number where the first byte is >= 0x80 in
-  // case the underlying library tries to pad it.
+// TODO(mattm): Creating the X509Certificate fails on some platforms due to the
+// null in the subject. Generate a new test cert specifically for this case
+// rather than reusing paypal_null_cert.
+#if !defined(OS_WIN) && !BUILDFLAG(USE_BYTE_CERTS)
+  // Check a serial number where the first byte is >= 0x80, the DER returned by
+  // serial() should contain the leading 0 padding byte.
   scoped_refptr<X509Certificate> paypal_null_cert(
       X509Certificate::CreateFromBytes(
           reinterpret_cast<const char*>(paypal_null_der),
           sizeof(paypal_null_der)));
+  ASSERT_TRUE(paypal_null_cert);
 
   static const uint8_t paypal_null_serial[3] = {0x00, 0xf0, 0x9b};
   ASSERT_EQ(sizeof(paypal_null_serial),
             paypal_null_cert->serial_number().size());
   EXPECT_TRUE(memcmp(paypal_null_cert->serial_number().data(),
                      paypal_null_serial, sizeof(paypal_null_serial)) == 0);
+#endif  // !defined(OS_WIN)
 }
 
 TEST(X509CertificateTest, SHA256FingerprintsCorrectly) {
   scoped_refptr<X509Certificate> google_cert(X509Certificate::CreateFromBytes(
       reinterpret_cast<const char*>(google_der), sizeof(google_der)));
+  ASSERT_TRUE(google_cert);
 
   const SHA256HashValue google_sha256_fingerprint = {
       {0x21, 0xaf, 0x58, 0x74, 0xea, 0x6b, 0xad, 0xbd, 0xe4, 0xb3, 0xb1,
@@ -329,18 +336,21 @@ TEST(X509CertificateTest, CAFingerprints) {
   scoped_refptr<X509Certificate> cert_chain1 =
       X509Certificate::CreateFromHandle(server_cert->os_cert_handle(),
                                         intermediates);
+  ASSERT_TRUE(cert_chain1);
 
   intermediates.clear();
   intermediates.push_back(intermediate_cert2->os_cert_handle());
   scoped_refptr<X509Certificate> cert_chain2 =
       X509Certificate::CreateFromHandle(server_cert->os_cert_handle(),
                                         intermediates);
+  ASSERT_TRUE(cert_chain2);
 
   // No intermediate CA certicates.
   intermediates.clear();
   scoped_refptr<X509Certificate> cert_chain3 =
       X509Certificate::CreateFromHandle(server_cert->os_cert_handle(),
                                         intermediates);
+  ASSERT_TRUE(cert_chain3);
 
   SHA256HashValue cert_chain1_ca_fingerprint_256 = {
       {0x51, 0x15, 0x30, 0x49, 0x97, 0x54, 0xf8, 0xb4, 0x17, 0x41, 0x6b,
@@ -398,9 +408,16 @@ TEST(X509CertificateTest, ParseSubjectAltNames) {
       ImportCertFromFile(certs_dir, "subjectAltName_sanity_check.pem");
   ASSERT_NE(static_cast<X509Certificate*>(NULL), san_cert.get());
 
+  // Ensure that testing for SAN without using it is accepted.
+  EXPECT_TRUE(san_cert->GetSubjectAltName(nullptr, nullptr));
+
+  // Ensure that it's possible to get just dNSNames.
   std::vector<std::string> dns_names;
+  EXPECT_TRUE(san_cert->GetSubjectAltName(&dns_names, nullptr));
+
+  // Ensure that it's possible to get just iPAddresses.
   std::vector<std::string> ip_addresses;
-  san_cert->GetSubjectAltName(&dns_names, &ip_addresses);
+  EXPECT_TRUE(san_cert->GetSubjectAltName(nullptr, &ip_addresses));
 
   // Ensure that DNS names are correctly parsed.
   ASSERT_EQ(1U, dns_names.size());
@@ -427,6 +444,16 @@ TEST(X509CertificateTest, ParseSubjectAltNames) {
   // Ensure the subjectAltName dirName has not influenced the handling of
   // the subject commonName.
   EXPECT_EQ("127.0.0.1", san_cert->subject().common_name);
+
+  scoped_refptr<X509Certificate> no_san_cert =
+      ImportCertFromFile(certs_dir, "salesforce_com_test.pem");
+  ASSERT_NE(static_cast<X509Certificate*>(NULL), no_san_cert.get());
+
+  EXPECT_NE(0u, dns_names.size());
+  EXPECT_NE(0u, ip_addresses.size());
+  EXPECT_FALSE(no_san_cert->GetSubjectAltName(&dns_names, &ip_addresses));
+  EXPECT_EQ(0u, dns_names.size());
+  EXPECT_EQ(0u, ip_addresses.size());
 }
 
 #if defined(USE_NSS_CERTS)
@@ -492,6 +519,32 @@ TEST(X509CertificateTest, ExtractCRLURLsFromDERCert) {
   }
 }
 
+TEST(X509CertificateTest, HasTLSFeatureExtension) {
+  base::FilePath certs_dir = GetTestCertsDirectory();
+  scoped_refptr<X509Certificate> cert =
+      ImportCertFromFile(certs_dir, "tls_feature_extension.pem");
+  ASSERT_NE(static_cast<X509Certificate*>(NULL), cert.get());
+
+  std::string derBytes;
+  EXPECT_TRUE(
+      X509Certificate::GetDEREncoded(cert->os_cert_handle(), &derBytes));
+
+  EXPECT_TRUE(asn1::HasTLSFeatureExtension(derBytes));
+}
+
+TEST(X509CertificateTest, DoesNotHaveTLSFeatureExtension) {
+  base::FilePath certs_dir = GetTestCertsDirectory();
+  scoped_refptr<X509Certificate> cert =
+      ImportCertFromFile(certs_dir, "ok_cert.pem");
+  ASSERT_NE(static_cast<X509Certificate*>(NULL), cert.get());
+
+  std::string derBytes;
+  EXPECT_TRUE(
+      X509Certificate::GetDEREncoded(cert->os_cert_handle(), &derBytes));
+
+  EXPECT_FALSE(asn1::HasTLSFeatureExtension(derBytes));
+}
+
 // Tests X509CertificateCache via X509Certificate::CreateFromHandle.  We
 // call X509Certificate::CreateFromHandle several times and observe whether
 // it returns a cached or new OSCertHandle.
@@ -505,6 +558,7 @@ TEST(X509CertificateTest, Cache) {
   scoped_refptr<X509Certificate> cert1(X509Certificate::CreateFromHandle(
       google_cert_handle, X509Certificate::OSCertHandles()));
   X509Certificate::FreeOSCertHandle(google_cert_handle);
+  ASSERT_TRUE(cert1);
 
   // Add the same certificate, but as a new handle.
   google_cert_handle = X509Certificate::CreateOSCertHandleFromBytes(
@@ -512,6 +566,7 @@ TEST(X509CertificateTest, Cache) {
   scoped_refptr<X509Certificate> cert2(X509Certificate::CreateFromHandle(
       google_cert_handle, X509Certificate::OSCertHandles()));
   X509Certificate::FreeOSCertHandle(google_cert_handle);
+  ASSERT_TRUE(cert2);
 
   // A new X509Certificate should be returned.
   EXPECT_NE(cert1.get(), cert2.get());
@@ -533,6 +588,7 @@ TEST(X509CertificateTest, Cache) {
       google_cert_handle, intermediates));
   X509Certificate::FreeOSCertHandle(google_cert_handle);
   X509Certificate::FreeOSCertHandle(thawte_cert_handle);
+  ASSERT_TRUE(cert3);
 
   // Test that the new certificate, even with intermediates, results in the
   // same underlying handle being used.
@@ -584,10 +640,12 @@ TEST(X509CertificateTest, IntermediateCertificates) {
   scoped_refptr<X509Certificate> webkit_cert(
       X509Certificate::CreateFromBytes(
           reinterpret_cast<const char*>(webkit_der), sizeof(webkit_der)));
+  ASSERT_TRUE(webkit_cert);
 
   scoped_refptr<X509Certificate> thawte_cert(
       X509Certificate::CreateFromBytes(
           reinterpret_cast<const char*>(thawte_der), sizeof(thawte_der)));
+  ASSERT_TRUE(thawte_cert);
 
   X509Certificate::OSCertHandle google_handle;
   // Create object with no intermediates:
@@ -596,6 +654,7 @@ TEST(X509CertificateTest, IntermediateCertificates) {
   X509Certificate::OSCertHandles intermediates1;
   scoped_refptr<X509Certificate> cert1;
   cert1 = X509Certificate::CreateFromHandle(google_handle, intermediates1);
+  ASSERT_TRUE(cert1);
   EXPECT_EQ(0u, cert1->GetIntermediateCertificates().size());
 
   // Create object with 2 intermediates:
@@ -604,6 +663,7 @@ TEST(X509CertificateTest, IntermediateCertificates) {
   intermediates2.push_back(thawte_cert->os_cert_handle());
   scoped_refptr<X509Certificate> cert2;
   cert2 = X509Certificate::CreateFromHandle(google_handle, intermediates2);
+  ASSERT_TRUE(cert2);
 
   // Verify it has all the intermediates:
   const X509Certificate::OSCertHandles& cert2_intermediates =
@@ -716,6 +776,7 @@ TEST(X509CertificateTest, IsIssuedByEncodedWithIntermediates) {
   scoped_refptr<X509Certificate> cert_chain =
       X509Certificate::CreateFromHandle(policy_chain[0]->os_cert_handle(),
                                         intermediates);
+  ASSERT_TRUE(cert_chain);
 
   std::vector<std::string> issuers;
 
@@ -882,6 +943,7 @@ TEST_P(X509CertificateParseTest, CanParseFormat) {
 
     // A cert is expected - make sure that one was parsed.
     ASSERT_LT(i, certs.size());
+    ASSERT_TRUE(certs[i]);
 
     // Compare the parsed certificate with the expected certificate, by
     // comparing fingerprints.
@@ -907,6 +969,10 @@ struct CertificateNameVerifyTestData {
   // Comma separated list of certificate IP Addresses to match against. Each
   // address is x prefixed 16 byte hex code for v6 or dotted-decimals for v4.
   const char* ip_addrs;
+  // Whether to disable matching against the commonName. This is a negative
+  // condition so that tests can omit one or more of the above fields and
+  // allow default initialization to handle this case.
+  bool disable_fallback;
 };
 
 // GTest 'magic' pretty-printer, so that if/when a test fails, it knows how
@@ -920,7 +986,8 @@ void PrintTo(const CertificateNameVerifyTestData& data, std::ostream* os) {
       << "; hostname: " << data.hostname
       << "; common_name: " << data.common_name
       << "; dns_names: " << base::StringPiece(data.dns_names)
-      << "; ip_addrs: " << base::StringPiece(data.ip_addrs);
+      << "; ip_addrs: " << base::StringPiece(data.ip_addrs)
+      << "; disable_fallback: " << data.disable_fallback;
 }
 
 const CertificateNameVerifyTestData kNameVerifyTestData[] = {
@@ -949,12 +1016,15 @@ const CertificateNameVerifyTestData kNameVerifyTestData[] = {
     { true, "ww%57.foo.com", "", "www.foo.com" },
     { true, "www&.foo.com", "www%26.foo.com" },
     // Common name must not be used if subject alternative name was provided.
-    { false, "www.test.co.jp",  "www.test.co.jp",
+    { false, "www.test.co.jp", "www.test.co.jp",
         "*.test.de,*.jp,www.test.co.uk,www.*.co.jp" },
     { false, "www.bar.foo.com", "www.bar.foo.com",
       "*.foo.com,*.*.foo.com,*.*.bar.foo.com,*..bar.foo.com," },
     { false, "www.bath.org", "www.bath.org", "", "20.30.40.50" },
-    { false, "66.77.88.99", "www.bath.org", "www.bath.org" },
+    { false, "66.77.88.99", "66.77.88.99", "www.bath.org" },
+    // Common name must not be used if fallback is disabled.
+    { false, "www.test.com", "www.test.com", nullptr, nullptr, true },
+    { false, "127.0.0.1", "127.0.0.1", nullptr, nullptr, true },
     // IDN tests
     { true, "xn--poema-9qae5a.com.br", "xn--poema-9qae5a.com.br" },
     { true, "www.xn--poema-9qae5a.com.br", "*.xn--poema-9qae5a.com.br" },
@@ -1117,9 +1187,10 @@ TEST_P(X509CertificateNameVerifyTest, VerifyHostname) {
     }
   }
 
-  bool unused = false;
-  EXPECT_EQ(test_data.expected, X509Certificate::VerifyHostname(
-      test_data.hostname, common_name, dns_names, ip_addressses, &unused));
+  EXPECT_EQ(test_data.expected,
+            X509Certificate::VerifyHostname(test_data.hostname, common_name,
+                                            dns_names, ip_addressses,
+                                            !test_data.disable_fallback));
 }
 
 INSTANTIATE_TEST_CASE_P(, X509CertificateNameVerifyTest,
@@ -1130,16 +1201,13 @@ const struct PublicKeyInfoTestData {
   size_t expected_bits;
   X509Certificate::PublicKeyType expected_type;
 } kPublicKeyInfoTestData[] = {
-    {"768-rsa-ee-by-768-rsa-intermediate.pem",
-     768,
+    {"768-rsa-ee-by-768-rsa-intermediate.pem", 768,
      X509Certificate::kPublicKeyTypeRSA},
-    {"1024-rsa-ee-by-768-rsa-intermediate.pem",
-     1024,
+    {"1024-rsa-ee-by-768-rsa-intermediate.pem", 1024,
      X509Certificate::kPublicKeyTypeRSA},
-    {"prime256v1-ecdsa-ee-by-1024-rsa-intermediate.pem",
-     256,
+    {"prime256v1-ecdsa-ee-by-1024-rsa-intermediate.pem", 256,
      X509Certificate::kPublicKeyTypeECDSA},
-#if defined(OS_MACOSX) && !defined(OS_IOS)
+#if defined(OS_MACOSX) && !defined(OS_IOS) && !BUILDFLAG(USE_BYTE_CERTS)
     // OS X has an key length limit of 4096 bits. This should manifest as an
     // unknown key. If a future version of OS X changes this, large_key.pem may
     // need to be renegerated with a larger key. See https://crbug.com/472291.

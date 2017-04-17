@@ -9,10 +9,12 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/resource_request_info.h"
+#include "content/public/browser/websocket_handshake_request_info.h"
 #include "content/public/common/child_process_host.h"
 #include "extensions/browser/api/web_request/upload_data_presenter.h"
 #include "extensions/browser/api/web_request/web_request_api_constants.h"
 #include "extensions/browser/api/web_request/web_request_api_helpers.h"
+#include "extensions/browser/api/web_request/web_request_resource_type.h"
 #include "ipc/ipc_message.h"
 #include "net/base/auth.h"
 #include "net/base/upload_data_stream.h"
@@ -32,20 +34,34 @@ WebRequestEventDetails::WebRequestEventDetails(const net::URLRequest* request,
     : extra_info_spec_(extra_info_spec),
       render_process_id_(content::ChildProcessHost::kInvalidUniqueID),
       render_frame_id_(MSG_ROUTING_NONE) {
-  content::ResourceType resource_type = content::RESOURCE_TYPE_LAST_TYPE;
+  auto resource_type = GetWebRequestResourceType(request);
   const content::ResourceRequestInfo* info =
       content::ResourceRequestInfo::ForRequest(request);
   if (info) {
     render_process_id_ = info->GetChildID();
     render_frame_id_ = info->GetRenderFrameID();
-    resource_type = info->GetResourceType();
+  } else if (resource_type == WebRequestResourceType::WEB_SOCKET) {
+    // TODO(pkalinnikov): Consider embedding WebSocketHandshakeRequestInfo into
+    // UrlRequestUserData.
+    const content::WebSocketHandshakeRequestInfo* ws_info =
+        content::WebSocketHandshakeRequestInfo::ForRequest(request);
+    if (ws_info) {
+      render_process_id_ = ws_info->GetChildId();
+      render_frame_id_ = ws_info->GetRenderFrameId();
+    }
+  } else {
+    // Fallback for requests that are not allocated by a
+    // ResourceDispatcherHost, such as the TemplateURLFetcher.
+    content::ResourceRequestInfo::GetRenderFrameForRequest(
+        request, &render_process_id_, &render_frame_id_);
   }
 
   dict_.SetString(keys::kMethodKey, request->method());
   dict_.SetString(keys::kRequestIdKey,
                   base::Uint64ToString(request->identifier()));
   dict_.SetDouble(keys::kTimeStampKey, base::Time::Now().ToDoubleT() * 1000);
-  dict_.SetString(keys::kTypeKey, helpers::ResourceTypeToString(resource_type));
+  dict_.SetString(keys::kTypeKey,
+                  WebRequestResourceTypeToString(resource_type));
   dict_.SetString(keys::kUrlKey, request->url().spec());
 }
 
@@ -149,16 +165,20 @@ void WebRequestEventDetails::SetResponseSource(const net::URLRequest* request) {
     dict_.SetString(keys::kIpKey, response_ip);
 }
 
+void WebRequestEventDetails::SetFrameData(
+    const ExtensionApiFrameIdMap::FrameData& frame_data) {
+  dict_.SetInteger(keys::kTabIdKey, frame_data.tab_id);
+  dict_.SetInteger(keys::kFrameIdKey, frame_data.frame_id);
+  dict_.SetInteger(keys::kParentFrameIdKey, frame_data.parent_frame_id);
+}
+
 void WebRequestEventDetails::DetermineFrameDataOnUI() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   content::RenderFrameHost* rfh =
       content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
   ExtensionApiFrameIdMap::FrameData frame_data =
       ExtensionApiFrameIdMap::Get()->GetFrameData(rfh);
-
-  dict_.SetInteger(keys::kTabIdKey, frame_data.tab_id);
-  dict_.SetInteger(keys::kFrameIdKey, frame_data.frame_id);
-  dict_.SetInteger(keys::kParentFrameIdKey, frame_data.parent_frame_id);
+  SetFrameData(frame_data);
 }
 
 void WebRequestEventDetails::DetermineFrameDataOnIO(
@@ -189,13 +209,41 @@ WebRequestEventDetails::GetAndClearDict() {
   return result;
 }
 
+void WebRequestEventDetails::FilterForPublicSession() {
+  request_body_ = nullptr;
+  request_headers_ = nullptr;
+  response_headers_ = nullptr;
+
+  extra_info_spec_ = 0;
+
+  static const char* const kSafeAttributes[] = {
+    "method", "requestId", "timeStamp", "type", "tabId", "frameId",
+    "parentFrameId", "fromCache", "error", "ip", "statusLine", "statusCode"
+  };
+
+  auto copy = GetAndClearDict();
+
+  for (const char* safe_attr : kSafeAttributes) {
+    std::unique_ptr<base::Value> val;
+    if (copy->Remove(safe_attr, &val))
+      dict_.Set(safe_attr, std::move(val));
+  }
+
+  // URL is stripped down to the origin.
+  std::string url;
+  copy->GetString(keys::kUrlKey, &url);
+  GURL gurl(url);
+  dict_.SetString(keys::kUrlKey, gurl.GetOrigin().spec());
+}
+
+WebRequestEventDetails::WebRequestEventDetails()
+    : extra_info_spec_(0), render_process_id_(0), render_frame_id_(0) {}
+
 void WebRequestEventDetails::OnDeterminedFrameData(
     std::unique_ptr<WebRequestEventDetails> self,
     const DeterminedFrameDataCallback& callback,
     const ExtensionApiFrameIdMap::FrameData& frame_data) {
-  dict_.SetInteger(keys::kTabIdKey, frame_data.tab_id);
-  dict_.SetInteger(keys::kFrameIdKey, frame_data.frame_id);
-  dict_.SetInteger(keys::kParentFrameIdKey, frame_data.parent_frame_id);
+  SetFrameData(frame_data);
   callback.Run(std::move(self));
 }
 

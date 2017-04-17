@@ -36,13 +36,13 @@ cr.define('cr.ui.table', function() {
      * @return {cr.ui.table.TableColumn} Clone of the given column.
      */
     clone: function() {
-      var tableColumn = new TableColumn(this.id_, this.name_, this.width_,
-                                        this.endAlign_);
+      var tableColumn =
+          new TableColumn(this.id_, this.name_, this.width_, this.endAlign_);
       tableColumn.renderFunction = this.renderFunction_;
       tableColumn.headerRenderFunction = this.headerRenderFunction_;
       tableColumn.defaultOrder = this.defaultOrder_;
 
-      tableColumn.visible_  = this.visible_;
+      tableColumn.visible_ = this.visible_;
 
       return tableColumn;
     },
@@ -51,7 +51,7 @@ cr.define('cr.ui.table', function() {
      * Renders table cell. This is the default render function.
      * @param {*} dataItem The data item to be rendered.
      * @param {string} columnId The column id.
-     * @param {cr.ui.Table} table The table.
+     * @param {Element} table The table.
      * @return {HTMLElement} Rendered element.
      */
     renderFunction_: function(dataItem, columnId, table) {
@@ -64,7 +64,7 @@ cr.define('cr.ui.table', function() {
 
     /**
      * Renders table header. This is the default render function.
-     * @param {cr.ui.Table} table The table.
+     * @param {Element} table The table.
      * @return {Text} Rendered text node.
      */
     headerRenderFunction_: function(table) {
@@ -121,13 +121,13 @@ cr.define('cr.ui.table', function() {
 
   /**
    * The column render function.
-   * @type {function(*, string, cr.ui.Table): HTMLElement}
+   * @type {function(*, string, Element): HTMLElement}
    */
   cr.defineProperty(TableColumn, 'renderFunction');
 
   /**
    * The column header render function.
-   * @type {function(cr.ui.Table): Text}
+   * @type {function(Element): Text}
    */
   cr.defineProperty(TableColumn, 'headerRenderFunction');
 
@@ -137,7 +137,5 @@ cr.define('cr.ui.table', function() {
    */
   cr.defineProperty(TableColumn, 'defaultOrder');
 
-  return {
-    TableColumn: TableColumn
-  };
+  return {TableColumn: TableColumn};
 });

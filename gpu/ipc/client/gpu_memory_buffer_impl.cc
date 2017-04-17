@@ -12,12 +12,8 @@
 #include "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.h"
 #endif
 
-#if defined(OS_ANDROID)
-#include "gpu/ipc/client/gpu_memory_buffer_impl_surface_texture.h"
-#endif
-
-#if defined(USE_OZONE)
-#include "gpu/ipc/client/gpu_memory_buffer_impl_ozone_native_pixmap.h"
+#if defined(OS_LINUX)
+#include "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.h"
 #endif
 
 namespace gpu {
@@ -34,7 +30,8 @@ GpuMemoryBufferImpl::GpuMemoryBufferImpl(gfx::GpuMemoryBufferId id,
 
 GpuMemoryBufferImpl::~GpuMemoryBufferImpl() {
   DCHECK(!mapped_);
-  callback_.Run(destruction_sync_token_);
+  if (!callback_.is_null())
+    callback_.Run(destruction_sync_token_);
 }
 
 // static
@@ -53,26 +50,15 @@ std::unique_ptr<GpuMemoryBufferImpl> GpuMemoryBufferImpl::CreateFromHandle(
       return GpuMemoryBufferImplIOSurface::CreateFromHandle(
           handle, size, format, usage, callback);
 #endif
-#if defined(OS_ANDROID)
-    case gfx::SURFACE_TEXTURE_BUFFER:
-      return GpuMemoryBufferImplSurfaceTexture::CreateFromHandle(
-          handle, size, format, usage, callback);
-#endif
-#if defined(USE_OZONE)
-    case gfx::OZONE_NATIVE_PIXMAP:
-      return GpuMemoryBufferImplOzoneNativePixmap::CreateFromHandle(
+#if defined(OS_LINUX)
+    case gfx::NATIVE_PIXMAP:
+      return GpuMemoryBufferImplNativePixmap::CreateFromHandle(
           handle, size, format, usage, callback);
 #endif
     default:
       NOTREACHED();
       return nullptr;
   }
-}
-
-// static
-GpuMemoryBufferImpl* GpuMemoryBufferImpl::FromClientBuffer(
-    ClientBuffer buffer) {
-  return reinterpret_cast<GpuMemoryBufferImpl*>(buffer);
 }
 
 gfx::Size GpuMemoryBufferImpl::GetSize() const {

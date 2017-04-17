@@ -6,6 +6,145 @@
  * @fileoverview 'settings-autofill-section' is the section containing saved
  * addresses and credit cards for use in autofill.
  */
+
+/**
+ * Interface for all callbacks to the autofill API.
+ * @interface
+ */
+function AutofillManager() {}
+
+/** @typedef {chrome.autofillPrivate.AddressEntry} */
+AutofillManager.AddressEntry;
+
+/** @typedef {chrome.autofillPrivate.CreditCardEntry} */
+AutofillManager.CreditCardEntry;
+
+AutofillManager.prototype = {
+  /**
+   * Add an observer to the list of addresses.
+   * @param {function(!Array<!AutofillManager.AddressEntry>):void} listener
+   */
+  addAddressListChangedListener: assertNotReached,
+
+  /**
+   * Remove an observer from the list of addresses.
+   * @param {function(!Array<!AutofillManager.AddressEntry>):void} listener
+   */
+  removeAddressListChangedListener: assertNotReached,
+
+  /**
+   * Request the list of addresses.
+   * @param {function(!Array<!AutofillManager.AddressEntry>):void} callback
+   */
+  getAddressList: assertNotReached,
+
+  /**
+   * Saves the given address.
+   * @param {!AutofillManager.AddressEntry} address
+   */
+  saveAddress: assertNotReached,
+
+  /** @param {string} guid The guid of the address to remove.  */
+  removeAddress: assertNotReached,
+
+  /**
+   * Add an observer to the list of credit cards.
+   * @param {function(!Array<!AutofillManager.CreditCardEntry>):void} listener
+   */
+  addCreditCardListChangedListener: assertNotReached,
+
+  /**
+   * Remove an observer from the list of credit cards.
+   * @param {function(!Array<!AutofillManager.CreditCardEntry>):void} listener
+   */
+  removeCreditCardListChangedListener: assertNotReached,
+
+  /**
+   * Request the list of credit cards.
+   * @param {function(!Array<!AutofillManager.CreditCardEntry>):void} callback
+   */
+  getCreditCardList: assertNotReached,
+
+  /** @param {string} guid The GUID of the credit card to remove.  */
+  removeCreditCard: assertNotReached,
+
+  /** @param {string} guid The GUID to credit card to remove from the cache. */
+  clearCachedCreditCard: assertNotReached,
+
+  /**
+   * Saves the given credit card.
+   * @param {!AutofillManager.CreditCardEntry} creditCard
+   */
+  saveCreditCard: assertNotReached,
+};
+
+/**
+ * Implementation that accesses the private API.
+ * @implements {AutofillManager}
+ * @constructor
+ */
+function AutofillManagerImpl() {}
+cr.addSingletonGetter(AutofillManagerImpl);
+
+AutofillManagerImpl.prototype = {
+  __proto__: AutofillManager,
+
+  /** @override */
+  addAddressListChangedListener: function(listener) {
+    chrome.autofillPrivate.onAddressListChanged.addListener(listener);
+  },
+
+  /** @override */
+  removeAddressListChangedListener: function(listener) {
+    chrome.autofillPrivate.onAddressListChanged.removeListener(listener);
+  },
+
+  /** @override */
+  getAddressList: function(callback) {
+    chrome.autofillPrivate.getAddressList(callback);
+  },
+
+  /** @override */
+  saveAddress: function(address) {
+    chrome.autofillPrivate.saveAddress(address);
+  },
+
+  /** @override */
+  removeAddress: function(guid) {
+    chrome.autofillPrivate.removeEntry(assert(guid));
+  },
+
+  /** @override */
+  addCreditCardListChangedListener: function(listener) {
+    chrome.autofillPrivate.onCreditCardListChanged.addListener(listener);
+  },
+
+  /** @override */
+  removeCreditCardListChangedListener: function(listener) {
+    chrome.autofillPrivate.onCreditCardListChanged.removeListener(listener);
+  },
+
+  /** @override */
+  getCreditCardList: function(callback) {
+    chrome.autofillPrivate.getCreditCardList(callback);
+  },
+
+  /** @override */
+  removeCreditCard: function(guid) {
+    chrome.autofillPrivate.removeEntry(assert(guid));
+  },
+
+  /** @override */
+  clearCachedCreditCard: function(guid) {
+    chrome.autofillPrivate.maskCreditCard(assert(guid));
+  },
+
+  /** @override */
+  saveCreditCard: function(creditCard) {
+    chrome.autofillPrivate.saveCreditCard(creditCard);
+  }
+};
+
 (function() {
   'use strict';
 
@@ -17,101 +156,170 @@
     properties: {
       /**
        * An array of saved addresses.
-       * @type {!Array<!chrome.autofillPrivate.AddressEntry>}
+       * @type {!Array<!AutofillManager.AddressEntry>}
        */
       addresses: Array,
 
       /**
-       * Assigning a non-null value triggers the add/edit dialog.
+       * The model for any address related action menus or dialogs.
        * @private {?chrome.autofillPrivate.AddressEntry}
        */
       activeAddress: Object,
 
+      /** @private */
+      showAddressDialog_: Boolean,
+
       /**
-       * An array of saved addresses.
-       * @type {!Array<!chrome.autofillPrivate.CreditCardEntry>}
+       * An array of saved credit cards.
+       * @type {!Array<!AutofillManager.CreditCardEntry>}
        */
       creditCards: Array,
 
       /**
-       * Assigning a non-null value triggers the add/edit dialog.
+       * The model for any credit card related action menus or dialogs.
        * @private {?chrome.autofillPrivate.CreditCardEntry}
        */
       activeCreditCard: Object,
-   },
+
+      /** @private */
+      showCreditCardDialog_: Boolean,
+    },
 
     listeners: {
-      'addressList.scroll': 'closeMenu_',
-      'creditCardList.scroll': 'closeMenu_',
+      'save-address': 'saveAddress_',
+      'save-credit-card': 'saveCreditCard_',
     },
 
     /**
-     * Formats an AddressEntry so it's displayed as an address.
-     * @param {!chrome.autofillPrivate.AddressEntry} item
-     * @return {string}
+     * The element to return focus to, when the currently active dialog is
+     * closed.
+     * @private {?HTMLElement}
      */
-    address_: function(item) {
-      return item.metadata.summaryLabel + item.metadata.summarySublabel;
+    activeDialogAnchor_: null,
+
+    /**
+     * @type {AutofillManager}
+     * @private
+     */
+    autofillManager_: null,
+
+    /**
+     * @type {?function(!Array<!AutofillManager.AddressEntry>)}
+     * @private
+     */
+    setAddressesListener_: null,
+
+    /**
+     * @type {?function(!Array<!AutofillManager.CreditCardEntry>)}
+     * @private
+     */
+    setCreditCardsListener_: null,
+
+    /** @override */
+    attached: function() {
+      // Create listener functions.
+      /** @type {function(!Array<!AutofillManager.AddressEntry>)} */
+      var setAddressesListener = function(list) {
+        this.addresses = list;
+      }.bind(this);
+
+      /** @type {function(!Array<!AutofillManager.CreditCardEntry>)} */
+      var setCreditCardsListener = function(list) {
+        this.creditCards = list;
+      }.bind(this);
+
+      // Remember the bound reference in order to detach.
+      this.setAddressesListener_ = setAddressesListener;
+      this.setCreditCardsListener_ = setCreditCardsListener;
+
+      // Set the managers. These can be overridden by tests.
+      this.autofillManager_ = AutofillManagerImpl.getInstance();
+
+      // Request initial data.
+      this.autofillManager_.getAddressList(setAddressesListener);
+      this.autofillManager_.getCreditCardList(setCreditCardsListener);
+
+      // Listen for changes.
+      this.autofillManager_.addAddressListChangedListener(setAddressesListener);
+      this.autofillManager_.addCreditCardListChangedListener(
+          setCreditCardsListener);
+    },
+
+    /** @override */
+    detached: function() {
+      this.autofillManager_.removeAddressListChangedListener(
+          /** @type {function(!Array<!AutofillManager.AddressEntry>)} */(
+          this.setAddressesListener_));
+      this.autofillManager_.removeCreditCardListChangedListener(
+          /** @type {function(!Array<!AutofillManager.CreditCardEntry>)} */(
+          this.setCreditCardsListener_));
     },
 
     /**
      * Formats the expiration date so it's displayed as MM/YYYY.
      * @param {!chrome.autofillPrivate.CreditCardEntry} item
      * @return {string}
+     * @private
      */
     expiration_: function(item) {
       return item.expirationMonth + '/' + item.expirationYear;
     },
 
     /**
-     * Toggles the address overflow menu.
+     * Open the address action menu.
      * @param {!Event} e The polymer event.
      * @private
      */
     onAddressMenuTap_: function(e) {
-      // Close the other menu.
-      this.$.creditCardSharedMenu.closeMenu();
-
       var menuEvent = /** @type {!{model: !{item: !Object}}} */(e);
-      var address = /** @type {!chrome.autofillPrivate.AddressEntry} */(
-          menuEvent.model.item);
-      this.$.menuRemoveAddress.hidden = !address.metadata.isLocal;
-      this.$.addressSharedMenu.toggleMenu(Polymer.dom(e).localTarget, address);
-      e.stopPropagation();  // Prevent the tap event from closing the menu.
+
+      /* TODO(scottchen): drop the [dataHost][dataHost] once this bug is fixed:
+       https://github.com/Polymer/polymer/issues/2574 */
+      var item = menuEvent.model['dataHost']['dataHost'].item;
+
+      // Copy item so dialog won't update model on cancel.
+      this.activeAddress = /** @type {!chrome.autofillPrivate.AddressEntry} */(
+          Object.assign({}, item));
+
+      var dotsButton = /** @type {!HTMLElement} */ (Polymer.dom(e).localTarget);
+      /** @type {!CrActionMenuElement} */ (
+          this.$.addressSharedMenu).showAt(dotsButton);
+      this.activeDialogAnchor_ = dotsButton;
     },
 
     /**
      * Handles tapping on the "Add address" button.
-     * @param {!Event} e
+     * @param {!Event} e The polymer event.
      * @private
      */
     onAddAddressTap_: function(e) {
       e.preventDefault();
       this.activeAddress = {};
+      this.showAddressDialog_ = true;
+      this.activeDialogAnchor_ = this.$.addAddress;
+    },
+
+    /** @private */
+    onAddressDialogClosed_: function() {
+      this.showAddressDialog_ = false;
+      this.activeDialogAnchor_.focus();
+      this.activeDialogAnchor_ = null;
     },
 
     /**
      * Handles tapping on the "Edit" address button.
+     * @param {!Event} e The polymer event.
      * @private
      */
-    onMenuEditAddressTap_: function() {
-      var menu = this.$.addressSharedMenu;
-      /** @type {chrome.autofillPrivate.AddressEntry} */
-      var address = menu.itemData;
-
-      if (address.metadata.isLocal)
-        this.activeAddress = address;
-      else
-        window.open(this.i18n('manageAddressesUrl'));
-
-      menu.closeMenu();
+    onMenuEditAddressTap_: function(e) {
+      e.preventDefault();
+      this.showAddressDialog_ = true;
+      this.$.addressSharedMenu.close();
     },
 
     /** @private */
-    unstampAddressEditDialog_: function(e) {
-      var expectedDialog = this.$$('settings-address-edit-dialog').$.dialog;
-      if (Polymer.dom(e).rootTarget == expectedDialog)
-        this.activeAddress = null;
+    onRemoteEditAddressTap_: function() {
+      window.open(this.i18n('manageAddressesUrl'));
     },
 
     /**
@@ -119,28 +327,32 @@
      * @private
      */
     onMenuRemoveAddressTap_: function() {
-      var menu = this.$.addressSharedMenu;
-      this.fire('remove-address', menu.itemData);
-      menu.closeMenu();
+      this.autofillManager_.removeAddress(
+          /** @type {string} */(this.activeAddress.guid));
+      this.$.addressSharedMenu.close();
     },
 
     /**
-     * Toggles the credit card overflow menu.
+     * Opens the credit card action menu.
      * @param {!Event} e The polymer event.
      * @private
      */
     onCreditCardMenuTap_: function(e) {
-      // Close the other menu.
-      this.$.addressSharedMenu.closeMenu();
-
       var menuEvent = /** @type {!{model: !{item: !Object}}} */(e);
-      var creditCard = /** @type {!chrome.autofillPrivate.CreditCardEntry} */(
-          menuEvent.model.item);
-      this.$.menuRemoveCreditCard.hidden = !creditCard.metadata.isLocal;
-      this.$.menuClearCreditCard.hidden = !creditCard.metadata.isCached;
-      this.$.creditCardSharedMenu.toggleMenu(
-          Polymer.dom(e).localTarget, creditCard);
-      e.stopPropagation();  // Prevent the tap event from closing the menu.
+
+      /* TODO(scottchen): drop the [dataHost][dataHost] once this bug is fixed:
+       https://github.com/Polymer/polymer/issues/2574 */
+      var item = menuEvent.model['dataHost']['dataHost'].item;
+
+      // Copy item so dialog won't update model on cancel.
+      this.activeCreditCard =
+          /** @type {!chrome.autofillPrivate.CreditCardEntry} */(
+              Object.assign({}, item));
+
+      var dotsButton = /** @type {!HTMLElement} */ (Polymer.dom(e).localTarget);
+      /** @type {!CrActionMenuElement} */ (
+          this.$.creditCardSharedMenu).showAt(dotsButton);
+      this.activeDialogAnchor_ = dotsButton;
     },
 
     /**
@@ -149,37 +361,38 @@
      * @private
      */
     onAddCreditCardTap_: function(e) {
+      e.preventDefault();
       var date = new Date();  // Default to current month/year.
       var expirationMonth = date.getMonth() + 1;  // Months are 0 based.
       this.activeCreditCard = {
         expirationMonth: expirationMonth.toString(),
         expirationYear: date.getFullYear().toString(),
       };
-      e.preventDefault();
+      this.showCreditCardDialog_ = true;
+      this.activeDialogAnchor_ = this.$.addCreditCard;
+    },
+
+    /** @private */
+    onCreditCardDialogClosed_: function() {
+      this.showCreditCardDialog_ = false;
+      this.activeDialogAnchor_.focus();
+      this.activeDialogAnchor_ = null;
     },
 
     /**
      * Handles tapping on the "Edit" credit card button.
+     * @param {!Event} e The polymer event.
      * @private
      */
-    onMenuEditCreditCardTap_: function() {
-      var menu = this.$.creditCardSharedMenu;
-      /** @type {chrome.autofillPrivate.CreditCardEntry} */
-      var creditCard = menu.itemData;
-
-      if (creditCard.metadata.isLocal)
-        this.activeCreditCard = creditCard;
-      else
-        window.open(this.i18n('manageCreditCardsUrl'));
-
-      menu.closeMenu();
+    onMenuEditCreditCardTap_: function(e) {
+      e.preventDefault();
+      this.showCreditCardDialog_ = true;
+      this.$.creditCardSharedMenu.close();
     },
 
     /** @private */
-    unstampCreditCardEditDialog_: function(e) {
-      var expectedDialog = this.$$('settings-credit-card-edit-dialog').$.dialog;
-      if (Polymer.dom(e).rootTarget == expectedDialog)
-        this.activeCreditCard = null;
+    onRemoteEditCreditCardTap_: function() {
+      window.open(this.i18n('manageCreditCardsUrl'));
     },
 
     /**
@@ -187,9 +400,9 @@
      * @private
      */
     onMenuRemoveCreditCardTap_: function() {
-      var menu = this.$.creditCardSharedMenu;
-      this.fire('remove-credit-card', menu.itemData);
-      menu.closeMenu();
+      this.autofillManager_.removeCreditCard(
+          /** @type {string} */(this.activeCreditCard.guid));
+      this.$.creditCardSharedMenu.close();
     },
 
     /**
@@ -197,18 +410,46 @@
      * @private
      */
     onMenuClearCreditCardTap_: function() {
-      var menu = this.$.creditCardSharedMenu;
-      this.fire('clear-credit-card', menu.itemData);
-      menu.closeMenu();
+      this.autofillManager_.clearCachedCreditCard(
+          /** @type {string} */(this.activeCreditCard.guid));
+      this.$.creditCardSharedMenu.close();
     },
 
     /**
-     * Closes the overflow menus.
+     * Returns true if the list exists and has items.
+     * @param {Array<Object>} list
+     * @return {boolean}
      * @private
      */
-    closeMenu_: function() {
-      this.$.addressSharedMenu.closeMenu();
-      this.$.creditCardSharedMenu.closeMenu();
+    hasSome_: function(list) {
+      return !!(list && list.length);
     },
+
+    /**
+     * Listens for the save-address event, and calls the private API.
+     * @param {!Event} event
+     * @private
+     */
+    saveAddress_: function(event) {
+      this.autofillManager_.saveAddress(event.detail);
+    },
+
+    /**
+     * Listens for the save-credit-card event, and calls the private API.
+     * @param {!Event} event
+     * @private
+     */
+    saveCreditCard_: function(event) {
+      this.autofillManager_.saveCreditCard(event.detail);
+    },
+
+    /**
+     * @private
+     * @param {boolean} toggleValue
+     * @return {string}
+     */
+    getOnOffLabel_: function(toggleValue) {
+      return toggleValue ? this.i18n('toggleOn') : this.i18n('toggleOff');
+    }
   });
 })();

@@ -2,7 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-module device;
+module device.mojom;
+
+import "mojo/common/time.mojom";
+import "gpu/ipc/common/mailbox_holder.mojom";
+import "gpu/ipc/common/sync_token.mojom";
 
 // A field of view, given by 4 degrees describing the view from a center point.
 struct VRFieldOfView {
@@ -15,7 +19,6 @@ struct VRFieldOfView {
 // A display's position, orientation, velocity, and acceleration state at the
 // given timestamp.
 struct VRPose {
-  double timestamp;
   array<float, 4>? orientation;
   array<float, 3>? position;
   array<float, 3>? angularVelocity;
@@ -25,7 +28,6 @@ struct VRPose {
 };
 
 struct VRDisplayCapabilities {
-  bool hasOrientation;
   bool hasPosition;
   bool hasExternalDisplay;
   bool canPresent;
@@ -45,18 +47,74 @@ struct VRStageParameters {
   float sizeZ;
 };
 
-struct VRDisplay {
-   uint32 index;
-   string displayName;
-   VRDisplayCapabilities capabilities;
-   VRStageParameters? stageParameters;
-   VREyeParameters leftEye;
-   VREyeParameters rightEye;
+struct VRDisplayInfo {
+  uint32 index;
+  string displayName;
+  VRDisplayCapabilities capabilities;
+  VRStageParameters? stageParameters;
+  VREyeParameters leftEye;
+  VREyeParameters rightEye;
 };
 
+struct VRLayerBounds {
+  float left;
+  float top;
+  float width;
+  float height;
+};
+
+enum VRDisplayEventReason {
+  NONE = 0,
+  NAVIGATION = 1,
+  MOUNTED = 2,
+  UNMOUNTED = 3
+};
+
+// TODO(shaobo.yan@intel.com) : Add comments to describe these interfaces about
+// how to use and where they live.
 interface VRService {
-  GetDisplays() => (array<VRDisplay> displays);
-  [Sync]
-  GetPose(uint32 index) => (VRPose pose);
-  ResetPose(uint32 index);
+  // TODO(shaobo.yan@intel.com, crbug/701027): Use a factory function which
+  // takes a VRServiceClient so we will never have a half-initialized VRService.
+  SetClient(VRServiceClient client) => (uint32 numberOfConnectedDevices);
+  // Inform the service that the page is listening for vrdisplayactivate events.
+  SetListeningForActivate(bool listening);
+};
+
+interface VRServiceClient {
+  OnDisplayConnected(VRDisplay display, VRDisplayClient& request,
+                     VRDisplayInfo displayInfo);
+};
+
+interface VRSubmitFrameClient {
+  OnSubmitFrameTransferred();
+  OnSubmitFrameRendered();
+};
+
+interface VRDisplay {
+  RequestPresent(bool secureOrigin, VRSubmitFrameClient client) => (bool success);
+  ExitPresent();
+  SubmitFrame(int16 frameId, gpu.mojom.MailboxHolder mailboxHolder);
+  UpdateLayerBounds(int16 frameId, VRLayerBounds leftBounds,
+                    VRLayerBounds rightBounds, int16 sourceWidth,
+                    int16 sourceHeight);
+  GetVRVSyncProvider(VRVSyncProvider& request);
+};
+
+interface VRVSyncProvider {
+  enum Status { SUCCESS, CLOSING };
+
+  // The frameId maps a VSync to a frame arriving from the compositor. IDs will
+  // be reused after the frame arrives from the compositor. Negative IDs imply
+  // no mapping.
+  GetVSync() => (VRPose? pose, mojo.common.mojom.TimeDelta time, int16 frameId,
+                 Status status);
+};
+
+interface VRDisplayClient {
+  OnChanged(VRDisplayInfo display);
+  OnExitPresent();
+  OnBlur();
+  OnFocus();
+  OnActivate(VRDisplayEventReason reason);
+  OnDeactivate(VRDisplayEventReason reason);
 };

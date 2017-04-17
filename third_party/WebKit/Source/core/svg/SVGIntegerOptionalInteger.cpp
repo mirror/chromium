@@ -35,88 +35,98 @@
 
 namespace blink {
 
-SVGIntegerOptionalInteger::SVGIntegerOptionalInteger(SVGInteger* firstInteger, SVGInteger* secondInteger)
-    : m_firstInteger(firstInteger)
-    , m_secondInteger(secondInteger)
-{
+SVGIntegerOptionalInteger::SVGIntegerOptionalInteger(SVGInteger* first_integer,
+                                                     SVGInteger* second_integer)
+    : first_integer_(first_integer), second_integer_(second_integer) {}
+
+DEFINE_TRACE(SVGIntegerOptionalInteger) {
+  visitor->Trace(first_integer_);
+  visitor->Trace(second_integer_);
+  SVGPropertyBase::Trace(visitor);
 }
 
-DEFINE_TRACE(SVGIntegerOptionalInteger)
-{
-    visitor->trace(m_firstInteger);
-    visitor->trace(m_secondInteger);
-    SVGPropertyBase::trace(visitor);
+SVGIntegerOptionalInteger* SVGIntegerOptionalInteger::Clone() const {
+  return SVGIntegerOptionalInteger::Create(first_integer_->Clone(),
+                                           second_integer_->Clone());
 }
 
-SVGIntegerOptionalInteger* SVGIntegerOptionalInteger::clone() const
-{
-    return SVGIntegerOptionalInteger::create(m_firstInteger->clone(), m_secondInteger->clone());
+SVGPropertyBase* SVGIntegerOptionalInteger::CloneForAnimation(
+    const String& value) const {
+  SVGIntegerOptionalInteger* clone =
+      Create(SVGInteger::Create(0), SVGInteger::Create(0));
+  clone->SetValueAsString(value);
+  return clone;
 }
 
-SVGPropertyBase* SVGIntegerOptionalInteger::cloneForAnimation(const String& value) const
-{
-    float floatX, floatY;
-    if (!parseNumberOptionalNumber(value, floatX, floatY)) {
-        return SVGIntegerOptionalInteger::create(SVGInteger::create(0), SVGInteger::create(0));
-    }
+String SVGIntegerOptionalInteger::ValueAsString() const {
+  if (first_integer_->Value() == second_integer_->Value()) {
+    return String::Number(first_integer_->Value());
+  }
 
-    int x = static_cast<int>(roundf(floatX));
-    int y = static_cast<int>(roundf(floatY));
-
-    return SVGIntegerOptionalInteger::create(SVGInteger::create(x), SVGInteger::create(y));
+  return String::Number(first_integer_->Value()) + " " +
+         String::Number(second_integer_->Value());
 }
 
-String SVGIntegerOptionalInteger::valueAsString() const
-{
-    if (m_firstInteger->value() == m_secondInteger->value()) {
-        return String::number(m_firstInteger->value());
-    }
+SVGParsingError SVGIntegerOptionalInteger::SetValueAsString(
+    const String& value) {
+  float x, y;
+  SVGParsingError parse_status;
+  if (!ParseNumberOptionalNumber(value, x, y)) {
+    parse_status = SVGParseStatus::kExpectedInteger;
+    x = y = 0;
+  }
 
-    return String::number(m_firstInteger->value()) + " " + String::number(m_secondInteger->value());
+  first_integer_->SetValue(clampTo<int>(x));
+  second_integer_->SetValue(clampTo<int>(y));
+  return parse_status;
 }
 
-SVGParsingError SVGIntegerOptionalInteger::setValueAsString(const String& value)
-{
-    float x, y;
-    SVGParsingError parseStatus;
-    if (!parseNumberOptionalNumber(value, x, y)) {
-        parseStatus = SVGParseStatus::ExpectedInteger;
-        x = y = 0;
-    }
+void SVGIntegerOptionalInteger::Add(SVGPropertyBase* other, SVGElement*) {
+  SVGIntegerOptionalInteger* other_integer_optional_integer =
+      ToSVGIntegerOptionalInteger(other);
 
-    m_firstInteger->setValue(x);
-    m_secondInteger->setValue(y);
-    return parseStatus;
+  first_integer_->SetValue(
+      first_integer_->Value() +
+      other_integer_optional_integer->first_integer_->Value());
+  second_integer_->SetValue(
+      second_integer_->Value() +
+      other_integer_optional_integer->second_integer_->Value());
 }
 
-void SVGIntegerOptionalInteger::add(SVGPropertyBase* other, SVGElement*)
-{
-    SVGIntegerOptionalInteger* otherIntegerOptionalInteger = toSVGIntegerOptionalInteger(other);
+void SVGIntegerOptionalInteger::CalculateAnimatedValue(
+    SVGAnimationElement* animation_element,
+    float percentage,
+    unsigned repeat_count,
+    SVGPropertyBase* from,
+    SVGPropertyBase* to,
+    SVGPropertyBase* to_at_end_of_duration,
+    SVGElement*) {
+  DCHECK(animation_element);
 
-    m_firstInteger->setValue(m_firstInteger->value() + otherIntegerOptionalInteger->m_firstInteger->value());
-    m_secondInteger->setValue(m_secondInteger->value() + otherIntegerOptionalInteger->m_secondInteger->value());
+  SVGIntegerOptionalInteger* from_integer = ToSVGIntegerOptionalInteger(from);
+  SVGIntegerOptionalInteger* to_integer = ToSVGIntegerOptionalInteger(to);
+  SVGIntegerOptionalInteger* to_at_end_of_duration_integer =
+      ToSVGIntegerOptionalInteger(to_at_end_of_duration);
+
+  float x = first_integer_->Value();
+  float y = second_integer_->Value();
+  animation_element->AnimateAdditiveNumber(
+      percentage, repeat_count, from_integer->FirstInteger()->Value(),
+      to_integer->FirstInteger()->Value(),
+      to_at_end_of_duration_integer->FirstInteger()->Value(), x);
+  animation_element->AnimateAdditiveNumber(
+      percentage, repeat_count, from_integer->SecondInteger()->Value(),
+      to_integer->SecondInteger()->Value(),
+      to_at_end_of_duration_integer->SecondInteger()->Value(), y);
+  first_integer_->SetValue(clampTo<int>(roundf(x)));
+  second_integer_->SetValue(clampTo<int>(roundf(y)));
 }
 
-void SVGIntegerOptionalInteger::calculateAnimatedValue(SVGAnimationElement* animationElement, float percentage, unsigned repeatCount, SVGPropertyBase* from, SVGPropertyBase* to, SVGPropertyBase* toAtEndOfDuration, SVGElement*)
-{
-    ASSERT(animationElement);
-
-    SVGIntegerOptionalInteger* fromInteger = toSVGIntegerOptionalInteger(from);
-    SVGIntegerOptionalInteger* toInteger = toSVGIntegerOptionalInteger(to);
-    SVGIntegerOptionalInteger* toAtEndOfDurationInteger = toSVGIntegerOptionalInteger(toAtEndOfDuration);
-
-    float x = m_firstInteger->value();
-    float y = m_secondInteger->value();
-    animationElement->animateAdditiveNumber(percentage, repeatCount, fromInteger->firstInteger()->value(), toInteger->firstInteger()->value(), toAtEndOfDurationInteger->firstInteger()->value(), x);
-    animationElement->animateAdditiveNumber(percentage, repeatCount, fromInteger->secondInteger()->value(), toInteger->secondInteger()->value(), toAtEndOfDurationInteger->secondInteger()->value(), y);
-    m_firstInteger->setValue(static_cast<int>(roundf(x)));
-    m_secondInteger->setValue(static_cast<int>(roundf(y)));
+float SVGIntegerOptionalInteger::CalculateDistance(SVGPropertyBase* other,
+                                                   SVGElement*) {
+  // FIXME: Distance calculation is not possible for SVGIntegerOptionalInteger
+  // right now. We need the distance for every single value.
+  return -1;
 }
 
-float SVGIntegerOptionalInteger::calculateDistance(SVGPropertyBase* other, SVGElement*)
-{
-    // FIXME: Distance calculation is not possible for SVGIntegerOptionalInteger right now. We need the distance for every single value.
-    return -1;
-}
-
-} // namespace blink
+}  // namespace blink

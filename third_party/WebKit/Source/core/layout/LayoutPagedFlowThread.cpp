@@ -8,51 +8,55 @@
 
 namespace blink {
 
-LayoutPagedFlowThread* LayoutPagedFlowThread::createAnonymous(Document& document, const ComputedStyle& parentStyle)
-{
-    LayoutPagedFlowThread* pagedFlowThread = new LayoutPagedFlowThread();
-    pagedFlowThread->setDocumentForAnonymous(&document);
-    pagedFlowThread->setStyle(ComputedStyle::createAnonymousStyleWithDisplay(parentStyle, BLOCK));
-    return pagedFlowThread;
+LayoutPagedFlowThread* LayoutPagedFlowThread::CreateAnonymous(
+    Document& document,
+    const ComputedStyle& parent_style) {
+  LayoutPagedFlowThread* paged_flow_thread = new LayoutPagedFlowThread();
+  paged_flow_thread->SetDocumentForAnonymous(&document);
+  paged_flow_thread->SetStyle(ComputedStyle::CreateAnonymousStyleWithDisplay(
+      parent_style, EDisplay::kBlock));
+  return paged_flow_thread;
 }
 
-int LayoutPagedFlowThread::pageCount()
-{
-    if (LayoutMultiColumnSet* columnSet = firstMultiColumnSet())
-        return columnSet->actualColumnCount();
-    return 1;
+int LayoutPagedFlowThread::PageCount() {
+  if (LayoutMultiColumnSet* column_set = FirstMultiColumnSet())
+    return column_set->ActualColumnCount();
+  return 1;
 }
 
-bool LayoutPagedFlowThread::needsNewWidth() const
-{
-    return progressionIsInline() != pagedBlockFlow()->style()->hasInlinePaginationAxis();
+bool LayoutPagedFlowThread::NeedsNewWidth() const {
+  return ProgressionIsInline() !=
+         PagedBlockFlow()->Style()->HasInlinePaginationAxis();
 }
 
-void LayoutPagedFlowThread::updateLogicalWidth()
-{
-    // As long as we inherit from LayoutMultiColumnFlowThread, we need to bypass its implementation
-    // here. We're not split into columns, so the flow thread width will just be whatever is
-    // available in the containing block.
-    LayoutFlowThread::updateLogicalWidth();
+void LayoutPagedFlowThread::UpdateLogicalWidth() {
+  // As long as we inherit from LayoutMultiColumnFlowThread, we need to bypass
+  // its implementation here. We're not split into columns, so the flow thread
+  // width will just be whatever is available in the containing block.
+  LayoutFlowThread::UpdateLogicalWidth();
 }
 
-void LayoutPagedFlowThread::layout()
-{
-    ASSERT(firstMultiColumnBox() == lastMultiColumnBox()); // There should either be zero or one of those for paged layout.
-    setProgressionIsInline(pagedBlockFlow()->style()->hasInlinePaginationAxis());
-    LayoutMultiColumnFlowThread::layout();
+void LayoutPagedFlowThread::UpdateLayout() {
+  // There should either be zero or one of those for paged layout.
+  DCHECK_EQ(FirstMultiColumnBox(), LastMultiColumnBox());
+  SetProgressionIsInline(PagedBlockFlow()->Style()->HasInlinePaginationAxis());
+  LayoutMultiColumnFlowThread::UpdateLayout();
 
-    LayoutMultiColumnSet* columnSet = firstMultiColumnSet();
-    if (!columnSet)
-        return;
-    LayoutUnit pageLogicalHeight = columnSet->pageLogicalHeightForOffset(LayoutUnit());
-    if (!pageLogicalHeight)
-        return; // Page height not calculated yet. Happens in the first layout pass when height is auto.
-    // Ensure uniform page height. We don't want the last page to be shorter than the others,
-    // or it'll be impossible to scroll that whole page into view.
-    LayoutUnit paddedLogicalBottomInFlowThread = pageLogicalHeight * pageCount();
-    ASSERT(paddedLogicalBottomInFlowThread >= columnSet->logicalBottomInFlowThread());
-    columnSet->endFlow(paddedLogicalBottomInFlowThread);
+  LayoutMultiColumnSet* column_set = FirstMultiColumnSet();
+  if (!column_set)
+    return;
+  LayoutUnit page_logical_height =
+      column_set->PageLogicalHeightForOffset(LayoutUnit());
+  if (!page_logical_height)
+    return;  // Page height not calculated yet. Happens in the first layout pass
+             // when height is auto.
+  // Ensure uniform page height. We don't want the last page to be shorter than
+  // the others, or it'll be impossible to scroll that whole page into view.
+  LayoutUnit padded_logical_bottom_in_flow_thread =
+      page_logical_height * PageCount();
+  DCHECK_GE(padded_logical_bottom_in_flow_thread,
+            column_set->LogicalBottomInFlowThread());
+  column_set->EndFlow(padded_logical_bottom_in_flow_thread);
 }
 
-} // namespace blink
+}  // namespace blink

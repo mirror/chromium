@@ -31,23 +31,25 @@
 #ifndef SQLTransactionClient_h
 #define SQLTransactionClient_h
 
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class Database;
 
-// A client to the SQLTransaction class. Allows SQLTransaction to notify interested
-// parties that certain things have happened in a transaction.
+// A client to the SQLTransaction class. Allows SQLTransaction to notify
+// interested parties that certain things have happened in a transaction.
 class SQLTransactionClient {
-    WTF_MAKE_NONCOPYABLE(SQLTransactionClient); USING_FAST_MALLOC(SQLTransactionClient);
-public:
-    SQLTransactionClient() { }
-    void didCommitWriteTransaction(Database*);
-    bool didExceedQuota(Database*);
+  WTF_MAKE_NONCOPYABLE(SQLTransactionClient);
+  USING_FAST_MALLOC(SQLTransactionClient);
+
+ public:
+  SQLTransactionClient() {}
+  void DidCommitWriteTransaction(Database*);
+  bool DidExceedQuota(Database*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SQLTransactionClient_h
+#endif  // SQLTransactionClient_h

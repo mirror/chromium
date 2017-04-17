@@ -10,7 +10,6 @@
 
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
-#include "base/stl_util.h"
 #include "base/strings/string16.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/extension_management.h"
@@ -32,7 +31,7 @@ class PermissionsBasedManagementPolicyProviderTest : public testing::Test {
 
   PermissionsBasedManagementPolicyProviderTest()
       : pref_service_(new TestingPrefServiceSimple()),
-        settings_(new ExtensionManagement(pref_service_.get())),
+        settings_(new ExtensionManagement(pref_service_.get(), false)),
         provider_(settings_.get()) {}
 
   void SetUp() override {
@@ -42,14 +41,12 @@ class PermissionsBasedManagementPolicyProviderTest : public testing::Test {
         pref_names::kExtensionManagement);
   }
 
-  void TearDown() override {
-    STLDeleteElements(&perm_list_);
-  }
+  void TearDown() override {}
 
   // Get API permissions name for |id|, we cannot use arbitrary strings since
   // they will be ignored by ExtensionManagementService.
   std::string GetAPIPermissionName(APIPermission::ID id) {
-    for (auto* perm : perm_list_) {
+    for (const auto& perm : perm_list_) {
       if (perm->id() == id)
         return perm->name();
     }
@@ -68,11 +65,11 @@ class PermissionsBasedManagementPolicyProviderTest : public testing::Test {
     manifest_dict.SetString(manifest_keys::kVersion, "0.1");
     if (required_permissions) {
       manifest_dict.Set(manifest_keys::kPermissions,
-                        required_permissions->DeepCopy());
+                        required_permissions->CreateDeepCopy());
     }
     if (optional_permissions) {
       manifest_dict.Set(manifest_keys::kOptionalPermissions,
-                        optional_permissions->DeepCopy());
+                        optional_permissions->CreateDeepCopy());
     }
     std::string error;
     scoped_refptr<const Extension> extension = Extension::Create(
@@ -82,7 +79,7 @@ class PermissionsBasedManagementPolicyProviderTest : public testing::Test {
   }
 
  protected:
-  std::vector<APIPermissionInfo*> perm_list_;
+  std::vector<std::unique_ptr<APIPermissionInfo>> perm_list_;
 
   std::unique_ptr<TestingPrefServiceSimple> pref_service_;
   std::unique_ptr<ExtensionManagement> settings_;
@@ -143,21 +140,34 @@ TEST_F(PermissionsBasedManagementPolicyProviderTest, APIPermissions) {
   EXPECT_TRUE(provider_.UserMayLoad(extension.get(), &error16));
   EXPECT_TRUE(error16.empty());
 
-  // Explictly blocks kCookie for test extension. It should be blocked again.
+  // Explictly blocks kCookie for test extension. It should still be allowed.
   {
     PrefUpdater pref(pref_service_.get());
     pref.AddBlockedPermission(extension->id(),
                               GetAPIPermissionName(APIPermission::kCookie));
   }
   error16.clear();
-  EXPECT_FALSE(provider_.UserMayLoad(extension.get(), &error16));
-  EXPECT_FALSE(error16.empty());
+  EXPECT_TRUE(provider_.UserMayLoad(extension.get(), &error16));
+  EXPECT_TRUE(error16.empty());
 
-  // Blocks kDownloads by default. It should be blocked.
+  // Any extension specific definition overrides all defaults, even if blank.
   {
     PrefUpdater pref(pref_service_.get());
     pref.UnsetBlockedPermissions(extension->id());
     pref.UnsetAllowedPermissions(extension->id());
+    pref.ClearBlockedPermissions("*");
+    pref.AddBlockedPermission("*",
+                              GetAPIPermissionName(APIPermission::kDownloads));
+  }
+  error16.clear();
+  EXPECT_TRUE(provider_.UserMayLoad(extension.get(), &error16));
+  EXPECT_TRUE(error16.empty());
+
+  // Blocks kDownloads by default. It should be blocked.
+  {
+    PrefUpdater pref(pref_service_.get());
+    pref.UnsetPerExtensionSettings(extension->id());
+    pref.UnsetPerExtensionSettings(extension->id());
     pref.ClearBlockedPermissions("*");
     pref.AddBlockedPermission("*",
                               GetAPIPermissionName(APIPermission::kDownloads));

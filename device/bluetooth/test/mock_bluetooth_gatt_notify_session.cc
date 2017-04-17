@@ -11,9 +11,8 @@ using testing::Return;
 namespace device {
 
 MockBluetoothGattNotifySession::MockBluetoothGattNotifySession(
-    const std::string& characteristic_identifier) {
-  ON_CALL(*this, GetCharacteristicIdentifier())
-      .WillByDefault(Return(characteristic_identifier));
+    base::WeakPtr<BluetoothRemoteGattCharacteristic> characteristic)
+    : BluetoothGattNotifySession(characteristic) {
   ON_CALL(*this, IsActive()).WillByDefault(Return(true));
 }
 
@@ -41,9 +40,8 @@ void MockBluetoothGattNotifySession::DoNotify(
     MockBluetoothAdapter* adapter,
     MockBluetoothGattCharacteristic* characteristic,
     const std::vector<uint8_t>& value) {
-  FOR_EACH_OBSERVER(
-      BluetoothAdapter::Observer, adapter->GetObservers(),
-      GattCharacteristicValueChanged(adapter, characteristic, value));
+  for (auto& observer : adapter->GetObservers())
+    observer.GattCharacteristicValueChanged(adapter, characteristic, value);
 }
 
 }  // namespace device

@@ -20,98 +20,95 @@
 
 #include "core/layout/LayoutProgress.h"
 
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/html/HTMLProgressElement.h"
 #include "core/layout/LayoutTheme.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 LayoutProgress::LayoutProgress(HTMLProgressElement* element)
-    : LayoutBlockFlow(element)
-    , m_position(HTMLProgressElement::InvalidPosition)
-    , m_animationStartTime(0)
-    , m_animationRepeatInterval(0)
-    , m_animationDuration(0)
-    , m_animating(false)
-    , m_animationTimer(this, &LayoutProgress::animationTimerFired)
-{
+    : LayoutBlockFlow(element),
+      position_(HTMLProgressElement::kInvalidPosition),
+      animation_start_time_(0),
+      animation_repeat_interval_(0),
+      animation_duration_(0),
+      animating_(false),
+      animation_timer_(TaskRunnerHelper::Get(TaskType::kUnspecedTimer,
+                                             &element->GetDocument()),
+                       this,
+                       &LayoutProgress::AnimationTimerFired) {}
+
+LayoutProgress::~LayoutProgress() {}
+
+void LayoutProgress::WillBeDestroyed() {
+  if (animating_) {
+    animation_timer_.Stop();
+    animating_ = false;
+  }
+  LayoutBlockFlow::WillBeDestroyed();
 }
 
-LayoutProgress::~LayoutProgress()
-{
+void LayoutProgress::UpdateFromElement() {
+  HTMLProgressElement* element = ProgressElement();
+  if (position_ == element->position())
+    return;
+  position_ = element->position();
+
+  UpdateAnimationState();
+  SetShouldDoFullPaintInvalidation();
+  LayoutBlockFlow::UpdateFromElement();
 }
 
-void LayoutProgress::willBeDestroyed()
-{
-    if (m_animating) {
-        m_animationTimer.stop();
-        m_animating = false;
-    }
-    LayoutBlockFlow::willBeDestroyed();
+double LayoutProgress::AnimationProgress() const {
+  return animating_ ? (fmod((CurrentTime() - animation_start_time_),
+                            animation_duration_) /
+                       animation_duration_)
+                    : 0;
 }
 
-void LayoutProgress::updateFromElement()
-{
-    HTMLProgressElement* element = progressElement();
-    if (m_position == element->position())
-        return;
-    m_position = element->position();
-
-    updateAnimationState();
-    setShouldDoFullPaintInvalidation();
-    LayoutBlockFlow::updateFromElement();
+bool LayoutProgress::IsDeterminate() const {
+  return (HTMLProgressElement::kIndeterminatePosition != GetPosition() &&
+          HTMLProgressElement::kInvalidPosition != GetPosition());
 }
 
-double LayoutProgress::animationProgress() const
-{
-    return m_animating ? (fmod((currentTime() - m_animationStartTime), m_animationDuration) / m_animationDuration) : 0;
+bool LayoutProgress::IsAnimationTimerActive() const {
+  return animation_timer_.IsActive();
 }
 
-bool LayoutProgress::isDeterminate() const
-{
-    return (HTMLProgressElement::IndeterminatePosition != position()
-        && HTMLProgressElement::InvalidPosition != position());
+bool LayoutProgress::IsAnimating() const {
+  return animating_;
 }
 
-bool LayoutProgress::isAnimationTimerActive() const
-{
-    return m_animationTimer.isActive();
+void LayoutProgress::AnimationTimerFired(TimerBase*) {
+  SetShouldDoFullPaintInvalidation();
+  if (!animation_timer_.IsActive() && animating_)
+    animation_timer_.StartOneShot(animation_repeat_interval_, BLINK_FROM_HERE);
 }
 
-bool LayoutProgress::isAnimating() const
-{
-    return m_animating;
+void LayoutProgress::UpdateAnimationState() {
+  animation_duration_ =
+      LayoutTheme::GetTheme().AnimationDurationForProgressBar();
+  animation_repeat_interval_ =
+      LayoutTheme::GetTheme().AnimationRepeatIntervalForProgressBar();
+
+  bool animating =
+      !IsDeterminate() && Style()->HasAppearance() && animation_duration_ > 0;
+  if (animating == animating_)
+    return;
+
+  animating_ = animating;
+  if (animating_) {
+    animation_start_time_ = CurrentTime();
+    animation_timer_.StartOneShot(animation_repeat_interval_, BLINK_FROM_HERE);
+  } else {
+    animation_timer_.Stop();
+  }
 }
 
-void LayoutProgress::animationTimerFired(Timer<LayoutProgress>*)
-{
-    setShouldDoFullPaintInvalidation();
-    if (!m_animationTimer.isActive() && m_animating)
-        m_animationTimer.startOneShot(m_animationRepeatInterval, BLINK_FROM_HERE);
+HTMLProgressElement* LayoutProgress::ProgressElement() const {
+  return toHTMLProgressElement(GetNode());
 }
 
-void LayoutProgress::updateAnimationState()
-{
-    m_animationDuration = LayoutTheme::theme().animationDurationForProgressBar();
-    m_animationRepeatInterval = LayoutTheme::theme().animationRepeatIntervalForProgressBar();
-
-    bool animating = !isDeterminate() && style()->hasAppearance() && m_animationDuration > 0;
-    if (animating == m_animating)
-        return;
-
-    m_animating = animating;
-    if (m_animating) {
-        m_animationStartTime = currentTime();
-        m_animationTimer.startOneShot(m_animationRepeatInterval, BLINK_FROM_HERE);
-    } else {
-        m_animationTimer.stop();
-    }
-}
-
-HTMLProgressElement* LayoutProgress::progressElement() const
-{
-    return toHTMLProgressElement(node());
-}
-
-} // namespace blink
+}  // namespace blink

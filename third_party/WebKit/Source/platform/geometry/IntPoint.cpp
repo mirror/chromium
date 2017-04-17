@@ -4,15 +4,12 @@
 
 #include "platform/geometry/IntPoint.h"
 
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-#ifndef NDEBUG
-String IntPoint::toString() const
-{
-    return String::format("%d,%d", x(), y());
+String IntPoint::ToString() const {
+  return String::Format("%d,%d", X(), Y());
 }
-#endif
 
-} // namespace blink
+}  // namespace blink

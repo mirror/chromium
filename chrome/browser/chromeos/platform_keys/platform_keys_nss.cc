@@ -20,8 +20,8 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "base/threading/worker_pool.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_platform_part_chromeos.h"
 #include "chrome/browser/chromeos/certificate_provider/certificate_provider.h"
@@ -37,12 +37,12 @@
 #include "content/public/browser/browser_thread.h"
 #include "crypto/nss_key_util.h"
 #include "crypto/scoped_nss_types.h"
-#include "net/base/crypto_module.h"
 #include "net/base/net_errors.h"
 #include "net/cert/cert_database.h"
 #include "net/cert/nss_cert_database.h"
 #include "net/cert/x509_util_nss.h"
 #include "net/ssl/ssl_cert_request_info.h"
+#include "net/third_party/mozilla_security_manager/nsNSSCertificateDB.h"
 
 using content::BrowserContext;
 using content::BrowserThread;
@@ -440,10 +440,14 @@ void GenerateRSAKeyWithDB(std::unique_ptr<GenerateRSAKeyState> state,
                           net::NSSCertDatabase* cert_db) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Only the slot and not the NSSCertDatabase is required. Ignore |cert_db|.
-  base::WorkerPool::PostTask(
-      FROM_HERE,
-      base::Bind(&GenerateRSAKeyOnWorkerThread, base::Passed(&state)),
-      true /*task is slow*/);
+  // This task interacts with the TPM, hence MayBlock().
+  base::PostTaskWithTraits(
+      FROM_HERE, base::TaskTraits()
+                     .MayBlock()
+                     .WithPriority(base::TaskPriority::BACKGROUND)
+                     .WithShutdownBehavior(
+                         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN),
+      base::Bind(&GenerateRSAKeyOnWorkerThread, base::Passed(&state)));
 }
 
 // Does the actual signing on a worker thread. Used by SignRSAWithDB().
@@ -532,9 +536,14 @@ void SignRSAWithDB(std::unique_ptr<SignRSAState> state,
                    net::NSSCertDatabase* cert_db) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Only the slot and not the NSSCertDatabase is required. Ignore |cert_db|.
-  base::WorkerPool::PostTask(
-      FROM_HERE, base::Bind(&SignRSAOnWorkerThread, base::Passed(&state)),
-      true /*task is slow*/);
+  // This task interacts with the TPM, hence MayBlock().
+  base::PostTaskWithTraits(
+      FROM_HERE, base::TaskTraits()
+                     .MayBlock()
+                     .WithPriority(base::TaskPriority::BACKGROUND)
+                     .WithShutdownBehavior(
+                         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN),
+      base::Bind(&SignRSAOnWorkerThread, base::Passed(&state)));
 }
 
 // Called when ClientCertStoreChromeOS::GetClientCerts is done. Builds the list
@@ -554,8 +563,8 @@ void SelectCertificatesOnIOThread(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   state->cert_store_.reset(new ClientCertStoreChromeOS(
       nullptr,  // no additional provider
-      base::WrapUnique(new ClientCertFilterChromeOS(state->use_system_key_slot_,
-                                                    state->username_hash_)),
+      base::MakeUnique<ClientCertFilterChromeOS>(state->use_system_key_slot_,
+                                                 state->username_hash_),
       ClientCertStoreChromeOS::PasswordDelegateFactory()));
 
   state->certs_.reset(new net::CertificateList);
@@ -597,10 +606,14 @@ void DidGetCertificates(std::unique_ptr<GetCertificatesState> state,
                         std::unique_ptr<net::CertificateList> all_certs) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   state->certs_ = std::move(all_certs);
-  base::WorkerPool::PostTask(
-      FROM_HERE,
-      base::Bind(&FilterCertificatesOnWorkerThread, base::Passed(&state)),
-      true /*task is slow*/);
+  // This task interacts with the TPM, hence MayBlock().
+  base::PostTaskWithTraits(
+      FROM_HERE, base::TaskTraits()
+                     .MayBlock()
+                     .WithPriority(base::TaskPriority::BACKGROUND)
+                     .WithShutdownBehavior(
+                         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN),
+      base::Bind(&FilterCertificatesOnWorkerThread, base::Passed(&state)));
 }
 
 // Continues getting certificates with the obtained NSSCertDatabase. Used by
@@ -619,31 +632,26 @@ void GetCertificatesWithDB(std::unique_ptr<GetCertificatesState> state,
 void ImportCertificateWithDB(std::unique_ptr<ImportCertificateState> state,
                              net::NSSCertDatabase* cert_db) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  // TODO(pneubeck): Use |state->slot_| to verify that we're really importing to
-  // the correct token.
-  // |cert_db| is not required, ignore it.
-  net::CertDatabase* db = net::CertDatabase::GetInstance();
 
-  const net::Error cert_status =
-      static_cast<net::Error>(db->CheckUserCert(state->certificate_.get()));
-  if (cert_status == net::ERR_NO_PRIVATE_KEY_FOR_CERT) {
-    state->OnError(FROM_HERE, kErrorKeyNotFound);
+  if (!state->certificate_) {
+    state->OnError(FROM_HERE, net::ErrorToString(net::ERR_CERT_INVALID));
     return;
-  } else if (cert_status != net::OK) {
-    state->OnError(FROM_HERE, net::ErrorToString(cert_status));
+  }
+  if (state->certificate_->HasExpired()) {
+    state->OnError(FROM_HERE, net::ErrorToString(net::ERR_CERT_DATE_INVALID));
     return;
   }
 
   // Check that the private key is in the correct slot.
-  PK11SlotInfo* slot =
-      PK11_KeyForCertExists(state->certificate_->os_cert_handle(), NULL, NULL);
-  if (slot != state->slot_.get()) {
+  crypto::ScopedPK11Slot slot(
+      PK11_KeyForCertExists(state->certificate_->os_cert_handle(), NULL, NULL));
+  if (slot.get() != state->slot_.get()) {
     state->OnError(FROM_HERE, kErrorKeyNotFound);
     return;
   }
 
-  const net::Error import_status =
-      static_cast<net::Error>(db->AddUserCert(state->certificate_.get()));
+  const net::Error import_status = static_cast<net::Error>(
+      cert_db->ImportUserCert(state->certificate_.get()));
   if (import_status != net::OK) {
     LOG(ERROR) << "Could not import certificate.";
     state->OnError(FROM_HERE, net::ErrorToString(import_status));

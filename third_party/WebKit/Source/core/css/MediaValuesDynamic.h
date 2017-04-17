@@ -11,47 +11,54 @@ namespace blink {
 
 class Document;
 
-class MediaValuesDynamic final : public MediaValues {
-public:
-    static MediaValues* create(Document&);
-    static MediaValues* create(LocalFrame*);
-    MediaValues* copy() const override;
-    bool computeLength(double value, CSSPrimitiveValue::UnitType, int& result) const override;
-    bool computeLength(double value, CSSPrimitiveValue::UnitType, double& result) const override;
+class CORE_EXPORT MediaValuesDynamic : public MediaValues {
+ public:
+  static MediaValues* Create(Document&);
+  static MediaValues* Create(LocalFrame*);
+  MediaValues* Copy() const override;
+  bool ComputeLength(double value,
+                     CSSPrimitiveValue::UnitType,
+                     int& result) const override;
+  bool ComputeLength(double value,
+                     CSSPrimitiveValue::UnitType,
+                     double& result) const override;
 
-    double viewportWidth() const override;
-    double viewportHeight() const override;
-    int deviceWidth() const override;
-    int deviceHeight() const override;
-    float devicePixelRatio() const override;
-    int colorBitsPerComponent() const override;
-    int monochromeBitsPerComponent() const override;
-    PointerType primaryPointerType() const override;
-    int availablePointerTypes() const override;
-    HoverType primaryHoverType() const override;
-    int availableHoverTypes() const override;
-    bool threeDEnabled() const override;
-    bool strictMode() const override;
-    const String mediaType() const override;
-    WebDisplayMode displayMode() const override;
-    Document* document() const override;
-    bool hasValues() const override;
-    void overrideViewportDimensions(double width, double height) override;
+  double ViewportWidth() const override;
+  double ViewportHeight() const override;
+  int DeviceWidth() const override;
+  int DeviceHeight() const override;
+  float DevicePixelRatio() const override;
+  int ColorBitsPerComponent() const override;
+  int MonochromeBitsPerComponent() const override;
+  PointerType PrimaryPointerType() const override;
+  int AvailablePointerTypes() const override;
+  HoverType PrimaryHoverType() const override;
+  int AvailableHoverTypes() const override;
+  bool ThreeDEnabled() const override;
+  bool StrictMode() const override;
+  const String MediaType() const override;
+  WebDisplayMode DisplayMode() const override;
+  DisplayShape GetDisplayShape() const override;
+  ColorSpaceGamut ColorGamut() const override;
+  Document* GetDocument() const override;
+  bool HasValues() const override;
+  void OverrideViewportDimensions(double width, double height) override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    MediaValuesDynamic(LocalFrame*);
-    MediaValuesDynamic(LocalFrame*, bool overriddenViewportDimensions, double viewportWidth, double viewportHeight);
+ protected:
+  MediaValuesDynamic(LocalFrame*);
+  MediaValuesDynamic(LocalFrame*,
+                     bool overridden_viewport_dimensions,
+                     double viewport_width,
+                     double viewport_height);
 
-    // This raw ptr is safe, as MediaValues would not outlive MediaQueryEvaluator, and
-    // MediaQueryEvaluator is reset on |Document::detachLayoutTree|.
-    Member<LocalFrame> m_frame;
-    bool m_viewportDimensionsOverridden;
-    double m_viewportWidthOverride;
-    double m_viewportHeightOverride;
+  Member<LocalFrame> frame_;
+  bool viewport_dimensions_overridden_;
+  double viewport_width_override_;
+  double viewport_height_override_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaValuesDynamic_h
+#endif  // MediaValuesDynamic_h

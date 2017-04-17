@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <utility>
+
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_tokenizer.h"
 #include "base/strings/string_util.h"
@@ -33,6 +35,12 @@ WifiAccessPoint::WifiAccessPoint(const WifiAccessPoint& other) = default;
 
 WifiAccessPoint::~WifiAccessPoint() {
 }
+
+CellTower::CellTower() {}
+
+CellTower::CellTower(const CellTower& other) = default;
+
+CellTower::~CellTower() {}
 
 CellularScanResult::CellularScanResult() {
 }
@@ -129,7 +137,7 @@ bool ParseCellularScanResults(const base::ListValue& list,
   scan_results->reserve(list.GetSize());
   for (const auto& value : list) {
     const base::DictionaryValue* dict;
-    if (!value->GetAsDictionary(&dict))
+    if (!value.GetAsDictionary(&dict))
       return false;
     CellularScanResult scan_result;
     // If the network id property is not present then this network cannot be
@@ -204,7 +212,7 @@ std::unique_ptr<base::ListValue> TranslateNetworkListToONC(
   for (const NetworkState* state : network_states) {
     std::unique_ptr<base::DictionaryValue> onc_dictionary =
         TranslateNetworkStateToONC(state);
-    network_properties_list->Append(onc_dictionary.release());
+    network_properties_list->Append(std::move(onc_dictionary));
   }
   return network_properties_list;
 }

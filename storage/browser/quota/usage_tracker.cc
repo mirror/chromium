@@ -9,7 +9,7 @@
 #include <algorithm>
 
 #include "base/bind.h"
-#include "base/stl_util.h"
+#include "base/memory/ptr_util.h"
 #include "storage/browser/quota/client_usage_tracker.h"
 #include "storage/browser/quota/storage_monitor.h"
 
@@ -34,21 +34,18 @@ UsageTracker::UsageTracker(const QuotaClientList& clients,
       weak_factory_(this) {
   for (auto* client : clients) {
     if (client->DoesSupport(type)) {
-      client_tracker_map_[client->id()] =
-          new ClientUsageTracker(this, client, type, special_storage_policy,
-                                 storage_monitor_);
+      client_tracker_map_[client->id()] = base::MakeUnique<ClientUsageTracker>(
+          this, client, type, special_storage_policy, storage_monitor_);
     }
   }
 }
 
-UsageTracker::~UsageTracker() {
-  STLDeleteValues(&client_tracker_map_);
-}
+UsageTracker::~UsageTracker() {}
 
 ClientUsageTracker* UsageTracker::GetClientTracker(QuotaClient::ID client_id) {
-  ClientTrackerMap::iterator found = client_tracker_map_.find(client_id);
+  auto found = client_tracker_map_.find(client_id);
   if (found != client_tracker_map_.end())
-    return found->second;
+    return found->second.get();
   return nullptr;
 }
 
@@ -137,6 +134,13 @@ void UsageTracker::UpdateUsageCache(QuotaClient::ID client_id,
   ClientUsageTracker* client_tracker = GetClientTracker(client_id);
   DCHECK(client_tracker);
   client_tracker->UpdateUsageCache(origin, delta);
+}
+
+int64_t UsageTracker::GetCachedUsage() const {
+  int64_t usage = 0;
+  for (const auto& client_id_and_tracker : client_tracker_map_)
+    usage += client_id_and_tracker.second->GetCachedUsage();
+  return usage;
 }
 
 void UsageTracker::GetCachedHostsUsage(

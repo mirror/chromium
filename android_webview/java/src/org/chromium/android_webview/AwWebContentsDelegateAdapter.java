@@ -5,7 +5,6 @@
 package org.chromium.android_webview;
 
 import android.annotation.TargetApi;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -19,11 +18,16 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ConsoleMessage;
+import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.widget.FrameLayout;
 
 import org.chromium.base.ContentUriUtils;
 import org.chromium.base.ThreadUtils;
+import org.chromium.content.browser.ContentVideoViewEmbedder;
 import org.chromium.content_public.browser.InvalidateTypes;
+import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.content_public.common.ResourceRequestBody;
 
 /**
@@ -37,15 +41,17 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
 
     private final AwContents mAwContents;
     private final AwContentsClient mContentsClient;
-    private final AwContentViewClient mContentViewClient;
+    private final AwSettings mAwSettings;
     private final Context mContext;
     private View mContainerView;
+    private FrameLayout mCustomView;
+    private AwContentVideoViewEmbedder mVideoViewEmbedder;
 
     public AwWebContentsDelegateAdapter(AwContents awContents, AwContentsClient contentsClient,
-            AwContentViewClient contentViewClient, Context context, View containerView) {
+            AwSettings settings, Context context, View containerView) {
         mAwContents = awContents;
         mContentsClient = contentsClient;
-        mContentViewClient = contentViewClient;
+        mAwSettings = settings;
         mContext = context;
         setContainerView(containerView);
     }
@@ -120,7 +126,7 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
                 (reverse == (mContainerView.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL))
                 ? View.FOCUS_RIGHT : View.FOCUS_LEFT;
         if (tryToMoveFocus(direction)) return true;
-        direction = reverse ? View.FOCUS_UP : View.FOCUS_DOWN;
+        direction = reverse ? View.FOCUS_BACKWARD : View.FOCUS_FORWARD;
         return tryToMoveFocus(direction);
     }
 
@@ -219,7 +225,7 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
                 modeFlags, acceptTypes, title, defaultFilename, capture);
 
         mContentsClient.showFileChooser(new ValueCallback<String[]>() {
-            boolean mCompleted = false;
+            boolean mCompleted;
             @Override
             public void onReceiveValue(String[] results) {
                 if (mCompleted) {
@@ -231,8 +237,8 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
                             processId, renderId, modeFlags, null, null);
                     return;
                 }
-                GetDisplayNameTask task = new GetDisplayNameTask(
-                        mContext.getContentResolver(), processId, renderId, modeFlags, results);
+                GetDisplayNameTask task =
+                        new GetDisplayNameTask(mContext, processId, renderId, modeFlags, results);
                 task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }, params);
@@ -256,7 +262,7 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
             // Hint the client to show the last committed url, as it may be unsafe to show
             // the pending entry.
             String url = mAwContents.getLastCommittedUrl();
-            url = TextUtils.isEmpty(url) ? "about:blank" : url;
+            url = TextUtils.isEmpty(url) ? ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL : url;
             mContentsClient.getCallbackHelper().postSynthesizedPageLoadingForUrlBarUpdate(url);
         }
     }
@@ -264,9 +270,9 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
     @Override
     public void toggleFullscreenModeForTab(boolean enterFullscreen) {
         if (enterFullscreen) {
-            mContentViewClient.enterFullscreen();
+            enterFullscreen();
         } else {
-            mContentViewClient.exitFullscreen();
+            exitFullscreen();
         }
     }
 
@@ -275,20 +281,73 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
         mContentsClient.updateTitle(mAwContents.getTitle(), false);
     }
 
+    /**
+     * Called to show the web contents in fullscreen mode.
+     *
+     * <p>If entering fullscreen on a video element the web contents will contain just
+     * the html5 video controls. {@link #enterFullscreenVideo(View)} will be called later
+     * once the ContentVideoView, which contains the hardware accelerated fullscreen video,
+     * is ready to be shown.
+     */
+    private void enterFullscreen() {
+        if (mAwContents.isFullScreen()) {
+            return;
+        }
+        View fullscreenView = mAwContents.enterFullScreen();
+        if (fullscreenView == null) {
+            return;
+        }
+        WebChromeClient.CustomViewCallback cb = new WebChromeClient.CustomViewCallback() {
+            @Override
+            public void onCustomViewHidden() {
+                if (mCustomView != null) {
+                    mAwContents.requestExitFullscreen();
+                }
+            }
+        };
+        mCustomView = new FrameLayout(mContext);
+        mCustomView.addView(fullscreenView);
+        mContentsClient.onShowCustomView(mCustomView, cb);
+    }
+
+    /**
+     * Called to show the web contents in embedded mode.
+     */
+    private void exitFullscreen() {
+        if (mCustomView != null) {
+            mCustomView = null;
+            if (mVideoViewEmbedder != null) mVideoViewEmbedder.setCustomView(null);
+            mAwContents.exitFullScreen();
+            mContentsClient.onHideCustomView();
+        }
+    }
+
+    @Override
+    public ContentVideoViewEmbedder getContentVideoViewEmbedder() {
+        mVideoViewEmbedder = new AwContentVideoViewEmbedder(mContext, mContentsClient, mCustomView);
+        return mVideoViewEmbedder;
+    }
+
+    @Override
+    public boolean shouldBlockMediaRequest(String url) {
+        return mAwSettings != null
+                ? mAwSettings.getBlockNetworkLoads() && URLUtil.isNetworkUrl(url) : true;
+    }
+
     private static class GetDisplayNameTask extends AsyncTask<Void, Void, String[]> {
         final int mProcessId;
         final int mRenderId;
         final int mModeFlags;
         final String[] mFilePaths;
-        final ContentResolver mContentResolver;
+        final Context mContext;
 
-        public GetDisplayNameTask(ContentResolver contentResolver, int processId, int renderId,
-                                  int modeFlags, String[] filePaths) {
+        public GetDisplayNameTask(
+                Context context, int processId, int renderId, int modeFlags, String[] filePaths) {
             mProcessId = processId;
             mRenderId = renderId;
             mModeFlags = modeFlags;
             mFilePaths = filePaths;
-            mContentResolver = contentResolver;
+            mContext = context;
         }
 
         @Override
@@ -310,10 +369,10 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
          * or an empty string otherwise.
          */
         private String resolveFileName(String filePath) {
-            if (mContentResolver == null || filePath == null) return "";
+            if (filePath == null) return "";
             Uri uri = Uri.parse(filePath);
             return ContentUriUtils.getDisplayName(
-                    uri, mContentResolver, MediaStore.MediaColumns.DISPLAY_NAME);
+                    uri, mContext, MediaStore.MediaColumns.DISPLAY_NAME);
         }
     }
 }

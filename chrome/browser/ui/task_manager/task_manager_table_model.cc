@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/i18n/number_formatting.h"
 #include "base/i18n/rtl.h"
+#include "base/i18n/time_formatting.h"
 #include "base/macros.h"
 #include "base/process/process_handle.h"
 #include "base/strings/string_number_conversions.h"
@@ -16,7 +17,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/task_management/task_manager_interface.h"
+#include "chrome/browser/task_manager/task_manager_interface.h"
 #include "chrome/browser/ui/task_manager/task_manager_columns.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
@@ -24,25 +25,22 @@
 #include "components/nacl/common/nacl_switches.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/common/result_codes.h"
-#include "third_party/WebKit/public/web/WebCache.h"
+#include "third_party/WebKit/public/platform/WebCache.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/table_model_observer.h"
 #include "ui/base/text/bytes_formatting.h"
 
-namespace task_management {
+namespace task_manager {
 
 namespace {
+
+const char kCpuTextFormatString[] = "%.1f";
 
 #if defined(OS_MACOSX)
 // Match Activity Monitor's default refresh rate.
 const int64_t kRefreshTimeMS = 2000;
-
-// Activity Monitor shows %cpu with one decimal digit -- be consistent with
-// that.
-const char kCpuTextFormatString[] = "%.1f";
 #else
 const int64_t kRefreshTimeMS = 1000;
-const char kCpuTextFormatString[] = "%.0f";
 #endif  // defined(OS_MACOSX)
 
 // The columns that are shared by a group will show the value of the column
@@ -54,6 +52,8 @@ bool IsSharedByGroup(int column_id) {
     case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN:
     case IDS_TASK_MANAGER_SWAPPED_MEM_COLUMN:
     case IDS_TASK_MANAGER_CPU_COLUMN:
+    case IDS_TASK_MANAGER_START_TIME_COLUMN:
+    case IDS_TASK_MANAGER_CPU_TIME_COLUMN:
     case IDS_TASK_MANAGER_NET_COLUMN:
     case IDS_TASK_MANAGER_PROCESS_ID_COLUMN:
     case IDS_TASK_MANAGER_JAVASCRIPT_MEMORY_ALLOCATED_COLUMN:
@@ -66,6 +66,7 @@ bool IsSharedByGroup(int column_id) {
     case IDS_TASK_MANAGER_IDLE_WAKEUPS_COLUMN:
     case IDS_TASK_MANAGER_OPEN_FD_COUNT_COLUMN:
     case IDS_TASK_MANAGER_PROCESS_PRIORITY_COLUMN:
+    case IDS_TASK_MANAGER_MEMORY_STATE_COLUMN:
       return true;
     default:
       return false;
@@ -113,7 +114,13 @@ class TaskManagerValuesStringifier {
         unknown_string_(l10n_util::GetStringUTF16(
             IDS_TASK_MANAGER_UNKNOWN_VALUE_TEXT)),
         disabled_nacl_debugging_string_(l10n_util::GetStringUTF16(
-            IDS_TASK_MANAGER_DISABLED_NACL_DBG_TEXT)) {
+            IDS_TASK_MANAGER_DISABLED_NACL_DBG_TEXT)),
+        memory_state_normal_string_(l10n_util::GetStringUTF16(
+            IDS_TASK_MANAGER_MEMORY_STATE_NORMAL_TEXT)),
+        memory_state_throttled_string_(l10n_util::GetStringUTF16(
+            IDS_TASK_MANAGER_MEMORY_STATE_THROTTLED_TEXT)),
+        memory_state_suspended_string_(l10n_util::GetStringUTF16(
+            IDS_TASK_MANAGER_MEMORY_STATE_SUSPENDED_TEXT)) {
   }
 
   ~TaskManagerValuesStringifier() {}
@@ -121,6 +128,24 @@ class TaskManagerValuesStringifier {
   base::string16 GetCpuUsageText(double cpu_usage) {
     return base::UTF8ToUTF16(base::StringPrintf(kCpuTextFormatString,
                                                 cpu_usage));
+  }
+
+  base::string16 GetStartTimeText(base::Time start_time) {
+    if (start_time.is_null())
+      return n_a_string_;
+
+    return base::TimeFormatShortDateAndTime(start_time);
+  }
+
+  base::string16 GetCpuTimeText(base::TimeDelta cpu_time) {
+    if (cpu_time.is_zero())
+      return n_a_string_;
+
+    base::string16 duration;
+    return base::TimeDurationFormatWithSeconds(
+               cpu_time, base::DURATION_WIDTH_NARROW, &duration)
+               ? duration
+               : n_a_string_;
   }
 
   base::string16 GetMemoryUsageText(int64_t memory_usage, bool has_duplicates) {
@@ -146,6 +171,21 @@ class TaskManagerValuesStringifier {
     return memory_text;
   }
 
+  base::string16 GetMemoryStateText(base::MemoryState state) {
+    switch (state) {
+      case base::MemoryState::NORMAL:
+        return memory_state_normal_string_;
+      case base::MemoryState::THROTTLED:
+        return memory_state_throttled_string_;
+      case base::MemoryState::SUSPENDED:
+        return memory_state_suspended_string_;
+      case base::MemoryState::UNKNOWN:
+        return n_a_string_;
+    }
+    NOTREACHED();
+    return n_a_string_;
+  }
+
   base::string16 GetIdleWakeupsText(int idle_wakeups) {
     if (idle_wakeups == -1)
       return n_a_string_;
@@ -154,7 +194,9 @@ class TaskManagerValuesStringifier {
   }
 
   base::string16 GetNaClPortText(int nacl_port) {
-    if (nacl_port == nacl::kGdbDebugStubPortUnused || nacl_port == -2)
+    // Only called if NaCl debug stub ports are enabled.
+
+    if (nacl_port == nacl::kGdbDebugStubPortUnused)
       return n_a_string_;
 
     if (nacl_port == nacl::kGdbDebugStubPortUnknown)
@@ -194,7 +236,13 @@ class TaskManagerValuesStringifier {
 
   base::string16 GetWebCacheStatText(
       const blink::WebCache::ResourceTypeStat& stat) {
-    return FormatAllocatedAndUsedMemory(stat.size, stat.liveSize);
+    return GetMemoryUsageText(stat.size, false);
+  }
+
+  base::string16 GetKeepaliveCountText(int keepalive_count) const {
+    if (keepalive_count < 0)
+      return n_a_string();
+    return base::IntToString16(keepalive_count);
   }
 
   const base::string16& n_a_string() const { return n_a_string_; }
@@ -234,6 +282,11 @@ class TaskManagerValuesStringifier {
   // The string to show on the NaCl debug port column cells when the flag
   // #enable-nacl-debug is disabled.
   const base::string16 disabled_nacl_debugging_string_;
+
+  // Localized strings for memory states.
+  const base::string16 memory_state_normal_string_;
+  const base::string16 memory_state_throttled_string_;
+  const base::string16 memory_state_suspended_string_;
 
   DISALLOW_COPY_AND_ASSIGN(TaskManagerValuesStringifier);
 };
@@ -301,6 +354,14 @@ base::string16 TaskManagerTableModel::GetText(int row, int column) {
       return stringifier_->GetCpuUsageText(
           observed_task_manager()->GetCpuUsage(tasks_[row]));
 
+    case IDS_TASK_MANAGER_CPU_TIME_COLUMN:
+      return stringifier_->GetCpuTimeText(
+          observed_task_manager()->GetCpuTime(tasks_[row]));
+
+    case IDS_TASK_MANAGER_START_TIME_COLUMN:
+      return stringifier_->GetStartTimeText(
+          observed_task_manager()->GetStartTime(tasks_[row]));
+
     case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN:
       return stringifier_->GetMemoryUsageText(
           observed_task_manager()->GetPrivateMemoryUsage(tasks_[row]), false);
@@ -354,7 +415,7 @@ base::string16 TaskManagerTableModel::GetText(int row, int column) {
     case IDS_TASK_MANAGER_WEBCORE_CSS_CACHE_COLUMN: {
       blink::WebCache::ResourceTypeStats stats;
       if (observed_task_manager()->GetWebCacheStats(tasks_[row], &stats))
-        return stringifier_->GetWebCacheStatText(stats.cssStyleSheets);
+        return stringifier_->GetWebCacheStatText(stats.css_style_sheets);
       return stringifier_->n_a_string();
     }
 
@@ -401,6 +462,16 @@ base::string16 TaskManagerTableModel::GetText(int row, int column) {
     }
 #endif  // defined(OS_LINUX)
 
+    case IDS_TASK_MANAGER_MEMORY_STATE_COLUMN: {
+      return stringifier_->GetMemoryStateText(
+          observed_task_manager()->GetMemoryState(tasks_[row]));
+    }
+
+    case IDS_TASK_MANAGER_KEEPALIVE_COUNT_COLUMN: {
+      return stringifier_->GetKeepaliveCountText(
+          observed_task_manager()->GetKeepaliveCount(tasks_[row]));
+    }
+
     default:
       NOTREACHED();
       return base::string16();
@@ -422,6 +493,7 @@ int TaskManagerTableModel::CompareValues(int row1,
   switch (column_id) {
     case IDS_TASK_MANAGER_TASK_COLUMN:
     case IDS_TASK_MANAGER_PROFILE_NAME_COLUMN:
+    case IDS_TASK_MANAGER_MEMORY_STATE_COLUMN:
       return ui::TableModel::CompareValues(row1, row2, column_id);
 
     case IDS_TASK_MANAGER_NET_COLUMN:
@@ -432,6 +504,14 @@ int TaskManagerTableModel::CompareValues(int row1,
     case IDS_TASK_MANAGER_CPU_COLUMN:
       return ValueCompare(observed_task_manager()->GetCpuUsage(tasks_[row1]),
                           observed_task_manager()->GetCpuUsage(tasks_[row2]));
+
+    case IDS_TASK_MANAGER_CPU_TIME_COLUMN:
+      return ValueCompare(observed_task_manager()->GetCpuTime(tasks_[row1]),
+                          observed_task_manager()->GetCpuTime(tasks_[row2]));
+
+    case IDS_TASK_MANAGER_START_TIME_COLUMN:
+      return ValueCompare(observed_task_manager()->GetStartTime(tasks_[row1]),
+                          observed_task_manager()->GetStartTime(tasks_[row2]));
 
     case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN:
       return ValueCompare(
@@ -499,8 +579,8 @@ int TaskManagerTableModel::CompareValues(int row1,
         case IDS_TASK_MANAGER_WEBCORE_SCRIPTS_CACHE_COLUMN:
           return ValueCompare(stats1.scripts.size, stats2.scripts.size);
         case IDS_TASK_MANAGER_WEBCORE_CSS_CACHE_COLUMN:
-          return ValueCompare(stats1.cssStyleSheets.size,
-                              stats2.cssStyleSheets.size);
+          return ValueCompare(stats1.css_style_sheets.size,
+                              stats2.css_style_sheets.size);
         default:
           NOTREACHED();
           return 0;
@@ -562,17 +642,20 @@ int TaskManagerTableModel::CompareValues(int row1,
 void TaskManagerTableModel::GetRowsGroupRange(int row_index,
                                               int* out_start,
                                               int* out_length) {
+  const base::ProcessId process_id =
+      observed_task_manager()->GetProcessId(tasks_[row_index]);
   int i = row_index;
-  for ( ; i >= 0; --i) {
-    if (IsTaskFirstInGroup(i))
-      break;
+  int limit = row_index + 1;
+  while (i > 0 &&
+         observed_task_manager()->GetProcessId(tasks_[i - 1]) == process_id) {
+    --i;
   }
-
-  CHECK_GE(i, 0);
-
+  while (limit < RowCount() &&
+         observed_task_manager()->GetProcessId(tasks_[limit]) == process_id) {
+    ++limit;
+  }
   *out_start = i;
-  *out_length = observed_task_manager()->GetNumberOfTasksOnSameProcess(
-      tasks_[row_index]);
+  *out_length = limit - i;
 }
 
 void TaskManagerTableModel::OnTaskAdded(TaskId id) {
@@ -616,7 +699,7 @@ void TaskManagerTableModel::KillTask(int row_index) {
 }
 
 void TaskManagerTableModel::UpdateRefreshTypes(int column_id, bool visibility) {
-  bool new_visibility = visibility;
+  bool needs_refresh = visibility;
   RefreshType type = REFRESH_TYPE_NONE;
   switch (column_id) {
     case IDS_TASK_MANAGER_PROFILE_NAME_COLUMN:
@@ -632,20 +715,29 @@ void TaskManagerTableModel::UpdateRefreshTypes(int column_id, bool visibility) {
       type = REFRESH_TYPE_CPU;
       break;
 
+    case IDS_TASK_MANAGER_START_TIME_COLUMN:
+      type = REFRESH_TYPE_START_TIME;
+      break;
+
+    case IDS_TASK_MANAGER_CPU_TIME_COLUMN:
+      type = REFRESH_TYPE_CPU_TIME;
+      break;
+
     case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN:
+      type = REFRESH_TYPE_PHYSICAL_MEMORY;
+      break;
+
     case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN:
     case IDS_TASK_MANAGER_SHARED_MEM_COLUMN:
     case IDS_TASK_MANAGER_SWAPPED_MEM_COLUMN:
-      type = REFRESH_TYPE_MEMORY;
+      type = REFRESH_TYPE_MEMORY_DETAILS;
       if (table_view_delegate_->IsColumnVisible(
-              IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN) ||
-          table_view_delegate_->IsColumnVisible(
               IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN) ||
           table_view_delegate_->IsColumnVisible(
               IDS_TASK_MANAGER_SHARED_MEM_COLUMN) ||
           table_view_delegate_->IsColumnVisible(
               IDS_TASK_MANAGER_SWAPPED_MEM_COLUMN)) {
-        new_visibility = true;
+        needs_refresh = true;
       }
       break;
 
@@ -656,7 +748,7 @@ void TaskManagerTableModel::UpdateRefreshTypes(int column_id, bool visibility) {
               IDS_TASK_MANAGER_GDI_HANDLES_COLUMN) ||
           table_view_delegate_->IsColumnVisible(
               IDS_TASK_MANAGER_USER_HANDLES_COLUMN)) {
-        new_visibility = true;
+        needs_refresh = true;
       }
       break;
 
@@ -674,7 +766,7 @@ void TaskManagerTableModel::UpdateRefreshTypes(int column_id, bool visibility) {
               IDS_TASK_MANAGER_WEBCORE_SCRIPTS_CACHE_COLUMN) ||
           table_view_delegate_->IsColumnVisible(
               IDS_TASK_MANAGER_WEBCORE_CSS_CACHE_COLUMN)) {
-        new_visibility = true;
+        needs_refresh = true;
       }
       break;
 
@@ -692,10 +784,19 @@ void TaskManagerTableModel::UpdateRefreshTypes(int column_id, bool visibility) {
 
     case IDS_TASK_MANAGER_NACL_DEBUG_STUB_PORT_COLUMN:
       type = REFRESH_TYPE_NACL;
+      needs_refresh = needs_refresh && is_nacl_debugging_flag_enabled_;
       break;
 
     case IDS_TASK_MANAGER_PROCESS_PRIORITY_COLUMN:
       type = REFRESH_TYPE_PRIORITY;
+      break;
+
+    case IDS_TASK_MANAGER_MEMORY_STATE_COLUMN:
+      type = REFRESH_TYPE_MEMORY_STATE;
+      break;
+
+    case IDS_TASK_MANAGER_KEEPALIVE_COUNT_COLUMN:
+      type = REFRESH_TYPE_KEEPALIVE_COUNT;
       break;
 
 #if defined(OS_LINUX)
@@ -709,7 +810,7 @@ void TaskManagerTableModel::UpdateRefreshTypes(int column_id, bool visibility) {
       return;
   }
 
-  if (new_visibility)
+  if (needs_refresh)
     AddRefreshType(type);
   else
     RemoveRefreshType(type);
@@ -797,6 +898,16 @@ void TaskManagerTableModel::ToggleColumnVisibility(int column_id) {
   UpdateRefreshTypes(column_id, new_visibility);
 }
 
+int TaskManagerTableModel::GetRowForWebContents(
+    content::WebContents* web_contents) {
+  TaskId task_id =
+      observed_task_manager()->GetTaskIdForWebContents(web_contents);
+  auto index = std::find(tasks_.begin(), tasks_.end(), task_id);
+  if (index == tasks_.end())
+    return -1;
+  return static_cast<int>(index - tasks_.begin());
+}
+
 void TaskManagerTableModel::StartUpdating() {
   TaskManagerInterface::GetTaskManager()->AddObserver(this);
   tasks_ = observed_task_manager()->GetTaskIdsList();
@@ -827,5 +938,4 @@ bool TaskManagerTableModel::IsTaskFirstInGroup(int row_index) const {
       observed_task_manager()->GetProcessId(tasks_[row_index]);
 }
 
-
-}  // namespace task_management
+}  // namespace task_manager

@@ -6,59 +6,82 @@
 
 #include "core/layout/svg/LayoutSVGResourceMasker.h"
 #include "core/paint/LayoutObjectDrawingRecorder.h"
+#include "core/paint/ObjectPaintProperties.h"
 #include "core/paint/PaintInfo.h"
-#include "core/paint/TransformRecorder.h"
 #include "platform/graphics/paint/CompositingDisplayItem.h"
 #include "platform/graphics/paint/CompositingRecorder.h"
 #include "platform/graphics/paint/DrawingDisplayItem.h"
 #include "platform/graphics/paint/PaintController.h"
+#include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 
 namespace blink {
 
-bool SVGMaskPainter::prepareEffect(const LayoutObject& object, GraphicsContext& context)
-{
-    ASSERT(m_mask.style());
-    ASSERT_WITH_SECURITY_IMPLICATION(!m_mask.needsLayout());
+bool SVGMaskPainter::PrepareEffect(const LayoutObject& object,
+                                   GraphicsContext& context) {
+  DCHECK(mask_.Style());
+  SECURITY_DCHECK(!mask_.NeedsLayout());
 
-    m_mask.clearInvalidationMask();
+  mask_.ClearInvalidationMask();
 
-    FloatRect paintInvalidationRect = object.paintInvalidationRectInLocalSVGCoordinates();
-    if (paintInvalidationRect.isEmpty() || !m_mask.element()->hasChildren())
-        return false;
+  FloatRect visual_rect = object.VisualRectInLocalSVGCoordinates();
+  if (visual_rect.IsEmpty() || !mask_.GetElement()->HasChildren())
+    return false;
 
-    context.getPaintController().createAndAppend<BeginCompositingDisplayItem>(object, SkXfermode::kSrcOver_Mode, 1, &paintInvalidationRect);
-    return true;
+  context.GetPaintController().CreateAndAppend<BeginCompositingDisplayItem>(
+      object, SkBlendMode::kSrcOver, 1, &visual_rect);
+  return true;
 }
 
-void SVGMaskPainter::finishEffect(const LayoutObject& object, GraphicsContext& context)
-{
-    ASSERT(m_mask.style());
-    ASSERT_WITH_SECURITY_IMPLICATION(!m_mask.needsLayout());
+void SVGMaskPainter::FinishEffect(const LayoutObject& object,
+                                  GraphicsContext& context) {
+  DCHECK(mask_.Style());
+  SECURITY_DCHECK(!mask_.NeedsLayout());
 
-    FloatRect paintInvalidationRect = object.paintInvalidationRectInLocalSVGCoordinates();
-    {
-        ColorFilter maskLayerFilter = m_mask.style()->svgStyle().maskType() == MT_LUMINANCE
-            ? ColorFilterLuminanceToAlpha : ColorFilterNone;
-        CompositingRecorder maskCompositing(context, object, SkXfermode::kDstIn_Mode, 1, &paintInvalidationRect, maskLayerFilter);
-        drawMaskForLayoutObject(context, object, object.objectBoundingBox(), paintInvalidationRect);
+  FloatRect visual_rect = object.VisualRectInLocalSVGCoordinates();
+  {
+    ColorFilter mask_layer_filter =
+        mask_.Style()->SvgStyle().MaskType() == MT_LUMINANCE
+            ? kColorFilterLuminanceToAlpha
+            : kColorFilterNone;
+    CompositingRecorder mask_compositing(context, object, SkBlendMode::kDstIn,
+                                         1, &visual_rect, mask_layer_filter);
+    Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
+    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      const auto* object_paint_properties = object.PaintProperties();
+      DCHECK(object_paint_properties && object_paint_properties->Mask());
+      PaintChunkProperties properties(
+          context.GetPaintController().CurrentPaintChunkProperties());
+      properties.property_tree_state.SetEffect(object_paint_properties->Mask());
+      scoped_paint_chunk_properties.emplace(context.GetPaintController(),
+                                            object, properties);
     }
 
-    context.getPaintController().endItem<EndCompositingDisplayItem>(object);
+    DrawMaskForLayoutObject(context, object, object.ObjectBoundingBox(),
+                            visual_rect);
+  }
+
+  context.GetPaintController().EndItem<EndCompositingDisplayItem>(object);
 }
 
-void SVGMaskPainter::drawMaskForLayoutObject(GraphicsContext& context, const LayoutObject& layoutObject, const FloatRect& targetBoundingBox, const FloatRect& targetPaintInvalidationRect)
-{
-    AffineTransform contentTransformation;
-    RefPtr<const SkPicture> maskContentPicture = m_mask.createContentPicture(contentTransformation, targetBoundingBox, context);
+void SVGMaskPainter::DrawMaskForLayoutObject(
+    GraphicsContext& context,
+    const LayoutObject& layout_object,
+    const FloatRect& target_bounding_box,
+    const FloatRect& target_visual_rect) {
+  AffineTransform content_transformation;
+  sk_sp<const PaintRecord> record = mask_.CreatePaintRecord(
+      content_transformation, target_bounding_box, context);
 
-    if (LayoutObjectDrawingRecorder::useCachedDrawingIfPossible(context, layoutObject, DisplayItem::SVGMask))
-        return;
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+          context, layout_object, DisplayItem::kSVGMask))
+    return;
 
-    LayoutObjectDrawingRecorder drawingRecorder(context, layoutObject, DisplayItem::SVGMask, targetPaintInvalidationRect);
-    context.save();
-    context.concatCTM(contentTransformation);
-    context.drawPicture(maskContentPicture.get());
-    context.restore();
+  LayoutObjectDrawingRecorder drawing_recorder(
+      context, layout_object, DisplayItem::kSVGMask, target_visual_rect);
+  context.Save();
+  context.ConcatCTM(content_transformation);
+  context.DrawRecord(std::move(record));
+  context.Restore();
 }
 
-} // namespace blink
+}  // namespace blink

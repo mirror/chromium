@@ -31,7 +31,7 @@
 #include "core/editing/commands/EditCommand.h"
 #include "core/editing/commands/EditingState.h"
 #include "core/editing/commands/UndoStep.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -42,147 +42,201 @@ class HTMLElement;
 class HTMLSpanElement;
 class Text;
 
-class EditCommandComposition final : public UndoStep {
-public:
-    static EditCommandComposition* create(Document*, const VisibleSelection&, const VisibleSelection&, InputEvent::InputType);
-
-    bool belongsTo(const LocalFrame&) const override;
-    void unapply() override;
-    void reapply() override;
-    InputEvent::InputType inputType() const override;
-    void append(SimpleEditCommand*);
-
-    const VisibleSelection& startingSelection() const { return m_startingSelection; }
-    const VisibleSelection& endingSelection() const { return m_endingSelection; }
-    void setStartingSelection(const VisibleSelection&);
-    void setEndingSelection(const VisibleSelection&);
-    Element* startingRootEditableElement() const { return m_startingRootEditableElement.get(); }
-    Element* endingRootEditableElement() const { return m_endingRootEditableElement.get(); }
-
-    DECLARE_VIRTUAL_TRACE();
-
-private:
-    EditCommandComposition(Document*, const VisibleSelection& startingSelection, const VisibleSelection& endingSelection, InputEvent::InputType);
-
-    Member<Document> m_document;
-    VisibleSelection m_startingSelection;
-    VisibleSelection m_endingSelection;
-    HeapVector<Member<SimpleEditCommand>> m_commands;
-    Member<Element> m_startingRootEditableElement;
-    Member<Element> m_endingRootEditableElement;
-    InputEvent::InputType m_inputType;
-};
-
 class CORE_EXPORT CompositeEditCommand : public EditCommand {
-public:
-    enum ShouldPreserveSelection { PreserveSelection, DoNotPreserveSelection };
-    enum ShouldPreserveStyle { PreserveStyle, DoNotPreserveStyle };
+ public:
+  enum ShouldPreserveSelection { kPreserveSelection, kDoNotPreserveSelection };
+  enum ShouldPreserveStyle { kPreserveStyle, kDoNotPreserveStyle };
 
-    ~CompositeEditCommand() override;
+  ~CompositeEditCommand() override;
 
-    // Returns |false| if the command failed.  e.g. It's aborted.
-    bool apply();
-    bool isFirstCommand(EditCommand* command) { return !m_commands.isEmpty() && m_commands.first() == command; }
-    EditCommandComposition* composition() { return m_composition.get(); }
-    EditCommandComposition* ensureComposition();
+  const VisibleSelection& StartingSelection() const {
+    return starting_selection_;
+  }
+  const VisibleSelection& EndingSelection() const { return ending_selection_; }
 
-    virtual bool isReplaceSelectionCommand() const;
-    virtual bool isTypingCommand() const;
-    virtual bool preservesTypingStyle() const;
-    virtual void setShouldRetainAutocorrectionIndicator(bool);
-    virtual bool shouldStopCaretBlinking() const { return false; }
+  void SetStartingSelection(const VisibleSelection&);
+  void SetEndingSelection(const SelectionInDOMTree&);
+  // TODO(yosin): |setEndingVisibleSelection()| will take |SelectionInUndoStep|
+  // You should not use this function other than copying existing selection.
+  void SetEndingVisibleSelection(const VisibleSelection&);
 
-    DECLARE_VIRTUAL_TRACE();
+  void SetParent(CompositeEditCommand*) override;
 
-protected:
-    explicit CompositeEditCommand(Document&);
+  // Returns |false| if the command failed.  e.g. It's aborted.
+  bool Apply();
+  bool IsFirstCommand(EditCommand* command) {
+    return !commands_.IsEmpty() && commands_.front() == command;
+  }
+  UndoStep* GetUndoStep() { return undo_step_.Get(); }
+  UndoStep* EnsureUndoStep();
+  // Append undo step from an already applied command.
+  void AppendCommandToUndoStep(CompositeEditCommand*);
 
-    //
-    // sugary-sweet convenience functions to help create and apply edit commands in composite commands
-    //
-    void appendNode(Node*, ContainerNode* parent, EditingState*);
-    void applyCommandToComposite(EditCommand*, EditingState*);
-    void applyCommandToComposite(CompositeEditCommand*, const VisibleSelection&, EditingState*);
-    void applyStyle(const EditingStyle*, EditingState*);
-    void applyStyle(const EditingStyle*, const Position& start, const Position& end, EditingState*);
-    void applyStyledElement(Element*, EditingState*);
-    void removeStyledElement(Element*, EditingState*);
-    void deleteSelection(EditingState*, bool smartDelete = false, bool mergeBlocksAfterDelete = true, bool expandForSpecialElements = true, bool sanitizeMarkup = true);
-    void deleteSelection(const VisibleSelection&, EditingState*, bool smartDelete = false, bool mergeBlocksAfterDelete = true, bool expandForSpecialElements = true, bool sanitizeMarkup = true);
-    virtual void deleteTextFromNode(Text*, unsigned offset, unsigned count);
-    bool isRemovableBlock(const Node*);
-    void insertNodeAfter(Node*, Node* refChild, EditingState*);
-    void insertNodeAt(Node*, const Position&, EditingState*);
-    void insertNodeAtTabSpanPosition(Node*, const Position&, EditingState*);
-    void insertNodeBefore(Node*, Node* refChild, EditingState*, ShouldAssumeContentIsAlwaysEditable = DoNotAssumeContentIsAlwaysEditable);
-    void insertParagraphSeparator(EditingState*, bool useDefaultParagraphElement = false, bool pasteBlockqutoeIntoUnquotedArea = false);
-    void insertTextIntoNode(Text*, unsigned offset, const String& text);
-    void mergeIdenticalElements(Element*, Element*, EditingState*);
-    void rebalanceWhitespace();
-    void rebalanceWhitespaceAt(const Position&);
-    void rebalanceWhitespaceOnTextSubstring(Text*, int startOffset, int endOffset);
-    void prepareWhitespaceAtPositionForSplit(Position&);
-    void replaceCollapsibleWhitespaceWithNonBreakingSpaceIfNeeded(const VisiblePosition&);
-    bool canRebalance(const Position&) const;
-    bool shouldRebalanceLeadingWhitespaceFor(const String&) const;
-    void removeCSSProperty(Element*, CSSPropertyID);
-    void removeElementAttribute(Element*, const QualifiedName& attribute);
-    void removeChildrenInRange(Node*, unsigned from, unsigned to, EditingState*);
-    virtual void removeNode(Node*, EditingState*, ShouldAssumeContentIsAlwaysEditable = DoNotAssumeContentIsAlwaysEditable);
-    HTMLSpanElement* replaceElementWithSpanPreservingChildrenAndAttributes(HTMLElement*);
-    void removeNodePreservingChildren(Node*, EditingState*, ShouldAssumeContentIsAlwaysEditable = DoNotAssumeContentIsAlwaysEditable);
-    void removeNodeAndPruneAncestors(Node*, EditingState*, Node* excludeNode = nullptr);
-    void moveRemainingSiblingsToNewParent(Node*, Node* pastLastNodeToMove, Element* newParent, EditingState*);
-    void updatePositionForNodeRemovalPreservingChildren(Position&, Node&);
-    void prune(Node*, EditingState*, Node* excludeNode = nullptr);
-    void replaceTextInNode(Text*, unsigned offset, unsigned count, const String& replacementText);
-    Position replaceSelectedTextInNode(const String&);
-    void replaceTextInNodePreservingMarkers(Text*, unsigned offset, unsigned count, const String& replacementText);
-    Position positionOutsideTabSpan(const Position&);
-    void setNodeAttribute(Element*, const QualifiedName& attribute, const AtomicString& value);
-    void splitElement(Element*, Node* atChild);
-    void splitTextNode(Text*, unsigned offset);
-    void splitTextNodeContainingElement(Text*, unsigned offset);
-    void wrapContentsInDummySpan(Element*);
+  virtual bool IsReplaceSelectionCommand() const;
+  virtual bool IsTypingCommand() const;
+  virtual bool IsCommandGroupWrapper() const;
+  virtual bool IsDragAndDropCommand() const;
+  virtual bool PreservesTypingStyle() const;
+  virtual void SetShouldRetainAutocorrectionIndicator(bool);
 
-    void deleteInsignificantText(Text*, unsigned start, unsigned end);
-    void deleteInsignificantText(const Position& start, const Position& end);
-    void deleteInsignificantTextDownstream(const Position&);
+  DECLARE_VIRTUAL_TRACE();
 
-    HTMLBRElement* appendBlockPlaceholder(Element*, EditingState*);
-    HTMLBRElement* insertBlockPlaceholder(const Position&, EditingState*);
-    HTMLBRElement* addBlockPlaceholderIfNeeded(Element*, EditingState*);
-    void removePlaceholderAt(const Position&);
+ protected:
+  explicit CompositeEditCommand(Document&);
 
-    HTMLElement* insertNewDefaultParagraphElementAt(const Position&, EditingState*);
+  //
+  // sugary-sweet convenience functions to help create and apply edit commands
+  // in composite commands
+  //
+  void AppendNode(Node*, ContainerNode* parent, EditingState*);
+  void ApplyCommandToComposite(EditCommand*, EditingState*);
+  void ApplyCommandToComposite(CompositeEditCommand*,
+                               const VisibleSelection&,
+                               EditingState*);
+  void ApplyStyle(const EditingStyle*, EditingState*);
+  void ApplyStyle(const EditingStyle*,
+                  const Position& start,
+                  const Position& end,
+                  EditingState*);
+  void ApplyStyledElement(Element*, EditingState*);
+  void RemoveStyledElement(Element*, EditingState*);
+  void DeleteSelection(EditingState*,
+                       bool smart_delete = false,
+                       bool merge_blocks_after_delete = true,
+                       bool expand_for_special_elements = true,
+                       bool sanitize_markup = true);
+  virtual void DeleteTextFromNode(Text*, unsigned offset, unsigned count);
+  bool IsRemovableBlock(const Node*);
+  void InsertNodeAfter(Node*, Node* ref_child, EditingState*);
+  void InsertNodeAt(Node*, const Position&, EditingState*);
+  void InsertNodeAtTabSpanPosition(Node*, const Position&, EditingState*);
+  void InsertNodeBefore(Node*,
+                        Node* ref_child,
+                        EditingState*,
+                        ShouldAssumeContentIsAlwaysEditable =
+                            kDoNotAssumeContentIsAlwaysEditable);
+  void InsertParagraphSeparator(
+      EditingState*,
+      bool use_default_paragraph_element = false,
+      bool paste_blockqutoe_into_unquoted_area = false);
+  void InsertTextIntoNode(Text*, unsigned offset, const String& text);
+  void MergeIdenticalElements(Element*, Element*, EditingState*);
+  void RebalanceWhitespace();
+  void RebalanceWhitespaceAt(const Position&);
+  void RebalanceWhitespaceOnTextSubstring(Text*,
+                                          int start_offset,
+                                          int end_offset);
+  void PrepareWhitespaceAtPositionForSplit(Position&);
+  void ReplaceCollapsibleWhitespaceWithNonBreakingSpaceIfNeeded(
+      const VisiblePosition&);
+  bool CanRebalance(const Position&) const;
+  void RemoveCSSProperty(Element*, CSSPropertyID);
+  void RemoveElementAttribute(Element*, const QualifiedName& attribute);
+  void RemoveChildrenInRange(Node*, unsigned from, unsigned to, EditingState*);
+  virtual void RemoveNode(Node*,
+                          EditingState*,
+                          ShouldAssumeContentIsAlwaysEditable =
+                              kDoNotAssumeContentIsAlwaysEditable);
+  HTMLSpanElement* ReplaceElementWithSpanPreservingChildrenAndAttributes(
+      HTMLElement*);
+  void RemoveNodePreservingChildren(Node*,
+                                    EditingState*,
+                                    ShouldAssumeContentIsAlwaysEditable =
+                                        kDoNotAssumeContentIsAlwaysEditable);
+  void RemoveNodeAndPruneAncestors(Node*,
+                                   EditingState*,
+                                   Node* exclude_node = nullptr);
+  void MoveRemainingSiblingsToNewParent(Node*,
+                                        Node* past_last_node_to_move,
+                                        Element* new_parent,
+                                        EditingState*);
+  void UpdatePositionForNodeRemovalPreservingChildren(Position&, Node&);
+  void Prune(Node*, EditingState*, Node* exclude_node = nullptr);
+  void ReplaceTextInNode(Text*,
+                         unsigned offset,
+                         unsigned count,
+                         const String& replacement_text);
+  Position ReplaceSelectedTextInNode(const String&);
+  Position PositionOutsideTabSpan(const Position&);
+  void SetNodeAttribute(Element*,
+                        const QualifiedName& attribute,
+                        const AtomicString& value);
+  void SplitElement(Element*, Node* at_child);
+  void SplitTextNode(Text*, unsigned offset);
+  void SplitTextNodeContainingElement(Text*, unsigned offset);
+  void WrapContentsInDummySpan(Element*);
 
-    HTMLElement* moveParagraphContentsToNewBlockIfNecessary(const Position&, EditingState*);
+  void DeleteInsignificantText(Text*, unsigned start, unsigned end);
+  void DeleteInsignificantText(const Position& start, const Position& end);
+  void DeleteInsignificantTextDownstream(const Position&);
 
-    void pushAnchorElementDown(Element*, EditingState*);
+  HTMLBRElement* AppendBlockPlaceholder(Element*, EditingState*);
+  HTMLBRElement* InsertBlockPlaceholder(const Position&, EditingState*);
+  HTMLBRElement* AddBlockPlaceholderIfNeeded(Element*, EditingState*);
+  void RemovePlaceholderAt(const Position&);
 
-    void moveParagraph(const VisiblePosition&, const VisiblePosition&, const VisiblePosition&, EditingState*, ShouldPreserveSelection = DoNotPreserveSelection, ShouldPreserveStyle = PreserveStyle, Node* constrainingAncestor = nullptr);
-    void moveParagraphs(const VisiblePosition&, const VisiblePosition&, const VisiblePosition&, EditingState*, ShouldPreserveSelection = DoNotPreserveSelection, ShouldPreserveStyle = PreserveStyle, Node* constrainingAncestor = nullptr);
-    void moveParagraphWithClones(const VisiblePosition& startOfParagraphToMove, const VisiblePosition& endOfParagraphToMove, HTMLElement* blockElement, Node* outerNode, EditingState*);
-    void cloneParagraphUnderNewElement(const Position& start, const Position& end, Node* outerNode, Element* blockElement, EditingState*);
-    void cleanupAfterDeletion(EditingState*, VisiblePosition destination = VisiblePosition());
+  HTMLElement* InsertNewDefaultParagraphElementAt(const Position&,
+                                                  EditingState*);
 
-    bool breakOutOfEmptyListItem(EditingState*);
-    bool breakOutOfEmptyMailBlockquotedParagraph(EditingState*);
+  HTMLElement* MoveParagraphContentsToNewBlockIfNecessary(const Position&,
+                                                          EditingState*);
 
-    Position positionAvoidingSpecialElementBoundary(const Position&, EditingState*);
+  void PushAnchorElementDown(Element*, EditingState*);
 
-    Node* splitTreeToNode(Node*, Node*, bool splitAncestor = false);
+  void MoveParagraph(const VisiblePosition&,
+                     const VisiblePosition&,
+                     const VisiblePosition&,
+                     EditingState*,
+                     ShouldPreserveSelection = kDoNotPreserveSelection,
+                     ShouldPreserveStyle = kPreserveStyle,
+                     Node* constraining_ancestor = nullptr);
+  void MoveParagraphs(const VisiblePosition&,
+                      const VisiblePosition&,
+                      const VisiblePosition&,
+                      EditingState*,
+                      ShouldPreserveSelection = kDoNotPreserveSelection,
+                      ShouldPreserveStyle = kPreserveStyle,
+                      Node* constraining_ancestor = nullptr);
+  void MoveParagraphWithClones(
+      const VisiblePosition& start_of_paragraph_to_move,
+      const VisiblePosition& end_of_paragraph_to_move,
+      HTMLElement* block_element,
+      Node* outer_node,
+      EditingState*);
+  void CloneParagraphUnderNewElement(const Position& start,
+                                     const Position& end,
+                                     Node* outer_node,
+                                     Element* block_element,
+                                     EditingState*);
+  void CleanupAfterDeletion(EditingState*,
+                            VisiblePosition destination = VisiblePosition());
 
-    HeapVector<Member<EditCommand>> m_commands;
+  bool BreakOutOfEmptyListItem(EditingState*);
+  bool BreakOutOfEmptyMailBlockquotedParagraph(EditingState*);
 
-private:
-    bool isCompositeEditCommand() const final { return true; }
+  Position PositionAvoidingSpecialElementBoundary(const Position&,
+                                                  EditingState*);
 
-    Member<EditCommandComposition> m_composition;
+  Node* SplitTreeToNode(Node*, Node*, bool split_ancestor = false);
+
+  static bool IsNodeVisiblyContainedWithin(Node&, const Range&);
+
+  HeapVector<Member<EditCommand>> commands_;
+
+ private:
+  bool IsCompositeEditCommand() const final { return true; }
+
+  VisibleSelection starting_selection_;
+  VisibleSelection ending_selection_;
+  Member<UndoStep> undo_step_;
 };
 
-DEFINE_TYPE_CASTS(CompositeEditCommand, EditCommand, command, command->isCompositeEditCommand(), command.isCompositeEditCommand());
+DEFINE_TYPE_CASTS(CompositeEditCommand,
+                  EditCommand,
+                  command,
+                  command->IsCompositeEditCommand(),
+                  command.IsCompositeEditCommand());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositeEditCommand_h
+#endif  // CompositeEditCommand_h

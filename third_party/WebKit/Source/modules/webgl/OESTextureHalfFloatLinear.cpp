@@ -27,34 +27,29 @@
 
 namespace blink {
 
-OESTextureHalfFloatLinear::OESTextureHalfFloatLinear(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
-    context->extensionsUtil()->ensureExtensionEnabled("GL_OES_texture_half_float_linear");
+OESTextureHalfFloatLinear::OESTextureHalfFloatLinear(
+    WebGLRenderingContextBase* context)
+    : WebGLExtension(context) {
+  context->ExtensionsUtil()->EnsureExtensionEnabled(
+      "GL_OES_texture_half_float_linear");
 }
 
-OESTextureHalfFloatLinear::~OESTextureHalfFloatLinear()
-{
+WebGLExtensionName OESTextureHalfFloatLinear::GetName() const {
+  return kOESTextureHalfFloatLinearName;
 }
 
-WebGLExtensionName OESTextureHalfFloatLinear::name() const
-{
-    return OESTextureHalfFloatLinearName;
+OESTextureHalfFloatLinear* OESTextureHalfFloatLinear::Create(
+    WebGLRenderingContextBase* context) {
+  return new OESTextureHalfFloatLinear(context);
 }
 
-OESTextureHalfFloatLinear* OESTextureHalfFloatLinear::create(WebGLRenderingContextBase* context)
-{
-    return new OESTextureHalfFloatLinear(context);
+bool OESTextureHalfFloatLinear::Supported(WebGLRenderingContextBase* context) {
+  return context->ExtensionsUtil()->SupportsExtension(
+      "GL_OES_texture_half_float_linear");
 }
 
-bool OESTextureHalfFloatLinear::supported(WebGLRenderingContextBase* context)
-{
-    return context->extensionsUtil()->supportsExtension("GL_OES_texture_half_float_linear");
+const char* OESTextureHalfFloatLinear::ExtensionName() {
+  return "OES_texture_half_float_linear";
 }
 
-const char* OESTextureHalfFloatLinear::extensionName()
-{
-    return "OES_texture_half_float_linear";
-}
-
-} // namespace blink
+}  // namespace blink

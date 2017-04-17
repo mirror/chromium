@@ -5,33 +5,48 @@
 #ifndef HttpEquiv_h
 #define HttpEquiv_h
 
-#include "wtf/Allocator.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class Document;
+class Element;
 
 /**
- * Handles a HTTP header equivalent set by a meta tag using <meta http-equiv="..." content="...">. This is called
- * when a meta tag is encountered during document parsing, and also when a script dynamically changes or adds a meta
- * tag. This enables scripts to use meta tags to perform refreshes and set expiry dates in addition to them being
- * specified in a HTML file.
+ * Handles a HTTP header equivalent set by a meta tag using
+ * <meta http-equiv="..." content="...">. This is called when a meta tag is
+ * encountered during document parsing, and also when a script dynamically
+ * changes or adds a meta tag. This enables scripts to use meta tags to perform
+ * refreshes and set expiry dates in addition to them being specified in a HTML
+ * file.
  */
 class HttpEquiv {
-    STATIC_ONLY(HttpEquiv);
-public:
-    static void process(Document&, const AtomicString& equiv, const AtomicString& content, bool inDocumentHeadElement);
+  STATIC_ONLY(HttpEquiv);
 
-private:
-    static void processHttpEquivDefaultStyle(Document&, const AtomicString& content);
-    static void processHttpEquivRefresh(Document&, const AtomicString& content);
-    static void processHttpEquivSetCookie(Document&, const AtomicString& content);
-    static void processHttpEquivXFrameOptions(Document&, const AtomicString& content);
-    static void processHttpEquivContentSecurityPolicy(Document&, const AtomicString& equiv, const AtomicString& content);
-    static void processHttpEquivAcceptCH(Document&, const AtomicString& content);
+ public:
+  static void Process(Document&,
+                      const AtomicString& equiv,
+                      const AtomicString& content,
+                      bool in_document_head_element,
+                      Element*);
+
+ private:
+  static void ProcessHttpEquivDefaultStyle(Document&,
+                                           const AtomicString& content);
+  static void ProcessHttpEquivRefresh(Document&,
+                                      const AtomicString& content,
+                                      Element*);
+  static void ProcessHttpEquivSetCookie(Document&,
+                                        const AtomicString& content,
+                                        Element*);
+  static void ProcessHttpEquivContentSecurityPolicy(
+      Document&,
+      const AtomicString& equiv,
+      const AtomicString& content);
+  static void ProcessHttpEquivAcceptCH(Document&, const AtomicString& content);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

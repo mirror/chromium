@@ -16,12 +16,18 @@
 #include "chrome/test/base/ui_test_utils.h"
 #include "chrome/test/base/web_ui_browser_test.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/context_menu_params.h"
 #include "content/public/common/drop_data.h"
 #include "content/public/test/browser_test_utils.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+
+// Turn these tests off on Mac while we collect data on windows server crashes
+// on mac chromium builders.
+// http://crbug.com/653353
+#if !defined(OS_MACOSX)
 
 #if !defined(OS_CHROMEOS) && defined(USE_AURA)
 #include "ui/aura/window.h"
@@ -134,8 +140,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, DisplayNone) {
   ui_test_utils::NavigateToURL(browser(), GetWebViewEnabledWebUIURL());
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
-      "testDisplayNone",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      "testDisplayNone", new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, ExecuteScriptCode) {
@@ -143,7 +148,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, ExecuteScriptCode) {
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testExecuteScriptCode",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, ExecuteScriptCodeFromFile) {
@@ -151,7 +156,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, ExecuteScriptCodeFromFile) {
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testExecuteScriptCodeFromFile",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddContentScript) {
@@ -159,7 +164,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddContentScript) {
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testAddContentScript",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddMultiContentScripts) {
@@ -167,7 +172,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddMultiContentScripts) {
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testAddMultiContentScripts",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(
@@ -177,7 +182,7 @@ IN_PROC_BROWSER_TEST_F(
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testAddContentScriptWithSameNameShouldOverwriteTheExistingOne",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(
@@ -187,7 +192,7 @@ IN_PROC_BROWSER_TEST_F(
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testAddContentScriptToOneWebViewShouldNotInjectToTheOtherWebView",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddAndRemoveContentScripts) {
@@ -195,7 +200,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddAndRemoveContentScripts) {
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testAddAndRemoveContentScripts",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest,
@@ -204,25 +209,35 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest,
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testAddContentScriptsWithNewWindowAPI",
-      new base::StringValue(GetTestUrl("guest_from_opener.html").spec())));
+      new base::Value(GetTestUrl("guest_from_opener.html").spec())));
 }
 
-IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest,
-                       ContentScriptIsInjectedAfterTerminateAndReloadWebView) {
+// https://crbug.com/665512.
+IN_PROC_BROWSER_TEST_F(
+    WebUIWebViewBrowserTest,
+    DISABLED_ContentScriptIsInjectedAfterTerminateAndReloadWebView) {
   ui_test_utils::NavigateToURL(browser(), GetWebViewEnabledWebUIURL());
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testContentScriptIsInjectedAfterTerminateAndReloadWebView",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
+// TODO(crbug.com/662673) Flaky on CrOS trybots.
+#if defined(OS_CHROMEOS)
+#define MAYBE_ContentScriptExistsAsLongAsWebViewTagExists \
+  DISABLED_ContentScriptExistsAsLongAsWebViewTagExists
+#else
+#define MAYBE_ContentScriptExistsAsLongAsWebViewTagExists \
+  ContentScriptExistsAsLongAsWebViewTagExists
+#endif
 IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest,
-                       ContentScriptExistsAsLongAsWebViewTagExists) {
+                       MAYBE_ContentScriptExistsAsLongAsWebViewTagExists) {
   ui_test_utils::NavigateToURL(browser(), GetWebViewEnabledWebUIURL());
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testContentScriptExistsAsLongAsWebViewTagExists",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddContentScriptWithCode) {
@@ -230,7 +245,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddContentScriptWithCode) {
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testAddContentScriptWithCode",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 
 #if defined(OS_CHROMEOS)
@@ -245,7 +260,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, AddContentScriptIncognito) {
 
   ASSERT_TRUE(WebUIBrowserTest::RunJavascriptAsyncTest(
       "testAddContentScript",
-      new base::StringValue(GetTestUrl("empty.html").spec())));
+      new base::Value(GetTestUrl("empty.html").spec())));
 }
 #endif
 
@@ -259,7 +274,7 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, ContextMenuInspectElement) {
 }
 
 #if !defined(OS_CHROMEOS) && defined(USE_AURA)
-IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, DragAndDropToInput) {
+IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, DISABLED_DragAndDropToInput) {
   ui_test_utils::NavigateToURL(browser(), GetWebViewEnabledWebUIURL());
   ASSERT_TRUE(
       WebUIBrowserTest::RunJavascriptAsyncTest("testDragAndDropToInput"));
@@ -300,9 +315,9 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, DragAndDropToInput) {
   gfx::Rect container_bounds = embedder_web_contents->GetContainerBounds();
   const gfx::Point screen_pt(container_bounds.x(), container_bounds.y());
   const blink::WebDragOperationsMask drag_operation_mask =
-      static_cast<blink::WebDragOperationsMask>(blink::WebDragOperationCopy |
-                                     blink::WebDragOperationLink |
-                                     blink::WebDragOperationMove);
+      static_cast<blink::WebDragOperationsMask>(blink::kWebDragOperationCopy |
+                                                blink::kWebDragOperationLink |
+                                                blink::kWebDragOperationMove);
   content::DropData dropdata;
   dropdata.did_originate_from_renderer = true;
   dropdata.url = GURL(url::kAboutBlankURL);
@@ -310,16 +325,20 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, DragAndDropToInput) {
 
   // Drag url into input in webview.
 
+  // TODO(paulmeyer): The following drag-and-drop calls on
+  // render_view_host->GetWidget() will need to be targeted to specific
+  // RenderWidgetHosts in order to work with OOPIFs. See crbug.com/647249.
+
   {
     EXPECT_TRUE(content::ExecuteScript(embedder_web_contents,
                                        "console.log('step1: Drag Enter')"));
 
     WebUIMessageListener listener(embedder_web_contents->GetWebUI(),
                                   "Step1: destNode gets dragenter");
-    render_view_host->FilterDropData(&dropdata);
-    render_view_host->DragTargetDragEnter(dropdata, client_pt, screen_pt,
-                                          drag_operation_mask,
-                                          blink::WebInputEvent::LeftButtonDown);
+    render_view_host->GetWidget()->FilterDropData(&dropdata);
+    render_view_host->GetWidget()->DragTargetDragEnter(
+        dropdata, client_pt, screen_pt, drag_operation_mask,
+        blink::WebInputEvent::kLeftButtonDown);
     ASSERT_TRUE(listener.Wait());
   }
 
@@ -329,9 +348,9 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, DragAndDropToInput) {
 
     WebUIMessageListener listener(embedder_web_contents->GetWebUI(),
                                   "Step2: destNode gets dragover");
-    render_view_host->DragTargetDragOver(client_pt, screen_pt,
-                                         drag_operation_mask,
-                                         blink::WebInputEvent::LeftButtonDown);
+    render_view_host->GetWidget()->DragTargetDragOver(
+        client_pt, screen_pt, drag_operation_mask,
+        blink::WebInputEvent::kLeftButtonDown);
     ASSERT_TRUE(listener.Wait());
   }
 
@@ -342,7 +361,8 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, DragAndDropToInput) {
     DNDToInputNavigationObserver observer(embedder_web_contents);
     WebUIMessageListener listener(embedder_web_contents->GetWebUI(),
                                   "Step3: destNode gets drop");
-    render_view_host->DragTargetDrop(dropdata, client_pt, screen_pt, 0);
+    render_view_host->GetWidget()->DragTargetDrop(
+        dropdata, client_pt, screen_pt, 0);
     ASSERT_TRUE(listener.Wait());
     // Confirm no navigation
     EXPECT_FALSE(observer.Navigated());
@@ -350,3 +370,5 @@ IN_PROC_BROWSER_TEST_F(WebUIWebViewBrowserTest, DragAndDropToInput) {
   }
 }
 #endif
+
+#endif  // !defined(OS_MACOSX)

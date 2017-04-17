@@ -5,12 +5,16 @@
 #include "android_webview/browser/aw_browser_main_parts.h"
 
 #include "android_webview/browser/aw_browser_context.h"
-#include "android_webview/browser/aw_dev_tools_discovery_provider.h"
+#include "android_webview/browser/aw_browser_terminator.h"
+#include "android_webview/browser/aw_content_browser_client.h"
 #include "android_webview/browser/aw_result_codes.h"
 #include "android_webview/browser/deferred_gpu_command_service.h"
 #include "android_webview/browser/net/aw_network_change_notifier_factory.h"
+#include "android_webview/common/aw_descriptors.h"
+#include "android_webview/common/aw_paths.h"
 #include "android_webview/common/aw_resource.h"
 #include "android_webview/common/aw_switches.h"
+#include "android_webview/common/crash_reporter/aw_microdump_crash_reporter.h"
 #include "base/android/apk_assets.h"
 #include "base/android/build_info.h"
 #include "base/android/locale_utils.h"
@@ -19,7 +23,8 @@
 #include "base/files/file_path.h"
 #include "base/i18n/rtl.h"
 #include "base/path_service.h"
-#include "components/crash/content/browser/crash_micro_dump_manager_android.h"
+#include "components/crash/content/browser/crash_dump_manager_android.h"
+#include "components/crash/content/browser/crash_dump_observer_android.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -76,8 +81,8 @@ class AwGeolocationDelegate : public device::GeolocationDelegate {
 
 }  // anonymous namespace
 
-AwBrowserMainParts::AwBrowserMainParts(AwBrowserContext* browser_context)
-    : browser_context_(browser_context) {
+AwBrowserMainParts::AwBrowserMainParts(AwContentBrowserClient* browser_client)
+    : browser_client_(browser_client) {
 }
 
 AwBrowserMainParts::~AwBrowserMainParts() {
@@ -96,41 +101,52 @@ void AwBrowserMainParts::PreEarlyInitialization() {
 int AwBrowserMainParts::PreCreateThreads() {
   ui::SetLocalePaksStoredInApk(true);
   std::string locale = ui::ResourceBundle::InitSharedInstanceWithLocale(
-      base::android::GetDefaultLocale(),
-      NULL,
-      ui::ResourceBundle::DO_NOT_LOAD_COMMON_RESOURCES);
+      base::android::GetDefaultLocaleString(), NULL,
+      ui::ResourceBundle::LOAD_COMMON_RESOURCES);
   if (locale.empty()) {
     LOG(WARNING) << "Failed to load locale .pak from the apk. "
         "Bringing up WebView without any locale";
   }
   base::i18n::SetICUDefaultLocale(locale);
 
-  // Try to directly mmap the webviewchromium.pak from the apk. Fall back to
-  // load from file, using PATH_SERVICE, otherwise.
+  // Try to directly mmap the resources.pak from the apk. Fall back to load
+  // from file, using PATH_SERVICE, otherwise.
   base::FilePath pak_file_path;
   PathService::Get(ui::DIR_RESOURCE_PAKS_ANDROID, &pak_file_path);
-  pak_file_path = pak_file_path.AppendASCII("webviewchromium.pak");
-  ui::LoadMainAndroidPackFile("assets/webviewchromium.pak", pak_file_path);
+  pak_file_path = pak_file_path.AppendASCII("resources.pak");
+  ui::LoadMainAndroidPackFile("assets/resources.pak", pak_file_path);
 
   base::android::MemoryPressureListenerAndroid::RegisterSystemCallback(
       base::android::AttachCurrentThread());
   DeferredGpuCommandService::SetInstance();
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kSingleProcess)) {
+  breakpad::CrashDumpObserver::Create();
+
+  if (crash_reporter::IsCrashReporterEnabled()) {
+    base::FilePath crash_dir;
+    if (PathService::Get(android_webview::DIR_CRASH_DUMPS, &crash_dir)) {
+      if (!base::PathExists(crash_dir))
+        base::CreateDirectory(crash_dir);
+      breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
+          base::MakeUnique<breakpad::CrashDumpManager>(
+              crash_dir, kAndroidMinidumpDescriptor));
+    }
+  }
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kWebViewSandboxedRenderer)) {
     // Create the renderers crash manager on the UI thread.
-    breakpad::CrashMicroDumpManager::GetInstance();
+    breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
+        base::MakeUnique<AwBrowserTerminator>());
   }
 
   return content::RESULT_CODE_NORMAL_EXIT;
 }
 
 void AwBrowserMainParts::PreMainMessageLoopRun() {
-  browser_context_->PreMainMessageLoopRun();
+  browser_client_->InitBrowserContext()->PreMainMessageLoopRun();
 
   device::GeolocationProvider::SetGeolocationDelegate(
       new AwGeolocationDelegate());
-
-  AwDevToolsDiscoveryProvider::Install();
 
   content::RenderFrameHost::AllowInjectingJavaScriptForAndroidWebView();
 }

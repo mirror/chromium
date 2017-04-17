@@ -6,26 +6,28 @@
 #define PaintFilterEffect_h
 
 #include "platform/graphics/filters/FilterEffect.h"
-#include "third_party/skia/include/core/SkPaint.h"
+#include "platform/graphics/paint/PaintFlags.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT PaintFilterEffect : public FilterEffect {
-public:
-    static PaintFilterEffect* create(Filter*, const SkPaint&);
-    ~PaintFilterEffect() override;
+ public:
+  static PaintFilterEffect* Create(Filter*, const PaintFlags&);
+  ~PaintFilterEffect() override;
 
-    FilterEffectType getFilterEffectType() const override { return FilterEffectTypeSourceInput; }
+  FilterEffectType GetFilterEffectType() const override {
+    return kFilterEffectTypeSourceInput;
+  }
 
-    TextStream& externalRepresentation(TextStream&, int indention) const override;
-    sk_sp<SkImageFilter> createImageFilter() override;
+  TextStream& ExternalRepresentation(TextStream&, int indention) const override;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
 
-private:
-    PaintFilterEffect(Filter*, const SkPaint&);
+ private:
+  PaintFilterEffect(Filter*, const PaintFlags&);
 
-    SkPaint m_paint;
+  PaintFlags flags_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaintFilterEffect_h
+#endif  // PaintFilterEffect_h

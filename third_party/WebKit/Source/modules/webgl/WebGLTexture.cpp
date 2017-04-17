@@ -30,90 +30,96 @@
 
 namespace blink {
 
-WebGLTexture* WebGLTexture::create(WebGLRenderingContextBase* ctx)
-{
-    return new WebGLTexture(ctx);
+WebGLTexture* WebGLTexture::Create(WebGLRenderingContextBase* ctx) {
+  return new WebGLTexture(ctx);
 }
 
 WebGLTexture::WebGLTexture(WebGLRenderingContextBase* ctx)
-    : WebGLSharedPlatform3DObject(ctx)
-    , m_target(0)
-{
-    GLuint texture;
-    ctx->contextGL()->GenTextures(1, &texture);
-    setObject(texture);
+    : WebGLSharedPlatform3DObject(ctx), target_(0) {
+  GLuint texture;
+  ctx->ContextGL()->GenTextures(1, &texture);
+  SetObject(texture);
 }
 
-WebGLTexture::~WebGLTexture()
-{
-    // See the comment in WebGLObject::detachAndDeleteObject().
-    detachAndDeleteObject();
+WebGLTexture::~WebGLTexture() {
+  RunDestructor();
 }
 
-void WebGLTexture::setTarget(GLenum target)
-{
-    if (!object())
-        return;
-    // Target is finalized the first time bindTexture() is called.
-    if (m_target)
-        return;
-    m_target = target;
+void WebGLTexture::SetTarget(GLenum target) {
+  if (!Object())
+    return;
+  // Target is finalized the first time bindTexture() is called.
+  if (target_)
+    return;
+  target_ = target;
 }
 
-void WebGLTexture::deleteObjectImpl(gpu::gles2::GLES2Interface* gl)
-{
-    gl->DeleteTextures(1, &m_object);
-    m_object = 0;
+void WebGLTexture::DeleteObjectImpl(gpu::gles2::GLES2Interface* gl) {
+  gl->DeleteTextures(1, &object_);
+  object_ = 0;
 }
 
-int WebGLTexture::mapTargetToIndex(GLenum target) const
-{
-    if (m_target == GL_TEXTURE_2D) {
-        if (target == GL_TEXTURE_2D)
-            return 0;
-    } else if (m_target == GL_TEXTURE_CUBE_MAP) {
-        switch (target) {
-        case GL_TEXTURE_CUBE_MAP_POSITIVE_X:
-            return 0;
-        case GL_TEXTURE_CUBE_MAP_NEGATIVE_X:
-            return 1;
-        case GL_TEXTURE_CUBE_MAP_POSITIVE_Y:
-            return 2;
-        case GL_TEXTURE_CUBE_MAP_NEGATIVE_Y:
-            return 3;
-        case GL_TEXTURE_CUBE_MAP_POSITIVE_Z:
-            return 4;
-        case GL_TEXTURE_CUBE_MAP_NEGATIVE_Z:
-            return 5;
-        }
-    } else if (m_target == GL_TEXTURE_3D) {
-        if (target == GL_TEXTURE_3D)
-            return 0;
-    } else if (m_target == GL_TEXTURE_2D_ARRAY) {
-        if (target == GL_TEXTURE_2D_ARRAY)
-            return 0;
-    }
-    return -1;
-}
-
-GLint WebGLTexture::computeLevelCount(GLsizei width, GLsizei height, GLsizei depth)
-{
-    // return 1 + log2Floor(std::max(width, height));
-    GLsizei n = std::max(std::max(width, height), depth);
-    if (n <= 0)
+int WebGLTexture::MapTargetToIndex(GLenum target) const {
+  if (target_ == GL_TEXTURE_2D) {
+    if (target == GL_TEXTURE_2D)
+      return 0;
+  } else if (target_ == GL_TEXTURE_CUBE_MAP) {
+    switch (target) {
+      case GL_TEXTURE_CUBE_MAP_POSITIVE_X:
         return 0;
-    GLint log = 0;
-    GLsizei value = n;
-    for (int ii = 4; ii >= 0; --ii) {
-        int shift = (1 << ii);
-        GLsizei x = (value >> shift);
-        if (x) {
-            value = x;
-            log += shift;
-        }
+      case GL_TEXTURE_CUBE_MAP_NEGATIVE_X:
+        return 1;
+      case GL_TEXTURE_CUBE_MAP_POSITIVE_Y:
+        return 2;
+      case GL_TEXTURE_CUBE_MAP_NEGATIVE_Y:
+        return 3;
+      case GL_TEXTURE_CUBE_MAP_POSITIVE_Z:
+        return 4;
+      case GL_TEXTURE_CUBE_MAP_NEGATIVE_Z:
+        return 5;
     }
-    ASSERT(value == 1);
-    return log + 1;
+  } else if (target_ == GL_TEXTURE_3D) {
+    if (target == GL_TEXTURE_3D)
+      return 0;
+  } else if (target_ == GL_TEXTURE_2D_ARRAY) {
+    if (target == GL_TEXTURE_2D_ARRAY)
+      return 0;
+  }
+  return -1;
 }
 
-} // namespace blink
+GLint WebGLTexture::ComputeLevelCount(GLsizei width,
+                                      GLsizei height,
+                                      GLsizei depth) {
+  // return 1 + log2Floor(std::max(width, height));
+  GLsizei n = std::max(std::max(width, height), depth);
+  if (n <= 0)
+    return 0;
+  GLint log = 0;
+  GLsizei value = n;
+  for (int ii = 4; ii >= 0; --ii) {
+    int shift = (1 << ii);
+    GLsizei x = (value >> shift);
+    if (x) {
+      value = x;
+      log += shift;
+    }
+  }
+  ASSERT(value == 1);
+  return log + 1;
+}
+
+void WebGLTexture::UpdateLastUploadedVideo(WebMediaPlayer* player) {
+  if (player && player->GetLastUploadedFrameInfo(
+                    &last_uploaded_video_width_, &last_uploaded_video_height_,
+                    &last_uploaded_video_timestamp_)) {
+    return;
+  }
+
+  // getCurrentFrameInfo was unavailable or failed
+  last_uploaded_video_width_ = 0;
+  last_uploaded_video_height_ = 0;
+  last_uploaded_video_timestamp_ = 0.0;
+}
+
+}  // namespace blink

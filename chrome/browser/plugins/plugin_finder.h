@@ -15,19 +15,16 @@
 #include "base/memory/singleton.h"
 #include "base/strings/string16.h"
 #include "base/synchronization/lock.h"
+#include "chrome/common/features.h"
 #include "content/public/common/webplugininfo.h"
 
 namespace base {
 class DictionaryValue;
 }
 
-class GURL;
+class PluginInstaller;
 class PluginMetadata;
 class PrefRegistrySimple;
-
-#if defined(ENABLE_PLUGIN_INSTALLATION)
-class PluginInstaller;
-#endif
 
 // This class should be created and initialized by calling
 // |GetInstance()| and |Init()| on the UI thread.
@@ -43,7 +40,6 @@ class PluginFinder {
 
   void ReinitializePlugins(const base::DictionaryValue* json_metadata);
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
   // Finds a plugin for the given MIME type and language (specified as an IETF
   // language tag, i.e. en-US). If found, sets |installer| to the
   // corresponding PluginInstaller and |plugin_metadata| to a copy of the
@@ -55,12 +51,11 @@ class PluginFinder {
 
   // Finds the plugin with the given identifier. If found, sets |installer|
   // to the corresponding PluginInstaller and |plugin_metadata| to a copy
-  // of the corresponding PluginMetadata. |installer| may be NULL.
+  // of the corresponding PluginMetadata. |installer| may be null.
   bool FindPluginWithIdentifier(
       const std::string& identifier,
       PluginInstaller** installer,
       std::unique_ptr<PluginMetadata>* plugin_metadata);
-#endif
 
   // Gets plugin metadata using |plugin|.
   std::unique_ptr<PluginMetadata> GetPluginMetadata(
@@ -75,22 +70,20 @@ class PluginFinder {
   ~PluginFinder();
 
   // Loads the plugin information from the browser resources and parses it.
-  // Returns NULL if the plugin list couldn't be parsed.
+  // Returns null if the plugin list couldn't be parsed.
   static base::DictionaryValue* LoadBuiltInPluginList();
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
-  std::map<std::string, PluginInstaller*> installers_;
-#endif
+  std::map<std::string, std::unique_ptr<PluginInstaller>> installers_;
 
-  std::map<std::string, PluginMetadata*> identifier_plugin_;
+  std::map<std::string, std::unique_ptr<PluginMetadata>> identifier_plugin_;
 
   // Version of the metadata information. We use this to consolidate multiple
   // sources (baked into resource and fetched from a URL), making sure that we
   // don't overwrite newer versions with older ones.
   int version_;
 
-  // Synchronization for the above member variables is
-  // required since multiple threads can be accessing them concurrently.
+  // Synchronization for the above member variables is required since multiple
+  // threads can be accessing them concurrently.
   base::Lock mutex_;
 
   DISALLOW_COPY_AND_ASSIGN(PluginFinder);

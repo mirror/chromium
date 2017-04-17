@@ -27,7 +27,8 @@
 #include "net/base/io_buffer.h"
 #include "net/base/ip_address.h"
 #include "net/base/net_errors.h"
-#include "net/dns/single_request_host_resolver.h"
+#include "net/log/net_log_source.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/ssl_client_socket.h"
@@ -37,7 +38,7 @@
 #include "ppapi/host/ppapi_host.h"
 #include "ppapi/host/resource_host.h"
 #include "ppapi/proxy/ppapi_messages.h"
-#include "ppapi/proxy/tcp_socket_resource_base.h"
+#include "ppapi/proxy/tcp_socket_resource_constants.h"
 #include "ppapi/shared_impl/private/net_address_private_impl.h"
 
 #if defined(OS_CHROMEOS)
@@ -46,7 +47,7 @@
 
 using ppapi::NetAddressPrivateImpl;
 using ppapi::host::NetErrorToPepperError;
-using ppapi::proxy::TCPSocketResourceBase;
+using ppapi::proxy::TCPSocketResourceConstants;
 using ppapi::TCPSocketState;
 using ppapi::TCPSocketVersion;
 
@@ -77,7 +78,7 @@ PepperTCPSocketMessageFilter::PepperTCPSocketMessageFilter(
       rcvbuf_size_(0),
       sndbuf_size_(0),
       address_index_(0),
-      socket_(new net::TCPSocket(NULL, NULL, net::NetLog::Source())),
+      socket_(new net::TCPSocket(NULL, NULL, net::NetLogSource())),
       ssl_context_helper_(host->ssl_context_helper()),
       pending_accept_(false),
       pending_read_on_unthrottle_(false),
@@ -368,7 +369,7 @@ int32_t PepperTCPSocketMessageFilter::OnMsgRead(
   if (read_buffer_.get())
     return PP_ERROR_INPROGRESS;
   if (bytes_to_read <= 0 ||
-      bytes_to_read > TCPSocketResourceBase::kMaxReadSize) {
+      bytes_to_read > TCPSocketResourceConstants::kMaxReadSize) {
     return PP_ERROR_BADARGUMENT;
   }
 
@@ -411,7 +412,8 @@ int32_t PepperTCPSocketMessageFilter::OnMsgWrite(
 
   size_t data_size = data.size();
   if (data_size == 0 ||
-      data_size > static_cast<size_t>(TCPSocketResourceBase::kMaxWriteSize)) {
+      data_size >
+          static_cast<size_t>(TCPSocketResourceConstants::kMaxWriteSize)) {
     return PP_ERROR_BADARGUMENT;
   }
 
@@ -523,9 +525,8 @@ int32_t PepperTCPSocketMessageFilter::OnMsgSetOption(
     }
     case PP_TCPSOCKET_OPTION_SEND_BUFFER_SIZE: {
       int32_t integer_value = 0;
-      if (!value.GetInt32(&integer_value) ||
-          integer_value <= 0 ||
-          integer_value > TCPSocketResourceBase::kMaxSendBufferSize)
+      if (!value.GetInt32(&integer_value) || integer_value <= 0 ||
+          integer_value > TCPSocketResourceConstants::kMaxSendBufferSize)
         return PP_ERROR_BADARGUMENT;
 
       // If the socket is already connected, proxy the value to TCPSocket.
@@ -541,9 +542,8 @@ int32_t PepperTCPSocketMessageFilter::OnMsgSetOption(
     }
     case PP_TCPSOCKET_OPTION_RECV_BUFFER_SIZE: {
       int32_t integer_value = 0;
-      if (!value.GetInt32(&integer_value) ||
-          integer_value <= 0 ||
-          integer_value > TCPSocketResourceBase::kMaxReceiveBufferSize)
+      if (!value.GetInt32(&integer_value) || integer_value <= 0 ||
+          integer_value > TCPSocketResourceConstants::kMaxReceiveBufferSize)
         return PP_ERROR_BADARGUMENT;
 
       // If the socket is already connected, proxy the value to TCPSocket.
@@ -643,16 +643,12 @@ void PepperTCPSocketMessageFilter::DoConnect(
   address_index_ = 0;
   address_list_.clear();
   net::HostResolver::RequestInfo request_info(net::HostPortPair(host, port));
-  resolver_.reset(
-      new net::SingleRequestHostResolver(resource_context->GetHostResolver()));
-  int net_result = resolver_->Resolve(
-      request_info,
-      net::DEFAULT_PRIORITY,
-      &address_list_,
+  net::HostResolver* resolver = resource_context->GetHostResolver();
+  int net_result = resolver->Resolve(
+      request_info, net::DEFAULT_PRIORITY, &address_list_,
       base::Bind(&PepperTCPSocketMessageFilter::OnResolveCompleted,
-                 base::Unretained(this),
-                 context),
-      net::BoundNetLog());
+                 base::Unretained(this), context),
+      &request_, net::NetLogWithSource());
   if (net_result != net::ERR_IO_PENDING)
     OnResolveCompleted(context, net_result);
 }
@@ -863,7 +859,7 @@ void PepperTCPSocketMessageFilter::OnConnectCompleted(
     // We have to recreate |socket_| because it doesn't allow a second connect
     // attempt. We won't lose any state such as bound address or set options,
     // because in the private or v1.0 API, connect must be the first operation.
-    socket_.reset(new net::TCPSocket(NULL, NULL, net::NetLog::Source()));
+    socket_.reset(new net::TCPSocket(NULL, NULL, net::NetLogSource()));
 
     if (address_index_ + 1 < address_list_.size()) {
       DCHECK_EQ(version_, ppapi::TCP_SOCKET_VERSION_PRIVATE);

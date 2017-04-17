@@ -9,8 +9,9 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
-#include "base/memory/scoped_vector.h"
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "device/bluetooth/bluetooth_common.h"
 #include "device/bluetooth/bluetooth_device.h"
@@ -27,7 +28,7 @@ class MockBluetoothDevice : public BluetoothDevice {
  public:
   MockBluetoothDevice(MockBluetoothAdapter* adapter,
                       uint32_t bluetooth_class,
-                      const std::string& name,
+                      const char* name,
                       const std::string& address,
                       bool paired,
                       bool connected);
@@ -44,15 +45,15 @@ class MockBluetoothDevice : public BluetoothDevice {
   MOCK_CONST_METHOD0(GetAppearance, uint16_t());
   MOCK_CONST_METHOD0(GetName, base::Optional<std::string>());
   MOCK_CONST_METHOD0(GetNameForDisplay, base::string16());
-  MOCK_CONST_METHOD0(GetDeviceType, BluetoothDevice::DeviceType());
+  MOCK_CONST_METHOD0(GetDeviceType, BluetoothDeviceType());
   MOCK_CONST_METHOD0(IsPaired, bool());
   MOCK_CONST_METHOD0(IsConnected, bool());
   MOCK_CONST_METHOD0(IsGattConnected, bool());
   MOCK_CONST_METHOD0(IsConnectable, bool());
   MOCK_CONST_METHOD0(IsConnecting, bool());
-  MOCK_CONST_METHOD0(GetUUIDs, UUIDList());
-  MOCK_CONST_METHOD0(GetInquiryRSSI, int16_t());
-  MOCK_CONST_METHOD0(GetInquiryTxPower, int16_t());
+  MOCK_CONST_METHOD0(GetUUIDs, UUIDSet());
+  MOCK_CONST_METHOD0(GetInquiryRSSI, base::Optional<int8_t>());
+  MOCK_CONST_METHOD0(GetInquiryTxPower, base::Optional<int8_t>());
   MOCK_CONST_METHOD0(ExpectingPinCode, bool());
   MOCK_CONST_METHOD0(ExpectingPasskey, bool());
   MOCK_CONST_METHOD0(ExpectingConfirmation, bool());
@@ -113,16 +114,29 @@ class MockBluetoothDevice : public BluetoothDevice {
   BluetoothRemoteGattService* GetMockService(
       const std::string& identifier) const;
 
+  void AddUUID(const BluetoothUUID& uuid) { uuids_.insert(uuid); }
+
+  // Functions to save and run callbacks from this device. Useful when
+  // trying to run callbacks in response to other actions e.g. run a read
+  // value callback in response to a connection request.
+  // Appends callback to the end of the callbacks queue.
+  void PushPendingCallback(const base::Closure& callback);
+  // Runs all pending callbacks.
+  void RunPendingCallbacks();
+
   void SetConnected(bool connected) { connected_ = connected; }
 
  private:
   uint32_t bluetooth_class_;
-  std::string name_;
+  base::Optional<std::string> name_;
   std::string address_;
-  BluetoothDevice::UUIDList uuids_;
+  BluetoothDevice::UUIDSet uuids_;
   bool connected_;
 
-  ScopedVector<MockBluetoothGattService> mock_services_;
+  // Used by tests to save callbacks that will be run in the future.
+  std::queue<base::Closure> pending_callbacks_;
+
+  std::vector<std::unique_ptr<MockBluetoothGattService>> mock_services_;
 };
 
 }  // namespace device

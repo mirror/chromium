@@ -6,49 +6,77 @@
 
 #include "core/css/CSSMarkup.h"
 #include "core/dom/Document.h"
-#include "core/fetch/FetchInitiatorTypeNames.h"
-#include "core/fetch/FetchRequest.h"
-#include "core/fetch/ResourceFetcher.h"
-#include "wtf/text/WTFString.h"
+#include "core/svg/SVGElementProxy.h"
+#include "platform/weborigin/KURL.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-CSSURIValue::CSSURIValue(const String& urlString)
-    : CSSValue(URIClass)
-    , m_url(urlString)
-    , m_loadRequested(false)
-{
+CSSURIValue::CSSURIValue(const AtomicString& relative_url,
+                         const AtomicString& absolute_url)
+    : CSSValue(kURIClass),
+      relative_url_(relative_url),
+      is_local_(relative_url.StartsWith('#')),
+      absolute_url_(absolute_url) {}
+
+CSSURIValue::CSSURIValue(const AtomicString& relative_url, const KURL& url)
+    : CSSURIValue(relative_url, AtomicString(url.GetString())) {}
+
+CSSURIValue::~CSSURIValue() {}
+
+SVGElementProxy& CSSURIValue::EnsureElementProxy(
+    const Document& document) const {
+  if (proxy_)
+    return *proxy_;
+  AtomicString fragment_id = FragmentIdentifier();
+  if (IsLocal(document))
+    proxy_ = SVGElementProxy::Create(fragment_id);
+  else
+    proxy_ = SVGElementProxy::Create(absolute_url_, fragment_id);
+  return *proxy_;
 }
 
-CSSURIValue::~CSSURIValue()
-{
+void CSSURIValue::ReResolveUrl(const Document& document) const {
+  if (is_local_)
+    return;
+  KURL url = document.CompleteURL(relative_url_);
+  AtomicString url_string(url.GetString());
+  if (url_string == absolute_url_)
+    return;
+  absolute_url_ = url_string;
+  proxy_ = nullptr;
 }
 
-DocumentResource* CSSURIValue::load(Document& document) const
-{
-    if (!m_loadRequested) {
-        m_loadRequested = true;
-
-        FetchRequest request(ResourceRequest(document.completeURL(m_url)), FetchInitiatorTypeNames::css);
-        m_document = DocumentResource::fetchSVGDocument(request, document.fetcher());
-    }
-    return m_document;
+String CSSURIValue::CustomCSSText() const {
+  return SerializeURI(relative_url_);
 }
 
-String CSSURIValue::customCSSText() const
-{
-    return serializeURI(m_url);
+AtomicString CSSURIValue::FragmentIdentifier() const {
+  if (is_local_)
+    return AtomicString(relative_url_.GetString().Substring(1));
+  return AtomicString(AbsoluteUrl().FragmentIdentifier());
 }
 
-bool CSSURIValue::equals(const CSSURIValue& other) const
-{
-    return m_url == other.m_url;
+KURL CSSURIValue::AbsoluteUrl() const {
+  return KURL(kParsedURLString, absolute_url_);
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(CSSURIValue)
-{
-    visitor->trace(m_document);
-    CSSValue::traceAfterDispatch(visitor);
+bool CSSURIValue::IsLocal(const Document& document) const {
+  return is_local_ ||
+         EqualIgnoringFragmentIdentifier(AbsoluteUrl(), document.Url());
 }
 
-} // namespace blink
+bool CSSURIValue::Equals(const CSSURIValue& other) const {
+  // If only one has the 'local url' flag set, the URLs can't match.
+  if (is_local_ != other.is_local_)
+    return false;
+  return (is_local_ && relative_url_ == other.relative_url_) ||
+         absolute_url_ == other.absolute_url_;
+}
+
+DEFINE_TRACE_AFTER_DISPATCH(CSSURIValue) {
+  visitor->Trace(proxy_);
+  CSSValue::TraceAfterDispatch(visitor);
+}
+
+}  // namespace blink

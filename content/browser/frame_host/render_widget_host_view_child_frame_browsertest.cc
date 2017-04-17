@@ -28,8 +28,8 @@ class RenderWidgetHostViewChildFrameTest : public ContentBrowserTest {
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");
-    ASSERT_TRUE(embedded_test_server()->Start());
     SetupCrossSiteRedirector(embedded_test_server());
+    ASSERT_TRUE(embedded_test_server()->Start());
   }
 
   void CheckScreenWidth(RenderFrameHost* render_frame_host) {
@@ -69,7 +69,8 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewChildFrameTest, Screen) {
   EXPECT_FALSE(main_frame_screen_width == 0);
 
   shell()->web_contents()->ForEachFrame(
-      base::Bind(&RenderWidgetHostViewChildFrameTest::CheckScreenWidth, this));
+      base::Bind(&RenderWidgetHostViewChildFrameTest::CheckScreenWidth,
+                 base::Unretained(this)));
 }
 
 }  // namespace content

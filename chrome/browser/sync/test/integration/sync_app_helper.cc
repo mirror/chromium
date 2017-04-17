@@ -4,6 +4,10 @@
 
 #include "chrome/browser/sync/test/integration/sync_app_helper.h"
 
+#include <list>
+#include <map>
+#include <memory>
+
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -41,7 +45,7 @@ struct AppState {
   bool from_bookmark;
 };
 
-typedef std::map<std::string, AppState> AppStateMap;
+using AppStateMap = std::map<std::string, AppState>;
 
 AppState::AppState()
     : launch_type(extensions::LAUNCH_TYPE_INVALID), from_bookmark(false) {}

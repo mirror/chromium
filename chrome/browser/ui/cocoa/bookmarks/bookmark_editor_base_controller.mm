@@ -23,9 +23,10 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/managed/managed_bookmark_service.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
+#include "ui/base/material_design/material_design_controller.h"
 
 using bookmarks::BookmarkExpandedStateTracker;
 using bookmarks::BookmarkModel;
@@ -75,7 +76,7 @@ void BookmarkEditor::Show(gfx::NativeWindow parent_window,
                           Profile* profile,
                           const EditDetails& details,
                           Configuration configuration) {
-  if (chrome::ToolkitViewsDialogsEnabled()) {
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
     chrome::ShowBookmarkEditorViews(parent_window, profile, details,
                                     configuration);
     return;
@@ -285,7 +286,8 @@ class BookmarkEditorBaseControllerBridge
   // Lock down floating bar when in full-screen mode.  Don't animate
   // otherwise the pane will be misplaced.
   [[BrowserWindowController browserWindowControllerForWindow:parentWindow_]
-   lockBarVisibilityForOwner:self withAnimation:NO delay:NO];
+      lockToolbarVisibilityForOwner:self
+                      withAnimation:NO];
   [NSApp beginSheet:[self window]
      modalForWindow:parentWindow_
       modalDelegate:self
@@ -332,7 +334,8 @@ NSString* const kOkEnabledName = @"okEnabled";
         contextInfo:(void*)contextInfo {
   [sheet close];
   [[BrowserWindowController browserWindowControllerForWindow:parentWindow_]
-   releaseBarVisibilityForOwner:self withAnimation:YES delay:NO];
+      releaseToolbarVisibilityForOwner:self
+                         withAnimation:YES];
 }
 
 - (void)windowWillClose:(NSNotification*)notification {
@@ -342,7 +345,7 @@ NSString* const kOkEnabledName = @"okEnabled";
 #pragma mark Folder Tree Management
 
 - (BookmarkModel*)bookmarkModel {
-  return BookmarkModelFactory::GetForProfile(profile_);
+  return BookmarkModelFactory::GetForBrowserContext(profile_);
 }
 
 - (Profile*)profile {
@@ -481,7 +484,7 @@ NSString* const kOkEnabledName = @"okEnabled";
   // of ancestor nodes.  Then crawl down the folderTreeArray looking
   // for each ancestor in order while building up the selectionPath.
   std::stack<const BookmarkNode*> nodeStack;
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile_);
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile_);
   const BookmarkNode* rootNode = model->root_node();
   const BookmarkNode* node = desiredNode;
   while (node != rootNode) {
@@ -539,7 +542,7 @@ NSString* const kOkEnabledName = @"okEnabled";
 
 - (void)buildFolderTree {
   // Build up a tree of the current folder configuration.
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile_);
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile_);
   const BookmarkNode* rootNode = model->root_node();
   NSMutableArray* baseArray = [self addChildFoldersFromNode:rootNode];
   DCHECK(baseArray);

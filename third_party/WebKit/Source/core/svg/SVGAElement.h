@@ -23,50 +23,56 @@
 #define SVGAElement_h
 
 #include "core/CoreExport.h"
-#include "core/svg/SVGAnimatedBoolean.h"
 #include "core/svg/SVGGraphicsElement.h"
 #include "core/svg/SVGURIReference.h"
 
 namespace blink {
 
-class CORE_EXPORT SVGAElement final : public SVGGraphicsElement, public SVGURIReference {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGAElement);
-public:
-    DECLARE_NODE_FACTORY(SVGAElement);
-    SVGAnimatedString* svgTarget() { return m_svgTarget.get(); }
+class CORE_EXPORT SVGAElement final : public SVGGraphicsElement,
+                                      public SVGURIReference {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGAElement);
 
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  DECLARE_NODE_FACTORY(SVGAElement);
+  SVGAnimatedString* svgTarget() { return svg_target_.Get(); }
 
-private:
-    explicit SVGAElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    String title() const override;
+ private:
+  explicit SVGAElement(Document&);
 
-    void svgAttributeChanged(const QualifiedName&) override;
+  String title() const override;
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    void defaultEventHandler(Event*) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    bool isLiveLink() const override { return isLink(); }
+  void DefaultEventHandler(Event*) override;
 
-    bool supportsFocus() const override;
-    bool shouldHaveFocusAppearance() const final;
-    void dispatchFocusEvent(Element* oldFocusedElement, WebFocusType, InputDeviceCapabilities* sourceCapabilities) override;
-    void dispatchBlurEvent(Element* newFocusedElement, WebFocusType, InputDeviceCapabilities* sourceCapabilities) override;
-    bool isMouseFocusable() const override;
-    bool isKeyboardFocusable() const override;
-    bool isURLAttribute(const Attribute&) const override;
-    bool canStartSelection() const override;
-    short tabIndex() const override;
+  bool IsLiveLink() const override { return IsLink(); }
 
-    bool willRespondToMouseClickEvents() override;
+  bool SupportsFocus() const override;
+  bool ShouldHaveFocusAppearance() const final;
+  void DispatchFocusEvent(
+      Element* old_focused_element,
+      WebFocusType,
+      InputDeviceCapabilities* source_capabilities) override;
+  void DispatchBlurEvent(Element* new_focused_element,
+                         WebFocusType,
+                         InputDeviceCapabilities* source_capabilities) override;
+  bool IsMouseFocusable() const override;
+  bool IsKeyboardFocusable() const override;
+  bool IsURLAttribute(const Attribute&) const override;
+  bool CanStartSelection() const override;
+  int tabIndex() const override;
 
-    Member<SVGAnimatedString> m_svgTarget;
-    bool m_wasFocusedByMouse;
+  bool WillRespondToMouseClickEvents() override;
+
+  Member<SVGAnimatedString> svg_target_;
+  bool was_focused_by_mouse_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGAElement_h
+#endif  // SVGAElement_h

@@ -37,25 +37,36 @@
 
 namespace blink {
 
-// SVG Spec: http://www.w3.org/TR/SVG11/coords.html#InterfaceSVGAnimatedTransformList
-class SVGAnimatedTransformList final : public SVGAnimatedProperty<SVGTransformList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SVGAnimatedTransformList* create(SVGElement* contextElement, const QualifiedName& attributeName, SVGTransformList* initialValue)
-    {
-        return new SVGAnimatedTransformList(contextElement, attributeName, initialValue);
-    }
+// SVG Spec:
+// http://www.w3.org/TR/SVG11/coords.html#InterfaceSVGAnimatedTransformList
+class SVGAnimatedTransformList final
+    : public SVGAnimatedProperty<SVGTransformList>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS()
-    {
-        visitor->traceWrappers(contextElement());
-    }
+ public:
+  static SVGAnimatedTransformList* Create(
+      SVGElement* context_element,
+      const QualifiedName& attribute_name,
+      CSSPropertyID css_property_id = CSSPropertyInvalid) {
+    return new SVGAnimatedTransformList(context_element, attribute_name,
+                                        css_property_id);
+  }
 
-protected:
-    SVGAnimatedTransformList(SVGElement* contextElement, const QualifiedName& attributeName, SVGTransformList* initialValue)
-        : SVGAnimatedProperty<SVGTransformList>(contextElement, attributeName, initialValue) { }
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    visitor->TraceWrappers(contextElement());
+  }
+
+ protected:
+  SVGAnimatedTransformList(SVGElement* context_element,
+                           const QualifiedName& attribute_name,
+                           CSSPropertyID css_property_id)
+      : SVGAnimatedProperty<SVGTransformList>(context_element,
+                                              attribute_name,
+                                              SVGTransformList::Create(),
+                                              css_property_id) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

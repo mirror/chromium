@@ -6,16 +6,21 @@
 
 #include <stddef.h>
 
+#include <algorithm>
 #include <memory>
+#include <string>
 
 #include "base/base64.h"
+#include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "chrome/browser/android/contextualsearch/contextual_search_context.h"
 #include "chrome/browser/android/contextualsearch/resolved_search_term.h"
 #include "chrome/browser/android/proto/client_discourse_context.pb.h"
+#include "chrome/common/chrome_switches.h"
 #include "components/search_engines/template_url_service.h"
 #include "net/base/escape.h"
 #include "net/url_request/test_url_fetcher_factory.h"
@@ -57,6 +62,7 @@ class ContextualSearchDelegateTest : public testing::Test {
     is_invalid_ = true;
     response_code_ = -1;
     search_term_ = "invalid";
+    mid_ = "";
     display_text_ = "unknown";
     context_language_ = "";
   }
@@ -67,10 +73,9 @@ class ContextualSearchDelegateTest : public testing::Test {
     data.SetURL("https://foobar.com/url?bar={searchTerms}");
     data.contextual_search_url = "https://foobar.com/_/contextualsearch?"
         "{google:contextualSearchVersion}{google:contextualSearchContextData}";
-    TemplateURL* template_url = new TemplateURL(data);
-    // Takes ownership of |template_url|.
     TemplateURLService* template_url_service = new TemplateURLService(NULL, 0);
-    template_url_service->Add(template_url);
+    TemplateURL* template_url =
+        template_url_service->Add(base::MakeUnique<TemplateURL>(data));
     template_url_service->SetUserSelectedDefaultSearchProvider(template_url);
     return template_url_service;
   }
@@ -86,18 +91,71 @@ class ContextualSearchDelegateTest : public testing::Test {
       int start_offset,
       int end_offset) {
     test_context_ = new ContextualSearchContext(
-        selected_text, true, GURL(kSomeSpecificBasePage), "utf-8");
+        selected_text, std::string(), GURL(kSomeSpecificBasePage), "utf-8");
     // ContextualSearchDelegate class takes ownership of the context.
-    delegate_->set_context_for_testing(test_context_);
+    delegate_->SetContextForTesting(test_context_->GetWeakPtr());
 
-    test_context_->start_offset = start_offset;
-    test_context_->end_offset = end_offset;
-    test_context_->surrounding_text = surrounding_text;
-    delegate_->ContinueSearchTermResolutionRequest();
+    test_context_->SetSelectionSurroundings(start_offset, end_offset,
+                                            surrounding_text);
+    delegate_->ResolveSearchTermFromContext();
     fetcher_ = test_factory_.GetFetcherByID(
         ContextualSearchDelegate::kContextualSearchURLFetcherID);
     ASSERT_TRUE(fetcher_);
     ASSERT_TRUE(fetcher());
+  }
+
+  // Allows using the vertical bar "|" as a quote character, which makes
+  // test cases more readable versus the escaped double quote that is otherwise
+  // needed for JSON literals.
+  std::string escapeBarQuoted(std::string bar_quoted) {
+    std::replace(bar_quoted.begin(), bar_quoted.end(), '|', '\"');
+    return bar_quoted;
+  }
+
+  void CreateDefaultSearchWithAdditionalJsonData(
+      const std::string additional_json_data) {
+    CreateDefaultSearchContextAndRequestSearchTerm();
+    fetcher()->set_response_code(200);
+    std::string response =
+        escapeBarQuoted("{|search_term|:|obama|" + additional_json_data + "}");
+    fetcher()->SetResponseString(response);
+    fetcher()->delegate()->OnURLFetchComplete(fetcher());
+
+    EXPECT_FALSE(is_invalid());
+    EXPECT_EQ(200, response_code());
+    EXPECT_EQ("obama", search_term());
+  }
+
+  //-------------------------------------------------------------------
+  // Helper methods that call private ContextualSearchDelegate methods.
+  // The ContextualSearchDelegate methods cannot be called directly
+  // from tests, but can be called here because this is a friend class.
+  //-------------------------------------------------------------------
+  void CreateTestContext() {
+    test_context_ =
+        new ContextualSearchContext(std::string("word"), std::string(),
+                                    GURL(kSomeSpecificBasePage), "utf-8");
+    delegate_->SetContextForTesting(test_context_->GetWeakPtr());
+  }
+
+  void DestroyTestContext() { delete test_context_; }
+
+  // Call the OnTextSurroundingSelectionAvailable.
+  // Cannot be in an actual test because OnTextSurroundingSelectionAvailable
+  // is private.
+  void CallOnTextSurroundingSelectionAvailable() {
+    delegate_->OnTextSurroundingSelectionAvailable(base::string16(), 1, 2);
+  }
+
+  // Call the OnURLFetchComplete to simulate the end of a Resolve request.
+  // Cannot be in an actual test because OnTextSurroundingSelectionAvailable
+  // is private.
+  void CallOnURLFetchComplete() {
+    delegate_->OnURLFetchComplete(delegate_->search_term_fetcher_.get());
+  }
+
+  void CallResolveSearchTermFromContext() {
+    delegate_->ResolveSearchTermFromContext();
   }
 
   void SetResponseStringAndFetch(const std::string& selected_text,
@@ -119,12 +177,11 @@ class ContextualSearchDelegateTest : public testing::Test {
                              int start_offset,
                              int end_offset) {
     test_context_ = new ContextualSearchContext(
-        "Bogus", true, GURL(kSomeSpecificBasePage), "utf-8");
-    test_context_->surrounding_text = surrounding_text;
-    test_context_->start_offset = start_offset;
-    test_context_->end_offset = end_offset;
+        "Bogus", std::string(), GURL(kSomeSpecificBasePage), "utf-8");
+    test_context_->SetSelectionSurroundings(start_offset, end_offset,
+                                            surrounding_text);
     // ContextualSearchDelegate class takes ownership of the context.
-    delegate_->set_context_for_testing(test_context_);
+    delegate_->SetContextForTesting(test_context_->GetWeakPtr());
   }
 
   // Gets the Client Discourse Context proto from the request header.
@@ -170,6 +227,9 @@ class ContextualSearchDelegateTest : public testing::Test {
   std::string search_term() { return search_term_; }
   std::string display_text() { return display_text_; }
   std::string alternate_term() { return alternate_term_; }
+  std::string mid() { return mid_; }
+  std::string caption() { return caption_; }
+  std::string thumbnail_url() { return thumbnail_url_; }
   bool do_prevent_preload() { return prevent_preload_; }
   std::string after_text() { return after_text_; }
   int start_adjust() { return start_adjust_; }
@@ -187,6 +247,9 @@ class ContextualSearchDelegateTest : public testing::Test {
     search_term_ = resolved_search_term.search_term;
     display_text_ = resolved_search_term.display_text;
     alternate_term_ = resolved_search_term.alternate_term;
+    mid_ = resolved_search_term.mid;
+    thumbnail_url_ = resolved_search_term.thumbnail_url;
+    caption_ = resolved_search_term.caption;
     prevent_preload_ = resolved_search_term.prevent_preload;
     start_adjust_ = resolved_search_term.selection_start_adjust;
     end_adjust_ = resolved_search_term.selection_end_adjust;
@@ -209,6 +272,9 @@ class ContextualSearchDelegateTest : public testing::Test {
   std::string search_term_;
   std::string display_text_;
   std::string alternate_term_;
+  std::string mid_;
+  std::string thumbnail_url_;
+  std::string caption_;
   bool prevent_preload_;
   int start_adjust_;
   int end_adjust_;
@@ -242,6 +308,7 @@ TEST_F(ContextualSearchDelegateTest, NormalFetchWithXssiEscape) {
   EXPECT_EQ(200, response_code());
   EXPECT_EQ("obama", search_term());
   EXPECT_EQ("Barack Obama", display_text());
+  EXPECT_EQ("/m/02mjmr", mid());
   EXPECT_FALSE(do_prevent_preload());
 }
 
@@ -259,6 +326,7 @@ TEST_F(ContextualSearchDelegateTest, NormalFetchWithoutXssiEscape) {
   EXPECT_EQ(200, response_code());
   EXPECT_EQ("obama", search_term());
   EXPECT_EQ("Barack Obama", display_text());
+  EXPECT_EQ("/m/02mjmr", mid());
   EXPECT_FALSE(do_prevent_preload());
 }
 
@@ -274,6 +342,7 @@ TEST_F(ContextualSearchDelegateTest, ResponseWithNoDisplayText) {
   EXPECT_EQ(200, response_code());
   EXPECT_EQ("obama", search_term());
   EXPECT_EQ("obama", display_text());
+  EXPECT_EQ("/m/02mjmr", mid());
   EXPECT_FALSE(do_prevent_preload());
 }
 
@@ -289,6 +358,7 @@ TEST_F(ContextualSearchDelegateTest, ResponseWithPreventPreload) {
   EXPECT_EQ(200, response_code());
   EXPECT_EQ("obama", search_term());
   EXPECT_EQ("obama", display_text());
+  EXPECT_EQ("/m/02mjmr", mid());
   EXPECT_TRUE(do_prevent_preload());
 }
 
@@ -302,6 +372,7 @@ TEST_F(ContextualSearchDelegateTest, NonJsonResponse) {
   EXPECT_EQ(200, response_code());
   EXPECT_EQ("", search_term());
   EXPECT_EQ("", display_text());
+  EXPECT_EQ("", mid());
   EXPECT_FALSE(do_prevent_preload());
 }
 
@@ -491,18 +562,31 @@ TEST_F(ContextualSearchDelegateTest, DecodeSearchTermFromJsonResponse) {
   std::string search_term;
   std::string display_text;
   std::string alternate_term;
+  std::string mid;
   std::string prevent_preload;
   int mention_start;
   int mention_end;
   std::string context_language;
+  std::string thumbnail_url;
+  std::string caption;
+  std::string quick_action_uri;
+  QuickActionCategory quick_action_category = QUICK_ACTION_CATEGORY_NONE;
+
   delegate_->DecodeSearchTermFromJsonResponse(
       json_with_escape, &search_term, &display_text, &alternate_term,
-      &prevent_preload, &mention_start, &mention_end, &context_language);
+      &mid, &prevent_preload, &mention_start, &mention_end, &context_language,
+      &thumbnail_url, &caption, &quick_action_uri, &quick_action_category);
+
   EXPECT_EQ("obama", search_term);
   EXPECT_EQ("Barack Obama", display_text);
   EXPECT_EQ("barack obama", alternate_term);
+  EXPECT_EQ("/m/02mjmr", mid);
   EXPECT_EQ("", prevent_preload);
   EXPECT_EQ("", context_language);
+  EXPECT_EQ("", thumbnail_url);
+  EXPECT_EQ("", caption);
+  EXPECT_EQ("", quick_action_uri);
+  EXPECT_EQ(QUICK_ACTION_CATEGORY_NONE, quick_action_category);
 }
 
 TEST_F(ContextualSearchDelegateTest, ResponseWithLanguage) {
@@ -518,6 +602,7 @@ TEST_F(ContextualSearchDelegateTest, ResponseWithLanguage) {
   EXPECT_EQ(200, response_code());
   EXPECT_EQ("obama", search_term());
   EXPECT_EQ("obama", display_text());
+  EXPECT_EQ("/m/02mjmr", mid());
   EXPECT_TRUE(do_prevent_preload());
   EXPECT_EQ("de", context_language());
 }
@@ -525,4 +610,41 @@ TEST_F(ContextualSearchDelegateTest, ResponseWithLanguage) {
 TEST_F(ContextualSearchDelegateTest, HeaderContainsBasePageUrl) {
   CreateDefaultSearchContextAndRequestSearchTerm();
   EXPECT_EQ(kSomeSpecificBasePage, getBasePageUrlFromRequest());
+}
+
+// Missing all Contextual Cards data.
+TEST_F(ContextualSearchDelegateTest, ContextualCardsResponseWithNoData) {
+  CreateDefaultSearchWithAdditionalJsonData("");
+  EXPECT_EQ("", caption());
+  EXPECT_EQ("", thumbnail_url());
+}
+
+// Test just the root level caption.
+TEST_F(ContextualSearchDelegateTest, ContextualCardsResponseWithCaption) {
+  CreateDefaultSearchWithAdditionalJsonData(", |caption|:|aCaption|");
+  EXPECT_EQ("aCaption", caption());
+  EXPECT_EQ("", thumbnail_url());
+}
+
+// Test just the root level thumbnail.
+TEST_F(ContextualSearchDelegateTest, ContextualCardsResponseWithThumbnail) {
+  CreateDefaultSearchWithAdditionalJsonData(
+      ", |thumbnail|:|https://t0.gstatic.com/images?q=tbn:ANd9|");
+  EXPECT_EQ("", caption());
+  EXPECT_EQ("https://t0.gstatic.com/images?q=tbn:ANd9", thumbnail_url());
+}
+
+// Test that we can destroy the context while resolving without a crash.
+TEST_F(ContextualSearchDelegateTest, DestroyContextDuringResolve) {
+  CreateTestContext();
+  CallResolveSearchTermFromContext();
+  DestroyTestContext();
+  CallOnURLFetchComplete();
+}
+
+// Test that we can destroy the context while gathering surrounding text.
+TEST_F(ContextualSearchDelegateTest, DestroyContextDuringGatherSurroundings) {
+  CreateTestContext();
+  DestroyTestContext();
+  CallOnTextSurroundingSelectionAvailable();
 }

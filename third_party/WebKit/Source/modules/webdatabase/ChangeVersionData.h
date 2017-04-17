@@ -26,25 +26,26 @@
 #ifndef ChangeVersionData_h
 #define ChangeVersionData_h
 
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ChangeVersionData {
-    STACK_ALLOCATED();
-public:
-    ChangeVersionData(String oldVersion, String newVersion)
-        : m_oldVersion(oldVersion), m_newVersion(newVersion) { }
+  STACK_ALLOCATED();
 
-    String oldVersion() const { return m_oldVersion; }
-    String newVersion() const { return m_newVersion; }
+ public:
+  ChangeVersionData(String old_version, String new_version)
+      : old_version_(old_version), new_version_(new_version) {}
 
-private:
-    String m_oldVersion;
-    String m_newVersion;
+  String OldVersion() const { return old_version_; }
+  String NewVersion() const { return new_version_; }
+
+ private:
+  String old_version_;
+  String new_version_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ChangeVersionData_h
+#endif  // ChangeVersionData_h

@@ -742,7 +742,6 @@ void QueryManager::Destroy(bool have_context) {
   active_queries_.clear();
   pending_queries_.clear();
   pending_transfer_queries_.clear();
-  active_queries_.clear();
   while (!queries_.empty()) {
     Query* query = queries_.begin()->second.get();
     query->Destroy(have_context);
@@ -801,6 +800,9 @@ QueryManager::Query* QueryManager::CreateQuery(GLenum target,
       query = new BooleanQuery(this, target, shm_id, shm_offset);
       break;
     case GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN:
+      query = new SummedIntegerQuery(this, target, shm_id, shm_offset);
+      break;
+    case GL_SAMPLES_PASSED:
       query = new SummedIntegerQuery(this, target, shm_id, shm_offset);
       break;
     default: {
@@ -1116,6 +1118,9 @@ bool QueryManager::EndQuery(Query* query, base::subtle::Atomic32 submit_count) {
 bool QueryManager::QueryCounter(
     Query* query, base::subtle::Atomic32 submit_count) {
   DCHECK(query);
+  if (!RemovePendingQuery(query)) {
+    return false;
+  }
   return query->QueryCounter(submit_count);
 }
 

@@ -6,9 +6,10 @@ package org.chromium.content.browser.input;
 
 import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
-import android.test.suitebuilder.annotation.LargeTest;
+import android.support.test.filters.LargeTest;
 
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
@@ -16,6 +17,7 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnPageFinishedHelper;
+import org.chromium.content_shell_apk.ContentShellActivityTestRule.RerunWithUpdatedContainerView;
 import org.chromium.content_shell_apk.ContentShellTestBase;
 
 import java.util.concurrent.TimeUnit;
@@ -67,8 +69,6 @@ public class SelectPopupTest extends ContentShellTestBase {
         super.setUp();
         launchContentShellWithUrl(SELECT_URL);
         waitForActiveShellToBeDoneLoading();
-        // TODO(aurimas) remove this wait once crbug.com/179511 is fixed.
-        assertWaitForPageScaleFactorMatch(1);
     }
 
     /**
@@ -78,6 +78,7 @@ public class SelectPopupTest extends ContentShellTestBase {
     @LargeTest
     @Feature({"Browser"})
     @RerunWithUpdatedContainerView
+    @RetryOnFailure
     public void testReloadWhilePopupShowing() throws InterruptedException, Exception, Throwable {
         // The popup should be hidden before the click.
         CriteriaHelper.pollInstrumentationThread(new PopupHiddenCriteria());
@@ -87,7 +88,7 @@ public class SelectPopupTest extends ContentShellTestBase {
         final OnPageFinishedHelper onPageFinishedHelper = viewClient.getOnPageFinishedHelper();
 
         // Once clicked, the popup should show up.
-        DOMUtils.clickNode(this, viewCore, "select");
+        DOMUtils.clickNode(viewCore, "select");
         CriteriaHelper.pollInstrumentationThread(new PopupShowingCriteria());
 
         // Reload the test page.
@@ -106,7 +107,7 @@ public class SelectPopupTest extends ContentShellTestBase {
         CriteriaHelper.pollInstrumentationThread(new PopupHiddenCriteria());
 
         // Click the select and wait for the popup to show.
-        DOMUtils.clickNode(this, viewCore, "select");
+        DOMUtils.clickNode(viewCore, "select");
         CriteriaHelper.pollInstrumentationThread(new PopupShowingCriteria());
     }
 }

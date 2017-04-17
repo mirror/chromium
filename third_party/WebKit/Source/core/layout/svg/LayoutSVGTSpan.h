@@ -26,13 +26,13 @@
 
 namespace blink {
 class LayoutSVGTSpan final : public LayoutSVGInline {
-public:
-    explicit LayoutSVGTSpan(Element*);
+ public:
+  explicit LayoutSVGTSpan(Element*);
 
-    bool isChildAllowed(LayoutObject*, const ComputedStyle&) const override;
+  bool IsChildAllowed(LayoutObject*, const ComputedStyle&) const override;
 
-    const char* name() const override { return "LayoutSVGTSpan"; }
+  const char* GetName() const override { return "LayoutSVGTSpan"; }
 };
 }
 
-#endif // LayoutSVGTSpan_h
+#endif  // LayoutSVGTSpan_h

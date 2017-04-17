@@ -12,37 +12,38 @@
 namespace blink {
 
 class DeviceLightEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~DeviceLightEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static DeviceLightEvent* create()
-    {
-        return new DeviceLightEvent;
-    }
-    static DeviceLightEvent* create(const AtomicString& eventType, double value)
-    {
-        return new DeviceLightEvent(eventType, value);
-    }
-    static DeviceLightEvent* create(const AtomicString& eventType, const DeviceLightEventInit& initializer)
-    {
-        return new DeviceLightEvent(eventType, initializer);
-    }
+ public:
+  ~DeviceLightEvent() override;
 
-    double value() const { return m_value; }
+  static DeviceLightEvent* Create(const AtomicString& event_type,
+                                  double value) {
+    return new DeviceLightEvent(event_type, value);
+  }
+  static DeviceLightEvent* Create(const AtomicString& event_type,
+                                  const DeviceLightEventInit& initializer) {
+    return new DeviceLightEvent(event_type, initializer);
+  }
 
-    const AtomicString& interfaceName() const override;
+  double value() const { return value_; }
 
-private:
-    DeviceLightEvent();
-    DeviceLightEvent(const AtomicString& eventType, double value);
-    DeviceLightEvent(const AtomicString& eventType, const DeviceLightEventInit& initializer);
+  const AtomicString& InterfaceName() const override;
 
-    double m_value;
+ private:
+  DeviceLightEvent(const AtomicString& event_type, double value);
+  DeviceLightEvent(const AtomicString& event_type,
+                   const DeviceLightEventInit& initializer);
+
+  double value_;
 };
 
-DEFINE_TYPE_CASTS(DeviceLightEvent, Event, event, event->interfaceName() == EventNames::DeviceLightEvent, event.interfaceName() == EventNames::DeviceLightEvent);
+DEFINE_TYPE_CASTS(DeviceLightEvent,
+                  Event,
+                  event,
+                  event->InterfaceName() == EventNames::DeviceLightEvent,
+                  event.InterfaceName() == EventNames::DeviceLightEvent);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DeviceLightEvent_h
+#endif  // DeviceLightEvent_h

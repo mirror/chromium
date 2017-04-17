@@ -22,22 +22,22 @@
 #include "base/time/time.h"
 #include "components/data_reduction_proxy/proto/data_store.pb.h"
 
+namespace data_reduction_proxy {
+
 namespace {
+
 const char kCurrentBucketIndexKey[] = "current_bucket_index";
 const char kBucketKeyPrefix[] = "data_usage_bucket:";
 
 const int kMinutesInHour = 60;
 const int kMinutesInDay = 24 * kMinutesInHour;
 
-// Time interval for each DataUsageBucket.
-const int kDataUsageBucketLengthInMinutes = 15;
-static_assert(kDataUsageBucketLengthInMinutes > 0,
+static_assert(data_reduction_proxy::kDataUsageBucketLengthInMinutes > 0,
               "Length of time should be positive");
-static_assert(kMinutesInHour % kDataUsageBucketLengthInMinutes == 0,
+static_assert(kMinutesInHour %
+                      data_reduction_proxy::kDataUsageBucketLengthInMinutes ==
+                  0,
               "kDataUsageBucketLengthMins must be a factor of kMinsInHour");
-
-// Number of days for which to maintain data usage history.
-const int kDataUsageHistoryNumDays = 60;
 
 // Total number of buckets persisted to DB.
 const int kNumDataUsageBuckets =
@@ -65,15 +65,13 @@ base::Time BucketLowerBoundary(base::Time time) {
 
 }  // namespace
 
-namespace data_reduction_proxy {
-
 DataUsageStore::DataUsageStore(DataStore* db)
     : db_(db), current_bucket_index_(-1) {
   sequence_checker_.DetachFromSequence();
 }
 
 DataUsageStore::~DataUsageStore() {
-  DCHECK(sequence_checker_.CalledOnValidSequencedThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
 }
 
 void DataUsageStore::LoadDataUsage(std::vector<DataUsageBucket>* data_usage) {
@@ -93,7 +91,7 @@ void DataUsageStore::LoadDataUsage(std::vector<DataUsageBucket>* data_usage) {
 }
 
 void DataUsageStore::LoadCurrentDataUsageBucket(DataUsageBucket* current) {
-  DCHECK(sequence_checker_.CalledOnValidSequencedThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
   DCHECK(current);
 
   std::string current_index_string;
@@ -117,7 +115,7 @@ void DataUsageStore::LoadCurrentDataUsageBucket(DataUsageBucket* current) {
 
 void DataUsageStore::StoreCurrentDataUsageBucket(
     const DataUsageBucket& current) {
-  DCHECK(sequence_checker_.CalledOnValidSequencedThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
   DCHECK(current_bucket_index_ >= 0 &&
          current_bucket_index_ < kNumDataUsageBuckets);
 
@@ -154,10 +152,16 @@ void DataUsageStore::StoreCurrentDataUsageBucket(
 }
 
 void DataUsageStore::DeleteHistoricalDataUsage() {
-  for (int i = 0; i < kNumDataUsageBuckets; ++i)
-    db_->Delete(DbKeyForBucketIndex(i));
+  std::string current_index_string;
+  DataStore::Status index_read_status =
+      db_->Get(kCurrentBucketIndexKey, &current_index_string);
 
-  db_->Delete(kCurrentBucketIndexKey);
+  // If the index doesn't exist, then no buckets have been written and the
+  // data usage doesn't need to be deleted.
+  if (index_read_status != DataStore::Status::OK)
+    return;
+
+  db_->RecreateDB();
 }
 
 void DataUsageStore::DeleteBrowsingHistory(const base::Time& start,
@@ -225,7 +229,6 @@ bool DataUsageStore::BucketOverlapsInterval(
     const base::Time& start_interval,
     const base::Time& end_interval) {
   DCHECK(!bucket_last_updated.is_null());
-  DCHECK(!start_interval.is_null());
   DCHECK(!end_interval.is_null());
   DCHECK_LE(start_interval, end_interval);
 

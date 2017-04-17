@@ -27,15 +27,15 @@ namespace blink {
 class SVGPathByteStream;
 
 class SVGPathByteStreamBuilder final : public SVGPathConsumer {
-public:
-    SVGPathByteStreamBuilder(SVGPathByteStream&);
+ public:
+  SVGPathByteStreamBuilder(SVGPathByteStream&);
 
-    void emitSegment(const PathSegmentData&) override;
+  void EmitSegment(const PathSegmentData&) override;
 
-private:
-    SVGPathByteStream& m_byteStream;
+ private:
+  SVGPathByteStream& byte_stream_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPathByteStreamBuilder_h
+#endif  // SVGPathByteStreamBuilder_h

@@ -5,50 +5,67 @@
 #ifndef HEADLESS_LIB_BROWSER_HEADLESS_DEVTOOLS_MANAGER_DELEGATE_H_
 #define HEADLESS_LIB_BROWSER_HEADLESS_DEVTOOLS_MANAGER_DELEGATE_H_
 
-#include "content/public/browser/devtools_manager_delegate.h"
-
 #include <map>
 #include <memory>
 #include <string>
 
+#include "base/callback_forward.h"
+#include "base/memory/weak_ptr.h"
 #include "base/values.h"
+#include "content/public/browser/devtools_manager_delegate.h"
 
 namespace headless {
 class HeadlessBrowserImpl;
-class HeadlessBrowserContext;
-class HeadlessWebContentsImpl;
 
 class HeadlessDevToolsManagerDelegate
     : public content::DevToolsManagerDelegate {
  public:
-  explicit HeadlessDevToolsManagerDelegate(HeadlessBrowserImpl* browser);
+  explicit HeadlessDevToolsManagerDelegate(
+      base::WeakPtr<HeadlessBrowserImpl> browser);
   ~HeadlessDevToolsManagerDelegate() override;
 
   // DevToolsManagerDelegate implementation:
-  void Inspect(content::BrowserContext* browser_context,
-               content::DevToolsAgentHost* agent_host) override {}
-  void DevToolsAgentStateChanged(content::DevToolsAgentHost* agent_host,
-                                 bool attached) override{};
   base::DictionaryValue* HandleCommand(content::DevToolsAgentHost* agent_host,
                                        base::DictionaryValue* command) override;
+  bool HandleAsyncCommand(content::DevToolsAgentHost* agent_host,
+                          base::DictionaryValue* command,
+                          const CommandCallback& callback) override;
+  scoped_refptr<content::DevToolsAgentHost> CreateNewTarget(
+      const GURL& url) override;
+  std::string GetDiscoveryPageHTML() override;
+  std::string GetFrontendResource(const std::string& path) override;
 
  private:
-  std::unique_ptr<base::Value> CreateTarget(
+  std::unique_ptr<base::DictionaryValue> CreateTarget(
+      int command_id,
       const base::DictionaryValue* params);
-  std::unique_ptr<base::Value> CloseTarget(const base::DictionaryValue* params);
-  std::unique_ptr<base::Value> CreateBrowserContext(
+  std::unique_ptr<base::DictionaryValue> CloseTarget(
+      int command_id,
       const base::DictionaryValue* params);
-  std::unique_ptr<base::Value> DisposeBrowserContext(
+  std::unique_ptr<base::DictionaryValue> CreateBrowserContext(
+      int command_id,
       const base::DictionaryValue* params);
+  std::unique_ptr<base::DictionaryValue> DisposeBrowserContext(
+      int command_id,
+      const base::DictionaryValue* params);
+  void PrintToPDF(content::DevToolsAgentHost* agent_host,
+                  int command_id,
+                  const base::DictionaryValue* params,
+                  const CommandCallback& callback);
 
-  HeadlessBrowserImpl* browser_;  // Not owned.
-  std::map<std::string, std::unique_ptr<HeadlessBrowserContext>>
-      browser_context_map_;
+  base::WeakPtr<HeadlessBrowserImpl> browser_;
 
-  using CommandMemberFnPtr = std::unique_ptr<base::Value> (
-      HeadlessDevToolsManagerDelegate::*)(const base::DictionaryValue* params);
-
-  std::map<std::string, CommandMemberFnPtr> command_map_;
+  using CommandMemberCallback =
+      base::Callback<std::unique_ptr<base::DictionaryValue>(
+          int command_id,
+          const base::DictionaryValue* params)>;
+  using AsyncCommandMemberCallback =
+      base::Callback<void(content::DevToolsAgentHost* agent_host,
+                          int command_id,
+                          const base::DictionaryValue* params,
+                          const CommandCallback& callback)>;
+  std::map<std::string, CommandMemberCallback> command_map_;
+  std::map<std::string, AsyncCommandMemberCallback> async_command_map_;
 };
 
 }  // namespace headless

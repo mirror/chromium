@@ -29,10 +29,10 @@
 #include "core/CoreExport.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/WebFocusType.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
 
 namespace blink {
 
@@ -40,6 +40,7 @@ struct FocusCandidate;
 struct FocusParams;
 class Document;
 class Element;
+class FocusChangedObserver;
 class Frame;
 class HTMLFrameOwnerElement;
 class InputDeviceCapabilities;
@@ -48,62 +49,89 @@ class Node;
 class Page;
 class RemoteFrame;
 
-class CORE_EXPORT FocusController final : public GarbageCollected<FocusController> {
-    WTF_MAKE_NONCOPYABLE(FocusController);
-public:
-    static FocusController* create(Page*);
+class CORE_EXPORT FocusController final
+    : public GarbageCollected<FocusController> {
+  WTF_MAKE_NONCOPYABLE(FocusController);
 
-    void setFocusedFrame(Frame*, bool notifyEmbedder = true);
-    void focusDocumentView(Frame*, bool notifyEmbedder = true);
-    LocalFrame* focusedFrame() const;
-    Frame* focusedOrMainFrame() const;
+ public:
+  static FocusController* Create(Page*);
 
-    // Finds the focused HTMLFrameOwnerElement, if any, in the provided frame.
-    // An HTMLFrameOwnerElement is considered focused if the frame it owns, or
-    // one of its descendant frames, is currently focused.
-    HTMLFrameOwnerElement* focusedFrameOwnerElement(LocalFrame& currentFrame) const;
+  void SetFocusedFrame(Frame*, bool notify_embedder = true);
+  void FocusDocumentView(Frame*, bool notify_embedder = true);
+  LocalFrame* FocusedFrame() const;
+  Frame* FocusedOrMainFrame() const;
 
-    // Determines whether the provided Document has focus according to
-    // http://www.w3.org/TR/html5/editing.html#dom-document-hasfocus
-    bool isDocumentFocused(const Document&) const;
+  // Finds the focused HTMLFrameOwnerElement, if any, in the provided frame.
+  // An HTMLFrameOwnerElement is considered focused if the frame it owns, or
+  // one of its descendant frames, is currently focused.
+  HTMLFrameOwnerElement* FocusedFrameOwnerElement(
+      LocalFrame& current_frame) const;
 
-    bool setInitialFocus(WebFocusType);
-    bool advanceFocus(WebFocusType type, InputDeviceCapabilities* sourceCapabilities = nullptr) { return advanceFocus(type, false, sourceCapabilities); }
-    bool advanceFocusAcrossFrames(WebFocusType, RemoteFrame* from, LocalFrame* to, InputDeviceCapabilities* sourceCapabilities = nullptr);
-    Element* findFocusableElementInShadowHost(const Element& shadowHost);
+  // Determines whether the provided Document has focus according to
+  // http://www.w3.org/TR/html5/editing.html#dom-document-hasfocus
+  bool IsDocumentFocused(const Document&) const;
 
-    bool setFocusedElement(Element*, Frame*, const FocusParams&);
-    // |setFocusedElement| variant with SelectionBehaviorOnFocus::None,
-    // |WebFocusTypeNone, and null InputDeviceCapabilities.
-    bool setFocusedElement(Element*, Frame*);
+  bool SetInitialFocus(WebFocusType);
+  bool AdvanceFocus(WebFocusType type,
+                    InputDeviceCapabilities* source_capabilities = nullptr) {
+    return AdvanceFocus(type, false, source_capabilities);
+  }
+  bool AdvanceFocusAcrossFrames(
+      WebFocusType,
+      RemoteFrame* from,
+      LocalFrame* to,
+      InputDeviceCapabilities* source_capabilities = nullptr);
+  Element* FindFocusableElementInShadowHost(const Element& shadow_host);
 
-    void setActive(bool);
-    bool isActive() const { return m_isActive; }
+  bool SetFocusedElement(Element*, Frame*, const FocusParams&);
+  // |setFocusedElement| variant with SelectionBehaviorOnFocus::None,
+  // |WebFocusTypeNone, and null InputDeviceCapabilities.
+  bool SetFocusedElement(Element*, Frame*);
 
-    void setFocused(bool);
-    bool isFocused() const { return m_isFocused; }
+  void SetActive(bool);
+  bool IsActive() const { return is_active_; }
 
-    DECLARE_TRACE();
+  void SetFocused(bool);
+  bool IsFocused() const { return is_focused_; }
 
-private:
-    explicit FocusController(Page*);
+  void RegisterFocusChangedObserver(FocusChangedObserver*);
 
-    Element* findFocusableElement(WebFocusType, Element&);
+  DECLARE_TRACE();
 
-    bool advanceFocus(WebFocusType, bool initialFocus, InputDeviceCapabilities* sourceCapabilities = nullptr);
-    bool advanceFocusDirectionally(WebFocusType);
-    bool advanceFocusInDocumentOrder(LocalFrame*, Element* start, WebFocusType, bool initialFocus, InputDeviceCapabilities* sourceCapabilities);
+ private:
+  explicit FocusController(Page*);
 
-    bool advanceFocusDirectionallyInContainer(Node* container, const LayoutRect& startingRect, WebFocusType);
-    void findFocusCandidateInContainer(Node& container, const LayoutRect& startingRect, WebFocusType, FocusCandidate& closest);
+  Element* FindFocusableElement(WebFocusType, Element&);
 
-    Member<Page> m_page;
-    Member<Frame> m_focusedFrame;
-    bool m_isActive;
-    bool m_isFocused;
-    bool m_isChangingFocusedFrame;
+  bool AdvanceFocus(WebFocusType,
+                    bool initial_focus,
+                    InputDeviceCapabilities* source_capabilities = nullptr);
+  bool AdvanceFocusDirectionally(WebFocusType);
+  bool AdvanceFocusInDocumentOrder(
+      LocalFrame*,
+      Element* start,
+      WebFocusType,
+      bool initial_focus,
+      InputDeviceCapabilities* source_capabilities);
+
+  bool AdvanceFocusDirectionallyInContainer(Node* container,
+                                            const LayoutRect& starting_rect,
+                                            WebFocusType);
+  void FindFocusCandidateInContainer(Node& container,
+                                     const LayoutRect& starting_rect,
+                                     WebFocusType,
+                                     FocusCandidate& closest);
+
+  void NotifyFocusChangedObservers() const;
+
+  Member<Page> page_;
+  Member<Frame> focused_frame_;
+  bool is_active_;
+  bool is_focused_;
+  bool is_changing_focused_frame_;
+  HeapHashSet<WeakMember<FocusChangedObserver>> focus_changed_observers_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FocusController_h
+#endif  // FocusController_h

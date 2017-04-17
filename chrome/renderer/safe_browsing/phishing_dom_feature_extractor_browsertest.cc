@@ -27,11 +27,14 @@
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
+#include "ui/native_theme/native_theme_switches.h"
 
 using ::testing::DoAll;
 using ::testing::Invoke;
 using ::testing::Return;
+using blink::WebRuntimeFeatures;
 
 namespace safe_browsing {
 
@@ -90,19 +93,19 @@ class TestPhishingDOMFeatureExtractor : public PhishingDOMFeatureExtractor {
   // this issue.
   blink::WebURL CompleteURL(const blink::WebElement& element,
                             const blink::WebString& partial_url) override {
-    GURL parsed_url(GURL(partial_url.utf8()));
+    GURL parsed_url = blink::WebStringToGURL(partial_url);
     GURL full_url;
     if (parsed_url.has_scheme()) {
       // This is already a complete URL.
-      full_url = GURL(blink::WebStringToGURL(partial_url));
+      full_url = parsed_url;
     } else if (!base_domain_.empty()) {
       // This is a partial URL and only one frame in testing html.
-      full_url = GURL("http://" + base_domain_).Resolve(partial_url);
+      full_url = GURL("http://" + base_domain_).Resolve(partial_url.Utf8());
     } else {
-      auto it = url_to_frame_domain_map_.find(partial_url.utf8());
+      auto it = url_to_frame_domain_map_.find(partial_url.Utf8());
       if (it != url_to_frame_domain_map_.end()) {
         const std::string frame_domain = it->second;
-        full_url = GURL("http://" + it->second).Resolve(partial_url.utf8());
+        full_url = GURL("http://" + it->second).Resolve(partial_url.Utf8());
         url_to_frame_domain_map_[full_url.spec()] = it->second;
       } else {
         NOTREACHED() << "Testing input setup is incorrect. "
@@ -156,7 +159,7 @@ class PhishingDOMFeatureExtractorTest : public ChromeRenderViewTest {
     LoadHTML(html_content.c_str());
 
     extractor_->ExtractFeatures(
-        GetMainFrame()->document(), features,
+        GetMainFrame()->GetDocument(), features,
         base::Bind(&PhishingDOMFeatureExtractorTest::AnotherExtractionDone,
                    weak_factory_.GetWeakPtr()));
     message_loop_->Run();
@@ -169,7 +172,7 @@ class PhishingDOMFeatureExtractorTest : public ChromeRenderViewTest {
     LoadHTML(html_content.c_str());
 
     extractor_->ExtractFeatures(
-        GetMainFrame()->document(), features,
+        GetMainFrame()->GetDocument(), features,
         base::Bind(&PhishingDOMFeatureExtractorTest::AnotherExtractionDone,
                    weak_factory_.GetWeakPtr()));
     message_loop_->Run();
@@ -186,6 +189,8 @@ class PhishingDOMFeatureExtractorTest : public ChromeRenderViewTest {
  protected:
   void SetUp() override {
     ChromeRenderViewTest::SetUp();
+    WebRuntimeFeatures::EnableOverlayScrollbars(
+        ui::IsOverlayScrollbarEnabled());
     extractor_.reset(new TestPhishingDOMFeatureExtractor(&clock_));
   }
 
@@ -209,7 +214,7 @@ class PhishingDOMFeatureExtractorTest : public ChromeRenderViewTest {
   void RemoveIframe() {
     blink::WebFrame* main_frame = GetMainFrame();
     ASSERT_TRUE(main_frame);
-    main_frame->executeScript(blink::WebString(
+    main_frame->ExecuteScript(blink::WebString(
         "document.body.removeChild(document.getElementById('frame1'));"));
   }
 

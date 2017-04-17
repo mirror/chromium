@@ -4,7 +4,10 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -109,10 +112,10 @@ class ExtensionSpecialStoragePolicyTest : public testing::Test {
     manifest.SetString(keys::kName, "Protected");
     manifest.SetString(keys::kVersion, "1");
     manifest.SetString(keys::kLaunchWebURL, "http://explicit/protected/start");
-    base::ListValue* list = new base::ListValue();
+    auto list = base::MakeUnique<base::ListValue>();
     list->AppendString("http://explicit/protected");
     list->AppendString("*://*.wildcards/protected");
-    manifest.Set(keys::kWebURLs, list);
+    manifest.Set(keys::kWebURLs, std::move(list));
     std::string error;
     scoped_refptr<Extension> protected_app = Extension::Create(
         path, Manifest::INVALID_LOCATION, manifest,
@@ -131,13 +134,13 @@ class ExtensionSpecialStoragePolicyTest : public testing::Test {
     manifest.SetString(keys::kName, "Unlimited");
     manifest.SetString(keys::kVersion, "1");
     manifest.SetString(keys::kLaunchWebURL, "http://explicit/unlimited/start");
-    base::ListValue* list = new base::ListValue();
+    auto list = base::MakeUnique<base::ListValue>();
     list->AppendString("unlimitedStorage");
-    manifest.Set(keys::kPermissions, list);
-    list = new base::ListValue();
+    manifest.Set(keys::kPermissions, std::move(list));
+    list = base::MakeUnique<base::ListValue>();
     list->AppendString("http://explicit/unlimited");
     list->AppendString("*://*.wildcards/unlimited");
-    manifest.Set(keys::kWebURLs, list);
+    manifest.Set(keys::kWebURLs, std::move(list));
     std::string error;
     scoped_refptr<Extension> unlimited_app = Extension::Create(
         path, Manifest::INVALID_LOCATION, manifest,
@@ -249,23 +252,6 @@ TEST_F(ExtensionSpecialStoragePolicyTest, AppWithUnlimitedStorage) {
   EXPECT_FALSE(policy_->IsStorageUnlimited(GURL("http://explicit/")));
   EXPECT_FALSE(policy_->IsStorageUnlimited(GURL("https://foo.wildcards/")));
   EXPECT_FALSE(policy_->IsStorageUnlimited(GURL("https://bar.wildcards/")));
-}
-
-TEST_F(ExtensionSpecialStoragePolicyTest, CanQueryDiskSize) {
-  const GURL kHttpUrl("http://foo");
-  const GURL kExtensionUrl("chrome-extension://bar");
-  scoped_refptr<Extension> regular_app(CreateRegularApp());
-  scoped_refptr<Extension> protected_app(CreateProtectedApp());
-  scoped_refptr<Extension> unlimited_app(CreateUnlimitedApp());
-  policy_->GrantRightsForExtension(regular_app.get(), NULL);
-  policy_->GrantRightsForExtension(protected_app.get(), NULL);
-  policy_->GrantRightsForExtension(unlimited_app.get(), NULL);
-
-  EXPECT_FALSE(policy_->CanQueryDiskSize(kHttpUrl));
-  EXPECT_FALSE(policy_->CanQueryDiskSize(kExtensionUrl));
-  EXPECT_TRUE(policy_->CanQueryDiskSize(regular_app->url()));
-  EXPECT_TRUE(policy_->CanQueryDiskSize(protected_app->url()));
-  EXPECT_TRUE(policy_->CanQueryDiskSize(unlimited_app->url()));
 }
 
 TEST_F(ExtensionSpecialStoragePolicyTest, HasIsolatedStorage) {

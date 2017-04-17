@@ -4,35 +4,50 @@
 
 #import "OmahaXMLParser.h"
 
-@implementation OmahaXMLParser
+@interface OmahaXMLParser ()<NSXMLParserDelegate>
+@end
 
-- (NSMutableArray*)chromeIncompleteDownloadURLs {
-  return chromeIncompleteDownloadURLs_;
-}
-
-- (NSString*)chromeImageFilename {
-  return chromeImageFilename_;
+@implementation OmahaXMLParser {
+  NSMutableArray* chromeIncompleteDownloadURLs_;
+  NSString* chromeImageFilename_;
 }
 
 // Sets up instance of NSXMLParser and calls on delegate methods to do actual
 // parsing work.
-- (NSArray*)parseXML:(NSData*)omahaResponseXML error:(NSError**)error {
++ (NSArray*)parseXML:(NSData*)omahaResponseXML error:(NSError**)error {
   NSXMLParser* parser = [[NSXMLParser alloc] initWithData:omahaResponseXML];
-  [parser setDelegate:self];
-  BOOL success = [parser parse];
-  if (!success) {
+
+  OmahaXMLParser* omahaParser = [[OmahaXMLParser alloc] init];
+  [parser setDelegate:omahaParser];
+  if (![parser parse]) {
     *error = [parser parserError];
+    return nil;
   }
 
-  return chromeIncompleteDownloadURLs_;
+  NSMutableArray* completeDownloadURLs = [[NSMutableArray alloc] init];
+  for (NSString* URL in omahaParser->chromeIncompleteDownloadURLs_) {
+    [completeDownloadURLs
+        addObject:[NSURL URLWithString:omahaParser->chromeImageFilename_
+                         relativeToURL:[NSURL URLWithString:URL]]];
+  }
+
+  if ([completeDownloadURLs count] < 1) {
+    // TODO: The below error exists only so the caller of this method would
+    // catch the error created here. A better way to handle this is to make the
+    // error's contents inform what the installer will try next when it attempts
+    // to recover from an issue.
+    *error = [NSError errorWithDomain:@"ChromeErrorDomain" code:1 userInfo:nil];
+    return nil;
+  }
+
+  return completeDownloadURLs;
 }
 
-// Method implementation for XMLParserDelegate.
 // Searches the XML data for the tag "URL" and the subsequent "codebase"
 // attribute that indicates a URL follows. Copies each URL into an array.
-// Note that the URLs in the XML file are incomplete. They need the filename
+// NOTE: The URLs in the XML file are incomplete. They need the filename
 // appended to end. The second if statement checks for the tag "package" which
-// contains the filename we need to complete the URLs.
+// contains the filename needed to complete the URLs.
 - (void)parser:(NSXMLParser*)parser
     didStartElement:(NSString*)elementName
        namespaceURI:(NSString*)namespaceURI
@@ -46,8 +61,17 @@
     [chromeIncompleteDownloadURLs_ addObject:extractedURL];
   }
   if ([elementName isEqualToString:@"package"]) {
-    chromeImageFilename_ = [[NSString alloc]
-        initWithFormat:@"%@", [attributeDict objectForKey:@"name"]];
+    chromeImageFilename_ =
+        [[NSString alloc] initWithString:[attributeDict objectForKey:@"name"]];
+  }
+}
+
+// If either component of the URL is empty then the complete URL cannot
+// be generated so both variables are set to nil to flag errors.
+- (void)parserDidEndDocument:(NSXMLParser*)parser {
+  if (!chromeIncompleteDownloadURLs_ || !chromeImageFilename_) {
+    chromeIncompleteDownloadURLs_ = nil;
+    chromeImageFilename_ = nil;
   }
 }
 

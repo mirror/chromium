@@ -5,71 +5,56 @@
 #ifndef DrawingDisplayItem_h
 #define DrawingDisplayItem_h
 
+#include "base/compiler_specific.h"
 #include "platform/PlatformExport.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/geometry/FloatPoint.h"
 #include "platform/graphics/paint/DisplayItem.h"
-#include "third_party/skia/include/core/SkPicture.h"
+#include "platform/graphics/paint/PaintRecord.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT DrawingDisplayItem final : public DisplayItem {
-public:
-#if ENABLE(ASSERT)
-    enum UnderInvalidationCheckingMode {
-        CheckPicture, // Check if the new picture and the old picture are the same
-        CheckBitmap, // Check if the new picture and the old picture produce the same bitmap
-    };
-#endif
+ public:
+  DISABLE_CFI_PERF
+  DrawingDisplayItem(const DisplayItemClient& client,
+                     Type type,
+                     sk_sp<const PaintRecord> record,
+                     bool known_to_be_opaque = false)
+      : DisplayItem(client, type, sizeof(*this)),
+        record_(record && record->approximateOpCount() ? std::move(record)
+                                                       : nullptr),
+        known_to_be_opaque_(known_to_be_opaque) {
+    DCHECK(IsDrawingType(type));
+  }
 
-    DrawingDisplayItem(const DisplayItemClient& client
-        , Type type
-        , PassRefPtr<const SkPicture> picture
-        , bool knownToBeOpaque = false
-#if ENABLE(ASSERT)
-        , UnderInvalidationCheckingMode underInvalidationCheckingMode = CheckPicture
-#endif
-        )
-        : DisplayItem(client, type, sizeof(*this))
-        , m_picture(picture && picture->approximateOpCount() ? picture : nullptr)
-        , m_knownToBeOpaque(knownToBeOpaque)
-#if ENABLE(ASSERT)
-        , m_underInvalidationCheckingMode(underInvalidationCheckingMode)
-#endif
-    {
-        ASSERT(isDrawingType(type));
-    }
+  void Replay(GraphicsContext&) const override;
+  void AppendToWebDisplayItemList(const IntRect&,
+                                  WebDisplayItemList*) const override;
+  bool DrawsContent() const override;
 
-    void replay(GraphicsContext&) const override;
-    void appendToWebDisplayItemList(const IntRect&, WebDisplayItemList*) const override;
-    bool drawsContent() const override;
+  const sk_sp<const PaintRecord>& GetPaintRecord() const { return record_; }
 
-    const SkPicture* picture() const { return m_picture.get(); }
+  bool KnownToBeOpaque() const {
+    DCHECK(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+    return known_to_be_opaque_;
+  }
 
-    bool knownToBeOpaque() const { ASSERT(RuntimeEnabledFeatures::slimmingPaintV2Enabled()); return m_knownToBeOpaque; }
+  int NumberOfSlowPaths() const override;
 
-    void analyzeForGpuRasterization(SkPictureGpuAnalyzer&) const override;
-
-#if ENABLE(ASSERT)
-    UnderInvalidationCheckingMode getUnderInvalidationCheckingMode() const { return m_underInvalidationCheckingMode; }
-    bool equals(const DisplayItem& other) const final;
-#endif
-
-private:
+ private:
 #ifndef NDEBUG
-    void dumpPropertiesAsDebugString(WTF::StringBuilder&) const override;
+  void DumpPropertiesAsDebugString(WTF::StringBuilder&) const override;
 #endif
+  bool Equals(const DisplayItem& other) const final;
 
-    RefPtr<const SkPicture> m_picture;
+  sk_sp<const PaintRecord> record_;
 
-    // True if there are no transparent areas. Only used for SlimmingPaintV2.
-    const bool m_knownToBeOpaque;
-
-#if ENABLE(ASSERT)
-    UnderInvalidationCheckingMode m_underInvalidationCheckingMode;
-#endif
+  // True if there are no transparent areas. Only used for SlimmingPaintV2.
+  const bool known_to_be_opaque_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DrawingDisplayItem_h
+#endif  // DrawingDisplayItem_h

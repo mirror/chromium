@@ -11,6 +11,7 @@
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/toolbar/app_menu_button.h"
 #include "chrome/browser/ui/views/toolbar/browser_actions_container.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
@@ -28,9 +29,8 @@ namespace {
 // The column width of the warning bubble.
 const int kColumnWidth = 285;
 
-views::Label* CreateLabel(const base::string16& text,
-                          const gfx::FontList& font) {
-  views::Label* label = new views::Label(text, font);
+views::Label* CreateExtensionNameLabel(const base::string16& text) {
+  views::Label* label = new views::Label(text, CONTEXT_BODY_TEXT_SMALL);
   label->SetMultiLine(true);
   label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   return label;
@@ -101,7 +101,7 @@ ImeWarningBubbleView::ImeWarningBubbleView(
       bubble_has_shown_(false),
       toolbar_actions_bar_observer_(this),
       weak_ptr_factory_(this) {
-  container_ = browser_view_->GetToolbarView()->browser_actions();
+  container_ = browser_view_->toolbar()->browser_actions();
   toolbar_actions_bar_ = container_->toolbar_actions_bar();
   BrowserList::AddObserver(this);
 
@@ -142,7 +142,7 @@ void ImeWarningBubbleView::InitAnchorView() {
   }
   if (!reference_view || !reference_view->visible()) {
     // Anchors the bubble to the app menu.
-    reference_view = browser_view_->GetToolbarView()->app_menu_button();
+    reference_view = browser_view_->toolbar()->app_menu_button();
   }
   SetAnchorView(reference_view);
   set_arrow(views::BubbleBorder::TOP_RIGHT);
@@ -172,13 +172,11 @@ void ImeWarningBubbleView::InitLayout() {
   main_cs->AddColumn(views::GridLayout::LEADING, views::GridLayout::LEADING, 0,
                      views::GridLayout::FIXED, kColumnWidth, 0);
 
-  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   layout->StartRow(0, cs_id);
   base::string16 extension_name = base::UTF8ToUTF16(extension_->name());
   base::i18n::AdjustStringForLocaleDirection(&extension_name);
-  views::Label* warning = CreateLabel(
-      l10n_util::GetStringFUTF16(IDS_IME_API_ACTIVATED_WARNING, extension_name),
-      rb.GetFontList(ResourceBundle::BaseFont));
+  views::Label* warning = CreateExtensionNameLabel(l10n_util::GetStringFUTF16(
+      IDS_IME_API_ACTIVATED_WARNING, extension_name));
   layout->AddView(warning);
   layout->AddPaddingRow(0, views::kRelatedControlVerticalSpacing);
 

@@ -2,12 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/** @type {string}
- * @const
- */
-var FEEDBACK_LANDING_PAGE =
-    'https://support.google.com/chrome/go/feedback_confirmation';
-
 /**
  * @type {string}
  * @const
@@ -56,16 +50,6 @@ var SYSINFO_WINDOW_ID = 'sysinfo_window';
  * @const
  */
 var STATS_WINDOW_ID = 'stats_window';
-
-/**
- * Feedback flow defined in feedback_private.idl.
- * @enum {string}
- */
-var FeedbackFlow = {
-  REGULAR: 'regular',  // Flow in a regular user session.
-  LOGIN: 'login',       // Flow on the login screen.
-  SHOW_SRT_PROMPT: 'showSrtPrompt'  // Prompt user to try Software Removal Tool
-};
 
 /**
  * SRT Prompt Result defined in feedback_private.idl.
@@ -182,7 +166,7 @@ function sendReport() {
 
   feedbackInfo.description = $('description-text').value;
   feedbackInfo.pageUrl = $('page-url-text').value;
-  feedbackInfo.email = $('user-email-text').value;
+  feedbackInfo.email = $('user-email-drop-down').value;
 
   var useSystemInfo = false;
   var useHistograms = false;
@@ -191,12 +175,12 @@ function sendReport() {
     // Send histograms along with system info.
     useSystemInfo = useHistograms = true;
   }
-<if expr="chromeos">
+// <if expr="chromeos">
   if ($('performance-info-checkbox') == null ||
       !($('performance-info-checkbox').checked)) {
     feedbackInfo.traceId = null;
   }
-</if>
+// </if>
 
   feedbackInfo.sendHistograms = useHistograms;
 
@@ -204,12 +188,19 @@ function sendReport() {
   if (!$('screenshot-checkbox').checked)
     feedbackInfo.screenshot = null;
 
+  var productId = parseInt('' + feedbackInfo.productId);
+  if (isNaN(productId)) {
+    // For apps that still use a string value as the |productId|, we must clear
+    // that value since the API uses an integer value, and a conflict in data
+    // types will cause the report to fail to be sent.
+    productId = null;
+  }
+  feedbackInfo.productId = productId;
+
   // Request sending the report, show the landing page (if allowed), and close
   // this window right away. The FeedbackRequest object that represents this
   // report will take care of sending the report in the background.
   sendFeedbackReport(useSystemInfo);
-  if (feedbackInfo.flow != FeedbackFlow.LOGIN)
-    window.open(FEEDBACK_LANDING_PAGE, '_blank');
   window.close();
   return true;
 }
@@ -238,7 +229,7 @@ function dataUrlToBlob(url) {
   return new Blob([new Uint8Array(dataArray)], {type: mimeString});
 }
 
-<if expr="chromeos">
+// <if expr="chromeos">
 /**
  * Update the page when performance feedback state is changed.
  */
@@ -254,7 +245,7 @@ function performanceFeedbackChanged() {
     $('screenshot-checkbox').disabled = false;
   }
 }
-</if>
+// </if>
 
 function resizeAppWindow() {
   // We pick the width from the titlebar, which has no margins.
@@ -353,7 +344,16 @@ function initialize() {
       });
 
       chrome.feedbackPrivate.getUserEmail(function(email) {
-        $('user-email-text').value = email;
+        // Never add an empty option.
+        if (!email)
+          return;
+        var optionElement = document.createElement('option');
+        optionElement.value = email;
+        optionElement.text = email;
+        optionElement.selected = true;
+        // Make sure the "Report anonymously" option comes last.
+        $('user-email-drop-down').insertBefore(optionElement,
+            $('anonymous-user-option'));
       });
 
       // Initiate getting the system info.
@@ -376,14 +376,14 @@ function initialize() {
         $('attach-file-note').hidden = true;
       }
 
-<if expr="chromeos">
+// <if expr="chromeos">
       if (feedbackInfo.traceId && ($('performance-info-area'))) {
         $('performance-info-area').hidden = false;
         $('performance-info-checkbox').checked = true;
         performanceFeedbackChanged();
         $('performance-info-link').onclick = openSlowTraceWindow;
       }
-</if>
+// </if>
       chrome.feedbackPrivate.getStrings(function(strings) {
         loadTimeData.data = strings;
         i18nTemplate.process(document, loadTimeData);
@@ -401,7 +401,7 @@ function initialize() {
               '/html/sys_info.html', {
                 frame: 'chrome',
                 id: SYSINFO_WINDOW_ID,
-                width: 600,
+                width: 640,
                 height: 400,
                 hidden: false,
                 resizable: true
@@ -446,10 +446,10 @@ function initialize() {
     $('send-report-button').onclick = sendReport;
     $('cancel-button').onclick = cancel;
     $('remove-attached-file').onclick = clearAttachedFile;
-<if expr="chromeos">
+// <if expr="chromeos">
     $('performance-info-checkbox').addEventListener(
         'change', performanceFeedbackChanged);
-</if>
+// </if>
   });
 }
 

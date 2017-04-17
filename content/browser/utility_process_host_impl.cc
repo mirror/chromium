@@ -13,37 +13,34 @@
 #include "base/files/file_path.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/process/process_handle.h"
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
 #include "build/build_config.h"
 #include "content/browser/browser_child_process_host_impl.h"
-#include "content/browser/mojo/constants.h"
-#include "content/browser/mojo/mojo_child_connection.h"
-#include "content/browser/mojo/mojo_shell_context.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
+#include "content/browser/service_manager/service_manager_context.h"
 #include "content/common/child_process_host_impl.h"
 #include "content/common/in_process_child_thread_params.h"
+#include "content/common/service_manager/child_connection.h"
 #include "content/common/utility_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/utility_process_host_client.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/mojo_channel_switches.h"
-#include "content/public/common/mojo_shell_connection.h"
 #include "content/public/common/process_type.h"
 #include "content/public/common/sandbox_type.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
-#include "ipc/ipc_switches.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/common/service_names.mojom.h"
 #include "mojo/edk/embedder/embedder.h"
-#include "services/shell/public/cpp/connection.h"
-#include "services/shell/public/cpp/interface_provider.h"
-#include "services/shell/public/cpp/interface_registry.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/base/ui_base_switches.h"
 
 #if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
@@ -70,17 +67,16 @@ class UtilitySandboxedProcessLauncherDelegate
   UtilitySandboxedProcessLauncherDelegate(const base::FilePath& exposed_dir,
                                           bool launch_elevated,
                                           bool no_sandbox,
-                                          const base::EnvironmentMap& env,
-                                          ChildProcessHost* host)
+                                          const base::EnvironmentMap& env)
       : exposed_dir_(exposed_dir),
 #if defined(OS_WIN)
         launch_elevated_(launch_elevated)
 #elif defined(OS_POSIX)
-        env_(env),
+        env_(env)
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-        no_sandbox_(no_sandbox),
+        ,
+        no_sandbox_(no_sandbox)
 #endif  // !defined(OS_MACOSX)  && !defined(OS_ANDROID)
-        ipc_fd_(host->TakeClientFileDescriptor())
 #endif  // OS_WIN
   {}
 
@@ -117,7 +113,6 @@ class UtilitySandboxedProcessLauncherDelegate
   }
 #endif  // !defined(OS_MACOSX) && !defined(OS_ANDROID)
   base::EnvironmentMap GetEnvironment() override { return env_; }
-  base::ScopedFD TakeIpcFd() override { return std::move(ipc_fd_); }
 #endif  // OS_WIN
 
   SandboxType GetSandboxType() override {
@@ -134,7 +129,6 @@ class UtilitySandboxedProcessLauncherDelegate
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID)
   bool no_sandbox_;
 #endif  // !defined(OS_MACOSX) && !defined(OS_ANDROID)
-  base::ScopedFD ipc_fd_;
 #endif  // OS_WIN
 };
 
@@ -166,15 +160,9 @@ UtilityProcessHostImpl::UtilityProcessHostImpl(
 #endif
       started_(false),
       name_(base::ASCIIToUTF16("utility process")),
-      child_token_(mojo::edk::GenerateRandomToken()),
       weak_ptr_factory_(this) {
-  process_.reset(new BrowserChildProcessHostImpl(PROCESS_TYPE_UTILITY, this,
-                                                 child_token_));
-  mojo_child_connection_.reset(new MojoChildConnection(
-      kUtilityMojoApplicationName,
-      base::StringPrintf("%d_0", process_->GetData().id), child_token_,
-      MojoShellContext::GetConnectorForIOThread(),
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)));
+  process_.reset(new BrowserChildProcessHostImpl(
+      PROCESS_TYPE_UTILITY, this, mojom::kUtilityServiceName));
 }
 
 UtilityProcessHostImpl::~UtilityProcessHostImpl() {
@@ -238,12 +226,11 @@ bool UtilityProcessHostImpl::Start() {
   return StartProcess();
 }
 
-shell::InterfaceRegistry* UtilityProcessHostImpl::GetInterfaceRegistry() {
-  return mojo_child_connection_->GetInterfaceRegistry();
-}
-
-shell::InterfaceProvider* UtilityProcessHostImpl::GetRemoteInterfaces() {
-  return mojo_child_connection_->GetRemoteInterfaces();
+void UtilityProcessHostImpl::BindInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  process_->child_connection()->BindInterface(interface_name,
+                                              std::move(interface_pipe));
 }
 
 void UtilityProcessHostImpl::SetName(const base::string16& name) {
@@ -267,13 +254,7 @@ bool UtilityProcessHostImpl::StartProcess() {
     return true;
 
   process_->SetName(name_);
-
-  std::string mojo_channel_token =
-      process_->GetHost()->CreateChannelMojo(child_token_);
-  if (mojo_channel_token.empty()) {
-    NotifyAndDelete(LAUNCH_RESULT_FAILURE);
-    return false;
-  }
+  process_->GetHost()->CreateChannelMojo();
 
   if (RenderProcessHost::run_renderer_in_process()) {
     DCHECK(g_utility_main_thread_factory);
@@ -281,9 +262,8 @@ bool UtilityProcessHostImpl::StartProcess() {
     // support single process mode this way.
     in_process_thread_.reset(
         g_utility_main_thread_factory(InProcessChildThreadParams(
-            std::string(), BrowserThread::UnsafeGetMessageLoopForThread(
-                            BrowserThread::IO)->task_runner(),
-            mojo_channel_token, mojo_child_connection_->service_token())));
+            BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+            process_->child_connection()->service_token())));
     in_process_thread_->Start();
   } else {
     const base::CommandLine& browser_command_line =
@@ -296,8 +276,8 @@ bool UtilityProcessHostImpl::StartProcess() {
       // readlink("/prof/self/exe") sometimes fails on Android at startup.
       // As a workaround skip calling it here, since the executable name is
       // not needed on Android anyway. See crbug.com/500854.
-      base::CommandLine* cmd_line =
-          new base::CommandLine(base::CommandLine::NO_PROGRAM);
+    std::unique_ptr<base::CommandLine> cmd_line =
+        base::MakeUnique<base::CommandLine>(base::CommandLine::NO_PROGRAM);
     #else
       int child_flags = child_flags_;
 
@@ -315,13 +295,12 @@ bool UtilityProcessHostImpl::StartProcess() {
         return false;
       }
 
-      base::CommandLine* cmd_line = new base::CommandLine(exe_path);
+      std::unique_ptr<base::CommandLine> cmd_line =
+          base::MakeUnique<base::CommandLine>(exe_path);
     #endif
 
     cmd_line->AppendSwitchASCII(switches::kProcessType,
                                 switches::kUtilityProcess);
-    cmd_line->AppendSwitchASCII(switches::kMojoChannelToken,
-                                mojo_channel_token);
     std::string locale = GetContentClient()->browser()->GetApplicationLocale();
     cmd_line->AppendSwitchASCII(switches::kLang, locale);
 
@@ -334,6 +313,7 @@ bool UtilityProcessHostImpl::StartProcess() {
 
     // Browser command-line switches to propagate to the utility process.
     static const char* const kSwitchNames[] = {
+      switches::kEnableNetworkService,
       switches::kNoSandbox,
       switches::kProfilerTiming,
 #if defined(OS_MACOSX)
@@ -361,16 +341,9 @@ bool UtilityProcessHostImpl::StartProcess() {
       cmd_line->AppendSwitch(switches::kUtilityProcessRunningElevated);
 #endif
 
-    cmd_line->AppendSwitchASCII(switches::kMojoApplicationChannelToken,
-                                mojo_child_connection_->service_token());
-
-    process_->Launch(
-        new UtilitySandboxedProcessLauncherDelegate(exposed_dir_,
-                                                    run_elevated_,
-                                                    no_sandbox_, env_,
-                                                    process_->GetHost()),
-        cmd_line,
-        true);
+    process_->Launch(base::MakeUnique<UtilitySandboxedProcessLauncherDelegate>(
+                         exposed_dir_, run_elevated_, no_sandbox_, env_),
+                     std::move(cmd_line), true);
   }
 
   return true;
@@ -397,7 +370,7 @@ void UtilityProcessHostImpl::OnProcessLaunchFailed(int error_code) {
   client_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&UtilityProcessHostClient::OnProcessLaunchFailed,
-                 client_.get(),
+                 client_,
                  error_code));
 }
 
@@ -407,7 +380,7 @@ void UtilityProcessHostImpl::OnProcessCrashed(int exit_code) {
 
   client_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&UtilityProcessHostClient::OnProcessCrashed, client_.get(),
+      base::Bind(&UtilityProcessHostClient::OnProcessCrashed, client_,
             exit_code));
 }
 

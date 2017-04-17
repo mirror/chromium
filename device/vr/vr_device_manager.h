@@ -12,36 +12,52 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
+#include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
+#include "base/timer/timer.h"
 #include "device/vr/vr_device.h"
 #include "device/vr/vr_device_provider.h"
 #include "device/vr/vr_export.h"
 #include "device/vr/vr_service.mojom.h"
+#include "device/vr/vr_service_impl.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 
 namespace device {
 
-class VRDeviceManager : public VRService {
+// Singleton used to provide the platform's VR devices to VRServiceImpl
+// instances.
+class VRDeviceManager {
  public:
-  DEVICE_VR_EXPORT ~VRDeviceManager() override;
-
-  DEVICE_VR_EXPORT static void BindRequest(
-      mojo::InterfaceRequest<VRService> request);
+  DEVICE_VR_EXPORT virtual ~VRDeviceManager();
 
   // Returns the VRDeviceManager singleton.
   static VRDeviceManager* GetInstance();
 
-  DEVICE_VR_EXPORT mojo::Array<VRDisplayPtr> GetVRDevices();
-  DEVICE_VR_EXPORT VRDevice* GetDevice(unsigned int index);
+  // Adds a listener for device manager events. VRDeviceManager does not own
+  // this object.
+  // Automatically connects all currently available VR devices by querying
+  // the device providers and, for each returned device, calling
+  // VRServiceImpl::ConnectDevice.
+  DEVICE_VR_EXPORT void AddService(VRServiceImpl* service);
+  void RemoveService(VRServiceImpl* service);
+
+  DEVICE_VR_EXPORT unsigned int GetNumberOfConnectedDevices();
+
+  void ListeningForActivateChanged(bool listening, VRServiceImpl* service);
+
+  bool IsMostRecentlyListeningForActivate(VRServiceImpl* service);
 
  private:
   friend class VRDeviceManagerTest;
+  friend class VRDisplayImplTest;
+  friend class VRServiceImplTest;
 
   VRDeviceManager();
   // Constructor for testing.
   DEVICE_VR_EXPORT explicit VRDeviceManager(
       std::unique_ptr<VRDeviceProvider> provider);
+
+  DEVICE_VR_EXPORT VRDevice* GetDevice(unsigned int index);
 
   static void SetInstance(VRDeviceManager* service);
   static bool HasInstance();
@@ -49,15 +65,11 @@ class VRDeviceManager : public VRService {
   void InitializeProviders();
   void RegisterProvider(std::unique_ptr<VRDeviceProvider> provider);
 
-  // mojom::VRService implementation
-  void GetDisplays(const GetDisplaysCallback& callback) override;
-  void GetPose(uint32_t index, const GetPoseCallback& callback) override;
-  void ResetPose(uint32_t index) override;
+  void SchedulePollEvents();
+  void PollEvents();
+  void StopSchedulingPollEvents();
 
-  // Mojo connection error handler.
-  void OnConnectionError();
-
-  using ProviderList = std::vector<linked_ptr<VRDeviceProvider>>;
+  using ProviderList = std::vector<std::unique_ptr<VRDeviceProvider>>;
   ProviderList providers_;
 
   // Devices are owned by their providers.
@@ -66,12 +78,19 @@ class VRDeviceManager : public VRService {
 
   bool vr_initialized_;
 
-  mojo::BindingSet<VRService> bindings_;
+  std::set<VRServiceImpl*> services_;
+  VRServiceImpl* most_recently_listening_for_activate_ = nullptr;
 
   // For testing. If true will not delete self when consumer count reaches 0.
   bool keep_alive_;
 
+  bool has_scheduled_poll_;
+
+  bool has_activate_listeners_;
+
   base::ThreadChecker thread_checker_;
+
+  base::RepeatingTimer timer_;
 
   DISALLOW_COPY_AND_ASSIGN(VRDeviceManager);
 };

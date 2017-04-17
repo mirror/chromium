@@ -28,33 +28,27 @@
 namespace blink {
 
 OESTextureFloatLinear::OESTextureFloatLinear(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
-    context->extensionsUtil()->ensureExtensionEnabled("GL_OES_texture_float_linear");
+    : WebGLExtension(context) {
+  context->ExtensionsUtil()->EnsureExtensionEnabled(
+      "GL_OES_texture_float_linear");
 }
 
-OESTextureFloatLinear::~OESTextureFloatLinear()
-{
+WebGLExtensionName OESTextureFloatLinear::GetName() const {
+  return kOESTextureFloatLinearName;
 }
 
-WebGLExtensionName OESTextureFloatLinear::name() const
-{
-    return OESTextureFloatLinearName;
+OESTextureFloatLinear* OESTextureFloatLinear::Create(
+    WebGLRenderingContextBase* context) {
+  return new OESTextureFloatLinear(context);
 }
 
-OESTextureFloatLinear* OESTextureFloatLinear::create(WebGLRenderingContextBase* context)
-{
-    return new OESTextureFloatLinear(context);
+bool OESTextureFloatLinear::Supported(WebGLRenderingContextBase* context) {
+  return context->ExtensionsUtil()->SupportsExtension(
+      "GL_OES_texture_float_linear");
 }
 
-bool OESTextureFloatLinear::supported(WebGLRenderingContextBase* context)
-{
-    return context->extensionsUtil()->supportsExtension("GL_OES_texture_float_linear");
+const char* OESTextureFloatLinear::ExtensionName() {
+  return "OES_texture_float_linear";
 }
 
-const char* OESTextureFloatLinear::extensionName()
-{
-    return "OES_texture_float_linear";
-}
-
-} // namespace blink
+}  // namespace blink

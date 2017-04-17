@@ -1,4 +1,3 @@
-
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -47,21 +46,27 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
 
   // Forcing the caller to provide all cached values upon construction
   // eliminates the need to perform a JNI call to retrieve values individually.
-  MotionEventAndroid(float pix_to_dip,
-                     JNIEnv* env,
+  MotionEventAndroid(JNIEnv* env,
                      jobject event,
+                     jfloat pix_to_dip,
+                     jfloat ticks_x,
+                     jfloat ticks_y,
+                     jfloat tick_multiplier,
                      jlong time_ms,
                      jint android_action,
                      jint pointer_count,
                      jint history_size,
                      jint action_index,
+                     jint android_action_button,
                      jint android_button_state,
                      jint meta_state,
                      jfloat raw_offset_x_pixels,
                      jfloat raw_offset_y_pixels,
-                     const Pointer& pointer0,
-                     const Pointer& pointer1);
+                     const Pointer* const pointer0,
+                     const Pointer* const pointer1);
   ~MotionEventAndroid() override;
+
+  std::unique_ptr<MotionEventAndroid> Offset(float x, float y) const;
 
   // ui::MotionEvent methods.
   uint32_t GetUniqueEventId() const override;
@@ -92,13 +97,22 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   int GetButtonState() const override;
   int GetFlags() const override;
 
-  static bool RegisterMotionEventAndroid(JNIEnv* env);
+  int GetActionButton() const;
+  float ticks_x() const { return ticks_x_; }
+  float ticks_y() const { return ticks_y_; }
+  float time_sec() const { return time_sec_; }
+  float GetTickMultiplier() const;
+
+  base::android::ScopedJavaLocalRef<jobject> GetJavaObject() const;
 
  private:
   struct CachedPointer;
 
   float ToDips(float pixels) const;
   CachedPointer FromAndroidPointer(const Pointer& pointer) const;
+  CachedPointer OffsetCachedPointer(const CachedPointer& pointer,
+                                    float x,
+                                    float y) const;
 
   // Cache pointer coords, id's and major lengths for the most common
   // touch-related scenarios, i.e., scrolling and pinching.  This prevents
@@ -112,11 +126,18 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   // DIP coordinates cached/returned by the MotionEventAndroid.
   const float pix_to_dip_;
 
+  // Variables for mouse wheel event.
+  const float ticks_x_;
+  const float ticks_y_;
+  const float tick_multiplier_;
+  const uint64_t time_sec_;
+
   const base::TimeTicks cached_time_;
   const Action cached_action_;
   const size_t cached_pointer_count_;
   const size_t cached_history_size_;
   const int cached_action_index_;
+  const int cached_action_button_;
   const int cached_button_state_;
   const int cached_flags_;
   const gfx::Vector2dF cached_raw_position_offset_;
@@ -134,7 +155,9 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   // A unique identifier for the Android motion event.
   const uint32_t unique_event_id_;
 
-  DISALLOW_COPY_AND_ASSIGN(MotionEventAndroid);
+  // Disallow copy/assign.
+  MotionEventAndroid(const MotionEventAndroid& e);  // private ctor
+  void operator=(const MotionEventAndroid&) = delete;
 };
 
 }  // namespace content

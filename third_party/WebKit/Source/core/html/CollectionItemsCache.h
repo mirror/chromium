@@ -32,85 +32,81 @@
 #ifndef CollectionItemsCache_h
 #define CollectionItemsCache_h
 
-#include "core/html/CollectionIndexCache.h"
-#include "wtf/Vector.h"
+#include "core/dom/CollectionIndexCache.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 template <typename Collection, typename NodeType>
 class CollectionItemsCache : public CollectionIndexCache<Collection, NodeType> {
-    DISALLOW_NEW();
+  DISALLOW_NEW();
 
-    typedef CollectionIndexCache<Collection, NodeType> Base;
+  typedef CollectionIndexCache<Collection, NodeType> Base;
 
-public:
-    CollectionItemsCache();
-    ~CollectionItemsCache();
+ public:
+  CollectionItemsCache();
+  ~CollectionItemsCache();
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_cachedList);
-        Base::trace(visitor);
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(cached_list_);
+    Base::Trace(visitor);
+  }
 
-    unsigned nodeCount(const Collection&);
-    NodeType* nodeAt(const Collection&, unsigned index);
-    void invalidate();
+  unsigned NodeCount(const Collection&);
+  NodeType* NodeAt(const Collection&, unsigned index);
+  void Invalidate();
 
-private:
-    bool m_listValid;
-    HeapVector<Member<NodeType>> m_cachedList;
+ private:
+  bool list_valid_;
+  HeapVector<Member<NodeType>> cached_list_;
 };
 
 template <typename Collection, typename NodeType>
 CollectionItemsCache<Collection, NodeType>::CollectionItemsCache()
-    : m_listValid(false)
-{
-}
+    : list_valid_(false) {}
 
 template <typename Collection, typename NodeType>
-CollectionItemsCache<Collection, NodeType>::~CollectionItemsCache()
-{
-}
+CollectionItemsCache<Collection, NodeType>::~CollectionItemsCache() {}
 
 template <typename Collection, typename NodeType>
-void CollectionItemsCache<Collection, NodeType>::invalidate()
-{
-    Base::invalidate();
-    if (m_listValid) {
-        m_cachedList.shrink(0);
-        m_listValid = false;
-    }
+void CollectionItemsCache<Collection, NodeType>::Invalidate() {
+  Base::Invalidate();
+  if (list_valid_) {
+    cached_list_.Shrink(0);
+    list_valid_ = false;
+  }
 }
 
 template <class Collection, class NodeType>
-unsigned CollectionItemsCache<Collection, NodeType>::nodeCount(const Collection& collection)
-{
-    if (this->isCachedNodeCountValid())
-        return this->cachedNodeCount();
+unsigned CollectionItemsCache<Collection, NodeType>::NodeCount(
+    const Collection& collection) {
+  if (this->IsCachedNodeCountValid())
+    return this->CachedNodeCount();
 
-    NodeType* currentNode = collection.traverseToFirst();
-    unsigned currentIndex = 0;
-    while (currentNode) {
-        m_cachedList.append(currentNode);
-        currentNode = collection.traverseForwardToOffset(currentIndex + 1, *currentNode, currentIndex);
-    }
+  NodeType* current_node = collection.TraverseToFirst();
+  unsigned current_index = 0;
+  while (current_node) {
+    cached_list_.push_back(current_node);
+    current_node = collection.TraverseForwardToOffset(
+        current_index + 1, *current_node, current_index);
+  }
 
-    this->setCachedNodeCount(m_cachedList.size());
-    m_listValid = true;
-    return this->cachedNodeCount();
+  this->SetCachedNodeCount(cached_list_.size());
+  list_valid_ = true;
+  return this->CachedNodeCount();
 }
 
 template <typename Collection, typename NodeType>
-inline NodeType* CollectionItemsCache<Collection, NodeType>::nodeAt(const Collection& collection, unsigned index)
-{
-    if (m_listValid) {
-        ASSERT(this->isCachedNodeCountValid());
-        return index < this->cachedNodeCount() ? m_cachedList[index] : nullptr;
-    }
-    return Base::nodeAt(collection, index);
+inline NodeType* CollectionItemsCache<Collection, NodeType>::NodeAt(
+    const Collection& collection,
+    unsigned index) {
+  if (list_valid_) {
+    DCHECK(this->IsCachedNodeCountValid());
+    return index < this->CachedNodeCount() ? cached_list_[index] : nullptr;
+  }
+  return Base::NodeAt(collection, index);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CollectionItemsCache_h
+#endif  // CollectionItemsCache_h

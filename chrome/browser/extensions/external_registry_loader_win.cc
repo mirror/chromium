@@ -8,7 +8,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_file.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -53,6 +53,9 @@ std::string MakePrefName(const std::string& extension_id,
 }  // namespace
 
 namespace extensions {
+
+ExternalRegistryLoader::ExternalRegistryLoader()
+    : attempted_watching_registry_(false) {}
 
 void ExternalRegistryLoader::StartLoading() {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
@@ -164,7 +167,7 @@ ExternalRegistryLoader::LoadPrefsOnFileThread() {
       continue;
     }
 
-    Version version(base::UTF16ToASCII(extension_version));
+    base::Version version(base::UTF16ToASCII(extension_version));
     if (!version.IsValid()) {
       LOG(ERROR) << "Invalid version value " << extension_version
                  << " for key " << key_path << ".";
@@ -187,41 +190,49 @@ ExternalRegistryLoader::LoadPrefsOnFileThread() {
 
 void ExternalRegistryLoader::LoadOnFileThread() {
   base::TimeTicks start_time = base::TimeTicks::Now();
-  std::unique_ptr<base::DictionaryValue> initial_prefs =
-      LoadPrefsOnFileThread();
-  prefs_.reset(initial_prefs.release());
+  std::unique_ptr<base::DictionaryValue> prefs = LoadPrefsOnFileThread();
   LOCAL_HISTOGRAM_TIMES("Extensions.ExternalRegistryLoaderWin",
                         base::TimeTicks::Now() - start_time);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::Bind(&ExternalRegistryLoader::CompleteLoadAndStartWatchingRegistry,
-                 this));
+                 this, base::Passed(&prefs)));
 }
 
-void ExternalRegistryLoader::CompleteLoadAndStartWatchingRegistry() {
+void ExternalRegistryLoader::CompleteLoadAndStartWatchingRegistry(
+    std::unique_ptr<base::DictionaryValue> prefs) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+  DCHECK(prefs);
+  prefs_ = std::move(prefs);
   LoadFinished();
 
-  // Start watching registry.
-  if (hklm_key_.Create(HKEY_LOCAL_MACHINE, kRegistryExtensions,
-                       KEY_NOTIFY | KEY_WOW64_32KEY) == ERROR_SUCCESS) {
+  // Attempt to watch registry if we haven't already.
+  if (attempted_watching_registry_)
+    return;
+
+  LONG result = ERROR_SUCCESS;
+  if ((result = hklm_key_.Create(HKEY_LOCAL_MACHINE, kRegistryExtensions,
+                                 KEY_NOTIFY | KEY_WOW64_32KEY)) ==
+      ERROR_SUCCESS) {
     base::win::RegKey::ChangeCallback callback =
         base::Bind(&ExternalRegistryLoader::OnRegistryKeyChanged,
                    base::Unretained(this), base::Unretained(&hklm_key_));
     hklm_key_.StartWatching(callback);
   } else {
-    LOG(WARNING) << "Error observing HKLM.";
+    LOG(WARNING) << "Error observing HKLM: " << result;
   }
 
-  if (hkcu_key_.Create(HKEY_CURRENT_USER, kRegistryExtensions, KEY_NOTIFY) ==
-      ERROR_SUCCESS) {
+  if ((result = hkcu_key_.Create(HKEY_CURRENT_USER, kRegistryExtensions,
+                                 KEY_NOTIFY)) == ERROR_SUCCESS) {
     base::win::RegKey::ChangeCallback callback =
         base::Bind(&ExternalRegistryLoader::OnRegistryKeyChanged,
                    base::Unretained(this), base::Unretained(&hkcu_key_));
     hkcu_key_.StartWatching(callback);
   } else {
-    LOG(WARNING) << "Error observing HKCU.";
+    LOG(WARNING) << "Error observing HKCU: " << result;
   }
+
+  attempted_watching_registry_ = true;
 }
 
 void ExternalRegistryLoader::OnRegistryKeyChanged(base::win::RegKey* key) {

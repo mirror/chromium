@@ -10,26 +10,26 @@
 namespace blink {
 
 class WebGLCompressedTextureASTC final : public WebGLExtension {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    typedef struct {
-        int CompressType;
-        int blockWidth;
-        int blockHeight;
-    } BlockSizeCompressASTC;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static WebGLCompressedTextureASTC* create(WebGLRenderingContextBase*);
-    static bool supported(WebGLRenderingContextBase*);
-    static const char* extensionName();
+ public:
+  typedef struct {
+    int compress_type;
+    int block_width;
+    int block_height;
+  } BlockSizeCompressASTC;
 
-    ~WebGLCompressedTextureASTC() override;
-    WebGLExtensionName name() const override;
-    static const BlockSizeCompressASTC kBlockSizeCompressASTC[];
+  static WebGLCompressedTextureASTC* Create(WebGLRenderingContextBase*);
+  static bool Supported(WebGLRenderingContextBase*);
+  static const char* ExtensionName();
 
-private:
-    explicit WebGLCompressedTextureASTC(WebGLRenderingContextBase*);
+  WebGLExtensionName GetName() const override;
+  static const BlockSizeCompressASTC kBlockSizeCompressASTC[];
+
+ private:
+  explicit WebGLCompressedTextureASTC(WebGLRenderingContextBase*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLCompressedTextureASTC_h
+#endif  // WebGLCompressedTextureASTC_h

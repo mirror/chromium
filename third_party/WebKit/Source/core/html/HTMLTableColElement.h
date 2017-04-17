@@ -31,33 +31,36 @@
 namespace blink {
 
 class HTMLTableColElement final : public HTMLTablePartElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_ELEMENT_FACTORY_WITH_TAGNAME(HTMLTableColElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    unsigned span() const { return m_span; }
-    void setSpan(unsigned);
+ public:
+  DECLARE_ELEMENT_FACTORY_WITH_TAGNAME(HTMLTableColElement);
 
-    const AtomicString& width() const;
+  unsigned span() const { return span_; }
+  void setSpan(unsigned);
 
-private:
-    HTMLTableColElement(const QualifiedName& tagName, Document&);
+  const AtomicString& Width() const;
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
-    const StylePropertySet* additionalPresentationAttributeStyle() override;
+ private:
+  HTMLTableColElement(const QualifiedName& tag_name, Document&);
 
-    unsigned m_span;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
+  const StylePropertySet* AdditionalPresentationAttributeStyle() override;
+
+  unsigned span_;
 };
 
-inline bool isHTMLTableColElement(const HTMLElement& element)
-{
-    return element.hasTagName(HTMLNames::colTag) || element.hasTagName(HTMLNames::colgroupTag);
+inline bool IsHTMLTableColElement(const HTMLElement& element) {
+  return element.HasTagName(HTMLNames::colTag) ||
+         element.HasTagName(HTMLNames::colgroupTag);
 }
 
 DEFINE_HTMLELEMENT_TYPE_CASTS_WITH_FUNCTION(HTMLTableColElement);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLTableColElement_h
+#endif  // HTMLTableColElement_h

@@ -11,39 +11,27 @@
 namespace blink {
 
 class LineLayoutBR : public LineLayoutText {
-public:
-    explicit LineLayoutBR(LayoutBR* layoutBR)
-        : LineLayoutText(layoutBR)
-    {
-    }
+ public:
+  explicit LineLayoutBR(LayoutBR* layout_br) : LineLayoutText(layout_br) {}
 
-    explicit LineLayoutBR(const LineLayoutItem& item)
-        : LineLayoutText(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isBR());
-    }
+  explicit LineLayoutBR(const LineLayoutItem& item) : LineLayoutText(item) {
+    SECURITY_DCHECK(!item || item.IsBR());
+  }
 
-    explicit LineLayoutBR(std::nullptr_t) : LineLayoutText(nullptr) { }
+  explicit LineLayoutBR(std::nullptr_t) : LineLayoutText(nullptr) {}
 
-    LineLayoutBR() { }
+  LineLayoutBR() {}
 
-    int lineHeight(bool firstLine) const
-    {
-        return toBR()->lineHeight(firstLine);
-    }
+  int LineHeight(bool first_line) const {
+    return ToBR()->LineHeight(first_line);
+  }
 
-private:
-    LayoutBR* toBR()
-    {
-        return toLayoutBR(layoutObject());
-    }
+ private:
+  LayoutBR* ToBR() { return ToLayoutBR(GetLayoutObject()); }
 
-    const LayoutBR* toBR() const
-    {
-        return toLayoutBR(layoutObject());
-    }
+  const LayoutBR* ToBR() const { return ToLayoutBR(GetLayoutObject()); }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineLayoutBR_h
+#endif  // LineLayoutBR_h

@@ -36,200 +36,194 @@ namespace blink {
 
 using namespace HTMLNames;
 
-static bool tokenExitsForeignContent(const CompactHTMLToken& token)
-{
-    // FIXME: This is copied from HTMLTreeBuilder::processTokenInForeignContent and changed to use threadSafeHTMLNamesMatch.
-    const String& tagName = token.data();
-    return threadSafeMatch(tagName, bTag)
-        || threadSafeMatch(tagName, bigTag)
-        || threadSafeMatch(tagName, blockquoteTag)
-        || threadSafeMatch(tagName, bodyTag)
-        || threadSafeMatch(tagName, brTag)
-        || threadSafeMatch(tagName, centerTag)
-        || threadSafeMatch(tagName, codeTag)
-        || threadSafeMatch(tagName, ddTag)
-        || threadSafeMatch(tagName, divTag)
-        || threadSafeMatch(tagName, dlTag)
-        || threadSafeMatch(tagName, dtTag)
-        || threadSafeMatch(tagName, emTag)
-        || threadSafeMatch(tagName, embedTag)
-        || threadSafeMatch(tagName, h1Tag)
-        || threadSafeMatch(tagName, h2Tag)
-        || threadSafeMatch(tagName, h3Tag)
-        || threadSafeMatch(tagName, h4Tag)
-        || threadSafeMatch(tagName, h5Tag)
-        || threadSafeMatch(tagName, h6Tag)
-        || threadSafeMatch(tagName, headTag)
-        || threadSafeMatch(tagName, hrTag)
-        || threadSafeMatch(tagName, iTag)
-        || threadSafeMatch(tagName, imgTag)
-        || threadSafeMatch(tagName, liTag)
-        || threadSafeMatch(tagName, listingTag)
-        || threadSafeMatch(tagName, menuTag)
-        || threadSafeMatch(tagName, metaTag)
-        || threadSafeMatch(tagName, nobrTag)
-        || threadSafeMatch(tagName, olTag)
-        || threadSafeMatch(tagName, pTag)
-        || threadSafeMatch(tagName, preTag)
-        || threadSafeMatch(tagName, rubyTag)
-        || threadSafeMatch(tagName, sTag)
-        || threadSafeMatch(tagName, smallTag)
-        || threadSafeMatch(tagName, spanTag)
-        || threadSafeMatch(tagName, strongTag)
-        || threadSafeMatch(tagName, strikeTag)
-        || threadSafeMatch(tagName, subTag)
-        || threadSafeMatch(tagName, supTag)
-        || threadSafeMatch(tagName, tableTag)
-        || threadSafeMatch(tagName, ttTag)
-        || threadSafeMatch(tagName, uTag)
-        || threadSafeMatch(tagName, ulTag)
-        || threadSafeMatch(tagName, varTag)
-        || (threadSafeMatch(tagName, fontTag) && (token.getAttributeItem(colorAttr) || token.getAttributeItem(faceAttr) || token.getAttributeItem(sizeAttr)));
+static bool TokenExitsForeignContent(const CompactHTMLToken& token) {
+  // FIXME: This is copied from HTMLTreeBuilder::processTokenInForeignContent
+  // and changed to use threadSafeHTMLNamesMatch.
+  const String& tag_name = token.Data();
+  return ThreadSafeMatch(tag_name, bTag) || ThreadSafeMatch(tag_name, bigTag) ||
+         ThreadSafeMatch(tag_name, blockquoteTag) ||
+         ThreadSafeMatch(tag_name, bodyTag) ||
+         ThreadSafeMatch(tag_name, brTag) ||
+         ThreadSafeMatch(tag_name, centerTag) ||
+         ThreadSafeMatch(tag_name, codeTag) ||
+         ThreadSafeMatch(tag_name, ddTag) ||
+         ThreadSafeMatch(tag_name, divTag) ||
+         ThreadSafeMatch(tag_name, dlTag) || ThreadSafeMatch(tag_name, dtTag) ||
+         ThreadSafeMatch(tag_name, emTag) ||
+         ThreadSafeMatch(tag_name, embedTag) ||
+         ThreadSafeMatch(tag_name, h1Tag) || ThreadSafeMatch(tag_name, h2Tag) ||
+         ThreadSafeMatch(tag_name, h3Tag) || ThreadSafeMatch(tag_name, h4Tag) ||
+         ThreadSafeMatch(tag_name, h5Tag) || ThreadSafeMatch(tag_name, h6Tag) ||
+         ThreadSafeMatch(tag_name, headTag) ||
+         ThreadSafeMatch(tag_name, hrTag) || ThreadSafeMatch(tag_name, iTag) ||
+         ThreadSafeMatch(tag_name, imgTag) ||
+         ThreadSafeMatch(tag_name, liTag) ||
+         ThreadSafeMatch(tag_name, listingTag) ||
+         ThreadSafeMatch(tag_name, menuTag) ||
+         ThreadSafeMatch(tag_name, metaTag) ||
+         ThreadSafeMatch(tag_name, nobrTag) ||
+         ThreadSafeMatch(tag_name, olTag) || ThreadSafeMatch(tag_name, pTag) ||
+         ThreadSafeMatch(tag_name, preTag) ||
+         ThreadSafeMatch(tag_name, rubyTag) ||
+         ThreadSafeMatch(tag_name, sTag) ||
+         ThreadSafeMatch(tag_name, smallTag) ||
+         ThreadSafeMatch(tag_name, spanTag) ||
+         ThreadSafeMatch(tag_name, strongTag) ||
+         ThreadSafeMatch(tag_name, strikeTag) ||
+         ThreadSafeMatch(tag_name, subTag) ||
+         ThreadSafeMatch(tag_name, supTag) ||
+         ThreadSafeMatch(tag_name, tableTag) ||
+         ThreadSafeMatch(tag_name, ttTag) || ThreadSafeMatch(tag_name, uTag) ||
+         ThreadSafeMatch(tag_name, ulTag) ||
+         ThreadSafeMatch(tag_name, varTag) ||
+         (ThreadSafeMatch(tag_name, fontTag) &&
+          (token.GetAttributeItem(colorAttr) ||
+           token.GetAttributeItem(faceAttr) ||
+           token.GetAttributeItem(sizeAttr)));
 }
 
-static bool tokenExitsSVG(const CompactHTMLToken& token)
-{
-    // FIXME: It's very fragile that we special case foreignObject here to be case-insensitive.
-    return equalIgnoringCaseNonNull(token.data().impl(), SVGNames::foreignObjectTag.localName().impl());
+static bool TokenExitsSVG(const CompactHTMLToken& token) {
+  // FIXME: It's very fragile that we special case foreignObject here to be
+  // case-insensitive.
+  return DeprecatedEqualIgnoringCase(token.Data(),
+                                     SVGNames::foreignObjectTag.LocalName());
 }
 
-static bool tokenExitsMath(const CompactHTMLToken& token)
-{
-    // FIXME: This is copied from HTMLElementStack::isMathMLTextIntegrationPoint and changed to use threadSafeMatch.
-    const String& tagName = token.data();
-    return threadSafeMatch(tagName, MathMLNames::miTag)
-        || threadSafeMatch(tagName, MathMLNames::moTag)
-        || threadSafeMatch(tagName, MathMLNames::mnTag)
-        || threadSafeMatch(tagName, MathMLNames::msTag)
-        || threadSafeMatch(tagName, MathMLNames::mtextTag);
+static bool TokenExitsMath(const CompactHTMLToken& token) {
+  // FIXME: This is copied from HTMLElementStack::isMathMLTextIntegrationPoint
+  // and changed to use threadSafeMatch.
+  const String& tag_name = token.Data();
+  return ThreadSafeMatch(tag_name, MathMLNames::miTag) ||
+         ThreadSafeMatch(tag_name, MathMLNames::moTag) ||
+         ThreadSafeMatch(tag_name, MathMLNames::mnTag) ||
+         ThreadSafeMatch(tag_name, MathMLNames::msTag) ||
+         ThreadSafeMatch(tag_name, MathMLNames::mtextTag);
 }
 
-// We always push tokens which may be related to elements which are
-// HTML integration points. elementMayBeHTMLIntegrationPoint gives
-// conservative false positives. Specifically, annotation-xml end tags
-// may not be related to HTML integration points; it depends on the
-// opening tags' attributes. But elementMayBeHTMLIntegrationPoint
-// returns true for these elements.
-static bool elementMayBeHTMLIntegrationPoint(const String& tagName)
-{
-    return threadSafeMatch(tagName, MathMLNames::annotation_xmlTag)
-        || threadSafeMatch(tagName, SVGNames::descTag)
-        || threadSafeMatch(tagName, SVGNames::foreignObjectTag)
-        || threadSafeMatch(tagName, titleTag);
+static bool TokenExitsInSelect(const CompactHTMLToken& token) {
+  // https://html.spec.whatwg.org/#parsing-main-inselect
+  const String& tag_name = token.Data();
+  return ThreadSafeMatch(tag_name, inputTag) ||
+         ThreadSafeMatch(tag_name, keygenTag) ||
+         ThreadSafeMatch(tag_name, textareaTag);
 }
 
-// https://html.spec.whatwg.org/#html-integration-point
-// See also HTMLElementStack::isHTMLIntegrationPoint
-static bool tokenStartsHTMLIntegrationPoint(const CompactHTMLToken& token)
-{
-    if (token.type() != HTMLToken::StartTag)
-        return false;
+HTMLTreeBuilderSimulator::HTMLTreeBuilderSimulator(
+    const HTMLParserOptions& options)
+    : options_(options), in_select_insertion_mode_(false) {
+  namespace_stack_.push_back(HTML);
+}
 
-    const String& tagName = token.data();
-    if (threadSafeMatch(tagName, MathMLNames::annotation_xmlTag)) {
-        if (const CompactHTMLToken::Attribute* encoding = token.getAttributeItem(MathMLNames::encodingAttr)) {
-            return equalIgnoringCase(encoding->value(), "text/html")
-                || equalIgnoringCase(encoding->value(), "application/xhtml+xml");
+HTMLTreeBuilderSimulator::State HTMLTreeBuilderSimulator::StateFor(
+    HTMLTreeBuilder* tree_builder) {
+  DCHECK(IsMainThread());
+  State namespace_stack;
+  for (HTMLElementStack::ElementRecord* record =
+           tree_builder->OpenElements()->TopRecord();
+       record; record = record->Next()) {
+    Namespace current_namespace = HTML;
+    if (record->NamespaceURI() == SVGNames::svgNamespaceURI)
+      current_namespace = SVG;
+    else if (record->NamespaceURI() == MathMLNames::mathmlNamespaceURI)
+      current_namespace = kMathML;
+
+    if (namespace_stack.IsEmpty() ||
+        namespace_stack.back() != current_namespace)
+      namespace_stack.push_back(current_namespace);
+  }
+  namespace_stack.Reverse();
+  return namespace_stack;
+}
+
+HTMLTreeBuilderSimulator::SimulatedToken HTMLTreeBuilderSimulator::Simulate(
+    const CompactHTMLToken& token,
+    HTMLTokenizer* tokenizer) {
+  SimulatedToken simulated_token = kOtherToken;
+
+  if (token.GetType() == HTMLToken::kStartTag) {
+    const String& tag_name = token.Data();
+    if (ThreadSafeMatch(tag_name, SVGNames::svgTag))
+      namespace_stack_.push_back(SVG);
+    if (ThreadSafeMatch(tag_name, MathMLNames::mathTag))
+      namespace_stack_.push_back(kMathML);
+    if (InForeignContent() && TokenExitsForeignContent(token))
+      namespace_stack_.pop_back();
+    if ((namespace_stack_.back() == SVG && TokenExitsSVG(token)) ||
+        (namespace_stack_.back() == kMathML && TokenExitsMath(token)))
+      namespace_stack_.push_back(HTML);
+    if (!InForeignContent()) {
+      // FIXME: This is just a copy of Tokenizer::updateStateFor which uses
+      // threadSafeMatches.
+      if (ThreadSafeMatch(tag_name, textareaTag) ||
+          ThreadSafeMatch(tag_name, titleTag)) {
+        tokenizer->SetState(HTMLTokenizer::kRCDATAState);
+      } else if (ThreadSafeMatch(tag_name, scriptTag)) {
+        tokenizer->SetState(HTMLTokenizer::kScriptDataState);
+        simulated_token = kScriptStart;
+      } else if (ThreadSafeMatch(tag_name, linkTag)) {
+        simulated_token = kLink;
+      } else if (!in_select_insertion_mode_) {
+        // If we're in the "in select" insertion mode, all of these tags are
+        // ignored, so we shouldn't change the tokenizer state:
+        // https://html.spec.whatwg.org/#parsing-main-inselect
+        if (ThreadSafeMatch(tag_name, plaintextTag) &&
+            !in_select_insertion_mode_) {
+          tokenizer->SetState(HTMLTokenizer::kPLAINTEXTState);
+        } else if (ThreadSafeMatch(tag_name, styleTag) ||
+                   ThreadSafeMatch(tag_name, iframeTag) ||
+                   ThreadSafeMatch(tag_name, xmpTag) ||
+                   (ThreadSafeMatch(tag_name, noembedTag) &&
+                    options_.plugins_enabled) ||
+                   ThreadSafeMatch(tag_name, noframesTag) ||
+                   (ThreadSafeMatch(tag_name, noscriptTag) &&
+                    options_.script_enabled)) {
+          tokenizer->SetState(HTMLTokenizer::kRAWTEXTState);
         }
-        return false;
-    }
+      }
 
-    return threadSafeMatch(tagName, SVGNames::descTag)
-        || threadSafeMatch(tagName, SVGNames::foreignObjectTag)
-        || threadSafeMatch(tagName, titleTag);
+      // We need to track whether we're in the "in select" insertion mode
+      // in order to determine whether '<plaintext>' will put the tokenizer
+      // into PLAINTEXTState, and whether '<xmp>' and others will consume
+      // textual content.
+      //
+      // https://html.spec.whatwg.org/#parsing-main-inselect
+      if (ThreadSafeMatch(tag_name, selectTag)) {
+        in_select_insertion_mode_ = true;
+      } else if (in_select_insertion_mode_ && TokenExitsInSelect(token)) {
+        in_select_insertion_mode_ = false;
+      }
+    }
+  }
+
+  if (token.GetType() == HTMLToken::kEndTag ||
+      (token.GetType() == HTMLToken::kStartTag && token.SelfClosing() &&
+       InForeignContent())) {
+    const String& tag_name = token.Data();
+    if ((namespace_stack_.back() == SVG &&
+         ThreadSafeMatch(tag_name, SVGNames::svgTag)) ||
+        (namespace_stack_.back() == kMathML &&
+         ThreadSafeMatch(tag_name, MathMLNames::mathTag)) ||
+        (namespace_stack_.Contains(SVG) && namespace_stack_.back() == HTML &&
+         TokenExitsSVG(token)) ||
+        (namespace_stack_.Contains(kMathML) &&
+         namespace_stack_.back() == HTML && TokenExitsMath(token))) {
+      namespace_stack_.pop_back();
+    }
+    if (ThreadSafeMatch(tag_name, scriptTag)) {
+      if (!InForeignContent())
+        tokenizer->SetState(HTMLTokenizer::kDataState);
+      return kScriptEnd;
+    } else if (ThreadSafeMatch(tag_name, selectTag)) {
+      in_select_insertion_mode_ = false;
+    }
+    if (ThreadSafeMatch(tag_name, styleTag))
+      simulated_token = kStyleEnd;
+  }
+
+  // FIXME: Also setForceNullCharacterReplacement when in text mode.
+  tokenizer->SetForceNullCharacterReplacement(InForeignContent());
+  tokenizer->SetShouldAllowCDATA(InForeignContent());
+  return simulated_token;
 }
 
-HTMLTreeBuilderSimulator::HTMLTreeBuilderSimulator(const HTMLParserOptions& options)
-    : m_options(options)
-{
-    m_stack.append(StateFlags {HTML, false});
-}
-
-HTMLTreeBuilderSimulator::State HTMLTreeBuilderSimulator::stateFor(HTMLTreeBuilder* treeBuilder)
-{
-    ASSERT(isMainThread());
-    State stack;
-    for (HTMLElementStack::ElementRecord* record = treeBuilder->openElements()->topRecord(); record; record = record->next()) {
-        Namespace recordNamespace = HTML;
-        if (record->namespaceURI() == SVGNames::svgNamespaceURI)
-            recordNamespace = SVG;
-        else if (record->namespaceURI() == MathMLNames::mathmlNamespaceURI)
-            recordNamespace = MathML;
-
-        if (stack.isEmpty() || static_cast<Namespace>(stack.last().ns) != recordNamespace || elementMayBeHTMLIntegrationPoint(record->stackItem()->localName()))
-            stack.append(StateFlags {static_cast<unsigned>(recordNamespace), HTMLElementStack::isHTMLIntegrationPoint(record->stackItem())});
-    }
-    stack.reverse();
-    return stack;
-}
-
-HTMLTreeBuilderSimulator::SimulatedToken HTMLTreeBuilderSimulator::simulate(const CompactHTMLToken& token, HTMLTokenizer* tokenizer)
-{
-    SimulatedToken simulatedToken = OtherToken;
-
-    if (token.type() == HTMLToken::StartTag) {
-        const String& tagName = token.data();
-        bool currentNodeIsHTMLIntegrationPoint = m_stack.last().isHTMLIntegrationPoint;
-        Namespace currentNodeNamespace = currentNamespace();
-
-        if (inForeignContent() && tokenExitsForeignContent(token))
-            m_stack.removeLast();
-
-        if (threadSafeMatch(tagName, SVGNames::svgTag))
-            m_stack.append(StateFlags {SVG, tokenStartsHTMLIntegrationPoint(token)});
-        else if (threadSafeMatch(tagName, MathMLNames::mathTag))
-            m_stack.append(StateFlags {MathML, tokenStartsHTMLIntegrationPoint(token)});
-        else if ((currentNodeNamespace == SVG && tokenExitsSVG(token))
-            || (currentNodeNamespace == MathML && tokenExitsMath(token)))
-            m_stack.append(StateFlags {HTML, tokenStartsHTMLIntegrationPoint(token)});
-        else if (elementMayBeHTMLIntegrationPoint(token.data()) != currentNodeIsHTMLIntegrationPoint)
-            m_stack.append(StateFlags {static_cast<unsigned>(currentNodeNamespace), tokenStartsHTMLIntegrationPoint(token)});
-
-        if (!inForeignContent() || currentNodeIsHTMLIntegrationPoint) {
-            // FIXME: This is just a copy of Tokenizer::updateStateFor which uses threadSafeMatches.
-            if (threadSafeMatch(tagName, textareaTag) || threadSafeMatch(tagName, titleTag)) {
-                tokenizer->setState(HTMLTokenizer::RCDATAState);
-            } else if (threadSafeMatch(tagName, plaintextTag)) {
-                tokenizer->setState(HTMLTokenizer::PLAINTEXTState);
-            } else if (threadSafeMatch(tagName, scriptTag)) {
-                tokenizer->setState(HTMLTokenizer::ScriptDataState);
-                simulatedToken = ScriptStart;
-            } else if (threadSafeMatch(tagName, styleTag)
-                || threadSafeMatch(tagName, iframeTag)
-                || threadSafeMatch(tagName, xmpTag)
-                || (threadSafeMatch(tagName, noembedTag) && m_options.pluginsEnabled)
-                || threadSafeMatch(tagName, noframesTag)
-                || (threadSafeMatch(tagName, noscriptTag) && m_options.scriptEnabled)) {
-                tokenizer->setState(HTMLTokenizer::RAWTEXTState);
-            }
-        }
-    }
-
-    if (token.type() == HTMLToken::EndTag) {
-        const String& tagName = token.data();
-        if ((currentNamespace() == SVG && threadSafeMatch(tagName, SVGNames::svgTag))
-            || (currentNamespace() == MathML && threadSafeMatch(tagName, MathMLNames::mathTag))
-            || (stackContainsNamespace(SVG) && currentNamespace() == HTML && tokenExitsSVG(token))
-            || (stackContainsNamespace(MathML) && currentNamespace() == HTML && tokenExitsMath(token))
-            // By checking the namespace, the above tests subtly avoid
-            // popping the base stack entry which is 'HTML'. Because
-            // HTML title is an integration point, we must explicitly
-            // check we are not popping the base entry when presented
-            // malformed input like </title> with no opening tag.
-            || (m_stack.size() > 1 && elementMayBeHTMLIntegrationPoint(token.data()) != static_cast<bool>(m_stack.last().isHTMLIntegrationPoint)))
-            m_stack.removeLast();
-
-        if (threadSafeMatch(tagName, scriptTag)) {
-            if (!inForeignContent())
-                tokenizer->setState(HTMLTokenizer::DataState);
-            return ScriptEnd;
-        }
-    }
-
-    // FIXME: Also setForceNullCharacterReplacement when in text mode.
-    tokenizer->setForceNullCharacterReplacement(inForeignContent());
-    tokenizer->setShouldAllowCDATA(inForeignContent());
-    return simulatedToken;
-}
-
-} // namespace blink
+}  // namespace blink

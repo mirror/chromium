@@ -28,324 +28,444 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/geometry/DoublePoint.h"
+#include "platform/geometry/FloatQuad.h"
+#include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/Color.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/scroll/Scrollbar.h"
-#include "wtf/MathExtras.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
+#include "public/platform/WebLayerScrollClient.h"
 
 namespace blink {
 
-class DoubleRect;
-class FloatPoint;
+class CompositorAnimationHost;
+class CompositorAnimationTimeline;
 class GraphicsLayer;
 class HostWindow;
 class LayoutBox;
-class PlatformWheelEvent;
+class LayoutObject;
+class PaintLayer;
 class ProgrammaticScrollAnimator;
 struct ScrollAlignment;
+class ScrollAnchor;
 class ScrollAnimatorBase;
 class CompositorAnimationTimeline;
-class Widget;
 
 enum IncludeScrollbarsInRect {
-    ExcludeScrollbars,
-    IncludeScrollbars,
+  kExcludeScrollbars,
+  kIncludeScrollbars,
 };
 
-class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
-    WTF_MAKE_NONCOPYABLE(ScrollableArea);
-public:
-    static int pixelsPerLineStep(HostWindow*);
-    static float minFractionToStepWhenPaging();
-    static int maxOverlapBetweenPages();
+class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
+                                       public WebLayerScrollClient {
+  WTF_MAKE_NONCOPYABLE(ScrollableArea);
 
-    // Convert a non-finite scroll value (Infinity, -Infinity, NaN) to 0 as
-    // per http://dev.w3.org/csswg/cssom-view/#normalize-non_finite-values.
-    static double normalizeNonFiniteScroll(double value) { return std::isfinite(value) ? value : 0.0; }
+ public:
+  static int PixelsPerLineStep(HostWindow*);
+  static float MinFractionToStepWhenPaging();
+  static int MaxOverlapBetweenPages();
 
-    // The window that hosts the ScrollableArea. The ScrollableArea will communicate scrolls and repaints to the
-    // host window in the window's coordinate space.
-    virtual HostWindow* getHostWindow() const { return 0; }
+  // Convert a non-finite scroll value (Infinity, -Infinity, NaN) to 0 as
+  // per http://dev.w3.org/csswg/cssom-view/#normalize-non_finite-values.
+  static float NormalizeNonFiniteScroll(float value) {
+    return std::isfinite(value) ? value : 0.0;
+  }
 
-    virtual ScrollResult userScroll(ScrollGranularity, const FloatSize&);
+  // The window that hosts the ScrollableArea. The ScrollableArea will
+  // communicate scrolls and repaints to the host window in the window's
+  // coordinate space.
+  virtual HostWindow* GetHostWindow() const { return 0; }
 
-    virtual void setScrollPosition(const DoublePoint&, ScrollType, ScrollBehavior = ScrollBehaviorInstant);
-    virtual void scrollBy(const DoubleSize&, ScrollType, ScrollBehavior = ScrollBehaviorInstant);
-    void setScrollPositionSingleAxis(ScrollbarOrientation, double, ScrollType, ScrollBehavior = ScrollBehaviorInstant);
+  virtual ScrollResult UserScroll(ScrollGranularity, const ScrollOffset&);
 
-    // Scrolls the area so that the given rect, given in the document's content coordinates, such that it's
-    // visible in the area. Returns the new location of the input rect relative once again to the document.
-    // Note, in the case of a Document container, such as FrameView, the output will always be the input rect
-    // since scrolling it can't change the location of content relative to the document, unlike an overflowing
-    // element.
-    virtual LayoutRect scrollIntoView(const LayoutRect& rectInContent, const ScrollAlignment& alignX, const ScrollAlignment& alignY, ScrollType = ProgrammaticScroll);
+  virtual void SetScrollOffset(const ScrollOffset&,
+                               ScrollType,
+                               ScrollBehavior = kScrollBehaviorInstant);
+  virtual void ScrollBy(const ScrollOffset&,
+                        ScrollType,
+                        ScrollBehavior = kScrollBehaviorInstant);
+  void SetScrollOffsetSingleAxis(ScrollbarOrientation,
+                                 float,
+                                 ScrollType,
+                                 ScrollBehavior = kScrollBehaviorInstant);
 
-    // Returns a rect, in the space of the area's backing graphics layer, that contains the visual
-    // region of all scrollbar parts.
-    virtual LayoutRect visualRectForScrollbarParts() const = 0;
+  // Scrolls the area so that the given rect, given in the document's content
+  // coordinates, such that it's visible in the area. Returns the new location
+  // of the input rect relative once again to the document.
+  // Note, in the case of a Document container, such as FrameView, the output
+  // will always be the input rect since scrolling it can't change the location
+  // of content relative to the document, unlike an overflowing element.
+  virtual LayoutRect ScrollIntoView(const LayoutRect& rect_in_content,
+                                    const ScrollAlignment& align_x,
+                                    const ScrollAlignment& align_y,
+                                    ScrollType = kProgrammaticScroll);
 
-    static bool scrollBehaviorFromString(const String&, ScrollBehavior&);
+  static bool ScrollBehaviorFromString(const String&, ScrollBehavior&);
 
-    void contentAreaWillPaint() const;
-    void mouseEnteredContentArea() const;
-    void mouseExitedContentArea() const;
-    void mouseMovedInContentArea() const;
-    void mouseEnteredScrollbar(Scrollbar&) const;
-    void mouseExitedScrollbar(Scrollbar&) const;
-    void contentAreaDidShow() const;
-    void contentAreaDidHide() const;
+  void ContentAreaWillPaint() const;
+  void MouseEnteredContentArea() const;
+  void MouseExitedContentArea() const;
+  void MouseMovedInContentArea() const;
+  void MouseEnteredScrollbar(Scrollbar&);
+  void MouseExitedScrollbar(Scrollbar&);
+  void MouseCapturedScrollbar();
+  void MouseReleasedScrollbar();
+  void ContentAreaDidShow() const;
+  void ContentAreaDidHide() const;
 
-    void finishCurrentScrollAnimations() const;
+  void FinishCurrentScrollAnimations() const;
 
-    virtual void didAddScrollbar(Scrollbar&, ScrollbarOrientation);
-    virtual void willRemoveScrollbar(Scrollbar&, ScrollbarOrientation);
+  virtual void DidAddScrollbar(Scrollbar&, ScrollbarOrientation);
+  virtual void WillRemoveScrollbar(Scrollbar&, ScrollbarOrientation);
 
-    virtual void contentsResized();
+  // Called when this ScrollableArea becomes or unbecomes the global root
+  // scroller.
+  virtual void DidChangeGlobalRootScroller() {}
 
-    bool hasOverlayScrollbars() const;
-    void setScrollbarOverlayStyle(ScrollbarOverlayStyle);
-    void recalculateScrollbarOverlayStyle(Color);
-    ScrollbarOverlayStyle getScrollbarOverlayStyle() const { return static_cast<ScrollbarOverlayStyle>(m_scrollbarOverlayStyle); }
+  virtual void ContentsResized();
 
-    // This getter will create a ScrollAnimatorBase if it doesn't already exist.
-    ScrollAnimatorBase& scrollAnimator() const;
+  bool HasOverlayScrollbars() const;
+  void SetScrollbarOverlayColorTheme(ScrollbarOverlayColorTheme);
+  void RecalculateScrollbarOverlayColorTheme(Color);
+  ScrollbarOverlayColorTheme GetScrollbarOverlayColorTheme() const {
+    return static_cast<ScrollbarOverlayColorTheme>(
+        scrollbar_overlay_color_theme_);
+  }
 
-    // This getter will return null if the ScrollAnimatorBase hasn't been created yet.
-    ScrollAnimatorBase* existingScrollAnimator() const { return m_scrollAnimator; }
+  // This getter will create a ScrollAnimatorBase if it doesn't already exist.
+  ScrollAnimatorBase& GetScrollAnimator() const;
 
-    ProgrammaticScrollAnimator& programmaticScrollAnimator() const;
-    ProgrammaticScrollAnimator* existingProgrammaticScrollAnimator() const { return m_programmaticScrollAnimator; }
+  // This getter will return null if the ScrollAnimatorBase hasn't been created
+  // yet.
+  ScrollAnimatorBase* ExistingScrollAnimator() const {
+    return scroll_animator_;
+  }
 
-    virtual CompositorAnimationTimeline* compositorAnimationTimeline() const { return nullptr; }
+  ProgrammaticScrollAnimator& GetProgrammaticScrollAnimator() const;
+  ProgrammaticScrollAnimator* ExistingProgrammaticScrollAnimator() const {
+    return programmatic_scroll_animator_;
+  }
 
-    // See Source/core/layout/README.md for an explanation of scroll origin.
-    const IntPoint& scrollOrigin() const { return m_scrollOrigin; }
-    bool scrollOriginChanged() const { return m_scrollOriginChanged; }
+  virtual CompositorAnimationHost* GetCompositorAnimationHost() const {
+    return nullptr;
+  }
+  virtual CompositorAnimationTimeline* GetCompositorAnimationTimeline() const {
+    return nullptr;
+  }
 
+  // See Source/core/layout/README.md for an explanation of scroll origin.
+  const IntPoint& ScrollOrigin() const { return scroll_origin_; }
+  bool ScrollOriginChanged() const { return scroll_origin_changed_; }
 
-    // This is used to determine whether the incoming fractional scroll offset should
-    // be truncated to integer. Current rule is that if preferCompositingToLCDTextEnabled()
-    // is disabled (which is true on low-dpi device by default) we should do the truncation.
-    // The justification is that non-composited elements using fractional scroll offsets
-    // is causing too much nasty bugs but does not add too benefit on low-dpi devices.
-    virtual bool shouldUseIntegerScrollOffset() const { return !RuntimeEnabledFeatures::fractionalScrollOffsetsEnabled(); }
+  // This is used to determine whether the incoming fractional scroll offset
+  // should be truncated to integer. Current rule is that if
+  // preferCompositingToLCDTextEnabled() is disabled (which is true on low-dpi
+  // device by default) we should do the truncation.  The justification is that
+  // non-composited elements using fractional scroll offsets is causing too much
+  // nasty bugs but does not add too benefit on low-dpi devices.
+  // TODO(szager): Now that scroll offsets are floats everywhere, can we get rid
+  // of this?
+  virtual bool ShouldUseIntegerScrollOffset() const {
+    return !RuntimeEnabledFeatures::fractionalScrollOffsetsEnabled();
+  }
 
-    virtual bool isActive() const = 0;
-    virtual int scrollSize(ScrollbarOrientation) const = 0;
-    void setScrollbarNeedsPaintInvalidation(ScrollbarOrientation);
-    virtual bool isScrollCornerVisible() const = 0;
-    virtual IntRect scrollCornerRect() const = 0;
-    void setScrollCornerNeedsPaintInvalidation();
-    virtual void getTickmarks(Vector<IntRect>&) const { }
+  virtual bool IsActive() const = 0;
+  virtual int ScrollSize(ScrollbarOrientation) const = 0;
+  void SetScrollbarNeedsPaintInvalidation(ScrollbarOrientation);
+  virtual bool IsScrollCornerVisible() const = 0;
+  virtual IntRect ScrollCornerRect() const = 0;
+  void SetScrollCornerNeedsPaintInvalidation();
+  virtual void GetTickmarks(Vector<IntRect>&) const {}
 
-    // Convert points and rects between the scrollbar and its containing Widget.
-    // The client needs to implement these in order to be aware of layout effects
-    // like CSS transforms.
-    virtual IntRect convertFromScrollbarToContainingWidget(const Scrollbar& scrollbar, const IntRect& scrollbarRect) const
-    {
-        return scrollbar.Widget::convertToContainingWidget(scrollbarRect);
-    }
-    virtual IntRect convertFromContainingWidgetToScrollbar(const Scrollbar& scrollbar, const IntRect& parentRect) const
-    {
-        return scrollbar.Widget::convertFromContainingWidget(parentRect);
-    }
-    virtual IntPoint convertFromScrollbarToContainingWidget(const Scrollbar& scrollbar, const IntPoint& scrollbarPoint) const
-    {
-        return scrollbar.Widget::convertToContainingWidget(scrollbarPoint);
-    }
-    virtual IntPoint convertFromContainingWidgetToScrollbar(const Scrollbar& scrollbar, const IntPoint& parentPoint) const
-    {
-        return scrollbar.Widget::convertFromContainingWidget(parentPoint);
-    }
+  // Convert points and rects between the scrollbar and its containing
+  // FrameViewBase. The client needs to implement these in order to be aware of
+  // layout effects like CSS transforms.
+  virtual IntRect ConvertFromScrollbarToContainingFrameViewBase(
+      const Scrollbar& scrollbar,
+      const IntRect& scrollbar_rect) const {
+    return scrollbar.FrameViewBase::ConvertToContainingFrameViewBase(
+        scrollbar_rect);
+  }
+  virtual IntRect ConvertFromContainingFrameViewBaseToScrollbar(
+      const Scrollbar& scrollbar,
+      const IntRect& parent_rect) const {
+    return scrollbar.FrameViewBase::ConvertFromContainingFrameViewBase(
+        parent_rect);
+  }
+  virtual IntPoint ConvertFromScrollbarToContainingFrameViewBase(
+      const Scrollbar& scrollbar,
+      const IntPoint& scrollbar_point) const {
+    return scrollbar.FrameViewBase::ConvertToContainingFrameViewBase(
+        scrollbar_point);
+  }
+  virtual IntPoint ConvertFromContainingFrameViewBaseToScrollbar(
+      const Scrollbar& scrollbar,
+      const IntPoint& parent_point) const {
+    return scrollbar.FrameViewBase::ConvertFromContainingFrameViewBase(
+        parent_point);
+  }
 
-    virtual Scrollbar* horizontalScrollbar() const { return nullptr; }
-    virtual Scrollbar* verticalScrollbar() const { return nullptr; }
+  virtual Scrollbar* HorizontalScrollbar() const { return nullptr; }
+  virtual Scrollbar* VerticalScrollbar() const { return nullptr; }
 
-    // scrollPosition is relative to the scrollOrigin. i.e. If the page is RTL
-    // then scrollPosition will be negative. By default, scrollPositionDouble()
-    // just call into scrollPosition(). Subclass can override scrollPositionDouble()
-    // to return floating point precision scrolloffset.
-    // FIXME: Remove scrollPosition(). crbug.com/414283.
-    virtual IntPoint scrollPosition() const = 0;
-    virtual DoublePoint scrollPositionDouble() const { return DoublePoint(scrollPosition()); }
-    virtual IntPoint minimumScrollPosition() const = 0;
-    virtual DoublePoint minimumScrollPositionDouble() const { return DoublePoint(minimumScrollPosition()); }
-    virtual IntPoint maximumScrollPosition() const = 0;
-    virtual DoublePoint maximumScrollPositionDouble() const { return DoublePoint(maximumScrollPosition()); }
+  virtual PaintLayer* Layer() const { return nullptr; }
 
-    virtual DoubleRect visibleContentRectDouble(IncludeScrollbarsInRect = ExcludeScrollbars) const;
-    virtual IntRect visibleContentRect(IncludeScrollbarsInRect = ExcludeScrollbars) const;
-    virtual int visibleHeight() const { return visibleContentRect().height(); }
-    virtual int visibleWidth() const { return visibleContentRect().width(); }
-    virtual IntSize contentsSize() const = 0;
-    virtual IntPoint lastKnownMousePosition() const { return IntPoint(); }
+  // scrollPosition is the location of the top/left of the scroll viewport in
+  // the coordinate system defined by the top/left of the overflow rect.
+  // scrollOffset is the offset of the scroll viewport from its position when
+  // scrolled all the way to the beginning of its content's flow.
+  // For a more detailed explanation of scrollPosition, scrollOffset, and
+  // scrollOrigin, see core/layout/README.md.
+  FloatPoint ScrollPosition() const {
+    return FloatPoint(ScrollOrigin()) + GetScrollOffset();
+  }
+  virtual IntSize ScrollOffsetInt() const = 0;
+  virtual ScrollOffset GetScrollOffset() const {
+    return ScrollOffset(ScrollOffsetInt());
+  }
+  virtual IntSize MinimumScrollOffsetInt() const = 0;
+  virtual ScrollOffset MinimumScrollOffset() const {
+    return ScrollOffset(MinimumScrollOffsetInt());
+  }
+  virtual IntSize MaximumScrollOffsetInt() const = 0;
+  virtual ScrollOffset MaximumScrollOffset() const {
+    return ScrollOffset(MaximumScrollOffsetInt());
+  }
 
-    virtual bool shouldSuspendScrollAnimations() const { return true; }
-    virtual void scrollbarStyleChanged() { }
-    virtual void scrollbarVisibilityChanged() { }
-    virtual bool scrollbarsCanBeActive() const = 0;
+  virtual IntRect VisibleContentRect(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const;
+  virtual int VisibleHeight() const { return VisibleContentRect().Height(); }
+  virtual int VisibleWidth() const { return VisibleContentRect().Width(); }
+  virtual IntSize ContentsSize() const = 0;
+  virtual IntPoint LastKnownMousePosition() const { return IntPoint(); }
 
-    // Returns the bounding box of this scrollable area, in the coordinate system of the enclosing scroll view.
-    virtual IntRect scrollableAreaBoundingBox() const = 0;
+  virtual bool ShouldSuspendScrollAnimations() const { return true; }
+  virtual void ScrollbarStyleChanged() {}
+  virtual bool ScrollbarsCanBeActive() const = 0;
 
-    virtual bool scrollAnimatorEnabled() const { return false; }
+  // Returns the bounding box of this scrollable area, in the coordinate system
+  // of the top-level FrameView.
+  virtual IntRect ScrollableAreaBoundingBox() const = 0;
 
-    // NOTE: Only called from Internals for testing.
-    void setScrollOffsetFromInternals(const IntPoint&);
+  virtual bool ScrollAnimatorEnabled() const { return false; }
 
-    IntPoint clampScrollPosition(const IntPoint&) const;
-    DoublePoint clampScrollPosition(const DoublePoint&) const;
+  // NOTE: Only called from Internals for testing.
+  void UpdateScrollOffsetFromInternals(const IntSize&);
 
-    // Let subclasses provide a way of asking for and servicing scroll
-    // animations.
-    virtual bool scheduleAnimation();
-    virtual void serviceScrollAnimations(double monotonicTime);
-    virtual void updateCompositorScrollAnimations();
-    virtual void registerForAnimation() { }
-    virtual void deregisterForAnimation() { }
+  IntSize ClampScrollOffset(const IntSize&) const;
+  ScrollOffset ClampScrollOffset(const ScrollOffset&) const;
 
-    virtual bool usesCompositedScrolling() const { return false; }
-    virtual bool shouldScrollOnMainThread() const;
+  // Let subclasses provide a way of asking for and servicing scroll
+  // animations.
+  virtual bool ScheduleAnimation();
+  virtual void ServiceScrollAnimations(double monotonic_time);
+  virtual void UpdateCompositorScrollAnimations();
+  virtual void RegisterForAnimation() {}
+  virtual void DeregisterForAnimation() {}
 
-    // Returns true if the GraphicsLayer tree needs to be rebuilt.
-    virtual bool updateAfterCompositingChange() { return false; }
+  virtual bool UsesCompositedScrolling() const { return false; }
+  virtual bool ShouldScrollOnMainThread() const;
 
-    virtual bool userInputScrollable(ScrollbarOrientation) const = 0;
-    virtual bool shouldPlaceVerticalScrollbarOnLeft() const = 0;
+  // Overlay scrollbars can "fade-out" when inactive.
+  virtual bool ScrollbarsHidden() const;
+  virtual void SetScrollbarsHidden(bool);
 
-    // Convenience functions
-    int scrollPosition(ScrollbarOrientation orientation) { return orientation == HorizontalScrollbar ? scrollPosition().x() : scrollPosition().y(); }
-    int minimumScrollPosition(ScrollbarOrientation orientation) { return orientation == HorizontalScrollbar ? minimumScrollPosition().x() : minimumScrollPosition().y(); }
-    int maximumScrollPosition(ScrollbarOrientation orientation) { return orientation == HorizontalScrollbar ? maximumScrollPosition().x() : maximumScrollPosition().y(); }
-    int clampScrollPosition(ScrollbarOrientation orientation, int pos)  { return clampTo(pos, minimumScrollPosition(orientation), maximumScrollPosition(orientation)); }
+  // Returns true if the GraphicsLayer tree needs to be rebuilt.
+  virtual bool UpdateAfterCompositingChange() { return false; }
 
-    virtual GraphicsLayer* layerForContainer() const;
-    virtual GraphicsLayer* layerForScrolling() const { return 0; }
-    virtual GraphicsLayer* layerForHorizontalScrollbar() const { return 0; }
-    virtual GraphicsLayer* layerForVerticalScrollbar() const { return 0; }
-    virtual GraphicsLayer* layerForScrollCorner() const { return 0; }
-    bool hasLayerForHorizontalScrollbar() const;
-    bool hasLayerForVerticalScrollbar() const;
-    bool hasLayerForScrollCorner() const;
+  virtual bool UserInputScrollable(ScrollbarOrientation) const = 0;
+  virtual bool ShouldPlaceVerticalScrollbarOnLeft() const = 0;
 
-    void layerForScrollingDidChange(CompositorAnimationTimeline*);
+  // Convenience functions
+  float MinimumScrollOffset(ScrollbarOrientation orientation) {
+    return orientation == kHorizontalScrollbar ? MinimumScrollOffset().Width()
+                                               : MinimumScrollOffset().Height();
+  }
+  float MaximumScrollOffset(ScrollbarOrientation orientation) {
+    return orientation == kHorizontalScrollbar ? MaximumScrollOffset().Width()
+                                               : MaximumScrollOffset().Height();
+  }
+  float ClampScrollOffset(ScrollbarOrientation orientation, float offset) {
+    return clampTo(offset, MinimumScrollOffset(orientation),
+                   MaximumScrollOffset(orientation));
+  }
 
-    void cancelScrollAnimation();
-    virtual void cancelProgrammaticScrollAnimation();
+  virtual GraphicsLayer* LayerForContainer() const;
+  virtual GraphicsLayer* LayerForScrolling() const { return 0; }
+  virtual GraphicsLayer* LayerForHorizontalScrollbar() const { return 0; }
+  virtual GraphicsLayer* LayerForVerticalScrollbar() const { return 0; }
+  virtual GraphicsLayer* LayerForScrollCorner() const { return 0; }
+  bool HasLayerForHorizontalScrollbar() const;
+  bool HasLayerForVerticalScrollbar() const;
+  bool HasLayerForScrollCorner() const;
 
-    virtual ~ScrollableArea();
+  void LayerForScrollingDidChange(CompositorAnimationTimeline*);
+  bool NeedsShowScrollbarLayers() const { return needs_show_scrollbar_layers_; }
+  void DidShowScrollbarLayers() { needs_show_scrollbar_layers_ = false; }
 
-    // Called when any of horizontal scrollbar, vertical scrollbar and scroll corner is setNeedsPaintInvalidation.
-    virtual void scrollControlWasSetNeedsPaintInvalidation() = 0;
+  void CancelScrollAnimation();
+  virtual void CancelProgrammaticScrollAnimation();
 
-    // Returns the default scroll style this area should scroll with when not
-    // explicitly specified. E.g. The scrolling behavior of an element can be
-    // specified in CSS.
-    virtual ScrollBehavior scrollBehaviorStyle() const { return ScrollBehaviorInstant; }
+  virtual ~ScrollableArea();
 
-    // TODO(bokan): This is only used in FrameView to check scrollability but is
-    // needed here to allow RootFrameViewport to preserve wheelHandler
-    // semantics. Not sure why it's FrameView specific, it could probably be
-    // generalized to other types of ScrollableAreas.
-    virtual bool isScrollable() { return true; }
+  // Called when any of horizontal scrollbar, vertical scrollbar and scroll
+  // corner is setNeedsPaintInvalidation.
+  virtual void ScrollControlWasSetNeedsPaintInvalidation() = 0;
 
-    // TODO(bokan): FrameView::setScrollPosition uses updateScrollbars to scroll
-    // which bails out early if its already in updateScrollbars, the effect being
-    // that programmatic scrolls (i.e. setScrollPosition) are disabled when in
-    // updateScrollbars. Expose this here to allow RootFrameViewport to match the
-    // semantics for now but it should be cleaned up at the source.
-    virtual bool isProgrammaticallyScrollable() { return true; }
+  // Returns the default scroll style this area should scroll with when not
+  // explicitly specified. E.g. The scrolling behavior of an element can be
+  // specified in CSS.
+  virtual ScrollBehavior ScrollBehaviorStyle() const {
+    return kScrollBehaviorInstant;
+  }
 
-    // Subtracts space occupied by this ScrollableArea's scrollbars.
-    // Does nothing if overlay scrollbars are enabled.
-    IntSize excludeScrollbars(const IntSize&) const;
+  virtual bool IsScrollable() const { return true; }
 
-    // Returns 0 if overlay scrollbars are enabled.
-    int verticalScrollbarWidth() const;
-    int horizontalScrollbarHeight() const;
+  // TODO(bokan): FrameView::setScrollOffset uses updateScrollbars to scroll
+  // which bails out early if its already in updateScrollbars, the effect being
+  // that programmatic scrolls (i.e. setScrollOffset) are disabled when in
+  // updateScrollbars. Expose this here to allow RootFrameViewport to match the
+  // semantics for now but it should be cleaned up at the source.
+  virtual bool IsProgrammaticallyScrollable() { return true; }
 
-    // Returns the widget associated with this ScrollableArea.
-    virtual Widget* getWidget() { return nullptr; }
+  // Subtracts space occupied by this ScrollableArea's scrollbars.
+  // Does nothing if overlay scrollbars are enabled.
+  IntSize ExcludeScrollbars(const IntSize&) const;
 
-    virtual LayoutBox* layoutBox() const { return nullptr; }
+  virtual int VerticalScrollbarWidth(
+      OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize) const;
+  virtual int HorizontalScrollbarHeight(
+      OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize) const;
 
-    virtual bool isFrameView() const { return false; }
-    virtual bool isPaintLayerScrollableArea() const { return false; }
-    virtual bool isRootFrameViewport() const { return false; }
+  // Returns the widget associated with this ScrollableArea.
+  virtual FrameViewBase* GetFrameViewBase() { return nullptr; }
 
-    // Returns true if the scroller adjusts the scroll position to compensate
-    // for layout movements (bit.ly/scroll-anchoring).
-    virtual bool shouldPerformScrollAnchoring() const { return false; }
+  virtual LayoutBox* GetLayoutBox() const { return nullptr; }
 
-    // Need to promptly let go of owned animator objects.
-    EAGERLY_FINALIZE();
-    DECLARE_VIRTUAL_TRACE();
+  // Maps a quad from the coordinate system of a LayoutObject contained by the
+  // ScrollableArea to the coordinate system of the ScrollableArea's visible
+  // content rect.  If the LayoutObject* argument is null, the argument quad is
+  // considered to be in the coordinate space of the overflow rect.
+  virtual FloatQuad LocalToVisibleContentQuad(const FloatQuad&,
+                                              const LayoutObject*,
+                                              unsigned = 0) const;
 
-    virtual void clearScrollAnimators();
+  virtual bool IsFrameView() const { return false; }
+  virtual bool IsPaintLayerScrollableArea() const { return false; }
+  virtual bool IsRootFrameViewport() const { return false; }
 
-protected:
-    ScrollableArea();
+  // Returns true if the scroller adjusts the scroll offset to compensate
+  // for layout movements (bit.ly/scroll-anchoring).
+  virtual bool ShouldPerformScrollAnchoring() const { return false; }
 
-    ScrollbarOrientation scrollbarOrientationFromDirection(ScrollDirectionPhysical) const;
-    float scrollStep(ScrollGranularity, ScrollbarOrientation) const;
+  // Need to promptly let go of owned animator objects.
+  EAGERLY_FINALIZE();
+  DECLARE_VIRTUAL_TRACE();
 
-    void setScrollOrigin(const IntPoint&);
-    void resetScrollOriginChanged() { m_scrollOriginChanged = false; }
+  virtual void ClearScrollableArea();
 
-    // Needed to let the animators call scrollPositionChanged.
-    friend class ScrollAnimatorCompositorCoordinator;
-    void scrollPositionChanged(const DoublePoint&, ScrollType);
+  virtual ScrollAnchor* GetScrollAnchor() { return nullptr; }
 
-    bool horizontalScrollbarNeedsPaintInvalidation() const { return m_horizontalScrollbarNeedsPaintInvalidation; }
-    bool verticalScrollbarNeedsPaintInvalidation() const { return m_verticalScrollbarNeedsPaintInvalidation; }
-    bool scrollCornerNeedsPaintInvalidation() const { return m_scrollCornerNeedsPaintInvalidation; }
-    void clearNeedsPaintInvalidationForScrollControls()
-    {
-        m_horizontalScrollbarNeedsPaintInvalidation = false;
-        m_verticalScrollbarNeedsPaintInvalidation = false;
-        m_scrollCornerNeedsPaintInvalidation = false;
-    }
+  virtual void DidScrollWithScrollbar(ScrollbarPart, ScrollbarOrientation) {}
 
-private:
-    void programmaticScrollHelper(const DoublePoint&, ScrollBehavior);
-    void userScrollHelper(const DoublePoint&, ScrollBehavior);
+  // Returns the task runner to be used for scrollable area timers.
+  // Ideally a frame-specific throttled one can be used.
+  virtual RefPtr<WebTaskRunner> GetTimerTaskRunner() const = 0;
 
-    // This function should be overriden by subclasses to perform the actual scroll of the content.
-    virtual void setScrollOffset(const DoublePoint& offset, ScrollType) = 0;
+  // Callback for compositor-side scrolling.
+  void DidScroll(const gfx::ScrollOffset&) override;
 
-    virtual int lineStep(ScrollbarOrientation) const;
-    virtual int pageStep(ScrollbarOrientation) const;
-    virtual int documentStep(ScrollbarOrientation) const;
-    virtual float pixelStep(ScrollbarOrientation) const;
+  virtual void ScrollbarFrameRectChanged() {}
 
-    mutable Member<ScrollAnimatorBase> m_scrollAnimator;
-    mutable Member<ProgrammaticScrollAnimator> m_programmaticScrollAnimator;
+ protected:
+  ScrollableArea();
 
-    unsigned m_scrollbarOverlayStyle : 2; // ScrollbarOverlayStyle
+  ScrollbarOrientation ScrollbarOrientationFromDirection(
+      ScrollDirectionPhysical) const;
+  float ScrollStep(ScrollGranularity, ScrollbarOrientation) const;
 
-    unsigned m_scrollOriginChanged : 1;
+  void SetScrollOrigin(const IntPoint&);
+  void ResetScrollOriginChanged() { scroll_origin_changed_ = false; }
 
-    unsigned m_horizontalScrollbarNeedsPaintInvalidation : 1;
-    unsigned m_verticalScrollbarNeedsPaintInvalidation : 1;
-    unsigned m_scrollCornerNeedsPaintInvalidation : 1;
+  // Needed to let the animators call scrollOffsetChanged.
+  friend class ScrollAnimatorCompositorCoordinator;
+  void ScrollOffsetChanged(const ScrollOffset&, ScrollType);
 
-    // There are 6 possible combinations of writing mode and direction. Scroll origin will be non-zero in the x or y axis
-    // if there is any reversed direction or writing-mode. The combinations are:
-    // writing-mode / direction     scrollOrigin.x() set    scrollOrigin.y() set
-    // horizontal-tb / ltr          NO                      NO
-    // horizontal-tb / rtl          YES                     NO
-    // vertical-lr / ltr            NO                      NO
-    // vertical-lr / rtl            NO                      YES
-    // vertical-rl / ltr            YES                     NO
-    // vertical-rl / rtl            YES                     YES
-    IntPoint m_scrollOrigin;
+  bool HorizontalScrollbarNeedsPaintInvalidation() const {
+    return horizontal_scrollbar_needs_paint_invalidation_;
+  }
+  bool VerticalScrollbarNeedsPaintInvalidation() const {
+    return vertical_scrollbar_needs_paint_invalidation_;
+  }
+  bool ScrollCornerNeedsPaintInvalidation() const {
+    return scroll_corner_needs_paint_invalidation_;
+  }
+  void ClearNeedsPaintInvalidationForScrollControls() {
+    horizontal_scrollbar_needs_paint_invalidation_ = false;
+    vertical_scrollbar_needs_paint_invalidation_ = false;
+    scroll_corner_needs_paint_invalidation_ = false;
+  }
+  void ShowOverlayScrollbars();
+
+  // Called when scrollbar hides/shows for overlay scrollbars. This callback
+  // shouldn't do any significant work as it can be called unexpectadly often
+  // on Mac. This happens because painting code has to set alpha to 1, paint,
+  // then reset to alpha, causing spurrious "visibilityChanged" calls.
+  virtual void ScrollbarVisibilityChanged() {}
+
+ private:
+  void ProgrammaticScrollHelper(const ScrollOffset&, ScrollBehavior);
+  void UserScrollHelper(const ScrollOffset&, ScrollBehavior);
+
+  void FadeOverlayScrollbarsTimerFired(TimerBase*);
+
+  // This function should be overriden by subclasses to perform the actual
+  // scroll of the content.
+  virtual void UpdateScrollOffset(const ScrollOffset&, ScrollType) = 0;
+
+  virtual int LineStep(ScrollbarOrientation) const;
+  virtual int PageStep(ScrollbarOrientation) const;
+  virtual int DocumentStep(ScrollbarOrientation) const;
+  virtual float PixelStep(ScrollbarOrientation) const;
+
+  mutable Member<ScrollAnimatorBase> scroll_animator_;
+  mutable Member<ProgrammaticScrollAnimator> programmatic_scroll_animator_;
+
+  std::unique_ptr<TaskRunnerTimer<ScrollableArea>>
+      fade_overlay_scrollbars_timer_;
+
+  unsigned scrollbar_overlay_color_theme_ : 2;
+
+  unsigned scroll_origin_changed_ : 1;
+
+  unsigned horizontal_scrollbar_needs_paint_invalidation_ : 1;
+  unsigned vertical_scrollbar_needs_paint_invalidation_ : 1;
+  unsigned scroll_corner_needs_paint_invalidation_ : 1;
+  unsigned scrollbars_hidden_ : 1;
+  unsigned scrollbar_captured_ : 1;
+  unsigned mouse_over_scrollbar_ : 1;
+
+  // Indicates that the next compositing update needs to call
+  // WebLayer::showScrollbars on our scroll layer. Ignored if not composited.
+  unsigned needs_show_scrollbar_layers_ : 1;
+
+  // There are 6 possible combinations of writing mode and direction. Scroll
+  // origin will be non-zero in the x or y axis if there is any reversed
+  // direction or writing-mode. The combinations are:
+  // writing-mode / direction     scrollOrigin.x() set    scrollOrigin.y() set
+  // horizontal-tb / ltr          NO                      NO
+  // horizontal-tb / rtl          YES                     NO
+  // vertical-lr / ltr            NO                      NO
+  // vertical-lr / rtl            NO                      YES
+  // vertical-rl / ltr            YES                     NO
+  // vertical-rl / rtl            YES                     YES
+  IntPoint scroll_origin_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScrollableArea_h
+#endif  // ScrollableArea_h

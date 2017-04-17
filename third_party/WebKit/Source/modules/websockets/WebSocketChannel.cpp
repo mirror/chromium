@@ -42,20 +42,22 @@
 
 namespace blink {
 
-WebSocketChannel* WebSocketChannel::create(ExecutionContext* context, WebSocketChannelClient* client)
-{
-    ASSERT(context);
-    ASSERT(client);
+WebSocketChannel* WebSocketChannel::Create(ExecutionContext* context,
+                                           WebSocketChannelClient* client) {
+  DCHECK(context);
+  DCHECK(client);
 
-    std::unique_ptr<SourceLocation> location = SourceLocation::capture(context);
+  std::unique_ptr<SourceLocation> location = SourceLocation::Capture(context);
 
-    if (context->isWorkerGlobalScope()) {
-        WorkerGlobalScope* workerGlobalScope = toWorkerGlobalScope(context);
-        return WorkerWebSocketChannel::create(*workerGlobalScope, client, std::move(location));
-    }
+  if (context->IsWorkerGlobalScope()) {
+    WorkerGlobalScope* worker_global_scope = ToWorkerGlobalScope(context);
+    return WorkerWebSocketChannel::Create(*worker_global_scope, client,
+                                          std::move(location));
+  }
 
-    Document* document = toDocument(context);
-    return DocumentWebSocketChannel::create(document, client, std::move(location));
+  Document* document = ToDocument(context);
+  return DocumentWebSocketChannel::Create(document, client,
+                                          std::move(location));
 }
 
-} // namespace blink
+}  // namespace blink

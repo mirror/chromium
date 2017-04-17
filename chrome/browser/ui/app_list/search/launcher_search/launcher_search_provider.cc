@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
-#include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chromeos/launcher_search_provider/launcher_search_provider_service.h"
 
@@ -17,8 +16,8 @@ namespace app_list {
 
 namespace {
 
-const int kLauncherSearchProviderQueryDelayInMs = 100;
-const int kLauncherSearchProviderMaxResults = 6;
+constexpr int kLauncherSearchProviderQueryDelayInMs = 100;
+constexpr int kLauncherSearchProviderMaxResults = 6;
 
 }  // namespace
 
@@ -58,19 +57,19 @@ void LauncherSearchProvider::Stop() {
 
 void LauncherSearchProvider::SetSearchResults(
     const extensions::ExtensionId& extension_id,
-    ScopedVector<LauncherSearchResult> results) {
+    std::vector<std::unique_ptr<LauncherSearchResult>> results) {
   DCHECK(Service::Get(profile_)->IsQueryRunning());
 
   // Add this extension's results (erasing any existing results).
-  extension_results_[extension_id] = base::WrapUnique(
-      new ScopedVector<LauncherSearchResult>(std::move(results)));
+  extension_results_[extension_id] = std::move(results);
 
   // Update results with other extension results.
-  ClearResults();
+  SearchProvider::Results new_results;
   for (const auto& item : extension_results_) {
-    for (const auto* result : *item.second)
-      Add(result->Duplicate());
+    for (const auto& result : item.second)
+      new_results.emplace_back(result->Duplicate());
   }
+  SwapResults(&new_results);
 }
 
 void LauncherSearchProvider::DelayQuery(const base::Closure& closure) {

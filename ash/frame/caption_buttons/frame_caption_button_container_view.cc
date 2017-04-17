@@ -7,13 +7,11 @@
 #include <cmath>
 #include <map>
 
-#include "ash/common/ash_switches.h"
-#include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
-#include "ash/common/wm_shell.h"
 #include "ash/frame/caption_buttons/frame_caption_button.h"
 #include "ash/frame/caption_buttons/frame_size_button.h"
 #include "ash/shell.h"
-#include "ash/touch/touch_uma.h"
+#include "ash/shell_port.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
@@ -22,7 +20,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/point.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/gfx/vector_icon_types.h"
 #include "ui/strings/grit/ui_strings.h"  // Accessibility names
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
@@ -151,14 +149,15 @@ void FrameCaptionButtonContainerView::TestApi::EndAnimations() {
 
 void FrameCaptionButtonContainerView::SetButtonImage(
     CaptionButtonIcon icon,
-    gfx::VectorIconId icon_image_id) {
-  button_icon_id_map_[icon] = icon_image_id;
+    const gfx::VectorIcon& icon_definition) {
+  button_icon_map_[icon] = &icon_definition;
 
   FrameCaptionButton* buttons[] = {minimize_button_, size_button_,
                                    close_button_};
   for (size_t i = 0; i < arraysize(buttons); ++i) {
     if (buttons[i]->icon() == icon)
-      buttons[i]->SetImage(icon, FrameCaptionButton::ANIMATE_NO, icon_image_id);
+      buttons[i]->SetImage(icon, FrameCaptionButton::ANIMATE_NO,
+                           icon_definition);
   }
 }
 
@@ -302,13 +301,13 @@ void FrameCaptionButtonContainerView::SetButtonIcon(FrameCaptionButton* button,
   FrameCaptionButton::Animate fcb_animate =
       (animate == ANIMATE_YES) ? FrameCaptionButton::ANIMATE_YES
                                : FrameCaptionButton::ANIMATE_NO;
-  auto it = button_icon_id_map_.find(icon);
-  if (it != button_icon_id_map_.end())
-    button->SetImage(icon, fcb_animate, it->second);
+  auto it = button_icon_map_.find(icon);
+  if (it != button_icon_map_.end())
+    button->SetImage(icon, fcb_animate, *it->second);
 }
 
 bool FrameCaptionButtonContainerView::ShouldSizeButtonBeVisible() const {
-  return !WmShell::Get()
+  return !Shell::Get()
               ->maximize_mode_controller()
               ->IsMaximizeModeWindowManagerEnabled() &&
          frame_->widget_delegate()->CanMaximize();
@@ -334,17 +333,15 @@ void FrameCaptionButtonContainerView::ButtonPressed(views::Button* sender,
       action = UMA_WINDOW_MAXIMIZE_BUTTON_CLICK_MAXIMIZE;
     }
 
-    if (event.IsGestureEvent()) {
-      TouchUMA::GetInstance()->RecordGestureAction(
-          TouchUMA::GESTURE_FRAMEMAXIMIZE_TAP);
-    }
+    if (event.IsGestureEvent())
+      ShellPort::Get()->RecordGestureAction(GESTURE_FRAMEMAXIMIZE_TAP);
   } else if (sender == close_button_) {
     frame_->Close();
     action = UMA_WINDOW_CLOSE_BUTTON_CLICK;
   } else {
     return;
   }
-  WmShell::Get()->RecordUserMetricsAction(action);
+  ShellPort::Get()->RecordUserMetricsAction(action);
 }
 
 bool FrameCaptionButtonContainerView::IsMinimizeButtonVisible() const {

@@ -9,33 +9,27 @@
 
 namespace blink {
 
-Credential::~Credential()
-{
-}
+Credential::~Credential() {}
 
 Credential::Credential(PlatformCredential* credential)
-    : m_platformCredential(credential)
-{
-}
+    : platform_credential_(credential) {}
 
 Credential::Credential(const String& id, const String& name, const KURL& icon)
-    : m_platformCredential(PlatformCredential::create(id, name, icon))
-{
+    : platform_credential_(PlatformCredential::Create(id, name, icon)) {}
+
+KURL Credential::ParseStringAsURL(const String& url,
+                                  ExceptionState& exception_state) {
+  if (url.IsEmpty())
+    return KURL();
+  KURL parsed_url = KURL(KURL(), url);
+  if (!parsed_url.IsValid())
+    exception_state.ThrowDOMException(kSyntaxError,
+                                      "'" + url + "' is not a valid URL.");
+  return parsed_url;
 }
 
-KURL Credential::parseStringAsURL(const String& url, ExceptionState& exceptionState)
-{
-    if (url.isEmpty())
-        return KURL();
-    KURL parsedURL = KURL(KURL(), url);
-    if (!parsedURL.isValid())
-        exceptionState.throwDOMException(SyntaxError, "'" + url + "' is not a valid URL.");
-    return parsedURL;
+DEFINE_TRACE(Credential) {
+  visitor->Trace(platform_credential_);
 }
 
-DEFINE_TRACE(Credential)
-{
-    visitor->trace(m_platformCredential);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -11,11 +11,19 @@
 #include "base/gtest_prod_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
-#include "chrome/browser/ui/website_settings/permission_bubble_view.h"
+#include "chrome/browser/ui/permission_bubble/permission_prompt.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
 class PermissionRequest;
+
+namespace safe_browsing {
+class PermissionReporterBrowserTest;
+}
+
+namespace test {
+class PermissionRequestManagerTestApi;
+}
 
 // Provides access to permissions bubbles. Allows clients to add a request
 // callback interface to the existing permission bubble configuration.
@@ -31,7 +39,7 @@ class PermissionRequest;
 class PermissionRequestManager
     : public content::WebContentsObserver,
       public content::WebContentsUserData<PermissionRequestManager>,
-      public PermissionBubbleView::Delegate {
+      public PermissionPrompt::Delegate {
  public:
   class Observer {
    public:
@@ -66,7 +74,9 @@ class PermissionRequestManager
   // at which time the caller is free to delete the request.
   void CancelRequest(PermissionRequest* request);
 
-  // Hides the bubble.
+  // Temporarily hides the bubble, and destroys the prompt UI surface. Any
+  // existing requests will be reshown when DisplayPendingRequests is called
+  // (e.g. when switching tabs away and back to a page with a prompt).
   void HideBubble();
 
   // Will show a permission bubble if there is a pending permission request on
@@ -79,6 +89,10 @@ class PermissionRequestManager
   // True if a permission bubble is currently visible.
   // TODO(hcarmona): Remove this as part of the bubble API work.
   bool IsBubbleVisible();
+
+  // Whether PermissionRequestManager is reused on Android, instead of
+  // PermissionQueueController.
+  static bool IsEnabled();
 
   // Get the native window of the bubble.
   // TODO(hcarmona): Remove this as part of the bubble API work.
@@ -97,29 +111,33 @@ class PermissionRequestManager
   }
 
  private:
-  // TODO(felt): Update testing so that it doesn't involve a lot of friends.
+  friend class test::PermissionRequestManagerTestApi;
+
+  // TODO(felt): Update testing to use the TestApi so that it doesn't involve a
+  // lot of friends.
   friend class GeolocationBrowserTest;
   friend class GeolocationPermissionContextTests;
-  friend class MockPermissionBubbleFactory;
-  friend class MockPermissionBubbleView;
-  friend class PermissionRequestManagerTest;
+  friend class MockPermissionPrompt;
+  friend class MockPermissionPromptFactory;
   friend class PermissionContextBaseTests;
+  friend class PermissionRequestManagerTest;
+  friend class safe_browsing::PermissionReporterBrowserTest;
   friend class content::WebContentsUserData<PermissionRequestManager>;
   FRIEND_TEST_ALL_PREFIXES(DownloadTest, TestMultipleDownloadsBubble);
 
   explicit PermissionRequestManager(content::WebContents* web_contents);
 
   // WebContentsObserver:
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override;
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
   void DocumentOnLoadCompletedInMainFrame() override;
   void DocumentLoadedInFrame(
       content::RenderFrameHost* render_frame_host) override;
   void WebContentsDestroyed() override;
 
-  // PermissionBubbleView::Delegate:
+  // PermissionPrompt::Delegate:
   void ToggleAccept(int request_index, bool new_value) override;
+  void TogglePersist(bool new_value) override;
   void Accept() override;
   void Deny() override;
   void Closing() override;
@@ -163,10 +181,10 @@ class PermissionRequestManager
   void DoAutoResponseForTesting();
 
   // Factory to be used to create views when needed.
-  PermissionBubbleView::Factory view_factory_;
+  PermissionPrompt::Factory view_factory_;
 
   // The UI surface to be used to display the permissions requests.
-  std::unique_ptr<PermissionBubbleView> view_;
+  std::unique_ptr<PermissionPrompt> view_;
 
   std::vector<PermissionRequest*> requests_;
   std::vector<PermissionRequest*> queued_requests_;
@@ -180,6 +198,9 @@ class PermissionRequestManager
   // TODO(gbillock): if there are iframes in the page, we need to deal with it.
   GURL request_url_;
   bool main_frame_has_fully_loaded_;
+
+  // Whether the response to each request should be persisted.
+  bool persist_;
 
   // Whether each of the requests in |requests_| is accepted by the user.
   std::vector<bool> accept_states_;

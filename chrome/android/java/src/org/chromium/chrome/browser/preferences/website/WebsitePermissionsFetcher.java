@@ -55,10 +55,6 @@ public class WebsitePermissionsFetcher {
         queue.add(new MidiInfoFetcher());
         // Cookies are stored per-host.
         queue.add(new CookieExceptionInfoFetcher());
-        // Fullscreen are stored per-origin.
-        queue.add(new FullscreenInfoFetcher());
-        // Keygen permissions are per-origin.
-        queue.add(new KeygenInfoFetcher());
         // Local storage info is per-origin.
         queue.add(new LocalStorageInfoFetcher());
         // Website storage is per-host.
@@ -66,6 +62,8 @@ public class WebsitePermissionsFetcher {
         // Popup exceptions are host-based patterns (unless we start
         // synchronizing popup exceptions with desktop Chrome).
         queue.add(new PopupExceptionInfoFetcher());
+        // Subresource filter exceptions are host-based.
+        queue.add(new SubresourceFilterExceptionInfoFetcher());
         // JavaScript exceptions are host-based patterns.
         queue.add(new JavaScriptExceptionInfoFetcher());
         // Protected media identifier permission is per-origin and per-embedder.
@@ -112,9 +110,6 @@ public class WebsitePermissionsFetcher {
             queue.add(new LocalStorageInfoFetcher());
             // Website storage is per-host.
             queue.add(new WebStorageInfoFetcher());
-        } else if (category.showFullscreenSites()) {
-            // Full screen is per-origin.
-            queue.add(new FullscreenInfoFetcher());
         } else if (category.showCameraSites()) {
             // Camera capture permission is per-origin and per-embedder.
             queue.add(new CameraCaptureInfoFetcher());
@@ -125,6 +120,9 @@ public class WebsitePermissionsFetcher {
             // Popup exceptions are host-based patterns (unless we start
             // synchronizing popup exceptions with desktop Chrome.)
             queue.add(new PopupExceptionInfoFetcher());
+        } else if (category.showSubresourceFilterSites()) {
+            // Subresource filter exceptions are host-based.
+            queue.add(new SubresourceFilterExceptionInfoFetcher());
         } else if (category.showJavaScriptSites()) {
             // JavaScript exceptions are host-based patterns.
             queue.add(new JavaScriptExceptionInfoFetcher());
@@ -140,13 +138,20 @@ public class WebsitePermissionsFetcher {
         } else if (category.showAutoplaySites()) {
             // Autoplay permission is per-origin.
             queue.add(new AutoplayExceptionInfoFetcher());
+        } else if (category.showUsbDevices()) {
+            // USB device permission is per-origin.
+            queue.add(new UsbInfoFetcher());
         }
         queue.add(new PermissionsAvailableCallbackRunner());
         queue.next();
     }
 
     private Website findOrCreateSite(WebsiteAddress origin, WebsiteAddress embedder) {
-        Pair<WebsiteAddress, WebsiteAddress> key = Pair.create(origin, embedder);
+        // In Jelly Bean a null value triggers a NullPointerException in Pair.hashCode(). Storing
+        // the origin twice works around it and won't conflict with other entries as this is how the
+        // native code indicates to this class that embedder == origin.  https://crbug.com/636330
+        Pair<WebsiteAddress, WebsiteAddress> key =
+                Pair.create(origin, embedder == null ? origin : embedder);
         Website site = mSites.get(key);
         if (site == null) {
             site = new Website(origin, embedder);
@@ -178,6 +183,9 @@ public class WebsitePermissionsFetcher {
                     break;
                 case ContentSettingsType.CONTENT_SETTINGS_TYPE_POPUPS:
                     site.setPopupException(exception);
+                    break;
+                case ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER:
+                    site.setSubresourceFilterException(exception);
                     break;
                 default:
                     assert false : "Unexpected content setting type received: "
@@ -253,6 +261,13 @@ public class WebsitePermissionsFetcher {
         }
     }
 
+    private class SubresourceFilterExceptionInfoFetcher extends Task {
+        @Override
+        public void run() {
+            setException(ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER);
+        }
+    }
+
     private class JavaScriptExceptionInfoFetcher extends Task {
         @Override
         public void run() {
@@ -264,33 +279,6 @@ public class WebsitePermissionsFetcher {
         @Override
         public void run() {
             setException(ContentSettingsType.CONTENT_SETTINGS_TYPE_COOKIES);
-        }
-    }
-
-    private class KeygenInfoFetcher extends Task {
-        @Override
-        public void run() {
-            for (KeygenInfo info : WebsitePreferenceBridge.getKeygenInfo()) {
-                WebsiteAddress origin = WebsiteAddress.create(info.getOrigin());
-                if (origin == null) continue;
-                WebsiteAddress embedder = WebsiteAddress.create(info.getEmbedder());
-                findOrCreateSite(origin, embedder).setKeygenInfo(info);
-            }
-        }
-    }
-
-    /**
-     * Class for fetching the fullscreen information.
-     */
-    private class FullscreenInfoFetcher extends Task {
-        @Override
-        public void run() {
-            for (FullscreenInfo info : WebsitePreferenceBridge.getFullscreenInfo()) {
-                WebsiteAddress origin = WebsiteAddress.create(info.getOrigin());
-                if (origin == null) continue;
-                WebsiteAddress embedder = WebsiteAddress.create(info.getEmbedder());
-                findOrCreateSite(origin, embedder).setFullscreenInfo(info);
-            }
         }
     }
 

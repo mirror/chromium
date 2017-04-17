@@ -20,160 +20,158 @@
 #ifndef SVGMarkerData_h
 #define SVGMarkerData_h
 
-#include "platform/FloatConversion.h"
 #include "platform/graphics/Path.h"
-#include "wtf/Allocator.h"
-#include "wtf/MathExtras.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
-enum SVGMarkerType {
-    StartMarker,
-    MidMarker,
-    EndMarker
-};
+enum SVGMarkerType { kStartMarker, kMidMarker, kEndMarker };
 
 struct MarkerPosition {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    MarkerPosition(SVGMarkerType useType, const FloatPoint& useOrigin, float useAngle)
-        : type(useType)
-        , origin(useOrigin)
-        , angle(useAngle)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  MarkerPosition(SVGMarkerType use_type,
+                 const FloatPoint& use_origin,
+                 float use_angle)
+      : type(use_type), origin(use_origin), angle(use_angle) {}
 
-    SVGMarkerType type;
-    FloatPoint origin;
-    float angle;
+  SVGMarkerType type;
+  FloatPoint origin;
+  float angle;
 };
 
 class LayoutSVGResourceMarker;
 
 class SVGMarkerData {
-    STACK_ALLOCATED();
-public:
-    SVGMarkerData(Vector<MarkerPosition>& positions, bool autoStartReverse)
-        : m_positions(positions)
-        , m_elementIndex(0)
-        , m_autoStartReverse(autoStartReverse)
-    {
+  STACK_ALLOCATED();
+
+ public:
+  SVGMarkerData(Vector<MarkerPosition>& positions, bool auto_start_reverse)
+      : positions_(positions),
+        element_index_(0),
+        auto_start_reverse_(auto_start_reverse) {}
+
+  static void UpdateFromPathElement(void* info, const PathElement* element) {
+    static_cast<SVGMarkerData*>(info)->UpdateFromPathElement(*element);
+  }
+
+  void PathIsDone() {
+    positions_.push_back(
+        MarkerPosition(kEndMarker, origin_, CurrentAngle(kEndMarker)));
+  }
+
+  static inline LayoutSVGResourceMarker* MarkerForType(
+      const SVGMarkerType& type,
+      LayoutSVGResourceMarker* marker_start,
+      LayoutSVGResourceMarker* marker_mid,
+      LayoutSVGResourceMarker* marker_end) {
+    switch (type) {
+      case kStartMarker:
+        return marker_start;
+      case kMidMarker:
+        return marker_mid;
+      case kEndMarker:
+        return marker_end;
     }
 
-    static void updateFromPathElement(void* info, const PathElement* element)
-    {
-        SVGMarkerData* markerData = static_cast<SVGMarkerData*>(info);
+    NOTREACHED();
+    return nullptr;
+  }
 
-        // First update the outslope for the previous element.
-        markerData->updateOutslope(element->points[0]);
+ private:
+  float CurrentAngle(SVGMarkerType type) const {
+    // For details of this calculation, see:
+    // http://www.w3.org/TR/SVG/single-page.html#painting-MarkerElement
+    FloatPoint in_slope(inslope_points_[1] - inslope_points_[0]);
+    FloatPoint out_slope(outslope_points_[1] - outslope_points_[0]);
 
-        // Record the marker for the previous element.
-        if (markerData->m_elementIndex > 0) {
-            SVGMarkerType markerType = markerData->m_elementIndex == 1 ? StartMarker : MidMarker;
-            markerData->m_positions.append(MarkerPosition(markerType, markerData->m_origin, markerData->currentAngle(markerType)));
-        }
+    double in_angle = rad2deg(in_slope.SlopeAngleRadians());
+    double out_angle = rad2deg(out_slope.SlopeAngleRadians());
 
-        // Update our marker data for this element.
-        markerData->updateMarkerDataForPathElement(element);
-        ++markerData->m_elementIndex;
+    switch (type) {
+      case kStartMarker:
+        if (auto_start_reverse_)
+          out_angle += 180;
+        return clampTo<float>(out_angle);
+      case kMidMarker:
+        // WK193015: Prevent bugs due to angles being non-continuous.
+        if (fabs(in_angle - out_angle) > 180)
+          in_angle += 360;
+        return clampTo<float>((in_angle + out_angle) / 2);
+      case kEndMarker:
+        return clampTo<float>(in_angle);
     }
 
-    void pathIsDone()
-    {
-        m_positions.append(MarkerPosition(EndMarker, m_origin, currentAngle(EndMarker)));
+    NOTREACHED();
+    return 0;
+  }
+
+  void UpdateOutslope(const PathElement& element) {
+    outslope_points_[0] = origin_;
+    FloatPoint point = element.type == kPathElementCloseSubpath
+                           ? subpath_start_
+                           : element.points[0];
+    outslope_points_[1] = point;
+  }
+
+  void UpdateFromPathElement(const PathElement& element) {
+    // First update the outslope for the previous element.
+    UpdateOutslope(element);
+
+    // Record the marker for the previous element.
+    if (element_index_ > 0) {
+      SVGMarkerType marker_type =
+          element_index_ == 1 ? kStartMarker : kMidMarker;
+      positions_.push_back(
+          MarkerPosition(marker_type, origin_, CurrentAngle(marker_type)));
     }
 
-    static inline LayoutSVGResourceMarker* markerForType(const SVGMarkerType& type, LayoutSVGResourceMarker* markerStart, LayoutSVGResourceMarker* markerMid, LayoutSVGResourceMarker* markerEnd)
-    {
-        switch (type) {
-        case StartMarker:
-            return markerStart;
-        case MidMarker:
-            return markerMid;
-        case EndMarker:
-            return markerEnd;
-        }
+    // Update our marker data for this element.
+    UpdateMarkerDataForPathElement(element);
+    ++element_index_;
+  }
 
-        ASSERT_NOT_REACHED();
-        return nullptr;
+  void UpdateMarkerDataForPathElement(const PathElement& element) {
+    const FloatPoint* points = element.points;
+
+    switch (element.type) {
+      case kPathElementAddQuadCurveToPoint:
+        inslope_points_[0] = points[0];
+        inslope_points_[1] = points[1];
+        origin_ = points[1];
+        break;
+      case kPathElementAddCurveToPoint:
+        inslope_points_[0] = points[1];
+        inslope_points_[1] = points[2];
+        origin_ = points[2];
+        break;
+      case kPathElementMoveToPoint:
+        subpath_start_ = points[0];
+      case kPathElementAddLineToPoint:
+        UpdateInslope(points[0]);
+        origin_ = points[0];
+        break;
+      case kPathElementCloseSubpath:
+        UpdateInslope(subpath_start_);
+        origin_ = subpath_start_;
+        subpath_start_ = FloatPoint();
     }
+  }
 
-private:
-    float currentAngle(SVGMarkerType type) const
-    {
-        // For details of this calculation, see: http://www.w3.org/TR/SVG/single-page.html#painting-MarkerElement
-        FloatPoint inSlope(m_inslopePoints[1] - m_inslopePoints[0]);
-        FloatPoint outSlope(m_outslopePoints[1] - m_outslopePoints[0]);
+  void UpdateInslope(const FloatPoint& point) {
+    inslope_points_[0] = origin_;
+    inslope_points_[1] = point;
+  }
 
-        double inAngle = rad2deg(inSlope.slopeAngleRadians());
-        double outAngle = rad2deg(outSlope.slopeAngleRadians());
-
-        switch (type) {
-        case StartMarker:
-            if (m_autoStartReverse)
-                outAngle += 180;
-            return narrowPrecisionToFloat(outAngle);
-        case MidMarker:
-            // WK193015: Prevent bugs due to angles being non-continuous.
-            if (fabs(inAngle - outAngle) > 180)
-                inAngle += 360;
-            return narrowPrecisionToFloat((inAngle + outAngle) / 2);
-        case EndMarker:
-            return narrowPrecisionToFloat(inAngle);
-        }
-
-        ASSERT_NOT_REACHED();
-        return 0;
-    }
-
-    void updateOutslope(const FloatPoint& point)
-    {
-        m_outslopePoints[0] = m_origin;
-        m_outslopePoints[1] = point;
-    }
-
-    void updateMarkerDataForPathElement(const PathElement* element)
-    {
-        FloatPoint* points = element->points;
-
-        switch (element->type) {
-        case PathElementAddQuadCurveToPoint:
-            m_inslopePoints[0] = points[0];
-            m_inslopePoints[1] = points[1];
-            m_origin = points[1];
-            break;
-        case PathElementAddCurveToPoint:
-            m_inslopePoints[0] = points[1];
-            m_inslopePoints[1] = points[2];
-            m_origin = points[2];
-            break;
-        case PathElementMoveToPoint:
-            m_subpathStart = points[0];
-        case PathElementAddLineToPoint:
-            updateInslope(points[0]);
-            m_origin = points[0];
-            break;
-        case PathElementCloseSubpath:
-            updateInslope(points[0]);
-            m_origin = m_subpathStart;
-            m_subpathStart = FloatPoint();
-        }
-    }
-
-    void updateInslope(const FloatPoint& point)
-    {
-        m_inslopePoints[0] = m_origin;
-        m_inslopePoints[1] = point;
-    }
-
-    Vector<MarkerPosition>& m_positions;
-    unsigned m_elementIndex;
-    FloatPoint m_origin;
-    FloatPoint m_subpathStart;
-    FloatPoint m_inslopePoints[2];
-    FloatPoint m_outslopePoints[2];
-    bool m_autoStartReverse;
+  Vector<MarkerPosition>& positions_;
+  unsigned element_index_;
+  FloatPoint origin_;
+  FloatPoint subpath_start_;
+  FloatPoint inslope_points_[2];
+  FloatPoint outslope_points_[2];
+  bool auto_start_reverse_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGMarkerData_h
+#endif  // SVGMarkerData_h

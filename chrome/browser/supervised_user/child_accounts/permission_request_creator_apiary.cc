@@ -15,7 +15,9 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/supervised_user/child_accounts/kids_management_api.h"
 #include "chrome/common/chrome_switches.h"
+#include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_manager_base.h"
@@ -23,14 +25,14 @@
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
 #include "url/gurl.h"
 
 using net::URLFetcher;
 
-const char kApiUrl[] =
-    "https://www.googleapis.com/kidsmanagement/v1/people/me/permissionRequests";
+const char kApiPath[] = "people/me/permissionRequests";
 const char kApiScope[] = "https://www.googleapis.com/auth/kid.permission";
 
 const int kNumRetries = 1;
@@ -137,9 +139,9 @@ GURL PermissionRequestCreatorApiary::GetApiUrl() const {
     LOG_IF(WARNING, !url.is_valid())
         << "Got invalid URL for " << switches::kPermissionRequestApiUrl;
     return url;
-  } else {
-    return GURL(kApiUrl);
   }
+
+  return kids_management_api::GetURL(kApiPath);
 }
 
 std::string PermissionRequestCreatorApiary::GetApiScope() const {
@@ -156,9 +158,9 @@ void PermissionRequestCreatorApiary::CreateRequest(
     const std::string& request_type,
     const std::string& object_ref,
     const SuccessCallback& callback) {
-  requests_.push_back(
-      new Request(request_type, object_ref, callback, url_fetcher_id_));
-  StartFetching(requests_.back());
+  requests_.push_back(base::MakeUnique<Request>(request_type, object_ref,
+                                                callback, url_fetcher_id_));
+  StartFetching(requests_.back().get());
 }
 
 void PermissionRequestCreatorApiary::StartFetching(Request* request) {
@@ -172,7 +174,7 @@ void PermissionRequestCreatorApiary::OnGetTokenSuccess(
     const OAuth2TokenService::Request* request,
     const std::string& access_token,
     const base::Time& expiration_time) {
-  RequestIterator it = requests_.begin();
+  auto it = requests_.begin();
   while (it != requests_.end()) {
     if (request == (*it)->access_token_request.get())
       break;
@@ -181,9 +183,39 @@ void PermissionRequestCreatorApiary::OnGetTokenSuccess(
   DCHECK(it != requests_.end());
   (*it)->access_token = access_token;
 
-  (*it)->url_fetcher = URLFetcher::Create((*it)->url_fetcher_id, GetApiUrl(),
-                                          URLFetcher::POST, this);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("permission_request_creator", R"(
+        semantics {
+          sender: "Supervised Users"
+          description:
+            "Requests permission for the user to access a blocked site."
+          trigger: "Initiated by the user."
+          data:
+            "The request is authenticated with an OAuth2 access token "
+            "identifying the Google account and contains the URL that the user "
+            "requests access to."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "This feature cannot be disabled in settings and is only enabled "
+            "for child accounts. If sign-in is restricted to accounts from a "
+            "managed domain, those accounts are not going to be child accounts."
+          chrome_policy {
+            RestrictSigninToPattern {
+              policy_options {mode: MANDATORY}
+              RestrictSigninToPattern: "*@manageddomain.com"
+            }
+          }
+        })");
+  (*it)->url_fetcher =
+      URLFetcher::Create((*it)->url_fetcher_id, GetApiUrl(), URLFetcher::POST,
+                         this, traffic_annotation);
 
+  data_use_measurement::DataUseUserData::AttachToFetcher(
+      (*it)->url_fetcher.get(),
+      data_use_measurement::DataUseUserData::SUPERVISED_USER);
   (*it)->url_fetcher->SetRequestContext(context_);
   (*it)->url_fetcher->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
                                    net::LOAD_DO_NOT_SAVE_COOKIES);
@@ -206,7 +238,7 @@ void PermissionRequestCreatorApiary::OnGetTokenSuccess(
 void PermissionRequestCreatorApiary::OnGetTokenFailure(
     const OAuth2TokenService::Request* request,
     const GoogleServiceAuthError& error) {
-  RequestIterator it = requests_.begin();
+  auto it = requests_.begin();
   while (it != requests_.end()) {
     if (request == (*it)->access_token_request.get())
       break;
@@ -219,7 +251,7 @@ void PermissionRequestCreatorApiary::OnGetTokenFailure(
 
 void PermissionRequestCreatorApiary::OnURLFetchComplete(
     const URLFetcher* source) {
-  RequestIterator it = requests_.begin();
+  auto it = requests_.begin();
   while (it != requests_.end()) {
     if (source == (*it)->url_fetcher.get())
       break;
@@ -241,7 +273,7 @@ void PermissionRequestCreatorApiary::OnURLFetchComplete(
     scopes.insert(GetApiScope());
     oauth2_token_service_->InvalidateAccessToken(account_id_, scopes,
                                                  (*it)->access_token);
-    StartFetching(*it);
+    StartFetching(it->get());
     return;
   }
 

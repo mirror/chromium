@@ -10,6 +10,10 @@
 #import "ios/web/public/block_types.h"
 #include "url/gurl.h"
 
+namespace web {
+struct ContextMenuParams;
+}  // namespace web;
+
 @protocol CRWNativeContentDelegate;
 
 // Abstract methods needed for manipulating native content in the web content
@@ -50,11 +54,11 @@
 // Notifies the CRWNativeContent that it has been hidden.
 - (void)wasHidden;
 
-// Evaluates JavaScript on the native view. |handler| is called with the results
+// Executes JavaScript on the native view. |handler| is called with the results
 // of the evaluation. If the native view cannot evaluate JS at the moment,
 // |handler| is called with an NSError.
-- (void)evaluateJavaScript:(NSString*)script
-       stringResultHandler:(web::JavaScriptCompletion)handler;
+- (void)executeJavaScript:(NSString*)script
+        completionHandler:(web::JavaScriptResultBlock)handler;
 
 // Returns |YES| if CRWNativeContent wants the keyboard shield when the keyboard
 // is up.
@@ -85,6 +89,13 @@
 // Called when a snapshot of the content will be taken.
 - (void)willUpdateSnapshot;
 
+// Notifies the CRWNativeContent that it will be removed from superview.
+- (void)willBeDismissed;
+
+// The URL that will be displayed to the user when presenting this native
+// content.
+- (GURL)virtualURL;
+
 @end
 
 // CRWNativeContent delegate protocol.
@@ -93,6 +104,12 @@
 @optional
 // Called when the content supplies a new title.
 - (void)nativeContent:(id)content titleDidChange:(NSString*)title;
+
+// Called when the content triggers a context menu.
+// The client must return whether the context menu event was handled and the
+// system menu must be suppressed.
+- (BOOL)nativeContent:(id)content
+    handleContextMenu:(const web::ContextMenuParams&)params;
 
 @end
 

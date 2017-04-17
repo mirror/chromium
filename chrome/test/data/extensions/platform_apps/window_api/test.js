@@ -218,14 +218,6 @@ function testCreate() {
       }))
     },
 
-    function badWindow() {
-      chrome.app.window.create('404.html', callbackPass(function(win) {
-        chrome.test.assertTrue(typeof win === 'undefined');
-        // TODO(mlamouri): because |win| is not defined, we can not close that
-        // window...
-      }));
-    },
-
     function loadEvent() {
       chrome.app.window.create('test.html', callbackPass(function(win) {
         win.contentWindow.onload = callbackPass(function() {
@@ -395,6 +387,25 @@ function testInitialBounds() {
         top: 100,
         width: 400,
         height: 300
+      };
+      chrome.app.window.create('test.html', {
+        innerBounds: innerBounds
+      }, callbackPass(function(win) {
+        chrome.test.assertTrue(win != null);
+        assertBoundsEq(innerBounds, win.innerBounds);
+        assertBoundsConsistent(win);
+        assertConstraintsUnspecified(win);
+        win.close();
+      }));
+    },
+
+    // Regression for crbug.com/694248.
+    function testInnerBoundsNegativeZero() {
+      var innerBounds = {
+        left: -0,
+        top: 100,
+        width: 400,
+        height: 300,
       };
       chrome.app.window.create('test.html', {
         innerBounds: innerBounds

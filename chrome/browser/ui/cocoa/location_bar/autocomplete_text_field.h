@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_UI_COCOA_AUTOCOMPLETE_TEXT_FIELD_H_
-#define CHROME_BROWSER_UI_COCOA_AUTOCOMPLETE_TEXT_FIELD_H_
+#ifndef CHROME_BROWSER_UI_COCOA_LOCATION_BAR_AUTOCOMPLETE_TEXT_FIELD_H_
+#define CHROME_BROWSER_UI_COCOA_LOCATION_BAR_AUTOCOMPLETE_TEXT_FIELD_H_
 
 #import <Cocoa/Cocoa.h>
 
@@ -53,12 +53,6 @@ class AutocompleteTextFieldObserver {
   // |pboard|.
   virtual void CopyToPasteboard(NSPasteboard* pboard) = 0;
 
-  // Returns true if the Show URL option should be available.
-  virtual bool ShouldEnableShowURL() = 0;
-
-  // Shows the underlying URL.  See OmniboxView::ShowURL().
-  virtual void ShowURL() = 0;
-
   // Returns true if the current clipboard text supports paste and go
   // (or paste and search).
   virtual bool CanPasteAndGo() = 0;
@@ -90,6 +84,9 @@ class AutocompleteTextFieldObserver {
   // Called when -insertText: is invoked on the editor.
   virtual void OnInsertText() = 0;
 
+  // Called before a -drawRect: operation.
+  virtual void OnBeforeDrawRect() = 0;
+
   // Called after the completion of a -drawRect: operation.
   virtual void OnDidDrawRect() = 0;
 
@@ -113,9 +110,6 @@ class AutocompleteTextFieldObserver {
   // Called before the text field handles a mouse down event.
   virtual void OnMouseDown(NSInteger button_number) = 0;
 
-  // Returns true if mouse down should select all.
-  virtual bool ShouldSelectAllOnMouseDown() = 0;
-
  protected:
   virtual ~AutocompleteTextFieldObserver() {}
 };
@@ -138,9 +132,6 @@ class AutocompleteTextFieldObserver {
 
   // Animation object used for resizing the autocomplete field.
   base::scoped_nsobject<NSViewAnimation> resizeAnimation_;
-
-  base::scoped_nsobject<NSString> suggestText_;
-  base::scoped_nsobject<NSColor> suggestColor_;
 }
 
 @property(nonatomic) AutocompleteTextFieldObserver* observer;
@@ -175,29 +166,9 @@ class AutocompleteTextFieldObserver {
 // via -[NSView addToolTipRect:owner:userData:].
 - (void)addToolTip:(NSString*)tooltip forRect:(NSRect)aRect;
 
-// Sets the suggest text that shows at the end of the field's normal text.
-// This can't be simply appended to the field's text storage because that
-// will end any pending IME session.
-- (void)setGrayTextAutocompletion:(NSString*)suggestText
-                        textColor:(NSColor*)suggestColor;
-
-- (NSString*)suggestText;
-- (NSColor*)suggestColor;
-
 // Obtain the bubble anchor point for |decoration|. In window coordinates.
 - (NSPoint)bubblePointForDecoration:(LocationBarDecoration*)decoration;
 
 @end
 
-namespace autocomplete_text_field {
-
-// Draw gray text suggestion in |controlView|.
-void DrawGrayTextAutocompletion(NSAttributedString* mainText,
-                                NSString* suggestText,
-                                NSColor* suggestColor,
-                                NSView* controlView,
-                                NSRect frame);
-
-}  // namespace autocomplete_text_field
-
-#endif  // CHROME_BROWSER_UI_COCOA_AUTOCOMPLETE_TEXT_FIELD_H_
+#endif  // CHROME_BROWSER_UI_COCOA_LOCATION_BAR_AUTOCOMPLETE_TEXT_FIELD_H_

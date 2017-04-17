@@ -9,10 +9,6 @@
 #include "content/public/browser/bluetooth_chooser.h"
 #include "content/public/browser/web_contents.h"
 
-namespace url {
-class Origin;
-}
-
 // Represents a way to ask the user to select a Bluetooth device from a list of
 // options.
 class BluetoothChooserAndroid : public content::BluetoothChooser {
@@ -26,9 +22,12 @@ class BluetoothChooserAndroid : public content::BluetoothChooser {
   bool CanAskForScanningPermission() override;
   void SetAdapterPresence(AdapterPresence presence) override;
   void ShowDiscoveryState(DiscoveryState state) override;
-  void AddDevice(const std::string& device_id,
-                 const base::string16& device_name) override;
-  void RemoveDevice(const std::string& device_id) override;
+  void AddOrUpdateDevice(const std::string& device_id,
+                         bool should_update_name,
+                         const base::string16& device_name,
+                         bool is_gatt_connected,
+                         bool is_paired,
+                         int signal_strength_level) override;
 
   // Report the dialog's result.
   void OnDialogFinished(JNIEnv* env,

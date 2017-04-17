@@ -6,9 +6,10 @@
 
 namespace blink {
 
-bool InternalsRTCCertificate::rtcCertificateEquals(Internals& internals, RTCCertificate* a, RTCCertificate* b)
-{
-    return a->certificate().equals(b->certificate());
+bool InternalsRTCCertificate::rtcCertificateEquals(Internals& internals,
+                                                   RTCCertificate* a,
+                                                   RTCCertificate* b) {
+  return a->Certificate().Equals(b->Certificate());
 }
 
-} // namespace blink
+}  // namespace blink

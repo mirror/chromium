@@ -34,12 +34,12 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/fonts/FontOrientation.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/text/WTFString.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 class SkTypeface;
 
@@ -47,23 +47,34 @@ namespace blink {
 
 class FontPlatformData;
 class SharedBuffer;
+class FontVariationSettings;
 
-class PLATFORM_EXPORT FontCustomPlatformData {
-    USING_FAST_MALLOC(FontCustomPlatformData);
-    WTF_MAKE_NONCOPYABLE(FontCustomPlatformData);
-public:
-    static std::unique_ptr<FontCustomPlatformData> create(SharedBuffer*, String& otsParseMessage);
-    ~FontCustomPlatformData();
+class PLATFORM_EXPORT FontCustomPlatformData
+    : public RefCounted<FontCustomPlatformData> {
+  USING_FAST_MALLOC(FontCustomPlatformData);
+  WTF_MAKE_NONCOPYABLE(FontCustomPlatformData);
 
-    FontPlatformData fontPlatformData(float size, bool bold, bool italic, FontOrientation = FontOrientation::Horizontal);
+ public:
+  static PassRefPtr<FontCustomPlatformData> Create(SharedBuffer*,
+                                                   String& ots_parse_message);
+  ~FontCustomPlatformData();
 
-    static bool supportsFormat(const String&);
+  FontPlatformData GetFontPlatformData(
+      float size,
+      bool bold,
+      bool italic,
+      FontOrientation = FontOrientation::kHorizontal,
+      const FontVariationSettings* = nullptr);
 
-private:
-    explicit FontCustomPlatformData(PassRefPtr<SkTypeface>);
-    RefPtr<SkTypeface> m_typeface;
+  size_t DataSize() const { return data_size_; }
+  static bool SupportsFormat(const String&);
+
+ private:
+  FontCustomPlatformData(sk_sp<SkTypeface>, size_t data_size);
+  sk_sp<SkTypeface> base_typeface_;
+  size_t data_size_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FontCustomPlatformData_h
+#endif  // FontCustomPlatformData_h

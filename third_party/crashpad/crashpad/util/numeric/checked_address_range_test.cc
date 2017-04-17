@@ -122,16 +122,16 @@ TEST(CheckedAddressRange, IsValid) {
   for (size_t index = 0; index < arraysize(kTestData); ++index) {
     const TestData& testcase = kTestData[index];
     SCOPED_TRACE(base::StringPrintf("index %" PRIuS
-                                    ", base 0x%llx, size 0x%llx",
+                                    ", base 0x%" PRIx64 ", size 0x%" PRIx64,
                                     index,
                                     testcase.base,
                                     testcase.size));
 
     CheckedAddressRange range_32(false, testcase.base, testcase.size);
-    EXPECT_EQ(ExpectationForValidity32(testcase.validity), range_32.IsValid());
+    EXPECT_EQ(range_32.IsValid(), ExpectationForValidity32(testcase.validity));
 
     CheckedAddressRange range_64(true, testcase.base, testcase.size);
-    EXPECT_EQ(ExpectationForValidity64(testcase.validity), range_64.IsValid());
+    EXPECT_EQ(range_64.IsValid(), ExpectationForValidity64(testcase.validity));
   }
 }
 
@@ -173,10 +173,10 @@ TEST(CheckedAddressRange, ContainsValue) {
   for (size_t index = 0; index < arraysize(kTestData); ++index) {
     const TestData& testcase = kTestData[index];
     SCOPED_TRACE(base::StringPrintf(
-        "index %" PRIuS ", value 0x%llx", index, testcase.value));
+        "index %" PRIuS ", value 0x%" PRIx64, index, testcase.value));
 
-    EXPECT_EQ(testcase.expectation,
-              parent_range_32.ContainsValue(testcase.value));
+    EXPECT_EQ(parent_range_32.ContainsValue(testcase.value),
+              testcase.expectation);
   }
 
   CheckedAddressRange parent_range_64(true, 0x100000000, 0x1000);
@@ -230,15 +230,15 @@ TEST(CheckedAddressRange, ContainsRange) {
   for (size_t index = 0; index < arraysize(kTestData); ++index) {
     const TestData& testcase = kTestData[index];
     SCOPED_TRACE(base::StringPrintf("index %" PRIuS
-                                    ", base 0x%llx, size 0x%llx",
+                                    ", base 0x%" PRIx64 ", size 0x%" PRIx64,
                                     index,
                                     testcase.base,
                                     testcase.size));
 
     CheckedAddressRange child_range_32(false, testcase.base, testcase.size);
     ASSERT_TRUE(child_range_32.IsValid());
-    EXPECT_EQ(testcase.expectation,
-              parent_range_32.ContainsRange(child_range_32));
+    EXPECT_EQ(parent_range_32.ContainsRange(child_range_32),
+              testcase.expectation);
   }
 
   CheckedAddressRange parent_range_64(true, 0x100000000, 0x1000);

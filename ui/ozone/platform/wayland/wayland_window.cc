@@ -6,6 +6,7 @@
 
 #include <xdg-shell-unstable-v5-client-protocol.h>
 
+#include "base/bind.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/events/event.h"
 #include "ui/events/ozone/events_ozone.h"
@@ -80,6 +81,8 @@ void WaylandWindow::Close() {
   NOTIMPLEMENTED();
 }
 
+void WaylandWindow::PrepareForShutdown() {}
+
 void WaylandWindow::SetBounds(const gfx::Rect& bounds) {
   if (bounds == bounds_)
     return;
@@ -148,6 +151,8 @@ bool WaylandWindow::CanDispatchEvent(const PlatformEvent& native_event) {
   Event* event = static_cast<Event*>(native_event);
   if (event->IsMouseEvent())
     return has_pointer_focus_;
+  if (event->IsKeyEvent())
+    return has_keyboard_focus_;
   return false;
 }
 

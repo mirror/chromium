@@ -23,50 +23,50 @@
 
 #include "core/CoreExport.h"
 #include "core/css/CSSValue.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
+class CSSIdentifierValue;
 class CSSPrimitiveValue;
 
 // Used for text-shadow and box-shadow
 class CORE_EXPORT CSSShadowValue : public CSSValue {
-public:
-    static CSSShadowValue* create(CSSPrimitiveValue* x,
-        CSSPrimitiveValue* y,
-        CSSPrimitiveValue* blur,
-        CSSPrimitiveValue* spread,
-        CSSPrimitiveValue* style,
-        CSSValue* color)
-    {
-        return new CSSShadowValue(x, y, blur, spread, style, color);
-    }
+ public:
+  static CSSShadowValue* Create(CSSPrimitiveValue* x,
+                                CSSPrimitiveValue* y,
+                                CSSPrimitiveValue* blur,
+                                CSSPrimitiveValue* spread,
+                                CSSIdentifierValue* style,
+                                CSSValue* color) {
+    return new CSSShadowValue(x, y, blur, spread, style, color);
+  }
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool equals(const CSSShadowValue&) const;
+  bool Equals(const CSSShadowValue&) const;
 
-    Member<CSSPrimitiveValue> x;
-    Member<CSSPrimitiveValue> y;
-    Member<CSSPrimitiveValue> blur;
-    Member<CSSPrimitiveValue> spread;
-    Member<CSSPrimitiveValue> style;
-    Member<CSSValue> color;
+  Member<CSSPrimitiveValue> x;
+  Member<CSSPrimitiveValue> y;
+  Member<CSSPrimitiveValue> blur;
+  Member<CSSPrimitiveValue> spread;
+  Member<CSSIdentifierValue> style;
+  Member<CSSValue> color;
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-private:
-    CSSShadowValue(CSSPrimitiveValue* x,
-        CSSPrimitiveValue* y,
-        CSSPrimitiveValue* blur,
-        CSSPrimitiveValue* spread,
-        CSSPrimitiveValue* style,
-        CSSValue* color);
+ private:
+  CSSShadowValue(CSSPrimitiveValue* x,
+                 CSSPrimitiveValue* y,
+                 CSSPrimitiveValue* blur,
+                 CSSPrimitiveValue* spread,
+                 CSSIdentifierValue* style,
+                 CSSValue* color);
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSShadowValue, isShadowValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSShadowValue, IsShadowValue());
 
-} // namespace blink
+}  // namespace blink
 
 #endif

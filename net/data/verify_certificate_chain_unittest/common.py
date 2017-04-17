@@ -36,28 +36,56 @@ JANUARY_1_2015_UTC = '150101120000Z'
 # January 1st, 2016 12:00 UTC
 JANUARY_1_2016_UTC = '160101120000Z'
 
+# January 1st, 2021 12:00 UTC
+JANUARY_1_2021_UTC = '210101120000Z'
+
 # The default time tests should use when verifying.
 DEFAULT_TIME = MARCH_2_2015_UTC
+
+KEY_PURPOSE_ANY = 'anyExtendedKeyUsage'
+KEY_PURPOSE_SERVER_AUTH = 'serverAuth'
+KEY_PURPOSE_CLIENT_AUTH = 'clientAuth'
+
+DEFAULT_KEY_PURPOSE = KEY_PURPOSE_SERVER_AUTH
 
 # Counters used to generate unique (but readable) path names.
 g_cur_path_id = {}
 
 # Output paths used:
-#   - g_out_dir: where any temporary files (keys, cert req, signing db etc) are
+#   - g_out_dir: where any temporary files (cert req, signing db etc) are
 #                saved to.
-#   - g_out_pem: the path to the final output (which is a .pem file)
+#   - g_script_name: the name of the invoking script. For instance if this is
+#                    being run by generate-foo.py then g_script_name will be
+#                    'foo'
 #
 # See init() for how these are assigned, based on the name of the calling
 # script.
 g_out_dir = None
-g_out_pem = None
+g_script_name = None
+
+# The default validity range of generated certificates. Can be modified with
+# set_default_validity_range().
+g_default_start_date = JANUARY_1_2015_UTC
+g_default_end_date = JANUARY_1_2016_UTC
 
 
-def GetUniquePathId(name):
+def set_default_validity_range(start_date, end_date):
+  """Sets the validity range that will be used for certificates created with
+  Certificate"""
+  global g_default_start_date
+  global g_default_end_date
+  g_default_start_date = start_date
+  g_default_end_date = end_date
+
+
+def get_unique_path_id(name):
   """Returns a base filename that contains 'name', but is unique to the output
   directory"""
-  path_id = g_cur_path_id.get(name, 0)
-  g_cur_path_id[name] = path_id + 1
+  # Use case-insensitive matching for counting duplicates, since some
+  # filesystems are case insensitive, but case preserving.
+  lowercase_name = name.lower()
+  path_id = g_cur_path_id.get(lowercase_name, 0)
+  g_cur_path_id[lowercase_name] = path_id + 1
 
   # Use a short and clean name for the first use of this name.
   if path_id == 0:
@@ -67,6 +95,84 @@ def GetUniquePathId(name):
   return '%s_%d' % (name, path_id)
 
 
+def get_path_in_output_dir(name, suffix):
+  return os.path.join(g_out_dir, '%s%s' % (name, suffix))
+
+
+class Key(object):
+  """Describes a public + private key pair. It is a dumb wrapper around an
+  on-disk key."""
+
+  def __init__(self, path):
+    self.path = path
+
+
+  def get_path(self):
+    """Returns the path to a file that contains the key contents."""
+    return self.path
+
+
+def get_or_generate_key(generation_arguments, path):
+  """Helper function to either retrieve a key from an existing file |path|, or
+  generate a new one using the command line |generation_arguments|."""
+
+  generation_arguments_str = ' '.join(generation_arguments)
+
+  # If the file doesn't already exist, generate a new key using the generation
+  # parameters.
+  if not os.path.isfile(path):
+    key_contents = subprocess.check_output(generation_arguments)
+
+    # Prepend the generation parameters to the key file.
+    write_string_to_file(generation_arguments_str + '\n' + key_contents,
+                         path)
+  else:
+    # If the path already exists, confirm that it is for the expected key type.
+    first_line = read_file_to_string(path).splitlines()[0]
+    if first_line != generation_arguments_str:
+      sys.stderr.write(('\nERROR: The existing key file:\n  %s\nis not '
+           'compatible with the requested parameters:\n  "%s" vs "%s".\n'
+           'Delete the file if you want to re-generate it with the new '
+           'parameters, otherwise pick a new filename\n') % (
+               path, first_line, generation_arguments_str))
+      sys.exit(1)
+
+  return Key(path)
+
+
+def get_or_generate_rsa_key(size_bits, path):
+  """Retrieves an existing key from a file if the path exists. Otherwise
+  generates an RSA key with the specified bit size and saves it to the path."""
+  return get_or_generate_key(['openssl', 'genrsa', str(size_bits)], path)
+
+
+def get_or_generate_ec_key(named_curve, path):
+  """Retrieves an existing key from a file if the path exists. Otherwise
+  generates an EC key with the specified named curve and saves it to the
+  path."""
+  return get_or_generate_key(['openssl', 'ecparam', '-name', named_curve,
+                              '-genkey'], path)
+
+
+def create_key_path(base_name):
+  """Generates a name that contains |base_name| in it, and is relative to the
+  "keys/" directory. If create_key_path(xxx) is called more than once during
+  the script run, a suffix will be added."""
+
+  # Save keys to CWD/keys/<generate-script-name>/*.key
+  # Hack: if the script name was generate-certs.py, then just save to
+  # 'keys/*.key' (used by external consumers of common.py)
+  keys_dir = 'keys'
+  if g_script_name != 'certs':
+    keys_dir = os.path.join(keys_dir, g_script_name)
+
+  # Create the keys directory if it doesn't exist
+  if not os.path.exists(keys_dir):
+    os.makedirs(keys_dir)
+
+  return get_unique_path_id(os.path.join(keys_dir, base_name)) + '.key'
+
+
 class Certificate(object):
   """Helper for building an X.509 certificate."""
 
@@ -74,10 +180,11 @@ class Certificate(object):
     # The name will be used for the subject's CN, and also as a component of
     # the temporary filenames to help with debugging.
     self.name = name
-    self.path_id = GetUniquePathId(name)
+    self.path_id = get_unique_path_id(name)
 
-    # If specified, use the key from this path instead of generating a new one.
-    self.key_path = None
+    # Allow the caller to override the key later. If no key was set will
+    # auto-generate one.
+    self.key = None
 
     # The issuer is also a Certificate object. Passing |None| means it is a
     # self-signed certificate.
@@ -98,9 +205,9 @@ class Certificate(object):
     self.md_flags = []
 
     # By default OpenSSL will use the current time for the start time. Instead
-    # default to using a fixed timestamp for more predictabl results each time
+    # default to using a fixed timestamp for more predictable results each time
     # the certificates are re-generated.
-    self.set_validity_range(JANUARY_1_2015_UTC, JANUARY_1_2016_UTC)
+    self.set_validity_range(g_default_start_date, g_default_end_date)
 
     # Use SHA-256 when THIS certificate is signed (setting it in the
     # configuration would instead set the hash to use when signing other
@@ -127,24 +234,10 @@ class Certificate(object):
     # Initialize any files that will be needed if this certificate is used to
     # sign other certificates. Starts off serial numbers at 1, and will
     # increment them for each signed certificate.
-    write_string_to_file('01\n', self.get_serial_path())
-    write_string_to_file('', self.get_database_path())
-
-
-  def generate_rsa_key(self, size_bits):
-    """Generates an RSA private key for the certificate."""
-    assert self.key_path is None
-    subprocess.check_call(
-        ['openssl', 'genrsa', '-out', self.get_key_path(), str(size_bits)])
-
-
-  def generate_ec_key(self, named_curve):
-    """Generates an EC private key for the certificate. |named_curve| can be
-    something like secp384r1"""
-    assert self.key_path is None
-    subprocess.check_call(
-        ['openssl', 'ecparam', '-out', self.get_key_path(),
-         '-name', named_curve, '-genkey'])
+    if not os.path.exists(self.get_serial_path()):
+      write_string_to_file('01\n', self.get_serial_path())
+    if not os.path.exists(self.get_database_path()):
+      write_string_to_file('', self.get_database_path())
 
 
   def set_validity_range(self, start_date, end_date):
@@ -169,17 +262,31 @@ class Certificate(object):
     return os.path.join(g_out_dir, '%s%s' % (self.path_id, suffix))
 
 
-  def set_key_path(self, path):
-    """Uses the key from the given path instead of generating a new one."""
-    self.key_path = path
+  def get_name_path(self, suffix):
+    """Forms a path to an output file for this CA, containing the indicated
+    suffix. If multiple certificates have the same name, they will use the same
+    path."""
+    return get_path_in_output_dir(self.name, suffix)
+
+
+  def set_key(self, key):
+    assert self.finalized is False
+    self.set_key_internal(key)
+
+
+  def set_key_internal(self, key):
+    self.key = key
+
+    # Associate the private key with the certificate.
     section = self.config.get_section('root_ca')
-    section.set_property('private_key', self.get_key_path())
+    section.set_property('private_key', self.key.get_path())
 
 
-  def get_key_path(self):
-    if self.key_path is not None:
-      return self.key_path
-    return self.get_path('.key')
+  def get_key(self):
+    if self.key is None:
+      self.set_key_internal(
+          get_or_generate_rsa_key(2048, create_key_path(self.name)))
+    return self.key
 
 
   def get_cert_path(self):
@@ -187,7 +294,7 @@ class Certificate(object):
 
 
   def get_serial_path(self):
-    return self.get_path('.serial')
+    return self.get_name_path('.serial')
 
 
   def get_csr_path(self):
@@ -195,7 +302,7 @@ class Certificate(object):
 
 
   def get_database_path(self):
-    return self.get_path('.db')
+    return self.get_name_path('.db')
 
 
   def get_config_path(self):
@@ -207,8 +314,7 @@ class Certificate(object):
     self.finalize()
 
     # Read the certificate data.
-    with open(self.get_cert_path(), 'r') as f:
-      return f.read()
+    return read_file_to_string(self.get_cert_path())
 
 
   def finalize(self):
@@ -225,11 +331,9 @@ class Certificate(object):
     # accessible. Note that self.issuer could be the same as self.
     self.issuer.finalize()
 
-    # Ensure the certificate has a key. Callers have the option to generate a
-    # different type of key, but if that was not done default to a new 2048-bit
-    # RSA key.
-    if not os.path.isfile(self.get_key_path()):
-      self.generate_rsa_key(2048)
+    # Ensure the certificate has a key (gets lazily created by this call if
+    # missing).
+    self.get_key()
 
     # Serialize the config to a file.
     self.config.write_to_file(self.get_config_path())
@@ -237,7 +341,7 @@ class Certificate(object):
     # Create a CSR.
     subprocess.check_call(
         ['openssl', 'req', '-new',
-         '-key', self.get_key_path(),
+         '-key', self.key.get_path(),
          '-out', self.get_csr_path(),
          '-config', self.get_config_path()])
 
@@ -310,7 +414,6 @@ class Certificate(object):
 
     section = self.config.get_section('root_ca')
     section.set_property('certificate', self.get_cert_path())
-    section.set_property('private_key', self.get_key_path())
     section.set_property('new_certs_dir', g_out_dir)
     section.set_property('serial', self.get_serial_path())
     section.set_property('database', self.get_database_path())
@@ -358,15 +461,35 @@ class Certificate(object):
     section.set_property('authorityInfoAccess', '@issuer_info')
 
 
-def data_to_pem(block_header, block_data):
-  return '-----BEGIN %s-----\n%s\n-----END %s-----\n' % (block_header,
-          base64.b64encode(block_data), block_header)
+def text_data_to_pem(block_header, text_data):
+  return '%s\n-----BEGIN %s-----\n%s\n-----END %s-----\n' % (text_data,
+          block_header, base64.b64encode(text_data), block_header)
 
 
-def write_test_file(description, chain, trusted_certs, utc_time, verify_result,
-                    out_pem=None):
+class TrustAnchor(object):
+  """Structure that represents a trust anchor."""
+
+  def __init__(self, cert, constrained=False):
+    self.cert = cert
+    self.constrained = constrained
+
+
+  def get_pem(self):
+    """Returns a PEM block string describing this trust anchor."""
+
+    cert_data = self.cert.get_cert_pem()
+    block_name = 'TRUST_ANCHOR_UNCONSTRAINED'
+    if self.constrained:
+      block_name = 'TRUST_ANCHOR_CONSTRAINED'
+
+    # Use a different block name in the .pem file, depending on the anchor type.
+    return cert_data.replace('CERTIFICATE', block_name)
+
+
+def write_test_file(description, chain, trust_anchor, utc_time, key_purpose,
+                    verify_result, errors, out_pem=None):
   """Writes a test file that contains all the inputs necessary to run a
-  verification on a certificate chain"""
+  verification on a certificate chain."""
 
   # Prepend the script name that generated the file to the description.
   test_data = '[Created by: %s]\n\n%s\n' % (sys.argv[0], description)
@@ -375,24 +498,30 @@ def write_test_file(description, chain, trusted_certs, utc_time, verify_result,
   for cert in chain:
     test_data += '\n' + cert.get_cert_pem()
 
-  # Write the trust store.
-  for cert in trusted_certs:
-    cert_data = cert.get_cert_pem()
-    # Use a different block type in the .pem file.
-    cert_data = cert_data.replace('CERTIFICATE', 'TRUSTED_CERTIFICATE')
-    test_data += '\n' + cert_data
-
-  test_data += '\n' + data_to_pem('TIME', utc_time)
+  test_data += '\n' + trust_anchor.get_pem()
+  test_data += '\n' + text_data_to_pem('TIME', utc_time)
 
   verify_result_string = 'SUCCESS' if verify_result else 'FAIL'
-  test_data += '\n' + data_to_pem('VERIFY_RESULT', verify_result_string)
+  test_data += '\n' + text_data_to_pem('VERIFY_RESULT', verify_result_string)
 
-  write_string_to_file(test_data, out_pem if out_pem else g_out_pem)
+  test_data += '\n' + text_data_to_pem('KEY_PURPOSE', key_purpose)
+
+  if errors is not None:
+    test_data += '\n' + text_data_to_pem('ERRORS', errors)
+
+  if not out_pem:
+    out_pem = g_script_name + '.pem'
+  write_string_to_file(test_data, out_pem)
 
 
 def write_string_to_file(data, path):
   with open(path, 'w') as f:
     f.write(data)
+
+
+def read_file_to_string(path):
+  with open(path, 'r') as f:
+    return f.read()
 
 
 def init(invoking_script_path):
@@ -402,7 +531,18 @@ def init(invoking_script_path):
   """
 
   global g_out_dir
-  global g_out_pem
+  global g_script_name
+
+  # The scripts assume to be run from within their containing directory (paths
+  # to things like "keys/" are written relative).
+  expected_cwd = os.path.realpath(os.path.dirname(invoking_script_path))
+  actual_cwd = os.path.realpath(os.getcwd())
+  if actual_cwd != expected_cwd:
+    sys.stderr.write(
+        ('Your current working directory must be that containing the python '
+         'scripts:\n%s\nas the script may reference paths relative to this\n')
+        % (expected_cwd))
+    sys.exit(1)
 
   # Base the output name off of the invoking script's name.
   out_name = os.path.splitext(os.path.basename(invoking_script_path))[0]
@@ -419,7 +559,7 @@ def init(invoking_script_path):
   shutil.rmtree(g_out_dir, True)
   os.makedirs(g_out_dir)
 
-  g_out_pem = os.path.join('%s.pem' % (out_name))
+  g_script_name = out_name
 
 
 def create_self_signed_root_certificate(name):

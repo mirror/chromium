@@ -33,25 +33,24 @@
 
 namespace blink {
 
-class GamepadList final : public GarbageCollected<GamepadList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static GamepadList* create()
-    {
-        return new GamepadList();
-    }
+class GamepadList final : public GarbageCollected<GamepadList>,
+                          public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    void set(unsigned index, Gamepad*);
-    Gamepad* item(unsigned index);
-    unsigned length() const { return WebGamepads::itemsLengthCap; }
+ public:
+  static GamepadList* Create() { return new GamepadList(); }
 
-    DECLARE_TRACE();
+  void Set(unsigned index, Gamepad*);
+  Gamepad* item(unsigned index);
+  unsigned length() const { return WebGamepads::kItemsLengthCap; }
 
-private:
-    GamepadList();
-    Member<Gamepad> m_items[WebGamepads::itemsLengthCap];
+  DECLARE_TRACE();
+
+ private:
+  GamepadList();
+  Member<Gamepad> items_[WebGamepads::kItemsLengthCap];
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GamepadList_h
+#endif  // GamepadList_h

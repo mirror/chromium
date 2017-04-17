@@ -173,14 +173,6 @@ void Context::DestroyImage(int32_t id) {
   NOTIMPLEMENTED();
 }
 
-int32_t Context::CreateGpuMemoryBufferImage(size_t width,
-                                            size_t height,
-                                            unsigned internalformat,
-                                            unsigned usage) {
-  NOTIMPLEMENTED();
-  return -1;
-}
-
 void Context::SignalQuery(uint32_t query, const base::Closure& callback) {
   NOTIMPLEMENTED();
 }
@@ -221,13 +213,23 @@ bool Context::IsFenceSyncFlushReceived(uint64_t release) {
   return display_->IsFenceSyncFlushReceived(release);
 }
 
+bool Context::IsFenceSyncReleased(uint64_t release) {
+  NOTIMPLEMENTED();
+  return false;
+}
+
 void Context::SignalSyncToken(const gpu::SyncToken& sync_token,
                               const base::Closure& callback) {
   NOTIMPLEMENTED();
 }
 
-bool Context::CanWaitUnverifiedSyncToken(const gpu::SyncToken* sync_token) {
+void Context::WaitSyncTokenHint(const gpu::SyncToken& sync_token) {}
+
+bool Context::CanWaitUnverifiedSyncToken(const gpu::SyncToken& sync_token) {
   return false;
+}
+
+void Context::AddLatencyInfo(const std::vector<ui::LatencyInfo>& latency_info) {
 }
 
 void Context::ApplyCurrentContext(gl::GLSurface* current_surface) {
@@ -259,8 +261,8 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
   scoped_refptr<gpu::gles2::ContextGroup> group(new gpu::gles2::ContextGroup(
       gpu_preferences_, nullptr, nullptr,
       new gpu::gles2::ShaderTranslatorCache(gpu_preferences_),
-      new gpu::gles2::FramebufferCompletenessCache, feature_info, true,
-      nullptr));
+      new gpu::gles2::FramebufferCompletenessCache, feature_info, true, nullptr,
+      nullptr, gpu::GpuFeatureInfo()));
 
   std::unique_ptr<gpu::gles2::GLES2Decoder> decoder(
       gpu::gles2::GLES2Decoder::Create(group.get()));
@@ -273,8 +275,10 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
 
   decoder->set_engine(command_executor.get());
 
+  gl::GLContextAttribs context_attribs;
+  context_attribs.gpu_preference = gl::PreferDiscreteGpu;
   scoped_refptr<gl::GLContext> gl_context(
-      gl::init::CreateGLContext(nullptr, gl_surface, gl::PreferDiscreteGpu));
+      gl::init::CreateGLContext(nullptr, gl_surface, context_attribs));
   if (!gl_context)
     return false;
 

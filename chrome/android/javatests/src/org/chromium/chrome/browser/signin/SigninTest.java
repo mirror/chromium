@@ -11,11 +11,12 @@ import android.app.Instrumentation.ActivityMonitor;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.Preference;
+import android.support.test.filters.MediumTest;
 import android.support.v7.app.AlertDialog;
-import android.test.suitebuilder.annotation.MediumTest;
 import android.widget.Button;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge;
 import org.chromium.chrome.browser.preferences.MainPreferences;
@@ -26,11 +27,11 @@ import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.test.ChromeTabbedActivityTestBase;
 import org.chromium.chrome.test.util.ActivityUtils;
+import org.chromium.chrome.test.util.ChromeRestriction;
 import org.chromium.chrome.test.util.browser.signin.SigninTestUtil;
 import org.chromium.components.bookmarks.BookmarkId;
+import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.content.browser.test.util.TestTouchUtils;
-import org.chromium.sync.signin.ChromeSigninController;
-import org.chromium.sync.test.util.MockAccountManager;
 
 /**
  * Test suite for sign in tests.
@@ -129,12 +130,10 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
         private final Object mLock = new Object();
         private boolean mIsLoaded;
         private boolean mAdded;
-        private boolean mAllUserNodesRemoved;
 
         public TestBookmarkModelObserver(BookmarkBridge bookmarks) {
             mIsLoaded = bookmarks.isBookmarkModelLoaded();
             mAdded = false;
-            mAllUserNodesRemoved = false;
         }
 
         public void waitForBookmarkModelToLoad() {
@@ -152,18 +151,6 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
         public void waitForBookmarkAdded() {
             synchronized (mLock) {
                 while (!mAdded) {
-                    try {
-                        mLock.wait();
-                    } catch (InterruptedException exception) {
-                        // Ignore.
-                    }
-                }
-            }
-        }
-
-        public void waitForAllUserBookmarksRemoved() {
-            synchronized (mLock) {
-                while (!mAllUserNodesRemoved) {
                     try {
                         mLock.wait();
                     } catch (InterruptedException exception) {
@@ -192,7 +179,6 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
         @Override
         public void bookmarkAllUserNodesRemoved() {
             synchronized (mLock) {
-                mAllUserNodesRemoved = true;
                 mLock.notify();
             }
         }
@@ -204,7 +190,6 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
     }
 
     private Context mContext;
-    private MockAccountManager mAccountManager;
     private SigninManager mSigninManager;
     private PrefServiceBridge mPrefService;
     private BookmarkBridge mBookmarks;
@@ -225,7 +210,7 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
             @Override
             public void run() {
                 // This call initializes the ChromeSigninController to use our test context.
-                ChromeSigninController.get(mContext);
+                ChromeSigninController.get();
 
                 // Start observing the SigninManager.
                 mTestSignInObserver = new TestSignInObserver();
@@ -268,7 +253,7 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
 
                 mSigninManager.removeSignInStateObserver(mTestSignInObserver);
 
-                if (ChromeSigninController.get(mContext).isSignedIn()) {
+                if (ChromeSigninController.get().isSignedIn()) {
                     mSigninManager.signOut(null, null);
                 }
 
@@ -284,7 +269,8 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
     }
 
     @MediumTest
-    public void testConsumerSignin() throws InterruptedException {
+    @Restriction(ChromeRestriction.RESTRICTION_TYPE_GOOGLE_PLAY_SERVICES)
+    public void testConsumerSignin() {
         SigninTestUtil.addTestAccount();
         signInToSingleAccount();
 
@@ -326,7 +312,7 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
 
     private void signInToSingleAccount() {
         // Verify that we aren't signed in yet.
-        assertFalse(ChromeSigninController.get(mContext).isSignedIn());
+        assertFalse(ChromeSigninController.get().isSignedIn());
 
         // Open the preferences UI.
         final Preferences prefActivity = startPreferences(null);
@@ -371,12 +357,12 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
         mTestSignInObserver.waitForSignInEvents(1);
         assertEquals(1, mTestSignInObserver.mSignInCount);
         assertEquals(0, mTestSignInObserver.mSignOutCount);
-        assertTrue(ChromeSigninController.get(mContext).isSignedIn());
+        assertTrue(ChromeSigninController.get().isSignedIn());
     }
 
-    private void signOut() throws InterruptedException {
+    private void signOut() {
         // Verify that we are currently signed in.
-        assertTrue(ChromeSigninController.get(mContext).isSignedIn());
+        assertTrue(ChromeSigninController.get().isSignedIn());
 
         // Open the account preferences.
         final Preferences prefActivity =
@@ -398,7 +384,7 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
         mTestSignInObserver.waitForSignInEvents(2);
         assertEquals(1, mTestSignInObserver.mSignInCount);
         assertEquals(1, mTestSignInObserver.mSignOutCount);
-        assertFalse(ChromeSigninController.get(mContext).isSignedIn());
+        assertFalse(ChromeSigninController.get().isSignedIn());
 
         if (!prefActivity.isFinishing()) prefActivity.finish();
         getInstrumentation().waitForIdleSync();
@@ -432,8 +418,7 @@ public class SigninTest extends ChromeTabbedActivityTestBase {
         signOutPref.getOnPreferenceClickListener().onPreferenceClick(signOutPref);
     }
 
-    private void acceptAlertDialogWithTag(Activity activity, String tag)
-            throws InterruptedException {
+    private void acceptAlertDialogWithTag(Activity activity, String tag) {
         getInstrumentation().waitForIdleSync();
         DialogFragment fragment = ActivityUtils.waitForFragment(activity, tag);
         AlertDialog dialog = (AlertDialog) fragment.getDialog();

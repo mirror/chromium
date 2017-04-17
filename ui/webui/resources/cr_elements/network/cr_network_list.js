@@ -6,89 +6,116 @@
  * @fileoverview Polymer element for displaying a collapsable list of networks.
  */
 
-(function() {
-
 /**
  * Polymer class definition for 'cr-network-list'.
- * TODO(stevenjb): Update with iron-list(?) once implemented in Polymer 1.0.
  */
 Polymer({
   is: 'cr-network-list',
 
   properties: {
     /**
-     * The maximum height in pixels for the list.
-     */
-    maxHeight: {
-      type: Number,
-      value: 1000,
-      observer: 'maxHeightChanged_'
-    },
-
-    /**
-     * Determines how the list item will be displayed:
-     *  'visible' - displays the network icon (with strength) and name
-     *  'known' - displays the visible info along with a toggle icon for the
-     *      preferred status and a remove button.
-     */
-    listType: {
-      type: String,
-      value: 'visible'
-    },
-
-    /**
      * The list of network state properties for the items to display.
-     * See <cr-network-list-network-item/> for details.
-     *
      * @type {!Array<!CrOnc.NetworkStateProperties>}
      */
     networks: {
       type: Array,
-      value: function() { return []; }
+      value: function() {
+        return [];
+      },
     },
 
     /**
-     * The list of custom state properties for the items to display.
-     * See <cr-network-list-custom-item/> for details.
-     *
-     * @type {!Array<Object>}
+     * The list of custom items to display after the list of networks.
+     * @type {!Array<!CrNetworkList.CustomItemState>}
      */
     customItems: {
       type: Array,
-      value: function() { return []; }
+      value: function() {
+        return [];
+      },
     },
 
-    /**
-     * True if the list is opened.
-     */
-    opened: {
-      type: Boolean,
-      value: true
-    },
-
-    /**
-     * Shows all buttons from the list items.
-     */
+    /** True if action buttons should be shown for the itmes. */
     showButtons: {
       type: Boolean,
       value: false,
+      reflectToAttribute: true,
+    },
+
+    /**
+     * Reflects the iron-list selecteditem property.
+     * @type {!CrNetworkList.CrNetworkListItemType}
+     */
+    selectedItem: {
+      type: Object,
+      observer: 'selectedItemChanged_',
+    },
+
+    /**
+     * Contains |networks| + |customItems|.
+     * @private {!Array<!CrNetworkList.CrNetworkListItemType>}
+     */
+    listItems_: {
+      type: Array,
+      value: function() {
+        return [];
+      },
     },
   },
 
-  /**
-   * Polymer maxHeight changed method.
-   */
-  maxHeightChanged_: function() {
-    this.$.container.style.maxHeight = this.maxHeight + 'px';
+  behaviors: [CrScrollableBehavior],
+
+  observers: ['updateListItems_(networks, customItems)'],
+
+  /** @private {boolean} */
+  focusRequested_: false,
+
+  focus: function() {
+    this.focusRequested_ = true;
+    this.focusFirstItem_();
+  },
+
+  /** @private */
+  updateListItems_: function() {
+    this.saveScroll(this.$.networkList);
+    this.listItems_ = this.networks.concat(this.customItems);
+    this.restoreScroll(this.$.networkList);
+    this.updateScrollableContents();
+    if (this.focusRequested_) {
+      this.async(function() {
+        this.focusFirstItem_();
+      });
+    }
+  },
+
+  /** @private */
+  focusFirstItem_: function() {
+    // Select the first cr-network-list-item if there is one.
+    var item = this.$$('cr-network-list-item');
+    if (!item)
+      return;
+    item.focus();
+    this.focusRequested_ = false;
   },
 
   /**
-   * Event triggered when a list item is tapped.
-   * @param {!{model: {item: !CrOnc.NetworkStateProperties}}} event
+   * Use iron-list selection (which is not the same as focus) to trigger
+   * tap (requires selection-enabled) or keyboard selection.
    * @private
    */
-  onTap_: function(event) {
-    this.fire('selected', event.model.item);
+  selectedItemChanged_: function() {
+    if (this.selectedItem)
+      this.onItemAction_(this.selectedItem);
+  },
+
+  /**
+   * @param {!CrNetworkList.CrNetworkListItemType} item
+   * @private
+   */
+  onItemAction_: function(item) {
+    if (item.hasOwnProperty('customItemName'))
+      this.fire('custom-item-selected', item);
+    else
+      this.fire('selected', item);
   },
 });
-})();

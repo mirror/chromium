@@ -10,12 +10,11 @@
 #include "base/win/win_util.h"
 #include "base/win/windows_version.h"
 #include "content/browser/accessibility/browser_accessibility_manager_win.h"
+#include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/accessibility/browser_accessibility_win.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
-#include "content/public/browser/browser_accessibility_state.h"
 #include "content/public/common/content_switches.h"
-#include "ui/base/touch/touch_enabled.h"
 #include "ui/base/view_prop.h"
 #include "ui/base/win/internal_constants.h"
 #include "ui/base/win/window_event_target.h"
@@ -112,8 +111,7 @@ LegacyRenderWidgetHostHWND::~LegacyRenderWidgetHostHWND() {
 }
 
 bool LegacyRenderWidgetHostHWND::Init() {
-  if (base::win::GetVersion() >= base::win::VERSION_WIN7 &&
-      ui::AreTouchEventsEnabled())
+  if (base::win::GetVersion() >= base::win::VERSION_WIN7)
     RegisterTouchWindow(hwnd(), TWF_WANTPALM);
 
   HRESULT hr = ::CreateStdAccessibleObject(
@@ -121,7 +119,9 @@ bool LegacyRenderWidgetHostHWND::Init() {
       reinterpret_cast<void **>(window_accessible_.Receive()));
   DCHECK(SUCCEEDED(hr));
 
-  if (!BrowserAccessibilityState::GetInstance()->IsAccessibleBrowser()) {
+  AccessibilityMode mode =
+      BrowserAccessibilityStateImpl::GetInstance()->accessibility_mode();
+  if (!mode.has_mode(AccessibilityMode::kNativeAPIs)) {
     // Attempt to detect screen readers or other clients who want full
     // accessibility support, by seeing if they respond to this event.
     NotifyWinEvent(EVENT_SYSTEM_ALERT, hwnd(), kIdScreenReaderHoneyPot,
@@ -163,8 +163,10 @@ LRESULT LegacyRenderWidgetHostHWND::OnGetObject(UINT message,
 
   if (kIdScreenReaderHoneyPot == obj_id) {
     // When an MSAA client has responded to our fake event on this id,
-    // enable screen reader support.
-    BrowserAccessibilityState::GetInstance()->OnScreenReaderDetected();
+    // enable basic accessibility support. (Full screen reader support is
+    // detected later when specific more advanced APIs are accessed.)
+    BrowserAccessibilityStateImpl::GetInstance()->AddAccessibilityModeFlags(
+        AccessibilityMode::kNativeAPIs | AccessibilityMode::kWebContents);
     return static_cast<LRESULT>(0L);
   }
 
@@ -308,6 +310,19 @@ LRESULT LegacyRenderWidgetHostHWND::OnMouseActivate(UINT message,
     return MA_NOACTIVATE;
   }
   return MA_ACTIVATE;
+}
+
+LRESULT LegacyRenderWidgetHostHWND::OnPointer(UINT message,
+                                              WPARAM w_param,
+                                              LPARAM l_param) {
+  LRESULT ret = 0;
+  if (GetWindowEventTarget(GetParent())) {
+    bool msg_handled = false;
+    ret = GetWindowEventTarget(GetParent())
+              ->HandlePointerMessage(message, w_param, l_param, &msg_handled);
+    SetMsgHandled(msg_handled);
+  }
+  return ret;
 }
 
 LRESULT LegacyRenderWidgetHostHWND::OnTouch(UINT message,

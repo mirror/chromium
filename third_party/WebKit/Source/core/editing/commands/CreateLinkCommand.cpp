@@ -31,38 +31,36 @@
 namespace blink {
 
 CreateLinkCommand::CreateLinkCommand(Document& document, const String& url)
-    : CompositeEditCommand(document)
-{
-    m_url = url;
+    : CompositeEditCommand(document) {
+  url_ = url;
 }
 
-void CreateLinkCommand::doApply(EditingState* editingState)
-{
-    if (endingSelection().isNone())
-        return;
+void CreateLinkCommand::DoApply(EditingState* editing_state) {
+  if (EndingSelection().IsNone())
+    return;
 
-    HTMLAnchorElement* anchorElement = HTMLAnchorElement::create(document());
-    anchorElement->setHref(AtomicString(m_url));
+  HTMLAnchorElement* anchor_element = HTMLAnchorElement::Create(GetDocument());
+  anchor_element->SetHref(AtomicString(url_));
 
-    if (endingSelection().isRange()) {
-        applyStyledElement(anchorElement, editingState);
-        if (editingState->isAborted())
-            return;
-    } else {
-        insertNodeAt(anchorElement, endingSelection().start(), editingState);
-        if (editingState->isAborted())
-            return;
-        Text* textNode = Text::create(document(), m_url);
-        appendNode(textNode, anchorElement, editingState);
-        if (editingState->isAborted())
-            return;
-        setEndingSelection(VisibleSelection(Position::inParentBeforeNode(*anchorElement), Position::inParentAfterNode(*anchorElement), TextAffinity::Downstream, endingSelection().isDirectional()));
-    }
+  if (EndingSelection().IsRange()) {
+    ApplyStyledElement(anchor_element, editing_state);
+    if (editing_state->IsAborted())
+      return;
+  } else {
+    InsertNodeAt(anchor_element, EndingSelection().Start(), editing_state);
+    if (editing_state->IsAborted())
+      return;
+    Text* text_node = Text::Create(GetDocument(), url_);
+    AppendNode(text_node, anchor_element, editing_state);
+    if (editing_state->IsAborted())
+      return;
+    SetEndingSelection(
+        SelectionInDOMTree::Builder()
+            .Collapse(Position::InParentBeforeNode(*anchor_element))
+            .Extend(Position::InParentAfterNode(*anchor_element))
+            .SetIsDirectional(EndingSelection().IsDirectional())
+            .Build());
+  }
 }
 
-InputEvent::InputType CreateLinkCommand::inputType() const
-{
-    return InputEvent::InputType::CreateLink;
-}
-
-} // namespace blink
+}  // namespace blink

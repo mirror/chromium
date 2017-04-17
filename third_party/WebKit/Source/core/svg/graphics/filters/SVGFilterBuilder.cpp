@@ -36,188 +36,195 @@ namespace blink {
 namespace {
 
 class FilterInputKeywords {
-public:
-    static const AtomicString& getSourceGraphic()
-    {
-        DEFINE_STATIC_LOCAL(const AtomicString, s_sourceGraphicName, ("SourceGraphic"));
-        return s_sourceGraphicName;
-    }
+ public:
+  static const AtomicString& GetSourceGraphic() {
+    DEFINE_STATIC_LOCAL(const AtomicString, source_graphic_name,
+                        ("SourceGraphic"));
+    return source_graphic_name;
+  }
 
-    static const AtomicString& sourceAlpha()
-    {
-        DEFINE_STATIC_LOCAL(const AtomicString, s_sourceAlphaName, ("SourceAlpha"));
-        return s_sourceAlphaName;
-    }
+  static const AtomicString& SourceAlpha() {
+    DEFINE_STATIC_LOCAL(const AtomicString, source_alpha_name, ("SourceAlpha"));
+    return source_alpha_name;
+  }
 
-    static const AtomicString& fillPaint()
-    {
-        DEFINE_STATIC_LOCAL(const AtomicString, s_fillPaintName, ("FillPaint"));
-        return s_fillPaintName;
-    }
+  static const AtomicString& FillPaint() {
+    DEFINE_STATIC_LOCAL(const AtomicString, fill_paint_name, ("FillPaint"));
+    return fill_paint_name;
+  }
 
-    static const AtomicString& strokePaint()
-    {
-        DEFINE_STATIC_LOCAL(const AtomicString, s_strokePaintName, ("StrokePaint"));
-        return s_strokePaintName;
-    }
+  static const AtomicString& StrokePaint() {
+    DEFINE_STATIC_LOCAL(const AtomicString, stroke_paint_name, ("StrokePaint"));
+    return stroke_paint_name;
+  }
 };
 
-} // namespace
+}  // namespace
 
-SVGFilterGraphNodeMap::SVGFilterGraphNodeMap()
-{
+SVGFilterGraphNodeMap::SVGFilterGraphNodeMap() {}
+
+void SVGFilterGraphNodeMap::AddBuiltinEffect(FilterEffect* effect) {
+  effect_references_.insert(effect, FilterEffectSet());
 }
 
-void SVGFilterGraphNodeMap::addBuiltinEffect(FilterEffect* effect)
-{
-    m_effectReferences.add(effect, FilterEffectSet());
+void SVGFilterGraphNodeMap::AddPrimitive(LayoutObject* object,
+                                         FilterEffect* effect) {
+  // The effect must be a newly created filter effect.
+  DCHECK(!effect_references_.Contains(effect));
+  DCHECK(!object || !effect_renderer_.Contains(object));
+  effect_references_.insert(effect, FilterEffectSet());
+
+  unsigned number_of_input_effects = effect->InputEffects().size();
+
+  // Add references from the inputs of this effect to the effect itself, to
+  // allow determining what effects needs to be invalidated when a certain
+  // effect changes.
+  for (unsigned i = 0; i < number_of_input_effects; ++i)
+    EffectReferences(effect->InputEffect(i)).insert(effect);
+
+  // If object is null, that means the element isn't attached for some
+  // reason, which in turn mean that certain types of invalidation will not
+  // work (the LayoutObject -> FilterEffect mapping will not be defined).
+  if (object)
+    effect_renderer_.insert(object, effect);
 }
 
-void SVGFilterGraphNodeMap::addPrimitive(LayoutObject* object, FilterEffect* effect)
-{
-    // The effect must be a newly created filter effect.
-    ASSERT(!m_effectReferences.contains(effect));
-    ASSERT(!object || !m_effectRenderer.contains(object));
-    m_effectReferences.add(effect, FilterEffectSet());
+void SVGFilterGraphNodeMap::InvalidateDependentEffects(FilterEffect* effect) {
+  if (!effect->HasImageFilter())
+    return;
 
-    unsigned numberOfInputEffects = effect->inputEffects().size();
+  effect->ClearResult();
 
-    // Add references from the inputs of this effect to the effect itself, to
-    // allow determining what effects needs to be invalidated when a certain
-    // effect changes.
-    for (unsigned i = 0; i < numberOfInputEffects; ++i)
-        effectReferences(effect->inputEffect(i)).add(effect);
-
-    // If object is null, that means the element isn't attached for some
-    // reason, which in turn mean that certain types of invalidation will not
-    // work (the LayoutObject -> FilterEffect mapping will not be defined).
-    if (object)
-        m_effectRenderer.add(object, effect);
+  FilterEffectSet& effect_references = this->EffectReferences(effect);
+  for (FilterEffect* effect_reference : effect_references)
+    InvalidateDependentEffects(effect_reference);
 }
 
-void SVGFilterGraphNodeMap::invalidateDependentEffects(FilterEffect* effect)
-{
-    if (!effect->hasImageFilter())
-        return;
-
-    effect->clearResult();
-
-    FilterEffectSet& effectReferences = this->effectReferences(effect);
-    for (FilterEffect* effectReference : effectReferences)
-        invalidateDependentEffects(effectReference);
+DEFINE_TRACE(SVGFilterGraphNodeMap) {
+  visitor->Trace(effect_renderer_);
+  visitor->Trace(effect_references_);
 }
 
-DEFINE_TRACE(SVGFilterGraphNodeMap)
-{
-    visitor->trace(m_effectRenderer);
-    visitor->trace(m_effectReferences);
+SVGFilterBuilder::SVGFilterBuilder(FilterEffect* source_graphic,
+                                   SVGFilterGraphNodeMap* node_map,
+                                   const PaintFlags* fill_flags,
+                                   const PaintFlags* stroke_flags)
+    : node_map_(node_map) {
+  FilterEffect* source_graphic_ref = source_graphic;
+  builtin_effects_.insert(FilterInputKeywords::GetSourceGraphic(),
+                          source_graphic_ref);
+  builtin_effects_.insert(FilterInputKeywords::SourceAlpha(),
+                          SourceAlpha::Create(source_graphic_ref));
+  if (fill_flags) {
+    builtin_effects_.insert(FilterInputKeywords::FillPaint(),
+                            PaintFilterEffect::Create(
+                                source_graphic_ref->GetFilter(), *fill_flags));
+  }
+  if (stroke_flags) {
+    builtin_effects_.insert(
+        FilterInputKeywords::StrokePaint(),
+        PaintFilterEffect::Create(source_graphic_ref->GetFilter(),
+                                  *stroke_flags));
+  }
+  AddBuiltinEffects();
 }
 
-SVGFilterBuilder::SVGFilterBuilder(
-    FilterEffect* sourceGraphic,
-    SVGFilterGraphNodeMap* nodeMap,
-    const SkPaint* fillPaint,
-    const SkPaint* strokePaint)
-    : m_nodeMap(nodeMap)
-{
-    FilterEffect* sourceGraphicRef = sourceGraphic;
-    m_builtinEffects.add(FilterInputKeywords::getSourceGraphic(), sourceGraphicRef);
-    m_builtinEffects.add(FilterInputKeywords::sourceAlpha(), SourceAlpha::create(sourceGraphicRef));
-    if (fillPaint)
-        m_builtinEffects.add(FilterInputKeywords::fillPaint(), PaintFilterEffect::create(sourceGraphicRef->getFilter(), *fillPaint));
-    if (strokePaint)
-        m_builtinEffects.add(FilterInputKeywords::strokePaint(), PaintFilterEffect::create(sourceGraphicRef->getFilter(), *strokePaint));
-    addBuiltinEffects();
-}
-
-void SVGFilterBuilder::addBuiltinEffects()
-{
-    if (!m_nodeMap)
-        return;
-    for (const auto& entry : m_builtinEffects)
-        m_nodeMap->addBuiltinEffect(entry.value.get());
+void SVGFilterBuilder::AddBuiltinEffects() {
+  if (!node_map_)
+    return;
+  for (const auto& entry : builtin_effects_)
+    node_map_->AddBuiltinEffect(entry.value.Get());
 }
 
 // Returns the color-interpolation-filters property of the element.
-static EColorInterpolation colorInterpolationForElement(SVGElement& element, EColorInterpolation parentColorInterpolation)
-{
-    if (const LayoutObject* layoutObject = element.layoutObject())
-        return layoutObject->styleRef().svgStyle().colorInterpolationFilters();
+static EColorInterpolation ColorInterpolationForElement(
+    SVGElement& element,
+    EColorInterpolation parent_color_interpolation) {
+  if (const LayoutObject* layout_object = element.GetLayoutObject())
+    return layout_object->StyleRef().SvgStyle().ColorInterpolationFilters();
 
-    // No layout has been performed, try to determine the property value
-    // "manually" (used by external SVG files.)
-    if (const StylePropertySet* propertySet = element.presentationAttributeStyle()) {
-        const CSSValue* cssValue = propertySet->getPropertyCSSValue(CSSPropertyColorInterpolationFilters);
-        if (cssValue && cssValue->isPrimitiveValue()) {
-            const CSSPrimitiveValue& primitiveValue = toCSSPrimitiveValue(*cssValue);
-            return primitiveValue.convertTo<EColorInterpolation>();
-        }
+  // No layout has been performed, try to determine the property value
+  // "manually" (used by external SVG files.)
+  if (const StylePropertySet* property_set =
+          element.PresentationAttributeStyle()) {
+    const CSSValue* css_value =
+        property_set->GetPropertyCSSValue(CSSPropertyColorInterpolationFilters);
+    if (css_value && css_value->IsIdentifierValue()) {
+      return ToCSSIdentifierValue(*css_value).ConvertTo<EColorInterpolation>();
     }
-    // 'auto' is the default (per Filter Effects), but since the property is
-    // inherited, propagate the parent's value.
-    return parentColorInterpolation;
+  }
+  // 'auto' is the default (per Filter Effects), but since the property is
+  // inherited, propagate the parent's value.
+  return parent_color_interpolation;
 }
 
-ColorSpace SVGFilterBuilder::resolveColorSpace(EColorInterpolation colorInterpolation)
-{
-    return colorInterpolation == CI_LINEARRGB ? ColorSpaceLinearRGB : ColorSpaceDeviceRGB;
+ColorSpace SVGFilterBuilder::ResolveColorSpace(
+    EColorInterpolation color_interpolation) {
+  return color_interpolation == CI_LINEARRGB ? kColorSpaceLinearRGB
+                                             : kColorSpaceDeviceRGB;
 }
 
-void SVGFilterBuilder::buildGraph(Filter* filter, SVGFilterElement& filterElement, const FloatRect& referenceBox)
-{
-    EColorInterpolation filterColorInterpolation = colorInterpolationForElement(filterElement, CI_AUTO);
+void SVGFilterBuilder::BuildGraph(Filter* filter,
+                                  SVGFilterElement& filter_element,
+                                  const FloatRect& reference_box) {
+  EColorInterpolation filter_color_interpolation =
+      ColorInterpolationForElement(filter_element, CI_AUTO);
+  SVGUnitTypes::SVGUnitType primitive_units =
+      filter_element.primitiveUnits()->CurrentValue()->EnumValue();
 
-    for (SVGElement* element = Traversal<SVGElement>::firstChild(filterElement); element; element = Traversal<SVGElement>::nextSibling(*element)) {
-        if (!element->isFilterEffect())
-            continue;
+  for (SVGElement* element = Traversal<SVGElement>::FirstChild(filter_element);
+       element; element = Traversal<SVGElement>::NextSibling(*element)) {
+    if (!element->IsFilterEffect())
+      continue;
 
-        SVGFilterPrimitiveStandardAttributes* effectElement = static_cast<SVGFilterPrimitiveStandardAttributes*>(element);
-        FilterEffect* effect = effectElement->build(this, filter);
-        if (!effect)
-            continue;
+    SVGFilterPrimitiveStandardAttributes* effect_element =
+        static_cast<SVGFilterPrimitiveStandardAttributes*>(element);
+    FilterEffect* effect = effect_element->Build(this, filter);
+    if (!effect)
+      continue;
 
-        if (m_nodeMap)
-            m_nodeMap->addPrimitive(effectElement->layoutObject(), effect);
+    if (node_map_)
+      node_map_->AddPrimitive(effect_element->GetLayoutObject(), effect);
 
-        effectElement->setStandardAttributes(effect);
-        effect->setEffectBoundaries(SVGLengthContext::resolveRectangle<SVGFilterPrimitiveStandardAttributes>(effectElement, filterElement.primitiveUnits()->currentValue()->enumValue(), referenceBox));
-        EColorInterpolation colorInterpolation = colorInterpolationForElement(*effectElement, filterColorInterpolation);
-        effect->setOperatingColorSpace(resolveColorSpace(colorInterpolation));
-        if (effectElement->taintsOrigin(effect->inputsTaintOrigin()))
-            effect->setOriginTainted();
+    effect_element->SetStandardAttributes(effect, primitive_units,
+                                          reference_box);
+    EColorInterpolation color_interpolation = ColorInterpolationForElement(
+        *effect_element, filter_color_interpolation);
+    effect->SetOperatingColorSpace(ResolveColorSpace(color_interpolation));
+    if (effect_element->TaintsOrigin(effect->InputsTaintOrigin()))
+      effect->SetOriginTainted();
 
-        add(AtomicString(effectElement->result()->currentValue()->value()), effect);
-    }
+    Add(AtomicString(effect_element->result()->CurrentValue()->Value()),
+        effect);
+  }
 }
 
-void SVGFilterBuilder::add(const AtomicString& id, FilterEffect* effect)
-{
-    if (id.isEmpty()) {
-        m_lastEffect = effect;
-        return;
-    }
+void SVGFilterBuilder::Add(const AtomicString& id, FilterEffect* effect) {
+  if (id.IsEmpty()) {
+    last_effect_ = effect;
+    return;
+  }
 
-    if (m_builtinEffects.contains(id))
-        return;
+  if (builtin_effects_.Contains(id))
+    return;
 
-    m_lastEffect = effect;
-    m_namedEffects.set(id, m_lastEffect);
+  last_effect_ = effect;
+  named_effects_.Set(id, last_effect_);
 }
 
-FilterEffect* SVGFilterBuilder::getEffectById(const AtomicString& id) const
-{
-    if (!id.isEmpty()) {
-        if (FilterEffect* builtinEffect = m_builtinEffects.get(id))
-            return builtinEffect;
+FilterEffect* SVGFilterBuilder::GetEffectById(const AtomicString& id) const {
+  if (!id.IsEmpty()) {
+    if (FilterEffect* builtin_effect = builtin_effects_.at(id))
+      return builtin_effect;
 
-        if (FilterEffect* namedEffect = m_namedEffects.get(id))
-            return namedEffect;
-    }
+    if (FilterEffect* named_effect = named_effects_.at(id))
+      return named_effect;
+  }
 
-    if (m_lastEffect)
-        return m_lastEffect.get();
+  if (last_effect_)
+    return last_effect_.Get();
 
-    return m_builtinEffects.get(FilterInputKeywords::getSourceGraphic());
+  return builtin_effects_.at(FilterInputKeywords::GetSourceGraphic());
 }
 
-} // namespace blink
+}  // namespace blink

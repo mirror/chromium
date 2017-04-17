@@ -5,11 +5,11 @@
 <script>
 function test()
 {
+    var mockProjectId = 0;
     function createMockProject()
     {
-        var workspace = new WebInspector.Workspace();
-        var project = new WebInspector.ContentProviderBasedProject(workspace, "");
-        workspace.addProject(project);
+        var workspace = new Workspace.Workspace();
+        var project = new Bindings.ContentProviderBasedProject(workspace, "mockProject:" + (++mockProjectId));
         project.requestFileContent = function(uri, callback)
         {
             callback("<script content>");
@@ -19,13 +19,14 @@ function test()
         }
         return project;
     }
- 
+
     function dumpUISourceCodeWithRevisions(uiSourceCode)
     {
         var content = uiSourceCode._content;
         var revisionsString = "";
-        for (var i = 0; i < uiSourceCode.history.length; ++i) {
-            var revision = uiSourceCode.history[i];
+        var history = uiSourceCode.history();
+        for (var i = 0; i < history.length; ++i) {
+            var revision = history[i];
             if (i !== 0)
                 revisionsString += ", ";
             revisionsString += "'" + revision.content + "'";
@@ -37,7 +38,7 @@ function test()
     InspectorTest.runTestSuite([
         function testAddRevisionsRevertToOriginal(next)
         {
-            var uiSourceCode = new WebInspector.UISourceCode(createMockProject(), "url", WebInspector.resourceTypes.Script);
+            var uiSourceCode = new Workspace.UISourceCode(createMockProject(), "url", Common.resourceTypes.Script);
             uiSourceCode.setWorkingCopy("content1");
             uiSourceCode.setWorkingCopy("content2");
             uiSourceCode.commitWorkingCopy(function() { });
@@ -62,7 +63,7 @@ function test()
 
         function testAddRevisionsRevertAndClearHistory(next)
         {
-            var uiSourceCode = new WebInspector.UISourceCode(createMockProject(), "url2", WebInspector.resourceTypes.Script);
+            var uiSourceCode = new Workspace.UISourceCode(createMockProject(), "url2", Common.resourceTypes.Script);
 
             uiSourceCode.setWorkingCopy("content1");
             uiSourceCode.setWorkingCopy("content2");
@@ -88,7 +89,7 @@ function test()
 
         function testAddRevisionsRevertToPrevious(next)
         {
-            var uiSourceCode = new WebInspector.UISourceCode(createMockProject(), "url3", WebInspector.resourceTypes.Script);
+            var uiSourceCode = new Workspace.UISourceCode(createMockProject(), "url3", Common.resourceTypes.Script);
 
             uiSourceCode.setWorkingCopy("content1");
             uiSourceCode.setWorkingCopy("content2");
@@ -102,7 +103,7 @@ function test()
 
             InspectorTest.addResult("Second revision added.");
             dumpUISourceCodeWithRevisions(uiSourceCode);
-            uiSourceCode.history[0].revertToThis().then(onReverted);
+            uiSourceCode.history()[0].revertToThis().then(onReverted);
 
             function onReverted()
             {
@@ -114,7 +115,7 @@ function test()
 
         function testRequestContentAddRevisionsRevertToOriginal(next)
         {
-            var uiSourceCode = new WebInspector.UISourceCode(createMockProject(), "url4", WebInspector.resourceTypes.Script);
+            var uiSourceCode = new Workspace.UISourceCode(createMockProject(), "url4", Common.resourceTypes.Script);
             uiSourceCode.requestContent().then(contentReceived);
 
             function contentReceived()
@@ -146,7 +147,7 @@ function test()
 
         function testRequestContentAddRevisionsRevertAndClearHistory(next)
         {
-            var uiSourceCode = new WebInspector.UISourceCode(createMockProject(), "url5", WebInspector.resourceTypes.Script);
+            var uiSourceCode = new Workspace.UISourceCode(createMockProject(), "url5", Common.resourceTypes.Script);
             uiSourceCode.requestContent().then(contentReceived);
 
             function contentReceived()
@@ -178,7 +179,7 @@ function test()
 
         function testRequestContentAddRevisionsRevertToPrevious(next)
         {
-            var uiSourceCode = new WebInspector.UISourceCode(createMockProject(), "url6", WebInspector.resourceTypes.Script);
+            var uiSourceCode = new Workspace.UISourceCode(createMockProject(), "url6", Common.resourceTypes.Script);
             uiSourceCode.requestContent().then(contentReceived);
 
             function contentReceived()
@@ -197,7 +198,7 @@ function test()
 
                 InspectorTest.addResult("Second revision added.");
                 dumpUISourceCodeWithRevisions(uiSourceCode);
-                uiSourceCode.history[0].revertToThis().then(onReverted);
+                uiSourceCode.history()[0].revertToThis().then(onReverted);
 
                 function onReverted()
                 {

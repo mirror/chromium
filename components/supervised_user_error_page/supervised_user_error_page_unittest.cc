@@ -2,10 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/strings/utf_string_conversions.h"
 #include "components/supervised_user_error_page/supervised_user_error_page.h"
-#include "grit/components_resources.h"
-#include "grit/components_strings.h"
+
+#include "base/strings/utf_string_conversions.h"
+#include "components/grit/components_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest-param-test.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -39,8 +40,7 @@ BlockMessageIDTestParameter block_message_id_test_params[] = {
     {DEFAULT, false, true, IDS_SUPERVISED_USER_BLOCK_MESSAGE_DEFAULT},
     {DEFAULT, true, true, IDS_CHILD_BLOCK_MESSAGE_DEFAULT_SINGLE_PARENT},
     {DEFAULT, true, false, IDS_CHILD_BLOCK_MESSAGE_DEFAULT_MULTI_PARENT},
-    {ASYNC_CHECKER, false, false, IDS_SUPERVISED_USER_BLOCK_MESSAGE_SAFE_SITES},
-    {ASYNC_CHECKER, false, true, IDS_SUPERVISED_USER_BLOCK_MESSAGE_SAFE_SITES},
+    // SafeSites is not enabled for supervised users.
     {ASYNC_CHECKER, true, true, IDS_SUPERVISED_USER_BLOCK_MESSAGE_SAFE_SITES},
     {ASYNC_CHECKER, true, false, IDS_SUPERVISED_USER_BLOCK_MESSAGE_SAFE_SITES},
     {MANUAL, false, false, IDS_SUPERVISED_USER_BLOCK_MESSAGE_MANUAL},
@@ -71,13 +71,11 @@ class SupervisedUserErrorPageTest_BuildHtml
 
 TEST_P(SupervisedUserErrorPageTest_BuildHtml, BuildHtml) {
   BuildHtmlTestParameter param = GetParam();
-  std::string result =
-      BuildHtml(param.allow_access_requests, param.profile_image_url,
-                param.profile_image_url2, base::UTF8ToUTF16(param.custodian),
-                base::UTF8ToUTF16(param.custodian_email),
-                base::UTF8ToUTF16(param.second_custodian),
-                base::UTF8ToUTF16(param.second_custodian_email),
-                param.is_child_account, param.reason, "");
+  std::string result = BuildHtml(
+      param.allow_access_requests, param.profile_image_url,
+      param.profile_image_url2, param.custodian, param.custodian_email,
+      param.second_custodian, param.second_custodian_email,
+      param.is_child_account, param.reason, "");
   // The result should contain the original HTML plus scripts that plug values
   // into it. The test can't easily check that the scripts are correct, but
   // can check that the output contains the expected values.
@@ -94,65 +92,46 @@ TEST_P(SupervisedUserErrorPageTest_BuildHtml, BuildHtml) {
     EXPECT_THAT(result, testing::HasSubstr(param.second_custodian));
     EXPECT_THAT(result, testing::HasSubstr(param.second_custodian_email));
   }
-#if defined(GOOGLE_CHROME_BUILD)
-  if (param.is_child_account &&
-      (param.reason == ASYNC_CHECKER || param.reason == BLACKLIST))
+  if (param.reason == ASYNC_CHECKER || param.reason == BLACKLIST) {
     EXPECT_THAT(result, testing::HasSubstr("\"showFeedbackLink\":true"));
-  else
-#endif
+  } else {
     EXPECT_THAT(result, testing::HasSubstr("\"showFeedbackLink\":false"));
-  // Messages containing links aren't tested since they get modified before they
-  // are added to the result.
+  }
+
+  // Messages containing parameters aren't tested since they get modified before
+  // they are added to the result.
   if (param.allow_access_requests) {
     if (param.is_child_account) {
-      if (param.has_two_parents) {
-        EXPECT_THAT(result,
-                    testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                        IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE_SINGLE_PARENT))));
-        EXPECT_THAT(result,
-                    testing::HasSubstr(l10n_util::GetStringUTF8(
-                        IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE_MULTI_PARENT)));
-        EXPECT_THAT(result,
-                    testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                        IDS_BLOCK_INTERSTITIAL_MESSAGE))));
-        EXPECT_THAT(
-            result,
-            testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                IDS_BLOCK_INTERSTITIAL_MESSAGE_ACCESS_REQUESTS_DISABLED))));
-      } else {
-        EXPECT_THAT(result,
-                    testing::HasSubstr(l10n_util::GetStringUTF8(
-                        IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE_SINGLE_PARENT)));
-        EXPECT_THAT(result,
-                    testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                        IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE_MULTI_PARENT))));
-        EXPECT_THAT(
-            result,
-            testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                IDS_BLOCK_INTERSTITIAL_MESSAGE_ACCESS_REQUESTS_DISABLED))));
-      }
-    } else {
-      EXPECT_THAT(result,
-                  testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                      IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE_SINGLE_PARENT))));
-      EXPECT_THAT(result,
-                  testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                      IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE_MULTI_PARENT))));
+      EXPECT_THAT(result, testing::HasSubstr(l10n_util::GetStringUTF8(
+                              IDS_CHILD_BLOCK_INTERSTITIAL_HEADER)));
+      EXPECT_THAT(result, testing::HasSubstr(l10n_util::GetStringUTF8(
+                              IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE)));
       EXPECT_THAT(
           result,
           testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-              IDS_BLOCK_INTERSTITIAL_MESSAGE_ACCESS_REQUESTS_DISABLED))));
+              IDS_BLOCK_INTERSTITIAL_HEADER_ACCESS_REQUESTS_DISABLED))));
+    } else {
+      EXPECT_THAT(result,
+                  testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
+                      IDS_CHILD_BLOCK_INTERSTITIAL_HEADER))));
+      EXPECT_THAT(result,
+                  testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
+                      IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE))));
+      EXPECT_THAT(
+          result,
+          testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
+              IDS_BLOCK_INTERSTITIAL_HEADER_ACCESS_REQUESTS_DISABLED))));
     }
   } else {
     EXPECT_THAT(result,
                 testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                    IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE_SINGLE_PARENT))));
+                    IDS_CHILD_BLOCK_INTERSTITIAL_HEADER))));
     EXPECT_THAT(result,
                 testing::Not(testing::HasSubstr(l10n_util::GetStringUTF8(
-                    IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE_MULTI_PARENT))));
+                    IDS_CHILD_BLOCK_INTERSTITIAL_MESSAGE))));
     EXPECT_THAT(result,
                 testing::HasSubstr(l10n_util::GetStringUTF8(
-                    IDS_BLOCK_INTERSTITIAL_MESSAGE_ACCESS_REQUESTS_DISABLED)));
+                    IDS_BLOCK_INTERSTITIAL_HEADER_ACCESS_REQUESTS_DISABLED)));
   }
   if (param.is_child_account) {
     if (param.has_two_parents) {
@@ -220,7 +199,7 @@ BuildHtmlTestParameter build_html_test_parameter[] = {
     {true, "url1", "url2", "custodian", "custodian_email", "custodian2",
      "custodian2_email", false, DEFAULT, true},
     {true, "url1", "url2", "custodian", "custodian_email", "custodian2",
-     "custodian2_email", false, ASYNC_CHECKER, true},
+     "custodian2_email", true, ASYNC_CHECKER, true},
 };
 
 INSTANTIATE_TEST_CASE_P(GetBlockMessageIDParameterized,

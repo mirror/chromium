@@ -23,11 +23,11 @@ function initSpellTest(testElementId, testText, testFunction, opt_doNotFinishTes
         log("FAIL Incomplete test environment");
         return;
     }
+    testRunner.setMockSpellCheckerEnabled(true);
     testFunctionCallback = testFunction;
     jsTestIsAsync = true;
     internals.settings.setSmartInsertDeleteEnabled(true);
     internals.settings.setSelectTrailingWhitespaceEnabled(false);
-    internals.settings.setUnifiedTextCheckerEnabled(true);
     internals.settings.setEditingBehavior("win");
     window.destination = document.getElementById(testElementId);
     window.destination.focus();
@@ -65,4 +65,33 @@ function typeText(elem, text)
     for (var i = 0; i < text.length; ++i) {
         typeCharacterCommand(text[i]);
     }
+}
+
+function runNextStep(test, steps, assertions) {
+    if (!steps.length) {
+        test.done();
+        return;
+    }
+
+    var step = steps.shift();
+    var assertion = assertions.shift();
+
+    step();
+    step_timeout(() => {
+        test.step(() => assertion());
+        runNextStep(test, steps, assertions);
+    }, 50);
+}
+
+function runSpellingTest(steps, assertions, opt_title)
+{
+    var t = async_test(opt_title);
+    if (!window.internals || !window.testRunner) {
+        t.step(() => assert_unreached('Incomplete test environment'));
+        t.done();
+        return;
+    }
+
+    testRunner.setMockSpellCheckerEnabled(true);
+    runNextStep(t, steps, assertions);
 }

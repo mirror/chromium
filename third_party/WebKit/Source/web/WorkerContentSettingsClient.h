@@ -31,9 +31,9 @@
 #ifndef WorkerContentSettingsClient_h
 #define WorkerContentSettingsClient_h
 
-#include "core/workers/WorkerClients.h"
-#include "wtf/Forward.h"
 #include <memory>
+#include "core/workers/WorkerClients.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -41,28 +41,35 @@ class ExecutionContext;
 class WebString;
 class WebWorkerContentSettingsClientProxy;
 
-class WorkerContentSettingsClient final : public GarbageCollectedFinalized<WorkerContentSettingsClient>, public Supplement<WorkerClients> {
-    USING_GARBAGE_COLLECTED_MIXIN(WorkerContentSettingsClient);
-public:
-    static WorkerContentSettingsClient* create(std::unique_ptr<WebWorkerContentSettingsClientProxy>);
-    virtual ~WorkerContentSettingsClient();
+class WorkerContentSettingsClient final
+    : public GarbageCollectedFinalized<WorkerContentSettingsClient>,
+      public Supplement<WorkerClients> {
+  USING_GARBAGE_COLLECTED_MIXIN(WorkerContentSettingsClient);
 
-    bool requestFileSystemAccessSync();
-    bool allowIndexedDB(const WebString& name);
+ public:
+  static WorkerContentSettingsClient* Create(
+      std::unique_ptr<WebWorkerContentSettingsClientProxy>);
+  virtual ~WorkerContentSettingsClient();
 
-    static const char* supplementName();
-    static WorkerContentSettingsClient* from(ExecutionContext&);
+  bool RequestFileSystemAccessSync();
+  bool AllowIndexedDB(const WebString& name);
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<WorkerClients>::trace(visitor); }
+  static const char* SupplementName();
+  static WorkerContentSettingsClient* From(ExecutionContext&);
 
-private:
-    explicit WorkerContentSettingsClient(std::unique_ptr<WebWorkerContentSettingsClientProxy>);
+  DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<WorkerClients>::Trace(visitor); }
 
-    std::unique_ptr<WebWorkerContentSettingsClientProxy> m_proxy;
+ private:
+  explicit WorkerContentSettingsClient(
+      std::unique_ptr<WebWorkerContentSettingsClientProxy>);
+
+  std::unique_ptr<WebWorkerContentSettingsClientProxy> proxy_;
 };
 
-void provideContentSettingsClientToWorker(WorkerClients*, std::unique_ptr<WebWorkerContentSettingsClientProxy>);
+void ProvideContentSettingsClientToWorker(
+    WorkerClients*,
+    std::unique_ptr<WebWorkerContentSettingsClientProxy>);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerContentSettingsClient_h
+#endif  // WorkerContentSettingsClient_h

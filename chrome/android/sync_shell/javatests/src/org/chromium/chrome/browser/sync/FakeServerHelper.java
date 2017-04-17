@@ -10,8 +10,8 @@ import com.google.protobuf.nano.InvalidProtocolBufferNanoException;
 import com.google.protobuf.nano.MessageNano;
 
 import org.chromium.base.ThreadUtils;
-import org.chromium.sync.protocol.EntitySpecifics;
-import org.chromium.sync.protocol.SyncEntity;
+import org.chromium.components.sync.protocol.EntitySpecifics;
+import org.chromium.components.sync.protocol.SyncEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class FakeServerHelper {
 
     // Pointer value for the FakeServer. This pointer is not owned by native
     // code, so it must be stored here for future deletion.
-    private static long sNativeFakeServer = 0L;
+    private static long sNativeFakeServer;
 
     // The pointer to the native object called here.
     private final long mNativeFakeServerHelperAndroid;

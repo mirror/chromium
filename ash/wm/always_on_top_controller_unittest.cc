@@ -2,15 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/common/wm/always_on_top_controller.h"
+#include "ash/wm/always_on_top_controller.h"
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/shell_window_ids.h"
-#include "ash/common/wm/workspace/workspace_layout_manager.h"
-#include "ash/common/wm/workspace/workspace_layout_manager_delegate.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/wm/workspace/workspace_layout_manager.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "ui/keyboard/keyboard_controller.h"
@@ -39,8 +38,7 @@ class VirtualKeyboardAlwaysOnTopControllerTest : public AshTestBase {
 class TestLayoutManager : public WorkspaceLayoutManager {
  public:
   explicit TestLayoutManager(WmWindow* window)
-      : WorkspaceLayoutManager(window, nullptr),
-        keyboard_bounds_changed_(false) {}
+      : WorkspaceLayoutManager(window), keyboard_bounds_changed_(false) {}
 
   ~TestLayoutManager() override {}
 
@@ -66,8 +64,10 @@ TEST_F(VirtualKeyboardAlwaysOnTopControllerTest, NotifyKeyboardBoundsChanged) {
       Shell::GetContainer(root_window, kShellWindowId_AlwaysOnTopContainer);
   // Install test layout manager.
   TestLayoutManager* manager =
-      new TestLayoutManager(WmWindowAura::Get(always_on_top_container));
+      new TestLayoutManager(WmWindow::Get(always_on_top_container));
   RootWindowController* controller = Shell::GetPrimaryRootWindowController();
+  // Deactivates keyboard to unregister existing listeners.
+  controller->DeactivateKeyboard(keyboard_controller);
   AlwaysOnTopController* always_on_top_controller =
       controller->always_on_top_controller();
   always_on_top_controller->SetLayoutManagerForTest(base::WrapUnique(manager));

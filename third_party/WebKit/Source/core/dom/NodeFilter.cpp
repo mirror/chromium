@@ -26,14 +26,14 @@
 
 namespace blink {
 
-unsigned NodeFilter::acceptNode(Node* node, ExceptionState& exceptionState) const
-{
-    return m_condition ? m_condition->acceptNode(node, exceptionState) : FILTER_ACCEPT;
+unsigned NodeFilter::acceptNode(Node* node,
+                                ExceptionState& exception_state) const {
+  return condition_ ? condition_->AcceptNode(node, exception_state)
+                    : kFilterAccept;
 }
 
-DEFINE_TRACE(NodeFilter)
-{
-    visitor->trace(m_condition);
+DEFINE_TRACE(NodeFilter) {
+  visitor->Trace(condition_);
 }
 
-} // namespace blink
+}  // namespace blink

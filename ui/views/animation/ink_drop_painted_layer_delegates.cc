@@ -4,9 +4,10 @@
 
 #include "ui/views/animation/ink_drop_painted_layer_delegates.h"
 
+#include "cc/paint/paint_canvas.h"
+#include "cc/paint/paint_flags.h"
 #include "third_party/skia/include/core/SkDrawLooper.h"
-#include "third_party/skia/include/core/SkPaint.h"
-#include "third_party/skia/include/core/SkPath.h"
+#include "third_party/skia/include/core/SkRRect.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
@@ -14,7 +15,10 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/geometry/size_conversions.h"
+#include "ui/gfx/skia_paint_util.h"
 #include "ui/gfx/skia_util.h"
 
 namespace views {
@@ -39,9 +43,6 @@ void BasePaintedLayerDelegate::OnDelegatedFrameDamage(
 void BasePaintedLayerDelegate::OnDeviceScaleFactorChanged(
     float device_scale_factor) {}
 
-base::Closure BasePaintedLayerDelegate::PrepareForLayerBoundsChange() {
-  return base::Closure();
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -53,21 +54,22 @@ CircleLayerDelegate::CircleLayerDelegate(SkColor color, int radius)
 
 CircleLayerDelegate::~CircleLayerDelegate() {}
 
-gfx::Rect CircleLayerDelegate::GetPaintedBounds() const {
+gfx::RectF CircleLayerDelegate::GetPaintedBounds() const {
   const int diameter = radius_ * 2;
-  return gfx::Rect(0, 0, diameter, diameter);
+  return gfx::RectF(0, 0, diameter, diameter);
 }
 
 void CircleLayerDelegate::OnPaintLayer(const ui::PaintContext& context) {
-  SkPaint paint;
-  paint.setColor(color());
-  paint.setFlags(SkPaint::kAntiAlias_Flag);
-  paint.setStyle(SkPaint::kFill_Style);
+  cc::PaintFlags flags;
+  flags.setColor(color());
+  flags.setAntiAlias(true);
+  flags.setStyle(cc::PaintFlags::kFill_Style);
 
-  ui::PaintRecorder recorder(context, GetPaintedBounds().size());
+  ui::PaintRecorder recorder(context,
+                             gfx::ToEnclosingRect(GetPaintedBounds()).size());
   gfx::Canvas* canvas = recorder.canvas();
 
-  canvas->DrawCircle(GetPaintedBounds().CenterPoint(), radius_, paint);
+  canvas->DrawCircle(GetPaintedBounds().CenterPoint(), radius_, flags);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -75,24 +77,24 @@ void CircleLayerDelegate::OnPaintLayer(const ui::PaintContext& context) {
 // RectangleLayerDelegate
 //
 
-RectangleLayerDelegate::RectangleLayerDelegate(SkColor color, gfx::Size size)
+RectangleLayerDelegate::RectangleLayerDelegate(SkColor color, gfx::SizeF size)
     : BasePaintedLayerDelegate(color), size_(size) {}
 
 RectangleLayerDelegate::~RectangleLayerDelegate() {}
 
-gfx::Rect RectangleLayerDelegate::GetPaintedBounds() const {
-  return gfx::Rect(size_);
+gfx::RectF RectangleLayerDelegate::GetPaintedBounds() const {
+  return gfx::RectF(size_);
 }
 
 void RectangleLayerDelegate::OnPaintLayer(const ui::PaintContext& context) {
-  SkPaint paint;
-  paint.setColor(color());
-  paint.setFlags(SkPaint::kAntiAlias_Flag);
-  paint.setStyle(SkPaint::kFill_Style);
+  cc::PaintFlags flags;
+  flags.setColor(color());
+  flags.setAntiAlias(true);
+  flags.setStyle(cc::PaintFlags::kFill_Style);
 
-  ui::PaintRecorder recorder(context, size_);
+  ui::PaintRecorder recorder(context, gfx::ToCeiledSize(size_));
   gfx::Canvas* canvas = recorder.canvas();
-  canvas->DrawRect(GetPaintedBounds(), paint);
+  canvas->DrawRect(GetPaintedBounds(), flags);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -102,7 +104,7 @@ void RectangleLayerDelegate::OnPaintLayer(const ui::PaintContext& context) {
 
 RoundedRectangleLayerDelegate::RoundedRectangleLayerDelegate(
     SkColor color,
-    const gfx::Size& size,
+    const gfx::SizeF& size,
     int corner_radius)
     : BasePaintedLayerDelegate(color),
       size_(size),
@@ -110,19 +112,23 @@ RoundedRectangleLayerDelegate::RoundedRectangleLayerDelegate(
 
 RoundedRectangleLayerDelegate::~RoundedRectangleLayerDelegate() {}
 
-gfx::Rect RoundedRectangleLayerDelegate::GetPaintedBounds() const {
-  return gfx::Rect(size_);
+gfx::RectF RoundedRectangleLayerDelegate::GetPaintedBounds() const {
+  return gfx::RectF(size_);
 }
 
 void RoundedRectangleLayerDelegate::OnPaintLayer(
     const ui::PaintContext& context) {
-  SkPaint paint;
-  paint.setColor(color());
-  paint.setFlags(SkPaint::kAntiAlias_Flag);
-  paint.setStyle(SkPaint::kFill_Style);
+  cc::PaintFlags flags;
+  flags.setColor(color());
+  flags.setAntiAlias(true);
+  flags.setStyle(cc::PaintFlags::kFill_Style);
 
-  ui::PaintRecorder recorder(context, size_);
-  recorder.canvas()->DrawRoundRect(GetPaintedBounds(), corner_radius_, paint);
+  ui::PaintRecorder recorder(context, gfx::ToCeiledSize(size_));
+  const float dsf = recorder.canvas()->UndoDeviceScaleFactor();
+  gfx::RectF rect = GetPaintedBounds();
+  rect.Scale(dsf);
+  recorder.canvas()->DrawRoundRect(gfx::ToEnclosingRect(rect),
+                                   dsf * corner_radius_, flags);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -133,18 +139,20 @@ void RoundedRectangleLayerDelegate::OnPaintLayer(
 BorderShadowLayerDelegate::BorderShadowLayerDelegate(
     const std::vector<gfx::ShadowValue>& shadows,
     const gfx::Rect& shadowed_area_bounds,
+    SkColor fill_color,
     int corner_radius)
     : BasePaintedLayerDelegate(gfx::kPlaceholderColor),
       shadows_(shadows),
       bounds_(shadowed_area_bounds),
+      fill_color_(fill_color),
       corner_radius_(corner_radius) {}
 
 BorderShadowLayerDelegate::~BorderShadowLayerDelegate() {}
 
-gfx::Rect BorderShadowLayerDelegate::GetPaintedBounds() const {
+gfx::RectF BorderShadowLayerDelegate::GetPaintedBounds() const {
   gfx::Rect total_rect(bounds_);
   total_rect.Inset(gfx::ShadowValue::GetMargin(shadows_));
-  return total_rect;
+  return gfx::RectF(total_rect);
 }
 
 gfx::Vector2dF BorderShadowLayerDelegate::GetCenteringOffset() const {
@@ -152,26 +160,26 @@ gfx::Vector2dF BorderShadowLayerDelegate::GetCenteringOffset() const {
 }
 
 void BorderShadowLayerDelegate::OnPaintLayer(const ui::PaintContext& context) {
-  SkPaint paint;
-  paint.setLooper(gfx::CreateShadowDrawLooperCorrectBlur(shadows_));
-  paint.setStyle(SkPaint::kStrokeAndFill_Style);
-  paint.setAntiAlias(true);
-  paint.setColor(SK_ColorTRANSPARENT);
-  paint.setStrokeJoin(SkPaint::kRound_Join);
-  SkRect path_bounds = gfx::RectFToSkRect(
-      gfx::RectF(bounds_ - GetPaintedBounds().OffsetFromOrigin()));
+  cc::PaintFlags flags;
+  flags.setStyle(cc::PaintFlags::kFill_Style);
+  flags.setAntiAlias(true);
+  flags.setColor(fill_color_);
 
-  ui::PaintRecorder recorder(context, GetPaintedBounds().size());
-  const SkScalar corner = SkFloatToScalar(corner_radius_);
-  SkPath path;
-  path.addRoundRect(path_bounds, corner, corner, SkPath::kCCW_Direction);
-  recorder.canvas()->DrawPath(path, paint);
+  gfx::RectF rrect_bounds =
+      gfx::RectF(bounds_) - GetPaintedBounds().OffsetFromOrigin();
+  SkRRect r_rect = SkRRect::MakeRectXY(gfx::RectFToSkRect(rrect_bounds),
+                                       corner_radius_, corner_radius_);
 
-  SkPaint clear_paint;
-  clear_paint.setAntiAlias(true);
-  clear_paint.setXfermodeMode(SkXfermode::kClear_Mode);
-  recorder.canvas()->sk_canvas()->drawRoundRect(path_bounds, corner, corner,
-                                                clear_paint);
+  // First the fill color.
+  ui::PaintRecorder recorder(context,
+                             gfx::ToCeiledSize(GetPaintedBounds().size()));
+  recorder.canvas()->sk_canvas()->drawRRect(r_rect, flags);
+
+  // Now the shadow.
+  flags.setLooper(gfx::CreateShadowDrawLooper(shadows_));
+  recorder.canvas()->sk_canvas()->clipRRect(r_rect, SkClipOp::kDifference,
+                                            true);
+  recorder.canvas()->sk_canvas()->drawRRect(r_rect, flags);
 }
 
 }  // namespace views

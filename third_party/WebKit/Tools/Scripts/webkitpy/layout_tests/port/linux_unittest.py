@@ -26,11 +26,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from webkitpy.common.system import executive_mock
-from webkitpy.common.system.systemhost_mock import MockSystemHost
+import optparse
+
+from webkitpy.common.system.executive_mock import MockExecutive
+from webkitpy.common.system.system_host_mock import MockSystemHost
 from webkitpy.layout_tests.port import linux
 from webkitpy.layout_tests.port import port_testcase
-from webkitpy.tool.mock_tool import MockOptions
 
 
 class LinuxPortTest(port_testcase.PortTestCase):
@@ -46,35 +47,31 @@ class LinuxPortTest(port_testcase.PortTestCase):
         host = MockSystemHost(os_name=self.os_name, os_version=(os_version or self.os_version))
         host.filesystem.isfile = lambda x: 'content_shell' in x
         if driver_file_output:
-            host.executive = executive_mock.MockExecutive2(driver_file_output)
+            host.executive = MockExecutive(driver_file_output)
         port = self.make_port(host=host, port_name=port_name, os_version=os_version)
         self.assertEqual(port.name(), expected_name)
         self.assertEqual(port.version(), expected_version)
 
     def test_versions(self):
-        self.assertTrue(self.make_port().name() in ('linux-precise', 'linux-trusty'))
+        self.assertTrue(self.make_port().name() in ('linux-trusty',))
 
         self.assert_version_properties('linux', 'trusty', 'linux-trusty', 'trusty')
-        self.assert_version_properties('linux', 'precise', 'linux-precise', 'precise')
-
         self.assert_version_properties('linux-trusty', None, 'linux-trusty', 'trusty')
-        self.assert_version_properties('linux-precise', None, 'linux-precise', 'precise')
         self.assertRaises(AssertionError, self.assert_version_properties,
                           'linux-utopic', None, 'ignored', 'ignored', 'ignored')
 
     def assert_baseline_paths(self, port_name, os_version, *expected_paths):
         port = self.make_port(port_name=port_name, os_version=os_version)
-        self.assertEqual(port.baseline_path(), port._webkit_baseline_path(expected_paths[0]))
+        self.assertEqual(
+            port.baseline_version_dir(),
+            port._absolute_baseline_path(expected_paths[0]))  # pylint: disable=protected-access
         self.assertEqual(len(port.baseline_search_path()), len(expected_paths))
         for i, path in enumerate(expected_paths):
             self.assertTrue(port.baseline_search_path()[i].endswith(path))
 
     def test_baseline_paths(self):
         self.assert_baseline_paths('linux', 'trusty', 'linux', '/win')
-        self.assert_baseline_paths('linux', 'precise', 'linux-precise', '/linux', '/win')
-
         self.assert_baseline_paths('linux-trusty', None, 'linux', '/win')
-        self.assert_baseline_paths('linux-precise', None, 'linux-precise', '/linux', '/win')
 
     def test_check_illegal_port_names(self):
         # FIXME: Check that, for now, these are illegal port names.
@@ -86,16 +83,17 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_build_path(self):
         # Test that optional paths are used regardless of whether they exist.
-        options = MockOptions(configuration='Release', build_directory='/foo')
+        options = optparse.Values({'configuration': 'Release', 'build_directory': '/foo'})
         self.assert_build_path(options, ['/mock-checkout/out/Release'], '/foo/Release')
 
         # Test that optional relative paths are returned unmodified.
-        options = MockOptions(configuration='Release', build_directory='foo')
+        options = optparse.Values({'configuration': 'Release', 'build_directory': 'foo'})
         self.assert_build_path(options, ['/mock-checkout/out/Release'], 'foo/Release')
 
     def test_driver_name_option(self):
         self.assertTrue(self.make_port()._path_to_driver().endswith('content_shell'))
-        self.assertTrue(self.make_port(options=MockOptions(driver_name='OtherDriver'))._path_to_driver().endswith('OtherDriver'))
+        port = self.make_port(options=optparse.Values({'driver_name': 'OtherDriver'}))
+        self.assertTrue(port._path_to_driver().endswith('OtherDriver'))  # pylint: disable=protected-access
 
     def test_path_to_image_diff(self):
         self.assertEqual(self.make_port()._path_to_image_diff(), '/mock-checkout/out/Release/image_diff')
@@ -103,16 +101,16 @@ class LinuxPortTest(port_testcase.PortTestCase):
     def test_dummy_home_dir_is_created_and_cleaned_up(self):
         port = self.make_port()
         port.host.environ['HOME'] = '/home/user'
-        port._filesystem.files['/home/user/.Xauthority'] = ''
+        port.host.filesystem.files['/home/user/.Xauthority'] = ''
 
         # Set up the test run; the temporary home directory should be set up.
         port.setup_test_run()
         temp_home_dir = port.host.environ['HOME']
         self.assertNotEqual(temp_home_dir, '/home/user')
-        self.assertTrue(port._filesystem.isdir(temp_home_dir))
-        self.assertTrue(port._filesystem.isfile(port._filesystem.join(temp_home_dir, '.Xauthority')))
+        self.assertTrue(port.host.filesystem.isdir(temp_home_dir))
+        self.assertTrue(port.host.filesystem.isfile(port.host.filesystem.join(temp_home_dir, '.Xauthority')))
 
         # Clean up; HOME should be reset and the temp dir should be cleaned up.
         port.clean_up_test_run()
         self.assertEqual(port.host.environ['HOME'], '/home/user')
-        self.assertFalse(port._filesystem.exists(temp_home_dir))
+        self.assertFalse(port.host.filesystem.exists(temp_home_dir))

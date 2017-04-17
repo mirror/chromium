@@ -22,12 +22,15 @@ class BluetoothChooserDesktop : public content::BluetoothChooser {
   // BluetoothChooser:
   void SetAdapterPresence(AdapterPresence presence) override;
   void ShowDiscoveryState(DiscoveryState state) override;
-  void AddDevice(const std::string& device_id,
-                 const base::string16& device_name) override;
-  void RemoveDevice(const std::string& device_id) override;
+  void AddOrUpdateDevice(const std::string& device_id,
+                         bool should_update_name,
+                         const base::string16& device_name,
+                         bool is_gatt_connected,
+                         bool is_paired,
+                         int signal_strength_level) override;
 
  private:
-  // Weak. ChooserContentView[Cocoa] owns it.
+  // Weak. DeviceChooserContentView[Cocoa] owns it.
   BluetoothChooserController* bluetooth_chooser_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(BluetoothChooserDesktop);

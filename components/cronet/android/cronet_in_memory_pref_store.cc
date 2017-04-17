@@ -18,6 +18,11 @@ bool CronetInMemoryPrefStore::GetValue(const std::string& key,
   return prefs_.GetValue(key, value);
 }
 
+std::unique_ptr<base::DictionaryValue> CronetInMemoryPrefStore::GetValues()
+    const {
+  return prefs_.AsDictionaryValue();
+}
+
 bool CronetInMemoryPrefStore::GetMutableValue(const std::string& key,
                                               base::Value** value) {
   return prefs_.GetValue(key, value);
@@ -79,6 +84,6 @@ void CronetInMemoryPrefStore::ReadPrefsAsync(
 
 void CronetInMemoryPrefStore::ReportValueChanged(const std::string& key,
                                                  uint32_t flags) {
-  FOR_EACH_OBSERVER(Observer, observers_, OnPrefValueChanged(key));
+  for (Observer& observer : observers_)
+    observer.OnPrefValueChanged(key);
 }
-

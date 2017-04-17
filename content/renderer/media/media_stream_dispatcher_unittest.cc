@@ -26,20 +26,19 @@ namespace {
 const int kRouteId = 0;
 const int kAudioSessionId = 3;
 const int kVideoSessionId = 5;
+const int kScreenSessionId = 7;
 const int kRequestId1 = 10;
 const int kRequestId2 = 20;
-const int kRequestId3 = 30;
-const int kRequestId4 = 40;
 
 const MediaStreamType kAudioType = MEDIA_DEVICE_AUDIO_CAPTURE;
 const MediaStreamType kVideoType = MEDIA_DEVICE_VIDEO_CAPTURE;
+const MediaStreamType kScreenType = MEDIA_DESKTOP_VIDEO_CAPTURE;
 
 class MockMediaStreamDispatcherEventHandler
     : public MediaStreamDispatcherEventHandler,
       public base::SupportsWeakPtr<MockMediaStreamDispatcherEventHandler> {
  public:
-  MockMediaStreamDispatcherEventHandler()
-      : request_id_(-1), did_receive_devices_changed_(false) {}
+  MockMediaStreamDispatcherEventHandler() : request_id_(-1) {}
 
   void OnStreamGenerated(
       int request_id,
@@ -75,11 +74,6 @@ class MockMediaStreamDispatcherEventHandler
     }
   }
 
-  void OnDevicesEnumerated(int request_id,
-                           const StreamDeviceInfoArray& device_array) override {
-    request_id_ = request_id;
-  }
-
   void OnDeviceOpened(int request_id,
                       const std::string& label,
                       const StreamDeviceInfo& video_device) override {
@@ -88,8 +82,6 @@ class MockMediaStreamDispatcherEventHandler
   }
 
   void OnDeviceOpenFailed(int request_id) override { request_id_ = request_id; }
-
-  void OnDevicesChanged() override { did_receive_devices_changed_ = true; }
 
   void ResetStoredParameters() {
     request_id_ = -1;
@@ -104,7 +96,6 @@ class MockMediaStreamDispatcherEventHandler
   std::string device_stopped_label_;
   StreamDeviceInfo audio_device_;
   StreamDeviceInfo video_device_;
-  bool did_receive_devices_changed_;
 };
 
 class MediaStreamDispatcherUnderTest : public MediaStreamDispatcher {
@@ -128,7 +119,7 @@ class MediaStreamDispatcherTest : public ::testing::Test {
   int GenerateStream(const StreamControls& controls, int request_id) {
     int next_ipc_id = dispatcher_->GetNextIpcIdForTest();
     dispatcher_->GenerateStream(request_id, handler_.get()->AsWeakPtr(),
-                                controls, security_origin_);
+                                controls, security_origin_, true);
     return next_ipc_id;
   }
 
@@ -225,19 +216,6 @@ TEST_F(MediaStreamDispatcherTest, BasicVideoDevice) {
       new MockMediaStreamDispatcherEventHandler);
   url::Origin security_origin;
 
-  int ipc_request_id1 = dispatcher->next_ipc_id_;
-  dispatcher->EnumerateDevices(
-      kRequestId1, handler1.get()->AsWeakPtr(),
-      kVideoType,
-      security_origin);
-  int ipc_request_id2 = dispatcher->next_ipc_id_;
-  EXPECT_NE(ipc_request_id1, ipc_request_id2);
-  dispatcher->EnumerateDevices(
-      kRequestId2, handler2.get()->AsWeakPtr(),
-      kVideoType,
-      security_origin);
-  EXPECT_EQ(dispatcher->requests_.size(), size_t(2));
-
   StreamDeviceInfoArray video_device_array(1);
   StreamDeviceInfo video_device_info;
   video_device_info.device.name = "Camera";
@@ -246,44 +224,33 @@ TEST_F(MediaStreamDispatcherTest, BasicVideoDevice) {
   video_device_info.session_id = kVideoSessionId;
   video_device_array[0] = video_device_info;
 
-  // Complete the first enumeration request.
-  dispatcher->OnMessageReceived(MediaStreamMsg_DevicesEnumerated(
-      kRouteId, ipc_request_id1, video_device_array));
-  EXPECT_EQ(handler1->request_id_, kRequestId1);
-
-  dispatcher->OnMessageReceived(MediaStreamMsg_DevicesEnumerated(
-        kRouteId, ipc_request_id2, video_device_array));
-  EXPECT_EQ(handler2->request_id_, kRequestId2);
-
-  EXPECT_EQ(dispatcher->requests_.size(), size_t(2));
+  EXPECT_EQ(dispatcher->requests_.size(), size_t(0));
   EXPECT_EQ(dispatcher->label_stream_map_.size(), size_t(0));
 
-  int ipc_request_id3 = dispatcher->next_ipc_id_;
-  dispatcher->OpenDevice(kRequestId3, handler1.get()->AsWeakPtr(),
-                         video_device_info.device.id,
-                         kVideoType,
+  int ipc_request_id1 = dispatcher->next_ipc_id_;
+  dispatcher->OpenDevice(kRequestId1, handler1.get()->AsWeakPtr(),
+                         video_device_info.device.id, kVideoType,
                          security_origin);
-  int ipc_request_id4 = dispatcher->next_ipc_id_;
-  EXPECT_NE(ipc_request_id3, ipc_request_id4);
-  dispatcher->OpenDevice(kRequestId4, handler1.get()->AsWeakPtr(),
-                         video_device_info.device.id,
-                         kVideoType,
+  int ipc_request_id2 = dispatcher->next_ipc_id_;
+  EXPECT_NE(ipc_request_id1, ipc_request_id2);
+  dispatcher->OpenDevice(kRequestId2, handler1.get()->AsWeakPtr(),
+                         video_device_info.device.id, kVideoType,
                          security_origin);
-  EXPECT_EQ(dispatcher->requests_.size(), size_t(4));
+  EXPECT_EQ(dispatcher->requests_.size(), size_t(2));
 
   // Complete the OpenDevice of request 1.
   std::string stream_label1 = std::string("stream1");
   dispatcher->OnMessageReceived(MediaStreamMsg_DeviceOpened(
-      kRouteId, ipc_request_id3, stream_label1, video_device_info));
-  EXPECT_EQ(handler1->request_id_, kRequestId3);
+      kRouteId, ipc_request_id1, stream_label1, video_device_info));
+  EXPECT_EQ(handler1->request_id_, kRequestId1);
 
   // Complete the OpenDevice of request 2.
   std::string stream_label2 = std::string("stream2");
   dispatcher->OnMessageReceived(MediaStreamMsg_DeviceOpened(
-      kRouteId, ipc_request_id4, stream_label2, video_device_info));
-  EXPECT_EQ(handler1->request_id_, kRequestId4);
+      kRouteId, ipc_request_id2, stream_label2, video_device_info));
+  EXPECT_EQ(handler1->request_id_, kRequestId2);
 
-  EXPECT_EQ(dispatcher->requests_.size(), size_t(2));
+  EXPECT_EQ(dispatcher->requests_.size(), size_t(0));
   EXPECT_EQ(dispatcher->label_stream_map_.size(), size_t(2));
 
   // Check the video_session_id.
@@ -303,7 +270,7 @@ TEST_F(MediaStreamDispatcherTest, BasicVideoDevice) {
 
   // Verify that the request have been completed.
   EXPECT_EQ(dispatcher->label_stream_map_.size(), size_t(0));
-  EXPECT_EQ(dispatcher->requests_.size(), size_t(2));
+  EXPECT_EQ(dispatcher->requests_.size(), size_t(0));
 }
 
 TEST_F(MediaStreamDispatcherTest, TestFailure) {
@@ -317,7 +284,7 @@ TEST_F(MediaStreamDispatcherTest, TestFailure) {
   // Test failure when creating a stream.
   int ipc_request_id1 = dispatcher->next_ipc_id_;
   dispatcher->GenerateStream(kRequestId1, handler.get()->AsWeakPtr(),
-                             components, security_origin);
+                             components, security_origin, true);
   dispatcher->OnMessageReceived(MediaStreamMsg_StreamGenerationFailed(
       kRouteId, ipc_request_id1, MEDIA_DEVICE_PERMISSION_DENIED));
 
@@ -328,7 +295,7 @@ TEST_F(MediaStreamDispatcherTest, TestFailure) {
   // Create a new stream.
   ipc_request_id1 = dispatcher->next_ipc_id_;
   dispatcher->GenerateStream(kRequestId1, handler.get()->AsWeakPtr(),
-                             components, security_origin);
+                             components, security_origin, true);
 
   StreamDeviceInfoArray audio_device_array(1);
   StreamDeviceInfo audio_device_info;
@@ -363,9 +330,9 @@ TEST_F(MediaStreamDispatcherTest, CancelGenerateStream) {
   int ipc_request_id1 = dispatcher->next_ipc_id_;
 
   dispatcher->GenerateStream(kRequestId1, handler.get()->AsWeakPtr(),
-                             components, url::Origin());
+                             components, url::Origin(), true);
   dispatcher->GenerateStream(kRequestId2, handler.get()->AsWeakPtr(),
-                             components, url::Origin());
+                             components, url::Origin(), true);
 
   EXPECT_EQ(2u, dispatcher->requests_.size());
   dispatcher->CancelGenerateStream(kRequestId2, handler.get()->AsWeakPtr());
@@ -413,23 +380,72 @@ TEST_F(MediaStreamDispatcherTest, DeviceClosed) {
             StreamDeviceInfo::kNoId);
 }
 
-// Test that the MediaStreamDispatcherEventHandler is notified when the message
-// MediaStreamMsg_DevicesChanged is received.
-TEST_F(MediaStreamDispatcherTest, DevicesChanged) {
-  std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler1(
+TEST_F(MediaStreamDispatcherTest, GetNonScreenCaptureDevices) {
+  std::unique_ptr<MediaStreamDispatcher> dispatcher(
+      new MediaStreamDispatcher(nullptr));
+  std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler(
       new MockMediaStreamDispatcherEventHandler);
-  std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler2(
-      new MockMediaStreamDispatcherEventHandler);
-  dispatcher_->SubscribeToDeviceChangeNotifications(handler1->AsWeakPtr(),
-                                                    security_origin_);
-  dispatcher_->SubscribeToDeviceChangeNotifications(handler2->AsWeakPtr(),
-                                                    security_origin_);
-  dispatcher_->OnMessageReceived(MediaStreamMsg_DevicesChanged(kRouteId));
-  dispatcher_->CancelDeviceChangeNotifications(handler1->AsWeakPtr());
-  dispatcher_->CancelDeviceChangeNotifications(handler2->AsWeakPtr());
+  url::Origin security_origin;
 
-  EXPECT_TRUE(handler1->did_receive_devices_changed_);
-  EXPECT_TRUE(handler2->did_receive_devices_changed_);
+  StreamDeviceInfo video_device_info;
+  video_device_info.device.name = "Camera";
+  video_device_info.device.id = "device_path";
+  video_device_info.device.type = kVideoType;
+  video_device_info.session_id = kVideoSessionId;
+
+  StreamDeviceInfo screen_device_info;
+  screen_device_info.device.name = "Screen";
+  screen_device_info.device.id = "screen_capture";
+  screen_device_info.device.type = kScreenType;
+  screen_device_info.session_id = kScreenSessionId;
+
+  EXPECT_EQ(dispatcher->requests_.size(), 0u);
+  EXPECT_EQ(dispatcher->label_stream_map_.size(), 0u);
+
+  int ipc_request_id1 = dispatcher->next_ipc_id_;
+  dispatcher->OpenDevice(kRequestId1, handler.get()->AsWeakPtr(),
+                         video_device_info.device.id, kVideoType,
+                         security_origin);
+  int ipc_request_id2 = dispatcher->next_ipc_id_;
+  EXPECT_NE(ipc_request_id1, ipc_request_id2);
+  dispatcher->OpenDevice(kRequestId2, handler.get()->AsWeakPtr(),
+                         screen_device_info.device.id, kScreenType,
+                         security_origin);
+  EXPECT_EQ(dispatcher->requests_.size(), 2u);
+
+  // Complete the OpenDevice of request 1.
+  std::string stream_label1 = std::string("stream1");
+  dispatcher->OnMessageReceived(MediaStreamMsg_DeviceOpened(
+      kRouteId, ipc_request_id1, stream_label1, video_device_info));
+  EXPECT_EQ(handler->request_id_, kRequestId1);
+
+  // Complete the OpenDevice of request 2.
+  std::string stream_label2 = std::string("stream2");
+  dispatcher->OnMessageReceived(MediaStreamMsg_DeviceOpened(
+      kRouteId, ipc_request_id2, stream_label2, screen_device_info));
+  EXPECT_EQ(handler->request_id_, kRequestId2);
+
+  EXPECT_EQ(dispatcher->requests_.size(), 0u);
+  EXPECT_EQ(dispatcher->label_stream_map_.size(), 2u);
+
+  // Only the device with |kVideoType| will be returned.
+  StreamDeviceInfoArray video_device_array =
+      dispatcher->GetNonScreenCaptureDevices();
+  EXPECT_EQ(video_device_array.size(), 1u);
+
+  // Close the device from request 2.
+  dispatcher->CloseDevice(stream_label2);
+  EXPECT_EQ(dispatcher->video_session_id(stream_label2, 0),
+            StreamDeviceInfo::kNoId);
+
+  // Close the device from request 1.
+  dispatcher->CloseDevice(stream_label1);
+  EXPECT_EQ(dispatcher->video_session_id(stream_label1, 0),
+            StreamDeviceInfo::kNoId);
+
+  // Verify that the request have been completed.
+  EXPECT_EQ(dispatcher->label_stream_map_.size(), 0u);
+  EXPECT_EQ(dispatcher->requests_.size(), 0u);
 }
 
 }  // namespace content

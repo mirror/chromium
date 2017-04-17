@@ -5,13 +5,17 @@
 #include "mojo/edk/test/mojo_test_base.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/synchronization/waitable_event.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/system/handle_signals_state.h"
 #include "mojo/public/c/system/buffer.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/c/system/functions.h"
+#include "mojo/public/c/system/watcher.h"
+#include "mojo/public/cpp/system/wait.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
@@ -21,7 +25,6 @@
 namespace mojo {
 namespace edk {
 namespace test {
-
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
 namespace {
@@ -44,14 +47,15 @@ MojoTestBase::~MojoTestBase() {}
 MojoTestBase::ClientController& MojoTestBase::StartClient(
     const std::string& client_name) {
   clients_.push_back(base::MakeUnique<ClientController>(
-      client_name, this, process_error_callback_));
+      client_name, this, process_error_callback_, launch_type_));
   return *clients_.back();
 }
 
 MojoTestBase::ClientController::ClientController(
     const std::string& client_name,
     MojoTestBase* test,
-    const ProcessErrorCallback& process_error_callback) {
+    const ProcessErrorCallback& process_error_callback,
+    LaunchType launch_type) {
 #if !defined(OS_IOS)
 #if defined(OS_MACOSX)
   // This lock needs to be held while launching the child because the Mach port
@@ -63,7 +67,7 @@ MojoTestBase::ClientController::ClientController(
   base::AutoLock lock(g_mach_broker->GetLock());
 #endif
   helper_.set_process_error_callback(process_error_callback);
-  pipe_ = helper_.StartChild(client_name);
+  pipe_ = helper_.StartChild(client_name, launch_type);
 #if defined(OS_MACOSX)
   g_mach_broker->AddPlaceholderForPid(helper_.test_child().Handle());
 #endif
@@ -73,6 +77,12 @@ MojoTestBase::ClientController::ClientController(
 MojoTestBase::ClientController::~ClientController() {
   CHECK(was_shutdown_)
       << "Test clients should be waited on explicitly with WaitForShutdown().";
+}
+
+void MojoTestBase::ClientController::ClosePeerConnection() {
+#if !defined(OS_IOS)
+  helper_.ClosePeerConnection();
+#endif
 }
 
 int MojoTestBase::ClientController::WaitForShutdown() {
@@ -123,9 +133,7 @@ std::string MojoTestBase::ReadMessageWithHandles(
     MojoHandle mp,
     MojoHandle* handles,
     uint32_t expected_num_handles) {
-  CHECK_EQ(MojoWait(mp, MOJO_HANDLE_SIGNAL_READABLE, MOJO_DEADLINE_INDEFINITE,
-                    nullptr),
-           MOJO_RESULT_OK);
+  CHECK_EQ(WaitForSignals(mp, MOJO_HANDLE_SIGNAL_READABLE), MOJO_RESULT_OK);
 
   uint32_t message_size = 0;
   uint32_t num_handles = 0;
@@ -147,9 +155,7 @@ std::string MojoTestBase::ReadMessageWithHandles(
 // static
 std::string MojoTestBase::ReadMessageWithOptionalHandle(MojoHandle mp,
                                                         MojoHandle* handle) {
-  CHECK_EQ(MojoWait(mp, MOJO_HANDLE_SIGNAL_READABLE, MOJO_DEADLINE_INDEFINITE,
-                    nullptr),
-           MOJO_RESULT_OK);
+  CHECK_EQ(WaitForSignals(mp, MOJO_HANDLE_SIGNAL_READABLE), MOJO_RESULT_OK);
 
   uint32_t message_size = 0;
   uint32_t num_handles = 0;
@@ -184,9 +190,7 @@ std::string MojoTestBase::ReadMessage(MojoHandle mp) {
 void MojoTestBase::ReadMessage(MojoHandle mp,
                                char* data,
                                size_t num_bytes) {
-  CHECK_EQ(MojoWait(mp, MOJO_HANDLE_SIGNAL_READABLE, MOJO_DEADLINE_INDEFINITE,
-                    nullptr),
-           MOJO_RESULT_OK);
+  CHECK_EQ(WaitForSignals(mp, MOJO_HANDLE_SIGNAL_READABLE), MOJO_RESULT_OK);
 
   uint32_t message_size = 0;
   uint32_t num_handles = 0;
@@ -281,8 +285,7 @@ void MojoTestBase::CreateDataPipe(MojoHandle *p0,
 
 // static
 void MojoTestBase::WriteData(MojoHandle producer, const std::string& data) {
-  CHECK_EQ(MojoWait(producer, MOJO_HANDLE_SIGNAL_WRITABLE,
-                    MOJO_DEADLINE_INDEFINITE, nullptr),
+  CHECK_EQ(WaitForSignals(producer, MOJO_HANDLE_SIGNAL_WRITABLE),
            MOJO_RESULT_OK);
   uint32_t num_bytes = static_cast<uint32_t>(data.size());
   CHECK_EQ(MojoWriteData(producer, data.data(), &num_bytes,
@@ -293,8 +296,7 @@ void MojoTestBase::WriteData(MojoHandle producer, const std::string& data) {
 
 // static
 std::string MojoTestBase::ReadData(MojoHandle consumer, size_t size) {
-  CHECK_EQ(MojoWait(consumer, MOJO_HANDLE_SIGNAL_READABLE,
-                    MOJO_DEADLINE_INDEFINITE, nullptr),
+  CHECK_EQ(WaitForSignals(consumer, MOJO_HANDLE_SIGNAL_READABLE),
            MOJO_RESULT_OK);
   std::vector<char> buffer(size);
   uint32_t num_bytes = static_cast<uint32_t>(size);
@@ -304,6 +306,20 @@ std::string MojoTestBase::ReadData(MojoHandle consumer, size_t size) {
   CHECK_EQ(num_bytes, static_cast<uint32_t>(size));
 
   return std::string(buffer.data(), buffer.size());
+}
+
+// static
+MojoHandleSignalsState MojoTestBase::GetSignalsState(MojoHandle handle) {
+  MojoHandleSignalsState signals_state;
+  CHECK_EQ(MOJO_RESULT_OK, MojoQueryHandleSignalsState(handle, &signals_state));
+  return signals_state;
+}
+
+// static
+MojoResult MojoTestBase::WaitForSignals(MojoHandle handle,
+                                        MojoHandleSignals signals,
+                                        MojoHandleSignalsState* state) {
+  return Wait(Handle(handle), signals, state);
 }
 
 }  // namespace test

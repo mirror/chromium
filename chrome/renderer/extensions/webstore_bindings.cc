@@ -93,7 +93,7 @@ void WebstoreBindings::Install(
 
   Send(new ExtensionHostMsg_InlineWebstoreInstall(
       render_frame->GetRoutingID(), install_id, GetRoutingID(),
-      webstore_item_id, frame->document().url(), listener_mask));
+      webstore_item_id, listener_mask));
 
   args.GetReturnValue().Set(static_cast<int32_t>(install_id));
 }
@@ -104,45 +104,45 @@ bool WebstoreBindings::GetWebstoreItemIdFromFrame(
     const std::string& preferred_store_link_url,
     std::string* webstore_item_id,
     std::string* error) {
-  if (frame != frame->top()) {
+  if (frame != frame->Top()) {
     *error = kNotInTopFrameError;
     return false;
   }
 
-  if (!WebUserGestureIndicator::isProcessingUserGesture()) {
+  if (!WebUserGestureIndicator::IsProcessingUserGesture()) {
     *error = kNotUserGestureError;
     return false;
   }
 
-  WebDocument document = frame->document();
-  if (document.isNull()) {
+  WebDocument document = frame->GetDocument();
+  if (document.IsNull()) {
     *error = kNoWebstoreItemLinkFoundError;
     return false;
   }
 
-  WebElement head = document.head();
-  if (head.isNull()) {
+  WebElement head = document.Head();
+  if (head.IsNull()) {
     *error = kNoWebstoreItemLinkFoundError;
     return false;
   }
 
   GURL webstore_base_url =
       GURL(extension_urls::GetWebstoreItemDetailURLPrefix());
-  for (WebNode child = head.firstChild(); !child.isNull();
-       child = child.nextSibling()) {
-    if (!child.isElementNode())
+  for (WebNode child = head.FirstChild(); !child.IsNull();
+       child = child.NextSibling()) {
+    if (!child.IsElementNode())
       continue;
-    WebElement elem = child.to<WebElement>();
+    WebElement elem = child.To<WebElement>();
 
-    if (!elem.hasHTMLTagName("link") || !elem.hasAttribute("rel") ||
-        !elem.hasAttribute("href"))
+    if (!elem.HasHTMLTagName("link") || !elem.HasAttribute("rel") ||
+        !elem.HasAttribute("href"))
       continue;
 
-    std::string rel = elem.getAttribute("rel").utf8();
+    std::string rel = elem.GetAttribute("rel").Utf8();
     if (!base::LowerCaseEqualsASCII(rel, kWebstoreLinkRelation))
       continue;
 
-    std::string webstore_url_string(elem.getAttribute("href").utf8());
+    std::string webstore_url_string(elem.GetAttribute("href").Utf8());
 
     if (!preferred_store_link_url.empty() &&
         preferred_store_link_url != webstore_url_string) {
@@ -214,7 +214,7 @@ void WebstoreBindings::OnInlineWebstoreInstallResponse(
     v8::String::NewFromUtf8(
         isolate, api::webstore::kInstallResultCodes[static_cast<int>(result)])
   };
-  context()->module_system()->CallModuleMethod(
+  context()->module_system()->CallModuleMethodSafe(
       "webstore", "onInstallResponse", arraysize(argv), argv);
 }
 
@@ -235,7 +235,7 @@ void WebstoreBindings::OnInlineInstallStageChanged(int stage) {
   v8::Context::Scope context_scope(context()->v8_context());
   v8::Local<v8::Value> argv[] = {
       v8::String::NewFromUtf8(isolate, stage_string)};
-  context()->module_system()->CallModuleMethod(
+  context()->module_system()->CallModuleMethodSafe(
       "webstore", "onInstallStageChanged", arraysize(argv), argv);
 }
 
@@ -245,7 +245,7 @@ void WebstoreBindings::OnInlineInstallDownloadProgress(int percent_downloaded) {
   v8::Context::Scope context_scope(context()->v8_context());
   v8::Local<v8::Value> argv[] = {
       v8::Number::New(isolate, percent_downloaded / 100.0)};
-  context()->module_system()->CallModuleMethod(
+  context()->module_system()->CallModuleMethodSafe(
       "webstore", "onDownloadProgress", arraysize(argv), argv);
 }
 

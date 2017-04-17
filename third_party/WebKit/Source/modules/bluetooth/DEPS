@@ -1,9 +1,7 @@
 include_rules = [
-    "+bindings",
-    "+core",
-    "+heap",
+    "+device/bluetooth/public/interfaces",
     "-modules",
     "+modules/bluetooth",
     "+modules/EventTargetModules.h",
-    "-web",
+    "+mojo/public/cpp/bindings",
 ]

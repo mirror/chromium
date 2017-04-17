@@ -29,8 +29,8 @@
 
 #include "platform/transforms/TransformationMatrix.h"
 
-#include "wtf/Allocator.h"
-#include <string.h> // for memcpy
+#include <string.h>  // for memcpy
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -41,162 +41,165 @@ class IntPoint;
 class IntRect;
 class TransformationMatrix;
 
-#define IDENTITY_TRANSFORM { 1, 0, 0, 1, 0, 0 }
+#define IDENTITY_TRANSFORM \
+  { 1, 0, 0, 1, 0, 0 }
 
 class PLATFORM_EXPORT AffineTransform {
-    DISALLOW_NEW();
-public:
-    typedef double Transform[6];
+  DISALLOW_NEW();
 
-    AffineTransform();
-    AffineTransform(double a, double b, double c, double d, double e, double f);
-    AffineTransform(const Transform transform) { setMatrix(transform); }
+ public:
+  typedef double Transform[6];
 
-    void setMatrix(double a, double b, double c, double d, double e, double f);
+  AffineTransform();
+  AffineTransform(double a, double b, double c, double d, double e, double f);
+  AffineTransform(const Transform transform) { SetMatrix(transform); }
 
-    void setTransform(const AffineTransform& other) { setMatrix(other.m_transform); }
+  void SetMatrix(double a, double b, double c, double d, double e, double f);
 
-    void map(double x, double y, double& x2, double& y2) const;
+  void SetTransform(const AffineTransform& other) {
+    SetMatrix(other.transform_);
+  }
 
-    // Rounds the mapped point to the nearest integer value.
-    IntPoint mapPoint(const IntPoint&) const;
+  void Map(double x, double y, double& x2, double& y2) const;
 
-    FloatPoint mapPoint(const FloatPoint&) const;
+  // Rounds the mapped point to the nearest integer value.
+  IntPoint MapPoint(const IntPoint&) const;
 
-    IntSize mapSize(const IntSize&) const;
+  FloatPoint MapPoint(const FloatPoint&) const;
 
-    FloatSize mapSize(const FloatSize&) const;
+  IntSize MapSize(const IntSize&) const;
 
-    // Rounds the resulting mapped rectangle out. This is helpful for bounding
-    // box computations but may not be what is wanted in other contexts.
-    IntRect mapRect(const IntRect&) const;
+  FloatSize MapSize(const FloatSize&) const;
 
-    FloatRect mapRect(const FloatRect&) const;
-    FloatQuad mapQuad(const FloatQuad&) const;
+  // Rounds the resulting mapped rectangle out. This is helpful for bounding
+  // box computations but may not be what is wanted in other contexts.
+  IntRect MapRect(const IntRect&) const;
 
-    bool isIdentity() const;
+  FloatRect MapRect(const FloatRect&) const;
+  FloatQuad MapQuad(const FloatQuad&) const;
 
-    double a() const { return m_transform[0]; }
-    void setA(double a) { m_transform[0] = a; }
-    double b() const { return m_transform[1]; }
-    void setB(double b) { m_transform[1] = b; }
-    double c() const { return m_transform[2]; }
-    void setC(double c) { m_transform[2] = c; }
-    double d() const { return m_transform[3]; }
-    void setD(double d) { m_transform[3] = d; }
-    double e() const { return m_transform[4]; }
-    void setE(double e) { m_transform[4] = e; }
-    double f() const { return m_transform[5]; }
-    void setF(double f) { m_transform[5] = f; }
+  bool IsIdentity() const;
 
-    void makeIdentity();
+  double A() const { return transform_[0]; }
+  void SetA(double a) { transform_[0] = a; }
+  double B() const { return transform_[1]; }
+  void SetB(double b) { transform_[1] = b; }
+  double C() const { return transform_[2]; }
+  void SetC(double c) { transform_[2] = c; }
+  double D() const { return transform_[3]; }
+  void SetD(double d) { transform_[3] = d; }
+  double E() const { return transform_[4]; }
+  void SetE(double e) { transform_[4] = e; }
+  double F() const { return transform_[5]; }
+  void SetF(double f) { transform_[5] = f; }
 
-    // this' = this * other
-    AffineTransform& multiply(const AffineTransform& other);
-    // this' = other * this
-    AffineTransform& preMultiply(const AffineTransform& other);
+  void MakeIdentity();
 
-    AffineTransform& scale(double);
-    AffineTransform& scale(double sx, double sy);
-    AffineTransform& scaleNonUniform(double sx, double sy);
-    AffineTransform& rotate(double a);
-    AffineTransform& rotateRadians(double a);
-    AffineTransform& rotateFromVector(double x, double y);
-    AffineTransform& translate(double tx, double ty);
-    AffineTransform& shear(double sx, double sy);
-    AffineTransform& flipX();
-    AffineTransform& flipY();
-    AffineTransform& skew(double angleX, double angleY);
-    AffineTransform& skewX(double angle);
-    AffineTransform& skewY(double angle);
+  // this' = this * other
+  AffineTransform& Multiply(const AffineTransform& other);
+  // this' = other * this
+  AffineTransform& PreMultiply(const AffineTransform& other);
 
-    double xScaleSquared() const;
-    double xScale() const;
-    double yScaleSquared() const;
-    double yScale() const;
+  AffineTransform& Scale(double);
+  AffineTransform& Scale(double sx, double sy);
+  AffineTransform& ScaleNonUniform(double sx, double sy);
+  AffineTransform& Rotate(double a);
+  AffineTransform& RotateRadians(double a);
+  AffineTransform& RotateFromVector(double x, double y);
+  AffineTransform& Translate(double tx, double ty);
+  AffineTransform& Shear(double sx, double sy);
+  AffineTransform& FlipX();
+  AffineTransform& FlipY();
+  AffineTransform& Skew(double angle_x, double angle_y);
+  AffineTransform& SkewX(double angle);
+  AffineTransform& SkewY(double angle);
 
-    double det() const;
-    bool isInvertible() const;
-    AffineTransform inverse() const;
+  double XScaleSquared() const;
+  double XScale() const;
+  double YScaleSquared() const;
+  double YScale() const;
 
-    TransformationMatrix toTransformationMatrix() const;
+  double Det() const;
+  bool IsInvertible() const;
+  AffineTransform Inverse() const;
 
-    bool isIdentityOrTranslation() const
-    {
-        return m_transform[0] == 1 && m_transform[1] == 0 && m_transform[2] == 0 && m_transform[3] == 1;
-    }
+  TransformationMatrix ToTransformationMatrix() const;
 
-    bool isIdentityOrTranslationOrFlipped() const
-    {
-        return m_transform[0] == 1 && m_transform[1] == 0 && m_transform[2] == 0 && (m_transform[3] == 1 || m_transform[3] == -1);
-    }
+  bool IsIdentityOrTranslation() const {
+    return transform_[0] == 1 && transform_[1] == 0 && transform_[2] == 0 &&
+           transform_[3] == 1;
+  }
 
-    bool preservesAxisAlignment() const
-    {
-        return (m_transform[1] == 0 && m_transform[2] == 0) || (m_transform[0] == 0 && m_transform[3] == 0);
-    }
+  bool IsIdentityOrTranslationOrFlipped() const {
+    return transform_[0] == 1 && transform_[1] == 0 && transform_[2] == 0 &&
+           (transform_[3] == 1 || transform_[3] == -1);
+  }
 
-    bool operator== (const AffineTransform& m2) const
-    {
-        return (m_transform[0] == m2.m_transform[0]
-             && m_transform[1] == m2.m_transform[1]
-             && m_transform[2] == m2.m_transform[2]
-             && m_transform[3] == m2.m_transform[3]
-             && m_transform[4] == m2.m_transform[4]
-             && m_transform[5] == m2.m_transform[5]);
-    }
+  bool PreservesAxisAlignment() const {
+    return (transform_[1] == 0 && transform_[2] == 0) ||
+           (transform_[0] == 0 && transform_[3] == 0);
+  }
 
-    bool operator!=(const AffineTransform& other) const { return !(*this == other); }
+  bool operator==(const AffineTransform& m2) const {
+    return (transform_[0] == m2.transform_[0] &&
+            transform_[1] == m2.transform_[1] &&
+            transform_[2] == m2.transform_[2] &&
+            transform_[3] == m2.transform_[3] &&
+            transform_[4] == m2.transform_[4] &&
+            transform_[5] == m2.transform_[5]);
+  }
 
-    // *this = *this * t (i.e., a multRight)
-    AffineTransform& operator*=(const AffineTransform& t)
-    {
-        return multiply(t);
-    }
+  bool operator!=(const AffineTransform& other) const {
+    return !(*this == other);
+  }
 
-    // result = *this * t (i.e., a multRight)
-    AffineTransform operator*(const AffineTransform& t) const
-    {
-        AffineTransform result = *this;
-        result *= t;
-        return result;
-    }
+  // *this = *this * t (i.e., a multRight)
+  AffineTransform& operator*=(const AffineTransform& t) { return Multiply(t); }
 
-    static AffineTransform translation(double x, double y)
-    {
-        return AffineTransform(1, 0, 0, 1, x, y);
-    }
+  // result = *this * t (i.e., a multRight)
+  AffineTransform operator*(const AffineTransform& t) const {
+    AffineTransform result = *this;
+    result *= t;
+    return result;
+  }
 
-    // decompose the matrix into its component parts
-    typedef struct {
-        double scaleX, scaleY;
-        double angle;
-        double remainderA, remainderB, remainderC, remainderD;
-        double translateX, translateY;
-    } DecomposedType;
+  static AffineTransform Translation(double x, double y) {
+    return AffineTransform(1, 0, 0, 1, x, y);
+  }
 
-    bool decompose(DecomposedType&) const;
-    void recompose(const DecomposedType&);
+  // decompose the matrix into its component parts
+  typedef struct {
+    double scale_x, scale_y;
+    double angle;
+    double remainder_a, remainder_b, remainder_c, remainder_d;
+    double translate_x, translate_y;
+  } DecomposedType;
 
-    void copyTransformTo(Transform m)
-    {
-        memcpy(m, m_transform, sizeof(Transform));
-    }
+  bool Decompose(DecomposedType&) const;
+  void Recompose(const DecomposedType&);
 
-private:
-    void setMatrix(const Transform m)
-    {
-        if (m && m != m_transform)
-            memcpy(m_transform, m, sizeof(Transform));
-    }
+  void CopyTransformTo(Transform m) {
+    memcpy(m, transform_, sizeof(Transform));
+  }
 
-    Transform m_transform;
+  // If |asMatrix| is true, the transform is returned as a matrix in row-major
+  // order. Otherwise, the transform's decomposition is returned which shows
+  // the translation, scale, etc.
+  String ToString(bool as_matrix = false) const;
+
+ private:
+  void SetMatrix(const Transform m) {
+    if (m && m != transform_)
+      memcpy(transform_, m, sizeof(Transform));
+  }
+
+  Transform transform_;
 };
 
 // Redeclared here to avoid ODR issues.
 // See platform/testing/TransformPrinters.h.
 void PrintTo(const AffineTransform&, std::ostream*);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

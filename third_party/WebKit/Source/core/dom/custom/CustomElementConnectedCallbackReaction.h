@@ -8,20 +8,21 @@
 #include "core/CoreExport.h"
 #include "core/dom/custom/CustomElementReaction.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class CORE_EXPORT CustomElementConnectedCallbackReaction final
     : public CustomElementReaction {
-    WTF_MAKE_NONCOPYABLE(CustomElementConnectedCallbackReaction);
-public:
-    CustomElementConnectedCallbackReaction(CustomElementDefinition*);
+  WTF_MAKE_NONCOPYABLE(CustomElementConnectedCallbackReaction);
 
-private:
-    void invoke(Element*) override;
+ public:
+  CustomElementConnectedCallbackReaction(CustomElementDefinition*);
+
+ private:
+  void Invoke(Element*) override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CustomElementConnectedCallbackReaction_h
+#endif  // CustomElementConnectedCallbackReaction_h

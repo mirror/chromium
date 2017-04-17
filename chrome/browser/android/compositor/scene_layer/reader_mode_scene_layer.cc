@@ -15,7 +15,8 @@
 #include "ui/android/view_android.h"
 #include "ui/gfx/android/java_bitmap.h"
 
-namespace chrome {
+using base::android::JavaParamRef;
+
 namespace android {
 
 ReaderModeSceneLayer::ReaderModeSceneLayer(JNIEnv* env, jobject jobj)
@@ -53,13 +54,9 @@ void ReaderModeSceneLayer::SetResourceIds(
     jint bar_shadow_resource_id,
     jint panel_icon_resource_id,
     jint close_icon_resource_id) {
-
   reader_mode_layer_->SetResourceIds(
-      text_resource_id,
-      bar_background_resource_id,
-      bar_shadow_resource_id,
-      panel_icon_resource_id,
-      close_icon_resource_id);
+      text_resource_id, bar_background_resource_id, bar_shadow_resource_id,
+      panel_icon_resource_id, close_icon_resource_id, 0);
 }
 
 void ReaderModeSceneLayer::Update(
@@ -161,4 +158,3 @@ bool RegisterReaderModeSceneLayer(JNIEnv* env) {
 }
 
 }  // namespace android
-}  // namespace chrome

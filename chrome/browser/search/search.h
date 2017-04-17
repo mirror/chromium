@@ -14,17 +14,11 @@
 
 class GURL;
 class Profile;
-class TemplateURL;
-class TemplateURLRef;
 
 namespace content {
 class BrowserContext;
 class NavigationEntry;
 class WebContents;
-}
-
-namespace user_prefs {
-class PrefRegistrySyncable;
 }
 
 namespace search {
@@ -39,32 +33,8 @@ enum CacheableNTPLoad {
 // Returns whether the suggest is enabled for the given |profile|.
 bool IsSuggestPrefEnabled(Profile* profile);
 
-// Extracts and returns search terms from |url|. Does not consider
-// IsQueryExtractionEnabled() and Instant support state of the page and does
-// not check for a privileged process, so most callers should use
-// GetSearchTerms() below instead.
+// Extracts and returns search terms from |url|.
 base::string16 ExtractSearchTermsFromURL(Profile* profile, const GURL& url);
-
-// Returns true if it is okay to extract search terms from |url|. |url| must
-// have a secure scheme and must contain the search terms replacement key for
-// the default search provider.
-bool IsQueryExtractionAllowedForURL(Profile* profile, const GURL& url);
-
-// Returns the search terms attached to a specific NavigationEntry, or empty
-// string otherwise. Does not consider IsQueryExtractionEnabled() and does not
-// check Instant support, so most callers should use GetSearchTerms() below
-// instead.
-base::string16 GetSearchTermsFromNavigationEntry(
-    const content::NavigationEntry* entry);
-
-// Returns search terms if this WebContents is a search results page. It looks
-// in the visible NavigationEntry first, to see if search terms have already
-// been extracted. Failing that, it tries to extract search terms from the URL.
-//
-// Returns a blank string if search terms were not found, or if search terms
-// extraction is disabled for this WebContents or profile, or if |contents|
-// does not support Instant.
-base::string16 GetSearchTerms(const content::WebContents* contents);
 
 // Returns true if |url| should be rendered in the Instant renderer process.
 bool ShouldAssignURLToInstantRenderer(const GURL& url, Profile* profile);
@@ -119,10 +89,6 @@ std::vector<GURL> GetSearchURLs(Profile* profile);
 // trials.
 GURL GetSearchResultPrefetchBaseURL(Profile* profile);
 
-// Returns true if 'prerender_instant_url_on_omnibox_focus' flag is enabled in
-// field trials to prerender Instant search base page when the omnibox is
-// focused.
-bool ShouldPrerenderInstantUrlOnOmniboxFocus();
 
 // Transforms the input |url| into its "effective URL". |url| must be an
 // Instant URL, i.e. ShouldAssignURLToInstantRenderer must return true. The
@@ -154,35 +120,8 @@ bool HandleNewTabURLRewrite(GURL* url,
 bool HandleNewTabURLReverseRewrite(GURL* url,
                                    content::BrowserContext* browser_context);
 
-// Sets the Instant support |state| in the navigation |entry|.
-void SetInstantSupportStateInNavigationEntry(InstantSupportState state,
-                                             content::NavigationEntry* entry);
-
-// Returns the Instant support state attached to the NavigationEntry, or
-// INSTANT_SUPPORT_UNKNOWN otherwise.
-InstantSupportState GetInstantSupportStateFromNavigationEntry(
-    const content::NavigationEntry& entry);
-
-// Returns true if the field trial flag is enabled to prefetch results on SRP.
-bool ShouldPrefetchSearchResultsOnSRP();
-
-// -----------------------------------------------------
-// The following APIs are exposed for use in tests only.
-// -----------------------------------------------------
-
 // Returns the Cacheable New Tab Page URL for the given |profile|.
 GURL GetNewTabPageURL(Profile* profile);
-
-// Returns true if 'use_alternate_instant_url' flag is set to true in field
-// trials to use an alternate Instant search base page URL for prefetching
-// search results. This allows experimentation of Instant search.
-bool ShouldUseAltInstantURL();
-
-// Returns true if 'use_search_path_for_instant' flag is set to true in field
-// trials to use an '/search' path in an alternate Instant search base page URL
-// for prefetching search results. This allows experimentation of Instant
-// search.
-bool ShouldUseSearchPathForInstant();
 
 }  // namespace search
 

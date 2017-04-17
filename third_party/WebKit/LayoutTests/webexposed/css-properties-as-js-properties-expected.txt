@@ -31,6 +31,7 @@ backgroundRepeatX
 backgroundRepeatY
 backgroundSize
 baselineShift
+blockSize
 border
 borderBottom
 borderBottomColor
@@ -72,6 +73,7 @@ breakBefore
 breakInside
 bufferedRendering
 captionSide
+caretColor
 clear
 clip
 clipPath
@@ -131,6 +133,7 @@ fontVariant
 fontVariantCaps
 fontVariantLigatures
 fontVariantNumeric
+fontVariationSettings
 fontWeight
 getPropertyPriority
 getPropertyValue
@@ -156,6 +159,7 @@ height
 hyphens
 imageOrientation
 imageRendering
+inlineSize
 isolation
 item
 justifyContent
@@ -166,6 +170,7 @@ length
 letterSpacing
 lightingColor
 lineHeight
+lineHeightStep
 listStyle
 listStyleImage
 listStylePosition
@@ -182,19 +187,27 @@ markerStart
 mask
 maskSourceType
 maskType
+maxBlockSize
 maxHeight
+maxInlineSize
 maxWidth
 maxZoom
+minBlockSize
 minHeight
+minInlineSize
 minWidth
 minZoom
 mixBlendMode
 motion
-motionOffset
-motionPath
-motionRotation
 objectFit
 objectPosition
+offset
+offsetAnchor
+offsetDistance
+offsetPath
+offsetPosition
+offsetRotate
+offsetRotation
 opacity
 order
 orientation
@@ -205,6 +218,7 @@ outlineOffset
 outlineStyle
 outlineWidth
 overflow
+overflowAnchor
 overflowWrap
 overflowX
 overflowY
@@ -221,6 +235,9 @@ paintOrder
 parentRule
 perspective
 perspectiveOrigin
+placeContent
+placeItems
+placeSelf
 pointerEvents
 position
 quotes
@@ -244,7 +261,6 @@ shapeMargin
 shapeOutside
 shapeRendering
 size
-snapHeight
 speak
 src
 stopColor
@@ -266,6 +282,7 @@ textCombineUpright
 textDecoration
 textDecorationColor
 textDecorationLine
+textDecorationSkip
 textDecorationStyle
 textIndent
 textJustify
@@ -279,6 +296,7 @@ textUnderlinePosition
 top
 touchAction
 transform
+transformBox
 transformOrigin
 transformStyle
 transition
@@ -289,6 +307,7 @@ transitionTimingFunction
 translate
 unicodeBidi
 unicodeRange
+userSelect
 userZoom
 vectorEffect
 verticalAlign
@@ -326,7 +345,6 @@ webkitBoxOrdinalGroup
 webkitBoxOrient
 webkitBoxPack
 webkitBoxReflect
-webkitClipPath
 webkitColumnBreakAfter
 webkitColumnBreakBefore
 webkitColumnBreakInside
@@ -397,7 +415,6 @@ webkitTransformOriginY
 webkitTransformOriginZ
 webkitUserDrag
 webkitUserModify
-webkitUserSelect
 webkitWritingMode
 whiteSpace
 widows

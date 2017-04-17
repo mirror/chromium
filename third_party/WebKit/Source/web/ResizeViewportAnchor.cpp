@@ -5,63 +5,56 @@
 #include "web/ResizeViewportAnchor.h"
 
 #include "core/frame/FrameView.h"
+#include "core/frame/RootFrameViewport.h"
 #include "core/frame/VisualViewport.h"
+#include "core/page/Page.h"
 #include "platform/geometry/DoubleRect.h"
-#include "platform/geometry/DoubleSize.h"
 #include "platform/geometry/FloatSize.h"
 
 namespace blink {
 
-ResizeViewportAnchor::ResizeViewportAnchor(FrameView& rootFrameView, VisualViewport& visualViewport)
-    : ViewportAnchor(rootFrameView, visualViewport)
-    , m_visualViewportInDocument(rootFrameView.getScrollableArea()->scrollPositionDouble())
-{
+void ResizeViewportAnchor::ResizeFrameView(IntSize size) {
+  FrameView* frame_view = RootFrameView();
+  DCHECK(frame_view);
+
+  ScrollableArea* root_viewport = frame_view->GetScrollableArea();
+  ScrollOffset offset = root_viewport->GetScrollOffset();
+
+  frame_view->Resize(size);
+  drift_ += root_viewport->GetScrollOffset() - offset;
 }
 
-ResizeViewportAnchor::~ResizeViewportAnchor()
-{
-    // TODO(bokan): Don't use RootFrameViewport::setScrollPosition since it
-    // assumes we can just set a sub-pixel precision offset on the FrameView.
-    // While we "can" do this, the offset that will be shipped to CC will be the
-    // truncated number and this class is used to handle TopControl movement
-    // which needs the two threads to match exactly pixel-for-pixel. We can
-    // replace this with RFV::setScrollPosition once Blink is sub-pixel scroll
-    // offset aware. crbug.com/414283.
+void ResizeViewportAnchor::EndScope() {
+  if (--scope_count_ > 0)
+    return;
 
-    ScrollableArea* rootViewport = m_rootFrameView->getScrollableArea();
-    ScrollableArea* layoutViewport =
-        m_rootFrameView->layoutViewportScrollableArea();
+  FrameView* frame_view = RootFrameView();
+  if (!frame_view)
+    return;
 
-    // Clamp the scroll offset of each viewport now so that we force any invalid
-    // offsets to become valid so we can compute the correct deltas.
-    m_visualViewport->clampToBoundaries();
-    layoutViewport->setScrollPosition(
-        layoutViewport->scrollPositionDouble(), ProgrammaticScroll);
+  ScrollOffset visual_viewport_in_document =
+      frame_view->GetScrollableArea()->GetScrollOffset() - drift_;
 
-    DoubleSize delta = m_visualViewportInDocument
-        - rootViewport->scrollPositionDouble();
+  // TODO(bokan): Don't use RootFrameViewport::setScrollPosition since it
+  // assumes we can just set a sub-pixel precision offset on the FrameView.
+  // While we "can" do this, the offset that will be shipped to CC will be the
+  // truncated number and this class is used to handle TopControl movement
+  // which needs the two threads to match exactly pixel-for-pixel. We can
+  // replace this with RFV::setScrollPosition once Blink is sub-pixel scroll
+  // offset aware. crbug.com/414283.
+  DCHECK(frame_view->GetRootFrameViewport());
+  frame_view->GetRootFrameViewport()->RestoreToAnchor(
+      visual_viewport_in_document);
 
-    m_visualViewport->move(toFloatSize(delta));
-
-    delta = m_visualViewportInDocument
-        - rootViewport->scrollPositionDouble();
-
-    // Since the main thread FrameView has integer scroll offsets, scroll it to
-    // the next pixel and then we'll scroll the visual viewport again to
-    // compensate for the sub-pixel offset. We need this "overscroll" to ensure
-    // the pixel of which we want to be partially in appears fully inside the
-    // FrameView since the VisualViewport is bounded by the FrameView.
-    IntSize layoutDelta = IntSize(
-        delta.width() < 0 ? floor(delta.width()) : ceil(delta.width()),
-        delta.height() < 0 ? floor(delta.height()) : ceil(delta.height()));
-
-    layoutViewport->setScrollPosition(
-        layoutViewport->scrollPosition() + layoutDelta,
-        ProgrammaticScroll);
-
-    delta = m_visualViewportInDocument
-        - rootViewport->scrollPositionDouble();
-    m_visualViewport->move(toFloatSize(delta));
+  drift_ = ScrollOffset();
 }
 
-} // namespace blink
+FrameView* ResizeViewportAnchor::RootFrameView() {
+  if (Frame* frame = page_->MainFrame()) {
+    if (frame->IsLocalFrame())
+      return ToLocalFrame(frame)->View();
+  }
+  return nullptr;
+}
+
+}  // namespace blink

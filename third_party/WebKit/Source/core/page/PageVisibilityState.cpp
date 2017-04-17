@@ -32,19 +32,18 @@
 
 namespace blink {
 
-String pageVisibilityStateString(PageVisibilityState state)
-{
-    switch (state) {
-    case PageVisibilityStateVisible:
-        return "visible";
-    case PageVisibilityStateHidden:
-        return "hidden";
-    case PageVisibilityStatePrerender:
-        return "prerender";
-    }
+String PageVisibilityStateString(PageVisibilityState state) {
+  switch (state) {
+    case kPageVisibilityStateVisible:
+      return "visible";
+    case kPageVisibilityStateHidden:
+      return "hidden";
+    case kPageVisibilityStatePrerender:
+      return "prerender";
+  }
 
-    ASSERT_NOT_REACHED();
-    return String();
+  ASSERT_NOT_REACHED();
+  return String();
 }
 
-} // namespace blink
+}  // namespace blink

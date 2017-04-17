@@ -4,20 +4,18 @@
 
 #include "core/editing/TextAffinity.h"
 
-#include <ostream> // NOLINT
+#include <ostream>  // NOLINT
 
 namespace blink {
 
-std::ostream& operator<<(std::ostream& ostream, TextAffinity affinity)
-{
-    switch (affinity) {
-    case TextAffinity::Downstream:
-        return ostream << "TextAffinity::Downstream";
-    case TextAffinity::Upstream:
-        return ostream << "TextAffinity::Upstream";
-    }
-    return ostream << "TextAffinity(" << static_cast<int>(affinity) << ')';
+std::ostream& operator<<(std::ostream& ostream, TextAffinity affinity) {
+  switch (affinity) {
+    case TextAffinity::kDownstream:
+      return ostream << "TextAffinity::Downstream";
+    case TextAffinity::kUpstream:
+      return ostream << "TextAffinity::Upstream";
+  }
+  return ostream << "TextAffinity(" << static_cast<int>(affinity) << ')';
 }
 
-} // namespace blink
-
+}  // namespace blink

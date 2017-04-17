@@ -9,8 +9,11 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "content/renderer/media/media_stream_constraints_util_video_device.h"
+#include "media/capture/video_capture_types.h"
 
 namespace content {
 
@@ -200,21 +203,80 @@ blink::WebMediaStreamTrack MediaStreamVideoTrack::CreateVideoTrack(
     const blink::WebMediaConstraints& constraints,
     const MediaStreamVideoSource::ConstraintsCallback& callback,
     bool enabled) {
+  DCHECK(IsOldVideoConstraints());
   blink::WebMediaStreamTrack track;
-  track.initialize(source->owner());
-  track.setTrackData(
+  track.Initialize(source->Owner());
+  track.SetTrackData(
       new MediaStreamVideoTrack(source, constraints, callback, enabled));
+  return track;
+}
+
+// static
+blink::WebMediaStreamTrack MediaStreamVideoTrack::CreateVideoTrack(
+    MediaStreamVideoSource* source,
+    const MediaStreamVideoSource::ConstraintsCallback& callback,
+    bool enabled) {
+  blink::WebMediaStreamTrack track;
+  track.Initialize(source->Owner());
+  track.SetTrackData(new MediaStreamVideoTrack(source, callback, enabled));
+  return track;
+}
+
+// static
+blink::WebMediaStreamTrack MediaStreamVideoTrack::CreateVideoTrack(
+    MediaStreamVideoSource* source,
+    const VideoTrackAdapterSettings& adapter_settings,
+    const base::Optional<bool>& noise_reduction,
+    bool is_screencast,
+    double min_frame_rate,
+    const MediaStreamVideoSource::ConstraintsCallback& callback,
+    bool enabled) {
+  blink::WebMediaStreamTrack track;
+  track.Initialize(source->Owner());
+  track.SetTrackData(new MediaStreamVideoTrack(
+      source, adapter_settings, noise_reduction, is_screencast, min_frame_rate,
+      callback, enabled));
   return track;
 }
 
 // static
 MediaStreamVideoTrack* MediaStreamVideoTrack::GetVideoTrack(
      const blink::WebMediaStreamTrack& track) {
-  if (track.isNull() ||
-      track.source().getType() != blink::WebMediaStreamSource::TypeVideo) {
+  if (track.IsNull() ||
+      track.Source().GetType() != blink::WebMediaStreamSource::kTypeVideo) {
     return nullptr;
   }
-  return static_cast<MediaStreamVideoTrack*>(track.getTrackData());
+  return static_cast<MediaStreamVideoTrack*>(track.GetTrackData());
+}
+
+MediaStreamVideoTrack::MediaStreamVideoTrack(
+    MediaStreamVideoSource* source,
+    const MediaStreamVideoSource::ConstraintsCallback& callback,
+    bool enabled)
+    : MediaStreamTrack(true),
+      frame_deliverer_(
+          new MediaStreamVideoTrack::FrameDeliverer(source->io_task_runner(),
+                                                    enabled)),
+      adapter_settings_(base::MakeUnique<VideoTrackAdapterSettings>(
+          VideoTrackAdapterSettings())),
+      is_screencast_(false),
+      min_frame_rate_(0.0),
+      source_(source->GetWeakPtr()) {
+  if (IsOldVideoConstraints()) {
+    blink::WebMediaConstraints constraints;
+    constraints.Initialize();
+    source->AddTrackLegacy(
+        this,
+        base::Bind(&MediaStreamVideoTrack::FrameDeliverer::DeliverFrameOnIO,
+                   frame_deliverer_),
+        constraints, callback);
+  } else {
+    source->AddTrack(
+        this, VideoTrackAdapterSettings(),
+        base::Bind(&MediaStreamVideoTrack::FrameDeliverer::DeliverFrameOnIO,
+                   frame_deliverer_),
+        callback);
+  }
 }
 
 MediaStreamVideoTrack::MediaStreamVideoTrack(
@@ -228,12 +290,39 @@ MediaStreamVideoTrack::MediaStreamVideoTrack(
                                                     enabled)),
       constraints_(constraints),
       source_(source->GetWeakPtr()) {
-  DCHECK(!constraints.isNull());
-  source->AddTrack(this,
-                   base::Bind(
-                       &MediaStreamVideoTrack::FrameDeliverer::DeliverFrameOnIO,
-                       frame_deliverer_),
-                   constraints, callback);
+  DCHECK(IsOldVideoConstraints());
+  DCHECK(!constraints.IsNull());
+  source->AddTrackLegacy(
+      this,
+      base::Bind(&MediaStreamVideoTrack::FrameDeliverer::DeliverFrameOnIO,
+                 frame_deliverer_),
+      constraints, callback);
+}
+
+MediaStreamVideoTrack::MediaStreamVideoTrack(
+    MediaStreamVideoSource* source,
+    const VideoTrackAdapterSettings& adapter_settings,
+    const base::Optional<bool>& noise_reduction,
+    bool is_screen_cast,
+    double min_frame_rate,
+    const MediaStreamVideoSource::ConstraintsCallback& callback,
+    bool enabled)
+    : MediaStreamTrack(true),
+      frame_deliverer_(
+          new MediaStreamVideoTrack::FrameDeliverer(source->io_task_runner(),
+                                                    enabled)),
+      adapter_settings_(
+          base::MakeUnique<VideoTrackAdapterSettings>(adapter_settings)),
+      noise_reduction_(noise_reduction),
+      is_screencast_(is_screen_cast),
+      min_frame_rate_(min_frame_rate),
+      source_(source->GetWeakPtr()) {
+  DCHECK(!IsOldVideoConstraints());
+  source->AddTrack(
+      this, adapter_settings,
+      base::Bind(&MediaStreamVideoTrack::FrameDeliverer::DeliverFrameOnIO,
+                 frame_deliverer_),
+      callback);
 }
 
 MediaStreamVideoTrack::~MediaStreamVideoTrack() {
@@ -252,11 +341,12 @@ void MediaStreamVideoTrack::AddSink(MediaStreamVideoSink* sink,
   frame_deliverer_->AddCallback(sink, callback);
   secure_tracker_.Add(sink, is_sink_secure);
   // Request source to deliver a frame because a new sink is added.
-  if (source_) {
-    source_->RequestRefreshFrame();
-    source_->UpdateCapturingLinkSecure(this,
-                                       secure_tracker_.is_capturing_secure());
-  }
+  if (!source_)
+    return;
+  source_->UpdateHasConsumers(this, true);
+  source_->RequestRefreshFrame();
+  source_->UpdateCapturingLinkSecure(this,
+                                     secure_tracker_.is_capturing_secure());
 }
 
 void MediaStreamVideoTrack::RemoveSink(MediaStreamVideoSink* sink) {
@@ -267,9 +357,12 @@ void MediaStreamVideoTrack::RemoveSink(MediaStreamVideoSink* sink) {
   sinks_.erase(it);
   frame_deliverer_->RemoveCallback(sink);
   secure_tracker_.Remove(sink);
-  if (source_)
-    source_->UpdateCapturingLinkSecure(this,
-                                       secure_tracker_.is_capturing_secure());
+  if (!source_)
+    return;
+  if (sinks_.empty())
+    source_->UpdateHasConsumers(this, false);
+  source_->UpdateCapturingLinkSecure(this,
+                                     secure_tracker_.is_capturing_secure());
 }
 
 void MediaStreamVideoTrack::SetEnabled(bool enabled) {
@@ -279,27 +372,62 @@ void MediaStreamVideoTrack::SetEnabled(bool enabled) {
     sink->OnEnabledChanged(enabled);
 }
 
+void MediaStreamVideoTrack::SetContentHint(
+    blink::WebMediaStreamTrack::ContentHintType content_hint) {
+  DCHECK(main_render_thread_checker_.CalledOnValidThread());
+  for (auto* sink : sinks_)
+    sink->OnContentHintChanged(content_hint);
+}
+
 void MediaStreamVideoTrack::Stop() {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   if (source_) {
     source_->RemoveTrack(this);
     source_ = NULL;
   }
-  OnReadyStateChanged(blink::WebMediaStreamSource::ReadyStateEnded);
+  OnReadyStateChanged(blink::WebMediaStreamSource::kReadyStateEnded);
 }
 
-void MediaStreamVideoTrack::getSettings(
+void MediaStreamVideoTrack::GetSettings(
     blink::WebMediaStreamTrack::Settings& settings) {
-  if (source_) {
-    const media::VideoCaptureFormat* format = source_->GetCurrentFormat();
-    if (format) {
-      settings.frameRate = format->frame_rate;
-      settings.width = format->frame_size.width();
-      settings.height = format->frame_size.height();
-    }
+  DCHECK(main_render_thread_checker_.CalledOnValidThread());
+  if (width_ && height_) {
+    settings.width = width_;
+    settings.height = height_;
   }
-  // TODO(hta): Extract the real value.
-  settings.deviceId = blink::WebString("video device ID");
+
+  if (!source_)
+    return;
+
+  base::Optional<media::VideoCaptureFormat> format =
+      source_->GetCurrentFormat();
+  if (format) {
+    settings.frame_rate = format->frame_rate;
+    settings.video_kind = GetVideoKindForFormat(*format);
+  }
+  switch (source_->device_info().device.video_facing) {
+    case media::MEDIA_VIDEO_FACING_NONE:
+      settings.facing_mode = blink::WebMediaStreamTrack::FacingMode::kNone;
+      break;
+    case media::MEDIA_VIDEO_FACING_USER:
+      settings.facing_mode = blink::WebMediaStreamTrack::FacingMode::kUser;
+      break;
+    case media::MEDIA_VIDEO_FACING_ENVIRONMENT:
+      settings.facing_mode =
+          blink::WebMediaStreamTrack::FacingMode::kEnvironment;
+      break;
+    default:
+      settings.facing_mode = blink::WebMediaStreamTrack::FacingMode::kNone;
+      break;
+  }
+  const base::Optional<CameraCalibration> calibration =
+      source_->device_info().device.camera_calibration;
+  if (calibration) {
+    settings.depth_near = calibration->depth_near;
+    settings.depth_far = calibration->depth_far;
+    settings.focal_length_x = calibration->focal_length_x;
+    settings.focal_length_y = calibration->focal_length_y;
+  }
 }
 
 void MediaStreamVideoTrack::OnReadyStateChanged(

@@ -10,62 +10,52 @@
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef LineClampValue_h
 #define LineClampValue_h
 
 #include "core/style/ComputedStyleConstants.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class LineClampValue {
-    DISALLOW_NEW();
-public:
-    LineClampValue()
-        : m_type(LineClampLineCount)
-        , m_value(-1)
-    {
-    }
+  DISALLOW_NEW();
 
-    LineClampValue(int value, ELineClampType type)
-        : m_type(type)
-        , m_value(value)
-    {
-    }
+ public:
+  LineClampValue() : type_(kLineClampLineCount), value_(-1) {}
 
-    int value() const { return m_value; }
+  LineClampValue(int value, ELineClampType type) : type_(type), value_(value) {}
 
-    bool isPercentage() const { return m_type == LineClampPercentage; }
+  int Value() const { return value_; }
 
-    bool isNone() const { return m_value == -1; }
+  bool IsPercentage() const { return type_ == kLineClampPercentage; }
 
-    bool operator==(const LineClampValue& o) const
-    {
-        return value() == o.value() && isPercentage() == o.isPercentage();
-    }
+  bool IsNone() const { return value_ == -1; }
 
-    bool operator!=(const LineClampValue& o) const
-    {
-        return !(*this == o);
-    }
+  bool operator==(const LineClampValue& o) const {
+    return Value() == o.Value() && IsPercentage() == o.IsPercentage();
+  }
 
-private:
-    ELineClampType m_type;
-    int m_value;
+  bool operator!=(const LineClampValue& o) const { return !(*this == o); }
+
+ private:
+  ELineClampType type_;
+  int value_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineClampValue_h
+#endif  // LineClampValue_h

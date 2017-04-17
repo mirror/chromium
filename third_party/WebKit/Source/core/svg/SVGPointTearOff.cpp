@@ -30,49 +30,46 @@
 
 #include "core/svg/SVGPointTearOff.h"
 
-#include "bindings/core/v8/ExceptionState.h"
-#include "core/dom/ExceptionCode.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/SVGMatrixTearOff.h"
 
 namespace blink {
 
-SVGPointTearOff::SVGPointTearOff(SVGPoint* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName)
-    : SVGPropertyTearOff<SVGPoint>(target, contextElement, propertyIsAnimVal, attributeName)
-{
+SVGPointTearOff::SVGPointTearOff(SVGPoint* target,
+                                 SVGElement* context_element,
+                                 PropertyIsAnimValType property_is_anim_val,
+                                 const QualifiedName& attribute_name)
+    : SVGPropertyTearOff<SVGPoint>(target,
+                                   context_element,
+                                   property_is_anim_val,
+                                   attribute_name) {}
+
+void SVGPointTearOff::setX(float f, ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetX(f);
+  CommitChange();
 }
 
-void SVGPointTearOff::setX(float f, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setX(f);
-    commitChange();
+void SVGPointTearOff::setY(float f, ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetY(f);
+  CommitChange();
 }
 
-void SVGPointTearOff::setY(float f, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setY(f);
-    commitChange();
+SVGPointTearOff* SVGPointTearOff::matrixTransform(SVGMatrixTearOff* matrix) {
+  FloatPoint point = Target()->MatrixTransform(matrix->Value());
+  return SVGPointTearOff::Create(SVGPoint::Create(point), 0,
+                                 kPropertyIsNotAnimVal);
 }
 
-SVGPointTearOff* SVGPointTearOff::matrixTransform(SVGMatrixTearOff* matrix)
-{
-    FloatPoint point = target()->matrixTransform(matrix->value());
-    return SVGPointTearOff::create(SVGPoint::create(point), 0, PropertyIsNotAnimVal);
+DEFINE_TRACE_WRAPPERS(SVGPointTearOff) {
+  visitor->TraceWrappers(contextElement());
 }
 
-DEFINE_TRACE_WRAPPERS(SVGPointTearOff)
-{
-    visitor->traceWrappers(contextElement());
-}
-
-} // namespace blink
+}  // namespace blink

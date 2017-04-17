@@ -9,43 +9,52 @@
 #include "platform/graphics/paint/PaintChunk.h"
 #include "platform/graphics/paint/PaintChunkProperties.h"
 #include "platform/graphics/paint/PaintController.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class ScopedPaintChunkProperties {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    WTF_MAKE_NONCOPYABLE(ScopedPaintChunkProperties);
-public:
-    ScopedPaintChunkProperties(PaintController& paintController, const DisplayItemClient& client, DisplayItem::Type type, const PaintChunkProperties& properties)
-        : m_paintController(paintController)
-        , m_previousProperties(paintController.currentPaintChunkProperties())
-    {
-        PaintChunk::Id id(client, type);
-        m_paintController.updateCurrentPaintChunkProperties(&id, properties);
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  WTF_MAKE_NONCOPYABLE(ScopedPaintChunkProperties);
 
-    // Omits the type parameter, in case that the client creates only one PaintChunkProperties node during each painting.
-    ScopedPaintChunkProperties(PaintController& paintController, const DisplayItemClient& client, const PaintChunkProperties& properties)
-        : ScopedPaintChunkProperties(paintController, client, DisplayItem::UninitializedType, properties)
-    { }
+ public:
+  ScopedPaintChunkProperties(PaintController& paint_controller,
+                             const DisplayItemClient& client,
+                             DisplayItem::Type type,
+                             const PaintChunkProperties& properties)
+      : paint_controller_(paint_controller),
+        previous_properties_(paint_controller.CurrentPaintChunkProperties()) {
+    PaintChunk::Id id(client, type);
+    paint_controller_.UpdateCurrentPaintChunkProperties(&id, properties);
+  }
 
-    ~ScopedPaintChunkProperties()
-    {
-        // We should not return to the previous id, because that may cause a new chunk to use
-        // the same id as that of the previous chunk before this ScopedPaintChunkProperties.
-        // The painter should create another scope of paint properties with new id, or the
-        // new chunk will have no id and will not match any old chunk and will be treated as
-        // fully invalidated for rasterization.
-        m_paintController.updateCurrentPaintChunkProperties(nullptr, m_previousProperties);
-    }
+  // Omits the type parameter, in case that the client creates only one
+  // PaintChunkProperties node during each painting.
+  ScopedPaintChunkProperties(PaintController& paint_controller,
+                             const DisplayItemClient& client,
+                             const PaintChunkProperties& properties)
+      : ScopedPaintChunkProperties(paint_controller,
+                                   client,
+                                   DisplayItem::kUninitializedType,
+                                   properties) {}
 
-private:
-    PaintController& m_paintController;
-    PaintChunkProperties m_previousProperties;
+  ~ScopedPaintChunkProperties() {
+    // We should not return to the previous id, because that may cause a new
+    // chunk to use the same id as that of the previous chunk before this
+    // ScopedPaintChunkProperties. The painter should create another scope of
+    // paint properties with new id, or the new chunk will have no id and will
+    // not match any old chunk and will be treated as fully invalidated for
+    // rasterization.
+    paint_controller_.UpdateCurrentPaintChunkProperties(nullptr,
+                                                        previous_properties_);
+  }
+
+ private:
+  PaintController& paint_controller_;
+  PaintChunkProperties previous_properties_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScopedPaintChunkProperties_h
+#endif  // ScopedPaintChunkProperties_h

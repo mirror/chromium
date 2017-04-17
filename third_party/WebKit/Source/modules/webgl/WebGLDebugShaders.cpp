@@ -33,43 +33,39 @@
 namespace blink {
 
 WebGLDebugShaders::WebGLDebugShaders(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
+    : WebGLExtension(context) {
+  context->ExtensionsUtil()->EnsureExtensionEnabled(
+      "GL_ANGLE_translated_shader_source");
 }
 
-WebGLDebugShaders::~WebGLDebugShaders()
-{
+WebGLExtensionName WebGLDebugShaders::GetName() const {
+  return kWebGLDebugShadersName;
 }
 
-WebGLExtensionName WebGLDebugShaders::name() const
-{
-    return WebGLDebugShadersName;
+WebGLDebugShaders* WebGLDebugShaders::Create(
+    WebGLRenderingContextBase* context) {
+  return new WebGLDebugShaders(context);
 }
 
-WebGLDebugShaders* WebGLDebugShaders::create(WebGLRenderingContextBase* context)
-{
-    return new WebGLDebugShaders(context);
+String WebGLDebugShaders::getTranslatedShaderSource(WebGLShader* shader) {
+  WebGLExtensionScopedContext scoped(this);
+  if (scoped.IsLost())
+    return String();
+  if (!scoped.Context()->ValidateWebGLObject("getTranslatedShaderSource",
+                                             shader))
+    return "";
+  GLStringQuery query(scoped.Context()->ContextGL());
+  return query.Run<GLStringQuery::TranslatedShaderSourceANGLE>(
+      shader->Object());
 }
 
-String WebGLDebugShaders::getTranslatedShaderSource(WebGLShader* shader)
-{
-    WebGLExtensionScopedContext scoped(this);
-    if (scoped.isLost())
-        return String();
-    if (!scoped.context()->validateWebGLObject("getTranslatedShaderSource", shader))
-        return "";
-    GLStringQuery query(scoped.context()->contextGL());
-    return query.Run<GLStringQuery::TranslatedShaderSourceANGLE>(shader->object());
+bool WebGLDebugShaders::Supported(WebGLRenderingContextBase* context) {
+  return context->ExtensionsUtil()->SupportsExtension(
+      "GL_ANGLE_translated_shader_source");
 }
 
-bool WebGLDebugShaders::supported(WebGLRenderingContextBase* context)
-{
-    return context->extensionsUtil()->supportsExtension("GL_ANGLE_translated_shader_source");
+const char* WebGLDebugShaders::ExtensionName() {
+  return "WEBGL_debug_shaders";
 }
 
-const char* WebGLDebugShaders::extensionName()
-{
-    return "WEBGL_debug_shaders";
-}
-
-} // namespace blink
+}  // namespace blink

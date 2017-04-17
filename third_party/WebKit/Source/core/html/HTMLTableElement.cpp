@@ -4,7 +4,8 @@
  *           (C) 1998 Waldo Bastian (bastian@kde.org)
  *           (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2010, 2011 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,19 +26,19 @@
 #include "core/html/HTMLTableElement.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSImageValue.h"
 #include "core/css/CSSInheritedValue.h"
-#include "core/css/CSSPrimitiveValue.h"
 #include "core/css/StylePropertySet.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/NodeListsNodeData.h"
 #include "core/dom/StyleChangeReason.h"
+#include "core/frame/UseCounter.h"
 #include "core/html/HTMLTableCaptionElement.h"
 #include "core/html/HTMLTableCellElement.h"
 #include "core/html/HTMLTableRowElement.h"
@@ -45,524 +46,574 @@
 #include "core/html/HTMLTableSectionElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "platform/weborigin/Referrer.h"
-#include "wtf/StdLibExtras.h"
+#include "platform/wtf/StdLibExtras.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
 inline HTMLTableElement::HTMLTableElement(Document& document)
-    : HTMLElement(tableTag, document)
-    , m_borderAttr(false)
-    , m_borderColorAttr(false)
-    , m_frameAttr(false)
-    , m_rulesAttr(UnsetRules)
-    , m_padding(1)
-{
-}
+    : HTMLElement(tableTag, document),
+      border_attr_(false),
+      border_color_attr_(false),
+      frame_attr_(false),
+      rules_attr_(kUnsetRules),
+      padding_(1) {}
 
 // An explicit empty destructor should be in HTMLTableElement.cpp, because
 // if an implicit destructor is used or an empty destructor is defined in
 // HTMLTableElement.h, when including HTMLTableElement, msvc tries to expand
 // the destructor and causes a compile error because of lack of
 // StylePropertySet definition.
-HTMLTableElement::~HTMLTableElement()
-{
-}
+HTMLTableElement::~HTMLTableElement() {}
 
 DEFINE_NODE_FACTORY(HTMLTableElement)
 
-HTMLTableCaptionElement* HTMLTableElement::caption() const
-{
-    return Traversal<HTMLTableCaptionElement>::firstChild(*this);
+HTMLTableCaptionElement* HTMLTableElement::caption() const {
+  return Traversal<HTMLTableCaptionElement>::FirstChild(*this);
 }
 
-void HTMLTableElement::setCaption(HTMLTableCaptionElement* newCaption, ExceptionState& exceptionState)
-{
-    deleteCaption();
-    insertBefore(newCaption, firstChild(), exceptionState);
+void HTMLTableElement::setCaption(HTMLTableCaptionElement* new_caption,
+                                  ExceptionState& exception_state) {
+  deleteCaption();
+  InsertBefore(new_caption, FirstChild(), exception_state);
 }
 
-HTMLTableSectionElement* HTMLTableElement::tHead() const
-{
-    return toHTMLTableSectionElement(Traversal<HTMLElement>::firstChild(*this, HasHTMLTagName(theadTag)));
+HTMLTableSectionElement* HTMLTableElement::tHead() const {
+  return ToHTMLTableSectionElement(
+      Traversal<HTMLElement>::FirstChild(*this, HasHTMLTagName(theadTag)));
 }
 
-void HTMLTableElement::setTHead(HTMLTableSectionElement* newHead, ExceptionState& exceptionState)
-{
-    deleteTHead();
+void HTMLTableElement::setTHead(HTMLTableSectionElement* new_head,
+                                ExceptionState& exception_state) {
+  deleteTHead();
 
-    HTMLElement* child;
-    for (child = Traversal<HTMLElement>::firstChild(*this); child; child = Traversal<HTMLElement>::nextSibling(*child)) {
-        if (!child->hasTagName(captionTag) && !child->hasTagName(colgroupTag))
-            break;
-    }
+  HTMLElement* child;
+  for (child = Traversal<HTMLElement>::FirstChild(*this); child;
+       child = Traversal<HTMLElement>::NextSibling(*child)) {
+    if (!child->HasTagName(captionTag) && !child->HasTagName(colgroupTag))
+      break;
+  }
 
-    insertBefore(newHead, child, exceptionState);
+  InsertBefore(new_head, child, exception_state);
 }
 
-HTMLTableSectionElement* HTMLTableElement::tFoot() const
-{
-    return toHTMLTableSectionElement(Traversal<HTMLElement>::firstChild(*this, HasHTMLTagName(tfootTag)));
+HTMLTableSectionElement* HTMLTableElement::tFoot() const {
+  return ToHTMLTableSectionElement(
+      Traversal<HTMLElement>::FirstChild(*this, HasHTMLTagName(tfootTag)));
 }
 
-void HTMLTableElement::setTFoot(HTMLTableSectionElement* newFoot, ExceptionState& exceptionState)
-{
-    deleteTFoot();
+void HTMLTableElement::setTFoot(HTMLTableSectionElement* new_foot,
+                                ExceptionState& exception_state) {
+  if (new_foot && !new_foot->HasTagName(tfootTag)) {
+    exception_state.ThrowDOMException(kHierarchyRequestError,
+                                      "Not a tfoot element.");
+    return;
+  }
 
-    HTMLElement* child;
-    for (child = Traversal<HTMLElement>::firstChild(*this); child; child = Traversal<HTMLElement>::nextSibling(*child)) {
-        if (!child->hasTagName(captionTag) && !child->hasTagName(colgroupTag) && !child->hasTagName(theadTag))
-            break;
-    }
+  deleteTFoot();
 
-    insertBefore(newFoot, child, exceptionState);
+  if (new_foot)
+    AppendChild(new_foot, exception_state);
 }
 
-HTMLTableSectionElement* HTMLTableElement::createTHead()
-{
-    if (HTMLTableSectionElement* existingHead = tHead())
-        return existingHead;
-    HTMLTableSectionElement* head = HTMLTableSectionElement::create(theadTag, document());
-    setTHead(head, IGNORE_EXCEPTION);
-    return head;
+HTMLTableSectionElement* HTMLTableElement::createTHead() {
+  if (HTMLTableSectionElement* existing_head = tHead())
+    return existing_head;
+  HTMLTableSectionElement* head =
+      HTMLTableSectionElement::Create(theadTag, GetDocument());
+  setTHead(head, IGNORE_EXCEPTION_FOR_TESTING);
+  return head;
 }
 
-void HTMLTableElement::deleteTHead()
-{
-    removeChild(tHead(), IGNORE_EXCEPTION);
+void HTMLTableElement::deleteTHead() {
+  RemoveChild(tHead(), IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-HTMLTableSectionElement* HTMLTableElement::createTFoot()
-{
-    if (HTMLTableSectionElement* existingFoot = tFoot())
-        return existingFoot;
-    HTMLTableSectionElement* foot = HTMLTableSectionElement::create(tfootTag, document());
-    setTFoot(foot, IGNORE_EXCEPTION);
-    return foot;
+HTMLTableSectionElement* HTMLTableElement::createTFoot() {
+  if (HTMLTableSectionElement* existing_foot = tFoot())
+    return existing_foot;
+  HTMLTableSectionElement* foot =
+      HTMLTableSectionElement::Create(tfootTag, GetDocument());
+  setTFoot(foot, IGNORE_EXCEPTION_FOR_TESTING);
+  return foot;
 }
 
-void HTMLTableElement::deleteTFoot()
-{
-    removeChild(tFoot(), IGNORE_EXCEPTION);
+void HTMLTableElement::deleteTFoot() {
+  RemoveChild(tFoot(), IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-HTMLTableSectionElement* HTMLTableElement::createTBody()
-{
-    HTMLTableSectionElement* body = HTMLTableSectionElement::create(tbodyTag, document());
-    Node* referenceElement = lastBody() ? lastBody()->nextSibling() : 0;
+HTMLTableSectionElement* HTMLTableElement::createTBody() {
+  HTMLTableSectionElement* body =
+      HTMLTableSectionElement::Create(tbodyTag, GetDocument());
+  Node* reference_element = LastBody() ? LastBody()->nextSibling() : 0;
 
-    insertBefore(body, referenceElement);
-    return body;
+  InsertBefore(body, reference_element);
+  return body;
 }
 
-HTMLTableCaptionElement* HTMLTableElement::createCaption()
-{
-    if (HTMLTableCaptionElement* existingCaption = caption())
-        return existingCaption;
-    HTMLTableCaptionElement* caption = HTMLTableCaptionElement::create(document());
-    setCaption(caption, IGNORE_EXCEPTION);
-    return caption;
+HTMLTableCaptionElement* HTMLTableElement::createCaption() {
+  if (HTMLTableCaptionElement* existing_caption = caption())
+    return existing_caption;
+  HTMLTableCaptionElement* caption =
+      HTMLTableCaptionElement::Create(GetDocument());
+  setCaption(caption, IGNORE_EXCEPTION_FOR_TESTING);
+  return caption;
 }
 
-void HTMLTableElement::deleteCaption()
-{
-    removeChild(caption(), IGNORE_EXCEPTION);
+void HTMLTableElement::deleteCaption() {
+  RemoveChild(caption(), IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-HTMLTableSectionElement* HTMLTableElement::lastBody() const
-{
-    return toHTMLTableSectionElement(Traversal<HTMLElement>::lastChild(*this, HasHTMLTagName(tbodyTag)));
+HTMLTableSectionElement* HTMLTableElement::LastBody() const {
+  return ToHTMLTableSectionElement(
+      Traversal<HTMLElement>::LastChild(*this, HasHTMLTagName(tbodyTag)));
 }
 
-HTMLTableRowElement* HTMLTableElement::insertRow(int index, ExceptionState& exceptionState)
-{
-    if (index < -1) {
-        exceptionState.throwDOMException(IndexSizeError, "The index provided (" + String::number(index) + ") is less than -1.");
-        return nullptr;
-    }
+HTMLTableRowElement* HTMLTableElement::insertRow(
+    int index,
+    ExceptionState& exception_state) {
+  if (index < -1) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        "The index provided (" + String::Number(index) + ") is less than -1.");
+    return nullptr;
+  }
 
-    HTMLTableRowElement* lastRow = nullptr;
-    HTMLTableRowElement* row = nullptr;
-    if (index == -1) {
-        lastRow = HTMLTableRowsCollection::lastRow(*this);
-    } else {
-        for (int i = 0; i <= index; ++i) {
-            row = HTMLTableRowsCollection::rowAfter(*this, lastRow);
-            if (!row) {
-                if (i != index) {
-                    exceptionState.throwDOMException(IndexSizeError, "The index provided (" + String::number(index) + ") is greater than the number of rows in the table (" + String::number(i) + ").");
-                    return nullptr;
-                }
-                break;
-            }
-            lastRow = row;
+  HTMLTableRowElement* last_row = nullptr;
+  HTMLTableRowElement* row = nullptr;
+  if (index == -1) {
+    last_row = HTMLTableRowsCollection::LastRow(*this);
+  } else {
+    for (int i = 0; i <= index; ++i) {
+      row = HTMLTableRowsCollection::RowAfter(*this, last_row);
+      if (!row) {
+        if (i != index) {
+          exception_state.ThrowDOMException(
+              kIndexSizeError,
+              "The index provided (" + String::Number(index) +
+                  ") is greater than the number of rows in the table (" +
+                  String::Number(i) + ").");
+          return nullptr;
         }
+        break;
+      }
+      last_row = row;
     }
+  }
 
-    ContainerNode* parent;
-    if (lastRow) {
-        parent = row ? row->parentNode() : lastRow->parentNode();
-    } else {
-        parent = lastBody();
-        if (!parent) {
-            HTMLTableSectionElement* newBody = HTMLTableSectionElement::create(tbodyTag, document());
-            HTMLTableRowElement* newRow = HTMLTableRowElement::create(document());
-            newBody->appendChild(newRow, exceptionState);
-            appendChild(newBody, exceptionState);
-            return newRow;
-        }
+  ContainerNode* parent;
+  if (last_row) {
+    parent = row ? row->parentNode() : last_row->parentNode();
+  } else {
+    parent = LastBody();
+    if (!parent) {
+      HTMLTableSectionElement* new_body =
+          HTMLTableSectionElement::Create(tbodyTag, GetDocument());
+      HTMLTableRowElement* new_row = HTMLTableRowElement::Create(GetDocument());
+      new_body->AppendChild(new_row, exception_state);
+      AppendChild(new_body, exception_state);
+      return new_row;
     }
+  }
 
-    HTMLTableRowElement* newRow = HTMLTableRowElement::create(document());
-    parent->insertBefore(newRow, row, exceptionState);
-    return newRow;
+  HTMLTableRowElement* new_row = HTMLTableRowElement::Create(GetDocument());
+  parent->InsertBefore(new_row, row, exception_state);
+  return new_row;
 }
 
-void HTMLTableElement::deleteRow(int index, ExceptionState& exceptionState)
-{
-    if (index < -1) {
-        exceptionState.throwDOMException(IndexSizeError, "The index provided (" + String::number(index) + ") is less than -1.");
-        return;
-    }
+void HTMLTableElement::deleteRow(int index, ExceptionState& exception_state) {
+  if (index < -1) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        "The index provided (" + String::Number(index) + ") is less than -1.");
+    return;
+  }
 
-    HTMLTableRowElement* row = 0;
-    int i = 0;
-    if (index == -1) {
-        row = HTMLTableRowsCollection::lastRow(*this);
-    } else {
-        for (i = 0; i <= index; ++i) {
-            row = HTMLTableRowsCollection::rowAfter(*this, row);
-            if (!row)
-                break;
-        }
+  HTMLTableRowElement* row = 0;
+  int i = 0;
+  if (index == -1) {
+    row = HTMLTableRowsCollection::LastRow(*this);
+    if (!row)
+      return;
+  } else {
+    for (i = 0; i <= index; ++i) {
+      row = HTMLTableRowsCollection::RowAfter(*this, row);
+      if (!row)
+        break;
     }
-    if (!row) {
-        exceptionState.throwDOMException(IndexSizeError, "The index provided (" + String::number(index) + ") is greater than the number of rows in the table (" + String::number(i) + ").");
-        return;
-    }
-    row->remove(exceptionState);
+  }
+  if (!row) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        "The index provided (" + String::Number(index) +
+            ") is greater than the number of rows in the table (" +
+            String::Number(i) + ").");
+    return;
+  }
+  row->remove(exception_state);
 }
 
-void HTMLTableElement::setNeedsTableStyleRecalc() const
-{
-    Element* element = ElementTraversal::next(*this, this);
-    while (element) {
-        element->setNeedsStyleRecalc(LocalStyleChange, StyleChangeReasonForTracing::fromAttribute(rulesAttr));
-        if (isHTMLTableCellElement(*element))
-            element = ElementTraversal::nextSkippingChildren(*element, this);
-        else
-            element = ElementTraversal::next(*element, this);
-    }
+void HTMLTableElement::SetNeedsTableStyleRecalc() const {
+  Element* element = ElementTraversal::Next(*this, this);
+  while (element) {
+    element->SetNeedsStyleRecalc(
+        kLocalStyleChange,
+        StyleChangeReasonForTracing::FromAttribute(rulesAttr));
+    if (IsHTMLTableCellElement(*element))
+      element = ElementTraversal::NextSkippingChildren(*element, this);
+    else
+      element = ElementTraversal::Next(*element, this);
+  }
 }
 
-static bool getBordersFromFrameAttributeValue(const AtomicString& value, bool& borderTop, bool& borderRight, bool& borderBottom, bool& borderLeft)
-{
-    borderTop = false;
-    borderRight = false;
-    borderBottom = false;
-    borderLeft = false;
+static bool GetBordersFromFrameAttributeValue(const AtomicString& value,
+                                              bool& border_top,
+                                              bool& border_right,
+                                              bool& border_bottom,
+                                              bool& border_left) {
+  border_top = false;
+  border_right = false;
+  border_bottom = false;
+  border_left = false;
 
-    if (equalIgnoringCase(value, "above"))
-        borderTop = true;
-    else if (equalIgnoringCase(value, "below"))
-        borderBottom = true;
-    else if (equalIgnoringCase(value, "hsides"))
-        borderTop = borderBottom = true;
-    else if (equalIgnoringCase(value, "vsides"))
-        borderLeft = borderRight = true;
-    else if (equalIgnoringCase(value, "lhs"))
-        borderLeft = true;
-    else if (equalIgnoringCase(value, "rhs"))
-        borderRight = true;
-    else if (equalIgnoringCase(value, "box") || equalIgnoringCase(value, "border"))
-        borderTop = borderBottom = borderLeft = borderRight = true;
-    else if (!equalIgnoringCase(value, "void"))
-        return false;
+  if (DeprecatedEqualIgnoringCase(value, "above"))
+    border_top = true;
+  else if (DeprecatedEqualIgnoringCase(value, "below"))
+    border_bottom = true;
+  else if (DeprecatedEqualIgnoringCase(value, "hsides"))
+    border_top = border_bottom = true;
+  else if (DeprecatedEqualIgnoringCase(value, "vsides"))
+    border_left = border_right = true;
+  else if (DeprecatedEqualIgnoringCase(value, "lhs"))
+    border_left = true;
+  else if (DeprecatedEqualIgnoringCase(value, "rhs"))
+    border_right = true;
+  else if (DeprecatedEqualIgnoringCase(value, "box") ||
+           DeprecatedEqualIgnoringCase(value, "border"))
+    border_top = border_bottom = border_left = border_right = true;
+  else if (!DeprecatedEqualIgnoringCase(value, "void"))
+    return false;
+  return true;
+}
+
+void HTMLTableElement::CollectStyleForPresentationAttribute(
+    const QualifiedName& name,
+    const AtomicString& value,
+    MutableStylePropertySet* style) {
+  if (name == widthAttr) {
+    AddHTMLLengthToStyle(style, CSSPropertyWidth, value);
+  } else if (name == heightAttr) {
+    AddHTMLLengthToStyle(style, CSSPropertyHeight, value);
+  } else if (name == borderAttr) {
+    AddPropertyToPresentationAttributeStyle(
+        style, CSSPropertyBorderWidth, ParseBorderWidthAttribute(value),
+        CSSPrimitiveValue::UnitType::kPixels);
+  } else if (name == bordercolorAttr) {
+    if (!value.IsEmpty())
+      AddHTMLColorToStyle(style, CSSPropertyBorderColor, value);
+  } else if (name == bgcolorAttr) {
+    AddHTMLColorToStyle(style, CSSPropertyBackgroundColor, value);
+  } else if (name == backgroundAttr) {
+    String url = StripLeadingAndTrailingHTMLSpaces(value);
+    if (!url.IsEmpty()) {
+      UseCounter::Count(
+          GetDocument(),
+          UseCounter::kHTMLTableElementPresentationAttributeBackground);
+      CSSImageValue* image_value =
+          CSSImageValue::Create(url, GetDocument().CompleteURL(url),
+                                Referrer(GetDocument().OutgoingReferrer(),
+                                         GetDocument().GetReferrerPolicy()));
+      style->SetProperty(CSSProperty(CSSPropertyBackgroundImage, *image_value));
+    }
+  } else if (name == valignAttr) {
+    if (!value.IsEmpty())
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyVerticalAlign,
+                                              value);
+  } else if (name == cellspacingAttr) {
+    if (!value.IsEmpty()) {
+      AddHTMLLengthToStyle(style, CSSPropertyBorderSpacing, value,
+                           kDontAllowPercentageValues);
+    }
+  } else if (name == alignAttr) {
+    if (!value.IsEmpty()) {
+      if (DeprecatedEqualIgnoringCase(value, "center")) {
+        AddPropertyToPresentationAttributeStyle(
+            style, CSSPropertyWebkitMarginStart, CSSValueAuto);
+        AddPropertyToPresentationAttributeStyle(
+            style, CSSPropertyWebkitMarginEnd, CSSValueAuto);
+      } else {
+        AddPropertyToPresentationAttributeStyle(style, CSSPropertyFloat, value);
+      }
+    }
+  } else if (name == rulesAttr) {
+    // The presence of a valid rules attribute causes border collapsing to be
+    // enabled.
+    if (rules_attr_ != kUnsetRules)
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyBorderCollapse,
+                                              CSSValueCollapse);
+  } else if (name == frameAttr) {
+    bool border_top;
+    bool border_right;
+    bool border_bottom;
+    bool border_left;
+    if (GetBordersFromFrameAttributeValue(value, border_top, border_right,
+                                          border_bottom, border_left)) {
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyBorderWidth,
+                                              CSSValueThin);
+      AddPropertyToPresentationAttributeStyle(
+          style, CSSPropertyBorderTopStyle,
+          border_top ? CSSValueSolid : CSSValueHidden);
+      AddPropertyToPresentationAttributeStyle(
+          style, CSSPropertyBorderBottomStyle,
+          border_bottom ? CSSValueSolid : CSSValueHidden);
+      AddPropertyToPresentationAttributeStyle(
+          style, CSSPropertyBorderLeftStyle,
+          border_left ? CSSValueSolid : CSSValueHidden);
+      AddPropertyToPresentationAttributeStyle(
+          style, CSSPropertyBorderRightStyle,
+          border_right ? CSSValueSolid : CSSValueHidden);
+    }
+  } else {
+    HTMLElement::CollectStyleForPresentationAttribute(name, value, style);
+  }
+}
+
+bool HTMLTableElement::IsPresentationAttribute(
+    const QualifiedName& name) const {
+  if (name == widthAttr || name == heightAttr || name == bgcolorAttr ||
+      name == backgroundAttr || name == valignAttr || name == vspaceAttr ||
+      name == hspaceAttr || name == alignAttr || name == cellspacingAttr ||
+      name == borderAttr || name == bordercolorAttr || name == frameAttr ||
+      name == rulesAttr)
     return true;
+  return HTMLElement::IsPresentationAttribute(name);
 }
 
-void HTMLTableElement::collectStyleForPresentationAttribute(const QualifiedName& name, const AtomicString& value, MutableStylePropertySet* style)
-{
-    if (name == widthAttr) {
-        addHTMLLengthToStyle(style, CSSPropertyWidth, value);
-    } else if (name == heightAttr) {
-        addHTMLLengthToStyle(style, CSSPropertyHeight, value);
-    } else if (name == borderAttr) {
-        addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderWidth, parseBorderWidthAttribute(value), CSSPrimitiveValue::UnitType::Pixels);
-    } else if (name == bordercolorAttr) {
-        if (!value.isEmpty())
-            addHTMLColorToStyle(style, CSSPropertyBorderColor, value);
-    } else if (name == bgcolorAttr) {
-        addHTMLColorToStyle(style, CSSPropertyBackgroundColor, value);
-    } else if (name == backgroundAttr) {
-        String url = stripLeadingAndTrailingHTMLSpaces(value);
-        if (!url.isEmpty()) {
-            CSSImageValue* imageValue = CSSImageValue::create(url, document().completeURL(url));
-            imageValue->setReferrer(Referrer(document().outgoingReferrer(), document().getReferrerPolicy()));
-            style->setProperty(CSSProperty(CSSPropertyBackgroundImage, *imageValue));
-        }
-    } else if (name == valignAttr) {
-        if (!value.isEmpty())
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyVerticalAlign, value);
-    } else if (name == cellspacingAttr) {
-        if (!value.isEmpty())
-            addHTMLLengthToStyle(style, CSSPropertyBorderSpacing, value);
-    } else if (name == alignAttr) {
-        if (!value.isEmpty()) {
-            if (equalIgnoringCase(value, "center")) {
-                addPropertyToPresentationAttributeStyle(style, CSSPropertyWebkitMarginStart, CSSValueAuto);
-                addPropertyToPresentationAttributeStyle(style, CSSPropertyWebkitMarginEnd, CSSValueAuto);
-            } else {
-                addPropertyToPresentationAttributeStyle(style, CSSPropertyFloat, value);
-            }
-        }
-    } else if (name == rulesAttr) {
-        // The presence of a valid rules attribute causes border collapsing to be enabled.
-        if (m_rulesAttr != UnsetRules)
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderCollapse, CSSValueCollapse);
-    } else if (name == frameAttr) {
-        bool borderTop;
-        bool borderRight;
-        bool borderBottom;
-        bool borderLeft;
-        if (getBordersFromFrameAttributeValue(value, borderTop, borderRight, borderBottom, borderLeft)) {
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderWidth, CSSValueThin);
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderTopStyle, borderTop ? CSSValueSolid : CSSValueHidden);
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderBottomStyle, borderBottom ? CSSValueSolid : CSSValueHidden);
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderLeftStyle, borderLeft ? CSSValueSolid : CSSValueHidden);
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderRightStyle, borderRight ? CSSValueSolid : CSSValueHidden);
-        }
-    } else {
-        HTMLElement::collectStyleForPresentationAttribute(name, value, style);
+void HTMLTableElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  const QualifiedName& name = params.name;
+  CellBorders borders_before = GetCellBorders();
+  unsigned short old_padding = padding_;
+
+  if (name == borderAttr) {
+    // FIXME: This attribute is a mess.
+    border_attr_ = ParseBorderWidthAttribute(params.new_value);
+  } else if (name == bordercolorAttr) {
+    border_color_attr_ = !params.new_value.IsEmpty();
+  } else if (name == frameAttr) {
+    // FIXME: This attribute is a mess.
+    bool border_top;
+    bool border_right;
+    bool border_bottom;
+    bool border_left;
+    frame_attr_ = GetBordersFromFrameAttributeValue(
+        params.new_value, border_top, border_right, border_bottom, border_left);
+  } else if (name == rulesAttr) {
+    rules_attr_ = kUnsetRules;
+    if (DeprecatedEqualIgnoringCase(params.new_value, "none"))
+      rules_attr_ = kNoneRules;
+    else if (DeprecatedEqualIgnoringCase(params.new_value, "groups"))
+      rules_attr_ = kGroupsRules;
+    else if (DeprecatedEqualIgnoringCase(params.new_value, "rows"))
+      rules_attr_ = kRowsRules;
+    else if (DeprecatedEqualIgnoringCase(params.new_value, "cols"))
+      rules_attr_ = kColsRules;
+    else if (DeprecatedEqualIgnoringCase(params.new_value, "all"))
+      rules_attr_ = kAllRules;
+  } else if (params.name == cellpaddingAttr) {
+    if (!params.new_value.IsEmpty())
+      padding_ = std::max(0, params.new_value.ToInt());
+    else
+      padding_ = 1;
+  } else if (params.name == colsAttr) {
+    // ###
+  } else {
+    HTMLElement::ParseAttribute(params);
+  }
+
+  if (borders_before != GetCellBorders() || old_padding != padding_) {
+    shared_cell_style_ = nullptr;
+    SetNeedsTableStyleRecalc();
+  }
+}
+
+static StylePropertySet* CreateBorderStyle(CSSValueID value) {
+  MutableStylePropertySet* style =
+      MutableStylePropertySet::Create(kHTMLQuirksMode);
+  style->SetProperty(CSSPropertyBorderTopStyle, value);
+  style->SetProperty(CSSPropertyBorderBottomStyle, value);
+  style->SetProperty(CSSPropertyBorderLeftStyle, value);
+  style->SetProperty(CSSPropertyBorderRightStyle, value);
+  return style;
+}
+
+const StylePropertySet*
+HTMLTableElement::AdditionalPresentationAttributeStyle() {
+  if (frame_attr_)
+    return nullptr;
+
+  if (!border_attr_ && !border_color_attr_) {
+    // Setting the border to 'hidden' allows it to win over any border
+    // set on the table's cells during border-conflict resolution.
+    if (rules_attr_ != kUnsetRules) {
+      DEFINE_STATIC_LOCAL(StylePropertySet, solid_border_style,
+                          (CreateBorderStyle(CSSValueHidden)));
+      return &solid_border_style;
     }
+    return nullptr;
+  }
+
+  if (border_color_attr_) {
+    DEFINE_STATIC_LOCAL(StylePropertySet, solid_border_style,
+                        (CreateBorderStyle(CSSValueSolid)));
+    return &solid_border_style;
+  }
+  DEFINE_STATIC_LOCAL(StylePropertySet, outset_border_style,
+                      (CreateBorderStyle(CSSValueOutset)));
+  return &outset_border_style;
 }
 
-bool HTMLTableElement::isPresentationAttribute(const QualifiedName& name) const
-{
-    if (name == widthAttr || name == heightAttr || name == bgcolorAttr || name == backgroundAttr || name == valignAttr || name == vspaceAttr || name == hspaceAttr || name == alignAttr || name == cellspacingAttr || name == borderAttr || name == bordercolorAttr || name == frameAttr || name == rulesAttr)
-        return true;
-    return HTMLElement::isPresentationAttribute(name);
+HTMLTableElement::CellBorders HTMLTableElement::GetCellBorders() const {
+  switch (rules_attr_) {
+    case kNoneRules:
+    case kGroupsRules:
+      return kNoBorders;
+    case kAllRules:
+      return kSolidBorders;
+    case kColsRules:
+      return kSolidBordersColsOnly;
+    case kRowsRules:
+      return kSolidBordersRowsOnly;
+    case kUnsetRules:
+      if (!border_attr_)
+        return kNoBorders;
+      if (border_color_attr_)
+        return kSolidBorders;
+      return kInsetBorders;
+  }
+  NOTREACHED();
+  return kNoBorders;
 }
 
-void HTMLTableElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    CellBorders bordersBefore = getCellBorders();
-    unsigned short oldPadding = m_padding;
+StylePropertySet* HTMLTableElement::CreateSharedCellStyle() {
+  MutableStylePropertySet* style =
+      MutableStylePropertySet::Create(kHTMLQuirksMode);
 
-    if (name == borderAttr)  {
-        // FIXME: This attribute is a mess.
-        m_borderAttr = parseBorderWidthAttribute(value);
-    } else if (name == bordercolorAttr) {
-        m_borderColorAttr = !value.isEmpty();
-    } else if (name == frameAttr) {
-        // FIXME: This attribute is a mess.
-        bool borderTop;
-        bool borderRight;
-        bool borderBottom;
-        bool borderLeft;
-        m_frameAttr = getBordersFromFrameAttributeValue(value, borderTop, borderRight, borderBottom, borderLeft);
-    } else if (name == rulesAttr) {
-        m_rulesAttr = UnsetRules;
-        if (equalIgnoringCase(value, "none"))
-            m_rulesAttr = NoneRules;
-        else if (equalIgnoringCase(value, "groups"))
-            m_rulesAttr = GroupsRules;
-        else if (equalIgnoringCase(value, "rows"))
-            m_rulesAttr = RowsRules;
-        else if (equalIgnoringCase(value, "cols"))
-            m_rulesAttr = ColsRules;
-        else if (equalIgnoringCase(value, "all"))
-            m_rulesAttr = AllRules;
-    } else if (name == cellpaddingAttr) {
-        if (!value.isEmpty())
-            m_padding = std::max(0, value.toInt());
-        else
-            m_padding = 1;
-    } else if (name == colsAttr) {
-        // ###
-    } else {
-        HTMLElement::parseAttribute(name, oldValue, value);
-    }
+  switch (GetCellBorders()) {
+    case kSolidBordersColsOnly:
+      style->SetProperty(CSSPropertyBorderLeftWidth, CSSValueThin);
+      style->SetProperty(CSSPropertyBorderRightWidth, CSSValueThin);
+      style->SetProperty(CSSPropertyBorderLeftStyle, CSSValueSolid);
+      style->SetProperty(CSSPropertyBorderRightStyle, CSSValueSolid);
+      style->SetProperty(CSSPropertyBorderColor, *CSSInheritedValue::Create());
+      break;
+    case kSolidBordersRowsOnly:
+      style->SetProperty(CSSPropertyBorderTopWidth, CSSValueThin);
+      style->SetProperty(CSSPropertyBorderBottomWidth, CSSValueThin);
+      style->SetProperty(CSSPropertyBorderTopStyle, CSSValueSolid);
+      style->SetProperty(CSSPropertyBorderBottomStyle, CSSValueSolid);
+      style->SetProperty(CSSPropertyBorderColor, *CSSInheritedValue::Create());
+      break;
+    case kSolidBorders:
+      style->SetProperty(
+          CSSPropertyBorderWidth,
+          *CSSPrimitiveValue::Create(1, CSSPrimitiveValue::UnitType::kPixels));
+      style->SetProperty(CSSPropertyBorderStyle,
+                         *CSSIdentifierValue::Create(CSSValueSolid));
+      style->SetProperty(CSSPropertyBorderColor, *CSSInheritedValue::Create());
+      break;
+    case kInsetBorders:
+      style->SetProperty(
+          CSSPropertyBorderWidth,
+          *CSSPrimitiveValue::Create(1, CSSPrimitiveValue::UnitType::kPixels));
+      style->SetProperty(CSSPropertyBorderStyle,
+                         *CSSIdentifierValue::Create(CSSValueInset));
+      style->SetProperty(CSSPropertyBorderColor, *CSSInheritedValue::Create());
+      break;
+    case kNoBorders:
+      // If 'rules=none' then allow any borders set at cell level to take
+      // effect.
+      break;
+  }
 
-    if (bordersBefore != getCellBorders() || oldPadding != m_padding) {
-        m_sharedCellStyle = nullptr;
-        setNeedsTableStyleRecalc();
-    }
+  if (padding_)
+    style->SetProperty(CSSPropertyPadding,
+                       *CSSPrimitiveValue::Create(
+                           padding_, CSSPrimitiveValue::UnitType::kPixels));
+
+  return style;
 }
 
-static StylePropertySet* createBorderStyle(CSSValueID value)
-{
-    MutableStylePropertySet* style = MutableStylePropertySet::create(HTMLQuirksMode);
-    style->setProperty(CSSPropertyBorderTopStyle, value);
-    style->setProperty(CSSPropertyBorderBottomStyle, value);
-    style->setProperty(CSSPropertyBorderLeftStyle, value);
-    style->setProperty(CSSPropertyBorderRightStyle, value);
-    return style;
+const StylePropertySet* HTMLTableElement::AdditionalCellStyle() {
+  if (!shared_cell_style_)
+    shared_cell_style_ = CreateSharedCellStyle();
+  return shared_cell_style_.Get();
 }
 
-const StylePropertySet* HTMLTableElement::additionalPresentationAttributeStyle()
-{
-    if (m_frameAttr)
-        return nullptr;
-
-    if (!m_borderAttr && !m_borderColorAttr) {
-        // Setting the border to 'hidden' allows it to win over any border
-        // set on the table's cells during border-conflict resolution.
-        if (m_rulesAttr != UnsetRules) {
-            DEFINE_STATIC_LOCAL(StylePropertySet, solidBorderStyle, (createBorderStyle(CSSValueHidden)));
-            return &solidBorderStyle;
-        }
-        return nullptr;
-    }
-
-    if (m_borderColorAttr) {
-        DEFINE_STATIC_LOCAL(StylePropertySet, solidBorderStyle, (createBorderStyle(CSSValueSolid)));
-        return &solidBorderStyle;
-    }
-    DEFINE_STATIC_LOCAL(StylePropertySet, outsetBorderStyle, (createBorderStyle(CSSValueOutset)));
-    return &outsetBorderStyle;
+static StylePropertySet* CreateGroupBorderStyle(int rows) {
+  MutableStylePropertySet* style =
+      MutableStylePropertySet::Create(kHTMLQuirksMode);
+  if (rows) {
+    style->SetProperty(CSSPropertyBorderTopWidth, CSSValueThin);
+    style->SetProperty(CSSPropertyBorderBottomWidth, CSSValueThin);
+    style->SetProperty(CSSPropertyBorderTopStyle, CSSValueSolid);
+    style->SetProperty(CSSPropertyBorderBottomStyle, CSSValueSolid);
+  } else {
+    style->SetProperty(CSSPropertyBorderLeftWidth, CSSValueThin);
+    style->SetProperty(CSSPropertyBorderRightWidth, CSSValueThin);
+    style->SetProperty(CSSPropertyBorderLeftStyle, CSSValueSolid);
+    style->SetProperty(CSSPropertyBorderRightStyle, CSSValueSolid);
+  }
+  return style;
 }
 
-HTMLTableElement::CellBorders HTMLTableElement::getCellBorders() const
-{
-    switch (m_rulesAttr) {
-    case NoneRules:
-    case GroupsRules:
-        return NoBorders;
-    case AllRules:
-        return SolidBorders;
-    case ColsRules:
-        return SolidBordersColsOnly;
-    case RowsRules:
-        return SolidBordersRowsOnly;
-    case UnsetRules:
-        if (!m_borderAttr)
-            return NoBorders;
-        if (m_borderColorAttr)
-            return SolidBorders;
-        return InsetBorders;
-    }
-    ASSERT_NOT_REACHED();
-    return NoBorders;
+const StylePropertySet* HTMLTableElement::AdditionalGroupStyle(bool rows) {
+  if (rules_attr_ != kGroupsRules)
+    return nullptr;
+
+  if (rows) {
+    DEFINE_STATIC_LOCAL(StylePropertySet, row_border_style,
+                        (CreateGroupBorderStyle(true)));
+    return &row_border_style;
+  }
+  DEFINE_STATIC_LOCAL(StylePropertySet, column_border_style,
+                      (CreateGroupBorderStyle(false)));
+  return &column_border_style;
 }
 
-StylePropertySet* HTMLTableElement::createSharedCellStyle()
-{
-    MutableStylePropertySet* style = MutableStylePropertySet::create(HTMLQuirksMode);
-
-    switch (getCellBorders()) {
-    case SolidBordersColsOnly:
-        style->setProperty(CSSPropertyBorderLeftWidth, CSSValueThin);
-        style->setProperty(CSSPropertyBorderRightWidth, CSSValueThin);
-        style->setProperty(CSSPropertyBorderLeftStyle, CSSValueSolid);
-        style->setProperty(CSSPropertyBorderRightStyle, CSSValueSolid);
-        style->setProperty(CSSPropertyBorderColor, CSSInheritedValue::create());
-        break;
-    case SolidBordersRowsOnly:
-        style->setProperty(CSSPropertyBorderTopWidth, CSSValueThin);
-        style->setProperty(CSSPropertyBorderBottomWidth, CSSValueThin);
-        style->setProperty(CSSPropertyBorderTopStyle, CSSValueSolid);
-        style->setProperty(CSSPropertyBorderBottomStyle, CSSValueSolid);
-        style->setProperty(CSSPropertyBorderColor, CSSInheritedValue::create());
-        break;
-    case SolidBorders:
-        style->setProperty(CSSPropertyBorderWidth, CSSPrimitiveValue::create(1, CSSPrimitiveValue::UnitType::Pixels));
-        style->setProperty(CSSPropertyBorderStyle, CSSPrimitiveValue::createIdentifier(CSSValueSolid));
-        style->setProperty(CSSPropertyBorderColor, CSSInheritedValue::create());
-        break;
-    case InsetBorders:
-        style->setProperty(CSSPropertyBorderWidth, CSSPrimitiveValue::create(1, CSSPrimitiveValue::UnitType::Pixels));
-        style->setProperty(CSSPropertyBorderStyle, CSSPrimitiveValue::createIdentifier(CSSValueInset));
-        style->setProperty(CSSPropertyBorderColor, CSSInheritedValue::create());
-        break;
-    case NoBorders:
-        // If 'rules=none' then allow any borders set at cell level to take effect.
-        break;
-    }
-
-    if (m_padding)
-        style->setProperty(CSSPropertyPadding, CSSPrimitiveValue::create(m_padding, CSSPrimitiveValue::UnitType::Pixels));
-
-    return style;
+bool HTMLTableElement::IsURLAttribute(const Attribute& attribute) const {
+  return attribute.GetName() == backgroundAttr ||
+         HTMLElement::IsURLAttribute(attribute);
 }
 
-const StylePropertySet* HTMLTableElement::additionalCellStyle()
-{
-    if (!m_sharedCellStyle)
-        m_sharedCellStyle = createSharedCellStyle();
-    return m_sharedCellStyle.get();
+bool HTMLTableElement::HasLegalLinkAttribute(const QualifiedName& name) const {
+  return name == backgroundAttr || HTMLElement::HasLegalLinkAttribute(name);
 }
 
-static StylePropertySet* createGroupBorderStyle(int rows)
-{
-    MutableStylePropertySet* style = MutableStylePropertySet::create(HTMLQuirksMode);
-    if (rows) {
-        style->setProperty(CSSPropertyBorderTopWidth, CSSValueThin);
-        style->setProperty(CSSPropertyBorderBottomWidth, CSSValueThin);
-        style->setProperty(CSSPropertyBorderTopStyle, CSSValueSolid);
-        style->setProperty(CSSPropertyBorderBottomStyle, CSSValueSolid);
-    } else {
-        style->setProperty(CSSPropertyBorderLeftWidth, CSSValueThin);
-        style->setProperty(CSSPropertyBorderRightWidth, CSSValueThin);
-        style->setProperty(CSSPropertyBorderLeftStyle, CSSValueSolid);
-        style->setProperty(CSSPropertyBorderRightStyle, CSSValueSolid);
-    }
-    return style;
+const QualifiedName& HTMLTableElement::SubResourceAttributeName() const {
+  return backgroundAttr;
 }
 
-const StylePropertySet* HTMLTableElement::additionalGroupStyle(bool rows)
-{
-    if (m_rulesAttr != GroupsRules)
-        return nullptr;
-
-    if (rows) {
-        DEFINE_STATIC_LOCAL(StylePropertySet, rowBorderStyle, (createGroupBorderStyle(true)));
-        return &rowBorderStyle;
-    }
-    DEFINE_STATIC_LOCAL(StylePropertySet, columnBorderStyle, (createGroupBorderStyle(false)));
-    return &columnBorderStyle;
+HTMLTableRowsCollection* HTMLTableElement::rows() {
+  return EnsureCachedCollection<HTMLTableRowsCollection>(kTableRows);
 }
 
-bool HTMLTableElement::isURLAttribute(const Attribute& attribute) const
-{
-    return attribute.name() == backgroundAttr || HTMLElement::isURLAttribute(attribute);
+HTMLCollection* HTMLTableElement::tBodies() {
+  return EnsureCachedCollection<HTMLCollection>(kTableTBodies);
 }
 
-bool HTMLTableElement::hasLegalLinkAttribute(const QualifiedName& name) const
-{
-    return name == backgroundAttr || HTMLElement::hasLegalLinkAttribute(name);
+const AtomicString& HTMLTableElement::Rules() const {
+  return getAttribute(rulesAttr);
 }
 
-const QualifiedName& HTMLTableElement::subResourceAttributeName() const
-{
-    return backgroundAttr;
+const AtomicString& HTMLTableElement::Summary() const {
+  return getAttribute(summaryAttr);
 }
 
-HTMLTableRowsCollection* HTMLTableElement::rows()
-{
-    return ensureCachedCollection<HTMLTableRowsCollection>(TableRows);
+DEFINE_TRACE(HTMLTableElement) {
+  visitor->Trace(shared_cell_style_);
+  HTMLElement::Trace(visitor);
 }
 
-HTMLCollection* HTMLTableElement::tBodies()
-{
-    return ensureCachedCollection<HTMLCollection>(TableTBodies);
-}
-
-const AtomicString& HTMLTableElement::rules() const
-{
-    return getAttribute(rulesAttr);
-}
-
-const AtomicString& HTMLTableElement::summary() const
-{
-    return getAttribute(summaryAttr);
-}
-
-DEFINE_TRACE(HTMLTableElement)
-{
-    visitor->trace(m_sharedCellStyle);
-    HTMLElement::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -44,56 +44,64 @@ class WebMediaConstraints;
 class WebMediaStream;
 
 class WebUserMediaRequest {
-public:
-    WebUserMediaRequest() { }
-    WebUserMediaRequest(const WebUserMediaRequest& request) { assign(request); }
-    ~WebUserMediaRequest() { reset(); }
+ public:
+  WebUserMediaRequest() {}
+  WebUserMediaRequest(const WebUserMediaRequest& request) { Assign(request); }
+  ~WebUserMediaRequest() { Reset(); }
 
-    WebUserMediaRequest& operator=(const WebUserMediaRequest& other)
-    {
-        assign(other);
-        return *this;
-    }
+  WebUserMediaRequest& operator=(const WebUserMediaRequest& other) {
+    Assign(other);
+    return *this;
+  }
 
-    BLINK_EXPORT void reset();
-    bool isNull() const { return m_private.isNull(); }
-    BLINK_EXPORT bool equals(const WebUserMediaRequest&) const;
-    BLINK_EXPORT void assign(const WebUserMediaRequest&);
+  BLINK_EXPORT void Reset();
+  bool IsNull() const { return private_.IsNull(); }
+  BLINK_EXPORT bool Equals(const WebUserMediaRequest&) const;
+  BLINK_EXPORT void Assign(const WebUserMediaRequest&);
 
-    BLINK_EXPORT bool audio() const;
-    BLINK_EXPORT bool video() const;
-    BLINK_EXPORT WebMediaConstraints audioConstraints() const;
-    BLINK_EXPORT WebMediaConstraints videoConstraints() const;
+  BLINK_EXPORT bool Audio() const;
+  BLINK_EXPORT bool Video() const;
+  BLINK_EXPORT WebMediaConstraints AudioConstraints() const;
+  BLINK_EXPORT WebMediaConstraints VideoConstraints() const;
 
-    BLINK_EXPORT WebSecurityOrigin getSecurityOrigin() const;
-    BLINK_EXPORT WebDocument ownerDocument() const;
+  BLINK_EXPORT WebSecurityOrigin GetSecurityOrigin() const;
+  BLINK_EXPORT WebDocument OwnerDocument() const;
 
-    BLINK_EXPORT void requestSucceeded(const WebMediaStream&);
+  BLINK_EXPORT void RequestSucceeded(const WebMediaStream&);
 
-    BLINK_EXPORT void requestDenied(const WebString& description = WebString());
-    BLINK_EXPORT void requestFailedConstraint(const WebString& constraintName, const WebString& description = WebString());
-    BLINK_EXPORT void requestFailedUASpecific(const WebString& name, const WebString& constraintName = WebString(), const WebString& description = WebString());
+  BLINK_EXPORT void RequestDenied(const WebString& description = WebString());
+  BLINK_EXPORT void RequestFailedConstraint(
+      const WebString& constraint_name,
+      const WebString& description = WebString());
+  BLINK_EXPORT void RequestFailedUASpecific(
+      const WebString& name,
+      const WebString& constraint_name = WebString(),
+      const WebString& description = WebString());
 
-    // DEPRECATED
-    BLINK_EXPORT void requestFailed(const WebString& description = WebString()) { requestDenied(description); }
+  // DEPRECATED
+  BLINK_EXPORT void RequestFailed(const WebString& description = WebString()) {
+    RequestDenied(description);
+  }
 
-    // For testing in content/
-    BLINK_EXPORT static WebUserMediaRequest createForTesting(const WebMediaConstraints& audio, const WebMediaConstraints& video);
+  // For testing in content/
+  BLINK_EXPORT static WebUserMediaRequest CreateForTesting(
+      const WebMediaConstraints& audio,
+      const WebMediaConstraints& video);
 
 #if BLINK_IMPLEMENTATION
-    WebUserMediaRequest(UserMediaRequest*);
-    operator UserMediaRequest*() const;
+  WebUserMediaRequest(UserMediaRequest*);
+  operator UserMediaRequest*() const;
 #endif
 
-private:
-    WebPrivatePtr<UserMediaRequest> m_private;
+ private:
+  WebPrivatePtr<UserMediaRequest> private_;
 };
 
-inline bool operator==(const WebUserMediaRequest& a, const WebUserMediaRequest& b)
-{
-    return a.equals(b);
+inline bool operator==(const WebUserMediaRequest& a,
+                       const WebUserMediaRequest& b) {
+  return a.Equals(b);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebUserMediaRequest_h
+#endif  // WebUserMediaRequest_h

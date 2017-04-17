@@ -7,22 +7,23 @@
 
 namespace blink {
 
-// From https://w3c.github.io/encrypted-media/initdata-format-registry.html#registry
+// From
+// https://w3c.github.io/encrypted-media/initdata-format-registry.html#registry
 enum class WebEncryptedMediaInitDataType {
-    Unknown,
-    Cenc,
-    Keyids,
-    Webm,
+  kUnknown,
+  kCenc,
+  kKeyids,
+  kWebm,
 };
 
 // From https://w3c.github.io/encrypted-media/#idl-def-MediaKeySessionType
 enum class WebEncryptedMediaSessionType {
-    Unknown,
-    Temporary,
-    PersistentLicense,
-    PersistentReleaseMessage,
+  kUnknown,
+  kTemporary,
+  kPersistentLicense,
+  kPersistentReleaseMessage,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebEncryptedMediaTypes_h
+#endif  // WebEncryptedMediaTypes_h

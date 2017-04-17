@@ -4,26 +4,33 @@
 
 #include "android_webview/native/aw_contents_client_bridge.h"
 
+#include <memory>
+#include <utility>
+
 #include "android_webview/common/devtools_instrumentation.h"
+#include "android_webview/grit/components_strings.h"
 #include "android_webview/native/aw_contents.h"
 #include "base/android/jni_android.h"
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
 #include "base/callback_helpers.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/client_certificate_delegate.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
-#include "crypto/scoped_openssl_types.h"
-#include "grit/components_strings.h"
 #include "jni/AwContentsClientBridge_jni.h"
-#include "net/android/keystore_openssl.h"
 #include "net/cert/x509_certificate.h"
+#include "net/http/http_response_headers.h"
 #include "net/ssl/openssl_client_key_store.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "net/ssl/ssl_client_cert_type.h"
+#include "net/ssl/ssl_platform_key_android.h"
+#include "net/ssl/ssl_private_key.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 
@@ -31,9 +38,12 @@ using base::android::AttachCurrentThread;
 using base::android::ConvertJavaStringToUTF16;
 using base::android::ConvertUTF8ToJavaString;
 using base::android::ConvertUTF16ToJavaString;
+using base::android::HasException;
 using base::android::JavaRef;
 using base::android::ScopedJavaLocalRef;
+using base::android::ToJavaArrayOfStrings;
 using content::BrowserThread;
+using std::vector;
 
 namespace android_webview {
 
@@ -41,19 +51,19 @@ namespace {
 
 // Must be called on the I/O thread to record a client certificate
 // and its private key in the OpenSSLClientKeyStore.
-void RecordClientCertificateKey(
-    const scoped_refptr<net::X509Certificate>& client_cert,
-    crypto::ScopedEVP_PKEY private_key) {
+void RecordClientCertificateKey(net::X509Certificate* client_cert,
+                                scoped_refptr<net::SSLPrivateKey> private_key) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   net::OpenSSLClientKeyStore::GetInstance()->RecordClientCertPrivateKey(
-      client_cert.get(), private_key.get());
+      client_cert, std::move(private_key));
 }
 
 }  // namespace
 
-AwContentsClientBridge::AwContentsClientBridge(JNIEnv* env, jobject obj)
+AwContentsClientBridge::AwContentsClientBridge(JNIEnv* env,
+                                               const JavaRef<jobject>& obj)
     : java_ref_(env, obj) {
-  DCHECK(obj);
+  DCHECK(!obj.is_null());
   Java_AwContentsClientBridge_setNativeContentsClientBridge(
       env, obj, reinterpret_cast<intptr_t>(this));
 }
@@ -65,11 +75,10 @@ AwContentsClientBridge::~AwContentsClientBridge() {
   if (!obj.is_null()) {
     // Clear the weak reference from the java peer to the native object since
     // it is possible that java object lifetime can exceed the AwContens.
-    Java_AwContentsClientBridge_setNativeContentsClientBridge(env, obj.obj(),
-                                                              0);
+    Java_AwContentsClientBridge_setNativeContentsClientBridge(env, obj, 0);
   }
 
-  for (IDMap<content::ClientCertificateDelegate>::iterator iter(
+  for (IDMap<content::ClientCertificateDelegate*>::iterator iter(
            &pending_client_cert_request_delegates_);
        !iter.IsAtEnd(); iter.Advance()) {
     delete iter.GetCurrentValue();
@@ -80,9 +89,8 @@ void AwContentsClientBridge::AllowCertificateError(
     int cert_error,
     net::X509Certificate* cert,
     const GURL& request_url,
-    const base::Callback<void(bool)>& callback,
+    const base::Callback<void(content::CertificateRequestResultType)>& callback,
     bool* cancel_request) {
-
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   JNIEnv* env = AttachCurrentThread();
 
@@ -100,9 +108,9 @@ void AwContentsClientBridge::AllowCertificateError(
   // We need to add the callback before making the call to java side,
   // as it may do a synchronous callback prior to returning.
   int request_id = pending_cert_error_callbacks_.Add(
-      new CertErrorCallback(callback));
+      base::MakeUnique<CertErrorCallback>(callback));
   *cancel_request = !Java_AwContentsClientBridge_allowCertificateError(
-      env, obj.obj(), cert_error, jcert.obj(), jurl.obj(), request_id);
+      env, obj, cert_error, jcert, jurl, request_id);
   // if the request is cancelled, then cancel the stored callback
   if (*cancel_request) {
     pending_cert_error_callbacks_.Remove(request_id);
@@ -119,7 +127,8 @@ void AwContentsClientBridge::ProceedSslError(JNIEnv* env,
     LOG(WARNING) << "Ignoring unexpected ssl error proceed callback";
     return;
   }
-  callback->Run(proceed);
+  callback->Run(proceed ? content::CERTIFICATE_REQUEST_RESULT_TYPE_CONTINUE
+                        : content::CERTIFICATE_REQUEST_RESULT_TYPE_CANCEL);
   pending_cert_error_callbacks_.Remove(id);
 }
 
@@ -183,12 +192,7 @@ void AwContentsClientBridge::SelectClientCertificate(
           env, cert_request_info->host_and_port.host());
 
   Java_AwContentsClientBridge_selectClientCertificate(
-      env,
-      obj.obj(),
-      request_id,
-      key_types_ref.obj(),
-      principals_ref.obj(),
-      host_name_ref.obj(),
+      env, obj, request_id, key_types_ref, principals_ref, host_name_ref,
       cert_request_info->host_and_port.port());
 
   // Release the guard.
@@ -242,10 +246,10 @@ void AwContentsClientBridge::ProvideClientCertificateResponse(
     return;
   }
 
-  // Create an EVP_PKEY wrapper for the private key JNI reference.
-  crypto::ScopedEVP_PKEY private_key(
-      net::android::GetOpenSSLPrivateKeyWrapper(private_key_ref.obj()));
-  if (!private_key.get()) {
+  // Create an SSLPrivateKey wrapper for the private key JNI reference.
+  scoped_refptr<net::SSLPrivateKey> private_key =
+      net::WrapJavaPrivateKey(client_cert.get(), private_key_ref);
+  if (!private_key) {
     LOG(ERROR) << "Could not create OpenSSL wrapper for private key";
     return;
   }
@@ -260,14 +264,14 @@ void AwContentsClientBridge::ProvideClientCertificateResponse(
   // the UI thread.
   content::BrowserThread::PostTaskAndReply(
       content::BrowserThread::IO, FROM_HERE,
-      base::Bind(&RecordClientCertificateKey, client_cert,
+      base::Bind(&RecordClientCertificateKey, base::RetainedRef(client_cert),
                  base::Passed(&private_key)),
       base::Bind(&content::ClientCertificateDelegate::ContinueWithCertificate,
                  base::Owned(delegate), base::RetainedRef(client_cert)));
 }
 
 void AwContentsClientBridge::RunJavaScriptDialog(
-    content::JavaScriptMessageType message_type,
+    content::JavaScriptDialogType dialog_type,
     const GURL& origin_url,
     const base::string16& message_text,
     const base::string16& default_prompt_text,
@@ -282,35 +286,32 @@ void AwContentsClientBridge::RunJavaScriptDialog(
   }
 
   int callback_id = pending_js_dialog_callbacks_.Add(
-      new content::JavaScriptDialogManager::DialogClosedCallback(callback));
+      base::MakeUnique<content::JavaScriptDialogManager::DialogClosedCallback>(
+          callback));
   ScopedJavaLocalRef<jstring> jurl(
       ConvertUTF8ToJavaString(env, origin_url.spec()));
   ScopedJavaLocalRef<jstring> jmessage(
       ConvertUTF16ToJavaString(env, message_text));
 
-  switch (message_type) {
-    case content::JAVASCRIPT_MESSAGE_TYPE_ALERT: {
+  switch (dialog_type) {
+    case content::JAVASCRIPT_DIALOG_TYPE_ALERT: {
       devtools_instrumentation::ScopedEmbedderCallbackTask("onJsAlert");
-      Java_AwContentsClientBridge_handleJsAlert(
-          env, obj.obj(), jurl.obj(), jmessage.obj(), callback_id);
+      Java_AwContentsClientBridge_handleJsAlert(env, obj, jurl, jmessage,
+                                                callback_id);
       break;
     }
-    case content::JAVASCRIPT_MESSAGE_TYPE_CONFIRM: {
+    case content::JAVASCRIPT_DIALOG_TYPE_CONFIRM: {
       devtools_instrumentation::ScopedEmbedderCallbackTask("onJsConfirm");
-      Java_AwContentsClientBridge_handleJsConfirm(
-          env, obj.obj(), jurl.obj(), jmessage.obj(), callback_id);
+      Java_AwContentsClientBridge_handleJsConfirm(env, obj, jurl, jmessage,
+                                                  callback_id);
       break;
     }
-    case content::JAVASCRIPT_MESSAGE_TYPE_PROMPT: {
+    case content::JAVASCRIPT_DIALOG_TYPE_PROMPT: {
       ScopedJavaLocalRef<jstring> jdefault_value(
           ConvertUTF16ToJavaString(env, default_prompt_text));
       devtools_instrumentation::ScopedEmbedderCallbackTask("onJsPrompt");
-      Java_AwContentsClientBridge_handleJsPrompt(env,
-                                                 obj.obj(),
-                                                 jurl.obj(),
-                                                 jmessage.obj(),
-                                                 jdefault_value.obj(),
-                                                 callback_id);
+      Java_AwContentsClientBridge_handleJsPrompt(env, obj, jurl, jmessage,
+                                                 jdefault_value, callback_id);
       break;
     }
     default:
@@ -334,15 +335,16 @@ void AwContentsClientBridge::RunBeforeUnloadDialog(
       l10n_util::GetStringUTF16(IDS_BEFOREUNLOAD_MESSAGEBOX_MESSAGE);
 
   int callback_id = pending_js_dialog_callbacks_.Add(
-      new content::JavaScriptDialogManager::DialogClosedCallback(callback));
+      base::MakeUnique<content::JavaScriptDialogManager::DialogClosedCallback>(
+          callback));
   ScopedJavaLocalRef<jstring> jurl(
       ConvertUTF8ToJavaString(env, origin_url.spec()));
   ScopedJavaLocalRef<jstring> jmessage(
       ConvertUTF16ToJavaString(env, message_text));
 
   devtools_instrumentation::ScopedEmbedderCallbackTask("onJsBeforeUnload");
-  Java_AwContentsClientBridge_handleJsBeforeUnload(
-      env, obj.obj(), jurl.obj(), jmessage.obj(), callback_id);
+  Java_AwContentsClientBridge_handleJsBeforeUnload(env, obj, jurl, jmessage,
+                                                   callback_id);
 }
 
 bool AwContentsClientBridge::ShouldOverrideUrlLoading(const base::string16& url,
@@ -356,8 +358,133 @@ bool AwContentsClientBridge::ShouldOverrideUrlLoading(const base::string16& url,
   ScopedJavaLocalRef<jstring> jurl = ConvertUTF16ToJavaString(env, url);
   devtools_instrumentation::ScopedEmbedderCallbackTask(
       "shouldOverrideUrlLoading");
-  return Java_AwContentsClientBridge_shouldOverrideUrlLoading(
-      env, obj.obj(), jurl.obj(), has_user_gesture, is_redirect, is_main_frame);
+  bool did_override = Java_AwContentsClientBridge_shouldOverrideUrlLoading(
+      env, obj, jurl, has_user_gesture, is_redirect, is_main_frame);
+  if (HasException(env)) {
+    // Tell the chromium message loop to not perform any tasks after the current
+    // one - we want to make sure we return to Java cleanly without first making
+    // any new JNI calls.
+    base::MessageLoopForUI::current()->Abort();
+    // If we crashed we don't want to continue the navigation.
+    return true;
+  }
+  return did_override;
+}
+
+void AwContentsClientBridge::NewDownload(const GURL& url,
+                                         const std::string& user_agent,
+                                         const std::string& content_disposition,
+                                         const std::string& mime_type,
+                                         int64_t content_length) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
+  if (obj.is_null())
+    return;
+
+  ScopedJavaLocalRef<jstring> jstring_url =
+      ConvertUTF8ToJavaString(env, url.spec());
+  ScopedJavaLocalRef<jstring> jstring_user_agent =
+      ConvertUTF8ToJavaString(env, user_agent);
+  ScopedJavaLocalRef<jstring> jstring_content_disposition =
+      ConvertUTF8ToJavaString(env, content_disposition);
+  ScopedJavaLocalRef<jstring> jstring_mime_type =
+      ConvertUTF8ToJavaString(env, mime_type);
+
+  Java_AwContentsClientBridge_newDownload(
+      env, obj, jstring_url, jstring_user_agent, jstring_content_disposition,
+      jstring_mime_type, content_length);
+}
+
+void AwContentsClientBridge::NewLoginRequest(const std::string& realm,
+                                             const std::string& account,
+                                             const std::string& args) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
+  if (obj.is_null())
+    return;
+
+  ScopedJavaLocalRef<jstring> jrealm = ConvertUTF8ToJavaString(env, realm);
+  ScopedJavaLocalRef<jstring> jargs = ConvertUTF8ToJavaString(env, args);
+
+  ScopedJavaLocalRef<jstring> jaccount;
+  if (!account.empty())
+    jaccount = ConvertUTF8ToJavaString(env, account);
+
+  Java_AwContentsClientBridge_newLoginRequest(env, obj, jrealm, jaccount,
+                                              jargs);
+}
+
+void AwContentsClientBridge::OnReceivedError(
+    const AwWebResourceRequest& request,
+    int error_code) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
+  if (obj.is_null())
+    return;
+
+  ScopedJavaLocalRef<jstring> jstring_description =
+      ConvertUTF8ToJavaString(env, net::ErrorToString(error_code));
+
+  AwWebResourceRequest::AwJavaWebResourceRequest java_web_resource_request;
+  AwWebResourceRequest::ConvertToJava(env, request, &java_web_resource_request);
+
+  Java_AwContentsClientBridge_onReceivedError(
+      env, obj, java_web_resource_request.jurl, request.is_main_frame,
+      request.has_user_gesture, java_web_resource_request.jmethod,
+      java_web_resource_request.jheader_names,
+      java_web_resource_request.jheader_values, error_code,
+      jstring_description);
+}
+
+void AwContentsClientBridge::OnReceivedHttpError(
+    const AwWebResourceRequest& request,
+    const scoped_refptr<const net::HttpResponseHeaders>& response_headers) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
+  if (obj.is_null())
+    return;
+
+  AwWebResourceRequest::AwJavaWebResourceRequest java_web_resource_request;
+  AwWebResourceRequest::ConvertToJava(env, request, &java_web_resource_request);
+
+  vector<std::string> response_header_names;
+  vector<std::string> response_header_values;
+
+  {
+    size_t headers_iterator = 0;
+    std::string header_name, header_value;
+    while (response_headers->EnumerateHeaderLines(
+        &headers_iterator, &header_name, &header_value)) {
+      response_header_names.push_back(header_name);
+      response_header_values.push_back(header_value);
+    }
+  }
+
+  std::string mime_type, encoding;
+  response_headers->GetMimeTypeAndCharset(&mime_type, &encoding);
+  ScopedJavaLocalRef<jstring> jstring_mime_type =
+      ConvertUTF8ToJavaString(env, mime_type);
+  ScopedJavaLocalRef<jstring> jstring_encoding =
+      ConvertUTF8ToJavaString(env, encoding);
+  int status_code = response_headers->response_code();
+  ScopedJavaLocalRef<jstring> jstring_reason =
+      ConvertUTF8ToJavaString(env, response_headers->GetStatusText());
+  ScopedJavaLocalRef<jobjectArray> jstringArray_response_header_names =
+      ToJavaArrayOfStrings(env, response_header_names);
+  ScopedJavaLocalRef<jobjectArray> jstringArray_response_header_values =
+      ToJavaArrayOfStrings(env, response_header_values);
+
+  Java_AwContentsClientBridge_onReceivedHttpError(
+      env, obj, java_web_resource_request.jurl, request.is_main_frame,
+      request.has_user_gesture, java_web_resource_request.jmethod,
+      java_web_resource_request.jheader_names,
+      java_web_resource_request.jheader_values, jstring_mime_type,
+      jstring_encoding, status_code, jstring_reason,
+      jstringArray_response_header_names, jstringArray_response_header_values);
 }
 
 void AwContentsClientBridge::ConfirmJsResult(JNIEnv* env,

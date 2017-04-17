@@ -25,6 +25,7 @@
 #ifndef NodeIteratorBase_h
 #define NodeIteratorBase_h
 
+#include "bindings/core/v8/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -34,25 +35,27 @@ class Node;
 class NodeFilter;
 
 class NodeIteratorBase : public GarbageCollectedMixin {
-public:
-    Node* root() const { return m_root.get(); }
-    unsigned whatToShow() const { return m_whatToShow; }
-    NodeFilter* filter() const { return m_filter.get(); }
+ public:
+  Node* root() const { return root_.Get(); }
+  unsigned whatToShow() const { return what_to_show_; }
+  NodeFilter* filter() const { return filter_.Get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    DECLARE_VIRTUAL_TRACE_WRAPPERS();
+ protected:
+  // In order to properly trace wrappers it is necessary for TraceWrapperMember
+  // to find the object header from within the mixin. |childThis| is safe to
+  // find the header so we pass it instead of |this|.
+  NodeIteratorBase(void* child_this, Node*, unsigned what_to_show, NodeFilter*);
+  unsigned AcceptNode(Node*, ExceptionState&) const;
 
-protected:
-    NodeIteratorBase(Node*, unsigned whatToShow, NodeFilter*);
-    unsigned acceptNode(Node*, ExceptionState&) const;
-
-private:
-    Member<Node> m_root;
-    unsigned m_whatToShow;
-    Member<NodeFilter> m_filter;
+ private:
+  Member<Node> root_;
+  unsigned what_to_show_;
+  TraceWrapperMember<NodeFilter> filter_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NodeIteratorBase_h
+#endif  // NodeIteratorBase_h

@@ -13,6 +13,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -24,7 +25,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
-#include "base/metrics/sparse_histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/scoped_native_library.h"
 #include "base/sequenced_task_runner.h"
 #include "base/stl_util.h"
@@ -39,10 +40,10 @@
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_types.h"
-#include "components/policy/core/common/preg_parser_win.h"
-#include "components/policy/core/common/registry_dict_win.h"
+#include "components/policy/core/common/preg_parser.h"
+#include "components/policy/core/common/registry_dict.h"
 #include "components/policy/core/common/schema.h"
-#include "policy/policy_constants.h"
+#include "components/policy/policy_constants.h"
 
 namespace schema = json_schema_constants;
 
@@ -63,13 +64,10 @@ const char kBlockedExtensionPrefix[] = "[BLOCKED]";
 // List of policies that are considered only if the user is part of a AD domain.
 // Please document any new additions in policy_templates.json!
 const char* kInsecurePolicies[] = {
-    key::kMetricsReportingEnabled,
-    key::kDefaultSearchProviderEnabled,
-    key::kHomepageIsNewTabPage,
-    key::kHomepageLocation,
-    key::kRestoreOnStartup,
-    key::kRestoreOnStartupURLs
-};
+    key::kMetricsReportingEnabled, key::kDefaultSearchProviderEnabled,
+    key::kHomepageIsNewTabPage,    key::kHomepageLocation,
+    key::kNewTabPageLocation,      key::kRestoreOnStartup,
+    key::kRestoreOnStartupURLs};
 
 #pragma warning(push)
 #pragma warning(disable: 4068)  // unknown pragmas
@@ -92,10 +90,16 @@ enum DomainCheckErrors {
   DOMAIN_CHECK_ERROR_SIZE,  // Not a DomainCheckError.  Must be last.
 };
 
+// Encapculates logic to determine if enterprise policies should be honored.
+// This is used in various places below.
+bool ShouldHonorPolicies() {
+  return base::win::IsEnterpriseManaged();
+}
+
 // Verifies that untrusted policies contain only safe values. Modifies the
 // |policy| in place.
 void FilterUntrustedPolicy(PolicyMap* policy) {
-  if (base::win::IsEnrolledToDomain())
+  if (ShouldHonorPolicies())
     return;
 
   int invalid_policies = 0;
@@ -109,7 +113,7 @@ void FilterUntrustedPolicy(PolicyMap* policy) {
     std::unique_ptr<base::ListValue> filtered_values(new base::ListValue);
     for (const auto& list_entry : *policy_list_value) {
       std::string entry;
-      if (!list_entry->GetAsString(&entry))
+      if (!list_entry.GetAsString(&entry))
         continue;
       size_t pos = entry.find(';');
       if (pos == std::string::npos)
@@ -209,7 +213,7 @@ class Wow64Functions {
 };
 
 // Global Wow64Function instance used by ScopedDisableWow64Redirection below.
-static base::LazyInstance<Wow64Functions> g_wow_64_functions =
+static base::LazyInstance<Wow64Functions>::DestructorAtExit g_wow_64_functions =
     LAZY_INSTANCE_INITIALIZER;
 
 // Scoper that switches off Wow64 File System Redirection during its lifetime.
@@ -262,8 +266,8 @@ class WinGPOListProvider : public AppliedGPOListProvider {
 };
 
 // The default windows GPO list provider used for PolicyLoaderWin.
-static base::LazyInstance<WinGPOListProvider> g_win_gpo_list_provider =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<WinGPOListProvider>::DestructorAtExit
+    g_win_gpo_list_provider = LAZY_INSTANCE_INITIALIZER;
 
 // Parses |gpo_dict| according to |schema| and writes the resulting policy
 // settings to |policy| for the given |scope| and |level|.
@@ -293,8 +297,12 @@ void CollectEnterpriseUMAs() {
                             base::win::OSInfo::GetInstance()->version_type(),
                             base::win::SUITE_LAST);
 
-  bool in_domain = base::win::IsEnrolledToDomain();
-  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.InDomain", in_domain);
+  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.InDomain",
+                        base::win::IsEnrolledToDomain());
+  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.IsManaged",
+                        base::win::IsDeviceRegisteredWithManagement());
+  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.IsEnterpriseUser",
+                        base::win::IsEnterpriseManaged());
 }
 
 }  // namespace
@@ -368,9 +376,9 @@ std::unique_ptr<PolicyBundle> PolicyLoaderWin::Load() {
     { POLICY_SCOPE_USER,    HKEY_CURRENT_USER  },
   };
 
-  bool is_enterprise = base::win::IsEnrolledToDomain();
+  bool honor_policies = ShouldHonorPolicies();
   VLOG(1) << "Reading policy from the registry is "
-          << (is_enterprise ? "enabled." : "disabled.");
+          << (honor_policies ? "enabled." : "disabled.");
 
   // Load policy data for the different scopes/levels and merge them.
   std::unique_ptr<PolicyBundle> bundle(new PolicyBundle());
@@ -398,7 +406,7 @@ std::unique_ptr<PolicyBundle> PolicyLoaderWin::Load() {
     // timeout on it more aggressively. For now, there's no justification for
     // the additional effort this would introduce.
 
-    bool is_registry_forced = is_enterprise || gpo_provider_ == nullptr;
+    bool is_registry_forced = honor_policies || gpo_provider_ == nullptr;
     if (is_registry_forced || !ReadPolicyFromGPO(scope, &gpo_dict, &status)) {
       VLOG_IF(1, !is_registry_forced) << "Failed to read GPO files for "
                                       << scope << " falling back to registry.";
@@ -479,6 +487,7 @@ bool PolicyLoaderWin::LoadGPOPolicy(PolicyScope scope,
 
       // Merge with existing forced policy, giving precedence to the existing
       // forced policy.
+      // TODO(ljusten): Same problem as below.
       new_forced_policy.Merge(forced_policy);
       forced_policy.Swap(&new_forced_policy);
     } else {
@@ -488,6 +497,11 @@ bool PolicyLoaderWin::LoadGPOPolicy(PolicyScope scope,
   }
 
   // Merge, give precedence to forced policy.
+  // TODO(ljusten): This doesn't work properly if policies are explicitly
+  // disabled or string list policies have less entries in the forced_policy.
+  // The merged dictionary still has excessive policies and strings. To fix
+  // this, use only one dict and call ReadPRegFile in the proper order (forced
+  // last). See crbug.com/659979.
   parsed_policy.Merge(forced_policy);
   policy->Swap(&parsed_policy);
 

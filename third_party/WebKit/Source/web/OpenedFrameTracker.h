@@ -5,42 +5,38 @@
 #ifndef OpenedFrameTracker_h
 #define OpenedFrameTracker_h
 
-#include "wtf/HashSet.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class Visitor;
-class InlinedGlobalMarkingVisitor;
 class WebFrame;
 
 // Small helper class to track the set of frames that a WebFrame has opened.
 // Due to layering restrictions, we need to hide the implementation, since
 // public/web/ cannot depend on wtf/.
 class OpenedFrameTracker {
-    WTF_MAKE_NONCOPYABLE(OpenedFrameTracker);
-public:
-    OpenedFrameTracker();
-    ~OpenedFrameTracker();
+  WTF_MAKE_NONCOPYABLE(OpenedFrameTracker);
 
-    bool isEmpty() const;
-    void add(WebFrame*);
-    void remove(WebFrame*);
+ public:
+  OpenedFrameTracker();
+  ~OpenedFrameTracker();
 
-    // Helper used when swapping a frame into the frame tree: this updates the
-    // opener for opened frames to point to the new frame being swapped in.
-    void transferTo(WebFrame*);
+  bool IsEmpty() const;
+  void Add(WebFrame*);
+  void Remove(WebFrame*);
 
-    void traceFrames(Visitor*);
-    void traceFrames(InlinedGlobalMarkingVisitor);
+  // Helper used when swapping a frame into the frame tree: this updates the
+  // opener for opened frames to point to the new frame being swapped in.
+  void TransferTo(WebFrame*);
 
-private:
-    template <typename VisitorDispatcher>
-    void traceFramesImpl(VisitorDispatcher);
+  // Helper function to clear the openers when the frame is being detached.
+  void Dispose() { TransferTo(nullptr); }
 
-    WTF::HashSet<WebFrame*> m_openedFrames;
+ private:
+  WTF::HashSet<WebFrame*> opened_frames_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebFramePrivate_h
+#endif  // WebFramePrivate_h

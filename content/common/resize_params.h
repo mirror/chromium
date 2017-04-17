@@ -6,8 +6,8 @@
 #define CONTENT_COMMON_RESIZE_PARAMS_H_
 
 #include "content/common/content_export.h"
+#include "content/public/common/screen_info.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
-#include "third_party/WebKit/public/platform/WebScreenInfo.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace content {
@@ -18,7 +18,7 @@ struct CONTENT_EXPORT ResizeParams {
   ~ResizeParams();
 
   // Information about the screen (dpi, depth, etc..).
-  blink::WebScreenInfo screen_info;
+  ScreenInfo screen_info;
 
   // The size of the renderer.
   gfx::Size new_size;
@@ -28,19 +28,19 @@ struct CONTENT_EXPORT ResizeParams {
 
   // Whether or not Blink's viewport size should be shrunk by the height of the
   // URL-bar (always false on platforms where URL-bar hiding isn't supported).
-  bool top_controls_shrink_blink_size;
+  bool browser_controls_shrink_blink_size;
 
   // The height of the top controls (always 0 on platforms where URL-bar hiding
   // isn't supported).
   float top_controls_height;
 
+  // The height of the bottom controls.
+  float bottom_controls_height;
+
   // The size of the visible viewport, which may be smaller than the view if the
   // view is partially occluded (e.g. by a virtual keyboard).  The size is in
   // DPI-adjusted pixels.
   gfx::Size visible_viewport_size;
-
-  // The resizer rect.
-  gfx::Rect resizer_rect;
 
   // Indicates whether tab-initiated fullscreen was granted.
   bool is_fullscreen_granted;

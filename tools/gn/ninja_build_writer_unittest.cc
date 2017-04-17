@@ -48,7 +48,7 @@ TEST(NinjaBuildWriter, TwoTargets) {
   Settings other_settings(setup.build_settings(), "toolchain/");
   other_settings.set_toolchain_label(other_toolchain_label);
 
-  std::map<const Settings*, const Toolchain*> used_toolchains;
+  std::unordered_map<const Settings*, const Toolchain*> used_toolchains;
   used_toolchains[setup.settings()] = setup.toolchain();
   used_toolchains[&other_settings] = &other_toolchain;
 
@@ -66,9 +66,6 @@ TEST(NinjaBuildWriter, TwoTargets) {
       "build build.ninja: gn\n"
       "  generator = 1\n"
       "  depfile = build.ninja.d\n";
-  const char expected_link_pool[] =
-      "pool link_pool\n"
-      "  depth = 0\n";
   const char expected_other_pool[] =
       "pool other_toolchain_other_pool\n"
       "  depth = 42\n";
@@ -91,7 +88,6 @@ TEST(NinjaBuildWriter, TwoTargets) {
         "Within: " << out_str
   EXPECT_SNIPPET(expected_rule_gn);
   EXPECT_SNIPPET(expected_build_ninja);
-  EXPECT_SNIPPET(expected_link_pool);
   EXPECT_SNIPPET(expected_other_pool);
   EXPECT_SNIPPET(expected_toolchain);
   EXPECT_SNIPPET(expected_targets);
@@ -121,7 +117,7 @@ TEST(NinjaBuildWriter, DuplicateOutputs) {
   target_bar.SetToolchain(setup.toolchain());
   ASSERT_TRUE(target_bar.OnResolved(&err));
 
-  std::map<const Settings*, const Toolchain*> used_toolchains;
+  std::unordered_map<const Settings*, const Toolchain*> used_toolchains;
   used_toolchains[setup.settings()] = setup.toolchain();
   std::vector<const Target*> targets = { &target_foo, &target_bar };
   std::ostringstream ninja_out;

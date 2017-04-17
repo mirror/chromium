@@ -25,254 +25,251 @@
 
 #include "platform/text/DateTimeFormat.h"
 
-#include "wtf/ASCIICType.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/ASCIICType.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-static const DateTimeFormat::FieldType lowerCaseToFieldTypeMap[26] = {
-    DateTimeFormat::FieldTypePeriod, // a
-    DateTimeFormat::FieldTypeInvalid, // b
-    DateTimeFormat::FieldTypeLocalDayOfWeekStandAlon, // c
-    DateTimeFormat::FieldTypeDayOfMonth, // d
-    DateTimeFormat::FieldTypeLocalDayOfWeek, // e
-    DateTimeFormat::FieldTypeInvalid, // f
-    DateTimeFormat::FieldTypeModifiedJulianDay, // g
-    DateTimeFormat::FieldTypeHour12, // h
-    DateTimeFormat::FieldTypeInvalid, // i
-    DateTimeFormat::FieldTypeInvalid, // j
-    DateTimeFormat::FieldTypeHour24, // k
-    DateTimeFormat::FieldTypeInvalid, // l
-    DateTimeFormat::FieldTypeMinute, // m
-    DateTimeFormat::FieldTypeInvalid, // n
-    DateTimeFormat::FieldTypeInvalid, // o
-    DateTimeFormat::FieldTypeInvalid, // p
-    DateTimeFormat::FieldTypeQuaterStandAlone, // q
-    DateTimeFormat::FieldTypeInvalid, // r
-    DateTimeFormat::FieldTypeSecond, // s
-    DateTimeFormat::FieldTypeInvalid, // t
-    DateTimeFormat::FieldTypeExtendedYear, // u
-    DateTimeFormat::FieldTypeNonLocationZone, // v
-    DateTimeFormat::FieldTypeWeekOfYear, // w
-    DateTimeFormat::FieldTypeInvalid, // x
-    DateTimeFormat::FieldTypeYear, // y
-    DateTimeFormat::FieldTypeZone, // z
+static const DateTimeFormat::FieldType kLowerCaseToFieldTypeMap[26] = {
+    DateTimeFormat::kFieldTypePeriod,                   // a
+    DateTimeFormat::kFieldTypeInvalid,                  // b
+    DateTimeFormat::kFieldTypeLocalDayOfWeekStandAlon,  // c
+    DateTimeFormat::kFieldTypeDayOfMonth,               // d
+    DateTimeFormat::kFieldTypeLocalDayOfWeek,           // e
+    DateTimeFormat::kFieldTypeInvalid,                  // f
+    DateTimeFormat::kFieldTypeModifiedJulianDay,        // g
+    DateTimeFormat::kFieldTypeHour12,                   // h
+    DateTimeFormat::kFieldTypeInvalid,                  // i
+    DateTimeFormat::kFieldTypeInvalid,                  // j
+    DateTimeFormat::kFieldTypeHour24,                   // k
+    DateTimeFormat::kFieldTypeInvalid,                  // l
+    DateTimeFormat::kFieldTypeMinute,                   // m
+    DateTimeFormat::kFieldTypeInvalid,                  // n
+    DateTimeFormat::kFieldTypeInvalid,                  // o
+    DateTimeFormat::kFieldTypeInvalid,                  // p
+    DateTimeFormat::kFieldTypeQuaterStandAlone,         // q
+    DateTimeFormat::kFieldTypeInvalid,                  // r
+    DateTimeFormat::kFieldTypeSecond,                   // s
+    DateTimeFormat::kFieldTypeInvalid,                  // t
+    DateTimeFormat::kFieldTypeExtendedYear,             // u
+    DateTimeFormat::kFieldTypeNonLocationZone,          // v
+    DateTimeFormat::kFieldTypeWeekOfYear,               // w
+    DateTimeFormat::kFieldTypeInvalid,                  // x
+    DateTimeFormat::kFieldTypeYear,                     // y
+    DateTimeFormat::kFieldTypeZone,                     // z
 };
 
-static const DateTimeFormat::FieldType upperCaseToFieldTypeMap[26] = {
-    DateTimeFormat::FieldTypeMillisecondsInDay, // A
-    DateTimeFormat::FieldTypeInvalid, // B
-    DateTimeFormat::FieldTypeInvalid, // C
-    DateTimeFormat::FieldTypeDayOfYear, // D
-    DateTimeFormat::FieldTypeDayOfWeek, // E
-    DateTimeFormat::FieldTypeDayOfWeekInMonth, // F
-    DateTimeFormat::FieldTypeEra, // G
-    DateTimeFormat::FieldTypeHour23, // H
-    DateTimeFormat::FieldTypeInvalid, // I
-    DateTimeFormat::FieldTypeInvalid, // J
-    DateTimeFormat::FieldTypeHour11, // K
-    DateTimeFormat::FieldTypeMonthStandAlone, // L
-    DateTimeFormat::FieldTypeMonth, // M
-    DateTimeFormat::FieldTypeInvalid, // N
-    DateTimeFormat::FieldTypeInvalid, // O
-    DateTimeFormat::FieldTypeInvalid, // P
-    DateTimeFormat::FieldTypeQuater, // Q
-    DateTimeFormat::FieldTypeInvalid, // R
-    DateTimeFormat::FieldTypeFractionalSecond, // S
-    DateTimeFormat::FieldTypeInvalid, // T
-    DateTimeFormat::FieldTypeInvalid, // U
-    DateTimeFormat::FieldTypeInvalid, // V
-    DateTimeFormat::FieldTypeWeekOfMonth, // W
-    DateTimeFormat::FieldTypeInvalid, // X
-    DateTimeFormat::FieldTypeYearOfWeekOfYear, // Y
-    DateTimeFormat::FieldTypeRFC822Zone, // Z
+static const DateTimeFormat::FieldType kUpperCaseToFieldTypeMap[26] = {
+    DateTimeFormat::kFieldTypeMillisecondsInDay,  // A
+    DateTimeFormat::kFieldTypeInvalid,            // B
+    DateTimeFormat::kFieldTypeInvalid,            // C
+    DateTimeFormat::kFieldTypeDayOfYear,          // D
+    DateTimeFormat::kFieldTypeDayOfWeek,          // E
+    DateTimeFormat::kFieldTypeDayOfWeekInMonth,   // F
+    DateTimeFormat::kFieldTypeEra,                // G
+    DateTimeFormat::kFieldTypeHour23,             // H
+    DateTimeFormat::kFieldTypeInvalid,            // I
+    DateTimeFormat::kFieldTypeInvalid,            // J
+    DateTimeFormat::kFieldTypeHour11,             // K
+    DateTimeFormat::kFieldTypeMonthStandAlone,    // L
+    DateTimeFormat::kFieldTypeMonth,              // M
+    DateTimeFormat::kFieldTypeInvalid,            // N
+    DateTimeFormat::kFieldTypeInvalid,            // O
+    DateTimeFormat::kFieldTypeInvalid,            // P
+    DateTimeFormat::kFieldTypeQuater,             // Q
+    DateTimeFormat::kFieldTypeInvalid,            // R
+    DateTimeFormat::kFieldTypeFractionalSecond,   // S
+    DateTimeFormat::kFieldTypeInvalid,            // T
+    DateTimeFormat::kFieldTypeInvalid,            // U
+    DateTimeFormat::kFieldTypeInvalid,            // V
+    DateTimeFormat::kFieldTypeWeekOfMonth,        // W
+    DateTimeFormat::kFieldTypeInvalid,            // X
+    DateTimeFormat::kFieldTypeYearOfWeekOfYear,   // Y
+    DateTimeFormat::kFieldTypeRFC822Zone,         // Z
 };
 
-static DateTimeFormat::FieldType mapCharacterToFieldType(const UChar ch)
-{
-    if (isASCIIUpper(ch))
-        return upperCaseToFieldTypeMap[ch - 'A'];
+static DateTimeFormat::FieldType MapCharacterToFieldType(const UChar ch) {
+  if (IsASCIIUpper(ch))
+    return kUpperCaseToFieldTypeMap[ch - 'A'];
 
-    if (isASCIILower(ch))
-        return lowerCaseToFieldTypeMap[ch - 'a'];
+  if (IsASCIILower(ch))
+    return kLowerCaseToFieldTypeMap[ch - 'a'];
 
-    return DateTimeFormat::FieldTypeLiteral;
+  return DateTimeFormat::kFieldTypeLiteral;
 }
 
-bool DateTimeFormat::parse(const String& source, TokenHandler& tokenHandler)
-{
-    enum State {
-        StateInQuote,
-        StateInQuoteQuote,
-        StateLiteral,
-        StateQuote,
-        StateSymbol,
-    } state = StateLiteral;
+bool DateTimeFormat::Parse(const String& source, TokenHandler& token_handler) {
+  enum State {
+    kStateInQuote,
+    kStateInQuoteQuote,
+    kStateLiteral,
+    kStateQuote,
+    kStateSymbol,
+  } state = kStateLiteral;
 
-    FieldType fieldType = FieldTypeLiteral;
-    StringBuilder literalBuffer;
-    int fieldCounter = 0;
+  FieldType field_type = kFieldTypeLiteral;
+  StringBuilder literal_buffer;
+  int field_counter = 0;
 
-    for (unsigned index = 0; index < source.length(); ++index) {
-        const UChar ch = source[index];
-        switch (state) {
-        case StateInQuote:
-            if (ch == '\'') {
-                state = StateInQuoteQuote;
-                break;
-            }
-
-            literalBuffer.append(ch);
-            break;
-
-        case StateInQuoteQuote:
-            if (ch == '\'') {
-                literalBuffer.append('\'');
-                state = StateInQuote;
-                break;
-            }
-
-            fieldType = mapCharacterToFieldType(ch);
-            if (fieldType == FieldTypeInvalid)
-                return false;
-
-            if (fieldType == FieldTypeLiteral) {
-                literalBuffer.append(ch);
-                state = StateLiteral;
-                break;
-            }
-
-            if (literalBuffer.length()) {
-                tokenHandler.visitLiteral(literalBuffer.toString());
-                literalBuffer.clear();
-            }
-
-            fieldCounter = 1;
-            state = StateSymbol;
-            break;
-
-        case StateLiteral:
-            if (ch == '\'') {
-                state = StateQuote;
-                break;
-            }
-
-            fieldType = mapCharacterToFieldType(ch);
-            if (fieldType == FieldTypeInvalid)
-                return false;
-
-            if (fieldType == FieldTypeLiteral) {
-                literalBuffer.append(ch);
-                break;
-            }
-
-            if (literalBuffer.length()) {
-                tokenHandler.visitLiteral(literalBuffer.toString());
-                literalBuffer.clear();
-            }
-
-            fieldCounter = 1;
-            state = StateSymbol;
-            break;
-
-        case StateQuote:
-            literalBuffer.append(ch);
-            state = ch == '\'' ? StateLiteral : StateInQuote;
-            break;
-
-        case StateSymbol: {
-            ASSERT(fieldType != FieldTypeInvalid);
-            ASSERT(fieldType != FieldTypeLiteral);
-            ASSERT(literalBuffer.isEmpty());
-
-            FieldType fieldType2 = mapCharacterToFieldType(ch);
-            if (fieldType2 == FieldTypeInvalid)
-                return false;
-
-            if (fieldType == fieldType2) {
-                ++fieldCounter;
-                break;
-            }
-
-            tokenHandler.visitField(fieldType, fieldCounter);
-
-            if (fieldType2 == FieldTypeLiteral) {
-                if (ch == '\'') {
-                    state = StateQuote;
-                } else {
-                    literalBuffer.append(ch);
-                    state = StateLiteral;
-                }
-                break;
-            }
-
-            fieldCounter = 1;
-            fieldType = fieldType2;
-            break;
-        }
-        }
-    }
-
-    ASSERT(fieldType != FieldTypeInvalid);
-
+  for (unsigned index = 0; index < source.length(); ++index) {
+    const UChar ch = source[index];
     switch (state) {
-    case StateLiteral:
-    case StateInQuoteQuote:
-        if (literalBuffer.length())
-            tokenHandler.visitLiteral(literalBuffer.toString());
-        return true;
-
-    case StateQuote:
-    case StateInQuote:
-        if (literalBuffer.length())
-            tokenHandler.visitLiteral(literalBuffer.toString());
-        return false;
-
-    case StateSymbol:
-        ASSERT(fieldType != FieldTypeLiteral);
-        ASSERT(!literalBuffer.length());
-        tokenHandler.visitField(fieldType, fieldCounter);
-        return true;
-    }
-
-    ASSERT_NOT_REACHED();
-    return false;
-}
-
-static bool isASCIIAlphabetOrQuote(UChar ch)
-{
-    return isASCIIAlpha(ch) || ch == '\'';
-}
-
-void DateTimeFormat::quoteAndappend(const String& literal, StringBuilder& buffer)
-{
-    if (literal.length() <= 0)
-        return;
-
-    if (literal.find(isASCIIAlphabetOrQuote) == kNotFound) {
-        buffer.append(literal);
-        return;
-    }
-
-    if (literal.find('\'') == kNotFound) {
-        buffer.append('\'');
-        buffer.append(literal);
-        buffer.append('\'');
-        return;
-    }
-
-    for (unsigned i = 0; i < literal.length(); ++i) {
-        if (literal[i] == '\'') {
-            buffer.append("''");
-        } else {
-            String escaped = literal.substring(i);
-            escaped.replace("'", "''");
-            buffer.append('\'');
-            buffer.append(escaped);
-            buffer.append('\'');
-            return;
+      case kStateInQuote:
+        if (ch == '\'') {
+          state = kStateInQuoteQuote;
+          break;
         }
+
+        literal_buffer.Append(ch);
+        break;
+
+      case kStateInQuoteQuote:
+        if (ch == '\'') {
+          literal_buffer.Append('\'');
+          state = kStateInQuote;
+          break;
+        }
+
+        field_type = MapCharacterToFieldType(ch);
+        if (field_type == kFieldTypeInvalid)
+          return false;
+
+        if (field_type == kFieldTypeLiteral) {
+          literal_buffer.Append(ch);
+          state = kStateLiteral;
+          break;
+        }
+
+        if (literal_buffer.length()) {
+          token_handler.VisitLiteral(literal_buffer.ToString());
+          literal_buffer.Clear();
+        }
+
+        field_counter = 1;
+        state = kStateSymbol;
+        break;
+
+      case kStateLiteral:
+        if (ch == '\'') {
+          state = kStateQuote;
+          break;
+        }
+
+        field_type = MapCharacterToFieldType(ch);
+        if (field_type == kFieldTypeInvalid)
+          return false;
+
+        if (field_type == kFieldTypeLiteral) {
+          literal_buffer.Append(ch);
+          break;
+        }
+
+        if (literal_buffer.length()) {
+          token_handler.VisitLiteral(literal_buffer.ToString());
+          literal_buffer.Clear();
+        }
+
+        field_counter = 1;
+        state = kStateSymbol;
+        break;
+
+      case kStateQuote:
+        literal_buffer.Append(ch);
+        state = ch == '\'' ? kStateLiteral : kStateInQuote;
+        break;
+
+      case kStateSymbol: {
+        DCHECK_NE(field_type, kFieldTypeInvalid);
+        DCHECK_NE(field_type, kFieldTypeLiteral);
+        DCHECK(literal_buffer.IsEmpty());
+
+        FieldType field_type2 = MapCharacterToFieldType(ch);
+        if (field_type2 == kFieldTypeInvalid)
+          return false;
+
+        if (field_type == field_type2) {
+          ++field_counter;
+          break;
+        }
+
+        token_handler.VisitField(field_type, field_counter);
+
+        if (field_type2 == kFieldTypeLiteral) {
+          if (ch == '\'') {
+            state = kStateQuote;
+          } else {
+            literal_buffer.Append(ch);
+            state = kStateLiteral;
+          }
+          break;
+        }
+
+        field_counter = 1;
+        field_type = field_type2;
+        break;
+      }
     }
+  }
+
+  DCHECK_NE(field_type, kFieldTypeInvalid);
+
+  switch (state) {
+    case kStateLiteral:
+    case kStateInQuoteQuote:
+      if (literal_buffer.length())
+        token_handler.VisitLiteral(literal_buffer.ToString());
+      return true;
+
+    case kStateQuote:
+    case kStateInQuote:
+      if (literal_buffer.length())
+        token_handler.VisitLiteral(literal_buffer.ToString());
+      return false;
+
+    case kStateSymbol:
+      DCHECK_NE(field_type, kFieldTypeLiteral);
+      DCHECK(!literal_buffer.length());
+      token_handler.VisitField(field_type, field_counter);
+      return true;
+  }
+
+  NOTREACHED();
+  return false;
 }
 
-} // namespace blink
+static bool IsASCIIAlphabetOrQuote(UChar ch) {
+  return IsASCIIAlpha(ch) || ch == '\'';
+}
+
+void DateTimeFormat::QuoteAndappend(const String& literal,
+                                    StringBuilder& buffer) {
+  if (literal.length() <= 0)
+    return;
+
+  if (literal.Find(IsASCIIAlphabetOrQuote) == kNotFound) {
+    buffer.Append(literal);
+    return;
+  }
+
+  if (literal.Find('\'') == kNotFound) {
+    buffer.Append('\'');
+    buffer.Append(literal);
+    buffer.Append('\'');
+    return;
+  }
+
+  for (unsigned i = 0; i < literal.length(); ++i) {
+    if (literal[i] == '\'') {
+      buffer.Append("''");
+    } else {
+      String escaped = literal.Substring(i);
+      escaped.Replace("'", "''");
+      buffer.Append('\'');
+      buffer.Append(escaped);
+      buffer.Append('\'');
+      return;
+    }
+  }
+}
+
+}  // namespace blink

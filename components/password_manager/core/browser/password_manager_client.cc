@@ -7,15 +7,21 @@
 
 namespace password_manager {
 
-bool PasswordManagerClient::IsAutomaticPasswordSavingEnabled() const {
-  return false;
-}
-
 bool PasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage() const {
   return true;
 }
 
 bool PasswordManagerClient::IsFillingEnabledForCurrentPage() const {
+  return true;
+}
+
+void PasswordManagerClient::PostHSTSQueryForHost(
+    const GURL& origin,
+    const HSTSCallback& callback) const {
+  callback.Run(false);
+}
+
+bool PasswordManagerClient::OnCredentialManagerUsed() {
   return true;
 }
 
@@ -25,10 +31,10 @@ void PasswordManagerClient::ForceSavePassword() {
 void PasswordManagerClient::GeneratePassword() {}
 
 void PasswordManagerClient::PasswordWasAutofilled(
-    const autofill::PasswordFormMap& best_matches,
+    const std::map<base::string16, const autofill::PasswordForm*>& best_matches,
     const GURL& origin,
-    const std::vector<std::unique_ptr<autofill::PasswordForm>>*
-        federated_matches) const {}
+    const std::vector<const autofill::PasswordForm*>* federated_matches) const {
+}
 
 PasswordSyncState PasswordManagerClient::GetPasswordSyncState() const {
   return NOT_SYNCING_PASSWORDS;
@@ -42,7 +48,7 @@ bool PasswordManagerClient::DidLastPageLoadEncounterSSLErrors() const {
   return false;
 }
 
-bool PasswordManagerClient::IsOffTheRecord() const {
+bool PasswordManagerClient::IsIncognito() const {
   return false;
 }
 
@@ -64,12 +70,14 @@ const GURL& PasswordManagerClient::GetMainFrameURL() const {
   return GURL::EmptyGURL();
 }
 
-bool PasswordManagerClient::IsUpdatePasswordUIEnabled() const {
+bool PasswordManagerClient::IsMainFrameSecure() const {
   return false;
 }
 
 const LogManager* PasswordManagerClient::GetLogManager() const {
   return nullptr;
 }
+
+void PasswordManagerClient::AnnotateNavigationEntry(bool has_password_field) {}
 
 }  // namespace password_manager

@@ -39,14 +39,14 @@
     <org.chromium.chrome.browser.preferences.website.SiteSettingsPreference
         android:fragment="org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences"
         android:key="popups" />
+    <!-- SubresourceFilter -->
+    <org.chromium.chrome.browser.preferences.website.SiteSettingsPreference
+        android:fragment="org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences"
+        android:key="subresource_filter" />
     <!-- Background sync -->
     <org.chromium.chrome.browser.preferences.website.SiteSettingsPreference
         android:fragment="org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences"
         android:key="background_sync" />
-    <!-- Fullscreen -->
-    <org.chromium.chrome.browser.preferences.website.SiteSettingsPreference
-        android:fragment="org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences"
-        android:key="fullscreen" />
     <!-- Protected content -->
     <org.chromium.chrome.browser.preferences.website.SiteSettingsPreference
         android:fragment="org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences"
@@ -74,4 +74,10 @@
         android:key="use_storage"
         android:title="@string/website_settings_storage"
         android:icon="@drawable/settings_storage" />
+    <!-- USB -->
+    <org.chromium.chrome.browser.preferences.website.SiteSettingsPreference
+        android:fragment="org.chromium.chrome.browser.preferences.website.UsbChooserPreferences"
+        android:key="usb"
+        android:title="@string/website_settings_usb"
+        android:icon="@drawable/settings_usb" />
 </PreferenceScreen>

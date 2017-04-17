@@ -1,13 +1,11 @@
 include_rules = [
-    "+bindings",
-    "+core",
-    "+heap",
+    "+device/generic_sensor/public/cpp",
+    "+device/generic_sensor/public/interfaces",
     "-modules",
     "+modules/EventModules.h",
     "+modules/EventTargetModules.h",
     "+modules/ModulesExport.h",
     "+modules/sensor",
-    "+platform",
-    "+public/platform",
-    "-web",
+    "+mojo/public/cpp/bindings",
+    "+services/device/public/interfaces/constants.mojom-blink.h",
 ]

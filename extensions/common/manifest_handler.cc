@@ -18,8 +18,8 @@ namespace extensions {
 
 namespace {
 
-static base::LazyInstance<ManifestHandlerRegistry> g_registry =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<ManifestHandlerRegistry>::DestructorAtExit
+    g_registry = LAZY_INSTANCE_INITIALIZER;
 static ManifestHandlerRegistry* g_registry_override = NULL;
 
 ManifestHandlerRegistry* GetRegistry() {
@@ -227,7 +227,7 @@ void ManifestHandlerRegistry::SortManifestHandlers() {
             << "Extension manifest handler depends on unrecognized key "
             << prerequisites[i];
         // Prerequisite is in our map.
-        if (ContainsKey(priority_map_, prereq_iter->second.get()))
+        if (base::ContainsKey(priority_map_, prereq_iter->second.get()))
           unsatisfied--;
       }
       if (unsatisfied == 0) {

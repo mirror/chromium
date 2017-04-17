@@ -7,13 +7,9 @@
 
 #include <string>
 
-#include "base/android/jni_weak_ref.h"
 #include "base/android/scoped_java_ref.h"
-#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "components/infobars/core/infobar.h"
-
-class InfoBarService;
 
 namespace infobars {
 class InfoBarDelegate;
@@ -33,9 +29,6 @@ class InfoBarAndroid : public infobars::InfoBar {
     // Translate infobar
     ACTION_TRANSLATE = 3,
     ACTION_TRANSLATE_SHOW_ORIGINAL = 4,
-    // Download overwrite infobar
-    ACTION_OVERWRITE = 5,
-    ACTION_CREATE_NEW_FILE = 6,
   };
 
   explicit InfoBarAndroid(std::unique_ptr<infobars::InfoBarDelegate> delegate);

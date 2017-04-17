@@ -12,31 +12,17 @@ does not have a POSIX-like shell (e.g. Windows).
 
 import argparse
 import os
-import re
 import subprocess
 import sys
 
-
-# When running on a Windows host and using a toolchain whose tools are
-# actually wrapper scripts (i.e. .bat files on Windows) rather than binary
-# executables, the "command" to run has to be prefixed with this magic.
-# The GN toolchain definitions take care of that for when GN/Ninja is
-# running the tool directly.  When that command is passed in to this
-# script, it appears as a unitary string but needs to be split up so that
-# just 'cmd' is the actual command given to Python's subprocess module.
-BAT_PREFIX = 'cmd /c call '
-
-def CommandToRun(command):
-  if command[0].startswith(BAT_PREFIX):
-    command = command[0].split(None, 3) + command[1:]
-  return command
+import wrapper_utils
 
 
 def CollectSONAME(args):
   """Replaces: readelf -d $sofile | grep SONAME"""
   toc = ''
-  readelf = subprocess.Popen(CommandToRun([args.readelf, '-d', args.sofile]),
-                             stdout=subprocess.PIPE, bufsize=-1)
+  readelf = subprocess.Popen(wrapper_utils.CommandToRun(
+      [args.readelf, '-d', args.sofile]), stdout=subprocess.PIPE, bufsize=-1)
   for line in readelf.stdout:
     if 'SONAME' in line:
       toc += line
@@ -46,7 +32,7 @@ def CollectSONAME(args):
 def CollectDynSym(args):
   """Replaces: nm --format=posix -g -D $sofile | cut -f1-2 -d' '"""
   toc = ''
-  nm = subprocess.Popen(CommandToRun([
+  nm = subprocess.Popen(wrapper_utils.CommandToRun([
       args.nm, '--format=posix', '-g', '-D', args.sofile]),
                         stdout=subprocess.PIPE, bufsize=-1)
   for line in nm.stdout:
@@ -92,16 +78,35 @@ def main():
                       required=True,
                       help='Output table-of-contents file',
                       metavar='FILE')
+  parser.add_argument('--map-file',
+                      help=('Use --Wl,-Map to generate a map file. Will be '
+                            'gzipped if extension ends with .gz'),
+                      metavar='FILE')
   parser.add_argument('--output',
                       required=True,
                       help='Final output shared object file',
                       metavar='FILE')
+  parser.add_argument('--resource-whitelist',
+                      help='Merge all resource whitelists into a single file.',
+                      metavar='PATH')
   parser.add_argument('command', nargs='+',
                       help='Linking command')
   args = parser.parse_args()
 
+  # Work-around for gold being slow-by-default. http://crbug.com/632230
+  fast_env = dict(os.environ)
+  fast_env['LC_ALL'] = 'C'
+
+  if args.resource_whitelist:
+    whitelist_candidates = wrapper_utils.ResolveRspLinks(args.command)
+    wrapper_utils.CombineResourceWhitelists(
+        whitelist_candidates, args.resource_whitelist)
+
   # First, run the actual link.
-  result = subprocess.call(CommandToRun(args.command))
+  command = wrapper_utils.CommandToRun(args.command)
+  result = wrapper_utils.RunLinkWithOptionalMapFile(command, env=fast_env,
+                                                    map_file=args.map_file)
+
   if result != 0:
     return result
 
@@ -116,8 +121,8 @@ def main():
 
   # Finally, strip the linked shared object file (if desired).
   if args.strip:
-    result = subprocess.call(CommandToRun([args.strip, '--strip-unneeded',
-                                           '-o', args.output, args.sofile]))
+    result = subprocess.call(wrapper_utils.CommandToRun(
+        [args.strip, '--strip-unneeded', '-o', args.output, args.sofile]))
 
   return result
 

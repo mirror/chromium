@@ -9,7 +9,7 @@
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/chromeos/login/startup_utils.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -22,6 +22,7 @@
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/network_util.h"
 #include "components/guest_view/browser/guest_view_manager.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
@@ -152,11 +153,11 @@ void NetworkStateHelper::GetConnectedWifiNetwork(std::string* out_onc_spec) {
   std::unique_ptr<base::DictionaryValue> copied_onc(
       new base::DictionaryValue());
   copied_onc->Set(onc::toplevel_config::kType,
-                  new base::StringValue(onc::network_type::kWiFi));
+                  base::MakeUnique<base::Value>(onc::network_type::kWiFi));
   copied_onc->Set(onc::network_config::WifiProperty(onc::wifi::kHexSSID),
-                  new base::StringValue(hex_ssid));
+                  base::MakeUnique<base::Value>(hex_ssid));
   copied_onc->Set(onc::network_config::WifiProperty(onc::wifi::kSecurity),
-                  new base::StringValue(security));
+                  base::MakeUnique<base::Value>(security));
   base::JSONWriter::Write(*copied_onc.get(), out_onc_spec);
 }
 
@@ -231,22 +232,17 @@ content::StoragePartition* GetSigninPartition() {
 }
 
 net::URLRequestContextGetter* GetSigninContext() {
-  if (StartupUtils::IsWebviewSigninEnabled()) {
-    content::StoragePartition* signin_partition = GetSigninPartition();
+  content::StoragePartition* signin_partition = GetSigninPartition();
 
-    // Special case for unit tests. There's no LoginDisplayHost thus no
-    // webview instance. TODO(nkostylev): Investigate if there's a better
-    // place to address this like dependency injection. http://crbug.com/477402
-    if (!signin_partition && !LoginDisplayHost::default_host())
-      return ProfileHelper::GetSigninProfile()->GetRequestContext();
+  // Special case for unit tests. There's no LoginDisplayHost thus no
+  // webview instance. See http://crbug.com/477402
+  if (!signin_partition && !LoginDisplayHost::default_host())
+    return ProfileHelper::GetSigninProfile()->GetRequestContext();
 
-    if (!signin_partition)
-      return nullptr;
+  if (!signin_partition)
+    return nullptr;
 
-    return signin_partition->GetURLRequestContext();
-  }
-
-  return ProfileHelper::GetSigninProfile()->GetRequestContext();
+  return signin_partition->GetURLRequestContext();
 }
 
 }  // namespace login

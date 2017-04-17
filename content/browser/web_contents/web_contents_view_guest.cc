@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/metrics/user_metrics.h"
 #include "build/build_config.h"
 #include "content/browser/browser_plugin/browser_plugin_embedder.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
@@ -15,7 +16,6 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/drag_messages.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/context_menu_params.h"
 #include "content/public/common/drop_data.h"
@@ -63,6 +63,13 @@ gfx::NativeWindow WebContentsViewGuest::GetTopLevelNativeWindow() const {
   return guest_->embedder_web_contents()->GetTopLevelNativeWindow();
 }
 
+void WebContentsViewGuest::GetScreenInfo(ScreenInfo* screen_info) const {
+  if (guest_->embedder_web_contents())
+    guest_->embedder_web_contents()->GetView()->GetScreenInfo(screen_info);
+  else
+    WebContentsView::GetDefaultScreenInfo(screen_info);
+}
+
 void WebContentsViewGuest::OnGuestAttached(WebContentsView* parent_view) {
 #if defined(USE_AURA)
   // In aura, ScreenPositionClient doesn't work properly if we do
@@ -85,7 +92,8 @@ void WebContentsViewGuest::GetContainerBounds(gfx::Rect* out) const {
   if (guest_->embedder_web_contents()) {
     // We need embedder container's bounds to calculate our bounds.
     guest_->embedder_web_contents()->GetView()->GetContainerBounds(out);
-    gfx::Point guest_coordinates = guest_->GetScreenCoordinates(gfx::Point());
+    gfx::Point guest_coordinates =
+        guest_->GetCoordinatesInEmbedderWebContents(gfx::Point());
     out->Offset(guest_coordinates.x(), guest_coordinates.y());
   } else {
     out->set_origin(gfx::Point());
@@ -141,9 +149,8 @@ RenderWidgetHostViewBase* WebContentsViewGuest::CreateViewForWidget(
   RenderWidgetHostViewBase* platform_widget =
       platform_view_->CreateViewForWidget(render_widget_host, true);
 
-  return new RenderWidgetHostViewGuest(render_widget_host,
-                                       guest_,
-                                       platform_widget->GetWeakPtr());
+  return RenderWidgetHostViewGuest::Create(render_widget_host, guest_,
+                                           platform_widget->GetWeakPtr());
 }
 
 RenderWidgetHostViewBase* WebContentsViewGuest::CreateViewForPopupWidget(
@@ -223,7 +230,8 @@ void WebContentsViewGuest::StartDragging(
     WebDragOperationsMask ops,
     const gfx::ImageSkia& image,
     const gfx::Vector2d& image_offset,
-    const DragEventSourceInfo& event_info) {
+    const DragEventSourceInfo& event_info,
+    RenderWidgetHostImpl* source_rwh) {
   WebContentsImpl* embedder_web_contents = guest_->embedder_web_contents();
   embedder_web_contents->GetBrowserPluginEmbedder()->StartDrag(guest_);
   RenderViewHostImpl* embedder_render_view_host =
@@ -234,9 +242,10 @@ void WebContentsViewGuest::StartDragging(
       embedder_render_view_host->GetDelegate()->GetDelegateView();
   if (view) {
     RecordAction(base::UserMetricsAction("BrowserPlugin.Guest.StartDrag"));
-    view->StartDragging(drop_data, ops, image, image_offset, event_info);
+    view->StartDragging(
+        drop_data, ops, image, image_offset, event_info, source_rwh);
   } else {
-    embedder_web_contents->SystemDragEnded();
+    embedder_web_contents->SystemDragEnded(source_rwh);
   }
 }
 

@@ -7,18 +7,37 @@
 #include <utility>
 
 #include "base/strings/string_util.h"
+#include "net/http/http_util.h"
+#include "net/spdy/platform/api/spdy_estimate_memory_usage.h"
+#include "net/spdy/platform/api/spdy_string.h"
 
 namespace net {
 
 const size_t kMaxHeaderListSize = 256 * 1024;
 
-void HeaderCoalescer::OnHeader(base::StringPiece key, base::StringPiece value) {
+void HeaderCoalescer::OnHeader(SpdyStringPiece key, SpdyStringPiece value) {
   if (error_seen_) {
     return;
   }
 
   if (key.empty()) {
     DVLOG(1) << "Header name must not be empty.";
+    error_seen_ = true;
+    return;
+  }
+
+  SpdyStringPiece key_name = key;
+  if (key[0] == ':') {
+    if (regular_header_seen_) {
+      error_seen_ = true;
+      return;
+    }
+    key_name.remove_prefix(1);
+  } else if (!regular_header_seen_) {
+    regular_header_seen_ = true;
+  }
+
+  if (!HttpUtil::IsValidHeaderName(key_name)) {
     error_seen_ = true;
     return;
   }
@@ -30,13 +49,11 @@ void HeaderCoalescer::OnHeader(base::StringPiece key, base::StringPiece value) {
     return;
   }
 
-  if (key[0] == ':') {
-    if (regular_header_seen_) {
-      error_seen_ = true;
-      return;
-    }
-  } else {
-    regular_header_seen_ = true;
+  // End of line delimiter is forbidden according to RFC 7230 Section 3.2.
+  // Line folding, RFC 7230 Section 3.2.4., is a special case of this.
+  if (value.find("\r\n") != SpdyStringPiece::npos) {
+    error_seen_ = true;
+    return;
   }
 
   auto iter = headers_.find(key);
@@ -44,16 +61,16 @@ void HeaderCoalescer::OnHeader(base::StringPiece key, base::StringPiece value) {
     headers_[key] = value;
   } else {
     // This header had multiple values, so it must be reconstructed.
-    base::StringPiece v = iter->second;
-    std::string s(v.data(), v.length());
+    SpdyStringPiece v = iter->second;
+    SpdyString s(v.data(), v.length());
     if (key == "cookie") {
       // Obeys section 8.1.2.5 in RFC 7540 for cookie reconstruction.
       s.append("; ");
     } else {
-      base::StringPiece("\0", 1).AppendToString(&s);
+      SpdyStringPiece("\0", 1).AppendToString(&s);
     }
     value.AppendToString(&s);
-    headers_.ReplaceOrAppendHeader(key, s);
+    headers_[key] = s;
   }
 }
 
@@ -61,6 +78,10 @@ SpdyHeaderBlock HeaderCoalescer::release_headers() {
   DCHECK(headers_valid_);
   headers_valid_ = false;
   return std::move(headers_);
+}
+
+size_t HeaderCoalescer::EstimateMemoryUsage() const {
+  return SpdyEstimateMemoryUsage(headers_);
 }
 
 }  // namespace net

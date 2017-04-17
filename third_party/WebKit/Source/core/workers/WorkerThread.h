@@ -27,18 +27,21 @@
 #ifndef WorkerThread_h
 #define WorkerThread_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerLoaderProxy.h"
 #include "core/workers/WorkerThreadLifecycleObserver.h"
 #include "platform/LifecycleNotifier.h"
 #include "platform/WaitableEvent.h"
-#include "wtf/Forward.h"
-#include "wtf/Functional.h"
-#include "wtf/PassRefPtr.h"
-#include <memory>
-#include <v8.h>
+#include "platform/WebTaskRunner.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Functional.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "public/platform/WebThread.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -51,24 +54,28 @@ class WorkerReportingProxy;
 class WorkerThreadStartupData;
 
 enum WorkerThreadStartMode {
-    DontPauseWorkerGlobalScopeOnStart,
-    PauseWorkerGlobalScopeOnStart
+  kDontPauseWorkerGlobalScopeOnStart,
+  kPauseWorkerGlobalScopeOnStart
 };
 
 // Used for notifying observers on the main thread of worker thread termination.
 // The lifetime of this class is equal to that of WorkerThread. Created and
 // destructed on the main thread.
-class CORE_EXPORT WorkerThreadLifecycleContext final : public GarbageCollectedFinalized<WorkerThreadLifecycleContext>, public LifecycleNotifier<WorkerThreadLifecycleContext, WorkerThreadLifecycleObserver> {
-    USING_GARBAGE_COLLECTED_MIXIN(WorkerThreadLifecycleContext);
-    WTF_MAKE_NONCOPYABLE(WorkerThreadLifecycleContext);
-public:
-    WorkerThreadLifecycleContext();
-    ~WorkerThreadLifecycleContext() override;
-    void notifyContextDestroyed() override;
+class CORE_EXPORT WorkerThreadLifecycleContext final
+    : public GarbageCollectedFinalized<WorkerThreadLifecycleContext>,
+      public LifecycleNotifier<WorkerThreadLifecycleContext,
+                               WorkerThreadLifecycleObserver> {
+  USING_GARBAGE_COLLECTED_MIXIN(WorkerThreadLifecycleContext);
+  WTF_MAKE_NONCOPYABLE(WorkerThreadLifecycleContext);
 
-private:
-    friend class WorkerThreadLifecycleObserver;
-    bool m_wasContextDestroyed = false;
+ public:
+  WorkerThreadLifecycleContext();
+  ~WorkerThreadLifecycleContext() override;
+  void NotifyContextDestroyed() override;
+
+ private:
+  friend class WorkerThreadLifecycleObserver;
+  bool was_context_destroyed_ = false;
 };
 
 // WorkerThread is a kind of WorkerBackingThread client. Each worker mechanism
@@ -86,172 +93,230 @@ private:
 //    any interruptions.
 //  - Queued tasks never run.
 //  - postTask() and appendDebuggerTask() reject posting new tasks.
-class CORE_EXPORT WorkerThread {
-public:
-    // Represents how this thread is terminated. Used for UMA. Append only.
-    enum class ExitCode {
-        NotTerminated,
-        GracefullyTerminated,
-        SyncForciblyTerminated,
-        AsyncForciblyTerminated,
-        LastEnum,
-    };
+class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
+ public:
+  // Represents how this thread is terminated. Used for UMA. Append only.
+  enum class ExitCode {
+    kNotTerminated,
+    kGracefullyTerminated,
+    kSyncForciblyTerminated,
+    kAsyncForciblyTerminated,
+    kLastEnum,
+  };
 
-    virtual ~WorkerThread();
+  virtual ~WorkerThread();
 
-    // Called on the main thread.
-    void start(std::unique_ptr<WorkerThreadStartupData>);
-    void terminate();
+  // Called on the main thread.
+  void Start(std::unique_ptr<WorkerThreadStartupData>, ParentFrameTaskRunners*);
+  void Terminate();
 
-    // Called on the main thread. Internally calls terminateInternal() and wait
-    // (by *blocking* the calling thread) until the worker(s) is/are shut down.
-    void terminateAndWait();
-    static void terminateAndWaitForAllWorkers();
+  // Called on the main thread. Internally calls terminateInternal() and wait
+  // (by *blocking* the calling thread) until the worker(s) is/are shut down.
+  void TerminateAndWait();
+  static void TerminateAndWaitForAllWorkers();
 
-    virtual WorkerBackingThread& workerBackingThread() = 0;
-    virtual ConsoleMessageStorage* consoleMessageStorage() = 0;
-    virtual bool shouldAttachThreadDebugger() const { return true; }
-    v8::Isolate* isolate();
+  // WebThread::TaskObserver.
+  void WillProcessTask() override;
+  void DidProcessTask() override;
 
-    // Can be used to wait for this worker thread to terminate.
-    // (This is signaled on the main thread, so it's assumed to be waited on
-    // the worker context thread)
-    WaitableEvent* terminationEvent() { return m_terminationEvent.get(); }
+  virtual WorkerBackingThread& GetWorkerBackingThread() = 0;
+  virtual void ClearWorkerBackingThread() = 0;
+  ConsoleMessageStorage* GetConsoleMessageStorage() const {
+    return console_message_storage_.Get();
+  }
+  v8::Isolate* GetIsolate();
 
-    bool isCurrentThread();
+  bool IsCurrentThread();
 
-    WorkerLoaderProxy* workerLoaderProxy() const
-    {
-        RELEASE_ASSERT(m_workerLoaderProxy);
-        return m_workerLoaderProxy.get();
-    }
+  WorkerLoaderProxy* GetWorkerLoaderProxy() const {
+    RELEASE_ASSERT(worker_loader_proxy_);
+    return worker_loader_proxy_.Get();
+  }
 
-    WorkerReportingProxy& workerReportingProxy() const { return m_workerReportingProxy; }
+  WorkerReportingProxy& GetWorkerReportingProxy() const {
+    return worker_reporting_proxy_;
+  }
 
-    void postTask(const WebTraceLocation&, std::unique_ptr<ExecutionContextTask>, bool isInstrumented = false);
-    void appendDebuggerTask(std::unique_ptr<CrossThreadClosure>);
+  void PostTask(const WebTraceLocation&, std::unique_ptr<WTF::Closure>);
+  void PostTask(const WebTraceLocation&,
+                std::unique_ptr<WTF::CrossThreadClosure>);
+  void AppendDebuggerTask(std::unique_ptr<CrossThreadClosure>);
 
-    // Runs only debugger tasks while paused in debugger.
-    void startRunningDebuggerTasksOnPauseOnWorkerThread();
-    void stopRunningDebuggerTasksOnPauseOnWorkerThread();
+  // Runs only debugger tasks while paused in debugger.
+  void StartRunningDebuggerTasksOnPauseOnWorkerThread();
+  void StopRunningDebuggerTasksOnPauseOnWorkerThread();
 
-    // Can be called only on the worker thread, WorkerOrWorkletGlobalScope is
-    // not thread safe.
-    WorkerOrWorkletGlobalScope* globalScope();
+  // Can be called only on the worker thread, WorkerOrWorkletGlobalScope
+  // and WorkerInspectorController are not thread safe.
+  WorkerOrWorkletGlobalScope* GlobalScope();
+  WorkerInspectorController* GetWorkerInspectorController();
 
-    // Called for creating WorkerThreadLifecycleObserver on both the main thread
-    // and the worker thread.
-    WorkerThreadLifecycleContext* getWorkerThreadLifecycleContext() const { return m_workerThreadLifecycleContext; }
+  // Called for creating WorkerThreadLifecycleObserver on both the main thread
+  // and the worker thread.
+  WorkerThreadLifecycleContext* GetWorkerThreadLifecycleContext() const {
+    return worker_thread_lifecycle_context_;
+  }
 
-    // Returns true once one of the terminate* methods is called.
-    bool terminated();
+  // Number of active worker threads.
+  static unsigned WorkerThreadCount();
 
-    // Number of active worker threads.
-    static unsigned workerThreadCount();
+  // Returns a set of all worker threads. This must be called only on the main
+  // thread and the returned set must not be stored for future use.
+  static HashSet<WorkerThread*>& WorkerThreads();
 
-    PlatformThreadId platformThreadId();
+  int GetWorkerThreadId() const { return worker_thread_id_; }
 
-    ExitCode getExitCode();
+  PlatformThreadId GetPlatformThreadId();
 
-    void waitForShutdownForTesting() { m_shutdownEvent->wait(); }
+  bool IsForciblyTerminated();
 
-protected:
-    WorkerThread(PassRefPtr<WorkerLoaderProxy>, WorkerReportingProxy&);
+  void WaitForShutdownForTesting() { shutdown_event_->Wait(); }
 
-    // Factory method for creating a new worker context for the thread.
-    // Called on the worker thread.
-    virtual WorkerOrWorkletGlobalScope* createWorkerGlobalScope(std::unique_ptr<WorkerThreadStartupData>) = 0;
+  ParentFrameTaskRunners* GetParentFrameTaskRunners() const {
+    return parent_frame_task_runners_.Get();
+  }
 
-    // Returns true when this WorkerThread owns the associated
-    // WorkerBackingThread exclusively. If this function returns true, the
-    // WorkerThread initializes / shutdowns the backing thread. Otherwise
-    // workerBackingThread() should be initialized / shutdown properly
-    // out of this class.
-    virtual bool isOwningBackingThread() const { return true; }
+ protected:
+  WorkerThread(PassRefPtr<WorkerLoaderProxy>, WorkerReportingProxy&);
 
-    // Called on the worker thread.
-    virtual void postInitialize() { }
+  // Factory method for creating a new worker context for the thread.
+  // Called on the worker thread.
+  virtual WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
+      std::unique_ptr<WorkerThreadStartupData>) = 0;
 
-private:
-    friend class WorkerThreadTest;
-    FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest, StartAndTerminateOnInitialization_TerminateWhileDebuggerTaskIsRunning);
-    FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest, StartAndTerminateOnScriptLoaded_TerminateWhileDebuggerTaskIsRunning);
+  // Returns true when this WorkerThread owns the associated
+  // WorkerBackingThread exclusively. If this function returns true, the
+  // WorkerThread initializes / shutdowns the backing thread. Otherwise
+  // workerBackingThread() should be initialized / shutdown properly
+  // out of this class.
+  virtual bool IsOwningBackingThread() const { return true; }
 
-    class ForceTerminationTask;
-    class WorkerMicrotaskRunner;
+ private:
+  friend class WorkerThreadTest;
+  FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest,
+                           ShouldScheduleToTerminateExecution);
+  FRIEND_TEST_ALL_PREFIXES(
+      WorkerThreadTest,
+      Terminate_WhileDebuggerTaskIsRunningOnInitialization);
+  FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest,
+                           Terminate_WhileDebuggerTaskIsRunning);
 
-    enum class TerminationMode {
-        // Synchronously terminate the worker execution. Please be careful to
-        // use this mode, because after the synchronous termination any V8 APIs
-        // may suddenly start to return empty handles and it may cause crashes.
-        Forcible,
+  enum class TerminationMode {
+    // Synchronously terminate the worker execution. Please be careful to
+    // use this mode, because after the synchronous termination any V8 APIs
+    // may suddenly start to return empty handles and it may cause crashes.
+    kForcible,
 
-        // Don't synchronously terminate the worker execution. Instead, schedule
-        // a task to terminate it in case that the shutdown sequence does not
-        // start on the worker thread in a certain time period.
-        Graceful,
-    };
+    // Don't synchronously terminate the worker execution. Instead, schedule
+    // a task to terminate it in case that the shutdown sequence does not
+    // start on the worker thread in a certain time period.
+    kGraceful,
+  };
 
-    void terminateInternal(TerminationMode);
-    void forciblyTerminateExecution();
+  // Represents the state of this worker thread. A caller may need to acquire
+  // a lock |m_threadStateMutex| before accessing this:
+  //   - Only the worker thread can set this with the lock.
+  //   - The worker thread can read this without the lock.
+  //   - The main thread can read this with the lock.
+  enum class ThreadState {
+    kNotStarted,
+    kRunning,
+    kReadyToShutdown,
+  };
 
-    // Returns true if termination or shutdown sequence has started. This is
-    // thread safe.
-    // Note that this returns false when the sequence has already started but it
-    // hasn't been notified to the calling thread.
-    bool isInShutdown();
+  void TerminateInternal(TerminationMode);
 
-    void initializeOnWorkerThread(std::unique_ptr<WorkerThreadStartupData>);
-    void prepareForShutdownOnWorkerThread();
-    void performShutdownOnWorkerThread();
-    void performTaskOnWorkerThread(std::unique_ptr<ExecutionContextTask>, bool isInstrumented);
-    void performDebuggerTaskOnWorkerThread(std::unique_ptr<CrossThreadClosure>);
-    void performDebuggerTaskDontWaitOnWorkerThread();
+  // Returns true if we should synchronously terminate or schedule to
+  // terminate the worker execution so that a shutdown task can be handled by
+  // the thread event loop. This must be called with |m_threadStateMutex|
+  // acquired.
+  bool ShouldScheduleToTerminateExecution(const MutexLocker&);
 
-    // Accessed only on the main thread.
-    bool m_started = false;
+  // Called as a delayed task to terminate the worker execution from the main
+  // thread. This task is expected to run when the shutdown sequence does not
+  // start in a certain time period because of an inifite loop in the JS
+  // execution context etc. When the shutdown sequence is started before this
+  // task runs, the task is simply cancelled.
+  void MayForciblyTerminateExecution();
 
-    // Set on the main thread and checked on both the main and worker threads.
-    bool m_terminated = false;
+  // Forcibly terminates the worker execution. This must be called with
+  // |m_threadStateMutex| acquired.
+  void ForciblyTerminateExecution(const MutexLocker&, ExitCode);
 
-    // Set on the worker thread and checked on both the main and worker threads.
-    bool m_readyToShutdown = false;
+  // Returns true if termination or shutdown sequence has started. This is
+  // thread safe.
+  // Note that this returns false when the sequence has already started but it
+  // hasn't been notified to the calling thread.
+  bool IsInShutdown();
 
-    // Accessed only on the worker thread.
-    bool m_pausedInDebugger = false;
+  void InitializeOnWorkerThread(std::unique_ptr<WorkerThreadStartupData>);
+  void PrepareForShutdownOnWorkerThread();
+  void PerformShutdownOnWorkerThread();
+  template <WTF::FunctionThreadAffinity threadAffinity>
+  void PerformTaskOnWorkerThread(
+      std::unique_ptr<Function<void(), threadAffinity>> task);
+  void PerformDebuggerTaskOnWorkerThread(std::unique_ptr<CrossThreadClosure>);
+  void PerformDebuggerTaskDontWaitOnWorkerThread();
 
-    // Set on the worker thread and checked on both the main and worker threads.
-    bool m_runningDebuggerTask = false;
+  // These must be called with |m_threadStateMutex| acquired.
+  void SetThreadState(const MutexLocker&, ThreadState);
+  void SetExitCode(const MutexLocker&, ExitCode);
+  bool IsThreadStateMutexLocked(const MutexLocker&);
 
-    ExitCode m_exitCode = ExitCode::NotTerminated;
+  // This internally acquires |m_threadStateMutex|. If you already have the
+  // lock or you're on the main thread, you should consider directly accessing
+  // |m_requestedToTerminate|.
+  bool CheckRequestedToTerminateOnWorkerThread();
 
-    long long m_forceTerminationDelayInMs;
+  ExitCode GetExitCodeForTesting();
 
-    std::unique_ptr<InspectorTaskRunner> m_inspectorTaskRunner;
-    std::unique_ptr<WorkerMicrotaskRunner> m_microtaskRunner;
+  // A unique identifier among all WorkerThreads.
+  const int worker_thread_id_;
 
-    RefPtr<WorkerLoaderProxy> m_workerLoaderProxy;
-    WorkerReportingProxy& m_workerReportingProxy;
+  // Accessed only on the main thread.
+  bool requested_to_start_ = false;
 
-    // This lock protects |m_globalScope|, |m_terminated|, |m_readyToShutdown|,
-    // |m_runningDebuggerTask|, |m_exitCode| and |m_microtaskRunner|.
-    Mutex m_threadStateMutex;
+  // Set on the main thread and checked on both the main and worker threads.
+  bool requested_to_terminate_ = false;
 
-    Persistent<WorkerOrWorkletGlobalScope> m_globalScope;
+  // Accessed only on the worker thread.
+  bool paused_in_debugger_ = false;
 
-    // Signaled when the thread starts termination on the main thread.
-    std::unique_ptr<WaitableEvent> m_terminationEvent;
+  // Set on the worker thread and checked on both the main and worker threads.
+  bool running_debugger_task_ = false;
 
-    // Signaled when the thread completes termination on the worker thread.
-    std::unique_ptr<WaitableEvent> m_shutdownEvent;
+  ThreadState thread_state_ = ThreadState::kNotStarted;
+  ExitCode exit_code_ = ExitCode::kNotTerminated;
 
-    // Scheduled when termination starts with TerminationMode::Force, and
-    // cancelled when the worker thread is gracefully shut down.
-    std::unique_ptr<ForceTerminationTask> m_scheduledForceTerminationTask;
+  long long forcible_termination_delay_in_ms_;
 
-    Persistent<WorkerThreadLifecycleContext> m_workerThreadLifecycleContext;
+  std::unique_ptr<InspectorTaskRunner> inspector_task_runner_;
+
+  RefPtr<WorkerLoaderProxy> worker_loader_proxy_;
+  WorkerReportingProxy& worker_reporting_proxy_;
+  CrossThreadPersistent<ParentFrameTaskRunners> parent_frame_task_runners_;
+
+  // This lock protects |m_globalScope|, |m_requestedToTerminate|,
+  // |m_threadState|, |m_runningDebuggerTask| and |m_exitCode|.
+  Mutex thread_state_mutex_;
+
+  CrossThreadPersistent<ConsoleMessageStorage> console_message_storage_;
+  CrossThreadPersistent<WorkerOrWorkletGlobalScope> global_scope_;
+  CrossThreadPersistent<WorkerInspectorController> worker_inspector_controller_;
+
+  // Signaled when the thread completes termination on the worker thread.
+  std::unique_ptr<WaitableEvent> shutdown_event_;
+
+  // Used to cancel a scheduled forcible termination task. See
+  // mayForciblyTerminateExecution() for details.
+  TaskHandle forcible_termination_task_handle_;
+
+  // Created on the main thread heap, but will be accessed cross-thread
+  // when worker thread posts tasks.
+  CrossThreadPersistent<WorkerThreadLifecycleContext>
+      worker_thread_lifecycle_context_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerThread_h
+#endif  // WorkerThread_h

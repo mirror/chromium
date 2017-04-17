@@ -8,6 +8,7 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/common/features.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_types.h"
@@ -15,11 +16,10 @@
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
-#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/border.h"
 #include "ui/views/bubble/bubble_border.h"
 #include "ui/views/bubble/bubble_frame_view.h"
-#include "ui/views/controls/button/label_button.h"
+#include "ui/views/controls/button/button.h"
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/client_view.h"
@@ -27,9 +27,9 @@
 #include "ui/views/window/native_frame_view.h"
 #include "ui/views/window/non_client_view.h"
 
-#if defined(ENABLE_APP_LIST)
+#if BUILDFLAG(ENABLE_APP_LIST)
 #include "third_party/skia/include/core/SkPaint.h"
-#include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_constants.h"  // nogncheck
 #include "ui/views/background.h"
 #endif
 
@@ -44,7 +44,7 @@ const views::BubbleBorder::Shadow kShadowType =
     views::BubbleBorder::SMALL_SHADOW;
 #endif
 
-#if defined(ENABLE_APP_LIST)
+#if BUILDFLAG(ENABLE_APP_LIST)
 // The background for App List dialogs, which appears as a rounded rectangle
 // with the same border radius and color as the app list contents.
 class AppListOverlayBackground : public views::Background {
@@ -59,11 +59,11 @@ class AppListOverlayBackground : public views::Background {
     // 1px smaller on platforms that support shadows.
     const int kAppListOverlayBorderRadius = 3;
 
-    SkPaint paint;
-    paint.setStyle(SkPaint::kFill_Style);
-    paint.setColor(app_list::kContentsBackgroundColor);
+    cc::PaintFlags flags;
+    flags.setStyle(cc::PaintFlags::kFill_Style);
+    flags.setColor(app_list::kContentsBackgroundColor);
     canvas->DrawRoundRect(view->GetContentsBounds(),
-                          kAppListOverlayBorderRadius, paint);
+                          kAppListOverlayBorderRadius, flags);
   }
 
  private:
@@ -123,7 +123,7 @@ class BaseDialogContainer : public views::DialogDelegateView {
   DISALLOW_COPY_AND_ASSIGN(BaseDialogContainer);
 };
 
-#if defined(ENABLE_APP_LIST)
+#if BUILDFLAG(ENABLE_APP_LIST)
 
 // The contents view for an App List Dialog, which covers the entire app list
 // and adds a close button.
@@ -140,7 +140,7 @@ class AppListDialogContainer : public BaseDialogContainer,
   ~AppListDialogContainer() override {}
 
  private:
-  // Overridden from views::View:
+  // views::View:
   void Layout() override {
     // Margin of the close button from the top right-hand corner of the dialog.
     const int kCloseButtonDialogMargin = 10;
@@ -153,13 +153,13 @@ class AppListDialogContainer : public BaseDialogContainer,
     views::DialogDelegateView::Layout();
   }
 
-  // Overridden from views::WidgetDelegate:
+  // views::WidgetDelegate:
   views::NonClientFrameView* CreateNonClientFrameView(
       views::Widget* widget) override {
     return new views::NativeFrameView(widget);
   }
 
-  // Overridden from views::ButtonListener:
+  // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
     if (sender == close_button_) {
       GetWidget()->Close();
@@ -168,7 +168,7 @@ class AppListDialogContainer : public BaseDialogContainer,
     }
   }
 
-  views::LabelButton* close_button_;
+  views::Button* close_button_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListDialogContainer);
 };
@@ -241,7 +241,7 @@ class NativeDialogContainer : public BaseDialogContainer {
 
 }  // namespace
 
-#if defined(ENABLE_APP_LIST)
+#if BUILDFLAG(ENABLE_APP_LIST)
 views::DialogDelegateView* CreateAppListContainerForView(
     views::View* view,
     const base::Closure& close_callback) {

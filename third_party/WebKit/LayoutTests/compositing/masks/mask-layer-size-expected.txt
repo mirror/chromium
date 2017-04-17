@@ -1,20 +1,23 @@
 {
-  "name": "Content Root Layer",
-  "bounds": [800, 600],
-  "children": [
+  "layers": [
     {
       "name": "LayoutView #document",
       "bounds": [800, 600],
       "contentsOpaque": true,
+      "drawsContent": true
+    },
+    {
+      "name": "LayoutBlockFlow DIV id='masked'",
+      "position": [10, 10],
+      "bounds": [400, 200],
+      "contentsOpaque": true,
       "drawsContent": true,
-      "children": [
+      "backgroundColor": "#000000",
+      "maskLayer": [
         {
-          "name": "LayoutBlockFlow DIV id='masked'",
-          "position": [10, 10],
+          "name": "Mask Layer",
           "bounds": [400, 200],
-          "contentsOpaque": true,
-          "drawsContent": true,
-          "backgroundColor": "#000000"
+          "drawsContent": true
         }
       ]
     }

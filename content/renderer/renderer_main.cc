@@ -21,16 +21,18 @@
 #include "base/timer/hi_res_timer_manager.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
-#include "components/scheduler/renderer/renderer_scheduler.h"
 #include "content/child/child_process.h"
 #include "content/common/content_constants_internal.h"
-#include "content/common/mojo/mojo_shell_connection_impl.h"
+#include "content/common/service_manager/service_manager_connection_impl.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/renderer/render_process_impl.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/renderer_main_platform_delegate.h"
+#include "media/media_features.h"
+#include "ppapi/features/features.h"
+#include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/skia/include/core/SkGraphics.h"
 #include "ui/base/ui_base_switches.h"
 
@@ -48,16 +50,16 @@
 #include "third_party/WebKit/public/web/WebView.h"
 #endif  // OS_MACOSX
 
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/renderer/pepper/pepper_plugin_registry.h"
 #endif
 
-#if defined(ENABLE_WEBRTC)
-#include "third_party/webrtc_overrides/init_webrtc.h"
+#if BUILDFLAG(ENABLE_WEBRTC)
+#include "third_party/webrtc_overrides/init_webrtc.h"  // nogncheck
 #endif
 
 #if defined(USE_OZONE)
-#include "ui/ozone/public/client_native_pixmap_factory.h"
+#include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
 #endif
 
 namespace content {
@@ -74,8 +76,8 @@ static void HandleRendererErrorTestParameters(
 }
 
 #if defined(USE_OZONE)
-base::LazyInstance<std::unique_ptr<ui::ClientNativePixmapFactory>>
-    g_pixmap_factory = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::unique_ptr<gfx::ClientNativePixmapFactory>>::
+    DestructorAtExit g_pixmap_factory = LAZY_INSTANCE_INITIALIZER;
 #endif
 
 }  // namespace
@@ -117,8 +119,8 @@ int RendererMain(const MainFunctionParams& parameters) {
 #endif
 
 #if defined(USE_OZONE)
-  g_pixmap_factory.Get() = ui::ClientNativePixmapFactory::Create();
-  ui::ClientNativePixmapFactory::SetInstance(g_pixmap_factory.Get().get());
+  g_pixmap_factory.Get() = ui::CreateClientNativePixmapFactoryOzone();
+  gfx::ClientNativePixmapFactory::SetInstance(g_pixmap_factory.Get().get());
 #endif
 
   // This function allows pausing execution using the --renderer-startup-dialog
@@ -152,17 +154,17 @@ int RendererMain(const MainFunctionParams& parameters) {
   base::android::RecordLibraryLoaderRendererHistograms();
 #endif
 
-  std::unique_ptr<scheduler::RendererScheduler> renderer_scheduler(
-      scheduler::RendererScheduler::Create());
+  std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler(
+      blink::scheduler::RendererScheduler::Create());
 
   // PlatformInitialize uses FieldTrials, so this must happen later.
   platform.PlatformInitialize();
 
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
   // Load pepper plugins before engaging the sandbox.
   PepperPluginRegistry::GetInstance();
 #endif
-#if defined(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC)
   // Initialize WebRTC before engaging the sandbox.
   // NOTE: On linux, this call could already have been made from
   // zygote_main_linux.cc.  However, calling multiple times from the same thread
@@ -174,7 +176,7 @@ int RendererMain(const MainFunctionParams& parameters) {
 #if defined(OS_WIN) || defined(OS_MACOSX)
     // TODO(markus): Check if it is OK to unconditionally move this
     // instruction down.
-    RenderProcessImpl render_process;
+    auto render_process = RenderProcessImpl::Create();
     RenderThreadImpl::Create(std::move(main_message_loop),
                              std::move(renderer_scheduler));
 #endif
@@ -182,7 +184,7 @@ int RendererMain(const MainFunctionParams& parameters) {
     if (!no_sandbox)
       run_loop = platform.EnableSandbox();
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
-    RenderProcessImpl render_process;
+    auto render_process = RenderProcessImpl::Create();
     RenderThreadImpl::Create(std::move(main_message_loop),
                              std::move(renderer_scheduler));
 #endif

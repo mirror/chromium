@@ -17,13 +17,13 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/safe_browsing/client_model.pb.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
 #include "chrome/renderer/safe_browsing/features.h"
 #include "chrome/renderer/safe_browsing/mock_feature_extractor_clock.h"
 #include "chrome/renderer/safe_browsing/murmurhash3_util.h"
 #include "chrome/renderer/safe_browsing/scorer.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
@@ -345,7 +345,8 @@ IN_PROC_BROWSER_TEST_F(PhishingClassifierTest,
 }
 
 // Test flakes with LSAN enabled. See http://crbug.com/373155.
-#if defined(LEAK_SANITIZER)
+// Flaky on Linux. See http://crbug.com/638557.
+#if defined(LEAK_SANITIZER) || defined(OS_LINUX)
 #define MAYBE_DisableDetection DISABLED_DisableDetection
 #else
 #define MAYBE_DisableDetection DisableDetection

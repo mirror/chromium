@@ -13,16 +13,20 @@
 #include "base/threading/thread_restrictions.h"
 #include "jni/JavaHandlerThread_jni.h"
 
+using base::android::AttachCurrentThread;
+
 namespace base {
 
 namespace android {
 
-JavaHandlerThread::JavaHandlerThread(const char* name) {
-  JNIEnv* env = base::android::AttachCurrentThread();
+JavaHandlerThread::JavaHandlerThread(const char* name)
+    : JavaHandlerThread(Java_JavaHandlerThread_create(
+          AttachCurrentThread(),
+          ConvertUTF8ToJavaString(AttachCurrentThread(), name))) {}
 
-  java_thread_.Reset(Java_JavaHandlerThread_create(
-      env, ConvertUTF8ToJavaString(env, name).obj()));
-}
+JavaHandlerThread::JavaHandlerThread(
+    const base::android::ScopedJavaLocalRef<jobject>& obj)
+    : java_thread_(obj) {}
 
 JavaHandlerThread::~JavaHandlerThread() {
 }
@@ -35,10 +39,9 @@ void JavaHandlerThread::Start() {
   base::WaitableEvent initialize_event(
       WaitableEvent::ResetPolicy::AUTOMATIC,
       WaitableEvent::InitialState::NOT_SIGNALED);
-  Java_JavaHandlerThread_start(env,
-                               java_thread_.obj(),
-                               reinterpret_cast<intptr_t>(this),
-                               reinterpret_cast<intptr_t>(&initialize_event));
+  Java_JavaHandlerThread_startAndInitialize(
+      env, java_thread_, reinterpret_cast<intptr_t>(this),
+      reinterpret_cast<intptr_t>(&initialize_event));
   // Wait for thread to be initialized so it is ready to be used when Start
   // returns.
   base::ThreadRestrictions::ScopedAllowWait wait_allowed;
@@ -49,8 +52,7 @@ void JavaHandlerThread::Stop() {
   JNIEnv* env = base::android::AttachCurrentThread();
   base::WaitableEvent shutdown_event(WaitableEvent::ResetPolicy::AUTOMATIC,
                                      WaitableEvent::InitialState::NOT_SIGNALED);
-  Java_JavaHandlerThread_stop(env,
-                              java_thread_.obj(),
+  Java_JavaHandlerThread_stop(env, java_thread_,
                               reinterpret_cast<intptr_t>(this),
                               reinterpret_cast<intptr_t>(&shutdown_event));
   // Wait for thread to shut down before returning.
@@ -63,15 +65,23 @@ void JavaHandlerThread::InitializeThread(JNIEnv* env,
                                          jlong event) {
   // TYPE_JAVA to get the Android java style message loop.
   message_loop_.reset(new base::MessageLoop(base::MessageLoop::TYPE_JAVA));
-  static_cast<MessageLoopForUI*>(message_loop_.get())->Start();
+  StartMessageLoop();
   reinterpret_cast<base::WaitableEvent*>(event)->Signal();
 }
 
 void JavaHandlerThread::StopThread(JNIEnv* env,
                                    const JavaParamRef<jobject>& obj,
                                    jlong event) {
-  static_cast<MessageLoopForUI*>(message_loop_.get())->QuitWhenIdle();
+  StopMessageLoop();
   reinterpret_cast<base::WaitableEvent*>(event)->Signal();
+}
+
+void JavaHandlerThread::StartMessageLoop() {
+  static_cast<MessageLoopForUI*>(message_loop_.get())->Start();
+}
+
+void JavaHandlerThread::StopMessageLoop() {
+  static_cast<MessageLoopForUI*>(message_loop_.get())->QuitWhenIdle();
 }
 
 // static

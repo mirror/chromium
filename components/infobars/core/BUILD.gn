@@ -34,6 +34,7 @@ static_library("core") {
     "//base",
     "//ui/base",
     "//ui/gfx",
+    "//ui/gfx/animation",
     "//ui/strings",
     "//url",
   ]
@@ -44,7 +45,6 @@ static_library("core") {
 }
 
 if (is_android) {
-  # GYP: //components/infobars.gypi:infobar_delegate_java
   java_cpp_enum("infobar_enums_java") {
     sources = [
       "infobar_delegate.h",

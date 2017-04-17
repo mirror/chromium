@@ -10,43 +10,96 @@
 #include <vector>
 
 #include "base/files/file.h"
+#include "base/files/file_path.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
+#include "components/subresource_filter/core/common/proto/rules.pb.h"
 
 namespace subresource_filter {
 namespace testing {
 
+// Encapsulates a testing subresource filtering ruleset serialized either in
+// indexed or unindexed format. The ruleset |contents| can be accessed directly
+// as a byte buffer, as well as through the file |path| pointing to a temporary
+// file that is cleaned up when the TestRulesetCreator is destroyed.
+struct TestRuleset {
+  TestRuleset();
+  ~TestRuleset();
+
+  // Convenience function to open a read-only file handle to |ruleset|.
+  static base::File Open(const TestRuleset& ruleset);
+
+  // Corrupts the |ruleset| file by truncating its tail of a certain size.
+  static void CorruptByTruncating(const TestRuleset& ruleset, size_t tail_size);
+
+  // Overrides all bytes in the [from..to) range by |fill_with|.
+  static void CorruptByFilling(const TestRuleset& ruleset,
+                               size_t from,
+                               size_t to,
+                               uint8_t fill_with);
+
+  std::vector<uint8_t> contents;
+  base::FilePath path;
+};
+
+// Encapsulates the same ruleset in both indexed and unindexed formats.
+struct TestRulesetPair {
+  TestRulesetPair();
+  ~TestRulesetPair();
+
+  TestRuleset unindexed;
+  TestRuleset indexed;
+};
+
 // Helper class to create subresource filtering rulesets for testing.
+//
+// All temporary files and paths are cleaned up when the instance goes out of
+// scope, but file handles already open can still be used and read even after
+// this has happened.
 class TestRulesetCreator {
  public:
   TestRulesetCreator();
   ~TestRulesetCreator();
 
-  // Creates a testing ruleset to disallow subresource loads from URL paths
-  // having the given |suffix|, and replaces the |buffer| with the ruleset data.
-  //
-  // Enclose the call to this method in ASSERT_NO_FATAL_FAILURE to detect
-  // errors.
-  static void CreateRulesetToDisallowURLsWithPathSuffix(
+  // Creates both the indexed and unindexed versions of a testing ruleset that
+  // consists of single filtering rule that disallows subresource loads from URL
+  // paths having the given |suffix|.
+  // Enclose call in ASSERT_NO_FATAL_FAILURE to detect errors.
+  void CreateRulesetToDisallowURLsWithPathSuffix(
       base::StringPiece suffix,
-      std::vector<uint8_t>* buffer);
+      TestRulesetPair* test_ruleset_pair);
 
-  // Same as above, but puts the ruleset into a file and returns its read-only
-  // file handle in |ruleset_file|.
-  //
-  // The underlying temporary file will be deleted when the TestRulesetCreator
-  // instance goes out of scope, but the |ruleset_file| handle may outlive and
-  // can still be used even after the destruction.
-  //
-  // Enclose the call to this method in ASSERT_NO_FATAL_FAILURE to detect
-  // errors.
-  void CreateRulesetFileToDisallowURLsWithPathSuffix(base::StringPiece suffix,
-                                                     base::File* ruleset_file);
+  // Same as above, but only creates an unindexed ruleset.
+  void CreateUnindexedRulesetToDisallowURLsWithPathSuffix(
+      base::StringPiece suffix,
+      TestRuleset* test_unindexed_ruleset);
+
+  // Similar to CreateRulesetToDisallowURLsWithPathSuffix, but the resulting
+  // ruleset consists of |num_of_suffixes| rules, each of them disallowing URLs
+  // with suffixes of the form |suffix|_k, 0 <= k < |num_of_suffixes|.
+  void CreateRulesetToDisallowURLsWithManySuffixes(
+      base::StringPiece suffix,
+      int num_of_suffixes,
+      TestRulesetPair* test_ruleset_pair);
+
+  void CreateRulesetWithRules(const std::vector<proto::UrlRule>& rules,
+                              TestRulesetPair* test_ruleset_pair);
+  void CreateUnindexedRulesetWithRules(const std::vector<proto::UrlRule>& rules,
+                                       TestRuleset* test_unindexed_ruleset);
+
+  // Returns a unique |path| that is valid for the lifetime of this instance.
+  // No file at |path| will be automatically created.
+  void GetUniqueTemporaryPath(base::FilePath* path);
 
  private:
+  // Writes the |ruleset_contents| to a temporary file, and initializes
+  // |ruleset| to have the same |contents|, and the |path| to this file.
+  void CreateTestRulesetFromContents(std::vector<uint8_t> ruleset_contents,
+                                     TestRuleset* ruleset);
+
   base::ScopedTempDir scoped_temp_dir_;
-  int next_ruleset_version_ = 1;
+  int next_unique_file_suffix = 1;
 
   DISALLOW_COPY_AND_ASSIGN(TestRulesetCreator);
 };

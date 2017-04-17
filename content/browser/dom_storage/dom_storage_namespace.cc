@@ -118,8 +118,8 @@ void DOMStorageNamespace::DeleteSessionStorageOrigin(const GURL& origin) {
 }
 
 void DOMStorageNamespace::PurgeMemory(bool aggressively) {
-  if (directory_.empty())
-    return;  // We can't purge w/o backing on disk.
+  if (namespace_id_ == kLocalStorageNamespaceId && directory_.empty())
+    return;  // We can't purge local storage w/o backing on disk.
 
   AreaMap::iterator it = areas_.begin();
   while (it != areas_.end()) {
@@ -184,7 +184,7 @@ DOMStorageNamespace::UsageStatistics DOMStorageNamespace::GetUsageStatistics()
 
 void DOMStorageNamespace::OnMemoryDump(
     base::trace_event::ProcessMemoryDump* pmd) {
-  DCHECK(task_runner_->IsRunningOnPrimarySequence());
+  task_runner_->AssertIsRunningOnPrimarySequence();
   for (const auto& it : areas_)
     it.second.area_->OnMemoryDump(pmd);
 }

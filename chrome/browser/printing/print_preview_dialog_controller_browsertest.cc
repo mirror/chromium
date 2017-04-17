@@ -10,6 +10,7 @@
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
@@ -18,7 +19,7 @@
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/plugins/plugin_prefs.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/task_management/mock_web_contents_task_manager.h"
+#include "chrome/browser/task_manager/mock_web_contents_task_manager.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -37,6 +38,7 @@
 #include "ipc/ipc_message_macros.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 using content::WebContents;
 using content::WebContentsObserver;
@@ -56,12 +58,11 @@ class RequestPrintPreviewObserver : public WebContentsObserver {
 
  private:
   // content::WebContentsObserver implementation.
-  bool OnMessageReceived(const IPC::Message& message) override {
+  bool OnMessageReceived(const IPC::Message& message,
+                         content::RenderFrameHost* render_frame_host) override {
     IPC_BEGIN_MESSAGE_MAP(RequestPrintPreviewObserver, message)
       IPC_MESSAGE_HANDLER(PrintHostMsg_RequestPrintPreview,
                           OnRequestPrintPreview)
-      IPC_MESSAGE_HANDLER(PrintHostMsg_SetupScriptedPrintPreview,
-                          OnSetupScriptedPrintPreview)
       IPC_MESSAGE_UNHANDLED(break)
     IPC_END_MESSAGE_MAP()
     return false;  // Report not handled so the real handler receives it.
@@ -69,10 +70,6 @@ class RequestPrintPreviewObserver : public WebContentsObserver {
 
   void OnRequestPrintPreview(
       const PrintHostMsg_RequestPrintPreview_Params& /* params */) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);
-  }
-
-  void OnSetupScriptedPrintPreview() {
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure_);
   }
 
@@ -96,8 +93,8 @@ class PrintPreviewDialogClonedObserver : public WebContentsObserver {
   // content::WebContentsObserver implementation.
   void DidCloneToNewWebContents(WebContents* old_web_contents,
                                 WebContents* new_web_contents) override {
-    request_preview_dialog_observer_.reset(
-        new RequestPrintPreviewObserver(new_web_contents));
+    request_preview_dialog_observer_ =
+        base::MakeUnique<RequestPrintPreviewObserver>(new_web_contents);
   }
 
   std::unique_ptr<RequestPrintPreviewObserver> request_preview_dialog_observer_;
@@ -105,65 +102,21 @@ class PrintPreviewDialogClonedObserver : public WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(PrintPreviewDialogClonedObserver);
 };
 
-class PrintPreviewDialogStartedObserver : public WebContentsObserver {
- public:
-  explicit PrintPreviewDialogStartedObserver(WebContents* dialog)
-      : WebContentsObserver(dialog), waiting_(false), dialog_started_(false) {}
-  ~PrintPreviewDialogStartedObserver() override {}
-
-  bool dialog_started() const { return dialog_started_; }
-
-  void WaitForDialogStarted() {
-    waiting_ = true;
-    run_loop_.Run();
-  }
-
- private:
-  // content::WebContentsObserver implementation.
-  void RenderViewReady() override {
-    dialog_started_ = true;
-    if (waiting_)
-      run_loop_.Quit();
-  }
-
-  void WebContentsDestroyed() override {
-    if (waiting_)
-      run_loop_.Quit();
-  }
-
-  bool waiting_;
-  bool dialog_started_;
-  base::RunLoop run_loop_;
-
-  DISALLOW_COPY_AND_ASSIGN(PrintPreviewDialogStartedObserver);
-};
-
 class PrintPreviewDialogDestroyedObserver : public WebContentsObserver {
  public:
   explicit PrintPreviewDialogDestroyedObserver(WebContents* dialog)
       : WebContentsObserver(dialog),
-        waiting_(false),
-        dialog_destroyed_(false) {}
+        dialog_destroyed_(false) {
+  }
   ~PrintPreviewDialogDestroyedObserver() override {}
 
   bool dialog_destroyed() const { return dialog_destroyed_; }
 
-  void WaitForDialogDestroyed() {
-    waiting_ = true;
-    run_loop_.Run();
-  }
-
  private:
   // content::WebContentsObserver implementation.
-  void WebContentsDestroyed() override {
-    dialog_destroyed_ = true;
-    if (waiting_)
-      run_loop_.Quit();
-  }
+  void WebContentsDestroyed() override { dialog_destroyed_ = true; }
 
-  bool waiting_;
   bool dialog_destroyed_;
-  base::RunLoop run_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(PrintPreviewDialogDestroyedObserver);
 };
@@ -171,11 +124,6 @@ class PrintPreviewDialogDestroyedObserver : public WebContentsObserver {
 void PluginsLoadedCallback(
     const base::Closure& quit_closure,
     const std::vector<content::WebPluginInfo>& /* info */) {
-  quit_closure.Run();
-}
-
-void PluginEnabledCallback(const base::Closure& quit_closure, bool can_enable) {
-  EXPECT_TRUE(can_enable);
   quit_closure.Run();
 }
 
@@ -199,12 +147,8 @@ void CheckPdfPluginForRenderFrame(content::RenderFrameHost* frame) {
 
   ChromePluginServiceFilter* filter = ChromePluginServiceFilter::GetInstance();
   EXPECT_TRUE(filter->IsPluginAvailable(
-      frame->GetProcess()->GetID(),
-      frame->GetRoutingID(),
-      nullptr,
-      GURL(kDummyPrintUrl),
-      GURL(),
-      &pdf_plugin_info));
+      frame->GetProcess()->GetID(), frame->GetRoutingID(), nullptr,
+      GURL(kDummyPrintUrl), url::Origin(), &pdf_plugin_info));
 }
 
 }  // namespace
@@ -225,18 +169,15 @@ class PrintPreviewDialogControllerBrowserTest : public InProcessBrowserTest {
     run_loop.Run();
   }
 
-  void PrintPreviewViaScript(base::StringPiece script) {
-    base::RunLoop run_loop;
-    request_preview_dialog_observer()->set_quit_closure(run_loop.QuitClosure());
-    initiator()->GetMainFrame()->ExecuteJavaScriptForTests(
-        base::ASCIIToUTF16(script));
-    run_loop.Run();
-  }
-
   WebContents* GetPrintPreviewDialog() {
     printing::PrintPreviewDialogController* dialog_controller =
         printing::PrintPreviewDialogController::GetInstance();
     return dialog_controller->GetPrintPreviewForContents(initiator_);
+  }
+
+  void SetAlwaysOpenPdfExternallyForTests(bool always_open_pdf_externally) {
+    PluginPrefs::GetForProfile(browser()->profile())
+        ->SetAlwaysOpenPdfExternallyForTests(always_open_pdf_externally);
   }
 
  private:
@@ -250,7 +191,8 @@ class PrintPreviewDialogControllerBrowserTest : public InProcessBrowserTest {
     // PrintPreviewMessageHandler gets created. Thus enabling
     // RequestPrintPreviewObserver to get messages first for the purposes of
     // this test.
-    cloned_tab_observer_.reset(new PrintPreviewDialogClonedObserver(first_tab));
+    cloned_tab_observer_ =
+        base::MakeUnique<PrintPreviewDialogClonedObserver>(first_tab);
     chrome::DuplicateTab(browser());
 
     initiator_ = browser()->tab_strip_model()->GetActiveWebContents();
@@ -305,52 +247,6 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
   EXPECT_TRUE(new_preview_dialog);
 }
 
-// Ensure that back/forward navigations with ScopedPageLoadDeferrers (e.g.,
-// during printing) end up committing to the correct NavigationEntry.
-// See https://crbug.com/626838.
-IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
-                       HistoryNavigateDuringPrint) {
-  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
-  ui_test_utils::NavigateToURL(browser(), GURL("data:text/html,page1"));
-  ui_test_utils::NavigateToURL(browser(), GURL("data:text/html,page2"));
-  EXPECT_EQ(2, tab->GetController().GetEntryCount());
-  EXPECT_EQ(1, tab->GetController().GetLastCommittedEntryIndex());
-
-  // Go back via script, but before that gets a chance to commit, show a print
-  // dialog with a nested message loop and ScopedPageLoadDeferrer.
-  PrintPreviewViaScript("history.back(); print();");
-
-  // Get the preview dialog for the initiator tab.
-  WebContents* preview_dialog = GetPrintPreviewDialog();
-
-  // Check a new print preview dialog got created.
-  ASSERT_TRUE(preview_dialog);
-  ASSERT_NE(initiator(), preview_dialog);
-
-  bool started = preview_dialog->GetRenderProcessHost()->IsReady();
-  if (!started) {
-    PrintPreviewDialogStartedObserver started_observer(preview_dialog);
-    started_observer.WaitForDialogStarted();
-    started = started_observer.dialog_started();
-  }
-
-  if (started) {
-    // Dismiss the dialog.
-    PrintPreviewDialogDestroyedObserver destroyed_observer(preview_dialog);
-    ASSERT_TRUE(preview_dialog->GetRenderProcessHost()->Shutdown(0, true));
-    if (!destroyed_observer.dialog_destroyed()) {
-      destroyed_observer.WaitForDialogDestroyed();
-      ASSERT_TRUE(destroyed_observer.dialog_destroyed());
-    }
-  }
-  ASSERT_FALSE(GetPrintPreviewDialog());
-
-  // The back navigation should put us back on the first entry.
-  content::WaitForLoadStop(tab);
-  EXPECT_EQ(2, tab->GetController().GetEntryCount());
-  EXPECT_EQ(0, tab->GetController().GetLastCommittedEntryIndex());
-}
-
 // Test to verify that after reloading the initiator, it creates a new print
 // preview dialog.
 IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
@@ -367,7 +263,7 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
   // Reload the initiator. Make sure reloading destroys the print preview
   // dialog.
   PrintPreviewDialogDestroyedObserver dialog_destroyed_observer(preview_dialog);
-  chrome::Reload(browser(), CURRENT_TAB);
+  chrome::Reload(browser(), WindowOpenDisposition::CURRENT_TAB);
   content::WaitForLoadStop(
       browser()->tab_strip_model()->GetActiveWebContents());
   ASSERT_TRUE(dialog_destroyed_observer.dialog_destroyed());
@@ -396,14 +292,7 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
   ASSERT_TRUE(GetPdfPluginInfo(&pdf_plugin_info));
 
   // Disable the PDF plugin.
-  {
-    base::RunLoop run_loop;
-    PluginPrefs::GetForProfile(browser()->profile())->EnablePlugin(
-        false,
-        base::FilePath::FromUTF8Unsafe(ChromeContentClient::kPDFPluginPath),
-        base::Bind(&PluginEnabledCallback, run_loop.QuitClosure()));
-    run_loop.Run();
-  }
+  SetAlwaysOpenPdfExternallyForTests(true);
 
   // Make sure it is actually disabled for webpages.
   ChromePluginServiceFilter* filter = ChromePluginServiceFilter::GetInstance();
@@ -411,10 +300,8 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
   EXPECT_FALSE(filter->IsPluginAvailable(
       initiator()->GetRenderProcessHost()->GetID(),
       initiator()->GetMainFrame()->GetRoutingID(),
-      browser()->profile()->GetResourceContext(),
-      GURL("http://google.com"),
-      GURL(),
-      &dummy_pdf_plugin_info));
+      browser()->profile()->GetResourceContext(), GURL(),
+      url::Origin(GURL("http://google.com")), &dummy_pdf_plugin_info));
 
   PrintPreview();
 
@@ -443,7 +330,7 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
   preview_dialog->ForEachFrame(base::Bind(&CheckPdfPluginForRenderFrame));
 }
 
-#if defined(ENABLE_TASK_MANAGER)
+#if !defined(OS_ANDROID)
 
 namespace {
 
@@ -452,9 +339,8 @@ base::string16 GetExpectedPrefix() {
                                     base::string16());
 }
 
-const std::vector<task_management::WebContentsTag*>& GetTrackedTags() {
-  return task_management::WebContentsTagsManager::GetInstance()->
-      tracked_tags();
+const std::vector<task_manager::WebContentsTag*>& GetTrackedTags() {
+  return task_manager::WebContentsTagsManager::GetInstance()->tracked_tags();
 }
 
 IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
@@ -467,12 +353,12 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
 
   // Create a task manager and expect the pre-existing print previews are
   // provided.
-  task_management::MockWebContentsTaskManager task_manager;
+  task_manager::MockWebContentsTaskManager task_manager;
   EXPECT_TRUE(task_manager.tasks().empty());
   task_manager.StartObserving();
   ASSERT_EQ(3U, task_manager.tasks().size());
-  const task_management::Task* pre_existing_task = task_manager.tasks().back();
-  EXPECT_EQ(task_management::Task::RENDERER, pre_existing_task->GetType());
+  const task_manager::Task* pre_existing_task = task_manager.tasks().back();
+  EXPECT_EQ(task_manager::Task::RENDERER, pre_existing_task->GetType());
   const base::string16 pre_existing_title = pre_existing_task->title();
   const base::string16 expected_prefix = GetExpectedPrefix();
   EXPECT_TRUE(base::StartsWith(pre_existing_title,
@@ -491,8 +377,8 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
   PrintPreview();
   EXPECT_EQ(3U, GetTrackedTags().size());
   ASSERT_EQ(3U, task_manager.tasks().size());
-  const task_management::Task* task = task_manager.tasks().back();
-  EXPECT_EQ(task_management::Task::RENDERER, task->GetType());
+  const task_manager::Task* task = task_manager.tasks().back();
+  EXPECT_EQ(task_manager::Task::RENDERER, task->GetType());
   const base::string16 title = task->title();
   EXPECT_TRUE(base::StartsWith(title,
                                expected_prefix,
@@ -510,4 +396,4 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
 
 }  // namespace
 
-#endif  // defined(ENABLE_TASK_MANAGER)
+#endif  // !defined(OS_ANDROID)

@@ -12,7 +12,6 @@
 #include "media/blink/webmediaplayer_impl.h"
 #include "media/blink/webmediaplayer_params.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerClient.h"
-#include "third_party/WebKit/public/platform/modules/mediasession/WebMediaSession.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -173,9 +172,8 @@ void WebMediaPlayerCast::Initialize(const GURL& url,
                                     blink::WebLocalFrame* frame,
                                     int delegate_id) {
   player_manager_->Initialize(MEDIA_PLAYER_TYPE_REMOTE_ONLY, player_id_, url,
-                              frame->document().firstPartyForCookies(), 0,
-                              frame->document().url(), true, delegate_id,
-                              blink::WebMediaSession::DefaultID);
+                              frame->GetDocument().FirstPartyForCookies(),
+                              frame->GetDocument().Url(), true, delegate_id);
   is_player_initialized_ = true;
 }
 
@@ -187,12 +185,16 @@ void WebMediaPlayerCast::SetMediaPlayerManager(
 
 void WebMediaPlayerCast::requestRemotePlayback() {
   player_manager_->Seek(player_id_, base::TimeDelta::FromSecondsD(
-                                        webmediaplayer_->currentTime()));
+                                        webmediaplayer_->CurrentTime()));
   player_manager_->RequestRemotePlayback(player_id_);
 }
 
 void WebMediaPlayerCast::requestRemotePlaybackControl() {
   player_manager_->RequestRemotePlaybackControl(player_id_);
+}
+
+void WebMediaPlayerCast::requestRemotePlaybackStop() {
+  player_manager_->RequestRemotePlaybackStop(player_id_);
 }
 
 void WebMediaPlayerCast::OnMediaMetadataChanged(base::TimeDelta duration,
@@ -203,57 +205,57 @@ void WebMediaPlayerCast::OnMediaMetadataChanged(base::TimeDelta duration,
 }
 
 void WebMediaPlayerCast::OnPlaybackComplete() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   webmediaplayer_->OnRemotePlaybackEnded();
 }
 
 void WebMediaPlayerCast::OnBufferingUpdate(int percentage) {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
 }
 
 void WebMediaPlayerCast::OnSeekRequest(const base::TimeDelta& time_to_seek) {
-  DVLOG(1) << __FUNCTION__;
-  client_->requestSeek(time_to_seek.InSecondsF());
+  DVLOG(1) << __func__;
+  client_->RequestSeek(time_to_seek.InSecondsF());
 }
 
 void WebMediaPlayerCast::OnSeekComplete(const base::TimeDelta& current_time) {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   remote_time_at_ = base::TimeTicks::Now();
   remote_time_ = current_time;
   webmediaplayer_->OnPipelineSeeked(true);
 }
 
 void WebMediaPlayerCast::OnMediaError(int error_type) {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
 }
 
 void WebMediaPlayerCast::OnVideoSizeChanged(int width, int height) {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
 }
 
 void WebMediaPlayerCast::OnTimeUpdate(base::TimeDelta current_timestamp,
                                       base::TimeTicks current_time_ticks) {
-  DVLOG(1) << __FUNCTION__ << " " << current_timestamp.InSecondsF();
+  DVLOG(1) << __func__ << " " << current_timestamp.InSecondsF();
   remote_time_at_ = current_time_ticks;
   remote_time_ = current_timestamp;
 }
 
 void WebMediaPlayerCast::OnPlayerReleased() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
 }
 
 void WebMediaPlayerCast::OnConnectedToRemoteDevice(
     const std::string& remote_playback_message) {
-  DVLOG(1) << __FUNCTION__;
-  remote_time_ = base::TimeDelta::FromSecondsD(webmediaplayer_->currentTime());
+  DVLOG(1) << __func__;
+  remote_time_ = base::TimeDelta::FromSecondsD(webmediaplayer_->CurrentTime());
   is_remote_ = true;
   initializing_ = true;
   paused_ = false;
-  client_->playbackStateChanged();
+  client_->PlaybackStateChanged();
 
   remote_playback_message_ = remote_playback_message;
   webmediaplayer_->SuspendForRemote();
-  client_->connectedToRemoteDevice();
+  client_->ConnectedToRemoteDevice();
 }
 
 double WebMediaPlayerCast::currentTime() const {
@@ -283,81 +285,66 @@ void WebMediaPlayerCast::seek(base::TimeDelta t) {
 }
 
 void WebMediaPlayerCast::OnDisconnectedFromRemoteDevice() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   if (!paused_) {
     paused_ = true;
   }
   is_remote_ = false;
   double t = currentTime();
-  if (t + media::kTimeUpdateInterval * 2 / 1000 > webmediaplayer_->duration()) {
-    t = webmediaplayer_->duration();
+  if (t + media::kTimeUpdateInterval * 2 / 1000 > webmediaplayer_->Duration()) {
+    t = webmediaplayer_->Duration();
   }
   webmediaplayer_->OnDisconnectedFromRemoteDevice(t);
 }
 
 void WebMediaPlayerCast::OnCancelledRemotePlaybackRequest() {
-  DVLOG(1) << __FUNCTION__;
-  client_->cancelledRemotePlaybackRequest();
+  DVLOG(1) << __func__;
+  client_->CancelledRemotePlaybackRequest();
+}
+
+void WebMediaPlayerCast::OnRemotePlaybackStarted() {
+  client_->RemotePlaybackStarted();
 }
 
 void WebMediaPlayerCast::OnDidExitFullscreen() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
 }
 
 void WebMediaPlayerCast::OnMediaPlayerPlay() {
-  DVLOG(1) << __FUNCTION__ << " is_remote_ = " << is_remote_;
+  DVLOG(1) << __func__ << " is_remote_ = " << is_remote_;
   initializing_ = false;
   if (is_remote_ && paused_) {
     paused_ = false;
     remote_time_at_ = base::TimeTicks::Now();
-    client_->playbackStateChanged();
+    client_->PlaybackStateChanged();
   }
   // Blink expects a timeChanged() in response to a seek().
   if (should_notify_time_changed_)
-    client_->timeChanged();
+    client_->TimeChanged();
 }
 
 void WebMediaPlayerCast::OnMediaPlayerPause() {
-  DVLOG(1) << __FUNCTION__ << " is_remote_ = " << is_remote_;
+  DVLOG(1) << __func__ << " is_remote_ = " << is_remote_;
   if (is_remote_ && !paused_) {
     paused_ = true;
-    client_->playbackStateChanged();
+    client_->PlaybackStateChanged();
   }
 }
 
 void WebMediaPlayerCast::OnRemoteRouteAvailabilityChanged(
-    bool routes_available) {
-  DVLOG(1) << __FUNCTION__;
-  client_->remoteRouteAvailabilityChanged(routes_available);
+    blink::WebRemotePlaybackAvailability availability) {
+  DVLOG(1) << __func__;
+  client_->RemoteRouteAvailabilityChanged(availability);
 }
 
 void WebMediaPlayerCast::SuspendAndReleaseResources() {}
-void WebMediaPlayerCast::OnWaitingForDecryptionKey() {}
-
-bool WebMediaPlayerCast::hasVideo() const {
-  return true;
-}
-
-bool WebMediaPlayerCast::paused() const {
-  return paused_;
-}
-
-#if defined(VIDEO_HOLE)
-bool WebMediaPlayerCast::UpdateBoundaryRectangle() {
-  return false;
-}
-
-const gfx::RectF WebMediaPlayerCast::GetBoundaryRectangle() {
-  return gfx::RectF();
-}
-#endif  // defined(VIDEO_HOLE)
 
 void WebMediaPlayerCast::SetDeviceScaleFactor(float scale_factor) {
   device_scale_factor_ = scale_factor;
 }
 
 scoped_refptr<VideoFrame> WebMediaPlayerCast::GetCastingBanner() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
 
   // TODO(johnme): Should redraw this frame if the layer bounds change; but
   // there seems no easy way to listen for the layer resizing (as opposed to
@@ -376,7 +363,7 @@ scoped_refptr<VideoFrame> WebMediaPlayerCast::GetCastingBanner() {
     return nullptr;
 
   return MakeTextFrameForCast(remote_playback_message_, canvas_size,
-                              webmediaplayer_->naturalSize(),
+                              webmediaplayer_->NaturalSize(),
                               base::Bind(&GLCBShim, context_3d_cb_));
 }
 

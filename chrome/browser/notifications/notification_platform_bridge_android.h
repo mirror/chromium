@@ -13,6 +13,7 @@
 
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
+#include "chrome/browser/notifications/displayed_notifications_dispatch_callback.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 
@@ -47,7 +48,8 @@ class NotificationPlatformBridgeAndroid : public NotificationPlatformBridge {
       jboolean incognito,
       const base::android::JavaParamRef<jstring>& java_tag,
       const base::android::JavaParamRef<jstring>& java_webapk_package,
-      jint action_index);
+      jint action_index,
+      const base::android::JavaParamRef<jstring>& java_reply);
 
   // Called by the Java implementation when the notification has been closed.
   void OnNotificationClosed(
@@ -68,10 +70,10 @@ class NotificationPlatformBridgeAndroid : public NotificationPlatformBridge {
                const Notification& notification) override;
   void Close(const std::string& profile_id,
              const std::string& notification_id) override;
-  bool GetDisplayed(const std::string& profile_id,
-                    bool incognito,
-                    std::set<std::string>* notifications) const override;
-  bool SupportsNotificationCenter() const override;
+  void GetDisplayed(
+      const std::string& profile_id,
+      bool incognito,
+      const GetDisplayedNotificationsCallback& callback) const override;
 
   static bool RegisterNotificationPlatformBridge(JNIEnv* env);
 

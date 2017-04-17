@@ -5,7 +5,7 @@
 #ifndef ReplacedPainter_h
 #define ReplacedPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,19 +14,23 @@ class LayoutPoint;
 class LayoutReplaced;
 
 class ReplacedPainter {
-    STACK_ALLOCATED();
-public:
-    ReplacedPainter(const LayoutReplaced& layoutReplaced) : m_layoutReplaced(layoutReplaced) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint&);
+ public:
+  ReplacedPainter(const LayoutReplaced& layout_replaced)
+      : layout_replaced_(layout_replaced) {}
 
-    // The adjustedPaintOffset should include the location (offset) of the object itself.
-    bool shouldPaint(const PaintInfo&, const LayoutPoint& adjustedPaintOffset) const;
+  void Paint(const PaintInfo&, const LayoutPoint&);
 
-private:
-    const LayoutReplaced& m_layoutReplaced;
+  // The adjustedPaintOffset should include the location (offset) of the object
+  // itself.
+  bool ShouldPaint(const PaintInfo&,
+                   const LayoutPoint& adjusted_paint_offset) const;
+
+ private:
+  const LayoutReplaced& layout_replaced_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ReplacedPainter_h
+#endif  // ReplacedPainter_h

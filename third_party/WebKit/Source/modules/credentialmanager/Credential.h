@@ -15,31 +15,36 @@ namespace blink {
 
 class ExceptionState;
 
-class MODULES_EXPORT Credential : public GarbageCollectedFinalized<Credential>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    virtual ~Credential();
+class MODULES_EXPORT Credential : public GarbageCollectedFinalized<Credential>,
+                                  public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Credential.idl
-    const String& id() const { return m_platformCredential->id(); }
-    const String& name() const { return m_platformCredential->name(); }
-    const KURL& iconURL() const { return m_platformCredential->iconURL(); }
-    const String& type() const { return m_platformCredential->type(); }
+ public:
+  virtual ~Credential();
 
-    DECLARE_VIRTUAL_TRACE();
+  // Credential.idl
+  const String& id() const { return platform_credential_->Id(); }
+  const String& GetName() const { return platform_credential_->GetName(); }
+  const KURL& GetIconURL() const { return platform_credential_->GetIconURL(); }
+  const String& type() const { return platform_credential_->GetType(); }
 
-    PlatformCredential* getPlatformCredential() const { return m_platformCredential; }
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    Credential(PlatformCredential*);
-    Credential(const String& id, const String& name, const KURL& icon);
+  PlatformCredential* GetPlatformCredential() const {
+    return platform_credential_;
+  }
 
-    // Parses a string as a KURL. Throws an exception via |exceptionState| if an invalid URL is produced.
-    static KURL parseStringAsURL(const String&, ExceptionState&);
+ protected:
+  Credential(PlatformCredential*);
+  Credential(const String& id, const String& name, const KURL& icon);
 
-    Member<PlatformCredential> m_platformCredential;
+  // Parses a string as a KURL. Throws an exception via |exceptionState| if an
+  // invalid URL is produced.
+  static KURL ParseStringAsURL(const String&, ExceptionState&);
+
+  Member<PlatformCredential> platform_credential_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Credential_h
+#endif  // Credential_h

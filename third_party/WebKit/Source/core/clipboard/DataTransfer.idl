@@ -29,6 +29,7 @@
 // https://html.spec.whatwg.org/#the-datatransfer-interface
 
 [
+    Constructor,
 ] interface DataTransfer {
     attribute DOMString dropEffect;
     attribute DOMString effectAllowed;
@@ -38,6 +39,8 @@
     void setDragImage(Element image, long x, long y);
 
     /* old interface */
+    // TODO(foolip): Switch to FrozenArray<DOMString> when the spec is fixed:
+    // https://github.com/whatwg/html/issues/11
     [SameObject] readonly attribute DOMString[] types;
     DOMString getData(DOMString format);
     void setData(DOMString format, DOMString data);

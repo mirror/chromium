@@ -13,7 +13,7 @@ description("Test inputs to HKDF importKey()");
 
 jsTestIsAsync = true;
 
-var extractable = true;
+var extractable = false;
 rawBytes = new Uint8Array([1, 2]);
 
 var p = Promise.resolve(null);
@@ -40,6 +40,11 @@ p.then(function() {
 
     debug("\nimportKey() with empty usages...");
     return crypto.subtle.importKey("raw", rawBytes, "HKDF", extractable, []);
+}).then(failAndFinishJSTest, function(result) {
+    logError(result);
+
+    debug("\nimportKey() with extractable=true ...");
+    return crypto.subtle.importKey("raw", rawBytes, "HKDF", true, ['deriveKey']);
 }).then(failAndFinishJSTest, function(result) {
     logError(result);
 }).then(finishJSTest, failAndFinishJSTest);

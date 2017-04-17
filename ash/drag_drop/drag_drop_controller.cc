@@ -9,12 +9,15 @@
 #include "ash/drag_drop/drag_drop_tracker.h"
 #include "ash/drag_drop/drag_image_view.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/wm_window.h"
 #include "base/bind.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/aura/client/capture_client.h"
+#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
@@ -31,7 +34,6 @@
 #include "ui/gfx/path.h"
 #include "ui/views/widget/native_widget_aura.h"
 #include "ui/wm/core/coordinate_conversion.h"
-#include "ui/wm/public/drag_drop_delegate.h"
 
 namespace ash {
 namespace {
@@ -133,11 +135,13 @@ DragDropController::DragDropController()
       drag_drop_window_delegate_(new DragDropTrackerDelegate(this)),
       current_drag_event_source_(ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE),
       weak_factory_(this) {
-  Shell::GetInstance()->PrependPreTargetHandler(this);
+  Shell::Get()->PrependPreTargetHandler(this);
+  ShellPort::Get()->AddDisplayObserver(this);
 }
 
 DragDropController::~DragDropController() {
-  Shell::GetInstance()->RemovePreTargetHandler(this);
+  ShellPort::Get()->RemoveDisplayObserver(this);
+  Shell::Get()->RemovePreTargetHandler(this);
   Cleanup();
   if (cancel_animation_)
     cancel_animation_->End();
@@ -199,7 +203,8 @@ int DragDropController::StartDragAndDrop(
   drag_image_final_bounds_for_cancel_animation_ =
       gfx::Rect(start_location - provider->GetDragImageOffset(),
                 provider->GetDragImage().size());
-  drag_image_.reset(new DragImageView(source_window->GetRootWindow(), source));
+  drag_image_.reset(
+      new DragImageView(WmWindow::Get(source_window->GetRootWindow()), source));
   drag_image_->SetImage(provider->GetDragImage());
   drag_image_offset_ = provider->GetDragImageOffset();
   gfx::Rect drag_image_bounds(start_location, drag_image_->GetPreferredSize());
@@ -246,97 +251,6 @@ int DragDropController::StartDragAndDrop(
   }
 
   return drag_operation_;
-}
-
-void DragDropController::DragUpdate(aura::Window* target,
-                                    const ui::LocatedEvent& event) {
-  int op = ui::DragDropTypes::DRAG_NONE;
-  if (target != drag_window_) {
-    if (drag_window_) {
-      aura::client::DragDropDelegate* delegate =
-          aura::client::GetDragDropDelegate(drag_window_);
-      if (delegate)
-        delegate->OnDragExited();
-      if (drag_window_ != drag_source_window_)
-        drag_window_->RemoveObserver(this);
-    }
-    drag_window_ = target;
-    // We are already an observer of |drag_source_window_| so no need to add.
-    if (drag_window_ != drag_source_window_)
-      drag_window_->AddObserver(this);
-    aura::client::DragDropDelegate* delegate =
-        aura::client::GetDragDropDelegate(drag_window_);
-    if (delegate) {
-      ui::DropTargetEvent e(*drag_data_, gfx::Point(), gfx::Point(),
-                            drag_operation_);
-      e.set_location_f(event.location_f());
-      e.set_root_location_f(event.root_location_f());
-      e.set_flags(event.flags());
-      delegate->OnDragEntered(e);
-    }
-  } else {
-    aura::client::DragDropDelegate* delegate =
-        aura::client::GetDragDropDelegate(drag_window_);
-    if (delegate) {
-      ui::DropTargetEvent e(*drag_data_, gfx::Point(), gfx::Point(),
-                            drag_operation_);
-      e.set_location_f(event.location_f());
-      e.set_root_location_f(event.root_location_f());
-      e.set_flags(event.flags());
-      op = delegate->OnDragUpdated(e);
-      gfx::NativeCursor cursor = ui::kCursorNoDrop;
-      if (op & ui::DragDropTypes::DRAG_COPY)
-        cursor = ui::kCursorCopy;
-      else if (op & ui::DragDropTypes::DRAG_LINK)
-        cursor = ui::kCursorAlias;
-      else if (op & ui::DragDropTypes::DRAG_MOVE)
-        cursor = ui::kCursorGrabbing;
-      ash::Shell::GetInstance()->cursor_manager()->SetCursor(cursor);
-    }
-  }
-
-  DCHECK(drag_image_.get());
-  if (drag_image_->visible()) {
-    gfx::Point root_location_in_screen = event.root_location();
-    ::wm::ConvertPointToScreen(target->GetRootWindow(),
-                               &root_location_in_screen);
-    drag_image_->SetScreenPosition(root_location_in_screen -
-                                   drag_image_offset_);
-    drag_image_->SetTouchDragOperation(op);
-  }
-}
-
-void DragDropController::Drop(aura::Window* target,
-                              const ui::LocatedEvent& event) {
-  ash::Shell::GetInstance()->cursor_manager()->SetCursor(ui::kCursorPointer);
-
-  // We must guarantee that a target gets a OnDragEntered before Drop. WebKit
-  // depends on not getting a Drop without DragEnter. This behavior is
-  // consistent with drag/drop on other platforms.
-  if (target != drag_window_)
-    DragUpdate(target, event);
-  DCHECK(target == drag_window_);
-
-  aura::client::DragDropDelegate* delegate =
-      aura::client::GetDragDropDelegate(target);
-  if (delegate) {
-    ui::DropTargetEvent e(*drag_data_, gfx::Point(), gfx::Point(),
-                          drag_operation_);
-    e.set_location_f(event.location_f());
-    e.set_root_location_f(event.root_location_f());
-    e.set_flags(event.flags());
-    drag_operation_ = delegate->OnPerformDrop(e);
-    if (drag_operation_ == 0)
-      StartCanceledAnimation(kCancelAnimationDuration);
-    else
-      drag_image_.reset();
-  } else {
-    drag_image_.reset();
-  }
-
-  Cleanup();
-  if (should_block_during_drag_drop_)
-    quit_closure_.Run();
 }
 
 void DragDropController::DragCancel() {
@@ -485,6 +399,97 @@ gfx::LinearAnimation* DragDropController::CreateCancelAnimation(
   return new gfx::LinearAnimation(duration, frame_rate, delegate);
 }
 
+void DragDropController::DragUpdate(aura::Window* target,
+                                    const ui::LocatedEvent& event) {
+  int op = ui::DragDropTypes::DRAG_NONE;
+  if (target != drag_window_) {
+    if (drag_window_) {
+      aura::client::DragDropDelegate* delegate =
+          aura::client::GetDragDropDelegate(drag_window_);
+      if (delegate)
+        delegate->OnDragExited();
+      if (drag_window_ != drag_source_window_)
+        drag_window_->RemoveObserver(this);
+    }
+    drag_window_ = target;
+    // We are already an observer of |drag_source_window_| so no need to add.
+    if (drag_window_ != drag_source_window_)
+      drag_window_->AddObserver(this);
+    aura::client::DragDropDelegate* delegate =
+        aura::client::GetDragDropDelegate(drag_window_);
+    if (delegate) {
+      ui::DropTargetEvent e(*drag_data_, gfx::Point(), gfx::Point(),
+                            drag_operation_);
+      e.set_location_f(event.location_f());
+      e.set_root_location_f(event.root_location_f());
+      e.set_flags(event.flags());
+      delegate->OnDragEntered(e);
+    }
+  } else {
+    aura::client::DragDropDelegate* delegate =
+        aura::client::GetDragDropDelegate(drag_window_);
+    if (delegate) {
+      ui::DropTargetEvent e(*drag_data_, gfx::Point(), gfx::Point(),
+                            drag_operation_);
+      e.set_location_f(event.location_f());
+      e.set_root_location_f(event.root_location_f());
+      e.set_flags(event.flags());
+      op = delegate->OnDragUpdated(e);
+      gfx::NativeCursor cursor = ui::kCursorNoDrop;
+      if (op & ui::DragDropTypes::DRAG_COPY)
+        cursor = ui::kCursorCopy;
+      else if (op & ui::DragDropTypes::DRAG_LINK)
+        cursor = ui::kCursorAlias;
+      else if (op & ui::DragDropTypes::DRAG_MOVE)
+        cursor = ui::kCursorGrabbing;
+      ash::Shell::Get()->cursor_manager()->SetCursor(cursor);
+    }
+  }
+
+  DCHECK(drag_image_.get());
+  if (drag_image_->visible()) {
+    gfx::Point root_location_in_screen = event.root_location();
+    ::wm::ConvertPointToScreen(target->GetRootWindow(),
+                               &root_location_in_screen);
+    drag_image_->SetScreenPosition(root_location_in_screen -
+                                   drag_image_offset_);
+    drag_image_->SetTouchDragOperation(op);
+  }
+}
+
+void DragDropController::Drop(aura::Window* target,
+                              const ui::LocatedEvent& event) {
+  ash::Shell::Get()->cursor_manager()->SetCursor(ui::kCursorPointer);
+
+  // We must guarantee that a target gets a OnDragEntered before Drop. WebKit
+  // depends on not getting a Drop without DragEnter. This behavior is
+  // consistent with drag/drop on other platforms.
+  if (target != drag_window_)
+    DragUpdate(target, event);
+  DCHECK(target == drag_window_);
+
+  aura::client::DragDropDelegate* delegate =
+      aura::client::GetDragDropDelegate(target);
+  if (delegate) {
+    ui::DropTargetEvent e(*drag_data_, gfx::Point(), gfx::Point(),
+                          drag_operation_);
+    e.set_location_f(event.location_f());
+    e.set_root_location_f(event.root_location_f());
+    e.set_flags(event.flags());
+    drag_operation_ = delegate->OnPerformDrop(e);
+    if (drag_operation_ == 0)
+      StartCanceledAnimation(kCancelAnimationDuration);
+    else
+      drag_image_.reset();
+  } else {
+    drag_image_.reset();
+  }
+
+  Cleanup();
+  if (should_block_during_drag_drop_)
+    quit_closure_.Run();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // DragDropController, private:
 
@@ -509,7 +514,7 @@ void DragDropController::AnimationEnded(const gfx::Animation* animation) {
 }
 
 void DragDropController::DoDragCancel(int drag_cancel_animation_duration_ms) {
-  ash::Shell::GetInstance()->cursor_manager()->SetCursor(ui::kCursorPointer);
+  ash::Shell::Get()->cursor_manager()->SetCursor(ui::kCursorPointer);
 
   // |drag_window_| can be NULL if we have just started the drag and have not
   // received any DragUpdates, or, if the |drag_window_| gets destroyed during
@@ -535,6 +540,13 @@ void DragDropController::AnimationProgressed(const gfx::Animation* animation) {
 
 void DragDropController::AnimationCanceled(const gfx::Animation* animation) {
   AnimationEnded(animation);
+}
+
+void DragDropController::OnDisplayConfigurationChanging() {
+  // Abort in-progress drags if a monitor is added or removed because the drag
+  // image widget's container may be destroyed.
+  if (IsDragDropInProgress())
+    DragCancel();
 }
 
 void DragDropController::StartCanceledAnimation(int animation_duration_ms) {

@@ -32,7 +32,7 @@ function getInitData(initDataType)
 
   if (initDataType == 'cenc') {
       return new Uint8Array([
-          0x00, 0x00, 0x00, 0x00,                          // size = 0
+          0x00, 0x00, 0x00, 0x34,                          // size = 52
           0x70, 0x73, 0x73, 0x68,                          // 'pssh'
           0x01,                                            // version = 1
           0x00, 0x00, 0x00,                                // flags
@@ -91,7 +91,7 @@ function getSimpleConfigurationForInitDataType(initDataType)
 // both audio and video capabilities for the specified file..
 function getConfigurationForFile(mediaFile)
 {
-    if (mediaFile.toLowerCase().endsWith('webm')) {
+    if (mediaFile.toLowerCase().endsWith('.webm')) {
         return [ {
             initDataTypes: [ 'webm' ],
             audioCapabilities: [ { contentType: 'audio/webm; codecs="opus"' } ],
@@ -294,7 +294,7 @@ function extractSingleKeyIdFromMessage(message)
 // Create a MediaKeys object for Clear Key with 1 session. KeyId and key
 // required for the video are already known and provided. Returns a promise
 // that resolves to the MediaKeys object created.
-function createMediaKeys(keyId, key)
+function createClearKeyMediaKeysAndInitializeWithOneKey(keyId, key)
 {
     var mediaKeys;
     var mediaKeySession;
@@ -328,4 +328,17 @@ function playVideoAndWaitForTimeupdate(video, content, duration)
             resolve('success');
         });
     });
+}
+
+// Verifies that the number of existing MediaKey and MediaKeySession objects
+// match what is expected.
+function verifyMediaKeyAndMediaKeySessionCount(
+    expectedMediaKeysCount, expectedMediaKeySessionCount, description)
+{
+    assert_equals(window.internals.mediaKeysCount(),
+                  expectedMediaKeysCount,
+                  description + ', MediaKeys:');
+    assert_equals(window.internals.mediaKeySessionCount(),
+                  expectedMediaKeySessionCount,
+                  description + ', MediaKeySession:');
 }

@@ -33,7 +33,6 @@ Lisätietoja tietosuojasta on Googlen tietosuojakäytännössä (http://goo.gl/S
 <translation id="177096447311351977">Asiakkaan kanavan IP-osoite: <ph name="CLIENT_GAIA_IDENTIFIER" /> ip='<ph name="CLIENT_IP_ADDRESS_AND_PORT" />' host_ip='<ph name="HOST_IP_ADDRESS_AND_PORT" />' channel='<ph name="CHANNEL_TYPE" />' connection='<ph name="CONNECTION_TYPE" />'.</translation>
 <translation id="1779766957982586368">Sulje ikkuna</translation>
 <translation id="1841799852846221389">Poistetaan tietokoneen etäyhteyksiä käytöstä…</translation>
-<translation id="189172778771606813">Sulje navigoinnin vetopaneeli</translation>
 <translation id="1897488610212723051">Poista</translation>
 <translation id="195619862187186579">Näppäinasettelut</translation>
 <translation id="1996161829609978754">Chrome lataa Chromoting-isäntäsovelluksen asennusohjelmaa. Suorita asennusohjelma, kun lataus on valmis.</translation>
@@ -42,6 +41,10 @@ Lisätietoja tietosuojasta on Googlen tietosuojakäytännössä (http://goo.gl/S
 <translation id="2013996867038862849">Kaikki laitepareiksi yhdistetyt asiakkaat on poistettu.</translation>
 <translation id="2038229918502634450">Isäntä käynnistyy uudelleen ja ottaa käyttöön käytäntöihin tehdyn muutoksen.</translation>
 <translation id="2046651113449445291">Seuraavat asiakkaat on yhdistetty tämän tietokoneen laitepareiksi, ja ne voivat muodostaa yhteyden ilman PIN-koodia. Voit peruuttaa luvan milloin tahansa joko yksitellen tai kaikille asiakkaille yhtä aikaa.</translation>
+<translation id="2053901200959289492">• Lisätty Android Nougat'n usean ikkunan tuki
+• Parannuksia työpöydän kuvanlaatuun, käytettävyyteen ja virrankulutukseen
+• Klikkaamisen ja vetämisen herkkyyttä lisätty
+• Parannuksia useisiin käyttöliittymän animaatioihin</translation>
 <translation id="2078880767960296260">Isäntäprosessi</translation>
 <translation id="20876857123010370">Ohjauslevytila</translation>
 <translation id="2089514346391228378">Tietokoneen etäyhteydet on otettu käyttöön.</translation>
@@ -65,7 +68,6 @@ Lisätietoja tietosuojasta on Googlen tietosuojakäytännössä (http://goo.gl/S
 <translation id="2359808026110333948">Jatka</translation>
 <translation id="2366718077645204424">Isäntään ei saatu yhteyttä. Tämä johtuu luultavasti käyttämäsi verkon määrityksistä.</translation>
 <translation id="2370754117186920852"><ph name="OPTIONAL_OFFLINE_REASON" />  Havaittiin verkossa viimeksi <ph name="RELATIVE_TIMESTAMP" />.</translation>
-<translation id="2498359688066513246">Ohjeet ja palaute</translation>
 <translation id="2499160551253595098">Auta meitä parantamaan Chrome-etäkäyttöä antamalla meidän kerätä käyttötilastoja ja virheraportteja.</translation>
 <translation id="2512228156274966424">Huomaa: voit varmistaa kaikkien pikanäppäinten käytettävyyden, kun määrität Chrome-etäkäytön avautumaan ikkunassa.</translation>
 <translation id="2540992418118313681">Haluatko jakaa tämän tietokoneen niin, että toinen käyttäjä voi käyttää ja valvoa sitä?</translation>
@@ -75,7 +77,6 @@ Lisätietoja tietosuojasta on Googlen tietosuojakäytännössä (http://goo.gl/S
 <translation id="2699970397166997657">Chromoting</translation>
 <translation id="2747641796667576127">Ohjelmistopäivitykset tapahtuvat yleensä automaattisesti, mutta voivat epäonnistua joissakin harvinaisissa tapauksissa. Ohjelmiston päivittäminen kestää yleensä vain muutaman minuutin, ja se voidaan suorittaa etäyhteyden välityksellä.</translation>
 <translation id="2841013758207633010">Aika</translation>
-<translation id="2851674870054673688">Tietokoneen jakaminen aloitetaan käyttäjän annettua käyttökoodin.</translation>
 <translation id="2851754573186462851">Chromium-sovellusten suoratoisto</translation>
 <translation id="2855866366045322178">offline</translation>
 <translation id="2888969873284818612">Verkkovirhe. Käynnistämme sovelluksen uudelleen, kun laitteesi on seuraavan kerran yhteydessä verkkoon.</translation>
@@ -115,6 +116,7 @@ Lisätietoja tietosuojasta on Googlen tietosuojakäytännössä (http://goo.gl/S
 isäntä</translation>
 <translation id="3870154837782082782">Google Inc.</translation>
 <translation id="3884839335308961732">Myönnä käyttöoikeus Chrome-etäkäytön kautta vahvistamalla tilisi ja PIN-koodisi alla.</translation>
+<translation id="3897092660631435901">Valikko</translation>
 <translation id="3905196214175737742">Isännän omistajan verkkotunnus on virheellinen.</translation>
 <translation id="3908017899227008678">Sovita ikkunaan</translation>
 <translation id="3931191050278863510">Isäntä pysähtyi.</translation>
@@ -127,6 +129,7 @@ isäntä</translation>
 <translation id="409800995205263688">HUOMAA: käytäntöasetusten vuoksi vain verkossasi olevien tietokoneiden väliset yhteydet sallitaan.</translation>
 <translation id="4155497795971509630">Joitakin vaadittavia komponentteja puuttuu. Varmista, että olet asentanut ohjelmiston uusimman version, ja yritä uudelleen.</translation>
 <translation id="4156740505453712750">Suojaa tämän tietokoneen käyttöä valitsemalla <ph name="BOLD_START" />vähintään kuusinumeroinen<ph name="BOLD_END" /> PIN-koodi. Tarvitset PIN-koodin muodostaessasi yhteyden toiselta koneelta.</translation>
+<translation id="4156741816461781891">Kirjautunut osoitteella <ph name="EMAIL_ADDRESS" /></translation>
 <translation id="4176825807642096119">Käyttökoodi</translation>
 <translation id="4207623512727273241">Suorita asennusohjelma ennen kuin jatkat.</translation>
 <translation id="4227991223508142681">Isäntien hallintatyökalu</translation>
@@ -148,7 +151,6 @@ isäntä</translation>
 <translation id="4573676252416618192">Chrome-etäkäytön
 isäntä</translation>
 <translation id="4619978527973181021">Hyväksy ja asenna</translation>
-<translation id="4647791084836149355">Näytä Cardboard-näkymä</translation>
 <translation id="4703302905453407178">Tarvittava osa ei toimi enää. Ilmoita tästä ongelmasta kehittäjille.</translation>
 <translation id="4703799847237267011">Chromoting-käyttökerta on päättynyt.</translation>
 <translation id="4736223761657662401">Yhteyshistoria</translation>
@@ -168,7 +170,6 @@ isäntä</translation>
 <translation id="5070121137485264635">Etäisäntä edellyttää todennusta kolmannen osapuolen sivustossa. Jos haluat jatkaa, anna Chrome-etäkäytölle lisäkäyttölupia tämän osoitteen avaamiseksi:</translation>
 <translation id="507204348399810022">Haluatko varmasti poistaa käytöstä etäyhteydet kohteeseen <ph name="HOSTNAME" />?</translation>
 <translation id="5156271271724754543">Kirjoita sama PIN-koodi molempiin ruutuihin.</translation>
-<translation id="5168917394043976756">Avaa navigoinnin vetopaneeli</translation>
 <translation id="5170982930780719864">Isännän tunnus on virheellinen.</translation>
 <translation id="518094545883702183">Näitä tietoja käytetään vain ilmoittamasi ongelman diagnosointiin, näytetään vain ongelmaasi selvittävälle henkilölle ja säilytetään korkeintaan 30 päivää.</translation>
 <translation id="5222676887888702881">Kirjaudu ulos</translation>
@@ -209,13 +210,8 @@ isäntä</translation>
 <translation id="6284412385303060032">Konsolin logiikkaruudussa käynnissä ollut isäntä sulkeutui tukeakseen verhotilaa. Vaihdetaan käyttäjäkohtaisessa istunnossa käynnissä olevaan isäntään.</translation>
 <translation id="629730747756840877">Tili</translation>
 <translation id="6304318647555713317">Asiakas</translation>
-<translation id="6324708100353784493">Otit käyttöön Google Cardboard -integraatiotilan. Käytä tilaa asettamalla laitteesi Google Cardboard -yhteensopivaan katselukoteloon.</translation>
 <translation id="6381670701864002291">Jokin muu syy.</translation>
 <translation id="6398765197997659313">Poistu koko näytön tilasta</translation>
-<translation id="6408143143164565232">• Kuuntele äänisisältöä Windows- tai Linux-tietokoneilta
-• Poista ei-toivotut yhteydet koskettamalla tietokoneen nimeä pitkään
-• Zoomaus nipistämällä ja vieritys kahdella sormella toimivat sujuvammin
-• Uusi Ohje ja palaute -näyttö</translation>
 <translation id="6441316101718669559">Tämä alusta ei tue työpöydän integraatiota. Voit silti käyttää sovellusta, mutta käyttökokemus on heikompi.</translation>
 <translation id="652218476070540101">Tietokoneen PIN-koodia päivitetään…</translation>
 <translation id="6527303717912515753">Jaa</translation>
@@ -228,16 +224,18 @@ isäntä</translation>
 <translation id="6640610550128933069">viimeksi online-tilassa <ph name="DATE" /></translation>
 <translation id="6668065415969892472">PIN-koodi on päivitetty.</translation>
 <translation id="6681800064886881394">Copyright 2013 Google Inc. Kaikki oikeudet pidätetään.</translation>
+<translation id="6705482892455291412">Kun koodi on annettu, sinua pyydetään hyväksymään yhteys ja aloittamaan jakaminen.</translation>
 <translation id="6746493157771801606">Tyhjennä historia</translation>
-<translation id="6748108480210050150">Lähde</translation>
+<translation id="6748108480210050150">Lähettäjä</translation>
 <translation id="677755392401385740">Käyttäjän <ph name="HOST_USERNAME" /> isäntä käynnistettiin.</translation>
 <translation id="6865175692670882333">Tarkastele/muokkaa</translation>
 <translation id="6930242544192836755">Kesto</translation>
 <translation id="6939719207673461467">Näytä/piilota näppäimistö</translation>
 <translation id="6944854424004126054">Palauta ikkuna</translation>
+<translation id="6963936880795878952">Yhteydet etätietokoneeseen on väliaikaisesti estetty, sillä siihen yritettiin muodostaa yhteys virheellisellä PIN-koodilla. Yritä myöhemmin uudelleen.</translation>
 <translation id="6965382102122355670">OK</translation>
 <translation id="6985691951107243942">Haluatko varmasti poistaa käytöstä etäyhteydet kohteeseen <ph name="HOSTNAME" />? Jos muutat mieltäsi, yhteydet täytyy palauttaa käyttöön kyseisellä tietokoneella.</translation>
-<translation id="6998989275928107238">Kohde</translation>
+<translation id="6998989275928107238">Vastaanottaja</translation>
 <translation id="7019153418965365059">Tuntematon isäntävirhe: <ph name="HOST_OFFLINE_REASON" />.</translation>
 <translation id="701976023053394610">Etätuki</translation>
 <translation id="7038683108611689168">Auta meitä parantamaan Chromotingia antamalla meidän kerätä käyttötilastoja ja virheraportteja.</translation>
@@ -265,6 +263,7 @@ isäntä</translation>
 <translation id="7948001860594368197">Ruudun asetukset</translation>
 <translation id="7970576581263377361">Todennus epäonnistui. Kirjaudu Chromiumiin uudelleen.</translation>
 <translation id="7981525049612125370">Etäistunto on vanhentunut.</translation>
+<translation id="8041089156583427627">Lähetä palautetta</translation>
 <translation id="8041721485428375115">Lataamalla Chrome-etäkäytön isännän asennusohjelman hyväksyt Googlen <ph name="LINK_BEGIN" />käyttöehdot<ph name="LINK_END" />.</translation>
 <translation id="8073845705237259513">Sinun on lisättävä laitteeseesi Google-tili, jotta voit käyttää Chrome-etäkäyttöä.</translation>
 <translation id="80739703311984697">Etäisäntä edellyttää todennusta kolmannen osapuolen sivustossa. Jos haluat jatkaa, anna Chromotingille lisäkäyttölupia tämän osoitteen avaamiseksi:</translation>
@@ -288,6 +287,7 @@ isäntä</translation>
 <translation id="8548209692293300397">Olet aiemmin kirjautunut sisään käyttäjänä <ph name="USER_NAME" /> (<ph name="USER_EMAIL" />). Jos haluat käyttää tietokoneitasi tämän tilin kautta, <ph name="LINK_BEGIN" />kirjaudu Google Chromeen<ph name="LINK_END" /> kyseisellä tilillä ja asenna Chrome-etäkäyttö uudelleen.</translation>
 <translation id="8642984861538780905">Kohtalainen</translation>
 <translation id="8712909229180978490">Tallennetut Google Drive -tiedostoni eivät näy verkossa.</translation>
+<translation id="8743328882720071828">Haluatko sallia sen, että <ph name="CLIENT_USERNAME" /> voi nähdä ja ohjata tietokonettasi?</translation>
 <translation id="8759753423332885148">Lisätietoja</translation>
 <translation id="8791202241915690908">Lataa Chromoting-isännän asennusohjelma</translation>
 <translation id="894763922177556086">Hyvä</translation>
@@ -301,6 +301,7 @@ isäntä</translation>
 <translation id="9188433529406846933">Valtuuta</translation>
 <translation id="9213184081240281106">Isännän omistajan määritykset ovat virheelliset.</translation>
 <translation id="951991426597076286">Hylkää</translation>
+<translation id="962733587145768554">Suorita prosessi loppuun valitsemalla valintaikkunassa <ph name="SHARE" />.</translation>
 <translation id="979100198331752041">Chrome-etäkäyttö kohteessa <ph name="HOSTNAME" /> on vanhentunut ja vaatii päivityksen.</translation>
 <translation id="985602178874221306">The Chromium Authors</translation>
 <translation id="992215271654996353"><ph name="HOSTNAME" /> (viimeksi online-tilassa <ph name="DATE_OR_TIME" />)</translation>

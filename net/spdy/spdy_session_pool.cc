@@ -7,14 +7,26 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/stl_util.h"
+#include "base/trace_event/memory_allocator_dump.h"
+#include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "net/base/address_list.h"
+#include "net/base/trace_constants.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_server_properties.h"
+#include "net/log/net_log_event_type.h"
+#include "net/log/net_log_source.h"
+#include "net/log/net_log_with_source.h"
+#include "net/spdy/hpack/hpack_constants.h"
+#include "net/spdy/hpack/hpack_huffman_table.h"
+#include "net/spdy/hpack/hpack_static_table.h"
+#include "net/spdy/platform/api/spdy_estimate_memory_usage.h"
+#include "net/spdy/platform/api/spdy_string_utils.h"
 #include "net/spdy/spdy_session.h"
 
 namespace net {
@@ -38,20 +50,20 @@ SpdySessionPool::SpdySessionPool(
     TransportSecurityState* transport_security_state,
     bool enable_ping_based_connection_checking,
     size_t session_max_recv_window_size,
-    size_t stream_max_recv_window_size,
+    const SettingsMap& initial_settings,
     SpdySessionPool::TimeFunc time_func,
     ProxyDelegate* proxy_delegate)
     : http_server_properties_(http_server_properties),
       transport_security_state_(transport_security_state),
       ssl_config_service_(ssl_config_service),
       resolver_(resolver),
-      verify_domain_authentication_(true),
       enable_sending_initial_data_(true),
       enable_ping_based_connection_checking_(
           enable_ping_based_connection_checking),
       session_max_recv_window_size_(session_max_recv_window_size),
-      stream_max_recv_window_size_(stream_max_recv_window_size),
+      initial_settings_(initial_settings),
       time_func_(time_func),
+      push_delegate_(nullptr),
       proxy_delegate_(proxy_delegate) {
   NetworkChangeNotifier::AddIPAddressObserver(this);
   if (ssl_config_service_.get())
@@ -77,30 +89,28 @@ SpdySessionPool::~SpdySessionPool() {
 base::WeakPtr<SpdySession> SpdySessionPool::CreateAvailableSessionFromSocket(
     const SpdySessionKey& key,
     std::unique_ptr<ClientSocketHandle> connection,
-    const BoundNetLog& net_log,
-    int certificate_error_code,
+    const NetLogWithSource& net_log,
     bool is_secure) {
-  TRACE_EVENT0("net", "SpdySessionPool::CreateAvailableSessionFromSocket");
+  TRACE_EVENT0(kNetTracingCategory,
+               "SpdySessionPool::CreateAvailableSessionFromSocket");
 
   UMA_HISTOGRAM_ENUMERATION(
       "Net.SpdySessionGet", IMPORTED_FROM_SOCKET, SPDY_SESSION_GET_MAX);
 
-  std::unique_ptr<SpdySession> new_session(new SpdySession(
+  auto new_session = base::MakeUnique<SpdySession>(
       key, http_server_properties_, transport_security_state_,
-      verify_domain_authentication_, enable_sending_initial_data_,
-      enable_ping_based_connection_checking_, session_max_recv_window_size_,
-      stream_max_recv_window_size_, time_func_, proxy_delegate_,
-      net_log.net_log()));
+      enable_sending_initial_data_, enable_ping_based_connection_checking_,
+      session_max_recv_window_size_, initial_settings_, time_func_,
+      push_delegate_, proxy_delegate_, net_log.net_log());
 
-  new_session->InitializeWithSocket(std::move(connection), this, is_secure,
-                                    certificate_error_code);
+  new_session->InitializeWithSocket(std::move(connection), this, is_secure);
 
   base::WeakPtr<SpdySession> available_session = new_session->GetWeakPtr();
   sessions_.insert(new_session.release());
   MapKeyToAvailableSession(key, available_session);
 
   net_log.AddEvent(
-      NetLog::TYPE_HTTP2_SESSION_POOL_IMPORTED_SESSION_FROM_SOCKET,
+      NetLogEventType::HTTP2_SESSION_POOL_IMPORTED_SESSION_FROM_SOCKET,
       available_session->net_log().source().ToEventParametersCallback());
 
   // Look up the IP address for this session so that we can match
@@ -120,7 +130,8 @@ base::WeakPtr<SpdySession> SpdySessionPool::CreateAvailableSessionFromSocket(
 base::WeakPtr<SpdySession> SpdySessionPool::FindAvailableSession(
     const SpdySessionKey& key,
     const GURL& url,
-    const BoundNetLog& net_log) {
+    bool enable_ip_based_pooling,
+    const NetLogWithSource& net_log) {
   UnclaimedPushedStreamMap::iterator url_it =
       unclaimed_pushed_streams_.find(url);
   if (!url.is_empty() && url_it != unclaimed_pushed_streams_.end()) {
@@ -152,15 +163,38 @@ base::WeakPtr<SpdySession> SpdySessionPool::FindAvailableSession(
 
   AvailableSessionMap::iterator it = LookupAvailableSessionByKey(key);
   if (it != available_sessions_.end()) {
-    UMA_HISTOGRAM_ENUMERATION(
-        "Net.SpdySessionGet", FOUND_EXISTING, SPDY_SESSION_GET_MAX);
-    net_log.AddEvent(
-        NetLog::TYPE_HTTP2_SESSION_POOL_FOUND_EXISTING_SESSION,
-        it->second->net_log().source().ToEventParametersCallback());
+    if (key.Equals(it->second->spdy_session_key())) {
+      UMA_HISTOGRAM_ENUMERATION("Net.SpdySessionGet", FOUND_EXISTING,
+                                SPDY_SESSION_GET_MAX);
+      net_log.AddEvent(
+          NetLogEventType::HTTP2_SESSION_POOL_FOUND_EXISTING_SESSION,
+          it->second->net_log().source().ToEventParametersCallback());
+    } else {
+      if (!enable_ip_based_pooling) {
+        // Remove session from available sessions and from aliases, and remove
+        // key from the session's pooled alias set, so that a new session can be
+        // created with this |key|.
+        it->second->RemovePooledAlias(key);
+        UnmapKey(key);
+        RemoveAliases(key);
+        return base::WeakPtr<SpdySession>();
+      }
+
+      UMA_HISTOGRAM_ENUMERATION("Net.SpdySessionGet",
+                                FOUND_EXISTING_FROM_IP_POOL,
+                                SPDY_SESSION_GET_MAX);
+      net_log.AddEvent(
+          NetLogEventType::
+              HTTP2_SESSION_POOL_FOUND_EXISTING_SESSION_FROM_IP_POOL,
+          it->second->net_log().source().ToEventParametersCallback());
+    }
     return it->second;
   }
 
-  // Look up the key's from the resolver's cache.
+  if (!enable_ip_based_pooling)
+    return base::WeakPtr<SpdySession>();
+
+  // Look up IP addresses from resolver cache.
   HostResolver::RequestInfo resolve_info(key.host_port_pair());
   AddressList addresses;
   int rv = resolver_->ResolveFromCache(resolve_info, &addresses, net_log);
@@ -194,7 +228,7 @@ base::WeakPtr<SpdySession> SpdySessionPool::FindAvailableSession(
 
     const base::WeakPtr<SpdySession>& available_session =
         available_session_it->second;
-    DCHECK(ContainsKey(sessions_, available_session.get()));
+    DCHECK(base::ContainsKey(sessions_, available_session.get()));
     // If the session is a secure one, we need to verify that the
     // server is authenticated to serve traffic for |host_port_proxy_pair| too.
     if (!available_session->VerifyDomainAuthentication(
@@ -208,7 +242,7 @@ base::WeakPtr<SpdySession> SpdySessionPool::FindAvailableSession(
                               FOUND_EXISTING_FROM_IP_POOL,
                               SPDY_SESSION_GET_MAX);
     net_log.AddEvent(
-        NetLog::TYPE_HTTP2_SESSION_POOL_FOUND_EXISTING_SESSION_FROM_IP_POOL,
+        NetLogEventType::HTTP2_SESSION_POOL_FOUND_EXISTING_SESSION_FROM_IP_POOL,
         available_session->net_log().source().ToEventParametersCallback());
     // Add this session to the map so that we can find it next time.
     MapKeyToAvailableSession(key, available_session);
@@ -237,8 +271,7 @@ void SpdySessionPool::RemoveUnavailableSession(
   DCHECK(!IsSessionAvailable(unavailable_session));
 
   unavailable_session->net_log().AddEvent(
-      NetLog::TYPE_HTTP2_SESSION_POOL_REMOVE_SESSION,
-      unavailable_session->net_log().source().ToEventParametersCallback());
+      NetLogEventType::HTTP2_SESSION_POOL_REMOVE_SESSION);
 
   SessionSet::iterator it = sessions_.find(unavailable_session.get());
   CHECK(it != sessions_.end());
@@ -272,8 +305,8 @@ void SpdySessionPool::RegisterUnclaimedPushedStream(
     GURL url,
     base::WeakPtr<SpdySession> spdy_session) {
   DCHECK(!url.is_empty());
-  // This SpdySessionPool  must own |spdy_session|.
-  DCHECK(ContainsKey(sessions_, spdy_session.get()));
+  // This SpdySessionPool must own |spdy_session|.
+  DCHECK(base::ContainsKey(sessions_, spdy_session.get()));
   UnclaimedPushedStreamMap::iterator url_it =
       unclaimed_pushed_streams_.lower_bound(url);
   if (url_it == unclaimed_pushed_streams_.end() || url_it->first != url) {
@@ -352,23 +385,59 @@ void SpdySessionPool::OnIPAddressChanged() {
 #endif  // defined(OS_ANDROID) || defined(OS_WIN) || defined(OS_IOS)
     DCHECK(!IsSessionAvailable(*it));
   }
-  http_server_properties_->ClearAllSpdySettings();
 }
 
 void SpdySessionPool::OnSSLConfigChanged() {
   CloseCurrentSessions(ERR_NETWORK_CHANGED);
 }
 
-void SpdySessionPool::OnCertAdded(const X509Certificate* cert) {
+void SpdySessionPool::OnCertDBChanged() {
   CloseCurrentSessions(ERR_CERT_DATABASE_CHANGED);
 }
 
-void SpdySessionPool::OnCACertChanged(const X509Certificate* cert) {
-  // Per wtc, we actually only need to CloseCurrentSessions when trust is
-  // reduced. CloseCurrentSessions now because OnCACertChanged does not
-  // tell us this.
-  // See comments in ClientSocketPoolManager::OnCACertChanged.
-  CloseCurrentSessions(ERR_CERT_DATABASE_CHANGED);
+void SpdySessionPool::DumpMemoryStats(
+    base::trace_event::ProcessMemoryDump* pmd,
+    const SpdyString& parent_dump_absolute_name) const {
+  if (sessions_.empty())
+    return;
+  size_t total_size = 0;
+  size_t buffer_size = 0;
+  size_t cert_count = 0;
+  size_t cert_size = 0;
+  size_t num_active_sessions = 0;
+  for (auto* session : sessions_) {
+    StreamSocket::SocketMemoryStats stats;
+    bool is_session_active = false;
+    total_size += session->DumpMemoryStats(&stats, &is_session_active);
+    buffer_size += stats.buffer_size;
+    cert_count += stats.cert_count;
+    cert_size += stats.cert_size;
+    if (is_session_active)
+      num_active_sessions++;
+  }
+  total_size += SpdyEstimateMemoryUsage(ObtainHpackHuffmanTable()) +
+                SpdyEstimateMemoryUsage(ObtainHpackStaticTable());
+  base::trace_event::MemoryAllocatorDump* dump =
+      pmd->CreateAllocatorDump(SpdyStringPrintf(
+          "%s/spdy_session_pool", parent_dump_absolute_name.c_str()));
+  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                  base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                  total_size);
+  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameObjectCount,
+                  base::trace_event::MemoryAllocatorDump::kUnitsObjects,
+                  sessions_.size());
+  dump->AddScalar("active_session_count",
+                  base::trace_event::MemoryAllocatorDump::kUnitsObjects,
+                  num_active_sessions);
+  dump->AddScalar("buffer_size",
+                  base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                  buffer_size);
+  dump->AddScalar("cert_count",
+                  base::trace_event::MemoryAllocatorDump::kUnitsObjects,
+                  cert_count);
+  dump->AddScalar("cert_size",
+                  base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                  cert_size);
 }
 
 bool SpdySessionPool::IsSessionAvailable(
@@ -384,7 +453,7 @@ bool SpdySessionPool::IsSessionAvailable(
 void SpdySessionPool::MapKeyToAvailableSession(
     const SpdySessionKey& key,
     const base::WeakPtr<SpdySession>& session) {
-  DCHECK(ContainsKey(sessions_, session.get()));
+  DCHECK(base::ContainsKey(sessions_, session.get()));
   std::pair<AvailableSessionMap::iterator, bool> result =
       available_sessions_.insert(std::make_pair(key, session));
   CHECK(result.second);
@@ -425,10 +494,9 @@ SpdySessionPool::WeakSessionList SpdySessionPool::GetCurrentSessions() const {
   return current_sessions;
 }
 
-void SpdySessionPool::CloseCurrentSessionsHelper(
-    Error error,
-    const std::string& description,
-    bool idle_only) {
+void SpdySessionPool::CloseCurrentSessionsHelper(Error error,
+                                                 const SpdyString& description,
+                                                 bool idle_only) {
   WeakSessionList current_sessions = GetCurrentSessions();
   for (WeakSessionList::const_iterator it = current_sessions.begin();
        it != current_sessions.end(); ++it) {

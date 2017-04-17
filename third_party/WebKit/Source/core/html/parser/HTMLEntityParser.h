@@ -29,46 +29,49 @@
 
 #include "core/CoreExport.h"
 #include "platform/text/SegmentedString.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class DecodedHTMLEntity {
-    STACK_ALLOCATED();
-private:
-    // HTML entities contain at most four UTF-16 code units.
-    static const unsigned kMaxLength = 4;
+  STACK_ALLOCATED();
 
-public:
-    DecodedHTMLEntity() : length(0) { }
+ private:
+  // HTML entities contain at most four UTF-16 code units.
+  static const unsigned kMaxLength = 4;
 
-    bool isEmpty() const { return !length; }
+ public:
+  DecodedHTMLEntity() : length(0) {}
 
-    void append(UChar c)
-    {
-        RELEASE_ASSERT(length < kMaxLength);
-        data[length++] = c;
+  bool IsEmpty() const { return !length; }
+
+  void Append(UChar c) {
+    CHECK(length < kMaxLength);
+    data[length++] = c;
+  }
+
+  void Append(UChar32 c) {
+    if (U_IS_BMP(c)) {
+      Append(static_cast<UChar>(c));
+      return;
     }
+    Append(U16_LEAD(c));
+    Append(U16_TRAIL(c));
+  }
 
-    void append(UChar32 c)
-    {
-        if (U_IS_BMP(c)) {
-            append(static_cast<UChar>(c));
-            return;
-        }
-        append(U16_LEAD(c));
-        append(U16_TRAIL(c));
-    }
-
-    unsigned length;
-    UChar data[kMaxLength];
+  unsigned length;
+  UChar data[kMaxLength];
 };
 
-CORE_EXPORT bool consumeHTMLEntity(SegmentedString&, DecodedHTMLEntity& decodedEntity, bool& notEnoughCharacters, UChar additionalAllowedCharacter = '\0');
+CORE_EXPORT bool ConsumeHTMLEntity(SegmentedString&,
+                                   DecodedHTMLEntity& decoded_entity,
+                                   bool& not_enough_characters,
+                                   UChar additional_allowed_character = '\0');
 
-// Used by the XML parser.  Not suitable for use in HTML parsing.  Use consumeHTMLEntity instead.
-size_t decodeNamedEntityToUCharArray(const char*, UChar result[4]);
+// Used by the XML parser.  Not suitable for use in HTML parsing.  Use
+// consumeHTMLEntity instead.
+size_t DecodeNamedEntityToUCharArray(const char*, UChar result[4]);
 
-} // namespace blink
+}  // namespace blink
 
-#endif
+#endif  // HTMLEntityParser_h

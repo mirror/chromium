@@ -14,9 +14,14 @@
 
 package org.chromium.net;
 
-import android.test.InstrumentationTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 
 import java.net.Proxy;
@@ -26,7 +31,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Properties;
 
-public class AndroidProxySelectorTest extends InstrumentationTestCase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class AndroidProxySelectorTest {
     Properties mProperties;
 
     public AndroidProxySelectorTest() {
@@ -34,14 +40,13 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
         mProperties = new Properties();
     }
 
-    @Override
+    @Before
     public void setUp() {
         System.setProperties(mProperties);
     }
 
     static String toString(Proxy proxy) {
-        if (proxy == Proxy.NO_PROXY)
-            return "DIRECT";
+        if (proxy == Proxy.NO_PROXY) return "DIRECT";
         // java.net.Proxy only knows about http and socks proxies.
         Proxy.Type type = proxy.type();
         switch (type) {
@@ -53,7 +58,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
                 return "DIRECT";
             default:
                 // If a new proxy type is supported in future, add a case to match it.
-                fail("Unknown proxy type" + type);
+                Assert.fail("Unknown proxy type" + type);
                 return "unknown://";
         }
     }
@@ -61,8 +66,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
     static String toString(List<Proxy> proxies) {
         StringBuilder builder = new StringBuilder();
         for (Proxy proxy : proxies) {
-            if (builder.length() > 0)
-                builder.append(';');
+            if (builder.length() > 0) builder.append(';');
             builder.append(toString(proxy));
         }
         return builder.toString();
@@ -71,7 +75,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
     static void checkMapping(String url, String expected) throws URISyntaxException {
         URI uri = new URI(url);
         List<Proxy> proxies = ProxySelector.getDefault().select(uri);
-        assertEquals("Mapping", expected, toString(proxies));
+        Assert.assertEquals("Mapping", expected, toString(proxies));
     }
 
     /**
@@ -79,6 +83,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testNoProxy() throws Exception {
@@ -92,6 +97,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testHttpProxyHostAndPort() throws Exception {
@@ -107,6 +113,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testHttpProxyHostOnly() throws Exception {
@@ -121,6 +128,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testHttpProxyPortOnly() throws Exception {
@@ -135,6 +143,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testHttpNonProxyHosts1() throws Exception {
@@ -150,6 +159,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testHttpNonProxyHosts2() throws Exception {
@@ -166,6 +176,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testHttpNonProxyHosts3() throws Exception {
@@ -182,6 +193,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testFtpNonProxyHosts() throws Exception {
@@ -197,6 +209,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testFtpProxyHostAndPort() throws Exception {
@@ -212,6 +225,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testFtpProxyHostOnly() throws Exception {
@@ -226,6 +240,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testHttpsProxyHostAndPort() throws Exception {
@@ -241,6 +256,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testDefaultProxyExplictPort() throws Exception {
@@ -258,6 +274,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testFallbackToSocks() throws Exception {
@@ -273,6 +290,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testSocksExplicitPort() throws Exception {
@@ -286,6 +304,7 @@ public class AndroidProxySelectorTest extends InstrumentationTestCase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testHttpProxySupercedesSocks() throws Exception {

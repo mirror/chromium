@@ -6,27 +6,49 @@ Loaded modules:
     bindings
     common
     components
+    console_model
+    dom_extension
     emulation
     extensions
+    help
     host
     main
+    network_conditions
+    network_log
+    persistence
     platform
+    protocol
     sdk
+    services
+    text_utils
     ui
     workspace
 
 Running: testCreateElementsPanel
 Loaded modules:
     bindings
+    color_picker
     common
     components
+    console_model
+    dom_extension
     elements
     emulation
+    event_listeners
     extensions
+    help
     host
+    inline_editor
     main
+    network_conditions
+    network_log
+    object_ui
+    persistence
     platform
+    protocol
     sdk
+    services
+    text_utils
     ui
     workspace
 
@@ -34,68 +56,119 @@ Running: testCreateNetworkPanel
 Loaded modules:
     animation
     bindings
+    cm
+    color_picker
     common
     components
-    components_lazy
+    console_model
+    cookie_table
+    data_grid
     diff
+    dom_extension
     elements
     emulation
+    event_listeners
     extensions
+    help
     host
+    inline_editor
     main
     network
+    network_conditions
+    network_log
+    object_ui
+    perf_ui
+    persistence
     platform
+    protocol
     sdk
-    snippets
+    services
     source_frame
-    sources
+    text_editor
+    text_utils
     ui
-    ui_lazy
     workspace
+    workspace_diff
 
 Running: testShowSourcesPanel
 Loaded modules:
     animation
     bindings
+    cm
+    color_picker
     common
     components
-    components_lazy
+    console_model
+    cookie_table
+    data_grid
     diff
+    dom_extension
     elements
     emulation
+    event_listeners
     extensions
+    help
     host
+    inline_editor
     main
     network
+    network_conditions
+    network_log
+    object_ui
+    perf_ui
+    persistence
     platform
+    protocol
+    quick_open
     sdk
+    services
     snippets
     source_frame
     sources
+    text_editor
+    text_utils
     ui
-    ui_lazy
     workspace
+    workspace_diff
 
 Running: testOpenUISourceCode
 Loaded modules:
     animation
     bindings
+    cm
+    color_picker
     common
     components
-    components_lazy
+    console_model
+    cookie_table
+    data_grid
     diff
+    dom_extension
     elements
     emulation
+    event_listeners
     extensions
+    help
     host
+    inline_editor
     main
     network
+    network_conditions
+    network_log
+    object_ui
+    perf_ui
+    persistence
     platform
+    protocol
+    quick_open
     sdk
+    services
     snippets
     source_frame
     sources
+    text_editor
+    text_utils
     ui
-    ui_lazy
     workspace
+    workspace_diff
 

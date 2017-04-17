@@ -7,35 +7,33 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class ConsoleMessage;
 class ExecutionContext;
 
-class CORE_EXPORT ConsoleMessageStorage : public GarbageCollected<ConsoleMessageStorage> {
-    WTF_MAKE_NONCOPYABLE(ConsoleMessageStorage);
-public:
-    ConsoleMessageStorage();
+class CORE_EXPORT ConsoleMessageStorage
+    : public GarbageCollected<ConsoleMessageStorage> {
+  WTF_MAKE_NONCOPYABLE(ConsoleMessageStorage);
 
-    bool addConsoleMessage(ExecutionContext*, ConsoleMessage*);
-    void clear();
-    void mute();
-    void unmute();
-    size_t size() const;
-    ConsoleMessage* at(size_t index) const;
-    int expiredCount() const;
-    bool isMuted() const;
+ public:
+  ConsoleMessageStorage();
 
-    DECLARE_TRACE();
+  void AddConsoleMessage(ExecutionContext*, ConsoleMessage*);
+  void Clear();
+  size_t size() const;
+  ConsoleMessage* at(size_t index) const;
+  int ExpiredCount() const;
 
-private:
-    int m_expiredCount;
-    int m_mutedCount;
-    HeapDeque<Member<ConsoleMessage>> m_messages;
+  DECLARE_TRACE();
+
+ private:
+  int expired_count_;
+  HeapDeque<Member<ConsoleMessage>> messages_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ConsoleMessageStorage_h
+#endif  // ConsoleMessageStorage_h

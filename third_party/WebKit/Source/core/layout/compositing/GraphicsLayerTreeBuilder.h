@@ -28,33 +28,22 @@
 #define GraphicsLayerTreeBuilder_h
 
 #include "platform/graphics/GraphicsLayer.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class PaintLayer;
 
 class GraphicsLayerTreeBuilder {
-    STACK_ALLOCATED();
-public:
-    GraphicsLayerTreeBuilder();
-    ~GraphicsLayerTreeBuilder();
+  STACK_ALLOCATED();
 
-    struct AncestorInfo {
-        STACK_ALLOCATED();
-        AncestorInfo()
-            : enclosingCompositedLayer(nullptr)
-            , childLayersOfEnclosingCompositedLayer(nullptr)
-        {
-        }
+ public:
+  GraphicsLayerTreeBuilder();
+  ~GraphicsLayerTreeBuilder();
 
-        PaintLayer* enclosingCompositedLayer;
-        GraphicsLayerVector* childLayersOfEnclosingCompositedLayer;
-    };
-
-    void rebuild(PaintLayer&, AncestorInfo);
+  void Rebuild(PaintLayer&, GraphicsLayerVector&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GraphicsLayerTreeBuilder_h
+#endif  // GraphicsLayerTreeBuilder_h

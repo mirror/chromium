@@ -15,6 +15,7 @@
 #include "components/gcm_driver/fake_gcm_driver.h"
 #include "components/policy/core/common/cloud/cloud_policy_client.h"
 #include "components/policy/core/common/cloud/mock_cloud_policy_client.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "net/base/ip_endpoint.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -100,6 +101,17 @@ class MockGCMDriver : public testing::StrictMock<gcm::FakeGCMDriver> {
         .Times(AnyNumber());
   }
 
+  void ResetStore() {
+    // Defensive copy in case OnStoreReset calls Add/RemoveAppHandler.
+    std::vector<gcm::GCMAppHandler*> app_handler_values;
+    for (const auto& key_value : app_handlers())
+      app_handler_values.push_back(key_value.second);
+    for (gcm::GCMAppHandler* app_handler : app_handler_values) {
+      app_handler->OnStoreReset();
+      // app_handler might now have been deleted.
+    }
+  }
+
  private:
   gcm::GCMConnectionObserver* observer_ = nullptr;
 
@@ -152,7 +164,7 @@ class HeartbeatSchedulerTest : public testing::Test {
         .Times(AnyNumber());
   }
 
-  base::MessageLoop loop_;
+  content::TestBrowserThreadBundle test_browser_thread_bundle_;
   MockGCMDriver gcm_driver_;
   chromeos::ScopedCrosSettingsTestHelper settings_helper_;
   testing::NiceMock<policy::MockCloudPolicyClient> cloud_policy_client_;
@@ -168,7 +180,7 @@ TEST_F(HeartbeatSchedulerTest, Basic) {
   // Just makes sure we can spin up and shutdown the scheduler with
   // heartbeats disabled.
   settings_helper_.SetBoolean(chromeos::kHeartbeatEnabled, false);
-  ASSERT_TRUE(task_runner_->GetPendingTasks().empty());
+  ASSERT_FALSE(task_runner_->HasPendingTask());
 }
 
 TEST_F(HeartbeatSchedulerTest, PermanentlyFailedGCMRegistration) {
@@ -179,7 +191,7 @@ TEST_F(HeartbeatSchedulerTest, PermanentlyFailedGCMRegistration) {
       kHeartbeatGCMAppID, gcm::GCMClient::GCM_DISABLED);
 
   // There should be no heartbeat tasks pending, because registration failed.
-  ASSERT_TRUE(task_runner_->GetPendingTasks().empty());
+  ASSERT_FALSE(task_runner_->HasPendingTask());
 }
 
 TEST_F(HeartbeatSchedulerTest, TemporarilyFailedGCMRegistration) {
@@ -195,7 +207,7 @@ TEST_F(HeartbeatSchedulerTest, TemporarilyFailedGCMRegistration) {
   gcm_driver_.IgnoreDefaultHeartbeatsInterval();
 
   // Should have a pending task to try registering again.
-  ASSERT_FALSE(task_runner_->GetPendingTasks().empty());
+  ASSERT_TRUE(task_runner_->HasPendingTask());
   EXPECT_CALL(gcm_driver_, RegisterImpl(kHeartbeatGCMAppID, _));
   task_runner_->RunPendingTasks();
   testing::Mock::VerifyAndClearExpectations(&gcm_driver_);
@@ -210,6 +222,59 @@ TEST_F(HeartbeatSchedulerTest, TemporarilyFailedGCMRegistration) {
   task_runner_->RunPendingTasks();
 }
 
+TEST_F(HeartbeatSchedulerTest, StoreResetDuringRegistration) {
+  IgnoreUpstreamNotificationMsg();
+
+  EXPECT_CALL(gcm_driver_, RegisterImpl(kHeartbeatGCMAppID, _));
+  settings_helper_.SetBoolean(chromeos::kHeartbeatEnabled, true);
+  testing::Mock::VerifyAndClearExpectations(&gcm_driver_);
+
+  gcm_driver_.ResetStore();
+
+  IgnoreUpstreamNotificationMsg();
+
+  // Successful registration handled ok despite store reset.
+  EXPECT_FALSE(task_runner_->HasPendingTask());
+  EXPECT_CALL(gcm_driver_, SendImpl(kHeartbeatGCMAppID, _, IsHeartbeatMsg()));
+  gcm_driver_.CompleteRegistration(
+      kHeartbeatGCMAppID, gcm::GCMClient::SUCCESS);
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
+  task_runner_->RunPendingTasks();
+  testing::Mock::VerifyAndClearExpectations(&gcm_driver_);
+}
+
+TEST_F(HeartbeatSchedulerTest, StoreResetAfterRegistration) {
+  IgnoreUpstreamNotificationMsg();
+
+  // Start from a successful registration.
+  EXPECT_CALL(gcm_driver_, RegisterImpl(kHeartbeatGCMAppID, _));
+  settings_helper_.SetBoolean(chromeos::kHeartbeatEnabled, true);
+  EXPECT_CALL(gcm_driver_, SendImpl(kHeartbeatGCMAppID, _, IsHeartbeatMsg()));
+  gcm_driver_.CompleteRegistration(
+      kHeartbeatGCMAppID, gcm::GCMClient::SUCCESS);
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
+  task_runner_->RunPendingTasks();
+  testing::Mock::VerifyAndClearExpectations(&gcm_driver_);
+
+  gcm_driver_.IgnoreDefaultHeartbeatsInterval();
+
+  // Reseting the store should trigger re-registration.
+  EXPECT_CALL(gcm_driver_, RegisterImpl(kHeartbeatGCMAppID, _));
+  gcm_driver_.ResetStore();
+  testing::Mock::VerifyAndClearExpectations(&gcm_driver_);
+
+  IgnoreUpstreamNotificationMsg();
+
+  // Once we have successfully re-registered, we should send a heartbeat.
+  EXPECT_FALSE(task_runner_->HasPendingTask());
+  EXPECT_CALL(gcm_driver_, SendImpl(kHeartbeatGCMAppID, _, IsHeartbeatMsg()));
+  gcm_driver_.CompleteRegistration(
+      kHeartbeatGCMAppID, gcm::GCMClient::SUCCESS);
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
+  task_runner_->RunPendingTasks();
+  testing::Mock::VerifyAndClearExpectations(&gcm_driver_);
+}
+
 TEST_F(HeartbeatSchedulerTest, ChangeHeartbeatFrequency) {
   IgnoreUpstreamNotificationMsg();
 
@@ -218,7 +283,7 @@ TEST_F(HeartbeatSchedulerTest, ChangeHeartbeatFrequency) {
   gcm_driver_.CompleteRegistration(
       kHeartbeatGCMAppID, gcm::GCMClient::SUCCESS);
 
-  EXPECT_EQ(1U, task_runner_->GetPendingTasks().size());
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
   // Should have a heartbeat task posted with zero delay on startup.
   EXPECT_EQ(base::TimeDelta(), task_runner_->NextPendingTaskDelay());
   testing::Mock::VerifyAndClearExpectations(&gcm_driver_);
@@ -234,13 +299,13 @@ TEST_F(HeartbeatSchedulerTest, ChangeHeartbeatFrequency) {
   EXPECT_CALL(gcm_driver_, SendImpl(kHeartbeatGCMAppID, _, IsHeartbeatMsg()))
       .WillOnce(SaveArg<2>(&message));
   task_runner_->RunPendingTasks();
-  EXPECT_TRUE(task_runner_->GetPendingTasks().empty());
+  EXPECT_FALSE(task_runner_->HasPendingTask());
 
   // Complete sending a message - we should queue up the next heartbeat
   // even if the previous attempt failed.
   gcm_driver_.CompleteSend(
       kHeartbeatGCMAppID, message.id, gcm::GCMClient::SERVER_ERROR);
-  EXPECT_EQ(1U, task_runner_->GetPendingTasks().size());
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
   CheckPendingTaskDelay(scheduler_.last_heartbeat(),
                         base::TimeDelta::FromMilliseconds(new_delay));
 }
@@ -257,7 +322,7 @@ TEST_F(HeartbeatSchedulerTest, DisableHeartbeats) {
   gcm_driver_.CompleteRegistration(
       kHeartbeatGCMAppID, gcm::GCMClient::SUCCESS);
   // Should have a heartbeat task posted.
-  EXPECT_EQ(1U, task_runner_->GetPendingTasks().size());
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
   task_runner_->RunPendingTasks();
 
   // Complete sending a message - we should queue up the next heartbeat.
@@ -265,7 +330,7 @@ TEST_F(HeartbeatSchedulerTest, DisableHeartbeats) {
       kHeartbeatGCMAppID, message.id, gcm::GCMClient::SUCCESS);
 
   // Should have a new heartbeat task posted.
-  ASSERT_EQ(1U, task_runner_->GetPendingTasks().size());
+  ASSERT_EQ(1U, task_runner_->NumPendingTasks());
   CheckPendingTaskDelay(
       scheduler_.last_heartbeat(),
       base::TimeDelta::FromMilliseconds(
@@ -278,7 +343,7 @@ TEST_F(HeartbeatSchedulerTest, DisableHeartbeats) {
   // Now disable heartbeats. Should get no more heartbeats sent.
   settings_helper_.SetBoolean(chromeos::kHeartbeatEnabled, false);
   task_runner_->RunPendingTasks();
-  EXPECT_TRUE(task_runner_->GetPendingTasks().empty());
+  EXPECT_FALSE(task_runner_->HasPendingTask());
 }
 
 TEST_F(HeartbeatSchedulerTest, CheckMessageContents) {

@@ -8,34 +8,38 @@
 #include "core/frame/LocalFrame.h"
 #include "modules/ModulesExport.h"
 #include "platform/Supplementable.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class WebPushClient;
 
-class PushController final : public GarbageCollected<PushController>, public Supplement<LocalFrame> {
-    USING_GARBAGE_COLLECTED_MIXIN(PushController);
-    WTF_MAKE_NONCOPYABLE(PushController);
-public:
-    static PushController* create(WebPushClient*);
-    static const char* supplementName();
-    static PushController* from(LocalFrame* frame) { return static_cast<PushController*>(Supplement<LocalFrame>::from(frame, supplementName())); }
-    static WebPushClient& clientFrom(LocalFrame*);
+class PushController final : public GarbageCollected<PushController>,
+                             public Supplement<LocalFrame> {
+  USING_GARBAGE_COLLECTED_MIXIN(PushController);
+  WTF_MAKE_NONCOPYABLE(PushController);
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<LocalFrame>::trace(visitor); }
+ public:
+  PushController(LocalFrame&, WebPushClient*);
 
-private:
-    explicit PushController(WebPushClient*);
+  static const char* SupplementName();
+  static PushController* From(LocalFrame* frame) {
+    return static_cast<PushController*>(
+        Supplement<LocalFrame>::From(frame, SupplementName()));
+  }
+  static WebPushClient& ClientFrom(LocalFrame*);
 
-    WebPushClient* client() const { return m_client; }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<LocalFrame>::Trace(visitor); }
 
-    WebPushClient* m_client;
+ private:
+  WebPushClient* Client() const { return client_; }
+
+  WebPushClient* client_;
 };
 
-MODULES_EXPORT void providePushControllerTo(LocalFrame&, WebPushClient*);
+MODULES_EXPORT void ProvidePushControllerTo(LocalFrame&, WebPushClient*);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PushController_h
+#endif  // PushController_h

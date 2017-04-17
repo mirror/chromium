@@ -27,17 +27,21 @@ class GbmBufferBase : public ScanoutBuffer {
 
   // ScanoutBuffer:
   uint32_t GetFramebufferId() const override;
+  uint32_t GetOpaqueFramebufferId() const override;
   uint32_t GetHandle() const override;
   gfx::Size GetSize() const override;
   uint32_t GetFramebufferPixelFormat() const override;
+  uint32_t GetOpaqueFramebufferPixelFormat() const override;
   const DrmDevice* GetDrmDevice() const override;
   bool RequiresGlFinish() const override;
 
  protected:
   GbmBufferBase(const scoped_refptr<GbmDevice>& drm,
                 gbm_bo* bo,
-                gfx::BufferFormat format,
-                gfx::BufferUsage usage);
+                uint32_t format,
+                uint32_t flags,
+                uint64_t modifier,
+                uint32_t addfb_flags);
   ~GbmBufferBase() override;
 
  private:
@@ -45,6 +49,11 @@ class GbmBufferBase : public ScanoutBuffer {
   gbm_bo* bo_;
   uint32_t framebuffer_ = 0;
   uint32_t framebuffer_pixel_format_ = 0;
+  // If |opaque_framebuffer_pixel_format_| differs from
+  // |framebuffer_pixel_format_| the following member is set to a valid fb,
+  // otherwise it is set to 0.
+  uint32_t opaque_framebuffer_ = 0;
+  uint32_t opaque_framebuffer_pixel_format_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(GbmBufferBase);
 };

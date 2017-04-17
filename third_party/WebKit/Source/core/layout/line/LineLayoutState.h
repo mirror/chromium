@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All right reserved.
+ * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ *               All right reserved.
  * Copyright (C) 2010 Google Inc. All rights reserved.
  * Copyright (C) 2014 Adobe Systems Incorporated. All rights reserved.
  *
@@ -26,71 +27,91 @@
 
 #include "core/layout/LayoutBlockFlow.h"
 #include "platform/geometry/LayoutRect.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-// Like LayoutState for layout(), LineLayoutState keeps track of global information
-// during an entire linebox tree layout pass (aka layoutInlineChildren).
+// Like LayoutState for layout(), LineLayoutState keeps track of global
+// information during an entire linebox tree layout pass (aka
+// layoutInlineChildren).
 class LineLayoutState {
-    STACK_ALLOCATED();
-public:
-    LineLayoutState(bool fullLayout)
-        : m_lastFloat(nullptr)
-        , m_endLine(nullptr)
-        , m_floatIndex(0)
-        , m_endLineMatched(false)
-        , m_hasInlineChild(false)
-        , m_isFullLayout(fullLayout)
-    { }
+  STACK_ALLOCATED();
 
-    void markForFullLayout() { m_isFullLayout = true; }
-    bool isFullLayout() const { return m_isFullLayout; }
+ public:
+  LineLayoutState(bool full_layout)
+      : last_float_(nullptr),
+        end_line_(nullptr),
+        float_index_(0),
+        end_line_matched_(false),
+        has_inline_child_(false),
+        is_full_layout_(full_layout),
+        needs_pagination_strut_recalculation_(false) {}
 
-    bool endLineMatched() const { return m_endLineMatched; }
-    void setEndLineMatched(bool endLineMatched) { m_endLineMatched = endLineMatched; }
+  void MarkForFullLayout() { is_full_layout_ = true; }
+  bool IsFullLayout() const { return is_full_layout_; }
 
-    bool hasInlineChild() const { return m_hasInlineChild; }
-    void setHasInlineChild(bool hasInlineChild) { m_hasInlineChild = hasInlineChild; }
+  bool NeedsPaginationStrutRecalculation() const {
+    return needs_pagination_strut_recalculation_ || IsFullLayout();
+  }
+  void SetNeedsPaginationStrutRecalculation() {
+    needs_pagination_strut_recalculation_ = true;
+  }
 
+  bool EndLineMatched() const { return end_line_matched_; }
+  void SetEndLineMatched(bool end_line_matched) {
+    end_line_matched_ = end_line_matched;
+  }
 
-    LineInfo& lineInfo() { return m_lineInfo; }
-    const LineInfo& lineInfo() const { return m_lineInfo; }
+  bool HasInlineChild() const { return has_inline_child_; }
+  void SetHasInlineChild(bool has_inline_child) {
+    has_inline_child_ = has_inline_child;
+  }
 
-    LayoutUnit endLineLogicalTop() const { return m_endLineLogicalTop; }
-    void setEndLineLogicalTop(LayoutUnit logicalTop) { m_endLineLogicalTop = logicalTop; }
+  LineInfo& GetLineInfo() { return line_info_; }
+  const LineInfo& GetLineInfo() const { return line_info_; }
 
-    RootInlineBox* endLine() const { return m_endLine; }
-    void setEndLine(RootInlineBox* line) { m_endLine = line; }
+  LayoutUnit EndLineLogicalTop() const { return end_line_logical_top_; }
+  void SetEndLineLogicalTop(LayoutUnit logical_top) {
+    end_line_logical_top_ = logical_top;
+  }
 
-    FloatingObject* lastFloat() const { return m_lastFloat; }
-    void setLastFloat(FloatingObject* lastFloat) { m_lastFloat = lastFloat; }
+  RootInlineBox* EndLine() const { return end_line_; }
+  void SetEndLine(RootInlineBox* line) { end_line_ = line; }
 
-    Vector<LayoutBlockFlow::FloatWithRect>& floats() { return m_floats; }
+  FloatingObject* LastFloat() const { return last_float_; }
+  void SetLastFloat(FloatingObject* last_float) { last_float_ = last_float; }
 
-    unsigned floatIndex() const { return m_floatIndex; }
-    void setFloatIndex(unsigned floatIndex) { m_floatIndex = floatIndex; }
+  Vector<LayoutBlockFlow::FloatWithRect>& Floats() { return floats_; }
 
-    LayoutUnit adjustedLogicalLineTop() const { return m_adjustedLogicalLineTop; }
-    void setAdjustedLogicalLineTop(LayoutUnit value) { m_adjustedLogicalLineTop = value; }
+  unsigned FloatIndex() const { return float_index_; }
+  void SetFloatIndex(unsigned float_index) { float_index_ = float_index; }
 
-private:
-    Vector<LayoutBlockFlow::FloatWithRect> m_floats;
-    FloatingObject* m_lastFloat;
-    RootInlineBox* m_endLine;
-    LineInfo m_lineInfo;
-    unsigned m_floatIndex;
-    LayoutUnit m_endLineLogicalTop;
-    bool m_endLineMatched;
-    // Used as a performance optimization to avoid doing a full paint invalidation when our floats
-    // change but we don't have any inline children.
-    bool m_hasInlineChild;
+  LayoutUnit AdjustedLogicalLineTop() const {
+    return adjusted_logical_line_top_;
+  }
+  void SetAdjustedLogicalLineTop(LayoutUnit value) {
+    adjusted_logical_line_top_ = value;
+  }
 
-    bool m_isFullLayout;
+ private:
+  Vector<LayoutBlockFlow::FloatWithRect> floats_;
+  FloatingObject* last_float_;
+  RootInlineBox* end_line_;
+  LineInfo line_info_;
+  unsigned float_index_;
+  LayoutUnit end_line_logical_top_;
+  bool end_line_matched_;
+  // Used as a performance optimization to avoid doing a full paint invalidation
+  // when our floats change but we don't have any inline children.
+  bool has_inline_child_;
 
-    LayoutUnit m_adjustedLogicalLineTop;
+  bool is_full_layout_;
+
+  bool needs_pagination_strut_recalculation_;
+
+  LayoutUnit adjusted_logical_line_top_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineLayoutState_h
+#endif  // LineLayoutState_h

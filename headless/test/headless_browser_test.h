@@ -9,8 +9,8 @@
 #include <string>
 
 #include "content/public/test/browser_test_base.h"
-#include "headless/public/domains/network.h"
-#include "headless/public/domains/page.h"
+#include "headless/public/devtools/domains/network.h"
+#include "headless/public/devtools/domains/page.h"
 #include "headless/public/headless_browser.h"
 #include "headless/public/headless_web_contents.h"
 
@@ -64,11 +64,6 @@ class HeadlessBrowserTest : public content::BrowserTestBase {
   void SetUpOnMainThread() override;
   void TearDownOnMainThread() override;
 
-  // Customize the options used in this test. Note that options which take
-  // effect before the message loop has been started (e.g., custom message
-  // pumps) cannot be set via this method.
-  void SetBrowserOptions(HeadlessBrowser::Options options);
-
   // Run an asynchronous test in a nested run loop. The caller should call
   // FinishAsynchronousTest() to notify that the test should finish.
   void RunAsynchronousTest();
@@ -85,6 +80,10 @@ class HeadlessBrowserTest : public content::BrowserTestBase {
   // Returns the browser for the test.
   HeadlessBrowser* browser() const;
 
+  // Returns the options used by the browser. Modify with caution, since some
+  // options only take effect if they were set before browser creation.
+  HeadlessBrowser::Options* options() const;
+
  private:
   std::unique_ptr<base::RunLoop> run_loop_;
 
@@ -93,6 +92,10 @@ class HeadlessBrowserTest : public content::BrowserTestBase {
 
 #define HEADLESS_ASYNC_DEVTOOLED_TEST_F(TEST_FIXTURE_NAME)               \
   IN_PROC_BROWSER_TEST_F(TEST_FIXTURE_NAME, RunAsyncTest) { RunTest(); } \
+  class AsyncHeadlessBrowserTestNeedsSemicolon##TEST_FIXTURE_NAME {}
+
+#define HEADLESS_ASYNC_DEVTOOLED_TEST_P(TEST_FIXTURE_NAME)               \
+  IN_PROC_BROWSER_TEST_P(TEST_FIXTURE_NAME, RunAsyncTest) { RunTest(); } \
   class AsyncHeadlessBrowserTestNeedsSemicolon##TEST_FIXTURE_NAME {}
 
 // Base class for tests that require access to a DevToolsClient. Subclasses
@@ -106,17 +109,28 @@ class HeadlessAsyncDevTooledBrowserTest : public HeadlessBrowserTest,
 
   // HeadlessWebContentsObserver implementation:
   void DevToolsTargetReady() override;
+  void RenderProcessExited(base::TerminationStatus status,
+                           int exit_code) override;
 
   // Implemented by tests and used to send request(s) to DevTools. Subclasses
   // need to ensure that FinishAsynchronousTest() is called after response(s)
   // are processed (e.g. in a callback).
   virtual void RunDevTooledTest() = 0;
 
+  // Returns the protocol handlers to construct the browser with.  By default
+  // the map returned is empty.
+  virtual ProtocolHandlerMap GetProtocolHandlers();
+
+  // Whether or not we should request a TabSocket when creating |web_contents_|.
+  virtual bool GetCreateTabSocket();
+
  protected:
   void RunTest();
 
+  HeadlessBrowserContext* browser_context_;  // Not owned.
   HeadlessWebContents* web_contents_;
   std::unique_ptr<HeadlessDevToolsClient> devtools_client_;
+  bool render_process_exited_;
 };
 
 }  // namespace headless

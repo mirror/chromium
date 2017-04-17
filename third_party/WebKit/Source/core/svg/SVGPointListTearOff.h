@@ -37,25 +37,37 @@
 namespace blink {
 
 class SVGPointListTearOff final
-    : public SVGListPropertyTearOffHelper<SVGPointListTearOff, SVGPointList>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SVGPointListTearOff* create(SVGPointList* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName = QualifiedName::null())
-    {
-        return new SVGPointListTearOff(target, contextElement, propertyIsAnimVal, attributeName);
-    }
+    : public SVGListPropertyTearOffHelper<SVGPointListTearOff, SVGPointList>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS()
-    {
-        visitor->traceWrappers(contextElement());
-    }
+ public:
+  static SVGPointListTearOff* Create(
+      SVGPointList* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null()) {
+    return new SVGPointListTearOff(target, context_element,
+                                   property_is_anim_val, attribute_name);
+  }
 
-private:
-    SVGPointListTearOff(SVGPointList* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName = QualifiedName::null())
-        : SVGListPropertyTearOffHelper<SVGPointListTearOff, SVGPointList>(target, contextElement, propertyIsAnimVal, attributeName) { }
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    visitor->TraceWrappers(contextElement());
+  }
+
+ private:
+  SVGPointListTearOff(
+      SVGPointList* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null())
+      : SVGListPropertyTearOffHelper<SVGPointListTearOff, SVGPointList>(
+            target,
+            context_element,
+            property_is_anim_val,
+            attribute_name) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPointListTearOff_h
+#endif  // SVGPointListTearOff_h

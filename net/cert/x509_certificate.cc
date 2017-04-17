@@ -25,6 +25,7 @@
 #include "base/strings/string_util.h"
 #include "base/synchronization/lock.h"
 #include "base/time/time.h"
+#include "base/trace_event/trace_event.h"
 #include "crypto/secure_hash.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/base/url_util.h"
@@ -47,7 +48,7 @@ const char kCertificateHeader[] = "CERTIFICATE";
 // The PEM block header used for PKCS#7 data
 const char kPKCS7Header[] = "PKCS7";
 
-#if !defined(USE_NSS_CERTS)
+#if !defined(USE_NSS_CERTS) && !BUILDFLAG(USE_BYTE_CERTS)
 // A thread-safe cache for OS certificate handles.
 //
 // Within each of the supported underlying crypto libraries, a certificate
@@ -101,7 +102,7 @@ class X509CertificateCache {
   // Obtain an instance of X509CertificateCache via a LazyInstance.
   X509CertificateCache() {}
   ~X509CertificateCache() {}
-  friend struct base::DefaultLazyInstanceTraits<X509CertificateCache>;
+  friend struct base::LazyInstanceTraitsBase<X509CertificateCache>;
 
   // You must acquire this lock before using any private data of this object
   // You must not block while holding this lock.
@@ -188,19 +189,20 @@ void X509CertificateCache::Remove(X509Certificate::OSCertHandle cert_handle) {
     cache_.erase(pos);
   }
 }
-#endif  // !defined(USE_NSS_CERTS)
+#endif  // !defined(USE_NSS_CERTS) && !BUILDFLAG(USE_BYTE_CERTS)
 
 // See X509CertificateCache::InsertOrUpdate. NSS has a built-in cache, so there
-// is no point in wrapping another cache around it.
+// is no point in wrapping another cache around it. With USE_BYTE_CERTS, the
+// CYRPTO_BUFFERs are deduped by a CRYPTO_BUFFER_POOL.
 void InsertOrUpdateCache(X509Certificate::OSCertHandle* cert_handle) {
-#if !defined(USE_NSS_CERTS)
+#if !defined(USE_NSS_CERTS) && !BUILDFLAG(USE_BYTE_CERTS)
   g_x509_certificate_cache.Pointer()->InsertOrUpdate(cert_handle);
 #endif
 }
 
 // See X509CertificateCache::Remove.
 void RemoveFromCache(X509Certificate::OSCertHandle cert_handle) {
-#if !defined(USE_NSS_CERTS)
+#if !defined(USE_NSS_CERTS) && !BUILDFLAG(USE_BYTE_CERTS)
   g_x509_certificate_cache.Pointer()->Remove(cert_handle);
 #endif
 }
@@ -229,12 +231,18 @@ scoped_refptr<X509Certificate> X509Certificate::CreateFromHandle(
     OSCertHandle cert_handle,
     const OSCertHandles& intermediates) {
   DCHECK(cert_handle);
-  return new X509Certificate(cert_handle, intermediates);
+  scoped_refptr<X509Certificate> cert(
+      new X509Certificate(cert_handle, intermediates));
+  if (!cert->os_cert_handle())
+    return nullptr;  // Initialize() failed.
+  return cert;
 }
 
 // static
 scoped_refptr<X509Certificate> X509Certificate::CreateFromDERCertChain(
     const std::vector<base::StringPiece>& der_certs) {
+  TRACE_EVENT0("io", "X509Certificate::CreateFromDERCertChain");
+
   // TODO(cbentzel): Remove ScopedTracker below once crbug.com/424386 is fixed.
   tracked_objects::ScopedTracker tracking_profile(
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
@@ -442,7 +450,10 @@ CertificateList X509Certificate::CreateCertificateListFromBytes(
 
   for (OSCertHandles::iterator it = certificates.begin();
        it != certificates.end(); ++it) {
-    results.push_back(CreateFromHandle(*it, OSCertHandles()));
+    scoped_refptr<X509Certificate> cert =
+        CreateFromHandle(*it, OSCertHandles());
+    if (cert)
+      results.push_back(std::move(cert));
     FreeOSCertHandle(*it);
   }
 
@@ -490,7 +501,7 @@ bool X509Certificate::VerifyHostname(
     const std::string& cert_common_name,
     const std::vector<std::string>& cert_san_dns_names,
     const std::vector<std::string>& cert_san_ip_addrs,
-    bool* common_name_fallback_used) {
+    bool allow_common_name_fallback) {
   DCHECK(!hostname.empty());
   // Perform name verification following http://tools.ietf.org/html/rfc6125.
   // The terminology used in this method is as per that RFC:-
@@ -511,14 +522,17 @@ bool X509Certificate::VerifyHostname(
   if (reference_name.empty())
     return false;
 
-  // Allow fallback to Common name matching?
-  const bool common_name_fallback = cert_san_dns_names.empty() &&
-                                    cert_san_ip_addrs.empty();
-  *common_name_fallback_used = common_name_fallback;
+  if (!allow_common_name_fallback && cert_san_dns_names.empty() &&
+      cert_san_ip_addrs.empty()) {
+    // Common Name matching is not allowed, so fail fast.
+    return false;
+  }
 
   // Fully handle all cases where |hostname| contains an IP address.
   if (host_info.IsIPAddress()) {
-    if (common_name_fallback && host_info.family == url::CanonHostInfo::IPV4) {
+    if (allow_common_name_fallback && cert_san_dns_names.empty() &&
+        cert_san_ip_addrs.empty() &&
+        host_info.family == url::CanonHostInfo::IPV4) {
       // Fallback to Common name matching. As this is deprecated and only
       // supported for compatibility refuse it for IPv6 addresses.
       return reference_name == cert_common_name;
@@ -551,7 +565,7 @@ bool X509Certificate::VerifyHostname(
     // is not registry controlled, this ensures that all reference domains
     // contain at least three domain components when using wildcards.
     size_t registry_length =
-        registry_controlled_domains::GetRegistryLength(
+        registry_controlled_domains::GetCanonicalHostRegistryLength(
             reference_name,
             registry_controlled_domains::INCLUDE_UNKNOWN_REGISTRIES,
             registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES);
@@ -577,7 +591,8 @@ bool X509Certificate::VerifyHostname(
   // fallback to use the common name instead.
   std::vector<std::string> common_name_as_vector;
   const std::vector<std::string>* presented_names = &cert_san_dns_names;
-  if (common_name_fallback) {
+  if (allow_common_name_fallback && cert_san_dns_names.empty() &&
+      cert_san_ip_addrs.empty()) {
     // Note: there's a small possibility cert_common_name is an international
     // domain name in non-standard encoding (e.g. UTF8String or BMPString
     // instead of A-label). As common name fallback is deprecated we're not
@@ -625,11 +640,11 @@ bool X509Certificate::VerifyHostname(
 }
 
 bool X509Certificate::VerifyNameMatch(const std::string& hostname,
-                                      bool* common_name_fallback_used) const {
+                                      bool allow_common_name_fallback) const {
   std::vector<std::string> dns_names, ip_addrs;
   GetSubjectAltName(&dns_names, &ip_addrs);
   return VerifyHostname(hostname, subject_.common_name, dns_names, ip_addrs,
-                        common_name_fallback_used);
+                        allow_common_name_fallback);
 }
 
 // static
@@ -704,7 +719,12 @@ X509Certificate::X509Certificate(OSCertHandle cert_handle,
     intermediate_ca_certs_.push_back(intermediate);
   }
   // Platform-specific initialization.
-  Initialize();
+  if (!Initialize() && cert_handle_) {
+    // Signal initialization failure by clearing cert_handle_.
+    RemoveFromCache(cert_handle_);
+    FreeOSCertHandle(cert_handle_);
+    cert_handle_ = nullptr;
+  }
 }
 
 X509Certificate::~X509Certificate() {

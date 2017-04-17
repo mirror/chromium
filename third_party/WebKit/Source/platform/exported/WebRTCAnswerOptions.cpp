@@ -9,24 +9,19 @@
 namespace blink {
 
 WebRTCAnswerOptions::WebRTCAnswerOptions(RTCAnswerOptionsPlatform* options)
-    : m_private(options)
-{
+    : private_(options) {}
+
+void WebRTCAnswerOptions::Assign(const WebRTCAnswerOptions& other) {
+  private_ = other.private_;
 }
 
-void WebRTCAnswerOptions::assign(const WebRTCAnswerOptions& other)
-{
-    m_private = other.m_private;
+void WebRTCAnswerOptions::Reset() {
+  private_.Reset();
 }
 
-void WebRTCAnswerOptions::reset()
-{
-    m_private.reset();
+bool WebRTCAnswerOptions::VoiceActivityDetection() const {
+  DCHECK(!private_.IsNull());
+  return private_->VoiceActivityDetection();
 }
 
-bool WebRTCAnswerOptions::voiceActivityDetection() const
-{
-    ASSERT(!m_private.isNull());
-    return m_private->voiceActivityDetection();
-}
-
-} // namespace blink
+}  // namespace blink

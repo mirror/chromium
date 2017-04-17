@@ -27,8 +27,14 @@ VideoCaptureDeviceFactory::CreateFactory(
       return std::unique_ptr<VideoCaptureDeviceFactory>(
           new media::FileVideoCaptureDeviceFactory());
     } else {
-      return std::unique_ptr<VideoCaptureDeviceFactory>(
-          new media::FakeVideoCaptureDeviceFactory());
+      std::vector<FakeVideoCaptureDeviceSettings> config;
+      FakeVideoCaptureDeviceFactory::ParseFakeDevicesConfigFromOptionsString(
+          command_line->GetSwitchValueASCII(
+              switches::kUseFakeDeviceForMediaStream),
+          &config);
+      auto result = base::MakeUnique<media::FakeVideoCaptureDeviceFactory>();
+      result->SetToCustomDevicesConfig(config);
+      return std::move(result);
     }
   } else {
     // |ui_task_runner| is needed for the Linux ChromeOS factory to retrieve
@@ -42,19 +48,7 @@ VideoCaptureDeviceFactory::VideoCaptureDeviceFactory() {
   thread_checker_.DetachFromThread();
 }
 
-VideoCaptureDeviceFactory::~VideoCaptureDeviceFactory() {
-}
-
-void VideoCaptureDeviceFactory::EnumerateDeviceNames(
-    const base::Callback<
-        void(std::unique_ptr<media::VideoCaptureDevice::Names>)>& callback) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(!callback.is_null());
-  std::unique_ptr<VideoCaptureDevice::Names> device_names(
-      new VideoCaptureDevice::Names());
-  GetDeviceNames(device_names.get());
-  callback.Run(std::move(device_names));
-}
+VideoCaptureDeviceFactory::~VideoCaptureDeviceFactory() {}
 
 #if !defined(OS_MACOSX) && !defined(OS_LINUX) && !defined(OS_ANDROID) && \
     !defined(OS_WIN)

@@ -8,7 +8,11 @@
 #include "base/files/file_util.h"
 #include "base/mac/bundle_locations.h"
 #include "base/strings/sys_string_conversions.h"
-#include "ios/web/public/web_client.h"
+#import "ios/web/public/web_client.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace web {
 
@@ -23,14 +27,16 @@ NSString* GetPageScript(NSString* script_file_name) {
   NSString* content = [NSString stringWithContentsOfFile:path
                                                 encoding:NSUTF8StringEncoding
                                                    error:&error];
-  DCHECK(!error) << "Error fetching script: " << [error.description UTF8String];
+  DCHECK(!error) << "Error fetching script: "
+                 << base::SysNSStringToUTF8(error.description);
   DCHECK(content);
   return content;
 }
 
-NSString* GetEarlyPageScript() {
+NSString* GetEarlyPageScript(BrowserState* browser_state) {
   DCHECK(GetWebClient());
-  NSString* embedder_page_script = GetWebClient()->GetEarlyPageScript();
+  NSString* embedder_page_script =
+      GetWebClient()->GetEarlyPageScript(browser_state);
   DCHECK(embedder_page_script);
 
   // Make sure that script is injected only once. For example, content of

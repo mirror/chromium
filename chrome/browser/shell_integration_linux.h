@@ -9,6 +9,7 @@
 
 #include "base/files/file_path.h"
 #include "chrome/browser/web_applications/web_app.h"
+#include "chrome/common/features.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -30,10 +31,11 @@ base::FilePath GetDataWriteLocation(base::Environment* env);
 // Called on the FILE thread.
 std::vector<base::FilePath> GetDataSearchLocations(base::Environment* env);
 
-// Gets the name for use as the res_class (and possibly res_name) of the
-// window's WM_CLASS property. This is the program name from argv[0], with the
-// first letter capitalized. Equivalent to GDK's gdk_get_program_class().
+// Gets the name for use as the res_name of the window's WM_CLASS property.
 std::string GetProgramClassName();
+
+// Gets the name for use as the res_class of the window's WM_CLASS property.
+std::string GetProgramClassClass();
 
 // Returns filename of the desktop shortcut used to launch the browser.
 std::string GetDesktopName(base::Environment* env);
@@ -119,7 +121,7 @@ bool CreateDesktopShortcut(
     const web_app::ShortcutInfo& shortcut_info,
     const web_app::ShortcutLocations& creation_locations);
 
-#if defined(ENABLE_APP_LIST)
+#if BUILDFLAG(ENABLE_APP_LIST)
 // Create shortcuts in the application menu for the app launcher. Duplicate
 // shortcuts are avoided, so if a requested shortcut already exists it is
 // deleted first. Also creates the icon required by the shortcut.
@@ -135,6 +137,17 @@ void DeleteDesktopShortcuts(const base::FilePath& profile_path,
 // Delete any desktop shortcuts on desktop or in the application menu that have
 // for the profile in |profile_path|.
 void DeleteAllDesktopShortcuts(const base::FilePath& profile_path);
+
+namespace internal {
+
+// Exposed for testing.  Clients should use the corresponding functions in
+// shell_integration_linux instead.
+std::string GetProgramClassName(const base::CommandLine& command_line,
+                                const std::string& desktop_file_name);
+std::string GetProgramClassClass(const base::CommandLine& command_line,
+                                 const std::string& desktop_file_name);
+
+}  // namespace internal
 
 }  // namespace shell_integration_linux
 

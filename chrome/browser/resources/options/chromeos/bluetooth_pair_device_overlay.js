@@ -180,6 +180,8 @@ cr.define('options', function() {
           this.keyDownEventHandler_.bind(this));
       $('bluetooth-pincode').addEventListener('keydown',
           this.keyDownEventHandler_.bind(this));
+      $('bluetooth-pairing-close-button').addEventListener('click',
+          this.onClose_.bind(this));
     },
 
     /** @override */
@@ -333,6 +335,16 @@ cr.define('options', function() {
         if (!button.hidden)
           button.click();
       }
+    },
+
+    /**
+     * Handles the click event on the close button.
+     * @param {Event} event A click down event.
+     * @private
+     */
+    onClose_: function(event) {
+      event.preventDefault();
+      chrome.send('dialogClose');
     },
 
     /**
@@ -549,27 +561,6 @@ cr.define('options', function() {
         break;
       case chrome.bluetoothPrivate.ConnectResultType.UNSUPPORTED_DEVICE:
         message = 'bluetoothConnectUnsupportedDevice';
-        break;
-      case chrome.bluetoothPrivate.ConnectResultType.ATTRIBUTE_LENGTH_INVALID:
-        message = 'bluetoothConnectAttributeLengthInvalid';
-        break;
-      case chrome.bluetoothPrivate.ConnectResultType.CONNECTION_CONGESTED:
-        message = 'bluetoothConnectConnectionCongested';
-        break;
-      case chrome.bluetoothPrivate.ConnectResultType.INSUFFICIENT_ENCRYPTION:
-        message = 'bluetoothConnectInsufficientEncryption';
-        break;
-      case chrome.bluetoothPrivate.ConnectResultType.OFFSET_INVALID:
-        message = 'bluetoothConnectOffsetInvalid';
-        break;
-      case chrome.bluetoothPrivate.ConnectResultType.READ_NOT_PERMITTED:
-        message = 'bluetoothConnectReadNotPermitted';
-        break;
-      case chrome.bluetoothPrivate.ConnectResultType.REQUEST_NOT_SUPPORTED:
-        message = 'bluetoothConnectRequestNotSupported';
-        break;
-      case chrome.bluetoothPrivate.ConnectResultType.WRITE_NOT_PERMITTED:
-        message = 'bluetoothConnectWriteNotPermitted';
         break;
     }
     if (message)

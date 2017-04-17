@@ -33,9 +33,10 @@
 #include "components/autofill/core/browser/phone_number_i18n.h"
 #include "components/autofill/core/browser/state_names.h"
 #include "components/autofill/core/browser/validation.h"
+#include "components/autofill/core/common/autofill_clock.h"
 #include "components/autofill/core/common/autofill_l10n_util.h"
 #include "components/autofill/core/common/form_field_data.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "third_party/icu/source/common/unicode/uchar.h"
 #include "third_party/icu/source/common/unicode/utypes.h"
 #include "third_party/icu/source/i18n/unicode/translit.h"
@@ -47,8 +48,8 @@
 
 using base::ASCIIToUTF16;
 using base::UTF16ToUTF8;
-using i18n::addressinput::AddressData;
-using i18n::addressinput::AddressField;
+using ::i18n::addressinput::AddressData;
+using ::i18n::addressinput::AddressField;
 
 namespace autofill {
 namespace {
@@ -195,22 +196,23 @@ AutofillProfile::AutofillProfile(const std::string& guid,
                                  const std::string& origin)
     : AutofillDataModel(guid, origin),
       record_type_(LOCAL_PROFILE),
-      phone_number_(this) {
-}
+      phone_number_(this),
+      has_converted_(false) {}
 
 AutofillProfile::AutofillProfile(RecordType type, const std::string& server_id)
     : AutofillDataModel(base::GenerateGUID(), std::string()),
       record_type_(type),
       phone_number_(this),
-      server_id_(server_id) {
+      server_id_(server_id),
+      has_converted_(false) {
   DCHECK(type == SERVER_PROFILE);
 }
 
 AutofillProfile::AutofillProfile()
     : AutofillDataModel(base::GenerateGUID(), std::string()),
       record_type_(LOCAL_PROFILE),
-      phone_number_(this) {
-}
+      phone_number_(this),
+      has_converted_(false) {}
 
 AutofillProfile::AutofillProfile(const AutofillProfile& profile)
     : AutofillDataModel(std::string(), std::string()), phone_number_(this) {
@@ -243,6 +245,7 @@ AutofillProfile& AutofillProfile::operator=(const AutofillProfile& profile) {
   set_language_code(profile.language_code());
 
   server_id_ = profile.server_id();
+  has_converted_ = profile.has_converted();
 
   return *this;
 }
@@ -354,8 +357,8 @@ int AutofillProfile::Compare(const AutofillProfile& profile) const {
       PHONE_HOME_WHOLE_NUMBER,
   };
 
-  for (size_t i = 0; i < arraysize(types); ++i) {
-    int comparison = GetRawInfo(types[i]).compare(profile.GetRawInfo(types[i]));
+  for (ServerFieldType type : types) {
+    int comparison = GetRawInfo(type).compare(profile.GetRawInfo(type));
     if (comparison != 0) {
       return comparison;
     }
@@ -700,7 +703,7 @@ void AutofillProfile::GenerateServerProfileIdentifier() {
 
 void AutofillProfile::RecordAndLogUse() {
   UMA_HISTOGRAM_COUNTS_1000("Autofill.DaysSinceLastUse.Profile",
-                            (base::Time::Now() - use_date()).InDays());
+                            (AutofillClock::Now() - use_date()).InDays());
   RecordUse();
 }
 

@@ -11,7 +11,6 @@
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
 #include "content/renderer/render_thread_impl.h"
 #include "media/base/audio_parameters.h"
-#include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
 #include "url/origin.h"
 
 namespace content {
@@ -68,22 +67,21 @@ MediaStreamDispatcher::MediaStreamDispatcher(RenderFrame* render_frame)
       next_ipc_id_(0) {
 }
 
-MediaStreamDispatcher::~MediaStreamDispatcher() {
-  DCHECK(device_change_subscribers_.empty());
-}
+MediaStreamDispatcher::~MediaStreamDispatcher() {}
 
 void MediaStreamDispatcher::GenerateStream(
     int request_id,
     const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
     const StreamControls& controls,
-    const url::Origin& security_origin) {
+    const url::Origin& security_origin,
+    bool is_processing_user_gesture) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DVLOG(1) << "MediaStreamDispatcher::GenerateStream(" << request_id << ")";
 
   requests_.push_back(Request(event_handler, request_id, next_ipc_id_));
-  Send(new MediaStreamHostMsg_GenerateStream(
-      routing_id(), next_ipc_id_++, controls, security_origin,
-      blink::WebUserGestureIndicator::isProcessingUserGesture()));
+  Send(new MediaStreamHostMsg_GenerateStream(routing_id(), next_ipc_id_++,
+                                             controls, security_origin,
+                                             is_processing_user_gesture));
 }
 
 void MediaStreamDispatcher::CancelGenerateStream(
@@ -133,47 +131,6 @@ void MediaStreamDispatcher::StopStreamDevice(
                                                device_info.device.id));
 }
 
-void MediaStreamDispatcher::EnumerateDevices(
-    int request_id,
-    const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
-    MediaStreamType type,
-    const url::Origin& security_origin) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(type == MEDIA_DEVICE_AUDIO_CAPTURE ||
-         type == MEDIA_DEVICE_VIDEO_CAPTURE ||
-         type == MEDIA_DEVICE_AUDIO_OUTPUT);
-  DVLOG(1) << "MediaStreamDispatcher::EnumerateDevices("
-           << request_id << ")";
-
-  for (RequestList::iterator it = requests_.begin(); it != requests_.end();
-       ++it) {
-    DCHECK(!it->IsThisRequest(request_id, event_handler));
-  }
-
-  requests_.push_back(Request(event_handler, request_id, next_ipc_id_));
-  Send(new MediaStreamHostMsg_EnumerateDevices(routing_id(),
-                                               next_ipc_id_++,
-                                               type,
-                                               security_origin));
-}
-
-void MediaStreamDispatcher::StopEnumerateDevices(
-    int request_id,
-    const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DVLOG(1) << "MediaStreamDispatcher::StopEnumerateDevices("
-           << request_id << ")";
-  for (RequestList::iterator it = requests_.begin(); it != requests_.end();
-       ++it) {
-    if (it->IsThisRequest(request_id, event_handler)) {
-      Send(new MediaStreamHostMsg_CancelEnumerateDevices(routing_id(),
-                                                         it->ipc_request));
-      requests_.erase(it);
-      break;
-    }
-  }
-}
-
 void MediaStreamDispatcher::OpenDevice(
     int request_id,
     const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
@@ -211,41 +168,22 @@ void MediaStreamDispatcher::CloseDevice(const std::string& label) {
   Send(new MediaStreamHostMsg_CloseDevice(routing_id(), label));
 }
 
-void MediaStreamDispatcher::SubscribeToDeviceChangeNotifications(
-    const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
-    const url::Origin& security_origin) {
+void MediaStreamDispatcher::OnStreamStarted(const std::string& label) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(std::find_if(
-             device_change_subscribers_.begin(),
-             device_change_subscribers_.end(),
-             [&event_handler](
-                 const base::WeakPtr<MediaStreamDispatcherEventHandler>& item) {
-               return event_handler.get() == item.get();
-             }) == device_change_subscribers_.end());
-  DVLOG(1) << "MediaStreamDispatcher::SubscribeToDeviceChangeNotifications";
+  DVLOG(1) << "MediaStreamDispatcher::OnStreamStarted(" << label << ")";
 
-  if (device_change_subscribers_.empty()) {
-    Send(new MediaStreamHostMsg_SubscribeToDeviceChangeNotifications(
-        routing_id(), security_origin));
-  }
-  device_change_subscribers_.push_back(event_handler);
+  Send(new MediaStreamHostMsg_StreamStarted(label));
 }
 
-void MediaStreamDispatcher::CancelDeviceChangeNotifications(
-    const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DVLOG(1) << "MediaStreamDispatcher::SubscribeToDeviceChangeNotifications";
-  auto it = std::find_if(
-      device_change_subscribers_.begin(), device_change_subscribers_.end(),
-      [&event_handler](
-          const base::WeakPtr<MediaStreamDispatcherEventHandler>& item) {
-        return event_handler.get() == item.get();
-      });
-  CHECK(it != device_change_subscribers_.end());
-  device_change_subscribers_.erase(it);
-
-  if (device_change_subscribers_.empty())
-    Send(new MediaStreamHostMsg_CancelDeviceChangeNotifications(routing_id()));
+StreamDeviceInfoArray MediaStreamDispatcher::GetNonScreenCaptureDevices() {
+  StreamDeviceInfoArray video_array;
+  for (const auto& stream_it : label_stream_map_) {
+    for (const auto& video_device : stream_it.second.video_array) {
+      if (!IsScreenCaptureMediaType(video_device.device.type))
+        video_array.push_back(video_device);
+    }
+  }
+  return video_array;
 }
 
 void MediaStreamDispatcher::OnDestruct() {
@@ -270,13 +208,10 @@ bool MediaStreamDispatcher::OnMessageReceived(const IPC::Message& message) {
                         OnStreamGenerationFailed)
     IPC_MESSAGE_HANDLER(MediaStreamMsg_DeviceStopped,
                         OnDeviceStopped)
-    IPC_MESSAGE_HANDLER(MediaStreamMsg_DevicesEnumerated,
-                        OnDevicesEnumerated)
     IPC_MESSAGE_HANDLER(MediaStreamMsg_DeviceOpened,
                         OnDeviceOpened)
     IPC_MESSAGE_HANDLER(MediaStreamMsg_DeviceOpenFailed,
                         OnDeviceOpenFailed)
-    IPC_MESSAGE_HANDLER(MediaStreamMsg_DevicesChanged, OnDevicesChanged)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -365,21 +300,6 @@ void MediaStreamDispatcher::OnDeviceStopped(
     label_stream_map_.erase(it);
 }
 
-void MediaStreamDispatcher::OnDevicesEnumerated(
-    int request_id,
-    const StreamDeviceInfoArray& device_array) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK_GE(request_id, 0);
-
-  for (RequestList::iterator it = requests_.begin(); it != requests_.end();
-       ++it) {
-    if (it->ipc_request == request_id && it->handler.get()) {
-      it->handler->OnDevicesEnumerated(it->request_id, device_array);
-      break;
-    }
-  }
-}
-
 void MediaStreamDispatcher::OnDeviceOpened(
     int request_id,
     const std::string& label,
@@ -424,14 +344,6 @@ void MediaStreamDispatcher::OnDeviceOpenFailed(int request_id) {
       requests_.erase(it);
       break;
     }
-  }
-}
-
-void MediaStreamDispatcher::OnDevicesChanged() {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  for (auto event_handler : device_change_subscribers_) {
-    DCHECK(event_handler);
-    event_handler->OnDevicesChanged();
   }
 }
 

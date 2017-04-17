@@ -30,52 +30,68 @@
 #include "core/CoreExport.h"
 #include "core/dom/Element.h"
 #include "core/dom/shadow/InsertionPoint.h"
+#include <cstdint>
 
 namespace blink {
 
 class LayoutObject;
 
-namespace LayoutTreeBuilderTraversal {
-
-class ParentDetails {
+class CORE_EXPORT LayoutTreeBuilderTraversal {
+ public:
+  static const int32_t kTraverseAllSiblings = -2;
+  class ParentDetails {
     STACK_ALLOCATED();
-public:
-    ParentDetails()
-        : m_insertionPoint(nullptr)
-    { }
 
-    const InsertionPoint* insertionPoint() const { return m_insertionPoint; }
+   public:
+    ParentDetails() : insertion_point_(nullptr) {}
 
-    void didTraverseInsertionPoint(const InsertionPoint*);
+    const InsertionPoint* GetInsertionPoint() const { return insertion_point_; }
 
-    bool operator==(const ParentDetails& other)
-    {
-        return m_insertionPoint == other.m_insertionPoint;
+    void DidTraverseInsertionPoint(const InsertionPoint*);
+
+    bool operator==(const ParentDetails& other) {
+      return insertion_point_ == other.insertion_point_;
     }
 
-private:
-    Member<const InsertionPoint> m_insertionPoint;
+   private:
+    Member<const InsertionPoint> insertion_point_;
+  };
+
+  static ContainerNode* Parent(const Node&, ParentDetails* = nullptr);
+  static ContainerNode* LayoutParent(const Node&, ParentDetails* = nullptr);
+  static Node* FirstChild(const Node&);
+  static Node* NextSibling(const Node&);
+  static Node* NextLayoutSibling(const Node& node) {
+    int32_t limit = kTraverseAllSiblings;
+    return NextLayoutSibling(node, limit);
+  }
+  static Node* PreviousLayoutSibling(const Node& node) {
+    int32_t limit = kTraverseAllSiblings;
+    return PreviousLayoutSibling(node, limit);
+  }
+  static Node* PreviousSibling(const Node&);
+  static Node* Previous(const Node&, const Node* stay_within);
+  static Node* Next(const Node&, const Node* stay_within);
+  static Node* NextSkippingChildren(const Node&, const Node* stay_within);
+  static LayoutObject* ParentLayoutObject(const Node&);
+  static LayoutObject* NextSiblingLayoutObject(
+      const Node&,
+      int32_t limit = kTraverseAllSiblings);
+  static LayoutObject* PreviousSiblingLayoutObject(
+      const Node&,
+      int32_t limit = kTraverseAllSiblings);
+  static LayoutObject* NextInTopLayer(const Element&);
+
+  static inline Element* ParentElement(const Node& node) {
+    ContainerNode* found = Parent(node);
+    return found && found->IsElementNode() ? ToElement(found) : 0;
+  }
+
+ private:
+  static Node* NextLayoutSibling(const Node&, int32_t& limit);
+  static Node* PreviousLayoutSibling(const Node&, int32_t& limit);
 };
 
-CORE_EXPORT ContainerNode* parent(const Node&, ParentDetails* = 0);
-CORE_EXPORT Node* firstChild(const Node&);
-CORE_EXPORT Node* nextSibling(const Node&);
-Node* previousSibling(const Node&);
-Node* previous(const Node&, const Node* stayWithin);
-Node* next(const Node&, const Node* stayWithin);
-Node* nextSkippingChildren(const Node&, const Node* stayWithin);
-LayoutObject* nextSiblingLayoutObject(const Node&);
-LayoutObject* previousSiblingLayoutObject(const Node&);
-LayoutObject* nextInTopLayer(const Element&);
-
-inline Element* parentElement(const Node& node)
-{
-    ContainerNode* found = parent(node);
-    return found && found->isElementNode() ? toElement(found) : 0;
-}
-
-} // namespace LayoutTreeBuilderTraversal
-
-} // namespace blink
+}  // namespace blink
 
 #endif

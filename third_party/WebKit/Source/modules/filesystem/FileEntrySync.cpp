@@ -36,24 +36,20 @@
 
 namespace blink {
 
-FileEntrySync::FileEntrySync(DOMFileSystemBase* fileSystem, const String& fullPath)
-    : EntrySync(fileSystem, fullPath)
-{
+FileEntrySync::FileEntrySync(DOMFileSystemBase* file_system,
+                             const String& full_path)
+    : EntrySync(file_system, full_path) {}
+
+File* FileEntrySync::file(ExceptionState& exception_state) {
+  return filesystem()->CreateFile(this, exception_state);
 }
 
-File* FileEntrySync::file(ExceptionState& exceptionState)
-{
-    return filesystem()->createFile(this, exceptionState);
+FileWriterSync* FileEntrySync::createWriter(ExceptionState& exception_state) {
+  return filesystem()->CreateWriter(this, exception_state);
 }
 
-FileWriterSync* FileEntrySync::createWriter(ExceptionState& exceptionState)
-{
-    return filesystem()->createWriter(this, exceptionState);
+DEFINE_TRACE(FileEntrySync) {
+  EntrySync::Trace(visitor);
 }
 
-DEFINE_TRACE(FileEntrySync)
-{
-    EntrySync::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

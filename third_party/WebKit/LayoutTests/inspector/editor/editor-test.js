@@ -3,11 +3,11 @@ function initialize_EditorTests()
 
 InspectorTest.createTestEditor = function(clientHeight, textEditorDelegate)
 {
-    var textEditor = new WebInspector.CodeMirrorTextEditor("", textEditorDelegate || new WebInspector.TextEditorDelegate());
+    var textEditor = new SourceFrame.SourcesTextEditor(textEditorDelegate || new SourceFrame.SourcesTextEditorDelegate());
     clientHeight = clientHeight || 100;
     textEditor.element.style.height = clientHeight + "px";
     textEditor.element.style.flex = "none";
-    textEditor.show(WebInspector.inspectorView.element);
+    textEditor.show(UI.inspectorView.element);
     return textEditor;
 };
 
@@ -22,7 +22,7 @@ function textWithSelection(text, selections)
     }
 
     var lines = text.split("\n");
-    selections.sort(WebInspector.TextRange.comparator);
+    selections.sort(TextUtils.TextRange.comparator);
     for (var i = selections.length - 1; i >= 0; --i) {
         var selection = selections[i];
         selection = selection.normalize();
@@ -52,7 +52,7 @@ InspectorTest.setLineSelections = function(editor, selections)
             selection.from = selection.column;
             selection.to = selection.column;
         }
-        coords.push(new WebInspector.TextRange(selection.line, selection.from, selection.line, selection.to));
+        coords.push(new TextUtils.TextRange(selection.line, selection.from, selection.line, selection.to));
     }
     editor.setSelections(coords);
 }
@@ -188,7 +188,7 @@ InspectorTest.dumpSelectionStats = function(textEditor)
     var selections = textEditor.selections();
     for (var i = 0; i < selections.length; ++i) {
         var selection = selections[i];
-        var text = textEditor.copyRange(selection);
+        var text = textEditor.text(selection);
         if (!listHashMap[text]) {
             listHashMap[text] = 1;
             sortedKeys.push(text);

@@ -75,7 +75,7 @@ Polymer({
    * @return {boolean} Whether the calculation was successful.
    * @private
    */
-  calculateVisualScale_() {
+  calculateVisualScale_: function() {
     var displayAreaDiv = this.$.displayArea;
     if (!displayAreaDiv || !displayAreaDiv.offsetWidth || !this.displays ||
         !this.displays.length) {
@@ -92,7 +92,7 @@ Polymer({
     };
     var maxWidth = bounds.width;
     var maxHeight = bounds.height;
-    for (let i = 1; i < this.displays.length; ++i) {
+    for (var i = 1; i < this.displays.length; ++i) {
       display = this.displays[i];
       bounds = this.getCalculatedDisplayBounds(display.id);
       boundsBoundingBox.left = Math.min(boundsBoundingBox.left, bounds.left);
@@ -141,19 +141,23 @@ Polymer({
    */
   getDivStyle_: function(id, displayBounds, visualScale, opt_mirrored) {
     // This matches the size of the box-shadow or border in CSS.
-    /** @const {number} */ var BORDER = opt_mirrored ? 1 : 2;
+    /** @const {number} */ var BORDER = 1;
+    /** @const {number} */ var MARGIN = 4;
     /** @const {number} */ var OFFSET = opt_mirrored ? -4 : 0;
+    /** @const {number} */ var PADDING = 3;
     var bounds = this.getCalculatedDisplayBounds(id, true /* notest */);
     if (!bounds)
       return '';
-    var height = Math.round(bounds.height * this.visualScale) - BORDER * 2;
-    var width = Math.round(bounds.width * this.visualScale) - BORDER * 2;
+    var height = Math.round(bounds.height * this.visualScale) - BORDER * 2 -
+        MARGIN * 2 - PADDING * 2;
+    var width = Math.round(bounds.width * this.visualScale) - BORDER * 2 -
+        MARGIN * 2 - PADDING * 2;
     var left = OFFSET +
         Math.round(this.visualOffset_.left + (bounds.left * this.visualScale));
     var top = OFFSET +
         Math.round(this.visualOffset_.top + (bounds.top * this.visualScale));
-    return `height: ${height}px; width: ${width}px;` +
-        ` left: ${left}px; top: ${top}px`;
+    return 'height: ' + height + 'px; width: ' + width + 'px;' +
+        ' left: ' + left + 'px; top: ' + top + 'px';
   },
 
   /**
@@ -179,12 +183,13 @@ Polymer({
 
   /**
    * @param {!{model: !{item: !chrome.system.display.DisplayUnitInfo},
-   *     target: !PaperButtonElement}} e
+   *     target: !HTMLDivElement}} e
    * @private
    */
   onSelectDisplayTap_: function(e) {
     this.fire('select-display', e.model.item.id);
     // Force active in case the selected display was clicked.
+    // TODO(dpapad): Ask @stevenjb, why are we setting 'active' on a div?
     e.target.active = true;
   },
 
@@ -192,7 +197,7 @@ Polymer({
    * @param {string} id
    * @param {?DragPosition} amount
    */
-  onDrag_(id, amount) {
+  onDrag_: function(id, amount) {
     id = id.substr(1);  // Skip prefix
 
     var newBounds;
@@ -210,7 +215,9 @@ Polymer({
               Object.assign({}, calculatedBounds));
       newBounds.left += Math.round(amount.x / this.visualScale);
       newBounds.top += Math.round(amount.y / this.visualScale);
-      newBounds = this.updateDisplayBounds(id, newBounds);
+
+      if (this.displays.length >= 2)
+        newBounds = this.updateDisplayBounds(id, newBounds);
     }
     var left =
         this.visualOffset_.left + Math.round(newBounds.left * this.visualScale);

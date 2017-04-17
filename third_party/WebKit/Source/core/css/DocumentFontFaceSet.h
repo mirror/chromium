@@ -27,8 +27,8 @@
 #define DocumentFontFaceSet_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -36,11 +36,12 @@ class Document;
 class FontFaceSet;
 
 class DocumentFontFaceSet {
-    STATIC_ONLY(DocumentFontFaceSet);
-public:
-    static FontFaceSet* fonts(Document&);
+  STATIC_ONLY(DocumentFontFaceSet);
+
+ public:
+  static FontFaceSet* fonts(Document&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentFontFaceSet_h
+#endif  // DocumentFontFaceSet_h

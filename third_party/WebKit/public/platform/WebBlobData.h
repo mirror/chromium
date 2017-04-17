@@ -45,46 +45,46 @@ namespace blink {
 class BlobData;
 
 class WebBlobData : public WebNonCopyable {
-public:
-    struct Item {
-        enum { TypeData, TypeFile, TypeBlob, TypeFileSystemURL } type;
-        WebThreadSafeData data;
-        WebString blobUUID;
-        WebString filePath;
-        WebURL fileSystemURL;
-        long long offset;
-        long long length; // -1 means go to the end of the file/blob.
-        double expectedModificationTime; // 0.0 means that the time is not set.
-    };
+ public:
+  struct Item {
+    enum { kTypeData, kTypeFile, kTypeBlob, kTypeFileSystemURL } type;
+    WebThreadSafeData data;
+    WebString blob_uuid;
+    WebString file_path;
+    WebURL file_system_url;
+    long long offset;
+    long long length;  // -1 means go to the end of the file/blob.
+    double expected_modification_time;  // 0.0 means that the time is not set.
+  };
 
-    BLINK_PLATFORM_EXPORT WebBlobData();
-    BLINK_PLATFORM_EXPORT ~WebBlobData();
+  BLINK_PLATFORM_EXPORT WebBlobData();
+  BLINK_PLATFORM_EXPORT ~WebBlobData();
 
-    bool isNull() const { return !m_private.get(); }
+  bool IsNull() const { return !private_.get(); }
 
-    // Returns the number of items.
-    BLINK_PLATFORM_EXPORT size_t itemCount() const;
+  // Returns the number of items.
+  BLINK_PLATFORM_EXPORT size_t ItemCount() const;
 
-    // Retrieves the values of the item at the given index. Returns false if
-    // index is out of bounds.
-    // This call is single use only per index. The memory ownership is
-    // transfered to the result in the case of memory items. A second call with
-    // the same index will result in null data.
-    // TODO(dmurph): change the name to 'takeItemAt'
-    BLINK_PLATFORM_EXPORT bool itemAt(size_t index, Item& result) const;
+  // Retrieves the values of the item at the given index. Returns false if
+  // index is out of bounds.
+  // This call is single use only per index. The memory ownership is
+  // transfered to the result in the case of memory items. A second call with
+  // the same index will result in null data.
+  // TODO(dmurph): change the name to 'takeItemAt'
+  BLINK_PLATFORM_EXPORT bool ItemAt(size_t index, Item& result) const;
 
-    BLINK_PLATFORM_EXPORT WebString contentType() const;
+  BLINK_PLATFORM_EXPORT WebString ContentType() const;
 
 #if INSIDE_BLINK
-    BLINK_PLATFORM_EXPORT WebBlobData(std::unique_ptr<BlobData>);
-    BLINK_PLATFORM_EXPORT WebBlobData& operator=(std::unique_ptr<BlobData>);
-    BLINK_PLATFORM_EXPORT operator std::unique_ptr<BlobData>();
+  BLINK_PLATFORM_EXPORT WebBlobData(std::unique_ptr<BlobData>);
+  BLINK_PLATFORM_EXPORT WebBlobData& operator=(std::unique_ptr<BlobData>);
+  BLINK_PLATFORM_EXPORT operator std::unique_ptr<BlobData>();
 #endif
 
-private:
-    std::unique_ptr<BlobData> m_private;
+ private:
+  std::unique_ptr<BlobData> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebBlobData_h
+#endif  // WebBlobData_h

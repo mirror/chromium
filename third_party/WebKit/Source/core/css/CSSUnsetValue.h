@@ -6,31 +6,30 @@
 #define CSSUnsetValue_h
 
 #include "core/css/CSSValue.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class CSSUnsetValue : public CSSValue {
-public:
-    static CSSUnsetValue* create();
+ public:
+  static CSSUnsetValue* Create();
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool equals(const CSSUnsetValue&) const { return true; }
+  bool Equals(const CSSUnsetValue&) const { return true; }
 
-    DEFINE_INLINE_TRACE_AFTER_DISPATCH() { CSSValue::traceAfterDispatch(visitor); }
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
+    CSSValue::TraceAfterDispatch(visitor);
+  }
 
-private:
-    friend class CSSValuePool;
+ private:
+  friend class CSSValuePool;
 
-    CSSUnsetValue()
-        : CSSValue(UnsetClass)
-    {
-    }
+  CSSUnsetValue() : CSSValue(kUnsetClass) {}
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSUnsetValue, isUnsetValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSUnsetValue, IsUnsetValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSUnsetValue_h
+#endif  // CSSUnsetValue_h

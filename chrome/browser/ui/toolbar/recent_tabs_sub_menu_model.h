@@ -9,20 +9,18 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/scoped_observer.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "base/timer/elapsed_timer.h"
 #include "components/favicon/core/favicon_service.h"
 #include "components/sessions/core/tab_restore_service.h"
 #include "components/sessions/core/tab_restore_service_observer.h"
+#include "components/sync/driver/sync_service_observer.h"
 #include "components/sync_sessions/synced_session.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/models/simple_menu_model.h"
 
 class Browser;
-
-namespace sync_driver {
-class OpenTabsUIDelegate;
-}
 
 namespace favicon_base {
 struct FaviconImageResult;
@@ -36,6 +34,15 @@ namespace sessions {
 struct SessionTab;
 }
 
+namespace sync_sessions {
+class OpenTabsUIDelegate;
+}
+
+namespace syncer {
+class SyncService;
+class SyncServiceBase;
+}  // namespace syncer
+
 namespace ui {
 class AcceleratorProvider;
 }
@@ -45,7 +52,8 @@ class AcceleratorProvider;
 // opened tabs of other devices.
 class RecentTabsSubMenuModel : public ui::SimpleMenuModel,
                                public ui::SimpleMenuModel::Delegate,
-                               public sessions::TabRestoreServiceObserver {
+                               public sessions::TabRestoreServiceObserver,
+                               public syncer::SyncServiceObserver {
  public:
   // Command Id for recently closed items header or disabled item to which the
   // accelerator string will be appended.
@@ -57,10 +65,9 @@ class RecentTabsSubMenuModel : public ui::SimpleMenuModel,
   static int GetFirstRecentTabsCommandId();
 
   // If |open_tabs_delegate| is NULL, the default delegate for |browser|'s
-  // profile will be used. Testing may require a specific |open_tabs_delegate|.
+  // profile will be used.
   RecentTabsSubMenuModel(ui::AcceleratorProvider* accelerator_provider,
-                         Browser* browser,
-                         sync_driver::OpenTabsUIDelegate* open_tabs_delegate);
+                         Browser* browser);
   ~RecentTabsSubMenuModel() override;
 
   // Overridden from ui::SimpleMenuModel::Delegate:
@@ -110,7 +117,7 @@ class RecentTabsSubMenuModel : public ui::SimpleMenuModel,
 
   // Add the favicon for the device section header.
   void AddDeviceFavicon(int index_in_menu,
-                        sync_driver::SyncedSession::DeviceType device_type);
+                        sync_sessions::SyncedSession::DeviceType device_type);
 
   // Add the favicon for a local or other devices' tab asynchronously,
   // OnFaviconDataAvailable() will be invoked when the favicon is ready.
@@ -122,6 +129,9 @@ class RecentTabsSubMenuModel : public ui::SimpleMenuModel,
   // Clear all recently closed tabs and windows.
   void ClearLocalEntries();
 
+  // Clears all tabs from other devices.
+  void ClearTabsFromOtherDevices();
+
   // Converts |command_id| of menu item to index in local or other devices'
   // TabNavigationItems, and returns the corresponding local or other devices'
   // TabNavigationItems in |tab_items|.
@@ -132,16 +142,20 @@ class RecentTabsSubMenuModel : public ui::SimpleMenuModel,
   // can always skip going through the function and access the field directly.
   // Consider instead having code just deal with potentially NULL open_tabs_
   // and have it initialized by an event / callback.
-  sync_driver::OpenTabsUIDelegate* GetOpenTabsUIDelegate();
+  sync_sessions::OpenTabsUIDelegate* GetOpenTabsUIDelegate();
 
   // Overridden from TabRestoreServiceObserver:
   void TabRestoreServiceChanged(sessions::TabRestoreService* service) override;
   void TabRestoreServiceDestroyed(
       sessions::TabRestoreService* service) override;
 
+  // Overridden from syncer::SyncServiceObserver:
+  void OnSyncConfigurationCompleted(syncer::SyncService* sync) override;
+  void OnForeignSessionUpdated(syncer::SyncService* sync) override;
+
   Browser* browser_;  // Weak.
 
-  sync_driver::OpenTabsUIDelegate* open_tabs_delegate_;  // Weak.
+  sync_sessions::OpenTabsUIDelegate* open_tabs_delegate_;  // Weak.
 
   // Accelerator for reopening last closed tab.
   ui::Accelerator reopen_closed_tab_accelerator_;
@@ -177,6 +191,15 @@ class RecentTabsSubMenuModel : public ui::SimpleMenuModel,
 
   // Time the menu is open for until a recent tab is selected.
   base::ElapsedTimer menu_opened_timer_;
+
+// Mac doesn't support the dynamic menu.
+#if !defined(OS_MACOSX)
+  ScopedObserver<sessions::TabRestoreService, RecentTabsSubMenuModel>
+      tab_restore_service_observer_;
+
+  ScopedObserver<syncer::SyncServiceBase, RecentTabsSubMenuModel>
+      sync_observer_;
+#endif
 
   base::WeakPtrFactory<RecentTabsSubMenuModel> weak_ptr_factory_;
 

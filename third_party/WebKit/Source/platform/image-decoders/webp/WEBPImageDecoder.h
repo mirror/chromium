@@ -33,63 +33,83 @@
 #include "third_party/skia/include/core/SkData.h"
 #include "webp/decode.h"
 #include "webp/demux.h"
-#include "wtf/RefPtr.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT WEBPImageDecoder final : public ImageDecoder {
-    WTF_MAKE_NONCOPYABLE(WEBPImageDecoder);
-public:
-    WEBPImageDecoder(AlphaOption, GammaAndColorProfileOption, size_t maxDecodedBytes);
-    ~WEBPImageDecoder() override;
+  WTF_MAKE_NONCOPYABLE(WEBPImageDecoder);
 
-    // ImageDecoder:
-    String filenameExtension() const override { return "webp"; }
-    void onSetData(SegmentReader* data) override;
-    int repetitionCount() const override;
-    bool frameIsCompleteAtIndex(size_t) const override;
-    float frameDurationAtIndex(size_t) const override;
-    size_t clearCacheExceptFrame(size_t) override;
+ public:
+  WEBPImageDecoder(AlphaOption, const ColorBehavior&, size_t max_decoded_bytes);
+  ~WEBPImageDecoder() override;
 
-private:
-    // ImageDecoder:
-    virtual void decodeSize() { updateDemuxer(); }
-    size_t decodeFrameCount() override;
-    void initializeNewFrame(size_t) override;
-    void decode(size_t) override;
+  // ImageDecoder:
+  String FilenameExtension() const override { return "webp"; }
+  void OnSetData(SegmentReader* data) override;
+  int RepetitionCount() const override;
+  bool FrameIsCompleteAtIndex(size_t) const override;
+  float FrameDurationAtIndex(size_t) const override;
 
-    bool decodeSingleFrame(const uint8_t* dataBytes, size_t dataSize, size_t frameIndex);
+ private:
+  // ImageDecoder:
+  virtual void DecodeSize() { UpdateDemuxer(); }
+  size_t DecodeFrameCount() override;
+  void InitializeNewFrame(size_t) override;
+  void Decode(size_t) override;
 
-    WebPIDecoder* m_decoder;
-    WebPDecBuffer m_decoderBuffer;
-    int m_formatFlags;
-    bool m_frameBackgroundHasAlpha;
+  bool DecodeSingleFrame(const uint8_t* data_bytes,
+                         size_t data_size,
+                         size_t frame_index);
 
-#if USE(QCMSLIB)
-    void readColorProfile();
-#endif
+  // For WebP images, the frame status needs to be FrameComplete to decode
+  // subsequent frames that depend on frame |index|. The reason for this is that
+  // WebP uses the previous frame for alpha blending, in applyPostProcessing().
+  //
+  // Before calling this, verify that frame |index| exists by checking that
+  // |index| is smaller than |m_frameBufferCache|.size().
+  bool FrameStatusSufficientForSuccessors(size_t index) override {
+    DCHECK(index < frame_buffer_cache_.size());
+    return frame_buffer_cache_[index].GetStatus() == ImageFrame::kFrameComplete;
+  }
 
-    bool updateDemuxer();
-    bool initFrameBuffer(size_t frameIndex);
-    void applyPostProcessing(size_t frameIndex);
-    void clearFrameBuffer(size_t frameIndex) override;
+  WebPIDecoder* decoder_;
+  WebPDecBuffer decoder_buffer_;
+  int format_flags_;
+  bool frame_background_has_alpha_;
 
-    WebPDemuxer* m_demux;
-    WebPDemuxState m_demuxState;
-    bool m_haveAlreadyParsedThisData;
-    int m_repetitionCount;
-    int m_decodedHeight;
+  void ReadColorProfile();
+  bool UpdateDemuxer();
 
-    typedef void (*AlphaBlendFunction)(ImageFrame&, ImageFrame&, int, int, int);
-    AlphaBlendFunction m_blendFunction;
+  // Set |m_frameBackgroundHasAlpha| based on this frame's characteristics.
+  // Before calling this method, the caller must verify that the frame exists.
+  void OnInitFrameBuffer(size_t frame_index) override;
 
-    void clear();
-    void clearDecoder();
+  // When the blending method of this frame is BlendAtopPreviousFrame, the
+  // previous frame's buffer is necessary to decode this frame in
+  // applyPostProcessing, so we can't take over the data. Before calling this
+  // method, the caller must verify that the frame exists.
+  bool CanReusePreviousFrameBuffer(size_t frame_index) const override;
 
-    // FIXME: Update libwebp's API so it does not require copying the data on each update.
-    RefPtr<SkData> m_consolidatedData;
+  void ApplyPostProcessing(size_t frame_index);
+  void ClearFrameBuffer(size_t frame_index) override;
+
+  WebPDemuxer* demux_;
+  WebPDemuxState demux_state_;
+  bool have_already_parsed_this_data_;
+  int repetition_count_;
+  int decoded_height_;
+
+  typedef void (*AlphaBlendFunction)(ImageFrame&, ImageFrame&, int, int, int);
+  AlphaBlendFunction blend_function_;
+
+  void Clear();
+  void ClearDecoder();
+
+  // FIXME: Update libwebp's API so it does not require copying the data on each
+  // update.
+  sk_sp<SkData> consolidated_data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

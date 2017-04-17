@@ -3,13 +3,24 @@
 // found in the LICENSE file.
 
 Polymer({
-  is: 'oobe-next-button',
+  is: 'oobe-text-button',
 
   properties: {
-    disabled: {
-      type: Boolean,
-      value: false,
-    }
+    disabled: {type: Boolean, value: false, reflectToAttribute: true},
+
+    inverse: Boolean,
+
+    border: Boolean,
+
+    /* Note that we are not using "aria-label" property here, because
+     * we want to pass the label value but not actually declare it as an
+     * ARIA property anywhere but the actual target element.
+     */
+    labelForAria: String,
+  },
+
+  focus: function() {
+    this.$.textButton.focus();
   },
 
   onClick_: function(e) {
@@ -19,22 +30,60 @@ Polymer({
 });
 
 Polymer({
-  is: 'oobe-icon-button',
+  is: 'oobe-back-button',
 
   properties: {
     disabled: {type: Boolean, value: false, reflectToAttribute: true},
 
-    icon: String,
-
-    ariaLabel: String
+    /* Note that we are not using "aria-label" property here, because
+     * we want to pass the label value but not actually declare it as an
+     * ARIA property anywhere but the actual target element.
+     */
+    labelForAria: String,
   },
 
   focus: function() {
-    this.$.iconButton.focus();
+    this.$.button.focus();
   },
 
   onClick_: function(e) {
     if (this.disabled)
       e.stopPropagation();
   }
+});
+
+Polymer({
+  is: 'oobe-next-button',
+
+  properties: {
+    disabled: {type: Boolean, value: false, reflectToAttribute: true},
+  },
+
+  focus: function() {
+    this.$.button.focus();
+  },
+
+  onClick_: function(e) {
+    if (this.disabled)
+      e.stopPropagation();
+  }
+});
+
+Polymer({
+  is: 'oobe-welcome-secondary-button',
+
+  properties: {
+    icon1x: String,
+    icon2x: String,
+
+    /* Note that we are not using "aria-label" property here, because
+     * we want to pass the label value but not actually declare it as an
+     * ARIA property anywhere but the actual target element.
+     */
+    labelForAria: String
+  },
+
+  focus: function() {
+    this.$.button.focus();
+  },
 });

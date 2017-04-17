@@ -26,16 +26,10 @@
 // https://html.spec.whatwg.org/#the-domstringmap-interface
 
 [
+    DependentLifetime,
     OverrideBuiltins,
-    SetWrapperReferenceFrom=element,
 ] interface DOMStringMap {
     [ImplementedAs=item] getter DOMString (DOMString name);
     [CEReactions, RaisesException] setter void (DOMString name, DOMString value);
     [CEReactions] deleter void (DOMString name);
-
-    // FIXME: The indexed getter, setter and deleter are not in the
-    // spec and simply converts the index to a string.
-    [NotEnumerable] getter DOMString (unsigned long index);
-    [CEReactions, RaisesException] setter void (unsigned long index, DOMString value);
-    [CEReactions] deleter void (unsigned long index);
 };

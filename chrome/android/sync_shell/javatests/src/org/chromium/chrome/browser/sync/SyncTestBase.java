@@ -16,11 +16,11 @@ import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.chrome.test.util.browser.signin.SigninTestUtil;
 import org.chromium.chrome.test.util.browser.sync.SyncTestUtil;
+import org.chromium.components.sync.AndroidSyncSettings;
+import org.chromium.components.sync.ModelType;
+import org.chromium.components.sync.test.util.MockSyncContentResolverDelegate;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
-import org.chromium.sync.AndroidSyncSettings;
-import org.chromium.sync.ModelType;
-import org.chromium.sync.test.util.MockSyncContentResolverDelegate;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -144,7 +144,7 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         return account;
     }
 
-    protected Account setUpTestAccountAndSignIn() throws InterruptedException {
+    protected Account setUpTestAccountAndSignIn() {
         Account account = setUpTestAccount();
         signIn(account);
         return account;
@@ -159,7 +159,7 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         });
     }
 
-    protected void startSyncAndWait() throws InterruptedException {
+    protected void startSyncAndWait() {
         startSync();
         SyncTestUtil.waitForSyncActive();
     }
@@ -174,7 +174,7 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         getInstrumentation().waitForIdleSync();
     }
 
-    protected void signIn(final Account account) throws InterruptedException {
+    protected void signIn(final Account account) {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -204,7 +204,7 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         assertFalse(SyncTestUtil.isSyncRequested());
     }
 
-    protected void clearServerData() throws InterruptedException {
+    protected void clearServerData() {
         mFakeServerHelper.clearServerData();
         SyncTestUtil.triggerSync();
         CriteriaHelper.pollUiThread(new Criteria("Timed out waiting for sync to stop.") {
@@ -227,7 +227,7 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         });
     }
 
-    protected void pollInstrumentationThread(Criteria criteria) throws InterruptedException {
+    protected void pollInstrumentationThread(Criteria criteria) {
         CriteriaHelper.pollInstrumentationThread(
                 criteria, SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
     }

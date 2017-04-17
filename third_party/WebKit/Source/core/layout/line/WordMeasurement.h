@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All right reserved.
+ * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ *               All right reserved.
  * Copyright (C) 2010 Google Inc. All rights reserved.
  * Copyright (C) 2013 Adobe Systems Incorporated.
  *
@@ -25,30 +26,26 @@
 #define WordMeasurement_h
 
 #include "platform/fonts/SimpleFontData.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashSet.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
 class WordMeasurement {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    WordMeasurement()
-        : layoutText(nullptr)
-        , width(0)
-        , startOffset(0)
-        , endOffset(0)
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    LineLayoutText layoutText;
-    float width;
-    int startOffset;
-    int endOffset;
-    HashSet<const SimpleFontData*> fallbackFonts;
-    FloatRect glyphBounds;
+ public:
+  WordMeasurement()
+      : layout_text(nullptr), width(0), start_offset(0), end_offset(0) {}
+
+  LineLayoutText layout_text;
+  float width;
+  int start_offset;
+  int end_offset;
+  HashSet<const SimpleFontData*> fallback_fonts;
+  FloatRect glyph_bounds;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WordMeasurement_h
+#endif  // WordMeasurement_h

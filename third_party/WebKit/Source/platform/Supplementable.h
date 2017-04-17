@@ -27,12 +27,12 @@
 #define Supplementable_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Assertions.h"
-#include "wtf/HashMap.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Noncopyable.h"
 
-#if ENABLE(ASSERT)
-#include "wtf/Threading.h"
+#if DCHECK_IS_ON()
+#include "platform/wtf/Threading.h"
 #endif
 
 namespace blink {
@@ -69,112 +69,131 @@ namespace blink {
 //
 //     MyClass* MyClass::from(MySupplementable* host)
 //     {
-//         return static_cast<MyClass*>(Supplement<MySupplementable>::from(host, supplementName()));
+//         return static_cast<MyClass*>(
+//             Supplement<MySupplementable>::from(host, supplementName()));
 //     }
 //
 // What you should know about thread checks
 // ========================================
 // When assertion is enabled this class performs thread-safety check so that
-// provideTo and from happen on the same thread. If you want to provide
-// some value for Workers this thread check may not work very well though,
-// since in most case you'd provide the value while worker preparation is
-// being done on the main thread, even before the worker thread is started.
+// supplements are provided to and from the same thread.
+// If you want to provide some value for Workers, this thread check may be too
+// strict, since in you'll be providing the value while worker preparation is
+// being done on the main thread, even before the worker thread has started.
 // If that's the case you can explicitly call reattachThread() when the
 // Supplementable object is passed to the final destination thread (i.e.
-// worker thread). Please be extremely careful to use the method though,
-// as randomly calling the method could easily cause racy condition.
+// worker thread). This will allow supplements to be accessed on that thread.
+// Please be extremely careful to use the method though, as randomly calling
+// the method could easily cause racy condition.
 //
 // Note that reattachThread() does nothing if assertion is not enabled.
 //
 
-template<typename T>
+template <typename T>
 class Supplementable;
 
-template<typename T>
+template <typename T>
 class Supplement : public GarbageCollectedMixin {
-public:
-    static void provideTo(Supplementable<T>& host, const char* key, Supplement<T>* supplement)
-    {
-        host.provideSupplement(key, supplement);
-    }
+ public:
+  // TODO(haraken): Remove the default constructor.
+  // All Supplement objects should be instantiated with m_host.
+  Supplement() {}
 
-    static Supplement<T>* from(Supplementable<T>& host, const char* key)
-    {
-        return host.requireSupplement(key);
-    }
+  explicit Supplement(T& supplementable) : supplementable_(&supplementable) {}
 
-    static Supplement<T>* from(Supplementable<T>* host, const char* key)
-    {
-        return host ? host->requireSupplement(key) : 0;
-    }
+  // Supplementable and its supplements live and die together.
+  // Thus supplementable() should never return null (if the default constructor
+  // is completely removed).
+  T* GetSupplementable() const { return supplementable_; }
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  static void ProvideTo(Supplementable<T>& supplementable,
+                        const char* key,
+                        Supplement<T>* supplement) {
+    supplementable.ProvideSupplement(key, supplement);
+  }
+
+  static Supplement<T>* From(Supplementable<T>& supplementable,
+                             const char* key) {
+    return supplementable.RequireSupplement(key);
+  }
+
+  static Supplement<T>* From(Supplementable<T>* supplementable,
+                             const char* key) {
+    return supplementable ? supplementable->RequireSupplement(key) : 0;
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(supplementable_); }
+
+ private:
+  Member<T> supplementable_;
 };
 
 // Supplementable<T> inherits from GarbageCollectedMixin virtually
 // to allow ExecutionContext to derive from two GC mixin classes.
-template<typename T>
+template <typename T>
 class Supplementable : public virtual GarbageCollectedMixin {
-    WTF_MAKE_NONCOPYABLE(Supplementable);
-public:
-    void provideSupplement(const char* key, Supplement<T>* supplement)
-    {
-        ASSERT(m_threadId == currentThread());
-        ASSERT(!this->m_supplements.get(key));
-        this->m_supplements.set(key, supplement);
-    }
+  WTF_MAKE_NONCOPYABLE(Supplementable);
 
-    void removeSupplement(const char* key)
-    {
-        ASSERT(m_threadId == currentThread());
-        this->m_supplements.remove(key);
-    }
-
-    Supplement<T>* requireSupplement(const char* key)
-    {
-        ASSERT(m_threadId == currentThread());
-        return this->m_supplements.get(key);
-    }
-
-    void reattachThread()
-    {
-#if ENABLE(ASSERT)
-        m_threadId = currentThread();
+ public:
+  void ProvideSupplement(const char* key, Supplement<T>* supplement) {
+#if DCHECK_IS_ON()
+    DCHECK_EQ(creation_thread_id_, CurrentThread());
 #endif
-    }
+    this->supplements_.Set(key, supplement);
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_supplements);
-    }
-
-protected:
-    using SupplementMap = HeapHashMap<const char*, Member<Supplement<T>>, PtrHash<const char>>;
-    SupplementMap m_supplements;
-
-    Supplementable()
-#if ENABLE(ASSERT)
-        : m_threadId(currentThread())
+  void RemoveSupplement(const char* key) {
+#if DCHECK_IS_ON()
+    DCHECK_EQ(creation_thread_id_, CurrentThread());
 #endif
-    {
-    }
+    this->supplements_.erase(key);
+  }
 
-#if ENABLE(ASSERT)
-private:
-    ThreadIdentifier m_threadId;
+  Supplement<T>* RequireSupplement(const char* key) {
+#if DCHECK_IS_ON()
+    DCHECK_EQ(attached_thread_id_, CurrentThread());
+#endif
+    return this->supplements_.at(key);
+  }
+
+  void ReattachThread() {
+#if DCHECK_IS_ON()
+    attached_thread_id_ = CurrentThread();
+#endif
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(supplements_); }
+
+ protected:
+  using SupplementMap =
+      HeapHashMap<const char*, Member<Supplement<T>>, PtrHash<const char>>;
+  SupplementMap supplements_;
+
+  Supplementable()
+#if DCHECK_IS_ON()
+      : attached_thread_id_(CurrentThread()),
+        creation_thread_id_(CurrentThread())
+#endif
+  {
+  }
+
+#if DCHECK_IS_ON()
+ private:
+  ThreadIdentifier attached_thread_id_;
+  ThreadIdentifier creation_thread_id_;
 #endif
 };
 
-template<typename T>
+template <typename T>
 struct ThreadingTrait<Supplement<T>> {
-    static const ThreadAffinity Affinity = ThreadingTrait<T>::Affinity;
+  static const ThreadAffinity kAffinity = ThreadingTrait<T>::kAffinity;
 };
 
-template<typename T>
+template <typename T>
 struct ThreadingTrait<Supplementable<T>> {
-    static const ThreadAffinity Affinity = ThreadingTrait<T>::Affinity;
+  static const ThreadAffinity kAffinity = ThreadingTrait<T>::Affinity;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Supplementable_h
+#endif  // Supplementable_h

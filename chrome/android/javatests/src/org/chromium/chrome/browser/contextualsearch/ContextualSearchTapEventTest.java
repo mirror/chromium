@@ -8,9 +8,10 @@ import static org.chromium.base.test.util.Restriction.RESTRICTION_TYPE_NON_LOW_E
 
 import android.content.Context;
 import android.net.Uri;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 import android.widget.LinearLayout;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -18,10 +19,11 @@ import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelManager;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelManagerWrapper;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
 import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
-import org.chromium.chrome.browser.compositor.layouts.eventfilter.EventFilterHost;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.content.browser.ContentViewCore;
-import org.chromium.content.browser.ContextualSearchClient;
+import org.chromium.content.browser.SelectionClient;
+import org.chromium.content.browser.SelectionPopupController;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
 import org.chromium.ui.touch_selection.SelectionEventType;
@@ -36,19 +38,19 @@ public class ContextualSearchTapEventTest extends ChromeActivityTestCaseBase<Chr
     private ContextualSearchManagerWrapper mContextualSearchManager;
     private ContextualSearchPanel mPanel;
     private OverlayPanelManagerWrapper mPanelManager;
-    private ContextualSearchClient mContextualSearchClient;
+    private SelectionClient mContextualSearchClient;
 
     /**
      * A ContextualSearchRequest that forgoes URI template lookup.
      */
     private static class MockContextualSearchRequest extends ContextualSearchRequest {
         public MockContextualSearchRequest(String term, String altTerm, boolean prefetch) {
-            super(term, altTerm, prefetch);
+            super(term, altTerm, "", prefetch);
         }
 
         @Override
-        protected Uri getUriTemplate(String query, @Nullable String alternateTerm,
-                boolean shouldPrefetch) {
+        protected Uri getUriTemplate(
+                String query, @Nullable String alternateTerm, String mid, boolean shouldPrefetch) {
             return Uri.parse("");
         }
     }
@@ -59,9 +61,9 @@ public class ContextualSearchTapEventTest extends ChromeActivityTestCaseBase<Chr
      * ContextualSearchPanel wrapper that prevents native calls.
      */
     private static class ContextualSearchPanelWrapper extends ContextualSearchPanel {
-        public ContextualSearchPanelWrapper(Context context, LayoutUpdateHost updateHost,
-                EventFilterHost eventHost, OverlayPanelManager panelManager) {
-            super(context, updateHost, eventHost, panelManager);
+        public ContextualSearchPanelWrapper(
+                Context context, LayoutUpdateHost updateHost, OverlayPanelManager panelManager) {
+            super(context, updateHost, panelManager);
         }
 
         @Override
@@ -84,26 +86,32 @@ public class ContextualSearchTapEventTest extends ChromeActivityTestCaseBase<Chr
                 WindowAndroid windowAndroid) {
             super(activity, windowAndroid, null);
             setSelectionController(new MockCSSelectionController(activity, this));
-            getSelectionController().getBaseContentView().setContextualSearchClient(this);
-            setContextualSearchPolicy(new MockContextualSearchPolicy(activity));
+            ContentViewCore contentView = getSelectionController().getBaseContentView();
+            contentView.setSelectionPopupControllerForTesting(new SelectionPopupController(
+                    activity, null, null, null, contentView.getRenderCoordinates()));
+            contentView.setSelectionClient(this);
+            MockContextualSearchPolicy policy = new MockContextualSearchPolicy();
+            setContextualSearchPolicy(policy);
+            mTranslateController = new MockedCSTranslateController(activity, policy, null);
         }
 
         @Override
         public void startSearchTermResolutionRequest(String selection) {
             // Skip native calls and immediately "resolve" the search term.
-            onSearchTermResolutionResponse(true, 200, selection, selection, "", false, 0, 10, "");
+            onSearchTermResolutionResponse(
+                    true, 200, selection, selection, "", "", false, 0, 10, "", "", "", "",
+                    QuickActionCategory.NONE);
         }
 
         @Override
-        protected ContextualSearchRequest createContextualSearchRequest(String query,
-                String altTerm, boolean shouldPrefetch) {
+        protected ContextualSearchRequest createContextualSearchRequest(
+                String query, String altTerm, String mid, boolean shouldPrefetch) {
             return new MockContextualSearchRequest(query, altTerm, shouldPrefetch);
         }
 
         @Override
         protected void nativeGatherSurroundingText(long nativeContextualSearchManager,
-                String selection, boolean useResolvedSearchTerm,
-                ContentViewCore baseContentViewCore, boolean maySendBasePageUrl) {}
+                ContextualSearchContext contextualSearchContext, WebContents baseWebContents) {}
 
         /**
          * @return A stubbed ContentViewCore for mocking text selection.
@@ -128,8 +136,33 @@ public class ContextualSearchTapEventTest extends ChromeActivityTestCaseBase<Chr
         }
 
         @Override
-        public StubbedContentViewCore getBaseContentView() {
+        StubbedContentViewCore getBaseContentView() {
             return mContentViewCore;
+        }
+    }
+
+    // --------------------------------------------------------------------------------------------
+
+    /**
+     * Translate controller that mocks out native calls.
+     */
+    private static class MockedCSTranslateController extends ContextualSearchTranslateController {
+        private static final String ENGLISH_TARGET_LANGUAGE = "en";
+        private static final String ENGLISH_ACCEPT_LANGUAGES = "en-US,en";
+
+        MockedCSTranslateController(ChromeActivity activity, ContextualSearchPolicy policy,
+                ContextualSearchTranslateInterface hostInterface) {
+            super(activity, policy, hostInterface);
+        }
+
+        @Override
+        protected String getNativeAcceptLanguages() {
+            return ENGLISH_ACCEPT_LANGUAGES;
+        }
+
+        @Override
+        protected String getNativeTranslateServiceTargetLanguage() {
+            return ENGLISH_TARGET_LANGUAGE;
         }
     }
 
@@ -142,7 +175,7 @@ public class ContextualSearchTapEventTest extends ChromeActivityTestCaseBase<Chr
         private String mCurrentText;
 
         public StubbedContentViewCore(Context context) {
-            super(context);
+            super(context, "");
         }
 
         @Override
@@ -162,16 +195,27 @@ public class ContextualSearchTapEventTest extends ChromeActivityTestCaseBase<Chr
      */
     private void mockTapText(String text) {
         mContextualSearchManager.getBaseContentView().setSelectedText(text);
-        mContextualSearchClient.onSelectionEvent(SelectionEventType.SELECTION_HANDLES_SHOWN, 0, 0);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mContextualSearchClient.onSelectionEvent(SelectionEventType.SELECTION_HANDLES_SHOWN,
+                        0, 0);
+            }
+        });
     }
 
     /**
      * Trigger empty space tap.
      */
     private void mockTapEmptySpace() {
-        mContextualSearchClient.showUnhandledTapUIIfNeeded(0, 0);
-        mContextualSearchClient.onSelectionEvent(
-                SelectionEventType.SELECTION_HANDLES_CLEARED, 0, 0);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mContextualSearchClient.showUnhandledTapUIIfNeeded(0, 0);
+                mContextualSearchClient.onSelectionEvent(
+                        SelectionEventType.SELECTION_HANDLES_CLEARED, 0, 0);
+            }
+        });
     }
 
     // --------------------------------------------------------------------------------------------
@@ -184,17 +228,24 @@ public class ContextualSearchTapEventTest extends ChromeActivityTestCaseBase<Chr
     protected void setUp() throws Exception {
         super.setUp();
 
-        mPanelManager = new OverlayPanelManagerWrapper();
-        mPanelManager.setContainerView(new LinearLayout(getActivity()));
-        mPanelManager.setDynamicResourceLoader(new DynamicResourceLoader(0, null));
+        final ChromeActivity activity = getActivity();
 
-        mContextualSearchManager =
-                new ContextualSearchManagerWrapper(getActivity(), getActivity().getWindowAndroid());
-        mPanel = new ContextualSearchPanelWrapper(getActivity(), null, null, mPanelManager);
-        mPanel.setManagementDelegate(mContextualSearchManager);
-        mContextualSearchManager.setContextualSearchPanel(mPanel);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mPanelManager = new OverlayPanelManagerWrapper();
+                mPanelManager.setContainerView(new LinearLayout(activity));
+                mPanelManager.setDynamicResourceLoader(new DynamicResourceLoader(0, null));
 
-        mContextualSearchClient = mContextualSearchManager;
+                mContextualSearchManager =
+                        new ContextualSearchManagerWrapper(activity, activity.getWindowAndroid());
+                mPanel = new ContextualSearchPanelWrapper(activity, null, mPanelManager);
+                mPanel.setManagementDelegate(mContextualSearchManager);
+                mContextualSearchManager.setContextualSearchPanel(mPanel);
+
+                mContextualSearchClient = mContextualSearchManager;
+            }
+        });
     }
 
     @Override

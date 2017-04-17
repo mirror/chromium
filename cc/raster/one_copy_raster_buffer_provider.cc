@@ -11,7 +11,9 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
 #include "cc/base/math_util.h"
 #include "cc/resources/platform_color.h"
@@ -19,6 +21,7 @@
 #include "cc/resources/resource_util.h"
 #include "cc/resources/scoped_resource.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "ui/gfx/buffer_format_util.h"
@@ -54,12 +57,12 @@ void OneCopyRasterBufferProvider::RasterBufferImpl::Playback(
     const gfx::Rect& raster_full_rect,
     const gfx::Rect& raster_dirty_rect,
     uint64_t new_content_id,
-    float scale,
+    const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings) {
   TRACE_EVENT0("cc", "OneCopyRasterBuffer::Playback");
   client_->PlaybackAndCopyOnWorkerThread(
       resource_, &lock_, sync_token_, raster_source, raster_full_rect,
-      raster_dirty_rect, scale, playback_settings, previous_content_id_,
+      raster_dirty_rect, transform, playback_settings, previous_content_id_,
       new_content_id);
 }
 
@@ -105,9 +108,9 @@ OneCopyRasterBufferProvider::AcquireBufferForRaster(
     uint64_t previous_content_id) {
   // TODO(danakj): If resource_content_id != 0, we only need to copy/upload
   // the dirty rect.
-  return base::WrapUnique(new RasterBufferImpl(this, resource_provider_,
-                                               resource, previous_content_id,
-                                               async_worker_context_enabled_));
+  return base::MakeUnique<RasterBufferImpl>(this, resource_provider_, resource,
+                                            previous_content_id,
+                                            async_worker_context_enabled_);
 }
 
 void OneCopyRasterBufferProvider::ReleaseBufferForRaster(
@@ -139,7 +142,7 @@ void OneCopyRasterBufferProvider::OrderingBarrier() {
 
 ResourceFormat OneCopyRasterBufferProvider::GetResourceFormat(
     bool must_support_alpha) const {
-  if (resource_provider_->IsResourceFormatSupported(preferred_tile_format_) &&
+  if (resource_provider_->IsTextureFormatSupported(preferred_tile_format_) &&
       (DoesResourceFormatSupportAlpha(preferred_tile_format_) ||
        !must_support_alpha)) {
     return preferred_tile_format_;
@@ -160,6 +163,46 @@ bool OneCopyRasterBufferProvider::CanPartialRasterIntoProvidedResource() const {
   return false;
 }
 
+bool OneCopyRasterBufferProvider::IsResourceReadyToDraw(
+    ResourceId resource_id) const {
+  if (!async_worker_context_enabled_)
+    return true;
+
+  gpu::SyncToken sync_token =
+      resource_provider_->GetSyncTokenForResources({resource_id});
+  if (!sync_token.HasData())
+    return true;
+
+  // IsSyncTokenSignaled is thread-safe, no need for worker context lock.
+  return worker_context_provider_->ContextSupport()->IsSyncTokenSignaled(
+      sync_token);
+}
+
+uint64_t OneCopyRasterBufferProvider::SetReadyToDrawCallback(
+    const ResourceProvider::ResourceIdArray& resource_ids,
+    const base::Closure& callback,
+    uint64_t pending_callback_id) const {
+  if (!async_worker_context_enabled_)
+    return 0;
+
+  gpu::SyncToken sync_token =
+      resource_provider_->GetSyncTokenForResources(resource_ids);
+  uint64_t callback_id = sync_token.release_count();
+  DCHECK_NE(callback_id, 0u);
+
+  // If the callback is different from the one the caller is already waiting on,
+  // pass the callback through to SignalSyncToken. Otherwise the request is
+  // redundant.
+  if (callback_id != pending_callback_id) {
+    // Use the compositor context because we want this callback on the impl
+    // thread.
+    compositor_context_provider_->ContextSupport()->SignalSyncToken(sync_token,
+                                                                    callback);
+  }
+
+  return callback_id;
+}
+
 void OneCopyRasterBufferProvider::Shutdown() {
   staging_pool_.Shutdown();
   pending_raster_buffers_.clear();
@@ -172,7 +215,7 @@ void OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
     const RasterSource* raster_source,
     const gfx::Rect& raster_full_rect,
     const gfx::Rect& raster_dirty_rect,
-    float scale,
+    const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings,
     uint64_t previous_content_id,
     uint64_t new_content_id) {
@@ -191,10 +234,10 @@ void OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
   std::unique_ptr<StagingBuffer> staging_buffer =
       staging_pool_.AcquireStagingBuffer(resource, previous_content_id);
 
-  PlaybackToStagingBuffer(staging_buffer.get(), resource, raster_source,
-                          raster_full_rect, raster_dirty_rect, scale,
-                          playback_settings, previous_content_id,
-                          new_content_id);
+  PlaybackToStagingBuffer(
+      staging_buffer.get(), resource, raster_source, raster_full_rect,
+      raster_dirty_rect, transform, resource_lock->color_space_for_raster(),
+      playback_settings, previous_content_id, new_content_id);
 
   CopyOnWorkerThread(staging_buffer.get(), resource_lock, sync_token,
                      raster_source, previous_content_id, new_content_id);
@@ -208,7 +251,8 @@ void OneCopyRasterBufferProvider::PlaybackToStagingBuffer(
     const RasterSource* raster_source,
     const gfx::Rect& raster_full_rect,
     const gfx::Rect& raster_dirty_rect,
-    float scale,
+    const gfx::AxisTransform2d& transform,
+    const gfx::ColorSpace& dst_color_space,
     const RasterSource::PlaybackSettings& playback_settings,
     uint64_t previous_content_id,
     uint64_t new_content_id) {
@@ -216,10 +260,9 @@ void OneCopyRasterBufferProvider::PlaybackToStagingBuffer(
   // must allocate a buffer with BufferUsage CPU_READ_WRITE_PERSISTENT.
   if (!staging_buffer->gpu_memory_buffer) {
     staging_buffer->gpu_memory_buffer =
-        resource_provider_->gpu_memory_buffer_manager()
-            ->AllocateGpuMemoryBuffer(
-                staging_buffer->size, BufferFormat(resource->format()),
-                StagingBufferUsage(), gpu::kNullSurfaceHandle);
+        resource_provider_->gpu_memory_buffer_manager()->CreateGpuMemoryBuffer(
+            staging_buffer->size, BufferFormat(resource->format()),
+            StagingBufferUsage(), gpu::kNullSurfaceHandle);
   }
 
   gfx::Rect playback_rect = raster_full_rect;
@@ -258,7 +301,7 @@ void OneCopyRasterBufferProvider::PlaybackToStagingBuffer(
     RasterBufferProvider::PlaybackToMemory(
         buffer->memory(0), resource->format(), staging_buffer->size,
         buffer->stride(0), raster_source, raster_full_rect, playback_rect,
-        scale, playback_settings);
+        transform, dst_color_space, playback_settings);
     buffer->Unmap();
     staging_buffer->content_id = new_content_id;
   }
@@ -344,9 +387,10 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
       int rows_to_copy = std::min(chunk_size_in_rows, height - y);
       DCHECK_GT(rows_to_copy, 0);
 
-      gl->CopySubTextureCHROMIUM(
-          staging_buffer->texture_id, resource_texture_id, 0, y, 0, y,
-          resource_lock->size().width(), rows_to_copy, false, false, false);
+      gl->CopySubTextureCHROMIUM(staging_buffer->texture_id, 0, GL_TEXTURE_2D,
+                                 resource_texture_id, 0, 0, y, 0, y,
+                                 resource_lock->size().width(), rows_to_copy,
+                                 false, false, false);
       y += rows_to_copy;
 
       // Increment |bytes_scheduled_since_last_flush_| by the amount of memory

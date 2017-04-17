@@ -9,6 +9,7 @@
 #include <algorithm>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/ui/focus_ring_layer.h"
 
 namespace chromeos {
@@ -79,12 +80,27 @@ AccessibilityFocusRingController::AccessibilityFocusRingController() {
 AccessibilityFocusRingController::~AccessibilityFocusRingController() {
 }
 
+void AccessibilityFocusRingController::SetFocusRingColor(SkColor color) {
+  focus_ring_color_ = color;
+  UpdateFocusRingsFromFocusRects();
+}
+
+void AccessibilityFocusRingController::ResetFocusRingColor() {
+  focus_ring_color_.reset();
+  UpdateFocusRingsFromFocusRects();
+}
+
 void AccessibilityFocusRingController::SetFocusRing(
     const std::vector<gfx::Rect>& rects,
     AccessibilityFocusRingController::FocusRingBehavior focus_ring_behavior) {
   focus_ring_behavior_ = focus_ring_behavior;
   OnLayerChange(&focus_animation_info_);
   focus_rects_ = rects;
+  UpdateFocusRingsFromFocusRects();
+}
+
+void AccessibilityFocusRingController::HideFocusRing() {
+  focus_rects_.clear();
   UpdateFocusRingsFromFocusRects();
 }
 
@@ -98,7 +114,7 @@ void AccessibilityFocusRingController::UpdateFocusRingsFromFocusRects() {
 
   for (size_t i = 0; i < focus_rings_.size(); ++i) {
     if (!focus_layers_[i])
-      focus_layers_[i] = new AccessibilityFocusRingLayer(this);
+      focus_layers_[i] = base::MakeUnique<AccessibilityFocusRingLayer>(this);
   }
 
   if (focus_ring_behavior_ == PERSIST_FOCUS_RING &&
@@ -111,6 +127,13 @@ void AccessibilityFocusRingController::UpdateFocusRingsFromFocusRects() {
     // In FADE mode, set all focus rings to their destination location.
     for (size_t i = 0; i < focus_rings_.size(); ++i)
       focus_layers_[i]->Set(focus_rings_[i]);
+  }
+
+  for (size_t i = 0; i < focus_rings_.size(); ++i) {
+    if (focus_ring_color_)
+      focus_layers_[i]->SetColor(*focus_ring_color_);
+    else
+      focus_layers_[i]->ResetColor();
   }
 }
 
@@ -133,6 +156,10 @@ void AccessibilityFocusRingController::SetCursorRing(
   OnLayerChange(&cursor_animation_info_);
 }
 
+void AccessibilityFocusRingController::HideCursorRing() {
+  cursor_layer_.reset();
+}
+
 void AccessibilityFocusRingController::SetCaretRing(
     const gfx::Point& location) {
   caret_location_ = location;
@@ -144,6 +171,10 @@ void AccessibilityFocusRingController::SetCaretRing(
 
   caret_layer_->Set(location);
   OnLayerChange(&caret_animation_info_);
+}
+
+void AccessibilityFocusRingController::HideCaretRing() {
+  caret_layer_.reset();
 }
 
 void AccessibilityFocusRingController::SetNoFadeForTesting() {
@@ -423,14 +454,13 @@ void AccessibilityFocusRingController::ComputeOpacity(
   float opacity;
   if (start_delta < fade_in_time) {
     opacity = start_delta.InSecondsF() / fade_in_time.InSecondsF();
-    if (opacity > 1.0)
-      opacity = 1.0;
   } else {
     opacity = 1.0 - (change_delta.InSecondsF() /
                      (fade_in_time + fade_out_time).InSecondsF());
-    if (opacity < 0.0)
-      opacity = 0.0;
   }
+
+  // Layer::SetOpacity will throw an error if we're not within 0...1.
+  opacity = std::min(std::max(opacity, 0.0f), 1.0f);
 
   animation_info->opacity = opacity;
 }

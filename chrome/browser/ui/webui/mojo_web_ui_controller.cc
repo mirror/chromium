@@ -17,7 +17,7 @@ MojoWebUIControllerBase::MojoWebUIControllerBase(content::WebUI* contents)
 MojoWebUIControllerBase::~MojoWebUIControllerBase() {
 }
 
-void MojoWebUIControllerBase::RenderViewCreated(
-    content::RenderViewHost* render_view_host) {
-  render_view_host->AllowBindings(content::BINDINGS_POLICY_WEB_UI);
+void MojoWebUIControllerBase::RenderFrameCreated(
+    content::RenderFrameHost* render_frame_host) {
+  render_frame_host->AllowBindings(content::BINDINGS_POLICY_WEB_UI);
 }

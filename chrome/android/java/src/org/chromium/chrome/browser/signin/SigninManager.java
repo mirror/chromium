@@ -10,20 +10,23 @@ import android.content.Context;
 import android.os.Handler;
 
 import org.chromium.base.ActivityState;
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
 import org.chromium.base.Promise;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.externalauth.ExternalAuthUtils;
 import org.chromium.chrome.browser.externalauth.UserRecoverableErrorHandler;
 import org.chromium.chrome.browser.sync.SyncUserDataWiper;
-import org.chromium.sync.signin.AccountManagerHelper;
-import org.chromium.sync.signin.ChromeSigninController;
+import org.chromium.components.signin.AccountManagerHelper;
+import org.chromium.components.signin.ChromeSigninController;
+import org.chromium.components.sync.AndroidSyncSettings;
 
 import javax.annotation.Nullable;
 
@@ -142,7 +145,7 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
          * afterwards. This allows the manager to know if it should progress the flow when the
          * account tracker broadcasts updates.
          */
-        public boolean blockedOnAccountSeeding = false;
+        public boolean blockedOnAccountSeeding;
 
         /**
          * @param account The account to sign in to.
@@ -196,7 +199,7 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
         mNativeSigninManagerAndroid = nativeInit();
         mSigninAllowedByPolicy = nativeIsSigninAllowedByPolicy(mNativeSigninManagerAndroid);
 
-        AccountTrackerService.get(mContext).addSystemAccountsSeededListener(this);
+        AccountTrackerService.get().addSystemAccountsSeededListener(this);
     }
 
     /**
@@ -232,8 +235,8 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
      * Returns true if signin can be started now.
      */
     public boolean isSignInAllowed() {
-        return mSigninAllowedByPolicy && !mFirstRunCheckIsPending && mSignInState == null
-                && ChromeSigninController.get(mContext).getSignedInUser() == null;
+        return !mFirstRunCheckIsPending && mSignInState == null && mSigninAllowedByPolicy
+                && ChromeSigninController.get().getSignedInUser() == null && isSigninSupported();
     }
 
     /**
@@ -241,6 +244,22 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
      */
     public boolean isSigninDisabledByPolicy() {
         return !mSigninAllowedByPolicy;
+    }
+
+    /**
+     * @return Whether true if the current user is not demo user and the user has a reasonable
+     *         Google Play Services installed.
+     */
+    public boolean isSigninSupported() {
+        return !ApiCompatibilityUtils.isDemoUser(mContext)
+                && !ExternalAuthUtils.getInstance().isGooglePlayServicesMissing(mContext);
+    }
+
+    /**
+     * @return Whether force sign-in is enabled by policy.
+     */
+    public boolean isForceSigninEnabled() {
+        return nativeIsForceSigninEnabled(mNativeSigninManagerAndroid);
     }
 
     /**
@@ -347,7 +366,7 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
      */
     public void signIn(String accountName, @Nullable final Activity activity,
             @Nullable final SignInCallback callback) {
-        AccountManagerHelper.get(mContext).getAccountFromName(accountName, new Callback<Account>() {
+        AccountManagerHelper.get().getAccountFromName(accountName, new Callback<Account>() {
             @Override
             public void onResult(Account account) {
                 signIn(account, activity, callback);
@@ -356,14 +375,14 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
     }
 
     private void progressSignInFlowSeedSystemAccounts() {
-        if (AccountTrackerService.get(mContext).checkAndSeedSystemAccounts()) {
+        if (AccountTrackerService.get().checkAndSeedSystemAccounts()) {
             progressSignInFlowCheckPolicy();
-        } else if (AccountIdProvider.getInstance().canBeUsed(mContext)) {
+        } else if (AccountIdProvider.getInstance().canBeUsed()) {
             mSignInState.blockedOnAccountSeeding = true;
         } else {
             Activity activity = mSignInState.activity;
             UserRecoverableErrorHandler errorHandler = activity != null
-                    ? new UserRecoverableErrorHandler.ModalDialog(activity)
+                    ? new UserRecoverableErrorHandler.ModalDialog(activity, !isForceSigninEnabled())
                     : new UserRecoverableErrorHandler.SystemNotification();
             ExternalAuthUtils.getInstance().canUseGooglePlayServices(mContext, errorHandler);
             Log.w(TAG, "Cancelling the sign-in process as Google Play services is unavailable");
@@ -433,7 +452,8 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
 
         // Cache the signed-in account name. This must be done after the native call, otherwise
         // sync tries to start without being signed in natively and crashes.
-        ChromeSigninController.get(mContext).setSignedInAccountName(mSignInState.account.name);
+        ChromeSigninController.get().setSignedInAccountName(mSignInState.account.name);
+        AndroidSyncSettings.updateAccount(mContext, mSignInState.account);
 
         if (mSignInState.callback != null) {
             mSignInState.callback.onSignInComplete();
@@ -512,7 +532,8 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
         // Native signout must happen before resetting the account so data is deleted correctly.
         // http://crbug.com/589028
         nativeSignOut(mNativeSigninManagerAndroid);
-        ChromeSigninController.get(mContext).setSignedInAccountName(null);
+        ChromeSigninController.get().setSignedInAccountName(null);
+        AndroidSyncSettings.updateAccount(mContext, null);
 
         if (wipeData) {
             wipeProfileData(wipeDataHooks);
@@ -520,7 +541,7 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
             onSignOutDone();
         }
 
-        AccountTrackerService.get(mContext).invalidateAccountSeedStatus(true);
+        AccountTrackerService.get().invalidateAccountSeedStatus(true);
     }
 
     /**
@@ -536,6 +557,10 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
 
     public void clearLastSignedInUser() {
         nativeClearLastSignedInUser(mNativeSigninManagerAndroid);
+    }
+
+    public void prohibitSignout(boolean prohibitSignout) {
+        nativeProhibitSignout(mNativeSigninManagerAndroid, prohibitSignout);
     }
 
     /**
@@ -618,26 +643,23 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
     /**
      * Performs an asynchronous check to see if the user is a managed user.
      * @param callback A callback to be called with true if the user is a managed user and false
-     *         otherwise.
+     *         otherwise. May be called synchronously from this function.
      */
     public static void isUserManaged(String email, final Callback<Boolean> callback) {
         if (nativeShouldLoadPolicyForUser(email)) {
             nativeIsUserManaged(email, callback);
         } else {
-            // Although we know the result immediately, the caller may not be able to handle the
-            // callback being executed during this method call. So we post the callback on the
-            // looper.
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onResult(false);
-                }
-            });
+            callback.onResult(false);
         }
     }
 
     public static String extractDomainName(String email) {
         return nativeExtractDomainName(email);
+    }
+
+    @VisibleForTesting
+    public static void setInstanceForTesting(SigninManager signinManager) {
+        sSigninManager = signinManager;
     }
 
     // Native methods.
@@ -646,6 +668,7 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
     private static native void nativeIsUserManaged(String username, Callback<Boolean> callback);
     private native long nativeInit();
     private native boolean nativeIsSigninAllowedByPolicy(long nativeSigninManagerAndroid);
+    private native boolean nativeIsForceSigninEnabled(long nativeSigninManagerAndroid);
     private native void nativeCheckPolicyBeforeSignIn(
             long nativeSigninManagerAndroid, String username);
     private native void nativeFetchPolicyBeforeSignIn(long nativeSigninManagerAndroid);
@@ -657,4 +680,6 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
     private native void nativeClearLastSignedInUser(long nativeSigninManagerAndroid);
     private native void nativeLogInSignedInUser(long nativeSigninManagerAndroid);
     private native boolean nativeIsSignedInOnNative(long nativeSigninManagerAndroid);
+    private native void nativeProhibitSignout(
+            long nativeSigninManagerAndroid, boolean prohibitSignout);
 }

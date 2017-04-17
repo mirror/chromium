@@ -4,11 +4,12 @@
 
 package org.chromium.net;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
+
+import org.json.JSONObject;
 
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.test.util.CertTestUtil;
-import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.security.cert.CertificateFactory;
@@ -34,7 +35,7 @@ public class PkpTest extends CronetTestBase {
     private static final boolean DISABLE_PINNING_BYPASS_FOR_LOCAL_ANCHORS = false;
 
     private CronetTestFramework mTestFramework;
-    private CronetEngine.Builder mBuilder;
+    private ExperimentalCronetEngine.Builder mBuilder;
     private TestUrlRequestCallback mListener;
     private String mServerUrl; // https://test.example.com:6121
     private String mServerHost; // test.example.com
@@ -72,7 +73,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256(mServerHost, nonMatchingHash, EXCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertErrorResponse();
@@ -95,7 +95,6 @@ public class PkpTest extends CronetTestBase {
 
         addPkpSha256(mServerHost, matchingHash, EXCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertSuccessfulResponse();
@@ -116,7 +115,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256(mDomain, nonMatchingHash, INCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertErrorResponse();
@@ -137,7 +135,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256(mDomain, nonMatchingHash, EXCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertSuccessfulResponse();
@@ -158,7 +155,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256("otherhost.com", nonMatchingHash, INCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertSuccessfulResponse();
@@ -179,7 +175,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256(mServerHost, nonMatchingHash, EXCLUDE_SUBDOMAINS, tenSecondsAhead);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertErrorResponse();
@@ -200,7 +195,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256(mServerHost, nonMatchingHash, EXCLUDE_SUBDOMAINS, oneSecondAgo);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertSuccessfulResponse();
@@ -219,7 +213,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256(mServerHost, nonMatchingHash, EXCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertErrorResponse();
@@ -238,7 +231,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256(mServerHost, nonMatchingHash, EXCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
 
         assertSuccessfulResponse();
@@ -257,7 +249,6 @@ public class PkpTest extends CronetTestBase {
         byte[] nonMatchingHash = generateSomeSha256();
         addPkpSha256(mServerHost, nonMatchingHash, EXCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
         assertErrorResponse();
         shutdownCronetEngine();
@@ -266,7 +257,6 @@ public class PkpTest extends CronetTestBase {
         // a successful response is expected.
         createCronetEngineBuilder(ENABLE_PINNING_BYPASS_FOR_LOCAL_ANCHORS, KNOWN_ROOT);
         startCronetFramework();
-        registerHostResolver(mTestFramework);
         sendRequestAndWaitForResult();
         assertSuccessfulResponse();
     }
@@ -373,7 +363,7 @@ public class PkpTest extends CronetTestBase {
      */
     private void assertErrorResponse() {
         assertNotNull("Expected an error", mListener.mError);
-        int errorCode = mListener.mError.getCronetInternalErrorCode();
+        int errorCode = ((NetworkException) mListener.mError).getCronetInternalErrorCode();
         Set<Integer> expectedErrors = new HashSet<>();
         expectedErrors.add(NetError.ERR_QUIC_PROTOCOL_ERROR);
         expectedErrors.add(NetError.ERR_CONNECTION_REFUSED);
@@ -389,7 +379,7 @@ public class PkpTest extends CronetTestBase {
     private void assertSuccessfulResponse() {
         if (mListener.mError != null) {
             fail("Did not expect an error but got error code "
-                    + mListener.mError.getCronetInternalErrorCode());
+                    + ((NetworkException) mListener.mError).getCronetInternalErrorCode());
         }
         assertNotNull("Expected non-null response from the server", mListener.mResponseInfo);
         assertEquals(200, mListener.mResponseInfo.getHttpStatusCode());
@@ -398,18 +388,19 @@ public class PkpTest extends CronetTestBase {
     private void createCronetEngineBuilder(boolean bypassPinningForLocalAnchors, boolean knownRoot)
             throws Exception {
         // Set common CronetEngine parameters
-        mBuilder = new CronetEngine.Builder(getContext());
+        mBuilder = new ExperimentalCronetEngine.Builder(getContext());
         mBuilder.enablePublicKeyPinningBypassForLocalTrustAnchors(bypassPinningForLocalAnchors);
-        mBuilder.enableQUIC(true);
+        mBuilder.enableQuic(true);
         mBuilder.addQuicHint(QuicTestServer.getServerHost(), QuicTestServer.getServerPort(),
                 QuicTestServer.getServerPort());
-        JSONObject quicParams = new JSONObject().put("host_whitelist", "test.example.com");
-        JSONObject experimentalOptions = new JSONObject().put("QUIC", quicParams);
+        JSONObject hostResolverParams = CronetTestUtil.generateHostResolverRules();
+        JSONObject experimentalOptions = new JSONObject()
+                                                 .put("HostResolverRules", hostResolverParams);
         mBuilder.setExperimentalOptions(experimentalOptions.toString());
         mBuilder.setStoragePath(CronetTestFramework.getTestStorage(getContext()));
         mBuilder.enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK_NO_HTTP, 1000 * 1024);
-        mBuilder.setMockCertVerifierForTesting(
-                MockCertVerifier.createMockCertVerifier(CERTS_USED, knownRoot));
+        CronetTestUtil.setMockCertVerifierForTesting(
+                mBuilder, MockCertVerifier.createMockCertVerifier(CERTS_USED, knownRoot));
     }
 
     private void startCronetFramework() {
@@ -439,8 +430,8 @@ public class PkpTest extends CronetTestBase {
         mListener = new TestUrlRequestCallback();
 
         String quicURL = mServerUrl + "/simple.txt";
-        UrlRequest.Builder requestBuilder = new UrlRequest.Builder(
-                quicURL, mListener, mListener.getExecutor(), mTestFramework.mCronetEngine);
+        UrlRequest.Builder requestBuilder = mTestFramework.mCronetEngine.newUrlRequestBuilder(
+                quicURL, mListener, mListener.getExecutor());
         requestBuilder.build().start();
         mListener.blockForDone();
     }

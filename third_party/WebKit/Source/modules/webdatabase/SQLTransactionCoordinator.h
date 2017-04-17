@@ -33,41 +33,45 @@
 #define SQLTransactionCoordinator_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Deque.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
 class SQLTransactionBackend;
 
-class SQLTransactionCoordinator : public GarbageCollectedFinalized<SQLTransactionCoordinator> {
-    WTF_MAKE_NONCOPYABLE(SQLTransactionCoordinator);
-public:
-    SQLTransactionCoordinator();
-    DECLARE_TRACE();
-    void acquireLock(SQLTransactionBackend*);
-    void releaseLock(SQLTransactionBackend*);
-    void shutdown();
+class SQLTransactionCoordinator
+    : public GarbageCollectedFinalized<SQLTransactionCoordinator> {
+  WTF_MAKE_NONCOPYABLE(SQLTransactionCoordinator);
 
-private:
-    typedef Deque<CrossThreadPersistent<SQLTransactionBackend>> TransactionsQueue;
-    struct CoordinationInfo {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    public:
-        TransactionsQueue pendingTransactions;
-        HashSet<CrossThreadPersistent<SQLTransactionBackend>> activeReadTransactions;
-        CrossThreadPersistent<SQLTransactionBackend> activeWriteTransaction;
-    };
-    // Maps database names to information about pending transactions
-    typedef HashMap<String, CoordinationInfo> CoordinationInfoHeapMap;
-    CoordinationInfoHeapMap m_coordinationInfoMap;
-    bool m_isShuttingDown;
+ public:
+  SQLTransactionCoordinator();
+  DECLARE_TRACE();
+  void AcquireLock(SQLTransactionBackend*);
+  void ReleaseLock(SQLTransactionBackend*);
+  void Shutdown();
 
-    void processPendingTransactions(CoordinationInfo&);
+ private:
+  typedef Deque<CrossThreadPersistent<SQLTransactionBackend>> TransactionsQueue;
+  struct CoordinationInfo {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+
+   public:
+    TransactionsQueue pending_transactions;
+    HashSet<CrossThreadPersistent<SQLTransactionBackend>>
+        active_read_transactions;
+    CrossThreadPersistent<SQLTransactionBackend> active_write_transaction;
+  };
+  // Maps database names to information about pending transactions
+  typedef HashMap<String, CoordinationInfo> CoordinationInfoHeapMap;
+  CoordinationInfoHeapMap coordination_info_map_;
+  bool is_shutting_down_;
+
+  void ProcessPendingTransactions(CoordinationInfo&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SQLTransactionCoordinator_h
+#endif  // SQLTransactionCoordinator_h

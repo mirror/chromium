@@ -15,8 +15,9 @@
 #include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/browsing_data/browsing_data_remover_test_util.h"
 #include "chrome/browser/browsing_data/cache_counter.h"
-#include "chrome/browser/browsing_data/origin_filter_builder.h"
+#include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/external_protocol/external_protocol_handler.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -27,6 +28,7 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/browsing_data_filter_builder.h"
 #include "content/public/browser/download_manager.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_paths.h"
@@ -40,6 +42,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using content::BrowserThread;
+using content::BrowsingDataFilterBuilder;
 
 namespace {
 static const char* kExampleHost = "example.com";
@@ -77,7 +80,7 @@ class BrowsingDataRemoverBrowserTest : public InProcessBrowserTest {
     base::ScopedTempDir downloads_directory;
     ASSERT_TRUE(downloads_directory.CreateUniqueTempDir());
     browser()->profile()->GetPrefs()->SetFilePath(
-        prefs::kDownloadDefaultDirectory, downloads_directory.path());
+        prefs::kDownloadDefaultDirectory, downloads_directory.GetPath());
 
     // Start a download.
     content::DownloadManager* download_manager =
@@ -103,6 +106,7 @@ class BrowsingDataRemoverBrowserTest : public InProcessBrowserTest {
     Profile* profile = browser()->profile();
     CacheCounter counter(profile);
     counter.Init(profile->GetPrefs(),
+                 browsing_data::ClearBrowsingDataTab::ADVANCED,
                  base::Bind(&BrowsingDataRemoverBrowserTest::OnCacheSizeResult,
                             base::Unretained(this), base::Unretained(&run_loop),
                             base::Unretained(&size)));
@@ -115,20 +119,22 @@ class BrowsingDataRemoverBrowserTest : public InProcessBrowserTest {
     BrowsingDataRemover* remover =
         BrowsingDataRemoverFactory::GetForBrowserContext(browser()->profile());
     BrowsingDataRemoverCompletionObserver completion_observer(remover);
-    remover->Remove(BrowsingDataRemover::Period(browsing_data::LAST_HOUR),
-                    remove_mask, BrowsingDataHelper::UNPROTECTED_WEB);
+    remover->RemoveAndReply(base::Time(), base::Time::Max(), remove_mask,
+                            BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB,
+                            &completion_observer);
     completion_observer.BlockUntilCompletion();
   }
 
   void RemoveWithFilterAndWait(
       int remove_mask,
-      const BrowsingDataFilterBuilder& filter_builder) {
+      std::unique_ptr<BrowsingDataFilterBuilder> filter_builder) {
     BrowsingDataRemover* remover =
         BrowsingDataRemoverFactory::GetForBrowserContext(browser()->profile());
     BrowsingDataRemoverCompletionObserver completion_observer(remover);
-    remover->RemoveWithFilter(
-        BrowsingDataRemover::Period(browsing_data::LAST_HOUR), remove_mask,
-        BrowsingDataHelper::UNPROTECTED_WEB, filter_builder);
+    remover->RemoveWithFilterAndReply(
+        base::Time(), base::Time::Max(), remove_mask,
+        BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB,
+        std::move(filter_builder), &completion_observer);
     completion_observer.BlockUntilCompletion();
   }
 
@@ -158,8 +164,9 @@ class BrowsingDataRemoverTransportSecurityStateBrowserTest
         BrowserThread::IO, FROM_HERE,
         base::Bind(&BrowsingDataRemoverTransportSecurityStateBrowserTest::
                        SetUpTransportSecurityState,
-                   this, base::RetainedRef(
-                             browser()->profile()->GetRequestContext())));
+                   base::Unretained(this),
+                   base::RetainedRef(
+                       browser()->profile()->GetRequestContext())));
   }
 
   void CheckTransportSecurityState(
@@ -188,7 +195,7 @@ class BrowsingDataRemoverTransportSecurityStateBrowserTest
 // Test BrowsingDataRemover for downloads.
 IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, Download) {
   DownloadAnItem();
-  RemoveAndWait(BrowsingDataRemover::REMOVE_DOWNLOADS);
+  RemoveAndWait(BrowsingDataRemover::DATA_TYPE_DOWNLOADS);
   VerifyDownloadCount(0u);
 }
 
@@ -202,7 +209,7 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, DownloadProhibited) {
   prefs->SetBoolean(prefs::kAllowDeletingBrowserHistory, false);
 
   DownloadAnItem();
-  RemoveAndWait(BrowsingDataRemover::REMOVE_DOWNLOADS);
+  RemoveAndWait(BrowsingDataRemover::DATA_TYPE_DOWNLOADS);
   VerifyDownloadCount(1u);
 }
 #endif
@@ -217,7 +224,7 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, Database) {
   RunScriptAndCheckResult("insertRecord('text')", "done");
   RunScriptAndCheckResult("getRecords()", "text");
 
-  RemoveAndWait(BrowsingDataRemover::REMOVE_SITE_DATA);
+  RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_DATA);
 
   ui_test_utils::NavigateToURL(browser(), url);
   RunScriptAndCheckResult("createTable()", "done");
@@ -245,35 +252,55 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, Cache) {
 
   // Partially delete cache data. Delete data for localhost, which is the origin
   // of |url1|, but not for |kExampleHost|, which is the origin of |url2|.
-  OriginFilterBuilder filter_builder(OriginFilterBuilder::WHITELIST);
-  filter_builder.AddOrigin(url::Origin(url1));
-  RemoveWithFilterAndWait(BrowsingDataRemover::REMOVE_CACHE, filter_builder);
+  std::unique_ptr<BrowsingDataFilterBuilder> filter_builder =
+      BrowsingDataFilterBuilder::Create(BrowsingDataFilterBuilder::WHITELIST);
+  filter_builder->AddOrigin(url::Origin(url1));
+  RemoveWithFilterAndWait(BrowsingDataRemover::DATA_TYPE_CACHE,
+                          std::move(filter_builder));
 
   // After the partial deletion, the cache should be smaller but still nonempty.
   browsing_data::BrowsingDataCounter::ResultInt new_size = GetCacheSize();
   EXPECT_LT(new_size, original_size);
 
   // Another partial deletion with the same filter should have no effect.
-  RemoveWithFilterAndWait(BrowsingDataRemover::REMOVE_CACHE, filter_builder);
+  filter_builder =
+      BrowsingDataFilterBuilder::Create(BrowsingDataFilterBuilder::WHITELIST);
+  filter_builder->AddOrigin(url::Origin(url1));
+  RemoveWithFilterAndWait(BrowsingDataRemover::DATA_TYPE_CACHE,
+                          std::move(filter_builder));
   EXPECT_EQ(new_size, GetCacheSize());
 
   // Delete the remaining data.
-  RemoveAndWait(BrowsingDataRemover::REMOVE_CACHE);
+  RemoveAndWait(BrowsingDataRemover::DATA_TYPE_CACHE);
 
   // The cache is empty.
   EXPECT_EQ(0, GetCacheSize());
 }
 
+IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest,
+                       ExternalProtocolHandlerPrefs) {
+  Profile* profile = browser()->profile();
+  base::DictionaryValue prefs;
+  prefs.SetBoolean("tel", true);
+  profile->GetPrefs()->Set(prefs::kExcludedSchemes, prefs);
+  ExternalProtocolHandler::BlockState block_state =
+      ExternalProtocolHandler::GetBlockState("tel", profile);
+  ASSERT_EQ(ExternalProtocolHandler::BLOCK, block_state);
+  RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_DATA);
+  block_state = ExternalProtocolHandler::GetBlockState("tel", profile);
+  ASSERT_EQ(ExternalProtocolHandler::UNKNOWN, block_state);
+}
+
 // Verify that TransportSecurityState data is cleared for REMOVE_CACHE.
 IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverTransportSecurityStateBrowserTest,
                        ClearTransportSecurityState) {
-  RemoveAndWait(BrowsingDataRemover::REMOVE_CACHE);
+  RemoveAndWait(BrowsingDataRemover::DATA_TYPE_CACHE);
   base::RunLoop run_loop;
   BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&BrowsingDataRemoverTransportSecurityStateBrowserTest::
                      CheckTransportSecurityState,
-                 this,
+                 base::Unretained(this),
                  base::RetainedRef(browser()->profile()->GetRequestContext()),
                  true /* should be cleared */),
       run_loop.QuitClosure());
@@ -283,13 +310,13 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverTransportSecurityStateBrowserTest,
 // set.
 IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverTransportSecurityStateBrowserTest,
                        PreserveTransportSecurityState) {
-  RemoveAndWait(BrowsingDataRemover::REMOVE_SITE_DATA);
+  RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_DATA);
   base::RunLoop run_loop;
   BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&BrowsingDataRemoverTransportSecurityStateBrowserTest::
                      CheckTransportSecurityState,
-                 this,
+                 base::Unretained(this),
                  base::RetainedRef(browser()->profile()->GetRequestContext()),
                  false /* should not be cleared */),
       run_loop.QuitClosure());

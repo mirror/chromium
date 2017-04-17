@@ -9,11 +9,11 @@
 #include "base/macros.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkCanvas.h"
+#include "ui/gfx/native_pixmap.h"
 #include "ui/ozone/platform/drm/gpu/crtc_controller.h"
 #include "ui/ozone/platform/drm/gpu/hardware_display_controller.h"
 #include "ui/ozone/platform/drm/gpu/mock_drm_device.h"
 #include "ui/ozone/platform/drm/gpu/mock_scanout_buffer.h"
-#include "ui/ozone/public/native_pixmap.h"
 
 namespace {
 
@@ -202,31 +202,6 @@ TEST_F(HardwareDisplayControllerTest, CheckOverlayTestMode) {
   EXPECT_EQ(2, page_flips_);
   EXPECT_EQ(2, drm_->get_page_flip_call_count());
   EXPECT_EQ(2, drm_->get_overlay_flip_call_count());
-}
-
-TEST_F(HardwareDisplayControllerTest, CheckOverlayFullScreenMode) {
-  ui::OverlayPlane plane1(scoped_refptr<ui::ScanoutBuffer>(
-      new ui::MockScanoutBuffer(kDefaultModeSize)));
-  ui::OverlayPlane plane2(scoped_refptr<ui::ScanoutBuffer>(
-                              new ui::MockScanoutBuffer(kDefaultModeSize)),
-                          1, gfx::OVERLAY_TRANSFORM_NONE,
-                          gfx::Rect(kDefaultModeSize),
-                          gfx::RectF(kDefaultModeSizeF));
-
-  EXPECT_TRUE(controller_->Modeset(plane1, kDefaultMode));
-
-  std::vector<ui::OverlayPlane> planes;
-  planes.push_back(plane1);
-  planes.push_back(plane2);
-
-  controller_->SchedulePageFlip(
-      planes, base::Bind(&HardwareDisplayControllerTest::PageFlipCallback,
-                         base::Unretained(this)));
-  drm_->RunCallbacks();
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, last_swap_result_);
-  EXPECT_EQ(1, page_flips_);
-  EXPECT_EQ(1, drm_->get_page_flip_call_count());
-  EXPECT_EQ(0, drm_->get_overlay_flip_call_count());
 }
 
 TEST_F(HardwareDisplayControllerTest, RejectUnderlays) {

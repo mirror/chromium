@@ -2,93 +2,89 @@ Hidden by modal dialog
 (Dialog itself is not hidden)
 Non-hidden element inside dialog
 {
-  "id": "<int>",
-  "result": {
-    "accessibilityNode": {
-      "nodeId": "<string>",
-      "ignored": true,
-      "ignoredReasons": [
-        {
-          "name": "activeModalDialog",
-          "value": {
-            "type": "idref",
-            "relatedNodes": [
-              {
-                "nodeResult": "dialog"
-              }
-            ]
+  "nodeId": "<string>",
+  "ignored": true,
+  "ignoredReasons": [
+    {
+      "name": "activeModalDialog",
+      "value": {
+        "type": "idref",
+        "relatedNodes": [
+          {
+            "nodeResult": "dialog"
           }
-        }
-      ],
-      "role": {
-        "type": "internalRole",
-        "value": "Div"
+        ]
       }
     }
-  }
+  ],
+  "role": {
+    "type": "internalRole",
+    "value": "Ignored"
+  },
+  "domNode": "div"
 }
 {
-  "id": "<int>",
-  "result": {
-    "accessibilityNode": {
-      "nodeId": "<string>",
-      "ignored": false,
-      "role": {
-        "type": "role",
-        "value": "dialog"
+  "nodeId": "<string>",
+  "ignored": false,
+  "role": {
+    "type": "role",
+    "value": "dialog"
+  },
+  "name": {
+    "type": "computedString",
+    "value": "",
+    "sources": [
+      {
+        "type": "relatedElement",
+        "attribute": "aria-labelledby"
       },
-      "name": {
-        "type": "computedString",
-        "value": "",
-        "sources": [
-          {
-            "type": "relatedElement",
-            "attribute": "aria-labelledby"
-          },
-          {
-            "type": "attribute",
-            "attribute": "aria-label"
-          },
-          {
-            "type": "attribute",
-            "attribute": "title"
-          }
-        ]
+      {
+        "type": "attribute",
+        "attribute": "aria-label"
       },
-      "properties": []
+      {
+        "type": "attribute",
+        "attribute": "title"
+      }
+    ]
+  },
+  "properties": [
+    {
+      "name": "modal",
+      "value": {
+        "type": "boolean",
+        "value": true
+      }
     }
-  }
+  ],
+  "domNode": "dialog"
 }
 {
-  "id": "<int>",
-  "result": {
-    "accessibilityNode": {
-      "nodeId": "<string>",
-      "ignored": false,
-      "role": {
-        "type": "internalRole",
-        "value": "Div"
+  "nodeId": "<string>",
+  "ignored": false,
+  "role": {
+    "type": "internalRole",
+    "value": "Div"
+  },
+  "name": {
+    "type": "computedString",
+    "value": "",
+    "sources": [
+      {
+        "type": "relatedElement",
+        "attribute": "aria-labelledby"
       },
-      "name": {
-        "type": "computedString",
-        "value": "",
-        "sources": [
-          {
-            "type": "relatedElement",
-            "attribute": "aria-labelledby"
-          },
-          {
-            "type": "attribute",
-            "attribute": "aria-label"
-          },
-          {
-            "type": "attribute",
-            "attribute": "title"
-          }
-        ]
+      {
+        "type": "attribute",
+        "attribute": "aria-label"
       },
-      "properties": []
-    }
-  }
+      {
+        "type": "attribute",
+        "attribute": "title"
+      }
+    ]
+  },
+  "properties": [],
+  "domNode": "div"
 }
 

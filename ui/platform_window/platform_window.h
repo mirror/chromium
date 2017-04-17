@@ -17,7 +17,6 @@ class Rect;
 namespace ui {
 
 class PlatformImeController;
-class PlatformWindowDelegate;
 
 // Platform window.
 //
@@ -30,6 +29,11 @@ class PlatformWindow {
   virtual void Show() = 0;
   virtual void Hide() = 0;
   virtual void Close() = 0;
+
+  // Informs the window it is going to be destroyed sometime soon. This is only
+  // called for specific code paths, for example by Ash, so it shouldn't be
+  // assumed this will get called before destruction.
+  virtual void PrepareForShutdown() = 0;
 
   // Sets and gets the bounds of the platform-window. Note that the bounds is in
   // physical pixel coordinates.

@@ -5,32 +5,19 @@
 #ifndef CHROME_BROWSER_PLUGINS_PLUGIN_OBSERVER_H_
 #define CHROME_BROWSER_PLUGINS_PLUGIN_OBSERVER_H_
 
+#include <map>
 #include <memory>
+#include <string>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/common/features.h"
+#include "components/component_updater/component_updater_service.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
-#include <map>
-#endif
-
-class GURL;
-class PluginFinder;
-class PluginMetadata;
-
-#if defined(ENABLE_PLUGIN_INSTALLATION)
-class PluginInstaller;
-class PluginPlaceholderHost;
-#endif
-
 namespace content {
 class WebContents;
-}
-
-namespace infobars {
-class InfoBarDelegate;
 }
 
 class PluginObserver : public content::WebContentsObserver,
@@ -45,26 +32,29 @@ class PluginObserver : public content::WebContentsObserver,
                          content::RenderFrameHost* render_frame_host) override;
 
  private:
-  explicit PluginObserver(content::WebContents* web_contents);
+  class ComponentObserver;
+  class PluginPlaceholderHost;
   friend class content::WebContentsUserData<PluginObserver>;
 
-  class PluginPlaceholderHost;
+  explicit PluginObserver(content::WebContents* web_contents);
 
   // Message handlers:
   void OnBlockedUnauthorizedPlugin(const base::string16& name,
                                    const std::string& identifier);
   void OnBlockedOutdatedPlugin(int placeholder_id,
                                const std::string& identifier);
-#if defined(ENABLE_PLUGIN_INSTALLATION)
+  void OnBlockedComponentUpdatedPlugin(int placeholder_id,
+                                       const std::string& identifier);
   void OnRemovePluginPlaceholderHost(int placeholder_id);
-#endif
-  void OnOpenAboutPlugins();
+  void RemoveComponentObserver(int placeholder_id);
+  void OnShowFlashPermissionBubble();
   void OnCouldNotLoadPlugin(const base::FilePath& plugin_path);
 
-#if defined(ENABLE_PLUGIN_INSTALLATION)
   // Stores all PluginPlaceholderHosts, keyed by their routing ID.
-  std::map<int, PluginPlaceholderHost*> plugin_placeholders_;
-#endif
+  std::map<int, std::unique_ptr<PluginPlaceholderHost>> plugin_placeholders_;
+
+  // Stores all ComponentObservers, keyed by their routing ID.
+  std::map<int, std::unique_ptr<ComponentObserver>> component_observers_;
 
   base::WeakPtrFactory<PluginObserver> weak_ptr_factory_;
 

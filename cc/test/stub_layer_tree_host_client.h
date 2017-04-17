@@ -24,13 +24,15 @@ class StubLayerTreeHostClient : public LayerTreeHostClient {
                            const gfx::Vector2dF& elastic_overscroll_delta,
                            float page_scale,
                            float top_controls_delta) override {}
-  void RequestNewOutputSurface() override {}
-  void DidInitializeOutputSurface() override {}
-  void DidFailToInitializeOutputSurface() override {}
+  void RecordWheelAndTouchScrollingCount(bool has_scrolled_by_wheel,
+                                         bool has_scrolled_by_touch) override {}
+  void RequestNewCompositorFrameSink() override {}
+  void DidInitializeCompositorFrameSink() override {}
+  void DidFailToInitializeCompositorFrameSink() override {}
   void WillCommit() override {}
   void DidCommit() override {}
   void DidCommitAndDrawFrame() override {}
-  void DidCompleteSwapBuffers() override {}
+  void DidReceiveCompositorFrameAck() override {}
   void DidCompletePageScaleAnimation() override {}
 };
 

@@ -4,10 +4,10 @@
 
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_info_cache.h"
+#include "chrome/browser/signin/signin_util.h"
 
 ProfileAttributesEntry::ProfileAttributesEntry()
-    : profile_info_cache_(nullptr),
-      profile_path_(base::FilePath()) {}
+    : profile_info_cache_(nullptr), profile_path_(base::FilePath()) {}
 
 void ProfileAttributesEntry::Initialize(
     ProfileInfoCache* cache, const base::FilePath& path) {
@@ -17,6 +17,9 @@ void ProfileAttributesEntry::Initialize(
   DCHECK(profile_path_.empty());
   DCHECK(!path.empty());
   profile_path_ = path;
+  is_force_signin_enabled_ = signin_util::IsForceSigninEnabled();
+  if (!IsAuthenticated() && is_force_signin_enabled_)
+    is_force_signin_profile_locked_ = true;
 }
 
 base::string16 ProfileAttributesEntry::GetName() const {
@@ -96,7 +99,8 @@ bool ProfileAttributesEntry::IsOmitted() const {
 }
 
 bool ProfileAttributesEntry::IsSigninRequired() const {
-  return profile_info_cache_->ProfileIsSigninRequiredAtIndex(profile_index());
+  return profile_info_cache_->ProfileIsSigninRequiredAtIndex(profile_index()) ||
+         is_force_signin_profile_locked_;
 }
 
 std::string ProfileAttributesEntry::GetSupervisedUserId() const {
@@ -223,6 +227,16 @@ void ProfileAttributesEntry::SetIsUsingGAIAPicture(bool value) {
 
 void ProfileAttributesEntry::SetIsSigninRequired(bool value) {
   profile_info_cache_->SetProfileSigninRequiredAtIndex(profile_index(), value);
+  if (is_force_signin_enabled_)
+    LockForceSigninProfile(value);
+}
+
+void ProfileAttributesEntry::LockForceSigninProfile(bool is_lock) {
+  DCHECK(is_force_signin_enabled_);
+  if (is_force_signin_profile_locked_ == is_lock)
+    return;
+  is_force_signin_profile_locked_ = is_lock;
+  profile_info_cache_->NotifyIsSigninRequiredChanged(profile_path_);
 }
 
 void ProfileAttributesEntry::SetIsEphemeral(bool value) {

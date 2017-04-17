@@ -4,6 +4,7 @@
 
 #include "ui/platform_window/win/win_window.h"
 
+#include <algorithm>
 #include <memory>
 
 #include "base/strings/string16.h"
@@ -72,6 +73,8 @@ void WinWindow::Hide() {
 void WinWindow::Close() {
   Destroy();
 }
+
+void WinWindow::PrepareForShutdown() {}
 
 void WinWindow::SetBounds(const gfx::Rect& bounds) {
   gfx::Rect window_bounds = GetWindowBoundsForClientBounds(

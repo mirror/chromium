@@ -31,259 +31,55 @@
 #define MediaControlElements_h
 
 #include "core/html/shadow/MediaControlElementTypes.h"
+#include "core/html/shadow/MediaControlTimelineMetrics.h"
 
 namespace blink {
 
-class TextTrack;
+class CORE_EXPORT MediaControlTimelineElement final
+    : public MediaControlInputElement {
+ public:
+  static MediaControlTimelineElement* Create(MediaControls&);
 
-// ----------------------------
+  bool WillRespondToMouseClickEvents() override;
 
-class MediaControlPanelElement final : public MediaControlDivElement {
-public:
-    static MediaControlPanelElement* create(MediaControls&);
+  // FIXME: An "earliest possible position" will be needed once that concept
+  // is supported by HTMLMediaElement, see https://crbug.com/137275
+  void SetPosition(double);
+  void SetDuration(double);
 
-    void setIsDisplayed(bool);
+  void OnPlaying();
 
-    void makeOpaque();
-    void makeTransparent();
+ private:
+  explicit MediaControlTimelineElement(MediaControls&);
 
-private:
-    explicit MediaControlPanelElement(MediaControls&);
+  void DefaultEventHandler(Event*) override;
+  bool KeepEventInNode(Event*) override;
 
-    void defaultEventHandler(Event*) override;
-    bool keepEventInNode(Event*) override;
+  // Width in CSS pixels * pageZoomFactor (ignores CSS transforms for
+  // simplicity; deliberately ignores pinch zoom's pageScaleFactor).
+  int TimelineWidth();
 
-    void startTimer();
-    void stopTimer();
-    void transitionTimerFired(Timer<MediaControlPanelElement>*);
-    void didBecomeVisible();
-
-    bool m_isDisplayed;
-    bool m_opaque;
-
-    Timer<MediaControlPanelElement> m_transitionTimer;
+  MediaControlTimelineMetrics metrics_;
 };
 
 // ----------------------------
 
-class MediaControlPanelEnclosureElement final : public MediaControlDivElement {
-public:
-    static MediaControlPanelEnclosureElement* create(MediaControls&);
+class CORE_EXPORT MediaControlVolumeSliderElement final
+    : public MediaControlInputElement {
+ public:
+  static MediaControlVolumeSliderElement* Create(MediaControls&);
 
-private:
-    explicit MediaControlPanelEnclosureElement(MediaControls&);
+  bool WillRespondToMouseMoveEvents() override;
+  bool WillRespondToMouseClickEvents() override;
+  void SetVolume(double);
+
+ private:
+  explicit MediaControlVolumeSliderElement(MediaControls&);
+
+  void DefaultEventHandler(Event*) override;
+  bool KeepEventInNode(Event*) override;
 };
 
-// ----------------------------
+}  // namespace blink
 
-class MediaControlOverlayEnclosureElement final : public MediaControlDivElement {
-public:
-    static MediaControlOverlayEnclosureElement* create(MediaControls&);
-
-private:
-    explicit MediaControlOverlayEnclosureElement(MediaControls&);
-    EventDispatchHandlingState* preDispatchEventHandler(Event*) override;
-};
-
-// ----------------------------
-
-class MediaControlMuteButtonElement final : public MediaControlInputElement {
-public:
-    static MediaControlMuteButtonElement* create(MediaControls&);
-
-    bool willRespondToMouseClickEvents() override { return true; }
-    void updateDisplayType() override;
-
-private:
-    explicit MediaControlMuteButtonElement(MediaControls&);
-
-    void defaultEventHandler(Event*) override;
-};
-
-// ----------------------------
-
-class MediaControlPlayButtonElement final : public MediaControlInputElement {
-public:
-    static MediaControlPlayButtonElement* create(MediaControls&);
-
-    bool willRespondToMouseClickEvents() override { return true; }
-    void updateDisplayType() override;
-
-private:
-    explicit MediaControlPlayButtonElement(MediaControls&);
-
-    void defaultEventHandler(Event*) override;
-};
-
-// ----------------------------
-
-class MediaControlOverlayPlayButtonElement final : public MediaControlInputElement {
-public:
-    static MediaControlOverlayPlayButtonElement* create(MediaControls&);
-
-    void updateDisplayType() override;
-
-private:
-    explicit MediaControlOverlayPlayButtonElement(MediaControls&);
-
-    void defaultEventHandler(Event*) override;
-    bool keepEventInNode(Event*) override;
-};
-
-// ----------------------------
-
-class MediaControlToggleClosedCaptionsButtonElement final : public MediaControlInputElement {
-public:
-    static MediaControlToggleClosedCaptionsButtonElement* create(MediaControls&);
-
-    bool willRespondToMouseClickEvents() override { return true; }
-
-    void updateDisplayType() override;
-
-private:
-    explicit MediaControlToggleClosedCaptionsButtonElement(MediaControls&);
-
-    void defaultEventHandler(Event*) override;
-};
-
-// ----------------------------
-
-class MediaControlTextTrackListElement final : public MediaControlDivElement {
-public:
-    static MediaControlTextTrackListElement* create(MediaControls&);
-
-    bool willRespondToMouseClickEvents() override { return true; }
-
-    void setVisible(bool);
-
-private:
-    explicit MediaControlTextTrackListElement(MediaControls&);
-
-    void defaultEventHandler(Event*) override;
-
-    void refreshTextTrackListMenu();
-
-    // Returns the label for the track when a valid track is passed in and "Off" when the parameter is null.
-    String getTextTrackLabel(TextTrack*);
-    // Creates the track element in the list when a valid track is passed in and the "Off" item when the parameter is null.
-    Element* createTextTrackListItem(TextTrack*);
-
-    void showTextTrackAtIndex(unsigned);
-    void disableShowingTextTracks();
-};
-
-// ----------------------------
-
-class MediaControlTimelineElement final : public MediaControlInputElement {
-public:
-    static MediaControlTimelineElement* create(MediaControls&);
-
-    bool willRespondToMouseClickEvents() override;
-
-    // FIXME: An "earliest possible position" will be needed once that concept
-    // is supported by HTMLMediaElement, see https://crbug.com/137275
-    void setPosition(double);
-    void setDuration(double);
-
-private:
-    explicit MediaControlTimelineElement(MediaControls&);
-
-    void defaultEventHandler(Event*) override;
-    bool keepEventInNode(Event*) override;
-};
-
-// ----------------------------
-
-class MediaControlFullscreenButtonElement final : public MediaControlInputElement {
-public:
-    static MediaControlFullscreenButtonElement* create(MediaControls&);
-
-    bool willRespondToMouseClickEvents() override { return true; }
-
-    void setIsFullscreen(bool);
-
-private:
-    explicit MediaControlFullscreenButtonElement(MediaControls&);
-
-    void defaultEventHandler(Event*) override;
-};
-
-// ----------------------------
-
-class MediaControlCastButtonElement final : public MediaControlInputElement {
-public:
-    static MediaControlCastButtonElement* create(MediaControls&, bool isOverlayButton);
-
-    bool willRespondToMouseClickEvents() override { return true; }
-
-    void setIsPlayingRemotely(bool);
-
-    // This will show a cast button if it is not covered by another element.
-    // This MUST be called for cast button elements that are overlay elements.
-    void tryShowOverlay();
-
-private:
-    explicit MediaControlCastButtonElement(MediaControls&, bool isOverlayButton);
-
-    const AtomicString& shadowPseudoId() const override;
-    void defaultEventHandler(Event*) override;
-    bool keepEventInNode(Event*) override;
-
-    bool m_isOverlayButton;
-
-    // This is used for UMA histogram (Cast.Sender.Overlay). New values should
-    // be appended only and must be added before |Count|.
-    enum class CastOverlayMetrics {
-        Created = 0,
-        Shown,
-        Clicked,
-        Count // Keep last.
-    };
-    void recordMetrics(CastOverlayMetrics);
-
-    // UMA related boolean. They are used to prevent counting something twice
-    // for the same media element.
-    bool m_clickUseCounted = false;
-    bool m_showUseCounted = false;
-};
-
-// ----------------------------
-
-class MediaControlVolumeSliderElement final : public MediaControlInputElement {
-public:
-    static MediaControlVolumeSliderElement* create(MediaControls&);
-
-    bool willRespondToMouseMoveEvents() override;
-    bool willRespondToMouseClickEvents() override;
-    void setVolume(double);
-
-private:
-    explicit MediaControlVolumeSliderElement(MediaControls&);
-
-    void defaultEventHandler(Event*) override;
-    bool keepEventInNode(Event*) override;
-};
-
-// ----------------------------
-
-class MediaControlTimeRemainingDisplayElement final : public MediaControlTimeDisplayElement {
-public:
-    static MediaControlTimeRemainingDisplayElement* create(MediaControls&);
-
-private:
-    explicit MediaControlTimeRemainingDisplayElement(MediaControls&);
-};
-
-// ----------------------------
-
-class MediaControlCurrentTimeDisplayElement final : public MediaControlTimeDisplayElement {
-public:
-    static MediaControlCurrentTimeDisplayElement* create(MediaControls&);
-
-private:
-    explicit MediaControlCurrentTimeDisplayElement(MediaControls&);
-};
-
-} // namespace blink
-
-#endif // MediaControlElements_h
+#endif  // MediaControlElements_h

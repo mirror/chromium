@@ -8,13 +8,13 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "cc/base/cc_export.h"
+#include "cc/animation/animation_export.h"
 #include "ui/gfx/geometry/cubic_bezier.h"
 
 namespace cc {
 
 // See http://www.w3.org/TR/css3-transitions/.
-class CC_EXPORT TimingFunction {
+class CC_ANIMATION_EXPORT TimingFunction {
  public:
   virtual ~TimingFunction();
 
@@ -31,15 +31,15 @@ class CC_EXPORT TimingFunction {
  protected:
   TimingFunction();
 
- private:
   DISALLOW_ASSIGN(TimingFunction);
 };
 
-class CC_EXPORT CubicBezierTimingFunction : public TimingFunction {
+class CC_ANIMATION_EXPORT CubicBezierTimingFunction : public TimingFunction {
  public:
   enum class EaseType { EASE, EASE_IN, EASE_OUT, EASE_IN_OUT, CUSTOM };
 
-  static std::unique_ptr<TimingFunction> CreatePreset(EaseType ease_type);
+  static std::unique_ptr<CubicBezierTimingFunction> CreatePreset(
+      EaseType ease_type);
   static std::unique_ptr<CubicBezierTimingFunction> Create(double x1,
                                                            double y1,
                                                            double x2,
@@ -54,8 +54,9 @@ class CC_EXPORT CubicBezierTimingFunction : public TimingFunction {
   std::unique_ptr<TimingFunction> Clone() const override;
 
   EaseType ease_type() const { return ease_type_; }
+  const gfx::CubicBezier& bezier() const { return bezier_; }
 
- protected:
+ private:
   CubicBezierTimingFunction(EaseType ease_type,
                             double x1,
                             double y1,
@@ -65,11 +66,10 @@ class CC_EXPORT CubicBezierTimingFunction : public TimingFunction {
   gfx::CubicBezier bezier_;
   EaseType ease_type_;
 
- private:
   DISALLOW_ASSIGN(CubicBezierTimingFunction);
 };
 
-class CC_EXPORT StepsTimingFunction : public TimingFunction {
+class CC_ANIMATION_EXPORT StepsTimingFunction : public TimingFunction {
  public:
   // Web Animations specification, 3.12.4. Timing in discrete steps.
   enum class StepPosition { START, MIDDLE, END };
@@ -86,12 +86,17 @@ class CC_EXPORT StepsTimingFunction : public TimingFunction {
   void Range(float* min, float* max) const override;
   float Velocity(double time) const override;
 
- protected:
-  StepsTimingFunction(int steps, StepPosition step_position);
+  int steps() const { return steps_; }
+  StepPosition step_position() const { return step_position_; }
+  double GetPreciseValue(double t) const;
 
  private:
+  StepsTimingFunction(int steps, StepPosition step_position);
+
+  float GetStepsStartOffset() const;
+
   int steps_;
-  float steps_start_offset_;
+  StepPosition step_position_;
 
   DISALLOW_ASSIGN(StepsTimingFunction);
 };

@@ -4,8 +4,6 @@
 
 #include "components/webcrypto/algorithms/secret_key_util.h"
 
-#include <openssl/rand.h>
-
 #include "components/webcrypto/algorithms/util.h"
 #include "components/webcrypto/blink_key_handle.h"
 #include "components/webcrypto/crypto_data.h"
@@ -13,6 +11,7 @@
 #include "components/webcrypto/jwk.h"
 #include "components/webcrypto/status.h"
 #include "crypto/openssl_util.h"
+#include "third_party/boringssl/src/include/openssl/rand.h"
 
 namespace webcrypto {
 
@@ -32,9 +31,9 @@ Status GenerateWebCryptoSecretKey(const blink::WebCryptoKeyAlgorithm& algorithm,
     TruncateToBitLength(keylen_bits, &random_bytes);
   }
 
-  result->AssignSecretKey(blink::WebCryptoKey::create(
+  result->AssignSecretKey(blink::WebCryptoKey::Create(
       CreateSymmetricKeyHandle(CryptoData(random_bytes)),
-      blink::WebCryptoKeyTypeSecret, extractable, algorithm, usages));
+      blink::kWebCryptoKeyTypeSecret, extractable, algorithm, usages));
 
   return Status::Success();
 }
@@ -44,17 +43,10 @@ Status CreateWebCryptoSecretKey(const CryptoData& key_data,
                                 bool extractable,
                                 blink::WebCryptoKeyUsageMask usages,
                                 blink::WebCryptoKey* key) {
-  *key = blink::WebCryptoKey::create(CreateSymmetricKeyHandle(key_data),
-                                     blink::WebCryptoKeyTypeSecret, extractable,
-                                     algorithm, usages);
+  *key = blink::WebCryptoKey::Create(CreateSymmetricKeyHandle(key_data),
+                                     blink::kWebCryptoKeyTypeSecret,
+                                     extractable, algorithm, usages);
   return Status::Success();
-}
-
-Status CheckSecretKeyCreationUsages(
-    blink::WebCryptoKeyUsageMask all_possible_usages,
-    blink::WebCryptoKeyUsageMask actual_usages) {
-  return CheckKeyCreationUsages(all_possible_usages, actual_usages,
-                                EmptyUsagePolicy::REJECT_EMPTY);
 }
 
 void WriteSecretKeyJwk(const CryptoData& raw_key_data,

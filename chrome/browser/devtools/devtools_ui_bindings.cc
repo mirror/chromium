@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <utility>
 
 #include "base/base64.h"
@@ -13,8 +14,10 @@
 #include "base/json/json_writer.h"
 #include "base/json/string_escape.h"
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -23,8 +26,8 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/devtools/devtools_file_watcher.h"
 #include "chrome/browser/devtools/devtools_protocol.h"
-#include "chrome/browser/devtools/devtools_target_impl.h"
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
+#include "chrome/browser/devtools/url_constants.h"
 #include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/profiles/profile.h"
@@ -40,28 +43,37 @@
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/infobars/core/infobar.h"
 #include "components/prefs/scoped_user_pref_update.h"
-#include "components/syncable_prefs/pref_service_syncable.h"
+#include "components/sync_preferences/pref_service_syncable.h"
 #include "components/zoom/page_zoom.h"
+#include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/devtools_external_agent_proxy.h"
 #include "content/public/browser/devtools_external_agent_proxy_delegate.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/notification_source.h"
+#include "content/public/browser/reload_type.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/url_constants.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "ipc/ipc_channel.h"
+#include "net/base/escape.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
+#include "net/base/url_util.h"
+#include "net/cert/x509_certificate.h"
 #include "net/http/http_response_headers.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_response_writer.h"
+#include "third_party/WebKit/public/public_features.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/page_transition_types.h"
 
@@ -96,9 +108,9 @@ typedef std::vector<DevToolsUIBindings*> DevToolsUIBindingsList;
 base::LazyInstance<DevToolsUIBindingsList>::Leaky g_instances =
     LAZY_INSTANCE_INITIALIZER;
 
-base::DictionaryValue* CreateFileSystemValue(
+std::unique_ptr<base::DictionaryValue> CreateFileSystemValue(
     DevToolsFileHelper::FileSystem file_system) {
-  base::DictionaryValue* file_system_value = new base::DictionaryValue();
+  auto file_system_value = base::MakeUnique<base::DictionaryValue>();
   file_system_value->SetString("fileSystemName", file_system.file_system_name);
   file_system_value->SetString("rootURL", file_system.root_url);
   file_system_value->SetString("fileSystemPath", file_system.file_system_path);
@@ -191,11 +203,14 @@ class DefaultBindingsDelegate : public DevToolsUIBindings::Delegate {
 
   void ActivateWindow() override;
   void CloseWindow() override {}
+  void Inspect(scoped_refptr<content::DevToolsAgentHost> host) override {}
   void SetInspectedPageBounds(const gfx::Rect& rect) override {}
   void InspectElementCompleted() override {}
   void SetIsDocked(bool is_docked) override {}
   void OpenInNewTab(const std::string& url) override;
   void SetWhitelistedShortcuts(const std::string& message) override {}
+  void SetEyeDropperActive(bool active) override {}
+  void OpenNodeFrontend() override {}
   using DispatchCallback =
       DevToolsEmbedderMessageDispatcher::Delegate::DispatchCallback;
 
@@ -215,9 +230,9 @@ void DefaultBindingsDelegate::ActivateWindow() {
 }
 
 void DefaultBindingsDelegate::OpenInNewTab(const std::string& url) {
-  content::OpenURLParams params(
-      GURL(url), content::Referrer(), NEW_FOREGROUND_TAB,
-      ui::PAGE_TRANSITION_LINK, false);
+  content::OpenURLParams params(GURL(url), content::Referrer(),
+                                WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                                ui::PAGE_TRANSITION_LINK, false);
   Browser* browser = FindBrowser(web_contents_);
   browser->OpenURL(params);
 }
@@ -242,7 +257,7 @@ class ResponseWriter : public net::URLFetcherResponseWriter {
   int Write(net::IOBuffer* buffer,
             int num_bytes,
             const net::CompletionCallback& callback) override;
-  int Finish(const net::CompletionCallback& callback) override;
+  int Finish(int net_error, const net::CompletionCallback& callback) override;
 
  private:
   base::WeakPtr<DevToolsUIBindings> bindings_;
@@ -274,9 +289,9 @@ int ResponseWriter::Write(net::IOBuffer* buffer,
     base::Base64Encode(chunk, &chunk);
   }
 
-  base::FundamentalValue* id = new base::FundamentalValue(stream_id_);
-  base::StringValue* chunkValue = new base::StringValue(chunk);
-  base::FundamentalValue* encodedValue = new base::FundamentalValue(encoded);
+  base::Value* id = new base::Value(stream_id_);
+  base::Value* chunkValue = new base::Value(chunk);
+  base::Value* encodedValue = new base::Value(encoded);
 
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
@@ -286,8 +301,136 @@ int ResponseWriter::Write(net::IOBuffer* buffer,
   return num_bytes;
 }
 
-int ResponseWriter::Finish(const net::CompletionCallback& callback) {
+int ResponseWriter::Finish(int net_error,
+                           const net::CompletionCallback& callback) {
   return net::OK;
+}
+
+GURL SanitizeFrontendURL(
+    const GURL& url,
+    const std::string& scheme,
+    const std::string& host,
+    const std::string& path,
+    bool allow_query);
+
+std::string SanitizeRevision(const std::string& revision) {
+  for (size_t i = 0; i < revision.length(); i++) {
+    if (!(revision[i] == '@' && i == 0)
+        && !(revision[i] >= '0' && revision[i] <= '9')
+        && !(revision[i] >= 'a' && revision[i] <= 'z')
+        && !(revision[i] >= 'A' && revision[i] <= 'Z')) {
+      return std::string();
+    }
+  }
+  return revision;
+}
+
+std::string SanitizeFrontendPath(const std::string& path) {
+  for (size_t i = 0; i < path.length(); i++) {
+    if (path[i] != '/' && path[i] != '-' && path[i] != '_'
+        && path[i] != '.' && path[i] != '@'
+        && !(path[i] >= '0' && path[i] <= '9')
+        && !(path[i] >= 'a' && path[i] <= 'z')
+        && !(path[i] >= 'A' && path[i] <= 'Z')) {
+      return std::string();
+    }
+  }
+  return path;
+}
+
+std::string SanitizeEndpoint(const std::string& value) {
+  if (value.find('&') != std::string::npos
+      || value.find('?') != std::string::npos)
+    return std::string();
+  return value;
+}
+
+std::string SanitizeRemoteBase(const std::string& value) {
+  GURL url(value);
+  std::string path = url.path();
+  std::vector<std::string> parts = base::SplitString(
+      path, "/", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  std::string revision = parts.size() > 2 ? parts[2] : "";
+  revision = SanitizeRevision(revision);
+  path = base::StringPrintf("/%s/%s/", kRemoteFrontendPath, revision.c_str());
+  return SanitizeFrontendURL(url, url::kHttpsScheme,
+                             kRemoteFrontendDomain, path, false).spec();
+}
+
+std::string SanitizeRemoteFrontendURL(const std::string& value) {
+  GURL url(net::UnescapeURLComponent(value,
+      net::UnescapeRule::SPACES | net::UnescapeRule::PATH_SEPARATORS |
+      net::UnescapeRule::URL_SPECIAL_CHARS_EXCEPT_PATH_SEPARATORS |
+      net::UnescapeRule::REPLACE_PLUS_WITH_SPACE));
+  std::string path = url.path();
+  std::vector<std::string> parts = base::SplitString(
+      path, "/", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  std::string revision = parts.size() > 2 ? parts[2] : "";
+  revision = SanitizeRevision(revision);
+  std::string filename = parts.size() ? parts[parts.size() - 1] : "";
+  if (filename != "devtools.html")
+    filename = "inspector.html";
+  path = base::StringPrintf("/serve_rev/%s/%s",
+                            revision.c_str(), filename.c_str());
+  std::string sanitized = SanitizeFrontendURL(url, url::kHttpsScheme,
+      kRemoteFrontendDomain, path, true).spec();
+  return net::EscapeQueryParamValue(sanitized, false);
+}
+
+std::string SanitizeFrontendQueryParam(
+    const std::string& key,
+    const std::string& value) {
+  // Convert boolean flags to true.
+  if (key == "can_dock" || key == "debugFrontend" || key == "experiments" ||
+      key == "isSharedWorker" || key == "v8only" || key == "remoteFrontend" ||
+      key == "nodeFrontend")
+    return "true";
+
+  // Pass connection endpoints as is.
+  if (key == "ws" || key == "service-backend")
+    return SanitizeEndpoint(value);
+
+  // Only support undocked for old frontends.
+  if (key == "dockSide" && value == "undocked")
+    return value;
+
+  if (key == "panel" && (value == "elements" || value == "console"))
+    return value;
+
+  if (key == "remoteBase")
+    return SanitizeRemoteBase(value);
+
+  if (key == "remoteFrontendUrl")
+    return SanitizeRemoteFrontendURL(value);
+
+  return std::string();
+}
+
+GURL SanitizeFrontendURL(
+    const GURL& url,
+    const std::string& scheme,
+    const std::string& host,
+    const std::string& path,
+    bool allow_query) {
+  std::vector<std::string> query_parts;
+  if (allow_query) {
+    for (net::QueryIterator it(url); !it.IsAtEnd(); it.Advance()) {
+      std::string value = SanitizeFrontendQueryParam(it.GetKey(),
+          it.GetValue());
+      if (!value.empty()) {
+        query_parts.push_back(
+            base::StringPrintf("%s=%s", it.GetKey().c_str(), value.c_str()));
+      }
+    }
+  }
+  std::string query =
+      query_parts.empty() ? "" : "?" + base::JoinString(query_parts, "&");
+  std::string constructed = base::StringPrintf("%s://%s%s%s",
+      scheme.c_str(), host.c_str(), path.c_str(), query.c_str());
+  GURL result = GURL(constructed);
+  if (!result.is_valid())
+    return GURL();
+  return result;
 }
 
 }  // namespace
@@ -303,14 +446,12 @@ class DevToolsUIBindings::FrontendWebContentsObserver
  private:
   // contents::WebContentsObserver:
   void RenderProcessGone(base::TerminationStatus status) override;
-  void DidStartNavigationToPendingEntry(
-      const GURL& url,
-      content::NavigationController::ReloadType reload_type) override;
+  void ReadyToCommitNavigation(
+      content::NavigationHandle* navigation_handle) override;
   void DocumentAvailableInMainFrame() override;
   void DocumentOnLoadCompletedInMainFrame() override;
-  void DidNavigateMainFrame(
-      const content::LoadCommittedDetails& details,
-      const content::FrameNavigateParams& params) override;
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
 
   DevToolsUIBindings* devtools_bindings_;
   DISALLOW_COPY_AND_ASSIGN(FrontendWebContentsObserver);
@@ -324,6 +465,22 @@ DevToolsUIBindings::FrontendWebContentsObserver::FrontendWebContentsObserver(
 
 DevToolsUIBindings::FrontendWebContentsObserver::
     ~FrontendWebContentsObserver() {
+}
+
+// static
+GURL DevToolsUIBindings::SanitizeFrontendURL(const GURL& url) {
+  return ::SanitizeFrontendURL(url, content::kChromeDevToolsScheme,
+      chrome::kChromeUIDevToolsHost, SanitizeFrontendPath(url.path()), true);
+}
+
+bool DevToolsUIBindings::IsValidFrontendURL(const GURL& url) {
+  if (url.SchemeIs(content::kChromeUIScheme) &&
+      url.host() == content::kChromeUITracingHost &&
+      !url.has_query() && !url.has_ref()) {
+    return true;
+  }
+
+  return SanitizeFrontendURL(url).spec() == url.spec();
 }
 
 void DevToolsUIBindings::FrontendWebContentsObserver::RenderProcessGone(
@@ -347,15 +504,10 @@ void DevToolsUIBindings::FrontendWebContentsObserver::RenderProcessGone(
   devtools_bindings_->delegate_->RenderProcessGone(crashed);
 }
 
-void DevToolsUIBindings::FrontendWebContentsObserver::
-    DidStartNavigationToPendingEntry(
-        const GURL& url,
-        content::NavigationController::ReloadType reload_type) {
-  devtools_bindings_->frontend_host_.reset(
-      content::DevToolsFrontendHost::Create(
-          web_contents()->GetMainFrame(),
-          base::Bind(&DevToolsUIBindings::HandleMessageFromDevToolsFrontend,
-                     base::Unretained(devtools_bindings_))));
+void DevToolsUIBindings::FrontendWebContentsObserver::ReadyToCommitNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (navigation_handle->IsInMainFrame())
+    devtools_bindings_->UpdateFrontendHost(navigation_handle);
 }
 
 void DevToolsUIBindings::FrontendWebContentsObserver::
@@ -368,10 +520,10 @@ void DevToolsUIBindings::FrontendWebContentsObserver::
   devtools_bindings_->DocumentOnLoadCompletedInMainFrame();
 }
 
-void DevToolsUIBindings::FrontendWebContentsObserver::
-    DidNavigateMainFrame(const content::LoadCommittedDetails& details,
-                         const content::FrameNavigateParams& params) {
-  devtools_bindings_->DidNavigateMainFrame();
+void DevToolsUIBindings::FrontendWebContentsObserver::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (navigation_handle->IsInMainFrame() && navigation_handle->HasCommitted())
+    devtools_bindings_->DidNavigateMainFrame();
 }
 
 // DevToolsUIBindings ---------------------------------------------------------
@@ -396,7 +548,7 @@ DevToolsUIBindings::DevToolsUIBindings(content::WebContents* web_contents)
       delegate_(new DefaultBindingsDelegate(web_contents_)),
       devices_updates_enabled_(false),
       frontend_loaded_(false),
-      reattaching_(false),
+      reloading_(false),
       weak_factory_(this) {
   g_instances.Get().push_back(this);
   frontend_contents_observer_.reset(new FrontendWebContentsObserver(this));
@@ -410,11 +562,6 @@ DevToolsUIBindings::DevToolsUIBindings(content::WebContents* web_contents)
   // Register on-load actions.
   embedder_message_dispatcher_.reset(
       DevToolsEmbedderMessageDispatcher::CreateForDevToolsFrontend(this));
-
-  frontend_host_.reset(content::DevToolsFrontendHost::Create(
-      web_contents_->GetMainFrame(),
-      base::Bind(&DevToolsUIBindings::HandleMessageFromDevToolsFrontend,
-                 base::Unretained(this))));
 }
 
 DevToolsUIBindings::~DevToolsUIBindings() {
@@ -442,6 +589,8 @@ DevToolsUIBindings::~DevToolsUIBindings() {
 // content::DevToolsFrontendHost::Delegate implementation ---------------------
 void DevToolsUIBindings::HandleMessageFromDevToolsFrontend(
     const std::string& message) {
+  if (!frontend_host_)
+    return;
   std::string method;
   base::ListValue empty_params;
   base::ListValue* params = &empty_params;
@@ -470,6 +619,8 @@ void DevToolsUIBindings::HandleMessageFromDevToolsFrontend(
 void DevToolsUIBindings::DispatchProtocolMessage(
     content::DevToolsAgentHost* agent_host, const std::string& message) {
   DCHECK(agent_host == agent_host_.get());
+  if (!frontend_host_)
+    return;
 
   if (message.length() < kMaxMessageChunkSize) {
     std::string param;
@@ -480,9 +631,9 @@ void DevToolsUIBindings::DispatchProtocolMessage(
     return;
   }
 
-  base::FundamentalValue total_size(static_cast<int>(message.length()));
+  base::Value total_size(static_cast<int>(message.length()));
   for (size_t pos = 0; pos < message.length(); pos += kMaxMessageChunkSize) {
-    base::StringValue message_value(message.substr(pos, kMaxMessageChunkSize));
+    base::Value message_value(message.substr(pos, kMaxMessageChunkSize));
     CallClientFunction("DevToolsAPI.dispatchMessageChunk",
                        &message_value, pos ? NULL : &total_size, NULL);
   }
@@ -498,7 +649,7 @@ void DevToolsUIBindings::AgentHostClosed(
 
 void DevToolsUIBindings::SendMessageAck(int request_id,
                                         const base::Value* arg) {
-  base::FundamentalValue id_value(request_id);
+  base::Value id_value(request_id);
   CallClientFunction("DevToolsAPI.embedderMessageAck",
                      &id_value, arg, nullptr);
 }
@@ -550,9 +701,35 @@ void DevToolsUIBindings::LoadNetworkResource(const DispatchCallback& callback,
     callback.Run(&response);
     return;
   }
+  // Create traffic annotation tag.
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("devtools_network_resource", R"(
+        semantics {
+          sender: "Developer Tools"
+          description:
+            "When user opens Developer Tools, the browser may fetch additional "
+            "resources from the network to enrich the debugging experience "
+            "(e.g. source map resources)."
+          trigger: "User opens Developer Tools to debug a web page."
+          data: "Any resources requested by Developer Tools."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting:
+            "It's not possible to disable this feature from settings."
+          chrome_policy {
+            DeveloperToolsDisabled {
+              policy_options {mode: MANDATORY}
+              DeveloperToolsDisabled: true
+            }
+          }
+        })");
 
-  net::URLFetcher* fetcher =
-      net::URLFetcher::Create(gurl, net::URLFetcher::GET, this).release();
+  net::URLFetcher* fetcher = net::URLFetcher::Create(gurl, net::URLFetcher::GET,
+                                                     this, traffic_annotation)
+                                 .release();
   pending_requests_[fetcher] = callback;
   fetcher->SetRequestContext(profile_->GetRequestContext());
   fetcher->SetExtraRequestHeaders(headers);
@@ -584,7 +761,7 @@ void DevToolsUIBindings::AppendToFile(const std::string& url,
 }
 
 void DevToolsUIBindings::RequestFileSystems() {
-  CHECK(web_contents_->GetURL().SchemeIs(content::kChromeDevToolsScheme));
+  CHECK(IsValidFrontendURL(web_contents_->GetURL()) && frontend_host_);
   std::vector<DevToolsFileHelper::FileSystem> file_systems =
       file_helper_->GetFileSystems();
   base::ListValue file_systems_value;
@@ -595,7 +772,7 @@ void DevToolsUIBindings::RequestFileSystems() {
 }
 
 void DevToolsUIBindings::AddFileSystem(const std::string& file_system_path) {
-  CHECK(web_contents_->GetURL().SchemeIs(content::kChromeDevToolsScheme));
+  CHECK(IsValidFrontendURL(web_contents_->GetURL()) && frontend_host_);
   file_helper_->AddFileSystem(
       file_system_path,
       base::Bind(&DevToolsUIBindings::ShowDevToolsConfirmInfoBar,
@@ -603,13 +780,13 @@ void DevToolsUIBindings::AddFileSystem(const std::string& file_system_path) {
 }
 
 void DevToolsUIBindings::RemoveFileSystem(const std::string& file_system_path) {
-  CHECK(web_contents_->GetURL().SchemeIs(content::kChromeDevToolsScheme));
+  CHECK(IsValidFrontendURL(web_contents_->GetURL()) && frontend_host_);
   file_helper_->RemoveFileSystem(file_system_path);
 }
 
 void DevToolsUIBindings::UpgradeDraggedFileSystemPermissions(
     const std::string& file_system_url) {
-  CHECK(web_contents_->GetURL().SchemeIs(content::kChromeDevToolsScheme));
+  CHECK(IsValidFrontendURL(web_contents_->GetURL()) && frontend_host_);
   file_helper_->UpgradeDraggedFileSystemPermissions(
       file_system_url,
       base::Bind(&DevToolsUIBindings::ShowDevToolsConfirmInfoBar,
@@ -619,7 +796,7 @@ void DevToolsUIBindings::UpgradeDraggedFileSystemPermissions(
 void DevToolsUIBindings::IndexPath(int index_request_id,
                                    const std::string& file_system_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  CHECK(web_contents_->GetURL().SchemeIs(content::kChromeDevToolsScheme));
+  CHECK(IsValidFrontendURL(web_contents_->GetURL()) && frontend_host_);
   if (!file_helper_->IsFileSystemAdded(file_system_path)) {
     IndexingDone(index_request_id, file_system_path);
     return;
@@ -657,7 +834,7 @@ void DevToolsUIBindings::SearchInPath(int search_request_id,
                                       const std::string& file_system_path,
                                       const std::string& query) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  CHECK(web_contents_->GetURL().SchemeIs(content::kChromeDevToolsScheme));
+  CHECK(IsValidFrontendURL(web_contents_->GetURL()) && frontend_host_);
   if (!file_helper_->IsFileSystemAdded(file_system_path)) {
     SearchCompleted(search_request_id,
                     file_system_path,
@@ -674,6 +851,56 @@ void DevToolsUIBindings::SearchInPath(int search_request_id,
 
 void DevToolsUIBindings::SetWhitelistedShortcuts(const std::string& message) {
   delegate_->SetWhitelistedShortcuts(message);
+}
+
+void DevToolsUIBindings::SetEyeDropperActive(bool active) {
+  delegate_->SetEyeDropperActive(active);
+}
+
+void DevToolsUIBindings::ShowCertificateViewer(const std::string& cert_chain) {
+  std::unique_ptr<base::Value> value =
+      base::JSONReader::Read(cert_chain);
+  if (!value || value->GetType() != base::Value::Type::LIST) {
+    NOTREACHED();
+    return;
+  }
+
+  std::unique_ptr<base::ListValue> list =
+      base::ListValue::From(std::move(value));
+  std::vector<std::string> decoded;
+  for (size_t i = 0; i < list->GetSize(); ++i) {
+    base::Value* item;
+    if (!list->Get(i, &item) || item->GetType() != base::Value::Type::STRING) {
+      NOTREACHED();
+      return;
+    }
+    std::string temp;
+    if (!item->GetAsString(&temp)) {
+      NOTREACHED();
+      return;
+    }
+    if (!base::Base64Decode(temp, &temp)) {
+      NOTREACHED();
+      return;
+    }
+    decoded.push_back(temp);
+  }
+
+  std::vector<base::StringPiece> cert_string_piece;
+  for (const auto& str : decoded)
+    cert_string_piece.push_back(str);
+  scoped_refptr<net::X509Certificate> cert =
+       net::X509Certificate::CreateFromDERCertChain(cert_string_piece);
+  if (!cert) {
+    NOTREACHED();
+    return;
+  }
+
+  if (!agent_host_ || !agent_host_->GetWebContents())
+    return;
+  content::WebContents* inspected_wc = agent_host_->GetWebContents();
+  web_contents_->GetDelegate()->ShowCertificateViewerInDevTools(
+      inspected_wc, cert.get());
 }
 
 void DevToolsUIBindings::ZoomIn() {
@@ -758,17 +985,18 @@ void DevToolsUIBindings::PerformActionOnRemotePage(const std::string& page_id,
                                                    const std::string& action) {
   if (!remote_targets_handler_)
     return;
-  DevToolsTargetImpl* target = remote_targets_handler_->GetTarget(page_id);
-  if (!target)
+  scoped_refptr<content::DevToolsAgentHost> host =
+      remote_targets_handler_->GetTarget(page_id);
+  if (!host)
     return;
   if (action == kRemotePageActionInspect)
-    target->Inspect(profile_);
-  if (action == kRemotePageActionReload)
-    target->Reload();
-  if (action == kRemotePageActionActivate)
-    target->Activate();
-  if (action == kRemotePageActionClose)
-    target->Close();
+    delegate_->Inspect(host);
+  else if (action == kRemotePageActionReload)
+    host->Reload();
+  else if (action == kRemotePageActionActivate)
+    host->Activate();
+  else if (action == kRemotePageActionClose)
+    host->Close();
 }
 
 void DevToolsUIBindings::OpenRemotePage(const std::string& browser_id,
@@ -776,6 +1004,10 @@ void DevToolsUIBindings::OpenRemotePage(const std::string& browser_id,
   if (!remote_targets_handler_)
     return;
   remote_targets_handler_->Open(browser_id, url);
+}
+
+void DevToolsUIBindings::OpenNodeFrontend() {
+  delegate_->OpenNodeFrontend();
 }
 
 void DevToolsUIBindings::GetPreferences(const DispatchCallback& callback) {
@@ -803,6 +1035,14 @@ void DevToolsUIBindings::ClearPreferences() {
   update.Get()->Clear();
 }
 
+void DevToolsUIBindings::Reattach(const DispatchCallback& callback) {
+  if (agent_host_.get()) {
+    agent_host_->DetachClient(this);
+    agent_host_->AttachClient(this);
+  }
+  callback.Run(nullptr);
+}
+
 void DevToolsUIBindings::ReadyForTest() {
   delegate_->ReadyForTest();
 }
@@ -816,6 +1056,8 @@ void DevToolsUIBindings::DispatchProtocolMessageFromDevToolsFrontend(
 void DevToolsUIBindings::RecordEnumeratedHistogram(const std::string& name,
                                                    int sample,
                                                    int boundary_value) {
+  if (!frontend_host_)
+    return;
   if (!(boundary_value >= 0 && boundary_value <= 100 && sample >= 0 &&
         sample < boundary_value)) {
     // TODO(nick): Replace with chrome::bad_message::ReceivedBadMessage().
@@ -823,11 +1065,11 @@ void DevToolsUIBindings::RecordEnumeratedHistogram(const std::string& name,
     return;
   }
   // Each histogram name must follow a different code path in
-  // order to UMA_HISTOGRAM_ENUMERATION work correctly.
+  // order to UMA_HISTOGRAM_EXACT_LINEAR work correctly.
   if (name == kDevToolsActionTakenHistogram)
-    UMA_HISTOGRAM_ENUMERATION(name, sample, boundary_value);
+    UMA_HISTOGRAM_EXACT_LINEAR(name, sample, boundary_value);
   else if (name == kDevToolsPanelShownHistogram)
-    UMA_HISTOGRAM_ENUMERATION(name, sample, boundary_value);
+    UMA_HISTOGRAM_EXACT_LINEAR(name, sample, boundary_value);
   else
     frontend_host_->BadMessageRecieved();
 }
@@ -852,7 +1094,7 @@ void DevToolsUIBindings::JsonReceived(const DispatchCallback& callback,
     callback.Run(nullptr);
     return;
   }
-  base::StringValue message_value(message);
+  base::Value message_value(message);
   callback.Run(&message_value);
 }
 
@@ -862,10 +1104,9 @@ void DevToolsUIBindings::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK(it != pending_requests_.end());
 
   base::DictionaryValue response;
-  base::DictionaryValue* headers = new base::DictionaryValue();
+  auto headers = base::MakeUnique<base::DictionaryValue>();
   net::HttpResponseHeaders* rh = source->GetResponseHeaders();
   response.SetInteger("statusCode", rh ? rh->response_code() : 200);
-  response.Set("headers", headers);
 
   size_t iterator = 0;
   std::string name;
@@ -873,13 +1114,14 @@ void DevToolsUIBindings::OnURLFetchComplete(const net::URLFetcher* source) {
   while (rh && rh->EnumerateHeaderLines(&iterator, &name, &value))
     headers->SetString(name, value);
 
+  response.Set("headers", std::move(headers));
   it->second.Run(&response);
   pending_requests_.erase(it);
   delete source;
 }
 
 void DevToolsUIBindings::DeviceCountChanged(int count) {
-  base::FundamentalValue value(count);
+  base::Value value(count);
   CallClientFunction("DevToolsAPI.deviceCountUpdated", &value, NULL,
                      NULL);
 }
@@ -892,18 +1134,18 @@ void DevToolsUIBindings::DevicesUpdated(
 }
 
 void DevToolsUIBindings::FileSavedAs(const std::string& url) {
-  base::StringValue url_value(url);
+  base::Value url_value(url);
   CallClientFunction("DevToolsAPI.savedURL", &url_value, NULL, NULL);
 }
 
 void DevToolsUIBindings::CanceledFileSaveAs(const std::string& url) {
-  base::StringValue url_value(url);
+  base::Value url_value(url);
   CallClientFunction("DevToolsAPI.canceledSaveURL",
                      &url_value, NULL, NULL);
 }
 
 void DevToolsUIBindings::AppendedTo(const std::string& url) {
-  base::StringValue url_value(url);
+  base::Value url_value(url);
   CallClientFunction("DevToolsAPI.appendedToURL", &url_value, NULL,
                      NULL);
 }
@@ -918,18 +1160,22 @@ void DevToolsUIBindings::FileSystemAdded(
 
 void DevToolsUIBindings::FileSystemRemoved(
     const std::string& file_system_path) {
-  base::StringValue file_system_path_value(file_system_path);
+  base::Value file_system_path_value(file_system_path);
   CallClientFunction("DevToolsAPI.fileSystemRemoved",
                      &file_system_path_value, NULL, NULL);
 }
 
 void DevToolsUIBindings::FilePathsChanged(
-    const std::vector<std::string>& file_paths) {
-  base::ListValue list;
-  for (auto path : file_paths)
-    list.AppendString(path);
-  CallClientFunction("DevToolsAPI.fileSystemFilesChanged",
-                     &list, NULL, NULL);
+    const std::vector<std::string>& changed_paths,
+    const std::vector<std::string>& added_paths,
+    const std::vector<std::string>& removed_paths) {
+  base::ListValue changed, added, removed;
+  changed.AppendStrings(changed_paths);
+  added.AppendStrings(added_paths);
+  removed.AppendStrings(removed_paths);
+
+  CallClientFunction("DevToolsAPI.fileSystemFilesChangedAddedRemoved", &changed,
+                     &added, &removed);
 }
 
 void DevToolsUIBindings::IndexingTotalWorkCalculated(
@@ -937,9 +1183,9 @@ void DevToolsUIBindings::IndexingTotalWorkCalculated(
     const std::string& file_system_path,
     int total_work) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::FundamentalValue request_id_value(request_id);
-  base::StringValue file_system_path_value(file_system_path);
-  base::FundamentalValue total_work_value(total_work);
+  base::Value request_id_value(request_id);
+  base::Value file_system_path_value(file_system_path);
+  base::Value total_work_value(total_work);
   CallClientFunction("DevToolsAPI.indexingTotalWorkCalculated",
                      &request_id_value, &file_system_path_value,
                      &total_work_value);
@@ -949,9 +1195,9 @@ void DevToolsUIBindings::IndexingWorked(int request_id,
                                         const std::string& file_system_path,
                                         int worked) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::FundamentalValue request_id_value(request_id);
-  base::StringValue file_system_path_value(file_system_path);
-  base::FundamentalValue worked_value(worked);
+  base::Value request_id_value(request_id);
+  base::Value file_system_path_value(file_system_path);
+  base::Value worked_value(worked);
   CallClientFunction("DevToolsAPI.indexingWorked", &request_id_value,
                      &file_system_path_value, &worked_value);
 }
@@ -960,8 +1206,8 @@ void DevToolsUIBindings::IndexingDone(int request_id,
                                       const std::string& file_system_path) {
   indexing_jobs_.erase(request_id);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::FundamentalValue request_id_value(request_id);
-  base::StringValue file_system_path_value(file_system_path);
+  base::Value request_id_value(request_id);
+  base::Value file_system_path_value(file_system_path);
   CallClientFunction("DevToolsAPI.indexingDone", &request_id_value,
                      &file_system_path_value, NULL);
 }
@@ -976,8 +1222,8 @@ void DevToolsUIBindings::SearchCompleted(
        it != file_paths.end(); ++it) {
     file_paths_value.AppendString(*it);
   }
-  base::FundamentalValue request_id_value(request_id);
-  base::StringValue file_system_path_value(file_system_path);
+  base::Value request_id_value(request_id);
+  base::Value file_system_path_value(file_system_path);
   CallClientFunction("DevToolsAPI.searchCompleted", &request_id_value,
                      &file_system_path_value, &file_paths_value);
 }
@@ -994,6 +1240,20 @@ void DevToolsUIBindings::ShowDevToolsConfirmInfoBar(
   GlobalConfirmInfoBar::Show(std::move(delegate));
 }
 
+void DevToolsUIBindings::UpdateFrontendHost(
+    content::NavigationHandle* navigation_handle) {
+  if (!IsValidFrontendURL(navigation_handle->GetURL())) {
+    LOG(ERROR) << "Attempt to navigate to an invalid DevTools front-end URL: "
+        << navigation_handle->GetURL().spec();
+    frontend_host_.reset();
+    return;
+  }
+  frontend_host_.reset(content::DevToolsFrontendHost::Create(
+      navigation_handle->GetRenderFrameHost(),
+      base::Bind(&DevToolsUIBindings::HandleMessageFromDevToolsFrontend,
+                 base::Unretained(this))));
+}
+
 void DevToolsUIBindings::AddDevToolsExtensionsToClient() {
   const extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(profile_->GetOriginalProfile());
@@ -1006,19 +1266,27 @@ void DevToolsUIBindings::AddDevToolsExtensionsToClient() {
     if (extensions::chrome_manifest_urls::GetDevToolsPage(extension.get())
             .is_empty())
       continue;
+
+    // Each devtools extension will need to be able to run in the devtools
+    // process. Grant each specific extension's origin permission to load
+    // documents.
+    content::ChildProcessSecurityPolicy::GetInstance()->GrantOrigin(
+        web_contents_->GetMainFrame()->GetProcess()->GetID(),
+        url::Origin(extension->url()));
+
     std::unique_ptr<base::DictionaryValue> extension_info(
         new base::DictionaryValue());
-    extension_info->Set(
+    extension_info->SetString(
         "startPage",
-        new base::StringValue(extensions::chrome_manifest_urls::GetDevToolsPage(
-                                  extension.get()).spec()));
-    extension_info->Set("name", new base::StringValue(extension->name()));
-    extension_info->Set("exposeExperimentalAPIs",
-                        new base::FundamentalValue(
-                            extension->permissions_data()->HasAPIPermission(
-                                extensions::APIPermission::kExperimental)));
+        extensions::chrome_manifest_urls::GetDevToolsPage(extension.get())
+            .spec());
+    extension_info->SetString("name", extension->name());
+    extension_info->SetBoolean("exposeExperimentalAPIs",
+                               extension->permissions_data()->HasAPIPermission(
+                                   extensions::APIPermission::kExperimental));
     results.Append(std::move(extension_info));
   }
+
   CallClientFunction("DevToolsAPI.addExtensions",
                      &results, NULL, NULL);
 }
@@ -1037,9 +1305,9 @@ void DevToolsUIBindings::AttachTo(
   agent_host_->ForceAttachClient(this);
 }
 
-void DevToolsUIBindings::Reattach() {
-  DCHECK(agent_host_.get());
-  reattaching_ = true;
+void DevToolsUIBindings::Reload() {
+  reloading_ = true;
+  web_contents_->GetController().Reload(content::ReloadType::NORMAL, false);
 }
 
 void DevToolsUIBindings::Detach() {
@@ -1056,6 +1324,9 @@ void DevToolsUIBindings::CallClientFunction(const std::string& function_name,
                                             const base::Value* arg1,
                                             const base::Value* arg2,
                                             const base::Value* arg3) {
+  // If we're not exposing bindings, we shouldn't call functions either.
+  if (!frontend_host_)
+    return;
   std::string javascript = function_name + "(";
   if (arg1) {
     std::string json;
@@ -1076,18 +1347,20 @@ void DevToolsUIBindings::CallClientFunction(const std::string& function_name,
 }
 
 void DevToolsUIBindings::DocumentAvailableInMainFrame() {
-  if (!reattaching_)
+  if (!reloading_)
     return;
-  reattaching_ = false;
-  agent_host_->DetachClient(this);
-  agent_host_->AttachClient(this);
+  reloading_ = false;
+  if (agent_host_.get()) {
+    agent_host_->DetachClient(this);
+    agent_host_->AttachClient(this);
+  }
 }
 
 void DevToolsUIBindings::DocumentOnLoadCompletedInMainFrame() {
   // In the DEBUG_DEVTOOLS mode, the DocumentOnLoadCompletedInMainFrame event
   // arrives before the LoadCompleted event, thus it should not trigger the
   // frontend load handling.
-#if !defined(DEBUG_DEVTOOLS)
+#if !BUILDFLAG(DEBUG_DEVTOOLS)
   FrontendLoaded();
 #endif
 }

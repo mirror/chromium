@@ -9,7 +9,7 @@
 
 #include "base/macros.h"
 #include "base/time/time.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/input/event_listener_properties.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/input/scroll_state.h"
@@ -18,10 +18,8 @@
 
 namespace gfx {
 class Point;
-class PointF;
 class ScrollOffset;
 class SizeF;
-class Vector2d;
 class Vector2dF;
 }
 
@@ -63,6 +61,7 @@ class CC_EXPORT InputHandlerClient {
       float page_scale_factor,
       float min_page_scale_factor,
       float max_page_scale_factor) = 0;
+  virtual void DeliverInputForBeginFrame() = 0;
 
  protected:
   InputHandlerClient() {}
@@ -105,10 +104,17 @@ class CC_EXPORT InputHandler {
     NON_BUBBLING_GESTURE
   };
 
+  enum class TouchStartEventListenerType {
+    NO_HANDLER,
+    HANDLER,
+    HANDLER_ON_SCROLLING_LAYER
+  };
+
   // Binds a client to this handler to receive notifications. Only one client
   // can be bound to an InputHandler. The client must live at least until the
   // handler calls WillShutdown() on the client.
-  virtual void BindToClient(InputHandlerClient* client) = 0;
+  virtual void BindToClient(InputHandlerClient* client,
+                            bool wheel_scroll_latching_enabled) = 0;
 
   // Selects a layer to be scrolled using the |scroll_state| start position.
   // Returns SCROLL_STARTED if the layer at the coordinates can be scrolled,
@@ -128,8 +134,12 @@ class CC_EXPORT InputHandler {
   virtual ScrollStatus ScrollAnimatedBegin(
       const gfx::Point& viewport_point) = 0;
 
+  // Returns SCROLL_ON_IMPL_THREAD if an animation is initiated on the impl
+  // thread. delayed_by is the delay that is taken into account when determining
+  // the duration of the animation.
   virtual ScrollStatus ScrollAnimated(const gfx::Point& viewport_point,
-                                      const gfx::Vector2dF& scroll_delta) = 0;
+                                      const gfx::Vector2dF& scroll_delta,
+                                      base::TimeDelta delayed_by) = 0;
 
   // Scroll the layer selected by |ScrollBegin| by given |scroll_state| delta.
   // Internally, the delta is transformed to local layer's coordinate space for
@@ -144,14 +154,14 @@ class CC_EXPORT InputHandler {
   // ScrollBegin() returned SCROLL_STARTED.
   virtual InputHandlerScrollResult ScrollBy(ScrollState* scroll_state) = 0;
 
-  virtual bool ScrollVerticallyByPage(const gfx::Point& viewport_point,
-                                      ScrollDirection direction) = 0;
-
   // Returns SCROLL_STARTED if a layer was actively being scrolled,
   // SCROLL_IGNORED if not.
   virtual ScrollStatus FlingScrollBegin() = 0;
 
   virtual void MouseMoveAt(const gfx::Point& mouse_position) = 0;
+  virtual void MouseDown() = 0;
+  virtual void MouseUp() = 0;
+  virtual void MouseLeave() = 0;
 
   // Stop scrolling the selected layer. Should only be called if ScrollBegin()
   // returned SCROLL_STARTED.
@@ -174,8 +184,8 @@ class CC_EXPORT InputHandler {
   // Request another callback to InputHandlerClient::Animate().
   virtual void SetNeedsAnimateInput() = 0;
 
-  // Returns true if there is an active scroll on the inner viewport layer.
-  virtual bool IsCurrentlyScrollingInnerViewport() const = 0;
+  // Returns true if there is an active scroll on the viewport.
+  virtual bool IsCurrentlyScrollingViewport() const = 0;
 
   // Whether the layer under |viewport_point| is the currently scrolling layer.
   virtual bool IsCurrentlyScrollingLayerAt(const gfx::Point& viewport_point,
@@ -184,9 +194,12 @@ class CC_EXPORT InputHandler {
   virtual EventListenerProperties GetEventListenerProperties(
       EventListenerClass event_class) const = 0;
 
+  // It returns the type of a touch start event listener at |viewport_point|.
   // Whether the page should be given the opportunity to suppress scrolling by
-  // consuming touch events that started at |viewport_point|.
-  virtual bool DoTouchEventsBlockScrollAt(const gfx::Point& viewport_point) = 0;
+  // consuming touch events that started at |viewport_point|, and whether
+  // |viewport_point| is on the currently scrolling layer.
+  virtual TouchStartEventListenerType EventListenerTypeForTouchStartAt(
+      const gfx::Point& viewport_point) = 0;
 
   // Calling CreateLatencyInfoSwapPromiseMonitor() to get a scoped
   // LatencyInfoSwapPromiseMonitor. During the life time of the
@@ -197,6 +210,14 @@ class CC_EXPORT InputHandler {
   CreateLatencyInfoSwapPromiseMonitor(ui::LatencyInfo* latency) = 0;
 
   virtual ScrollElasticityHelper* CreateScrollElasticityHelper() = 0;
+
+  // Called by the single-threaded UI Compositor to get or set the scroll offset
+  // on the impl side. Retruns false if |layer_id| isn't in the active tree.
+  virtual bool GetScrollOffsetForLayer(int layer_id,
+                                       gfx::ScrollOffset* offset) = 0;
+  virtual bool ScrollLayerTo(int layer_id, const gfx::ScrollOffset& offset) = 0;
+
+  virtual bool ScrollingShouldSwitchtoMainThread() = 0;
 
  protected:
   InputHandler() {}

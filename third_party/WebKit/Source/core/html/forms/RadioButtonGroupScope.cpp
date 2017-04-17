@@ -22,192 +22,179 @@
 
 #include "core/InputTypeNames.h"
 #include "core/html/HTMLInputElement.h"
-#include "wtf/HashMap.h"
+#include "platform/wtf/HashMap.h"
 
 namespace blink {
 
 class RadioButtonGroup : public GarbageCollected<RadioButtonGroup> {
-public:
-    static RadioButtonGroup* create();
-    bool isEmpty() const { return m_members.isEmpty(); }
-    bool isRequired() const { return m_requiredCount; }
-    HTMLInputElement* checkedButton() const { return m_checkedButton; }
-    void add(HTMLInputElement*);
-    void updateCheckedState(HTMLInputElement*);
-    void requiredAttributeChanged(HTMLInputElement*);
-    void remove(HTMLInputElement*);
-    bool contains(HTMLInputElement*) const;
-    unsigned size() const;
+ public:
+  static RadioButtonGroup* Create();
+  bool IsEmpty() const { return members_.IsEmpty(); }
+  bool IsRequired() const { return required_count_; }
+  HTMLInputElement* CheckedButton() const { return checked_button_; }
+  void Add(HTMLInputElement*);
+  void UpdateCheckedState(HTMLInputElement*);
+  void RequiredAttributeChanged(HTMLInputElement*);
+  void Remove(HTMLInputElement*);
+  bool Contains(HTMLInputElement*) const;
+  unsigned size() const;
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    RadioButtonGroup();
-    void setNeedsValidityCheckForAllButtons();
-    bool isValid() const;
-    void setCheckedButton(HTMLInputElement*);
+ private:
+  RadioButtonGroup();
+  void SetNeedsValidityCheckForAllButtons();
+  bool IsValid() const;
+  void SetCheckedButton(HTMLInputElement*);
 
-    // The map records the 'required' state of each (button) element.
-    using Members = HeapHashMap<Member<HTMLInputElement>, bool>;
+  // The map records the 'required' state of each (button) element.
+  using Members = HeapHashMap<Member<HTMLInputElement>, bool>;
 
-    using MemberKeyValue = WTF::KeyValuePair<Member<HTMLInputElement>, bool>;
+  using MemberKeyValue = WTF::KeyValuePair<Member<HTMLInputElement>, bool>;
 
-    void updateRequiredButton(MemberKeyValue&, bool isRequired);
+  void UpdateRequiredButton(MemberKeyValue&, bool is_required);
 
-    Members m_members;
-    Member<HTMLInputElement> m_checkedButton;
-    size_t m_requiredCount;
+  Members members_;
+  Member<HTMLInputElement> checked_button_;
+  size_t required_count_;
 };
 
 RadioButtonGroup::RadioButtonGroup()
-    : m_checkedButton(nullptr)
-    , m_requiredCount(0)
-{
+    : checked_button_(nullptr), required_count_(0) {}
+
+RadioButtonGroup* RadioButtonGroup::Create() {
+  return new RadioButtonGroup;
 }
 
-RadioButtonGroup* RadioButtonGroup::create()
-{
-    return new RadioButtonGroup;
+inline bool RadioButtonGroup::IsValid() const {
+  return !IsRequired() || checked_button_;
 }
 
-inline bool RadioButtonGroup::isValid() const
-{
-    return !isRequired() || m_checkedButton;
+void RadioButtonGroup::SetCheckedButton(HTMLInputElement* button) {
+  HTMLInputElement* old_checked_button = checked_button_;
+  if (old_checked_button == button)
+    return;
+  checked_button_ = button;
+  if (old_checked_button)
+    old_checked_button->setChecked(false);
 }
 
-void RadioButtonGroup::setCheckedButton(HTMLInputElement* button)
-{
-    HTMLInputElement* oldCheckedButton = m_checkedButton;
-    if (oldCheckedButton == button)
-        return;
-    m_checkedButton = button;
-    if (oldCheckedButton)
-        oldCheckedButton->setChecked(false);
+void RadioButtonGroup::UpdateRequiredButton(MemberKeyValue& it,
+                                            bool is_required) {
+  if (it.value == is_required)
+    return;
+
+  it.value = is_required;
+  if (is_required) {
+    required_count_++;
+  } else {
+    DCHECK_GT(required_count_, 0u);
+    required_count_--;
+  }
 }
 
-void RadioButtonGroup::updateRequiredButton(MemberKeyValue& it, bool isRequired)
-{
-    if (it.value == isRequired)
-        return;
+void RadioButtonGroup::Add(HTMLInputElement* button) {
+  DCHECK_EQ(button->type(), InputTypeNames::radio);
+  auto add_result = members_.insert(button, false);
+  if (!add_result.is_new_entry)
+    return;
+  bool group_was_valid = IsValid();
+  UpdateRequiredButton(*add_result.stored_value, button->IsRequired());
+  if (button->checked())
+    SetCheckedButton(button);
 
-    it.value = isRequired;
-    if (isRequired) {
-        m_requiredCount++;
-    } else {
-        DCHECK_GT(m_requiredCount, 0u);
-        m_requiredCount--;
-    }
+  bool group_is_valid = IsValid();
+  if (group_was_valid != group_is_valid) {
+    SetNeedsValidityCheckForAllButtons();
+  } else if (!group_is_valid) {
+    // A radio button not in a group is always valid. We need to make it
+    // invalid only if the group is invalid.
+    button->SetNeedsValidityCheck();
+  }
 }
 
-void RadioButtonGroup::add(HTMLInputElement* button)
-{
+void RadioButtonGroup::UpdateCheckedState(HTMLInputElement* button) {
+  DCHECK_EQ(button->type(), InputTypeNames::radio);
+  DCHECK(members_.Contains(button));
+  bool was_valid = IsValid();
+  if (button->checked()) {
+    SetCheckedButton(button);
+  } else {
+    if (checked_button_ == button)
+      checked_button_ = nullptr;
+  }
+  if (was_valid != IsValid())
+    SetNeedsValidityCheckForAllButtons();
+  for (auto& member : members_) {
+    HTMLInputElement* const input_element = member.key;
+    input_element->PseudoStateChanged(CSSSelector::kPseudoIndeterminate);
+  }
+}
+
+void RadioButtonGroup::RequiredAttributeChanged(HTMLInputElement* button) {
+  DCHECK_EQ(button->type(), InputTypeNames::radio);
+  auto it = members_.Find(button);
+  DCHECK_NE(it, members_.end());
+  bool was_valid = IsValid();
+  // Synchronize the 'required' flag for the button, along with
+  // updating the overall count.
+  UpdateRequiredButton(*it, button->IsRequired());
+  if (was_valid != IsValid())
+    SetNeedsValidityCheckForAllButtons();
+}
+
+void RadioButtonGroup::Remove(HTMLInputElement* button) {
+  DCHECK_EQ(button->type(), InputTypeNames::radio);
+  auto it = members_.Find(button);
+  if (it == members_.end())
+    return;
+  bool was_valid = IsValid();
+  DCHECK_EQ(it->value, button->IsRequired());
+  UpdateRequiredButton(*it, false);
+  members_.erase(it);
+  if (checked_button_ == button)
+    checked_button_ = nullptr;
+
+  if (members_.IsEmpty()) {
+    DCHECK(!required_count_);
+    DCHECK(!checked_button_);
+  } else if (was_valid != IsValid()) {
+    SetNeedsValidityCheckForAllButtons();
+  }
+  if (!was_valid) {
+    // A radio button not in a group is always valid. We need to make it
+    // valid only if the group was invalid.
+    button->SetNeedsValidityCheck();
+  }
+
+  // Send notification to update AX attributes for AXObjects which radiobutton
+  // group has.
+  if (!members_.IsEmpty()) {
+    HTMLInputElement* input = members_.begin()->key;
+    if (AXObjectCache* cache = input->GetDocument().ExistingAXObjectCache())
+      cache->RadiobuttonRemovedFromGroup(input);
+  }
+}
+
+void RadioButtonGroup::SetNeedsValidityCheckForAllButtons() {
+  for (auto& element : members_) {
+    HTMLInputElement* const button = element.key;
     DCHECK_EQ(button->type(), InputTypeNames::radio);
-    auto addResult = m_members.add(button, false);
-    if (!addResult.isNewEntry)
-        return;
-    bool groupWasValid = isValid();
-    updateRequiredButton(*addResult.storedValue, button->isRequired());
-    if (button->checked())
-        setCheckedButton(button);
-
-    bool groupIsValid = isValid();
-    if (groupWasValid != groupIsValid) {
-        setNeedsValidityCheckForAllButtons();
-    } else if (!groupIsValid) {
-        // A radio button not in a group is always valid. We need to make it
-        // invalid only if the group is invalid.
-        button->setNeedsValidityCheck();
-    }
+    button->SetNeedsValidityCheck();
+  }
 }
 
-void RadioButtonGroup::updateCheckedState(HTMLInputElement* button)
-{
-    DCHECK_EQ(button->type(), InputTypeNames::radio);
-    DCHECK(m_members.contains(button));
-    bool wasValid = isValid();
-    if (button->checked()) {
-        setCheckedButton(button);
-    } else {
-        if (m_checkedButton == button)
-            m_checkedButton = nullptr;
-    }
-    if (wasValid != isValid())
-        setNeedsValidityCheckForAllButtons();
-    for (auto& member : m_members) {
-        HTMLInputElement* const inputElement = member.key;
-        inputElement->pseudoStateChanged(CSSSelector::PseudoIndeterminate);
-    }
+bool RadioButtonGroup::Contains(HTMLInputElement* button) const {
+  return members_.Contains(button);
 }
 
-void RadioButtonGroup::requiredAttributeChanged(HTMLInputElement* button)
-{
-    DCHECK_EQ(button->type(), InputTypeNames::radio);
-    auto it = m_members.find(button);
-    ASSERT(it != m_members.end());
-    bool wasValid = isValid();
-    // Synchronize the 'required' flag for the button, along with
-    // updating the overall count.
-    updateRequiredButton(*it, button->isRequired());
-    if (wasValid != isValid())
-        setNeedsValidityCheckForAllButtons();
+unsigned RadioButtonGroup::size() const {
+  return members_.size();
 }
 
-void RadioButtonGroup::remove(HTMLInputElement* button)
-{
-    DCHECK_EQ(button->type(), InputTypeNames::radio);
-    auto it = m_members.find(button);
-    if (it == m_members.end())
-        return;
-    bool wasValid = isValid();
-    DCHECK_EQ(it->value, button->isRequired());
-    updateRequiredButton(*it, false);
-    m_members.remove(it);
-    if (m_checkedButton == button)
-        m_checkedButton = nullptr;
-
-    if (m_members.isEmpty()) {
-        DCHECK(!m_requiredCount);
-        DCHECK(!m_checkedButton);
-    } else if (wasValid != isValid()) {
-        setNeedsValidityCheckForAllButtons();
-    }
-    if (!wasValid) {
-        // A radio button not in a group is always valid. We need to make it
-        // valid only if the group was invalid.
-        button->setNeedsValidityCheck();
-    }
-
-    // Send notification to update AX attributes for AXObjects which radiobutton group has.
-    if (!m_members.isEmpty()) {
-        HTMLInputElement* input = m_members.begin()->key;
-        if (AXObjectCache* cache = input->document().existingAXObjectCache())
-            cache->radiobuttonRemovedFromGroup(input);
-    }
-}
-
-void RadioButtonGroup::setNeedsValidityCheckForAllButtons()
-{
-    for (auto& element : m_members) {
-        HTMLInputElement* const button = element.key;
-        DCHECK_EQ(button->type(), InputTypeNames::radio);
-        button->setNeedsValidityCheck();
-    }
-}
-
-bool RadioButtonGroup::contains(HTMLInputElement* button) const
-{
-    return m_members.contains(button);
-}
-
-unsigned RadioButtonGroup::size() const
-{
-    return m_members.size();
-}
-
-DEFINE_TRACE(RadioButtonGroup)
-{
-    visitor->trace(m_members);
-    visitor->trace(m_checkedButton);
+DEFINE_TRACE(RadioButtonGroup) {
+  visitor->Trace(members_);
+  visitor->Trace(checked_button_);
 }
 
 // ----------------------------------------------------------------
@@ -215,108 +202,100 @@ DEFINE_TRACE(RadioButtonGroup)
 // Explicity define empty constructor and destructor in order to prevent the
 // compiler from generating them as inlines. So we don't need to to define
 // RadioButtonGroup in the header.
-RadioButtonGroupScope::RadioButtonGroupScope()
-{
+RadioButtonGroupScope::RadioButtonGroupScope() {}
+
+RadioButtonGroupScope::~RadioButtonGroupScope() {}
+
+void RadioButtonGroupScope::AddButton(HTMLInputElement* element) {
+  DCHECK_EQ(element->type(), InputTypeNames::radio);
+  if (element->GetName().IsEmpty())
+    return;
+
+  if (!name_to_group_map_)
+    name_to_group_map_ = new NameToGroupMap;
+
+  auto key_value =
+      name_to_group_map_->insert(element->GetName(), nullptr).stored_value;
+  if (!key_value->value)
+    key_value->value = RadioButtonGroup::Create();
+  key_value->value->Add(element);
 }
 
-RadioButtonGroupScope::~RadioButtonGroupScope()
-{
+void RadioButtonGroupScope::UpdateCheckedState(HTMLInputElement* element) {
+  DCHECK_EQ(element->type(), InputTypeNames::radio);
+  if (element->GetName().IsEmpty())
+    return;
+  DCHECK(name_to_group_map_);
+  if (!name_to_group_map_)
+    return;
+  RadioButtonGroup* group = name_to_group_map_->at(element->GetName());
+  DCHECK(group);
+  group->UpdateCheckedState(element);
 }
 
-void RadioButtonGroupScope::addButton(HTMLInputElement* element)
-{
-    DCHECK_EQ(element->type(), InputTypeNames::radio);
-    if (element->name().isEmpty())
-        return;
-
-    if (!m_nameToGroupMap)
-        m_nameToGroupMap = new NameToGroupMap;
-
-    Member<RadioButtonGroup>& group = m_nameToGroupMap->add(element->name(), nullptr).storedValue->value;
-    if (!group)
-        group = RadioButtonGroup::create();
-    group->add(element);
+void RadioButtonGroupScope::RequiredAttributeChanged(
+    HTMLInputElement* element) {
+  DCHECK_EQ(element->type(), InputTypeNames::radio);
+  if (element->GetName().IsEmpty())
+    return;
+  DCHECK(name_to_group_map_);
+  if (!name_to_group_map_)
+    return;
+  RadioButtonGroup* group = name_to_group_map_->at(element->GetName());
+  DCHECK(group);
+  group->RequiredAttributeChanged(element);
 }
 
-void RadioButtonGroupScope::updateCheckedState(HTMLInputElement* element)
-{
-    DCHECK_EQ(element->type(), InputTypeNames::radio);
-    if (element->name().isEmpty())
-        return;
-    DCHECK(m_nameToGroupMap);
-    if (!m_nameToGroupMap)
-        return;
-    RadioButtonGroup* group = m_nameToGroupMap->get(element->name());
-    DCHECK(group);
-    group->updateCheckedState(element);
+HTMLInputElement* RadioButtonGroupScope::CheckedButtonForGroup(
+    const AtomicString& name) const {
+  if (!name_to_group_map_)
+    return nullptr;
+  RadioButtonGroup* group = name_to_group_map_->at(name);
+  return group ? group->CheckedButton() : nullptr;
 }
 
-void RadioButtonGroupScope::requiredAttributeChanged(HTMLInputElement* element)
-{
-    DCHECK_EQ(element->type(), InputTypeNames::radio);
-    if (element->name().isEmpty())
-        return;
-    DCHECK(m_nameToGroupMap);
-    if (!m_nameToGroupMap)
-        return;
-    RadioButtonGroup* group = m_nameToGroupMap->get(element->name());
-    DCHECK(group);
-    group->requiredAttributeChanged(element);
+bool RadioButtonGroupScope::IsInRequiredGroup(HTMLInputElement* element) const {
+  DCHECK_EQ(element->type(), InputTypeNames::radio);
+  if (element->GetName().IsEmpty())
+    return false;
+  if (!name_to_group_map_)
+    return false;
+  RadioButtonGroup* group = name_to_group_map_->at(element->GetName());
+  return group && group->IsRequired() && group->Contains(element);
 }
 
-HTMLInputElement* RadioButtonGroupScope::checkedButtonForGroup(const AtomicString& name) const
-{
-    if (!m_nameToGroupMap)
-        return nullptr;
-    RadioButtonGroup* group = m_nameToGroupMap->get(name);
-    return group ? group->checkedButton() : nullptr;
+unsigned RadioButtonGroupScope::GroupSizeFor(
+    const HTMLInputElement* element) const {
+  if (!name_to_group_map_)
+    return 0;
+
+  RadioButtonGroup* group = name_to_group_map_->at(element->GetName());
+  if (!group)
+    return 0;
+  return group->size();
 }
 
-bool RadioButtonGroupScope::isInRequiredGroup(HTMLInputElement* element) const
-{
-    DCHECK_EQ(element->type(), InputTypeNames::radio);
-    if (element->name().isEmpty())
-        return false;
-    if (!m_nameToGroupMap)
-        return false;
-    RadioButtonGroup* group = m_nameToGroupMap->get(element->name());
-    return group && group->isRequired() && group->contains(element);
+void RadioButtonGroupScope::RemoveButton(HTMLInputElement* element) {
+  DCHECK_EQ(element->type(), InputTypeNames::radio);
+  if (element->GetName().IsEmpty())
+    return;
+  if (!name_to_group_map_)
+    return;
+
+  RadioButtonGroup* group = name_to_group_map_->at(element->GetName());
+  if (!group)
+    return;
+  group->Remove(element);
+  if (group->IsEmpty()) {
+    // We don't remove an empty RadioButtonGroup from m_nameToGroupMap for
+    // better performance.
+    DCHECK(!group->IsRequired());
+    SECURITY_DCHECK(!group->CheckedButton());
+  }
 }
 
-unsigned RadioButtonGroupScope::groupSizeFor(const HTMLInputElement* element) const
-{
-    if (!m_nameToGroupMap)
-        return 0;
-
-    RadioButtonGroup* group = m_nameToGroupMap->get(element->name());
-    if (!group)
-        return 0;
-    return group->size();
+DEFINE_TRACE(RadioButtonGroupScope) {
+  visitor->Trace(name_to_group_map_);
 }
 
-void RadioButtonGroupScope::removeButton(HTMLInputElement* element)
-{
-    DCHECK_EQ(element->type(), InputTypeNames::radio);
-    if (element->name().isEmpty())
-        return;
-    if (!m_nameToGroupMap)
-        return;
-
-    RadioButtonGroup* group = m_nameToGroupMap->get(element->name());
-    if (!group)
-        return;
-    group->remove(element);
-    if (group->isEmpty()) {
-        // We don't remove an empty RadioButtonGroup from m_nameToGroupMap for
-        // better performance.
-        DCHECK(!group->isRequired());
-        SECURITY_DCHECK(!group->checkedButton());
-    }
-}
-
-DEFINE_TRACE(RadioButtonGroupScope)
-{
-    visitor->trace(m_nameToGroupMap);
-}
-
-} // namespace blink
+}  // namespace blink

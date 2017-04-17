@@ -13,20 +13,20 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/component_updater/component_updater_service.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
-#include "grit/browser_resources.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
@@ -104,9 +104,8 @@ void ComponentsDOMHandler::RegisterMessages() {
 
 void ComponentsDOMHandler::HandleRequestComponentsData(
     const base::ListValue* args) {
-  base::ListValue* list = ComponentsUI::LoadComponents();
   base::DictionaryValue result;
-  result.Set("components", list);
+  result.Set("components", ComponentsUI::LoadComponents());
   web_ui()->CallJavascriptFunctionUnsafe("returnComponentsData", result);
 }
 
@@ -138,7 +137,7 @@ void ComponentsDOMHandler::HandleCheckUpdate(const base::ListValue* args) {
 ///////////////////////////////////////////////////////////////////////////////
 
 ComponentsUI::ComponentsUI(content::WebUI* web_ui) : WebUIController(web_ui) {
-  web_ui->AddMessageHandler(new ComponentsDOMHandler());
+  web_ui->AddMessageHandler(base::MakeUnique<ComponentsDOMHandler>());
 
   // Set up the chrome://components/ source.
   Profile* profile = Profile::FromWebUI(web_ui);
@@ -159,18 +158,19 @@ ComponentsUI::~ComponentsUI() {
 void ComponentsUI::OnDemandUpdate(const std::string& component_id) {
   component_updater::ComponentUpdateService* cus =
       g_browser_process->component_updater();
-  cus->GetOnDemandUpdater().OnDemandUpdate(component_id);
+  cus->GetOnDemandUpdater().OnDemandUpdate(component_id,
+                                           component_updater::Callback());
 }
 
 // static
-base::ListValue* ComponentsUI::LoadComponents() {
+std::unique_ptr<base::ListValue> ComponentsUI::LoadComponents() {
   component_updater::ComponentUpdateService* cus =
       g_browser_process->component_updater();
   std::vector<std::string> component_ids;
   component_ids = cus->GetComponentIDs();
 
   // Construct DictionaryValues to return to UI.
-  base::ListValue* component_list = new base::ListValue();
+  auto component_list = base::MakeUnique<base::ListValue>();
   for (size_t j = 0; j < component_ids.size(); ++j) {
     update_client::CrxUpdateItem item;
     if (cus->GetComponentDetails(component_ids[j], &item)) {

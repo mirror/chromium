@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Apple Inc. All
+ * rights reserved.
  * Copyright (C) 2005 Alexey Proskuryakov.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,70 +30,74 @@
 namespace blink {
 
 template <typename Strategy>
-BackwardsCharacterIteratorAlgorithm<Strategy>::BackwardsCharacterIteratorAlgorithm(const PositionTemplate<Strategy>& start, const PositionTemplate<Strategy>& end, TextIteratorBehaviorFlags behavior)
-    : m_offset(0)
-    , m_runOffset(0)
-    , m_atBreak(true)
-    , m_textIterator(start, end, behavior)
-{
-    while (!atEnd() && !m_textIterator.length())
-        m_textIterator.advance();
+BackwardsCharacterIteratorAlgorithm<Strategy>::
+    BackwardsCharacterIteratorAlgorithm(const PositionTemplate<Strategy>& start,
+                                        const PositionTemplate<Strategy>& end,
+                                        const TextIteratorBehavior& behavior)
+    : offset_(0),
+      run_offset_(0),
+      at_break_(true),
+      text_iterator_(start, end, behavior) {
+  while (!AtEnd() && !text_iterator_.length())
+    text_iterator_.Advance();
 }
 
 template <typename Strategy>
-PositionTemplate<Strategy> BackwardsCharacterIteratorAlgorithm<Strategy>::endPosition() const
-{
-    if (!m_textIterator.atEnd()) {
-        if (m_textIterator.length() > 1) {
-            Node* n = m_textIterator.startContainer();
-            return PositionTemplate<Strategy>::editingPositionOf(n, m_textIterator.endOffset() - m_runOffset);
-        }
-        DCHECK(!m_runOffset);
+PositionTemplate<Strategy>
+BackwardsCharacterIteratorAlgorithm<Strategy>::EndPosition() const {
+  if (!text_iterator_.AtEnd()) {
+    if (text_iterator_.length() > 1) {
+      Node* n = text_iterator_.StartContainer();
+      return PositionTemplate<Strategy>::EditingPositionOf(
+          n, text_iterator_.EndOffset() - run_offset_);
     }
-    return m_textIterator.endPosition();
+    DCHECK(!run_offset_);
+  }
+  return text_iterator_.EndPosition();
 }
 
 template <typename Strategy>
-void BackwardsCharacterIteratorAlgorithm<Strategy>::advance(int count)
-{
-    if (count <= 0) {
-        DCHECK(!count);
+void BackwardsCharacterIteratorAlgorithm<Strategy>::Advance(int count) {
+  if (count <= 0) {
+    DCHECK(!count);
+    return;
+  }
+
+  at_break_ = false;
+
+  int remaining = text_iterator_.length() - run_offset_;
+  if (count < remaining) {
+    run_offset_ += count;
+    offset_ += count;
+    return;
+  }
+
+  count -= remaining;
+  offset_ += remaining;
+
+  for (text_iterator_.Advance(); !AtEnd(); text_iterator_.Advance()) {
+    int run_length = text_iterator_.length();
+    if (!run_length) {
+      at_break_ = true;
+    } else {
+      if (count < run_length) {
+        run_offset_ = count;
+        offset_ += count;
         return;
+      }
+
+      count -= run_length;
+      offset_ += run_length;
     }
+  }
 
-    m_atBreak = false;
-
-    int remaining = m_textIterator.length() - m_runOffset;
-    if (count < remaining) {
-        m_runOffset += count;
-        m_offset += count;
-        return;
-    }
-
-    count -= remaining;
-    m_offset += remaining;
-
-    for (m_textIterator.advance(); !atEnd(); m_textIterator.advance()) {
-        int runLength = m_textIterator.length();
-        if (!runLength) {
-            m_atBreak = true;
-        } else {
-            if (count < runLength) {
-                m_runOffset = count;
-                m_offset += count;
-                return;
-            }
-
-            count -= runLength;
-            m_offset += runLength;
-        }
-    }
-
-    m_atBreak = true;
-    m_runOffset = 0;
+  at_break_ = true;
+  run_offset_ = 0;
 }
 
-template class CORE_TEMPLATE_EXPORT BackwardsCharacterIteratorAlgorithm<EditingStrategy>;
-template class CORE_TEMPLATE_EXPORT BackwardsCharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
+template class CORE_TEMPLATE_EXPORT
+    BackwardsCharacterIteratorAlgorithm<EditingStrategy>;
+template class CORE_TEMPLATE_EXPORT
+    BackwardsCharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
 
-} // namespace blink
+}  // namespace blink

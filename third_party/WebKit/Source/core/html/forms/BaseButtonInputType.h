@@ -37,29 +37,34 @@
 namespace blink {
 
 // Base of button, image, reset, and submit types.
-class BaseButtonInputType : public InputType, public KeyboardClickableInputTypeView {
-    USING_GARBAGE_COLLECTED_MIXIN(BaseButtonInputType);
-public:
-    DECLARE_VIRTUAL_TRACE();
-    using InputType::element;
+class BaseButtonInputType : public InputType,
+                            public KeyboardClickableInputTypeView {
+  USING_GARBAGE_COLLECTED_MIXIN(BaseButtonInputType);
 
-protected:
-    explicit BaseButtonInputType(HTMLInputElement&);
-    void valueAttributeChanged() override;
-    void createShadowSubtree() override;
+ public:
+  DECLARE_VIRTUAL_TRACE();
+  using InputType::GetElement;
 
-private:
-    InputTypeView* createView() override;
-    bool shouldSaveAndRestoreFormControlState() const override;
-    void appendToFormData(FormData&) const override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) const override;
-    bool storesValueSeparateFromAttribute() override;
-    void setValue(const String&, bool, TextFieldEventBehavior) override;
-    bool matchesDefaultPseudoClass() override;
+ protected:
+  explicit BaseButtonInputType(HTMLInputElement&);
+  void ValueAttributeChanged() override;
+  void CreateShadowSubtree() override;
 
-    String displayValue() const;
+ private:
+  InputTypeView* CreateView() override;
+  bool ShouldSaveAndRestoreFormControlState() const override;
+  void AppendToFormData(FormData&) const override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) const override;
+  ValueMode GetValueMode() const override;
+  void SetValue(const String&,
+                bool,
+                TextFieldEventBehavior,
+                TextControlSetValueSelection) override;
+  bool MatchesDefaultPseudoClass() override;
+
+  String DisplayValue() const;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BaseButtonInputType_h
+#endif  // BaseButtonInputType_h

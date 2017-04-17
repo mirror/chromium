@@ -8,6 +8,16 @@
 #include "ppapi/c/ppb.h"
 #include "ppapi/cpp/module.h"
 
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
+
+#if defined(OS_WIN)
+typedef void (*PDFEnsureTypefaceCharactersAccessible)(const LOGFONT* font,
+                                                      const wchar_t* text,
+                                                      size_t text_length);
+#endif
+
 namespace chrome_pdf {
 
 class PDFModule : public pp::Module {
@@ -67,11 +77,20 @@ bool RenderPDFPageToDC(const void* pdf_buffer,
                        bool keep_aspect_ratio,
                        bool center_in_bounds,
                        bool autorotate);
-#endif
+
+void SetPDFEnsureTypefaceCharactersAccessible(
+    PDFEnsureTypefaceCharactersAccessible func);
+
+void SetPDFUseGDIPrinting(bool enable);
+
+void SetPDFPostscriptPrintingLevel(int postscript_level);
+#endif  // defined(OS_WIN)
+
 // |page_count| and |max_page_width| are optional and can be NULL.
 // Returns false if the document is not valid.
 bool GetPDFDocInfo(const void* pdf_buffer,
-                   int buffer_size, int* page_count,
+                   int buffer_size,
+                   int* page_count,
                    double* max_page_width);
 
 // Gets the dimensions of a specific page in a document.
@@ -84,8 +103,10 @@ bool GetPDFDocInfo(const void* pdf_buffer,
 // |height| is the output for the height of the page in points.
 // Returns false if the document or the page number are not valid.
 bool GetPDFPageSizeByIndex(const void* pdf_buffer,
-                           int pdf_buffer_size, int page_number,
-                           double* width, double* height);
+                           int pdf_buffer_size,
+                           int page_number,
+                           double* width,
+                           double* height);
 
 // Renders PDF page into 4-byte per pixel BGRA color bitmap.
 // |pdf_buffer| is the buffer that contains the entire PDF document to be

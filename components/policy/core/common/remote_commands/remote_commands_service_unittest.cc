@@ -24,8 +24,8 @@
 #include "components/policy/core/common/remote_commands/remote_commands_queue.h"
 #include "components/policy/core/common/remote_commands/test_remote_command_job.h"
 #include "components/policy/core/common/remote_commands/testing_remote_commands_server.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "policy/proto/device_management_backend.pb.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -84,9 +84,9 @@ class TestingCloudPolicyClientForRemoteCommands : public CloudPolicyClient {
       TestingRemoteCommandsServer* server)
       : CloudPolicyClient(std::string(), /* machine_id */
                           std::string(), /* machine_model */
-                          std::string(), /* verification_key_hash */
-                          nullptr,
-                          nullptr),
+                          nullptr,       /* service */
+                          nullptr,       /* request_context */
+                          nullptr /* signing_service */),
         server_(server) {
     dm_token_ = kDMToken;
   }

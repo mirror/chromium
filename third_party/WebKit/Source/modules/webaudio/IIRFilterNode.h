@@ -6,6 +6,7 @@
 #define IIRFilterNode_h
 
 #include "core/dom/DOMTypedArray.h"
+#include "core/dom/NotShared.h"
 #include "modules/webaudio/AudioNode.h"
 #include "modules/webaudio/IIRProcessor.h"
 
@@ -13,28 +14,38 @@ namespace blink {
 
 class BaseAudioContext;
 class ExceptionState;
+class IIRFilterOptions;
 
 class IIRFilterNode : public AudioNode {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static IIRFilterNode* create(
-        BaseAudioContext&,
-        const Vector<double> feedforward,
-        const Vector<double> feedback,
-        ExceptionState&);
+  DEFINE_WRAPPERTYPEINFO();
 
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static IIRFilterNode* Create(BaseAudioContext&,
+                               const Vector<double>& feedforward,
+                               const Vector<double>& feedback,
+                               ExceptionState&);
 
-    // Get the magnitude and phase response of the filter at the given
-    // set of frequencies (in Hz). The phase response is in radians.
-    void getFrequencyResponse(const DOMFloat32Array* frequencyHz, DOMFloat32Array* magResponse, DOMFloat32Array* phaseResponse, ExceptionState&);
+  static IIRFilterNode* Create(BaseAudioContext*,
+                               const IIRFilterOptions&,
+                               ExceptionState&);
 
-private:
-    IIRFilterNode(BaseAudioContext&, const Vector<double> denominator, const Vector<double> numerator);
+  DECLARE_VIRTUAL_TRACE();
 
-    IIRProcessor* iirProcessor() const;
+  // Get the magnitude and phase response of the filter at the given
+  // set of frequencies (in Hz). The phase response is in radians.
+  void getFrequencyResponse(NotShared<const DOMFloat32Array> frequency_hz,
+                            NotShared<DOMFloat32Array> mag_response,
+                            NotShared<DOMFloat32Array> phase_response,
+                            ExceptionState&);
+
+ private:
+  IIRFilterNode(BaseAudioContext&,
+                const Vector<double>& denominator,
+                const Vector<double>& numerator);
+
+  IIRProcessor* IirProcessor() const;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IIRFilterNode_h
+#endif  // IIRFilterNode_h

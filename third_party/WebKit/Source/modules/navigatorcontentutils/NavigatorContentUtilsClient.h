@@ -29,32 +29,32 @@
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class LocalFrame;
+class NavigatorContentUtilsClient
+    : public GarbageCollectedFinalized<NavigatorContentUtilsClient> {
+ public:
+  virtual ~NavigatorContentUtilsClient() {}
+  virtual void RegisterProtocolHandler(const String& scheme,
+                                       const KURL&,
+                                       const String& title) = 0;
 
-class NavigatorContentUtilsClient : public GarbageCollectedFinalized<NavigatorContentUtilsClient> {
-public:
-    virtual ~NavigatorContentUtilsClient() { }
-    virtual void registerProtocolHandler(const String& scheme, const KURL&, const String& title) = 0;
+  enum CustomHandlersState {
+    kCustomHandlersNew,
+    kCustomHandlersRegistered,
+    kCustomHandlersDeclined
+  };
 
-    enum CustomHandlersState {
-        CustomHandlersNew,
-        CustomHandlersRegistered,
-        CustomHandlersDeclined
-    };
+  virtual CustomHandlersState IsProtocolHandlerRegistered(const String& scheme,
+                                                          const KURL&) = 0;
+  virtual void UnregisterProtocolHandler(const String& scheme, const KURL&) = 0;
 
-    virtual CustomHandlersState isProtocolHandlerRegistered(const String& scheme, const KURL&) = 0;
-    virtual void unregisterProtocolHandler(const String& scheme, const KURL&) = 0;
-
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
-MODULES_EXPORT void provideNavigatorContentUtilsTo(LocalFrame&, NavigatorContentUtilsClient*);
+}  // namespace blink
 
-} // namespace blink
-
-#endif // NavigatorContentUtilsClient_h
+#endif  // NavigatorContentUtilsClient_h

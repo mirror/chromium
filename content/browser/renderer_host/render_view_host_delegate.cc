@@ -13,8 +13,9 @@ RenderViewHostDelegateView* RenderViewHostDelegate::GetDelegateView() {
   return NULL;
 }
 
-bool RenderViewHostDelegate::OnMessageReceived(RenderViewHost* render_view_host,
-                                               const IPC::Message& message) {
+bool RenderViewHostDelegate::OnMessageReceived(
+    RenderViewHostImpl* render_view_host,
+    const IPC::Message& message) {
   return false;
 }
 
@@ -49,6 +50,22 @@ bool RenderViewHostDelegate::IsVirtualKeyboardRequested() {
 }
 
 bool RenderViewHostDelegate::IsOverridingUserAgent() {
+  return false;
+}
+
+bool RenderViewHostDelegate::IsJavaScriptDialogShowing() const {
+  return false;
+}
+
+bool RenderViewHostDelegate::ShouldIgnoreUnresponsiveRenderer() {
+  return false;
+}
+
+bool RenderViewHostDelegate::HideDownloadUI() const {
+  return false;
+}
+
+bool RenderViewHostDelegate::HasPersistentVideo() const {
   return false;
 }
 

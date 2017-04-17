@@ -17,98 +17,90 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *  MA 02110-1301, USA
  */
 
 #include "core/frame/Navigator.h"
 
 #include "bindings/core/v8/ScriptController.h"
 #include "core/dom/Document.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/NavigatorID.h"
 #include "core/frame/Settings.h"
 #include "core/loader/CookieJar.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "platform/Language.h"
 
 namespace blink {
 
-Navigator::Navigator(LocalFrame* frame)
-    : DOMWindowProperty(frame)
-{
+Navigator::Navigator(LocalFrame* frame) : DOMWindowClient(frame) {}
+
+String Navigator::productSub() const {
+  return "20030107";
 }
 
-String Navigator::productSub() const
-{
-    return "20030107";
+String Navigator::vendor() const {
+  // Do not change without good cause. History:
+  // https://code.google.com/p/chromium/issues/detail?id=276813
+  // https://www.w3.org/Bugs/Public/show_bug.cgi?id=27786
+  // https://groups.google.com/a/chromium.org/forum/#!topic/blink-dev/QrgyulnqvmE
+  return "Google Inc.";
 }
 
-String Navigator::vendor() const
-{
-    // Do not change without good cause. History:
-    // https://code.google.com/p/chromium/issues/detail?id=276813
-    // https://www.w3.org/Bugs/Public/show_bug.cgi?id=27786
-    // https://groups.google.com/a/chromium.org/forum/#!topic/blink-dev/QrgyulnqvmE
-    return "Google Inc.";
+String Navigator::vendorSub() const {
+  return "";
 }
 
-String Navigator::vendorSub() const
-{
-    return "";
+String Navigator::userAgent() const {
+  // If the frame is already detached it no longer has a meaningful useragent.
+  if (!GetFrame() || !GetFrame()->GetPage())
+    return String();
+
+  return GetFrame()->Loader().UserAgent();
 }
 
-String Navigator::userAgent() const
-{
-    // If the frame is already detached it no longer has a meaningful useragent.
-    if (!m_frame || !m_frame->page())
-        return String();
+bool Navigator::cookieEnabled() const {
+  if (!GetFrame())
+    return false;
 
-    return m_frame->loader().userAgent();
+  Settings* settings = GetFrame()->GetSettings();
+  if (!settings || !settings->GetCookieEnabled())
+    return false;
+
+  return CookiesEnabled(GetFrame()->GetDocument());
 }
 
-bool Navigator::cookieEnabled() const
-{
-    if (!m_frame)
-        return false;
+Vector<String> Navigator::languages() {
+  Vector<String> languages;
 
-    Settings* settings = m_frame->settings();
-    if (!settings || !settings->cookieEnabled())
-        return false;
-
-    return cookiesEnabled(m_frame->document());
-}
-
-Vector<String> Navigator::languages()
-{
-    Vector<String> languages;
-
-    if (!m_frame || !m_frame->host()) {
-        languages.append(defaultLanguage());
-        return languages;
-    }
-
-    String acceptLanguages = m_frame->host()->chromeClient().acceptLanguages();
-    acceptLanguages.split(',', languages);
-
-    // Sanitizing tokens. We could do that more extensively but we should assume
-    // that the accept languages are already sane and support BCP47. It is
-    // likely a waste of time to make sure the tokens matches that spec here.
-    for (size_t i = 0; i < languages.size(); ++i) {
-        String& token = languages[i];
-        token = token.stripWhiteSpace();
-        if (token.length() >= 3 && token[2] == '_')
-            token.replace(2, 1, "-");
-    }
-
+  if (!GetFrame() || !GetFrame()->GetPage()) {
+    languages.push_back(DefaultLanguage());
     return languages;
+  }
+
+  String accept_languages =
+      GetFrame()->GetPage()->GetChromeClient().AcceptLanguages();
+  accept_languages.Split(',', languages);
+
+  // Sanitizing tokens. We could do that more extensively but we should assume
+  // that the accept languages are already sane and support BCP47. It is
+  // likely a waste of time to make sure the tokens matches that spec here.
+  for (size_t i = 0; i < languages.size(); ++i) {
+    String& token = languages[i];
+    token = token.StripWhiteSpace();
+    if (token.length() >= 3 && token[2] == '_')
+      token.Replace(2, 1, "-");
+  }
+
+  return languages;
 }
 
-DEFINE_TRACE(Navigator)
-{
-    DOMWindowProperty::trace(visitor);
-    Supplementable<Navigator>::trace(visitor);
+DEFINE_TRACE(Navigator) {
+  DOMWindowClient::Trace(visitor);
+  Supplementable<Navigator>::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

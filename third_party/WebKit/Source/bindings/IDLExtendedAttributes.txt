@@ -33,6 +33,7 @@
 
 ActiveScriptWrappable
 CEReactions
+CachedAccessor
 CachedAttribute=*
 CallWith=ExecutionContext|ScriptState|ScriptArguments|CurrentWindow|EnteredWindow|ThisValue
 CheckSecurity=Receiver|ReturnValue
@@ -41,22 +42,24 @@ Constructor
 # FIXME: remove [ConstructorCallWith=Document], as can instead use
 # [ConstructorCallWith=ExecutionContext] + toDocument(executionContext)
 ConstructorCallWith=ExecutionContext|ScriptState|Document
-Custom=|Getter|Setter|LegacyCallAsFunction|VisitDOMWrapper|PropertyGetter|PropertyEnumerator|PropertyQuery|CallPrologue|CallEpilogue
+CrossOrigin=|Getter|Setter
+Custom=|Getter|Setter|LegacyCallAsFunction|PropertyGetter|PropertyEnumerator|PropertyQuery|CallPrologue|CallEpilogue
 CustomConstructor
 CustomElementCallbacks
 Default=Undefined
 DependentLifetime
 DeprecateAs=*
 DoNotCheckConstants
-DoNotCheckSecurity=|Setter
 DoNotTestNewObject
 EnforceRange
+ExperimentalCallbackFunction
 Exposed=*
+FeaturePolicy=*
 FlexibleArrayBufferView
 Global=|*
+HTMLConstructor
+ImmutablePrototype
 ImplementedAs=*
-ImplementedInPrivateScript
-Iterable
 LegacyInterfaceTypeChecking
 LegacyTreatAsPartialInterface
 LenientThis
@@ -66,10 +69,8 @@ NewObject
 Measure
 MeasureAs=*
 NamedConstructor=*
-NoImplHeader
 NoInterfaceObject
 NotEnumerable
-OnlyExposedToPrivateScript
 OriginTrialEnabled=*
 OverrideBuiltins
 PartialInterfaceImplementedAs=*
@@ -86,15 +87,14 @@ ReflectMissing=*
 ReflectOnly=*
 Replaceable
 # Valid values for [RuntimeEnabled] are the Runtime Enabled Features, listed in
-# Source/platform/RuntimeEnabledFeatures.in
+# Source/platform/RuntimeEnabledFeatures.json5
 RuntimeEnabled=*
 SameObject
 SaveSameObject
-SetWrapperReferenceFrom=*
-SetWrapperReferenceTo=*
+SecureContext
 SetterCallWith=ExecutionContext|ScriptArguments|CurrentWindow|EnteredWindow
 TreatNullAs=NullString|EmptyString
-TreatUndefinedAs=NullString
 URL
 Unforgeable
-Unscopeable
+Unscopable
+WebAgentAPI

@@ -27,82 +27,77 @@
 #define SQLTransactionStateMachine_h
 
 #include "modules/webdatabase/SQLTransactionState.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-template<typename T>
+template <typename T>
 class SQLTransactionStateMachine {
-public:
-    virtual ~SQLTransactionStateMachine() { }
+ public:
+  virtual ~SQLTransactionStateMachine() {}
 
-protected:
-    SQLTransactionStateMachine();
+ protected:
+  SQLTransactionStateMachine();
 
-    typedef SQLTransactionState (T::* StateFunction)();
-    virtual StateFunction stateFunctionFor(SQLTransactionState) = 0;
+  typedef SQLTransactionState (T::*StateFunction)();
+  virtual StateFunction StateFunctionFor(SQLTransactionState) = 0;
 
-    void setStateToRequestedState();
-    void runStateMachine();
+  void SetStateToRequestedState();
+  void RunStateMachine();
 
-    SQLTransactionState m_nextState;
-    SQLTransactionState m_requestedState;
+  SQLTransactionState next_state_;
+  SQLTransactionState requested_state_;
 
-#if ENABLE(ASSERT)
-    // The state audit trail (i.e. bread crumbs) keeps track of up to the last
-    // s_sizeOfStateAuditTrail states that the state machine enters. The audit
-    // trail is updated before entering each state. This is for debugging use
-    // only.
-    static const int s_sizeOfStateAuditTrail = 20;
-    int m_nextStateAuditEntry;
-    SQLTransactionState m_stateAuditTrail[s_sizeOfStateAuditTrail];
+#if DCHECK_IS_ON()
+  // The state audit trail (i.e. bread crumbs) keeps track of up to the last
+  // s_sizeOfStateAuditTrail states that the state machine enters. The audit
+  // trail is updated before entering each state. This is for debugging use
+  // only.
+  static const int kSizeOfStateAuditTrail = 20;
+  int next_state_audit_entry_ = 0;
+  SQLTransactionState state_audit_trail_[kSizeOfStateAuditTrail];
 #endif
 };
 
-#if !LOG_DISABLED
-extern const char* nameForSQLTransactionState(SQLTransactionState);
+#if DCHECK_IS_ON()
+extern const char* NameForSQLTransactionState(SQLTransactionState);
 #endif
 
-template<typename T>
+template <typename T>
 SQLTransactionStateMachine<T>::SQLTransactionStateMachine()
-    : m_nextState(SQLTransactionState::Idle)
-    , m_requestedState(SQLTransactionState::Idle)
-#if ENABLE(ASSERT)
-    , m_nextStateAuditEntry(0)
-#endif
-{
-#if ENABLE(ASSERT)
-    for (int i = 0; i < s_sizeOfStateAuditTrail; i++)
-        m_stateAuditTrail[i] = SQLTransactionState::NumberOfStates;
+    : next_state_(SQLTransactionState::kIdle),
+      requested_state_(SQLTransactionState::kIdle) {
+#if DCHECK_IS_ON()
+  for (int i = 0; i < kSizeOfStateAuditTrail; i++)
+    state_audit_trail_[i] = SQLTransactionState::kNumberOfStates;
 #endif
 }
 
-template<typename T>
-void SQLTransactionStateMachine<T>::setStateToRequestedState()
-{
-    ASSERT(m_nextState == SQLTransactionState::Idle);
-    ASSERT(m_requestedState != SQLTransactionState::Idle);
-    m_nextState = m_requestedState;
-    m_requestedState = SQLTransactionState::Idle;
+template <typename T>
+void SQLTransactionStateMachine<T>::SetStateToRequestedState() {
+  DCHECK_EQ(next_state_, SQLTransactionState::kIdle);
+  DCHECK_NE(requested_state_, SQLTransactionState::kIdle);
+  next_state_ = requested_state_;
+  requested_state_ = SQLTransactionState::kIdle;
 }
 
-template<typename T>
-void SQLTransactionStateMachine<T>::runStateMachine()
-{
-    ASSERT(SQLTransactionState::End < SQLTransactionState::Idle);
-    while (m_nextState > SQLTransactionState::Idle) {
-        ASSERT(m_nextState < SQLTransactionState::NumberOfStates);
-        StateFunction stateFunction = stateFunctionFor(m_nextState);
-        ASSERT(stateFunction);
+template <typename T>
+void SQLTransactionStateMachine<T>::RunStateMachine() {
+  DCHECK_LT(SQLTransactionState::kEnd, SQLTransactionState::kIdle);
+  while (next_state_ > SQLTransactionState::kIdle) {
+    DCHECK_LT(next_state_, SQLTransactionState::kNumberOfStates);
+    StateFunction state_function = StateFunctionFor(next_state_);
+    DCHECK(state_function);
 
-#if ENABLE(ASSERT)
-        m_stateAuditTrail[m_nextStateAuditEntry] = m_nextState;
-        m_nextStateAuditEntry = (m_nextStateAuditEntry + 1) % s_sizeOfStateAuditTrail;
+#if DCHECK_IS_ON()
+    state_audit_trail_[next_state_audit_entry_] = next_state_;
+    next_state_audit_entry_ =
+        (next_state_audit_entry_ + 1) % kSizeOfStateAuditTrail;
 #endif
-        m_nextState = (static_cast<T*>(this)->*stateFunction)();
-    }
+    next_state_ = (static_cast<T*>(this)->*state_function)();
+  }
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SQLTransactionStateMachine_h
+#endif  // SQLTransactionStateMachine_h

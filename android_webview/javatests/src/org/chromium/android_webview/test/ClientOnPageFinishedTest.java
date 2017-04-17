@@ -4,13 +4,16 @@
 
 package org.chromium.android_webview.test;
 
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.test.util.CommonResources;
 import org.chromium.android_webview.test.util.JSUtils;
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.FlakyTest;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
+import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.net.test.util.TestWebServer;
 
 import java.util.concurrent.CountDownLatch;
@@ -52,11 +55,12 @@ public class ClientOnPageFinishedTest extends AwTestBase {
 
     @MediumTest
     @Feature({"AndroidWebView"})
+    @FlakyTest(message = "crbug.com/652577")
     public void testCalledAfterError() throws Throwable {
         class LocalTestClient extends TestAwContentsClient {
-            private boolean mIsOnReceivedErrorCalled = false;
-            private boolean mIsOnPageFinishedCalled = false;
-            private boolean mAllowAboutBlank = false;
+            private boolean mIsOnReceivedErrorCalled;
+            private boolean mIsOnPageFinishedCalled;
+            private boolean mAllowAboutBlank;
 
             @Override
             public void onReceivedError(int errorCode, String description, String failingUrl) {
@@ -70,7 +74,7 @@ public class ClientOnPageFinishedTest extends AwTestBase {
 
             @Override
             public void onPageFinished(String url) {
-                if (mAllowAboutBlank && "about:blank".equals(url)) {
+                if (mAllowAboutBlank && ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL.equals(url)) {
                     super.onPageFinished(url);
                     return;
                 }
@@ -104,7 +108,7 @@ public class ClientOnPageFinishedTest extends AwTestBase {
         // we load a valid page. Since callbacks arrive sequentially, this will ensure that
         // any extra calls of onPageFinished / onReceivedError will arrive to our client.
         testContentsClient.setAllowAboutBlank();
-        loadUrlSync(mAwContents, onPageFinishedHelper, "about:blank");
+        loadUrlSync(mAwContents, onPageFinishedHelper, ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
     }
 
     @MediumTest
@@ -319,8 +323,8 @@ public class ClientOnPageFinishedTest extends AwTestBase {
                         @Override
                         public void run() {
                             try {
-                                latch.await(WAIT_TIMEOUT_MS,
-                                        java.util.concurrent.TimeUnit.MILLISECONDS);
+                                assertTrue(latch.await(WAIT_TIMEOUT_MS,
+                                        java.util.concurrent.TimeUnit.MILLISECONDS));
                             } catch (InterruptedException e) {
                                 fail("Caught InterruptedException " + e);
                             }
@@ -418,6 +422,121 @@ public class ClientOnPageFinishedTest extends AwTestBase {
             onPageFinishedHelper.waitForCallback(currentCallCount);
             assertEquals(url, onPageFinishedHelper.getUrl());
         } finally {
+            webServer.shutdown();
+        }
+    }
+
+    /**
+     * Ensure onPageFinished is called for an empty response (if the response status isn't
+     * HttpStatus.SC_NO_CONTENT).
+     */
+    @MediumTest
+    @Feature({"AndroidWebView"})
+    public void testCalledOnEmptyResponse() throws Throwable {
+        TestWebServer webServer = TestWebServer.start();
+        try {
+            final String url = webServer.setEmptyResponse("/page.html");
+            TestCallbackHelperContainer.OnPageFinishedHelper onPageFinishedHelper =
+                    mContentsClient.getOnPageFinishedHelper();
+            int currentCallCount = onPageFinishedHelper.getCallCount();
+            loadUrlAsync(mAwContents, url);
+            onPageFinishedHelper.waitForCallback(currentCallCount);
+            assertEquals(url, onPageFinishedHelper.getUrl());
+        } finally {
+            webServer.shutdown();
+        }
+    }
+
+    /**
+     * Ensure onPageFinished is called when a provisional load is cancelled.
+     */
+    @MediumTest
+    @Feature({"AndroidWebView"})
+    @RetryOnFailure
+    public void testCalledOnCancelingProvisionalLoad() throws Throwable {
+        TestWebServer webServer = TestWebServer.start();
+        final CountDownLatch testDoneLatch = new CountDownLatch(1);
+        try {
+            final String url = webServer.setResponseWithRunnableAction(
+                    "/slow_page.html", "", null /* headers */, new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                assertTrue(testDoneLatch.await(WAIT_TIMEOUT_MS,
+                                        java.util.concurrent.TimeUnit.MILLISECONDS));
+                            } catch (InterruptedException e) {
+                                fail("Caught InterruptedException " + e);
+                            }
+                        }
+                    });
+            TestCallbackHelperContainer.OnPageFinishedHelper onPageFinishedHelper =
+                    mContentsClient.getOnPageFinishedHelper();
+            int initialCallCount = onPageFinishedHelper.getCallCount();
+            loadUrlAsync(mAwContents, url);
+
+            // Cancel before getting a response from the server.
+            stopLoading(mAwContents);
+
+            onPageFinishedHelper.waitForCallback(initialCallCount);
+            assertEquals(url, onPageFinishedHelper.getUrl());
+
+            // Load another page to ensure onPageFinished isn't called several times.
+            final String syncUrl = webServer.setResponse("/sync.html", "", null);
+            final int synchronizationPageCallCount = onPageFinishedHelper.getCallCount();
+            assertEquals(initialCallCount + 1, synchronizationPageCallCount);
+            loadUrlAsync(mAwContents, syncUrl);
+
+            onPageFinishedHelper.waitForCallback(synchronizationPageCallCount);
+            assertEquals(syncUrl, onPageFinishedHelper.getUrl());
+        } finally {
+            testDoneLatch.countDown();
+            webServer.shutdown();
+        }
+    }
+
+    /**
+     * Ensure onPageFinished is called when a committed load is cancelled.
+     */
+    @MediumTest
+    @Feature({"AndroidWebView"})
+    public void testCalledOnCancelingCommittedLoad() throws Throwable {
+        TestCallbackHelperContainer.OnPageFinishedHelper onPageFinishedHelper =
+                mContentsClient.getOnPageFinishedHelper();
+
+        TestWebServer webServer = TestWebServer.start();
+        final CountDownLatch serverImageUrlLatch = new CountDownLatch(1);
+        final CountDownLatch testDoneLatch = new CountDownLatch(1);
+        try {
+            final String stallingImageUrl = webServer.setResponseWithRunnableAction(
+                    "/stallingImage.html", "", null /* headers */, new Runnable() {
+                        @Override
+                        public void run() {
+                            serverImageUrlLatch.countDown();
+                            try {
+                                assertTrue(testDoneLatch.await(WAIT_TIMEOUT_MS,
+                                        java.util.concurrent.TimeUnit.MILLISECONDS));
+                            } catch (InterruptedException e) {
+                                fail("Caught InterruptedException " + e);
+                            }
+                        }
+                    });
+
+            final String mainPageHtml =
+                    CommonResources.makeHtmlPageFrom("", "<img src=" + stallingImageUrl + ">");
+            final String mainPageUrl = webServer.setResponse("/mainPage.html", mainPageHtml, null);
+
+            assertEquals(0, onPageFinishedHelper.getCallCount());
+            loadUrlAsync(mAwContents, mainPageUrl);
+
+            assertTrue(serverImageUrlLatch.await(
+                    WAIT_TIMEOUT_MS, java.util.concurrent.TimeUnit.MILLISECONDS));
+            assertEquals(0, onPageFinishedHelper.getCallCount());
+            // Our load isn't done since we haven't loaded the image - now cancel the load.
+            stopLoading(mAwContents);
+            onPageFinishedHelper.waitForCallback(0);
+            assertEquals(1, onPageFinishedHelper.getCallCount());
+        } finally {
+            testDoneLatch.countDown();
             webServer.shutdown();
         }
     }

@@ -1,11 +1,3 @@
-CONSOLE WARNING: 'webkitIDBTransaction' is deprecated. Please use 'IDBTransaction' instead.
-CONSOLE WARNING: 'webkitIDBRequest' is deprecated. Please use 'IDBRequest' instead.
-CONSOLE WARNING: 'webkitIDBObjectStore' is deprecated. Please use 'IDBObjectStore' instead.
-CONSOLE WARNING: 'webkitIDBKeyRange' is deprecated. Please use 'IDBKeyRange' instead.
-CONSOLE WARNING: 'webkitIDBIndex' is deprecated. Please use 'IDBIndex' instead.
-CONSOLE WARNING: 'webkitIDBFactory' is deprecated. Please use 'IDBFactory' instead.
-CONSOLE WARNING: 'webkitIDBDatabase' is deprecated. Please use 'IDBDatabase' instead.
-CONSOLE WARNING: 'webkitIDBCursor' is deprecated. Please use 'IDBCursor' instead.
 This test documents all interface attributes and methods on DedicatedWorkerGlobalScope.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
@@ -106,6 +98,13 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     getter name
 [Worker]     method constructor
 [Worker]     method toString
+[Worker] interface DOMStringList
+[Worker]     attribute @@toStringTag
+[Worker]     getter length
+[Worker]     method @@iterator
+[Worker]     method constructor
+[Worker]     method contains
+[Worker]     method item
 [Worker] interface DataView
 [Worker]     attribute @@toStringTag
 [Worker]     getter buffer
@@ -136,25 +135,9 @@ Starting worker: resources/global-interface-listing.js
 [Worker] interface Event
 [Worker]     attribute @@toStringTag
 [Worker]     attribute AT_TARGET
-[Worker]     attribute BLUR
 [Worker]     attribute BUBBLING_PHASE
 [Worker]     attribute CAPTURING_PHASE
-[Worker]     attribute CHANGE
-[Worker]     attribute CLICK
-[Worker]     attribute DBLCLICK
-[Worker]     attribute DRAGDROP
-[Worker]     attribute FOCUS
-[Worker]     attribute KEYDOWN
-[Worker]     attribute KEYPRESS
-[Worker]     attribute KEYUP
-[Worker]     attribute MOUSEDOWN
-[Worker]     attribute MOUSEDRAG
-[Worker]     attribute MOUSEMOVE
-[Worker]     attribute MOUSEOUT
-[Worker]     attribute MOUSEOVER
-[Worker]     attribute MOUSEUP
 [Worker]     attribute NONE
-[Worker]     attribute SELECT
 [Worker]     getter bubbles
 [Worker]     getter cancelBubble
 [Worker]     getter cancelable
@@ -281,6 +264,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method advance
 [Worker]     method constructor
 [Worker]     method continue
+[Worker]     method continuePrimaryKey
 [Worker]     method delete
 [Worker]     method update
 [Worker] interface IDBCursorWithValue : IDBCursor
@@ -327,6 +311,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method getKey
 [Worker]     method openCursor
 [Worker]     method openKeyCursor
+[Worker]     setter name
 [Worker] interface IDBKeyRange
 [Worker]     static method bound
 [Worker]     static method lowerBound
@@ -356,10 +341,12 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method get
 [Worker]     method getAll
 [Worker]     method getAllKeys
+[Worker]     method getKey
 [Worker]     method index
 [Worker]     method openCursor
 [Worker]     method openKeyCursor
 [Worker]     method put
+[Worker]     setter name
 [Worker] interface IDBOpenDBRequest : IDBRequest
 [Worker]     attribute @@toStringTag
 [Worker]     getter onblocked
@@ -409,6 +396,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method constructor
 [Worker] interface ImageData
 [Worker]     attribute @@toStringTag
+[Worker]     getter data
 [Worker]     getter height
 [Worker]     getter width
 [Worker]     method constructor
@@ -434,6 +422,13 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method postMessage
 [Worker]     method start
 [Worker]     setter onmessage
+[Worker] interface NavigationPreloadManager
+[Worker]     attribute @@toStringTag
+[Worker]     method constructor
+[Worker]     method disable
+[Worker]     method enable
+[Worker]     method getState
+[Worker]     method setHeaderValue
 [Worker] interface Notification : EventTarget
 [Worker]     static getter maxActions
 [Worker]     static getter permission
@@ -444,6 +439,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     getter data
 [Worker]     getter dir
 [Worker]     getter icon
+[Worker]     getter image
 [Worker]     getter lang
 [Worker]     getter onclick
 [Worker]     getter onclose
@@ -494,6 +490,8 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method cancel
 [Worker]     method constructor
 [Worker]     method getReader
+[Worker]     method pipeThrough
+[Worker]     method pipeTo
 [Worker]     method tee
 [Worker] interface Request
 [Worker]     attribute @@toStringTag
@@ -521,6 +519,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     getter bodyUsed
 [Worker]     getter headers
 [Worker]     getter ok
+[Worker]     getter redirected
 [Worker]     getter status
 [Worker]     getter statusText
 [Worker]     getter type
@@ -535,6 +534,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     attribute @@toStringTag
 [Worker]     getter active
 [Worker]     getter installing
+[Worker]     getter navigationPreload
 [Worker]     getter onupdatefound
 [Worker]     getter pushManager
 [Worker]     getter scope
@@ -546,6 +546,10 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method unregister
 [Worker]     method update
 [Worker]     setter onupdatefound
+[Worker] interface StorageManager
+[Worker]     attribute @@toStringTag
+[Worker]     method constructor
+[Worker]     method persisted
 [Worker] interface SubtleCrypto
 [Worker]     attribute @@toStringTag
 [Worker]     method constructor
@@ -645,14 +649,15 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     getter caches
 [Worker]     getter crypto
 [Worker]     getter indexedDB
+[Worker]     getter isSecureContext
 [Worker]     getter location
 [Worker]     getter navigator
 [Worker]     getter onerror
 [Worker]     getter onrejectionhandled
 [Worker]     getter onunhandledrejection
+[Worker]     getter origin
 [Worker]     getter performance
 [Worker]     getter self
-[Worker]     getter webkitIndexedDB
 [Worker]     method atob
 [Worker]     method btoa
 [Worker]     method clearInterval
@@ -666,6 +671,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     setter onerror
 [Worker]     setter onrejectionhandled
 [Worker]     setter onunhandledrejection
+[Worker]     setter origin
 [Worker] interface WorkerLocation
 [Worker]     attribute @@toStringTag
 [Worker]     getter hash
@@ -689,8 +695,14 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     getter permissions
 [Worker]     getter platform
 [Worker]     getter product
+[Worker]     getter storage
 [Worker]     getter userAgent
 [Worker]     method constructor
+[Worker] interface WritableStream
+[Worker]     getter locked
+[Worker]     method abort
+[Worker]     method constructor
+[Worker]     method getWriter
 [Worker] interface XMLHttpRequest : XMLHttpRequestEventTarget
 [Worker]     attribute @@toStringTag
 [Worker]     attribute DONE
@@ -742,117 +754,6 @@ Starting worker: resources/global-interface-listing.js
 [Worker] interface XMLHttpRequestUpload : XMLHttpRequestEventTarget
 [Worker]     attribute @@toStringTag
 [Worker]     method constructor
-[Worker] interface webkitIDBCursor
-[Worker]     attribute @@toStringTag
-[Worker]     getter direction
-[Worker]     getter key
-[Worker]     getter primaryKey
-[Worker]     getter source
-[Worker]     method advance
-[Worker]     method constructor
-[Worker]     method continue
-[Worker]     method delete
-[Worker]     method update
-[Worker] interface webkitIDBDatabase : EventTarget
-[Worker]     attribute @@toStringTag
-[Worker]     getter name
-[Worker]     getter objectStoreNames
-[Worker]     getter onabort
-[Worker]     getter onclose
-[Worker]     getter onerror
-[Worker]     getter onversionchange
-[Worker]     getter version
-[Worker]     method close
-[Worker]     method constructor
-[Worker]     method createObjectStore
-[Worker]     method deleteObjectStore
-[Worker]     method transaction
-[Worker]     setter onabort
-[Worker]     setter onclose
-[Worker]     setter onerror
-[Worker]     setter onversionchange
-[Worker] interface webkitIDBFactory
-[Worker]     attribute @@toStringTag
-[Worker]     method cmp
-[Worker]     method constructor
-[Worker]     method deleteDatabase
-[Worker]     method open
-[Worker]     method webkitGetDatabaseNames
-[Worker] interface webkitIDBIndex
-[Worker]     attribute @@toStringTag
-[Worker]     getter keyPath
-[Worker]     getter multiEntry
-[Worker]     getter name
-[Worker]     getter objectStore
-[Worker]     getter unique
-[Worker]     method constructor
-[Worker]     method count
-[Worker]     method get
-[Worker]     method getAll
-[Worker]     method getAllKeys
-[Worker]     method getKey
-[Worker]     method openCursor
-[Worker]     method openKeyCursor
-[Worker] interface webkitIDBKeyRange
-[Worker]     static method bound
-[Worker]     static method lowerBound
-[Worker]     static method only
-[Worker]     static method upperBound
-[Worker]     attribute @@toStringTag
-[Worker]     getter lower
-[Worker]     getter lowerOpen
-[Worker]     getter upper
-[Worker]     getter upperOpen
-[Worker]     method constructor
-[Worker]     method includes
-[Worker] interface webkitIDBObjectStore
-[Worker]     attribute @@toStringTag
-[Worker]     getter autoIncrement
-[Worker]     getter indexNames
-[Worker]     getter keyPath
-[Worker]     getter name
-[Worker]     getter transaction
-[Worker]     method add
-[Worker]     method clear
-[Worker]     method constructor
-[Worker]     method count
-[Worker]     method createIndex
-[Worker]     method delete
-[Worker]     method deleteIndex
-[Worker]     method get
-[Worker]     method getAll
-[Worker]     method getAllKeys
-[Worker]     method index
-[Worker]     method openCursor
-[Worker]     method openKeyCursor
-[Worker]     method put
-[Worker] interface webkitIDBRequest : EventTarget
-[Worker]     attribute @@toStringTag
-[Worker]     getter error
-[Worker]     getter onerror
-[Worker]     getter onsuccess
-[Worker]     getter readyState
-[Worker]     getter result
-[Worker]     getter source
-[Worker]     getter transaction
-[Worker]     method constructor
-[Worker]     setter onerror
-[Worker]     setter onsuccess
-[Worker] interface webkitIDBTransaction : EventTarget
-[Worker]     attribute @@toStringTag
-[Worker]     getter db
-[Worker]     getter error
-[Worker]     getter mode
-[Worker]     getter objectStoreNames
-[Worker]     getter onabort
-[Worker]     getter oncomplete
-[Worker]     getter onerror
-[Worker]     method abort
-[Worker]     method constructor
-[Worker]     method objectStore
-[Worker]     setter onabort
-[Worker]     setter oncomplete
-[Worker]     setter onerror
 [Worker] [GLOBAL OBJECT]
 [Worker]     attribute console
 [Worker]     attribute internals

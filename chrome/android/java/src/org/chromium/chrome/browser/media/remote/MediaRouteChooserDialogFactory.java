@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.media.remote;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -72,8 +73,8 @@ public class MediaRouteChooserDialogFactory extends MediaRouteDialogFactory {
         final MediaRouteController mController;
         final MediaStateListener mPlayer;
         final SystemVisibilitySaver mVisibilitySaver = new SystemVisibilitySaver();
-        boolean mCancelled = false;
-        Context mContext = null;
+        boolean mCancelled;
+        Context mContext;
 
         // The class has to be a public static class with a zero-argument constructor.
         // Since we can't pass any callbacks to the fragment easily, just close the dialog.
@@ -89,6 +90,7 @@ public class MediaRouteChooserDialogFactory extends MediaRouteDialogFactory {
             mPlayer = null;
         }
 
+        @SuppressLint("ValidFragment")
         Fragment(MediaRouteController controller, MediaStateListener player) {
             mController = controller;
             mPlayer = player;

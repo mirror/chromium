@@ -27,8 +27,8 @@
 #include "components/history/ios/browser/history_database_helper.h"
 #include "components/keyed_service/core/service_access_type.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
-#include "components/syncable_prefs/pref_service_syncable.h"
-#include "components/syncable_prefs/testing_pref_service_syncable.h"
+#include "components/sync_preferences/pref_service_syncable.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/user_prefs/user_prefs.h"
 #include "components/webdata_services/web_data_service_wrapper.h"
 #include "ios/chrome/browser/application_context.h"
@@ -48,14 +48,18 @@
 #include "ios/web/public/web_thread.h"
 #include "net/url_request/url_request_test_util.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 namespace {
 std::unique_ptr<KeyedService> BuildHistoryService(web::BrowserState* context) {
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
-  return base::WrapUnique(new history::HistoryService(
+  return base::MakeUnique<history::HistoryService>(
       base::WrapUnique(new HistoryClientImpl(
           ios::BookmarkModelFactory::GetForBrowserState(browser_state))),
-      nullptr));
+      nullptr);
 }
 
 std::unique_ptr<KeyedService> BuildBookmarkModel(web::BrowserState* context) {
@@ -63,27 +67,29 @@ std::unique_ptr<KeyedService> BuildBookmarkModel(web::BrowserState* context) {
       ios::ChromeBrowserState::FromBrowserState(context);
   std::unique_ptr<bookmarks::BookmarkModel> bookmark_model(
       new bookmarks::BookmarkModel(
-          base::WrapUnique(new BookmarkClientImpl(browser_state))));
+          base::MakeUnique<BookmarkClientImpl>(browser_state)));
   bookmark_model->Load(
       browser_state->GetPrefs(),
       browser_state->GetStatePath(), browser_state->GetIOTaskRunner(),
       web::WebThread::GetTaskRunnerForThread(web::WebThread::UI));
+  // TODO(crbug.com/703565): remove std::move() once Xcode 9.0+ is required.
   return std::move(bookmark_model);
 }
 
-void NotReachedErrorCallback(WebDataServiceWrapper::ErrorType error_type,
-                             sql::InitStatus status) {
+void NotReachedErrorCallback(WebDataServiceWrapper::ErrorType,
+                             sql::InitStatus,
+                             const std::string&) {
   NOTREACHED();
 }
 
 std::unique_ptr<KeyedService> BuildWebDataService(web::BrowserState* context) {
   const base::FilePath& browser_state_path = context->GetStatePath();
-  return base::WrapUnique(new WebDataServiceWrapper(
+  return base::MakeUnique<WebDataServiceWrapper>(
       browser_state_path, GetApplicationContext()->GetApplicationLocale(),
       web::WebThread::GetTaskRunnerForThread(web::WebThread::UI),
       web::WebThread::GetTaskRunnerForThread(web::WebThread::DB),
       ios::sync_start_util::GetFlareForSyncableService(browser_state_path),
-      &NotReachedErrorCallback));
+      &NotReachedErrorCallback);
 }
 
 base::FilePath CreateTempBrowserStateDir(base::ScopedTempDir* temp_dir) {
@@ -111,7 +117,7 @@ base::FilePath CreateTempBrowserStateDir(base::ScopedTempDir* temp_dir) {
       CHECK(temp_dir->Set(system_tmp_dir));
     }
   }
-  return temp_dir->path();
+  return temp_dir->GetPath();
 }
 }  // namespace
 
@@ -128,7 +134,7 @@ TestChromeBrowserState::TestChromeBrowserState(
 
 TestChromeBrowserState::TestChromeBrowserState(
     const base::FilePath& path,
-    std::unique_ptr<syncable_prefs::PrefServiceSyncable> prefs,
+    std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs,
     const TestingFactories& testing_factories,
     const RefcountedTestingFactories& refcounted_testing_factories)
     : state_path_(path),
@@ -173,8 +179,6 @@ void TestChromeBrowserState::Init() {
   // Normally this would happen during browser startup, but for tests we need to
   // trigger creation of BrowserState-related services.
   EnsureBrowserStateKeyedServiceFactoriesBuilt();
-  if (ios::GetChromeBrowserProvider())
-    ios::GetChromeBrowserProvider()->AssertBrowserContextKeyedFactoriesBuilt();
 
   if (prefs_) {
     // If user passed a custom PrefServiceSyncable, then leave |testing_prefs_|
@@ -186,7 +190,7 @@ void TestChromeBrowserState::Init() {
     prefs_ =
         CreateIncognitoBrowserStatePrefs(original_browser_state_->prefs_.get());
   } else {
-    testing_prefs_ = new syncable_prefs::TestingPrefServiceSyncable();
+    testing_prefs_ = new sync_preferences::TestingPrefServiceSyncable();
     RegisterBrowserStatePrefs(testing_prefs_->registry());
     prefs_.reset(testing_prefs_);
   }
@@ -278,8 +282,7 @@ void TestChromeBrowserState::ClearNetworkingHistorySince(
 }
 
 net::URLRequestContextGetter* TestChromeBrowserState::CreateRequestContext(
-    ProtocolHandlerMap* protocol_handlers,
-    URLRequestInterceptorScopedVector request_interceptors) {
+    ProtocolHandlerMap* protocol_handlers) {
   return new net::TestURLRequestContextGetter(
       web::WebThread::GetTaskRunnerForThread(web::WebThread::IO));
 }
@@ -359,9 +362,10 @@ void TestChromeBrowserState::DestroyHistoryService() {
   if (!history_service)
     return;
 
+  base::RunLoop run_loop;
+
   history_service->ClearCachedDataForContextID(0);
-  history_service->SetOnBackendDestroyTask(
-      base::MessageLoop::QuitWhenIdleClosure());
+  history_service->SetOnBackendDestroyTask(run_loop.QuitWhenIdleClosure());
   history_service->Shutdown();
   history_service = nullptr;
 
@@ -373,16 +377,10 @@ void TestChromeBrowserState::DestroyHistoryService() {
   // moving to the next test. Note: if this never terminates, somebody is
   // probably leaking a reference to the history backend, so it never calls
   // our destroy task.
-  base::MessageLoop::current()->Run();
-
-  // Make sure we don't have any event pending that could disrupt the next
-  // test.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
-  base::MessageLoop::current()->Run();
+  run_loop.Run();
 }
 
-syncable_prefs::TestingPrefServiceSyncable*
+sync_preferences::TestingPrefServiceSyncable*
 TestChromeBrowserState::GetTestingPrefService() {
   DCHECK(prefs_);
   DCHECK(testing_prefs_);
@@ -413,7 +411,7 @@ void TestChromeBrowserState::Builder::SetPath(const base::FilePath& path) {
 }
 
 void TestChromeBrowserState::Builder::SetPrefService(
-    std::unique_ptr<syncable_prefs::PrefServiceSyncable> prefs) {
+    std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs) {
   DCHECK(!build_called_);
   pref_service_ = std::move(prefs);
 }

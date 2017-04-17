@@ -32,46 +32,47 @@
 
 namespace blink {
 
-CanvasInterceptor<ReplayingCanvas>::~CanvasInterceptor()
-{
-    if (topLevelCall())
-        canvas()->updateInRange();
+CanvasInterceptor<ReplayingCanvas>::~CanvasInterceptor() {
+  if (TopLevelCall())
+    Canvas()->UpdateInRange();
 }
 
-ReplayingCanvas::ReplayingCanvas(SkBitmap bitmap, unsigned fromStep, unsigned toStep)
-    : InterceptingCanvas(bitmap), m_fromStep(fromStep), m_toStep(toStep), m_abortDrawing(false)
-{
+ReplayingCanvas::ReplayingCanvas(SkBitmap bitmap,
+                                 unsigned from_step,
+                                 unsigned to_step)
+    : InterceptingCanvas(bitmap),
+      from_step_(from_step),
+      to_step_(to_step),
+      abort_drawing_(false) {}
+
+void ReplayingCanvas::UpdateInRange() {
+  if (abort_drawing_)
+    return;
+  unsigned step = CallCount() + 1;
+  if (to_step_ && step > to_step_)
+    abort_drawing_ = true;
+  if (step == from_step_)
+    this->SkCanvas::clear(SK_ColorTRANSPARENT);
 }
 
-void ReplayingCanvas::updateInRange()
-{
-    if (m_abortDrawing)
-        return;
-    unsigned step = callCount() + 1;
-    if (m_toStep && step > m_toStep)
-        m_abortDrawing = true;
-    if (step == m_fromStep)
-        this->SkCanvas::clear(SK_ColorTRANSPARENT);
+bool ReplayingCanvas::abort() {
+  return abort_drawing_;
 }
 
-bool ReplayingCanvas::abort()
-{
-    return m_abortDrawing;
+SkCanvas::SaveLayerStrategy ReplayingCanvas::getSaveLayerStrategy(
+    const SaveLayerRec& rec) {
+  // We're about to create a layer and we have not cleared the device yet.
+  // Let's clear now, so it has effect on all layers.
+  if (CallCount() <= from_step_)
+    this->SkCanvas::clear(SK_ColorTRANSPARENT);
+
+  return this->InterceptingCanvas<ReplayingCanvas>::getSaveLayerStrategy(rec);
 }
 
-SkCanvas::SaveLayerStrategy ReplayingCanvas::getSaveLayerStrategy(const SaveLayerRec& rec)
-{
-    // We're about to create a layer and we have not cleared the device yet.
-    // Let's clear now, so it has effect on all layers.
-    if (callCount() <= m_fromStep)
-        this->SkCanvas::clear(SK_ColorTRANSPARENT);
-
-    return this->InterceptingCanvas<ReplayingCanvas>::getSaveLayerStrategy(rec);
+void ReplayingCanvas::onDrawPicture(const SkPicture* picture,
+                                    const SkMatrix* matrix,
+                                    const SkPaint* paint) {
+  this->UnrollDrawPicture(picture, matrix, paint, this);
 }
 
-void ReplayingCanvas::onDrawPicture(const SkPicture* picture, const SkMatrix* matrix, const SkPaint* paint)
-{
-    this->unrollDrawPicture(picture, matrix, paint, this);
-}
-
-} // namespace blink
+}  // namespace blink

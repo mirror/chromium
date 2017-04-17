@@ -2,5 +2,7 @@ skyostil@chromium.org
 tedchoc@chromium.org
 yfriedman@chromium.org
 
-per-file synchronous_compositor_*.h=boliu@chromium.org
-per-file synchronous_compositor_*.cc=boliu@chromium.org
+# ContentViewCore related
+per-file content_view_*=jinsukkim@chromium.org
+
+# COMPONENT: Content>WebApps

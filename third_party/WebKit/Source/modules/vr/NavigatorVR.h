@@ -6,48 +6,76 @@
 #define NavigatorVR_h
 
 #include "bindings/core/v8/ScriptPromise.h"
-#include "core/frame/DOMWindowProperty.h"
+#include "core/frame/LocalDOMWindow.h"
+#include "core/frame/Navigator.h"
+#include "core/page/FocusChangedObserver.h"
 #include "modules/ModulesExport.h"
 #include "modules/vr/VRDisplay.h"
+#include "modules/vr/VRDisplayEvent.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebVector.h"
-#include "wtf/Noncopyable.h"
 
 namespace blink {
 
 class Document;
 class Navigator;
 class VRController;
-class VRDisplayCollection;
 
-class MODULES_EXPORT NavigatorVR final : public GarbageCollectedFinalized<NavigatorVR>, public Supplement<Navigator>, public DOMWindowProperty {
-    USING_GARBAGE_COLLECTED_MIXIN(NavigatorVR);
-    WTF_MAKE_NONCOPYABLE(NavigatorVR);
-public:
-    static NavigatorVR* from(Document&);
-    static NavigatorVR& from(Navigator&);
-    virtual ~NavigatorVR();
+class MODULES_EXPORT NavigatorVR final
+    : public GarbageCollectedFinalized<NavigatorVR>,
+      public Supplement<Navigator>,
+      public LocalDOMWindow::EventListenerObserver,
+      public FocusChangedObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(NavigatorVR);
+  WTF_MAKE_NONCOPYABLE(NavigatorVR);
 
-    static ScriptPromise getVRDisplays(ScriptState*, Navigator&);
-    ScriptPromise getVRDisplays(ScriptState*);
+ public:
+  static NavigatorVR* From(Document&);
+  static NavigatorVR& From(Navigator&);
+  virtual ~NavigatorVR();
 
-    VRController* controller();
-    Document* document();
+  static ScriptPromise getVRDisplays(ScriptState*, Navigator&);
+  ScriptPromise getVRDisplays(ScriptState*);
 
-    DECLARE_VIRTUAL_TRACE();
+  VRController* Controller();
+  Document* GetDocument();
+  bool IsFocused() { return focused_; }
 
-private:
-    friend class VRDisplay;
-    friend class VRGetDevicesCallback;
+  // Queues up event to be fired soon.
+  void EnqueueVREvent(VRDisplayEvent*);
 
-    explicit NavigatorVR(LocalFrame*);
+  // Dispatches an event immediately.
+  void DispatchVREvent(VRDisplayEvent*);
 
-    static const char* supplementName();
+  // Inherited from FocusChangedObserver.
+  void FocusedFrameChanged() override;
 
-    Member<VRDisplayCollection> m_displays;
+  // Inherited from LocalDOMWindow::EventListenerObserver.
+  void DidAddEventListener(LocalDOMWindow*, const AtomicString&) override;
+  void DidRemoveEventListener(LocalDOMWindow*, const AtomicString&) override;
+  void DidRemoveAllEventListeners(LocalDOMWindow*) override;
+
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  friend class VRDisplay;
+  friend class VRGetDevicesCallback;
+
+  explicit NavigatorVR(Navigator&);
+
+  static const char* SupplementName();
+
+  void FireVRDisplayPresentChange(VRDisplay*);
+
+  Member<VRController> controller_;
+
+  // Whether this page is listening for vrdisplayactivate event.
+  bool listening_for_activate_ = false;
+  bool focused_ = false;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NavigatorVR_h
+#endif  // NavigatorVR_h

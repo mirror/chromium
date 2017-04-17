@@ -32,9 +32,10 @@
 #include "net/base/proxy_delegate.h"
 #include "net/dns/host_resolver.h"
 #include "net/http/http_network_session.h"
+#include "net/net_features.h"
 #include "net/proxy/proxy_config_service.h"
 #include "net/proxy/proxy_service.h"
-#include "net/quic/quic_protocol.h"
+#include "net/quic/core/quic_packets.h"
 #include "net/socket/next_proto.h"
 #include "net/url_request/url_request_job_factory.h"
 
@@ -48,7 +49,6 @@ class CertVerifier;
 class ChannelIDService;
 class CookieStore;
 class CTVerifier;
-class FtpTransactionFactory;
 class HostMappingRules;
 class HttpAuthHandlerFactory;
 class HttpServerProperties;
@@ -97,16 +97,13 @@ class NET_EXPORT URLRequestContextBuilder {
     std::string quic_user_agent_id;
     int quic_max_server_configs_stored_in_properties;
     bool quic_delay_tcp_race;
-    int quic_max_number_of_lossy_connections;
-    std::unordered_set<std::string> quic_host_whitelist;
-    bool quic_prefer_aes;
-    float quic_packet_loss_threshold;
     int quic_idle_connection_timeout_seconds;
     QuicTagVector quic_connection_options;
     bool quic_close_sessions_on_ip_change;
     bool quic_migrate_sessions_on_network_change;
     bool quic_migrate_sessions_early;
     bool quic_disable_bidirectional_streams;
+    bool quic_race_cert_verification;
   };
 
   URLRequestContextBuilder();
@@ -145,14 +142,14 @@ class NET_EXPORT URLRequestContextBuilder {
     data_enabled_ = enable;
   }
 
-#if !defined(DISABLE_FILE_SUPPORT)
+#if !BUILDFLAG(DISABLE_FILE_SUPPORT)
   // Control support for file:// requests. By default it's disabled.
   void set_file_enabled(bool enable) {
     file_enabled_ = enable;
   }
 #endif
 
-#if !defined(DISABLE_FTP_SUPPORT)
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
   // Control support for ftp:// requests. By default it's disabled.
   void set_ftp_enabled(bool enable) {
     ftp_enabled_ = enable;
@@ -236,26 +233,10 @@ class NET_EXPORT URLRequestContextBuilder {
     http_network_session_params_.quic_delay_tcp_race = quic_delay_tcp_race;
   }
 
-  void set_quic_max_number_of_lossy_connections(
-      int quic_max_number_of_lossy_connections) {
-    http_network_session_params_.quic_max_number_of_lossy_connections =
-        quic_max_number_of_lossy_connections;
-  }
-
-  void set_quic_packet_loss_threshold(float quic_packet_loss_threshold) {
-    http_network_session_params_.quic_packet_loss_threshold =
-        quic_packet_loss_threshold;
-  }
-
   void set_quic_idle_connection_timeout_seconds(
       int quic_idle_connection_timeout_seconds) {
     http_network_session_params_.quic_idle_connection_timeout_seconds =
         quic_idle_connection_timeout_seconds;
-  }
-
-  void set_quic_host_whitelist(
-      const std::unordered_set<std::string>& quic_host_whitelist) {
-    http_network_session_params_.quic_host_whitelist = quic_host_whitelist;
   }
 
   void set_quic_close_sessions_on_ip_change(
@@ -270,10 +251,6 @@ class NET_EXPORT URLRequestContextBuilder {
         quic_migrate_sessions_on_network_change;
   }
 
-  void set_quic_prefer_aes(bool quic_prefer_aes) {
-    http_network_session_params_.quic_prefer_aes = quic_prefer_aes;
-  }
-
   void set_quic_migrate_sessions_early(bool quic_migrate_sessions_early) {
     http_network_session_params_.quic_migrate_sessions_early =
         quic_migrate_sessions_early;
@@ -285,12 +262,13 @@ class NET_EXPORT URLRequestContextBuilder {
         quic_disable_bidirectional_streams;
   }
 
-  void set_throttling_enabled(bool throttling_enabled) {
-    throttling_enabled_ = throttling_enabled;
+  void set_quic_race_cert_verification(bool quic_race_cert_verification) {
+    http_network_session_params_.quic_race_cert_verification =
+        quic_race_cert_verification;
   }
 
-  void set_backoff_enabled(bool backoff_enabled) {
-    backoff_enabled_ = backoff_enabled;
+  void set_throttling_enabled(bool throttling_enabled) {
+    throttling_enabled_ = throttling_enabled;
   }
 
   void set_socket_performance_watcher_factory(
@@ -342,17 +320,16 @@ class NET_EXPORT URLRequestContextBuilder {
   std::string user_agent_;
   // Include support for data:// requests.
   bool data_enabled_;
-#if !defined(DISABLE_FILE_SUPPORT)
+#if !BUILDFLAG(DISABLE_FILE_SUPPORT)
   // Include support for file:// requests.
   bool file_enabled_;
 #endif
-#if !defined(DISABLE_FTP_SUPPORT)
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
   // Include support for ftp:// requests.
   bool ftp_enabled_;
 #endif
   bool http_cache_enabled_;
   bool throttling_enabled_;
-  bool backoff_enabled_;
   bool sdch_enabled_;
   bool cookie_store_set_by_client_;
 
@@ -368,9 +345,6 @@ class NET_EXPORT URLRequestContextBuilder {
   std::unique_ptr<NetworkDelegate> network_delegate_;
   std::unique_ptr<ProxyDelegate> proxy_delegate_;
   std::unique_ptr<CookieStore> cookie_store_;
-#if !defined(DISABLE_FTP_SUPPORT)
-  std::unique_ptr<FtpTransactionFactory> ftp_transaction_factory_;
-#endif
   std::unique_ptr<HttpAuthHandlerFactory> http_auth_handler_factory_;
   std::unique_ptr<CertVerifier> cert_verifier_;
   std::unique_ptr<CTVerifier> ct_verifier_;

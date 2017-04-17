@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "remoting/protocol/fake_connection_to_host.h"
 #include "remoting/signaling/fake_signal_strategy.h"
 #include "remoting/test/connection_setup_info.h"
@@ -68,8 +69,9 @@ void TestChromotingClientTest::SetUp() {
   // keep the ptr around so we can use it to simulate state changes.  It will
   // remain valid until |test_chromoting_client_| is destroyed.
   fake_connection_to_host_ = new FakeConnectionToHost();
-  test_chromoting_client_->SetSignalStrategyForTests(base::WrapUnique(
-      new FakeSignalStrategy("test_user@faux_address.com/123")));
+  test_chromoting_client_->SetSignalStrategyForTests(
+      base::MakeUnique<FakeSignalStrategy>(
+          SignalingAddress("test_user@faux_address.com/123")));
   test_chromoting_client_->SetConnectionToHostForTests(
       base::WrapUnique(fake_connection_to_host_));
 
@@ -86,7 +88,7 @@ void TestChromotingClientTest::TearDown() {
   // The IceTransportFactory destroys the PortAllocator via a DeleteSoon
   // operation. If we do not allow the message loop to run here, we run the
   // risk of the DeleteSoon task being dropped and incurring a memory leak.
-  message_loop_.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 }
 
 void TestChromotingClientTest::ConnectionStateChanged(
@@ -108,7 +110,7 @@ void TestChromotingClientTest::ConnectionReady(bool ready) {
 }
 
 TEST_F(TestChromotingClientTest, StartConnectionAndDisconnect) {
-  test_chromoting_client_->StartConnection(connection_setup_info_);
+  test_chromoting_client_->StartConnection(false, connection_setup_info_);
   EXPECT_EQ(protocol::ConnectionToHost::State::CONNECTING, connection_state_);
   EXPECT_EQ(protocol::OK, error_code_);
   EXPECT_FALSE(is_connected_to_host_);
@@ -141,7 +143,7 @@ TEST_F(TestChromotingClientTest, StartConnectionAndDisconnect) {
 
 TEST_F(TestChromotingClientTest,
        StartConnectionThenFailWithAuthenticationError) {
-  test_chromoting_client_->StartConnection(connection_setup_info_);
+  test_chromoting_client_->StartConnection(false, connection_setup_info_);
   EXPECT_EQ(protocol::ConnectionToHost::State::CONNECTING, connection_state_);
   EXPECT_EQ(protocol::OK, error_code_);
   EXPECT_FALSE(is_connected_to_host_);
@@ -161,7 +163,7 @@ TEST_F(TestChromotingClientTest,
 }
 
 TEST_F(TestChromotingClientTest, StartConnectionThenFailWithUnknownError) {
-  test_chromoting_client_->StartConnection(connection_setup_info_);
+  test_chromoting_client_->StartConnection(false, connection_setup_info_);
   EXPECT_EQ(protocol::ConnectionToHost::State::CONNECTING, connection_state_);
   EXPECT_EQ(protocol::OK, error_code_);
   EXPECT_FALSE(is_connected_to_host_);

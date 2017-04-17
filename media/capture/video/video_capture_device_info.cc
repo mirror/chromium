@@ -1,4 +1,4 @@
-// Copyright 2014 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -6,19 +6,18 @@
 
 namespace media {
 
-VideoCaptureDeviceInfo::VideoCaptureDeviceInfo() {
-}
+VideoCaptureDeviceInfo::VideoCaptureDeviceInfo() = default;
 
 VideoCaptureDeviceInfo::VideoCaptureDeviceInfo(
-    const VideoCaptureDevice::Name& name,
-    const VideoCaptureFormats& supported_formats)
-    : name(name), supported_formats(supported_formats) {
-}
+    media::VideoCaptureDeviceDescriptor descriptor)
+    : descriptor(descriptor) {}
 
 VideoCaptureDeviceInfo::VideoCaptureDeviceInfo(
     const VideoCaptureDeviceInfo& other) = default;
 
-VideoCaptureDeviceInfo::~VideoCaptureDeviceInfo() {
-}
+VideoCaptureDeviceInfo::~VideoCaptureDeviceInfo() = default;
+
+VideoCaptureDeviceInfo& VideoCaptureDeviceInfo::operator=(
+    const VideoCaptureDeviceInfo& other) = default;
 
 }  // namespace media

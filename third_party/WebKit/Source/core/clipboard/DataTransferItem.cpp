@@ -33,67 +33,79 @@
 #include "bindings/core/v8/V8Binding.h"
 #include "core/clipboard/DataObjectItem.h"
 #include "core/clipboard/DataTransfer.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/dom/StringCallback.h"
-#include "wtf/StdLibExtras.h"
+#include "core/dom/TaskRunnerHelper.h"
+#include "core/probe/CoreProbes.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebTraceLocation.h"
 
 namespace blink {
 
-DataTransferItem* DataTransferItem::create(DataTransfer* dataTransfer, DataObjectItem* item)
-{
-    return new DataTransferItem(dataTransfer, item);
+DataTransferItem* DataTransferItem::Create(DataTransfer* data_transfer,
+                                           DataObjectItem* item) {
+  return new DataTransferItem(data_transfer, item);
 }
 
-String DataTransferItem::kind() const
-{
-    DEFINE_STATIC_LOCAL(const String, kindString, ("string"));
-    DEFINE_STATIC_LOCAL(const String, kindFile, ("file"));
-    if (!m_dataTransfer->canReadTypes())
-        return String();
-    switch (m_item->kind()) {
-    case DataObjectItem::StringKind:
-        return kindString;
-    case DataObjectItem::FileKind:
-        return kindFile;
-    }
-    ASSERT_NOT_REACHED();
+String DataTransferItem::kind() const {
+  DEFINE_STATIC_LOCAL(const String, kind_string, ("string"));
+  DEFINE_STATIC_LOCAL(const String, kind_file, ("file"));
+  if (!data_transfer_->CanReadTypes())
     return String();
+  switch (item_->Kind()) {
+    case DataObjectItem::kStringKind:
+      return kind_string;
+    case DataObjectItem::kFileKind:
+      return kind_file;
+  }
+  ASSERT_NOT_REACHED();
+  return String();
 }
 
-String DataTransferItem::type() const
-{
-    if (!m_dataTransfer->canReadTypes())
-        return String();
-    return m_item->type();
+String DataTransferItem::type() const {
+  if (!data_transfer_->CanReadTypes())
+    return String();
+  return item_->GetType();
 }
 
-void DataTransferItem::getAsString(ExecutionContext* context, StringCallback* callback) const
-{
-    if (!m_dataTransfer->canReadData())
-        return;
-    if (!callback || m_item->kind() != DataObjectItem::StringKind)
-        return;
-
-    StringCallback::scheduleCallback(callback, context, m_item->getAsString(), "DataTransferItem.getAsString");
+static void RunGetAsStringTask(ExecutionContext* context,
+                               StringCallback* callback,
+                               const String& data) {
+  probe::AsyncTask async_task(context, callback);
+  if (context)
+    callback->handleEvent(data);
 }
 
-Blob* DataTransferItem::getAsFile() const
-{
-    if (!m_dataTransfer->canReadData())
-        return nullptr;
+void DataTransferItem::getAsString(ScriptState* script_state,
+                                   StringCallback* callback) const {
+  if (!data_transfer_->CanReadData())
+    return;
+  if (!callback || item_->Kind() != DataObjectItem::kStringKind)
+    return;
 
-    return m_item->getAsFile();
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  probe::AsyncTaskScheduled(context, "DataTransferItem.getAsString", callback);
+  TaskRunnerHelper::Get(TaskType::kUserInteraction, script_state)
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&RunGetAsStringTask, WrapWeakPersistent(context),
+                           WrapPersistent(callback), item_->GetAsString()));
 }
 
-DataTransferItem::DataTransferItem(DataTransfer* dataTransfer, DataObjectItem* item)
-    : m_dataTransfer(dataTransfer)
-    , m_item(item)
-{
+File* DataTransferItem::getAsFile() const {
+  if (!data_transfer_->CanReadData())
+    return nullptr;
+
+  return item_->GetAsFile();
 }
 
-DEFINE_TRACE(DataTransferItem)
-{
-    visitor->trace(m_dataTransfer);
-    visitor->trace(m_item);
+DataTransferItem::DataTransferItem(DataTransfer* data_transfer,
+                                   DataObjectItem* item)
+    : data_transfer_(data_transfer), item_(item) {}
+
+DEFINE_TRACE(DataTransferItem) {
+  visitor->Trace(data_transfer_);
+  visitor->Trace(item_);
 }
 
-} // namespace blink
+}  // namespace blink

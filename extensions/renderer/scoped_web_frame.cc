@@ -9,16 +9,16 @@
 namespace extensions {
 
 ScopedWebFrame::ScopedWebFrame() : view_(nullptr), frame_(nullptr) {
-  view_ = blink::WebView::create(nullptr, blink::WebPageVisibilityStateVisible);
-  frame_ = blink::WebLocalFrame::create(
-      blink::WebTreeScopeType::Document, nullptr);
-  view_->setMainFrame(frame_);
+  view_ =
+      blink::WebView::Create(nullptr, blink::kWebPageVisibilityStateVisible);
+  frame_ = blink::WebLocalFrame::Create(blink::WebTreeScopeType::kDocument,
+                                        &frame_client_, nullptr, nullptr);
+  view_->SetMainFrame(frame_);
 }
 
 ScopedWebFrame::~ScopedWebFrame() {
-  view_->close();
-  frame_->close();
-  blink::WebHeap::collectAllGarbageForTesting();
+  view_->Close();
+  blink::WebHeap::CollectAllGarbageForTesting();
 }
 
 }  // namespace extensions

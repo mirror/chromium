@@ -13,6 +13,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -37,9 +38,10 @@
 #include "components/version_info/version_info.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
+#include "extensions/features/features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_service_test_base.h"
 #include "chrome/browser/extensions/extension_util.h"
@@ -364,7 +366,7 @@ TEST_F(SupervisedUserServiceTest, CreatePermissionRequest) {
   }
 }
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 class SupervisedUserServiceExtensionTestBase
     : public extensions::ExtensionServiceTestBase {
  public:
@@ -384,7 +386,7 @@ class SupervisedUserServiceExtensionTestBase
     service->Init();
     site_list_observer_.Init(service->GetWhitelistService());
 
-    SupervisedUserURLFilter* url_filter = service->GetURLFilterForUIThread();
+    SupervisedUserURLFilter* url_filter = service->GetURLFilter();
     url_filter->SetBlockingTaskRunnerForTesting(
         base::ThreadTaskRunnerHandle::Get());
     url_filter_observer_.Init(url_filter);
@@ -448,14 +450,13 @@ class SupervisedUserServiceExtensionTest
 
  protected:
   void InitSupervisedUserInitiatedExtensionInstallFeature(bool enabled) {
-    base::FeatureList::ClearInstanceForTesting();
-    std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
     if (enabled) {
-      feature_list->InitializeFromCommandLine(
-          "SupervisedUserInitiatedExtensionInstall", std::string());
+      scoped_feature_list_.InitAndEnableFeature(
+          supervised_users::kSupervisedUserInitiatedExtensionInstall);
     }
-    base::FeatureList::SetInstance(std::move(feature_list));
   }
+
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 TEST_F(SupervisedUserServiceExtensionTest,
@@ -586,8 +587,7 @@ TEST_F(SupervisedUserServiceExtensionTest,
 TEST_F(SupervisedUserServiceExtensionTest, NoContentPacks) {
   SupervisedUserService* supervised_user_service =
       SupervisedUserServiceFactory::GetForProfile(profile_.get());
-  SupervisedUserURLFilter* url_filter =
-      supervised_user_service->GetURLFilterForUIThread();
+  SupervisedUserURLFilter* url_filter = supervised_user_service->GetURLFilter();
 
   // ASSERT_EQ instead of ASSERT_TRUE([...].empty()) so that the error
   // message contains the size in case of failure.
@@ -601,8 +601,7 @@ TEST_F(SupervisedUserServiceExtensionTest, NoContentPacks) {
 TEST_F(SupervisedUserServiceExtensionTest, InstallContentPacks) {
   SupervisedUserService* supervised_user_service =
       SupervisedUserServiceFactory::GetForProfile(profile_.get());
-  SupervisedUserURLFilter* url_filter =
-      supervised_user_service->GetURLFilterForUIThread();
+  SupervisedUserURLFilter* url_filter = supervised_user_service->GetURLFilter();
 
   const std::string id1 = "ID 1";
   const base::string16 title1 = base::ASCIIToUTF16("Title 1");
@@ -682,4 +681,4 @@ TEST_F(SupervisedUserServiceExtensionTest, InstallContentPacks) {
   EXPECT_EQ(SupervisedUserURLFilter::ALLOW,
             url_filter->GetFilteringBehaviorForURL(moose_url));
 }
-#endif  // defined(ENABLE_EXTENSIONS)
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)

@@ -7,11 +7,13 @@
 
 #include <deque>
 
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/lock.h"
 #include "base/test/test_pending_task.h"
-#include "base/threading/thread_checker.h"
+#include "base/threading/platform_thread.h"
 
 namespace base {
 
@@ -25,8 +27,6 @@ class TimeDelta;
 //
 // TestSimpleTaskRunner has the following properties which make it simple:
 //
-//   - It is non-thread safe; all member functions must be called on
-//     the same thread.
 //   - Tasks are simply stored in a queue in FIFO order, ignoring delay
 //     and nestability.
 //   - Tasks aren't guaranteed to be destroyed immediately after
@@ -36,10 +36,6 @@ class TimeDelta;
 // handles the running of tasks that in turn call back into itself
 // (e.g., to post more tasks).
 //
-// If you need more complicated properties, consider using this class
-// as a template for writing a test TaskRunner implementation using
-// TestPendingTask.
-//
 // Note that, like any TaskRunner, TestSimpleTaskRunner is
 // ref-counted.
 class TestSimpleTaskRunner : public SingleThreadTaskRunner {
@@ -48,35 +44,44 @@ class TestSimpleTaskRunner : public SingleThreadTaskRunner {
 
   // SingleThreadTaskRunner implementation.
   bool PostDelayedTask(const tracked_objects::Location& from_here,
-                       const Closure& task,
+                       OnceClosure task,
                        TimeDelta delay) override;
   bool PostNonNestableDelayedTask(const tracked_objects::Location& from_here,
-                                  const Closure& task,
+                                  OnceClosure task,
                                   TimeDelta delay) override;
 
   bool RunsTasksOnCurrentThread() const override;
 
-  const std::deque<TestPendingTask>& GetPendingTasks() const;
+  std::deque<TestPendingTask> TakePendingTasks();
+  size_t NumPendingTasks() const;
   bool HasPendingTask() const;
   base::TimeDelta NextPendingTaskDelay() const;
+  base::TimeDelta FinalPendingTaskDelay() const;
 
   // Clears the queue of pending tasks without running them.
   void ClearPendingTasks();
 
-  // Runs each current pending task in order and clears the queue.
-  // Any tasks posted by the tasks are not run.
-  virtual void RunPendingTasks();
+  // Runs each current pending task in order and clears the queue. Tasks posted
+  // by the tasks that run within this call do not run within this call. Can
+  // only be called on the thread that created this TestSimpleTaskRunner.
+  void RunPendingTasks();
 
-  // Runs pending tasks until the queue is empty.
+  // Runs pending tasks until the queue is empty. Can only be called on the
+  // thread that created this TestSimpleTaskRunner.
   void RunUntilIdle();
 
  protected:
   ~TestSimpleTaskRunner() override;
 
-  std::deque<TestPendingTask> pending_tasks_;
-  ThreadChecker thread_checker_;
-
  private:
+  // Thread on which this was instantiated.
+  const PlatformThreadRef thread_ref_ = PlatformThread::CurrentRef();
+
+  // Synchronizes access to |pending_tasks_|.
+  mutable Lock lock_;
+
+  std::deque<TestPendingTask> pending_tasks_;
+
   DISALLOW_COPY_AND_ASSIGN(TestSimpleTaskRunner);
 };
 

@@ -1,151 +1,156 @@
 // Copyright (c) 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+var fs = require('fs');
+var http = require('http');
+var path = require('path');
+var parseURL = require('url').parse;
 
-var fs = require("fs");
-var http = require("http");
-var https = require("https");
-var path = require("path");
-var parseURL = require("url").parse;
+var utils = require('../utils');
 
-var port = parseInt(process.env.PORT, 10) || 8090;
+const remoteDebuggingPort = parseInt(process.env.REMOTE_DEBUGGING_PORT, 10) || 9222;
+const serverPort = parseInt(process.env.PORT, 10) || 8090;
+const localProtocolPath = process.env.LOCAL_PROTOCOL_PATH;
+const devtoolsFolder = path.resolve(path.join(__dirname, '../..'));
 
-http.createServer(requestHandler).listen(port);
-console.log("Started hosted mode server at http://localhost:" + port);
+http.createServer(requestHandler).listen(serverPort);
+console.log(`Started hosted mode server at http://localhost:${serverPort}\n`);
+console.log('For info on using the hosted mode server, see our contributing docs:');
+console.log('https://bit.ly/devtools-contribution-guide');
+console.log('Tip: Look for the \'Development server options\' section\n');
 
-function requestHandler(request, response)
-{
-    var filePath = parseURL(request.url).pathname;
-    if (filePath === "/front_end/InspectorBackendCommands.js") {
-        sendResponse(200, " ");
-        return;
+function requestHandler(request, response) {
+  var filePath = parseURL(request.url).pathname;
+  if (filePath === '/') {
+    var landingURL = `http://localhost:${remoteDebuggingPort}#custom=true&experiments=true`;
+    sendResponse(200, `<html>Please go to <a href="${landingURL}">${landingURL}</a></html>`);
+    return;
+  }
+
+  var proxiedFile = proxy(filePath, sendResponse);
+  if (proxiedFile) {
+    proxiedFile.then(data => sendResponse(200, data)).catch(handleProxyError);
+    return;
+  }
+
+  function handleProxyError(err) {
+    console.log(`Error serving the file ${filePath}:`, err);
+    console.log(`Make sure you opened Chrome with the flag "--remote-debugging-port=${remoteDebuggingPort}"`);
+    sendResponse(500, '500 - Internal Server Error');
+  }
+
+  var absoluteFilePath = path.join(process.cwd(), filePath);
+  if (!path.resolve(absoluteFilePath).startsWith(devtoolsFolder)) {
+    console.log(`File requested is outside of devtools folder: ${devtoolsFolder}`);
+    sendResponse(403, `403 - Access denied. File requested is outside of devtools folder: ${devtoolsFolder}`);
+    return;
+  }
+
+  fs.exists(absoluteFilePath, fsExistsCallback);
+
+  function fsExistsCallback(fileExists) {
+    if (!fileExists) {
+      console.log(`Cannot find file ${absoluteFilePath}`);
+      sendResponse(404, '404 - File not found');
+      return;
     }
+    fs.readFile(absoluteFilePath, 'binary', readFileCallback);
+  }
 
-    var proxiedFile = proxy(filePath, sendResponse);
-    if (proxiedFile) {
-        proxiedFile
-            .then(data => sendResponse(200, data))
-            .catch(handleProxyError);
-        return;
+  function readFileCallback(err, file) {
+    if (err) {
+      console.log(`Unable to read local file ${absoluteFilePath}:`, err);
+      sendResponse(500, '500 - Internal Server Error');
+      return;
     }
+    sendResponse(200, file);
+  }
 
-    function handleProxyError(err)
-    {
-        console.log(`Error fetching over the internet file ${filePath}:`, err);
-        sendResponse(500, "500 - Internal Server Error");
-    }
-
-    var absoluteFilePath = path.join(process.cwd(), filePath);
-    fs.exists(absoluteFilePath, fsExistsCallback);
-
-    function fsExistsCallback(fileExists)
-    {
-        if (!fileExists) {
-            console.log(`Cannot find file ${absoluteFilePath}`);
-            sendResponse(404, "404 - File not found");
-            return;
-        }
-        fs.readFile(absoluteFilePath, "binary", readFileCallback);
-    }
-
-    function readFileCallback(err, file)
-    {
-        if (err) {
-            console.log(`Unable to read local file ${absoluteFilePath}:`, err);
-            sendResponse(500, "500 - Internal Server Error");
-            return;
-        }
-        sendResponse(200, file);
-    }
-
-    function sendResponse(statusCode, data)
-    {
-        response.writeHead(statusCode);
-        response.write(data, "binary");
-        response.end();
-    }
+  function sendResponse(statusCode, data) {
+    response.writeHead(statusCode);
+    response.write(data, 'binary');
+    response.end();
+  }
 }
 
 var proxyFilePathToURL = {
-    "/front_end/sdk/protocol/js_protocol.json": getWebKitURL.bind(null, "platform/v8_inspector/js_protocol.json"),
-    "/front_end/sdk/protocol/browser_protocol.json": getWebKitURL.bind(null, "core/inspector/browser_protocol.json"),
-    "/front_end/SupportedCSSProperties.js": getFrontendURL.bind(null, "SupportedCSSProperties.js")
+  '/front_end/SupportedCSSProperties.js': cloudURL.bind(null, 'SupportedCSSProperties.js'),
+  '/front_end/InspectorBackendCommands.js': cloudURL.bind(null, 'InspectorBackendCommands.js'),
+  '/favicon.ico': () => 'https://chrome-devtools-frontend.appspot.com/favicon.ico'
 };
 
-function getWebKitURL(path, commitHash)
-{
-    return {
-        url: `https://chromium.googlesource.com/chromium/src/+/${commitHash}/third_party/WebKit/Source/${path}?format=TEXT`,
-        isBase64: true
-    }
-}
-
-function getFrontendURL(path, commitHash)
-{
-    return {
-        url: `https://chrome-devtools-frontend.appspot.com/serve_file/@${commitHash}/${path}`,
-        isBase64: false
-    }
+function cloudURL(path, commitHash) {
+  return `https://chrome-devtools-frontend.appspot.com/serve_file/@${commitHash}/${path}`;
 }
 
 var proxyFileCache = new Map();
 
-function proxy(filePath)
-{
-    if (!(filePath in proxyFilePathToURL))
-        return null;
-    return fetch("http://localhost:9222/json/version")
-        .then(onBrowserMetadata);
+function proxy(filePath) {
+  if (!(filePath in proxyFilePathToURL))
+    return null;
+  if (localProtocolPath && filePath === '/front_end/InspectorBackendCommands.js')
+    return serveLocalProtocolFile();
+  if (process.env.CHROMIUM_COMMIT)
+    return onProxyFileURL(proxyFilePathToURL[filePath](process.env.CHROMIUM_COMMIT));
+  return utils.fetch(`http://localhost:${remoteDebuggingPort}/json/version`)
+      .then(onBrowserMetadata)
+      .then(onProxyFileURL);
 
-    function onBrowserMetadata(metadata)
-    {
-        var metadataObject = JSON.parse(metadata);
-        var match = metadataObject["WebKit-Version"].match(/\s\(@(\b[0-9a-f]{5,40}\b)/);
-        var commitHash = match[1];
-        var proxyFile = proxyFilePathToURL[filePath](commitHash);
-        var proxyFileURL = proxyFile.url;
-        if (proxyFileCache.has(proxyFileURL))
-            return proxyFileCache.get(proxyFileURL);
-        return fetch(proxyFileURL)
-            .then(text => proxyFile.isBase64 ? new Buffer(text, "base64").toString("binary") : text)
-            .then(cacheProxyFile.bind(null, proxyFileURL));
-    }
-
-    function cacheProxyFile(proxyFileURL, data)
-    {
-        proxyFileCache.set(proxyFileURL, data);
-        return data;
-    }
-}
-
-function fetch(url)
-{
-    return new Promise(fetchPromise);
-
-    function fetchPromise(resolve, reject) {
-        var request;
-        var protocol = parseURL(url).protocol;
-        var handleResponse = getCallback.bind(null, resolve, reject);
-        if (protocol === "https:") {
-            request = https.get(url, handleResponse);
-        } else if (protocol === "http:") {
-            request = http.get(url, handleResponse);
-        } else {
-            reject(new Error(`Invalid protocol for url: ${url}`));
-            return;
+  function serveLocalProtocolFile() {
+    return new Promise((resolve, reject) => {
+      fs.exists(localProtocolPath, fsExistsCallback);
+      function fsExistsCallback(fileExists) {
+        if (!fileExists) {
+          reject(new Error(`Cannot find local protocol file ${localProtocolPath}`));
+          return;
         }
-        request.on("error", err => reject(err));
-    }
-
-    function getCallback(resolve, reject, response)
-    {
-        if (response.statusCode !== 200) {
-            reject(new Error(`Request error: + ${response.statusCode}`));
-            return;
+        fs.readFile(localProtocolPath, 'binary', readFileCallback);
+      }
+      function readFileCallback(err, file) {
+        if (err) {
+          reject(new Error(`Unable to read local protocol file ${localProtocolPath}`));
+          return;
         }
-        var body = "";
-        response.on("data", chunk => body += chunk);
-        response.on("end", () => resolve(body));
-    }
-}
+        return resolve(file);
+      }
+    });
+  }
 
+  function onBrowserMetadata(metadata) {
+    var metadataObject = JSON.parse(metadata);
+    var match = metadataObject['WebKit-Version'].match(/\s\(@(\b[0-9a-f]{5,40}\b)/);
+    var commitHash = match[1];
+    var proxyFileURL = proxyFilePathToURL[filePath](commitHash);
+    return proxyFileURL;
+  }
+
+  function onProxyFileURL(proxyFileURL) {
+    if (proxyFileCache.has(proxyFileURL))
+      return Promise.resolve(proxyFileCache.get(proxyFileURL));
+    return utils.fetch(proxyFileURL).then(cacheProxyFile.bind(null, proxyFileURL)).catch(onMissingFile);
+  }
+
+  function onMissingFile() {
+    var isFullCheckout = utils.shellOutput('git config --get remote.origin.url') ===
+        'https://chromium.googlesource.com/chromium/src.git';
+    var earlierCommitHash;
+    var gitLogCommand = `git log --max-count=1 --grep="Commit-Position" --before="12 hours ago"`;
+    if (isFullCheckout) {
+      earlierCommitHash = utils.shellOutput(`${gitLogCommand} --pretty=format:"%H"`);
+    } else {
+      var commitMessage = utils.shellOutput(`${gitLogCommand}`);
+      earlierCommitHash = commitMessage.match(/Cr-Mirrored-Commit: (.*)/)[1];
+    }
+    var fallbackURL = proxyFilePathToURL[filePath](earlierCommitHash);
+    console.log('WARNING: Unable to fetch generated file based on browser\'s revision');
+    console.log('Fetching earlier revision of same file as fallback');
+    console.log('There may be a mismatch between the front-end and back-end');
+    console.log(fallbackURL, '\n');
+    return utils.fetch(fallbackURL).then(cacheProxyFile.bind(null, fallbackURL));
+  }
+
+  function cacheProxyFile(proxyFileURL, data) {
+    proxyFileCache.set(proxyFileURL, data);
+    return data;
+  }
+}

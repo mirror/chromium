@@ -13,6 +13,7 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "content/public/child/worker_thread.h"
 #include "content/public/renderer/render_thread.h"
 #include "extensions/common/extension_messages.h"
@@ -28,7 +29,8 @@ using namespace v8_helpers;
 
 namespace {
 
-base::LazyInstance<WakeEventPage> g_instance = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<WakeEventPage>::DestructorAtExit g_instance =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -84,8 +86,8 @@ class WakeEventPage::WakeEventPageNativeHandler
     v8::Local<v8::Value> args[] = {
         v8::Boolean::New(isolate, success),
     };
-    context()->CallFunction(v8::Local<v8::Function>::New(isolate, callback),
-                            arraysize(args), args);
+    context()->SafeCallFunction(v8::Local<v8::Function>::New(isolate, callback),
+                                arraysize(args), args);
   }
 
   MakeRequestCallback make_request_;
@@ -113,7 +115,7 @@ v8::Local<v8::Function> WakeEventPage::GetForContext(ScriptContext* context) {
 
   v8::Isolate* isolate = context->isolate();
   v8::EscapableHandleScope handle_scope(isolate);
-  v8::Handle<v8::Context> v8_context = context->v8_context();
+  v8::Local<v8::Context> v8_context = context->v8_context();
   v8::Context::Scope context_scope(v8_context);
 
   // Cache the imported function as a hidden property on the global object of
@@ -160,10 +162,9 @@ void WakeEventPage::MakeRequest(const std::string& extension_id,
   static base::AtomicSequenceNumber sequence_number;
   int request_id = sequence_number.GetNext();
   {
-    std::unique_ptr<RequestData> request_data(
-        new RequestData(content::WorkerThread::GetCurrentId(), on_response));
     base::AutoLock lock(requests_lock_);
-    requests_.set(request_id, std::move(request_data));
+    requests_[request_id] = base::MakeUnique<RequestData>(
+        content::WorkerThread::GetCurrentId(), on_response);
   }
   message_filter_->Send(
       new ExtensionHostMsg_WakeEventPage(request_id, extension_id));
@@ -183,9 +184,11 @@ void WakeEventPage::OnWakeEventPageResponse(int request_id, bool success) {
   std::unique_ptr<RequestData> request_data;
   {
     base::AutoLock lock(requests_lock_);
-    request_data = requests_.take(request_id);
+    auto it = requests_.find(request_id);
+    CHECK(it != requests_.end()) << "No request with ID " << request_id;
+    request_data = std::move(it->second);
+    requests_.erase(it);
   }
-  CHECK(request_data) << "No request with ID " << request_id;
   if (request_data->thread_id == 0) {
     // Thread ID of 0 means it wasn't called on a worker thread, so safe to
     // call immediately.

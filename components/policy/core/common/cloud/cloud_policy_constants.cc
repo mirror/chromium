@@ -10,7 +10,7 @@
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "components/policy/core/common/policy_switches.h"
-#include "policy/proto/device_management_backend.pb.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 
 namespace em = enterprise_management;
 
@@ -22,11 +22,14 @@ namespace dm_protocol {
 // Name constants for URL query parameters.
 const char kParamAgent[] = "agent";
 const char kParamAppType[] = "apptype";
+const char kParamCritical[] = "critical";
 const char kParamDeviceID[] = "deviceid";
 const char kParamDeviceType[] = "devicetype";
+const char kParamLastError[] = "lasterror";
 const char kParamOAuthToken[] = "oauth_token";
 const char kParamPlatform[] = "platform";
 const char kParamRequest[] = "request";
+const char kParamRetry[] = "retry";
 
 // String constants for the device and app type we report to the server.
 const char kValueAppType[] = "Chrome";
@@ -45,6 +48,11 @@ const char kValueRequestDeviceAttributeUpdatePermission[] =
 const char kValueRequestDeviceAttributeUpdate[] = "device_attribute_update";
 const char kValueRequestGcmIdUpdate[] = "gcm_id_update";
 const char kValueRequestCheckAndroidManagement[] = "check_android_management";
+const char kValueRequestCertBasedRegister[] = "certificate_based_register";
+const char kValueRequestActiveDirectoryEnrollPlayUser[] =
+    "active_directory_enroll_play_user";
+const char kValueRequestActiveDirectoryPlayActivity[] =
+    "active_directory_play_activity";
 
 const char kChromeDevicePolicyType[] = "google/chromeos/device";
 #if defined(OS_CHROMEOS)
@@ -58,6 +66,8 @@ const char kChromeUserPolicyType[] = "google/chrome/user";
 #endif
 const char kChromePublicAccountPolicyType[] = "google/chromeos/publicaccount";
 const char kChromeExtensionPolicyType[] = "google/chrome/extension";
+const char kChromeSigninExtensionPolicyType[] =
+    "google/chromeos/signinextension";
 
 }  // namespace dm_protocol
 
@@ -93,52 +103,8 @@ const uint8_t kPolicyVerificationKey[] = {
 const char kPolicyVerificationKeyHash[] = "1:356l7w";
 
 std::string GetPolicyVerificationKey() {
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kDisablePolicyKeyVerification)) {
-    return std::string();
-  } else {
-    return std::string(reinterpret_cast<const char*>(kPolicyVerificationKey),
-                       sizeof(kPolicyVerificationKey));
-  }
-}
-
-void SetManagementMode(em::PolicyData& policy_data, ManagementMode mode) {
-  switch (mode) {
-    case MANAGEMENT_MODE_LOCAL_OWNER:
-      policy_data.set_management_mode(em::PolicyData::LOCAL_OWNER);
-      return;
-
-    case MANAGEMENT_MODE_ENTERPRISE_MANAGED:
-      policy_data.set_management_mode(em::PolicyData::ENTERPRISE_MANAGED);
-      return;
-
-    case MANAGEMENT_MODE_CONSUMER_MANAGED:
-      policy_data.set_management_mode(em::PolicyData::CONSUMER_MANAGED);
-      return;
-  }
-  NOTREACHED();
-}
-
-ManagementMode GetManagementMode(const em::PolicyData& policy_data) {
-  if (policy_data.has_management_mode()) {
-    switch (policy_data.management_mode()) {
-      case em::PolicyData::LOCAL_OWNER:
-        return MANAGEMENT_MODE_LOCAL_OWNER;
-
-      case em::PolicyData::ENTERPRISE_MANAGED:
-        return MANAGEMENT_MODE_ENTERPRISE_MANAGED;
-
-      case em::PolicyData::CONSUMER_MANAGED:
-        return MANAGEMENT_MODE_CONSUMER_MANAGED;
-
-      default:
-        NOTREACHED();
-        return MANAGEMENT_MODE_LOCAL_OWNER;
-    }
-  }
-
-  return policy_data.has_request_token() ?
-      MANAGEMENT_MODE_ENTERPRISE_MANAGED : MANAGEMENT_MODE_LOCAL_OWNER;
+  return std::string(reinterpret_cast<const char*>(kPolicyVerificationKey),
+                     sizeof(kPolicyVerificationKey));
 }
 
 }  // namespace policy

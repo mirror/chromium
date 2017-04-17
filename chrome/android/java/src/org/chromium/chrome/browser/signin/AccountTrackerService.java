@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.signin;
 
 import android.accounts.Account;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import org.chromium.base.Callback;
@@ -14,7 +13,7 @@ import org.chromium.base.ObserverList;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.sync.signin.AccountManagerHelper;
+import org.chromium.components.signin.AccountManagerHelper;
 
 /**
 * Android wrapper of AccountTrackerService which provides access from the java layer.
@@ -30,12 +29,11 @@ public class AccountTrackerService {
     private boolean mSystemAccountsChanged;
     private boolean mSyncForceRefreshedForTest;
 
-    private final Context mContext;
-
     private enum SystemAccountsSeedingStatus {
         SEEDING_NOT_STARTED,
         SEEDING_IN_PROGRESS,
-        SEEDING_DONE
+        SEEDING_DONE,
+        SEEDING_VALIDATING
     }
 
     /**
@@ -52,16 +50,15 @@ public class AccountTrackerService {
     private final ObserverList<OnSystemAccountsSeededListener> mSystemAccountsSeedingObservers =
             new ObserverList<>();
 
-    public static AccountTrackerService get(Context context) {
+    public static AccountTrackerService get() {
         ThreadUtils.assertOnUiThread();
         if (sAccountTrackerService == null) {
-            sAccountTrackerService = new AccountTrackerService(context);
+            sAccountTrackerService = new AccountTrackerService();
         }
         return sAccountTrackerService;
     }
 
-    private AccountTrackerService(Context context) {
-        mContext = context;
+    private AccountTrackerService() {
         mSystemAccountsSeedingStatus = SystemAccountsSeedingStatus.SEEDING_NOT_STARTED;
         mSystemAccountsChanged = false;
     }
@@ -77,7 +74,10 @@ public class AccountTrackerService {
                 && !mSystemAccountsChanged) {
             return true;
         }
-        if (mSystemAccountsSeedingStatus != SystemAccountsSeedingStatus.SEEDING_IN_PROGRESS) {
+        if ((mSystemAccountsSeedingStatus == SystemAccountsSeedingStatus.SEEDING_NOT_STARTED
+                    || mSystemAccountsChanged)
+                && mSystemAccountsSeedingStatus
+                        != SystemAccountsSeedingStatus.SEEDING_IN_PROGRESS) {
             seedSystemAccounts();
         }
         return false;
@@ -107,13 +107,13 @@ public class AccountTrackerService {
         mSystemAccountsChanged = false;
         mSyncForceRefreshedForTest = false;
         final AccountIdProvider accountIdProvider = AccountIdProvider.getInstance();
-        if (accountIdProvider.canBeUsed(mContext)) {
+        if (accountIdProvider.canBeUsed()) {
             mSystemAccountsSeedingStatus = SystemAccountsSeedingStatus.SEEDING_IN_PROGRESS;
         } else {
             mSystemAccountsSeedingStatus = SystemAccountsSeedingStatus.SEEDING_NOT_STARTED;
             return;
         }
-        AccountManagerHelper.get(mContext).getGoogleAccounts(new Callback<Account[]>() {
+        AccountManagerHelper.get().getGoogleAccounts(new Callback<Account[]>() {
             @Override
             public void onResult(final Account[] accounts) {
                 new AsyncTask<Void, Void, String[][]>() {
@@ -123,7 +123,7 @@ public class AccountTrackerService {
                         String[][] accountIdNameMap = new String[2][accounts.length];
                         for (int i = 0; i < accounts.length; ++i) {
                             accountIdNameMap[0][i] =
-                                    accountIdProvider.getAccountId(mContext, accounts[i].name);
+                                    accountIdProvider.getAccountId(accounts[i].name);
                             accountIdNameMap[1][i] = accounts[i].name;
                         }
                         return accountIdNameMap;
@@ -185,6 +185,41 @@ public class AccountTrackerService {
         if (reSeedAccounts) checkAndSeedSystemAccounts();
     }
 
+    /**
+     * Verifies whether seeded accounts in AccountTrackerService are up-to-date with the accounts in
+     * Android. It sets seeding status to SEEDING_VALIDATING temporarily to block services depending
+     * on it and sets it back to SEEDING_DONE after passing the verification. This function is
+     * created because accounts changed notification from Android to Chrome has latency.
+     */
+    public void validateSystemAccounts() {
+        ThreadUtils.assertOnUiThread();
+        if (!checkAndSeedSystemAccounts()) {
+            // Do nothing if seeding is not done.
+            return;
+        }
+
+        mSystemAccountsSeedingStatus = SystemAccountsSeedingStatus.SEEDING_VALIDATING;
+        AccountManagerHelper.get().getGoogleAccounts(new Callback<Account[]>() {
+            @Override
+            public void onResult(final Account[] accounts) {
+                if (mSystemAccountsChanged
+                        || mSystemAccountsSeedingStatus
+                                != SystemAccountsSeedingStatus.SEEDING_VALIDATING) {
+                    return;
+                }
+
+                String[] accountNames = new String[accounts.length];
+                for (int i = 0; i < accounts.length; ++i) {
+                    accountNames[i] = accounts[i].name;
+                }
+                if (nativeAreAccountsSeeded(accountNames)) {
+                    mSystemAccountsSeedingStatus = SystemAccountsSeedingStatus.SEEDING_DONE;
+                    notifyObserversOnSeedingComplete();
+                }
+            }
+        });
+    }
+
     private void notifyObserversOnAccountsChange() {
         for (OnSystemAccountsSeededListener observer : mSystemAccountsSeedingObservers) {
             observer.onSystemAccountsChanged();
@@ -192,4 +227,5 @@ public class AccountTrackerService {
     }
 
     private static native void nativeSeedAccountsInfo(String[] gaiaIds, String[] accountNames);
+    private static native boolean nativeAreAccountsSeeded(String[] accountNames);
 }

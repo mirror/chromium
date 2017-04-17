@@ -6,22 +6,77 @@
 #define MOJO_PUBLIC_CPP_BINDINGS_ASSOCIATED_BINDING_H_
 
 #include <memory>
+#include <string>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "mojo/public/cpp/bindings/associated_group.h"
-#include "mojo/public/cpp/bindings/associated_group_controller.h"
+#include "mojo/public/cpp/bindings/associated_interface_ptr_info.h"
 #include "mojo/public/cpp/bindings/associated_interface_request.h"
+#include "mojo/public/cpp/bindings/bindings_export.h"
+#include "mojo/public/cpp/bindings/connection_error_callback.h"
 #include "mojo/public/cpp/bindings/interface_endpoint_client.h"
+#include "mojo/public/cpp/bindings/raw_ptr_impl_ref_traits.h"
 #include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
 
 namespace mojo {
+
+class MessageReceiver;
+
+// Base class used to factor out code in AssociatedBinding<T> expansions, in
+// particular for Bind().
+class MOJO_CPP_BINDINGS_EXPORT AssociatedBindingBase {
+ public:
+  AssociatedBindingBase();
+  ~AssociatedBindingBase();
+
+  // Adds a message filter to be notified of each incoming message before
+  // dispatch. If a filter returns |false| from Accept(), the message is not
+  // dispatched and the pipe is closed. Filters cannot be removed.
+  void AddFilter(std::unique_ptr<MessageReceiver> filter);
+
+  // Closes the associated interface. Puts this object into a state where it can
+  // be rebound.
+  void Close();
+
+  // Similar to the method above, but also specifies a disconnect reason.
+  void CloseWithReason(uint32_t custom_reason, const std::string& description);
+
+  // Sets an error handler that will be called if a connection error occurs.
+  //
+  // This method may only be called after this AssociatedBinding has been bound
+  // to a message pipe. The error handler will be reset when this
+  // AssociatedBinding is unbound or closed.
+  void set_connection_error_handler(const base::Closure& error_handler);
+
+  void set_connection_error_with_reason_handler(
+      const ConnectionErrorWithReasonCallback& error_handler);
+
+  // Indicates whether the associated binding has been completed.
+  bool is_bound() const { return !!endpoint_client_; }
+
+  // Sends a message on the underlying message pipe and runs the current
+  // message loop until its response is received. This can be used in tests to
+  // verify that no message was sent on a message pipe in response to some
+  // stimulus.
+  void FlushForTesting();
+
+ protected:
+  void BindImpl(ScopedInterfaceEndpointHandle handle,
+                MessageReceiverWithResponderStatus* receiver,
+                std::unique_ptr<MessageReceiver> payload_validator,
+                bool expect_sync_requests,
+                scoped_refptr<base::SingleThreadTaskRunner> runner,
+                uint32_t interface_version);
+
+  std::unique_ptr<InterfaceEndpointClient> endpoint_client_;
+};
 
 // Represents the implementation side of an associated interface. It is similar
 // to Binding, except that it doesn't own a message pipe handle.
@@ -33,53 +88,49 @@ namespace mojo {
 // single thread for the purposes of task scheduling. Please note that incoming
 // synchrounous method calls may not be run from this task runner, when they
 // reenter outgoing synchrounous calls on the same thread.
-template <typename Interface>
-class AssociatedBinding {
+template <typename Interface,
+          typename ImplRefTraits = RawPtrImplRefTraits<Interface>>
+class AssociatedBinding : public AssociatedBindingBase {
  public:
+  using ImplPointerType = typename ImplRefTraits::PointerType;
+
   // Constructs an incomplete associated binding that will use the
   // implementation |impl|. It may be completed with a subsequent call to the
-  // |Bind| method. Does not take ownership of |impl|, which must outlive this
-  // object.
-  explicit AssociatedBinding(Interface* impl) : impl_(impl) {
-    stub_.set_sink(impl_);
+  // |Bind| method.
+  explicit AssociatedBinding(ImplPointerType impl) {
+    stub_.set_sink(std::move(impl));
   }
 
   // Constructs a completed associated binding of |impl|. The output |ptr_info|
-  // should be passed through the message pipe endpoint referred to by
-  // |associated_group| to setup the corresponding asssociated interface
-  // pointer. |impl| must outlive this object.
-  AssociatedBinding(Interface* impl,
+  // should be sent by another interface. |impl| must outlive this object.
+  AssociatedBinding(ImplPointerType impl,
                     AssociatedInterfacePtrInfo<Interface>* ptr_info,
-                    AssociatedGroup* associated_group,
                     scoped_refptr<base::SingleThreadTaskRunner> runner =
                         base::ThreadTaskRunnerHandle::Get())
-      : AssociatedBinding(impl) {
-    Bind(ptr_info, associated_group, std::move(runner));
+      : AssociatedBinding(std::move(impl)) {
+    Bind(ptr_info, std::move(runner));
   }
 
   // Constructs a completed associated binding of |impl|. |impl| must outlive
   // the binding.
-  AssociatedBinding(Interface* impl,
+  AssociatedBinding(ImplPointerType impl,
                     AssociatedInterfaceRequest<Interface> request,
                     scoped_refptr<base::SingleThreadTaskRunner> runner =
                         base::ThreadTaskRunnerHandle::Get())
-      : AssociatedBinding(impl) {
+      : AssociatedBinding(std::move(impl)) {
     Bind(std::move(request), std::move(runner));
   }
 
   ~AssociatedBinding() {}
 
   // Creates an associated inteface and sets up this object as the
-  // implementation side. The output |ptr_info| should be passed through the
-  // message pipe endpoint referred to by |associated_group| to setup the
-  // corresponding asssociated interface pointer.
+  // implementation side. The output |ptr_info| should be sent by another
+  // interface.
   void Bind(AssociatedInterfacePtrInfo<Interface>* ptr_info,
-            AssociatedGroup* associated_group,
             scoped_refptr<base::SingleThreadTaskRunner> runner =
                 base::ThreadTaskRunnerHandle::Get()) {
-    AssociatedInterfaceRequest<Interface> request;
-    associated_group->CreateAssociatedInterface(AssociatedGroup::WILL_PASS_PTR,
-                                                ptr_info, &request);
+    auto request = MakeRequest(ptr_info);
+    ptr_info->set_version(Interface::Version_);
     Bind(std::move(request), std::move(runner));
   }
 
@@ -87,35 +138,10 @@ class AssociatedBinding {
   void Bind(AssociatedInterfaceRequest<Interface> request,
             scoped_refptr<base::SingleThreadTaskRunner> runner =
                 base::ThreadTaskRunnerHandle::Get()) {
-    ScopedInterfaceEndpointHandle handle = request.PassHandle();
-
-    DCHECK(handle.is_local())
-        << "The AssociatedInterfaceRequest is supposed to be used at the "
-        << "other side of the message pipe.";
-
-    if (!handle.is_valid() || !handle.is_local()) {
-      endpoint_client_.reset();
-      return;
-    }
-
-    endpoint_client_.reset(new InterfaceEndpointClient(
-        std::move(handle), &stub_,
-        base::WrapUnique(new typename Interface::RequestValidator_()),
-        Interface::HasSyncMethods_, std::move(runner)));
-    endpoint_client_->set_connection_error_handler(
-        base::Bind(&AssociatedBinding::RunConnectionErrorHandler,
-                   base::Unretained(this)));
-
-    stub_.serialization_context()->group_controller =
-        endpoint_client_->group_controller();
-  }
-
-  // Closes the associated interface. Puts this object into a state where it can
-  // be rebound.
-  void Close() {
-    DCHECK(endpoint_client_);
-    endpoint_client_.reset();
-    connection_error_handler_.Reset();
+    BindImpl(request.PassHandle(), &stub_,
+             base::WrapUnique(new typename Interface::RequestValidator_()),
+             Interface::HasSyncMethods_, std::move(runner),
+             Interface::Version_);
   }
 
   // Unbinds and returns the associated interface request so it can be
@@ -128,44 +154,15 @@ class AssociatedBinding {
     request.Bind(endpoint_client_->PassHandle());
 
     endpoint_client_.reset();
-    connection_error_handler_.Reset();
 
     return request;
   }
 
-  // Sets an error handler that will be called if a connection error occurs.
-  //
-  // This method may only be called after this AssociatedBinding has been bound
-  // to a message pipe. The error handler will be reset when this
-  // AssociatedBinding is unbound or closed.
-  void set_connection_error_handler(const base::Closure& error_handler) {
-    DCHECK(is_bound());
-    connection_error_handler_ = error_handler;
-  }
-
   // Returns the interface implementation that was previously specified.
-  Interface* impl() { return impl_; }
-
-  // Indicates whether the associated binding has been completed.
-  bool is_bound() const { return !!endpoint_client_; }
-
-  // Returns the associated group that this object belongs to. Returns null if
-  // the object is not bound.
-  AssociatedGroup* associated_group() {
-    return endpoint_client_ ? endpoint_client_->associated_group() : nullptr;
-  }
+  Interface* impl() { return ImplRefTraits::GetRawPointer(&stub_.sink()); }
 
  private:
-  void RunConnectionErrorHandler() {
-    if (!connection_error_handler_.is_null())
-      connection_error_handler_.Run();
-  }
-
-  std::unique_ptr<InterfaceEndpointClient> endpoint_client_;
-
-  typename Interface::Stub_ stub_;
-  Interface* impl_;
-  base::Closure connection_error_handler_;
+  typename Interface::template Stub_<ImplRefTraits> stub_;
 
   DISALLOW_COPY_AND_ASSIGN(AssociatedBinding);
 };

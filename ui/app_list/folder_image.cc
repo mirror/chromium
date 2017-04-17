@@ -79,15 +79,15 @@ void FolderImageSource::DrawIcon(gfx::Canvas* canvas,
 }
 
 void FolderImageSource::Draw(gfx::Canvas* canvas) {
-  SkPaint paint;
+  cc::PaintFlags flags;
   // Draw circle for folder bubble.
   gfx::PointF bubble_center(size().width() / 2, size().height() / 2);
   bubble_center.Offset(0, -kFolderBubbleOffsetY);
-  paint.setStyle(SkPaint::kFill_Style);
-  paint.setAntiAlias(true);
-  paint.setColor(kFolderBubbleColor);
+  flags.setStyle(cc::PaintFlags::kFill_Style);
+  flags.setAntiAlias(true);
+  flags.setColor(kFolderBubbleColor);
   canvas->sk_canvas()->drawCircle(bubble_center.x(), bubble_center.y(),
-                                  kFolderBubbleRadius, paint);
+                                  kFolderBubbleRadius, flags);
 
   if (icons_.size() == 0)
     return;
@@ -223,7 +223,8 @@ void FolderImage::RedrawIconAndNotify() {
   icon_ =
       gfx::ImageSkia(new FolderImageSource(top_icons, icon_size), icon_size);
 
-  FOR_EACH_OBSERVER(FolderImageObserver, observers_, OnFolderImageUpdated());
+  for (auto& observer : observers_)
+    observer.OnFolderImageUpdated();
 }
 
 }  // namespace app_list

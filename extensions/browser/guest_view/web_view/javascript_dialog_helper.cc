@@ -16,14 +16,14 @@ namespace extensions {
 
 namespace {
 
-std::string JavaScriptMessageTypeToString(
-    content::JavaScriptMessageType message_type) {
-  switch (message_type) {
-    case content::JAVASCRIPT_MESSAGE_TYPE_ALERT:
+std::string JavaScriptDialogTypeToString(
+    content::JavaScriptDialogType dialog_type) {
+  switch (dialog_type) {
+    case content::JAVASCRIPT_DIALOG_TYPE_ALERT:
       return "alert";
-    case content::JAVASCRIPT_MESSAGE_TYPE_CONFIRM:
+    case content::JAVASCRIPT_DIALOG_TYPE_CONFIRM:
       return "confirm";
-    case content::JAVASCRIPT_MESSAGE_TYPE_PROMPT:
+    case content::JAVASCRIPT_DIALOG_TYPE_PROMPT:
       return "prompt";
     default:
       NOTREACHED() << "Unknown JavaScript Message Type.";
@@ -43,21 +43,19 @@ JavaScriptDialogHelper::~JavaScriptDialogHelper() {
 void JavaScriptDialogHelper::RunJavaScriptDialog(
     content::WebContents* web_contents,
     const GURL& origin_url,
-    content::JavaScriptMessageType javascript_message_type,
+    content::JavaScriptDialogType dialog_type,
     const base::string16& message_text,
     const base::string16& default_prompt_text,
     const DialogClosedCallback& callback,
     bool* did_suppress_message) {
   base::DictionaryValue request_info;
-  request_info.Set(
-      webview::kDefaultPromptText,
-      new base::StringValue(base::UTF16ToUTF8(default_prompt_text)));
+  request_info.Set(webview::kDefaultPromptText,
+                   new base::Value(base::UTF16ToUTF8(default_prompt_text)));
   request_info.Set(webview::kMessageText,
-                   new base::StringValue(base::UTF16ToUTF8(message_text)));
+                   new base::Value(base::UTF16ToUTF8(message_text)));
   request_info.Set(webview::kMessageType,
-                   new base::StringValue(
-                       JavaScriptMessageTypeToString(javascript_message_type)));
-  request_info.Set(guest_view::kUrl, new base::StringValue(origin_url.spec()));
+                   new base::Value(JavaScriptDialogTypeToString(dialog_type)));
+  request_info.Set(guest_view::kUrl, new base::Value(origin_url.spec()));
   WebViewPermissionHelper* web_view_permission_helper =
       WebViewPermissionHelper::FromWebContents(web_contents);
   web_view_permission_helper->RequestPermission(
@@ -85,13 +83,8 @@ bool JavaScriptDialogHelper::HandleJavaScriptDialog(
   return false;
 }
 
-void JavaScriptDialogHelper::CancelActiveAndPendingDialogs(
-    content::WebContents* web_contents) {
-}
-
-void JavaScriptDialogHelper::ResetDialogState(
-    content::WebContents* web_contents) {
-}
+void JavaScriptDialogHelper::CancelDialogs(content::WebContents* web_contents,
+                                           bool reset_state) {}
 
 void JavaScriptDialogHelper::OnPermissionResponse(
     const DialogClosedCallback& callback,

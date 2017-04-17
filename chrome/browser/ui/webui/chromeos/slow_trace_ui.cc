@@ -33,8 +33,7 @@ std::string SlowTraceSource::GetSource() const {
 
 void SlowTraceSource::StartDataRequest(
     const std::string& path,
-    int render_process_id,
-    int render_frame_id,
+    const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
     const content::URLDataSource::GotDataCallback& callback) {
   int trace_id = 0;
   size_t pos = path.find('#');
@@ -61,6 +60,12 @@ void SlowTraceSource::OnGetTraceData(
     const content::URLDataSource::GotDataCallback& callback,
     scoped_refptr<base::RefCountedString> trace_data) {
   callback.Run(trace_data.get());
+}
+
+bool SlowTraceSource::AllowCaching() const {
+  // Should not be cached to reflect dynamically-generated contents that may
+  // depend on current settings.
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

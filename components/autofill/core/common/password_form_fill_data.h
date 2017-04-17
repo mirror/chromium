@@ -63,6 +63,7 @@ struct PasswordFormFillData {
   // that the original saved username is correct. This data is keyed by the
   // saved username/password to ensure uniqueness, though the username is not
   // used.
+  // TODO(crbug/188908). Remove |other_possible_usernames| or launch.
   UsernamesCollection other_possible_usernames;
 
   // Tells us whether we need to wait for the user to enter a valid username
@@ -90,11 +91,15 @@ struct PasswordFormFillData {
 // in |result|.
 void InitPasswordFormFillData(
     const PasswordForm& form_on_page,
-    const PasswordFormMap& matches,
+    const std::map<base::string16, const PasswordForm*>& matches,
     const PasswordForm* const preferred_match,
     bool wait_for_username_before_autofill,
     bool enable_other_possible_usernames,
     PasswordFormFillData* result);
+
+// Renderer needs to have only a password that should be autofilled, all other
+// passwords might be safety erased.
+PasswordFormFillData ClearPasswordValues(const PasswordFormFillData& data);
 
 }  // namespace autofill
 

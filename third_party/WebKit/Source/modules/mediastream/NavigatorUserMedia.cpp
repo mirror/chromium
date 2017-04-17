@@ -9,45 +9,40 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
 #include "modules/mediastream/MediaDevices.h"
-#include "platform/Logging.h"
 
 namespace blink {
 
-NavigatorUserMedia::NavigatorUserMedia(ExecutionContext* context)
-    : m_mediaDevices(MediaDevices::create(context))
-{
+NavigatorUserMedia::NavigatorUserMedia(Navigator& navigator)
+    : Supplement<Navigator>(navigator),
+      media_devices_(MediaDevices::Create(
+          navigator.GetFrame() ? navigator.GetFrame()->GetDocument()
+                               : nullptr)) {}
+
+const char* NavigatorUserMedia::SupplementName() {
+  return "NavigatorUserMedia";
 }
 
-const char* NavigatorUserMedia::supplementName()
-{
-    return "NavigatorUserMedia";
+NavigatorUserMedia& NavigatorUserMedia::From(Navigator& navigator) {
+  NavigatorUserMedia* supplement = static_cast<NavigatorUserMedia*>(
+      Supplement<Navigator>::From(navigator, SupplementName()));
+  if (!supplement) {
+    supplement = new NavigatorUserMedia(navigator);
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-NavigatorUserMedia& NavigatorUserMedia::from(Navigator& navigator)
-{
-    NavigatorUserMedia* supplement = static_cast<NavigatorUserMedia*>(Supplement<Navigator>::from(navigator, supplementName()));
-    if (!supplement) {
-        ExecutionContext* context = navigator.frame() ? navigator.frame()->document() : nullptr;
-        supplement = new NavigatorUserMedia(context);
-        provideTo(navigator, supplementName(), supplement);
-    }
-    return *supplement;
+MediaDevices* NavigatorUserMedia::GetMediaDevices() {
+  return media_devices_;
 }
 
-MediaDevices* NavigatorUserMedia::getMediaDevices()
-{
-    return m_mediaDevices;
+MediaDevices* NavigatorUserMedia::mediaDevices(Navigator& navigator) {
+  return NavigatorUserMedia::From(navigator).GetMediaDevices();
 }
 
-MediaDevices* NavigatorUserMedia::mediaDevices(Navigator& navigator)
-{
-    return NavigatorUserMedia::from(navigator).getMediaDevices();
+DEFINE_TRACE(NavigatorUserMedia) {
+  visitor->Trace(media_devices_);
+  Supplement<Navigator>::Trace(visitor);
 }
 
-DEFINE_TRACE(NavigatorUserMedia)
-{
-    visitor->trace(m_mediaDevices);
-    Supplement<Navigator>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

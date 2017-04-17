@@ -6,13 +6,10 @@
 #define BoxReflection_h
 
 #include "platform/PlatformExport.h"
-#include "third_party/skia/include/core/SkPicture.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
+#include "platform/graphics/paint/PaintRecord.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
-class SkImageFilter;
 class SkMatrix;
-class SkPicture;
 
 namespace blink {
 
@@ -25,50 +22,49 @@ class FloatRect;
 // * a mask image, which will be applied to the reflection before the
 //   reflection matrix is applied
 class PLATFORM_EXPORT BoxReflection {
-public:
-    enum ReflectionDirection {
-        // Vertically flipped (to appear above or below).
-        VerticalReflection,
-        // Horizontally flipped (to appear to the left or right).
-        HorizontalReflection,
-    };
+ public:
+  enum ReflectionDirection {
+    // Vertically flipped (to appear above or below).
+    kVerticalReflection,
+    // Horizontally flipped (to appear to the left or right).
+    kHorizontalReflection,
+  };
 
-    BoxReflection(ReflectionDirection direction, float offset, PassRefPtr<SkPicture> mask = nullptr)
-        : m_direction(direction), m_offset(offset), m_mask(mask) {}
+  BoxReflection(ReflectionDirection direction,
+                float offset,
+                sk_sp<PaintRecord> mask = nullptr)
+      : direction_(direction), offset_(offset), mask_(std::move(mask)) {}
 
-    ReflectionDirection direction() const { return m_direction; }
-    float offset() const { return m_offset; }
-    SkPicture* mask() const { return m_mask.get(); }
+  ReflectionDirection Direction() const { return direction_; }
+  float Offset() const { return offset_; }
+  const sk_sp<PaintRecord>& Mask() const { return mask_; }
 
-    // Returns a matrix which maps points between the original content and its
-    // reflection. Reflections are self-inverse, so this matrix can be used to
-    // map in either direction.
-    SkMatrix reflectionMatrix() const;
+  // Returns a matrix which maps points between the original content and its
+  // reflection. Reflections are self-inverse, so this matrix can be used to
+  // map in either direction.
+  SkMatrix ReflectionMatrix() const;
 
-    // Maps a source rectangle to the destination rectangle it can affect,
-    // including this reflection. Due to the symmetry of reflections, this can
-    // also be used to map from a destination rectangle to the source rectangle
-    // which contributes to it.
-    FloatRect mapRect(const FloatRect&) const;
+  // Maps a source rectangle to the destination rectangle it can affect,
+  // including this reflection. Due to the symmetry of reflections, this can
+  // also be used to map from a destination rectangle to the source rectangle
+  // which contributes to it.
+  FloatRect MapRect(const FloatRect&) const;
 
-private:
-    ReflectionDirection m_direction;
-    float m_offset;
-    RefPtr<SkPicture> m_mask;
+ private:
+  ReflectionDirection direction_;
+  float offset_;
+  sk_sp<PaintRecord> mask_;
 };
 
-inline bool operator==(const BoxReflection& a, const BoxReflection& b)
-{
-    return a.direction() == b.direction()
-        && a.offset() == b.offset()
-        && a.mask() == b.mask();
+inline bool operator==(const BoxReflection& a, const BoxReflection& b) {
+  return a.Direction() == b.Direction() && a.Offset() == b.Offset() &&
+         a.Mask() == b.Mask();
 }
 
-inline bool operator!=(const BoxReflection& a, const BoxReflection& b)
-{
-    return !(a == b);
+inline bool operator!=(const BoxReflection& a, const BoxReflection& b) {
+  return !(a == b);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BoxReflection_h
+#endif  // BoxReflection_h

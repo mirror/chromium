@@ -30,82 +30,158 @@
 
 #include "core/workers/InProcessWorkerObjectProxy.h"
 
+#include <memory>
 #include "bindings/core/v8/SerializedScriptValue.h"
 #include "bindings/core/v8/SourceLocation.h"
-#include "core/dom/CrossThreadTask.h"
+#include "bindings/core/v8/V8GCController.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/events/MessageEvent.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/workers/InProcessWorkerMessagingProxy.h"
-#include "wtf/Functional.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "core/workers/ParentFrameTaskRunners.h"
+#include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerThread.h"
+#include "platform/CrossThreadFunctional.h"
+#include "platform/WebTaskRunner.h"
+#include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
-std::unique_ptr<InProcessWorkerObjectProxy> InProcessWorkerObjectProxy::create(InProcessWorkerMessagingProxy* messagingProxy)
-{
-    DCHECK(messagingProxy);
-    return wrapUnique(new InProcessWorkerObjectProxy(messagingProxy));
+const double kDefaultIntervalInSec = 1;
+const double kMaxIntervalInSec = 30;
+
+std::unique_ptr<InProcessWorkerObjectProxy> InProcessWorkerObjectProxy::Create(
+    const WeakPtr<InProcessWorkerMessagingProxy>& messaging_proxy_weak_ptr,
+    ParentFrameTaskRunners* parent_frame_task_runners) {
+  DCHECK(messaging_proxy_weak_ptr);
+  return WTF::WrapUnique(new InProcessWorkerObjectProxy(
+      messaging_proxy_weak_ptr, parent_frame_task_runners));
 }
 
-void InProcessWorkerObjectProxy::postMessageToWorkerObject(PassRefPtr<SerializedScriptValue> message, std::unique_ptr<MessagePortChannelArray> channels)
-{
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::postMessageToWorkerObject, crossThreadUnretained(m_messagingProxy), message, passed(std::move(channels))));
+InProcessWorkerObjectProxy::~InProcessWorkerObjectProxy() {}
+
+void InProcessWorkerObjectProxy::PostMessageToWorkerObject(
+    PassRefPtr<SerializedScriptValue> message,
+    MessagePortChannelArray channels) {
+  GetParentFrameTaskRunners()
+      ->Get(TaskType::kPostedMessage)
+      ->PostTask(BLINK_FROM_HERE,
+                 CrossThreadBind(
+                     &InProcessWorkerMessagingProxy::PostMessageToWorkerObject,
+                     messaging_proxy_weak_ptr_, std::move(message),
+                     WTF::Passed(std::move(channels))));
 }
 
-void InProcessWorkerObjectProxy::postTaskToMainExecutionContext(std::unique_ptr<ExecutionContextTask> task)
-{
-    getExecutionContext()->postTask(BLINK_FROM_HERE, std::move(task));
+void InProcessWorkerObjectProxy::ProcessMessageFromWorkerObject(
+    PassRefPtr<SerializedScriptValue> message,
+    MessagePortChannelArray channels,
+    WorkerThread* worker_thread) {
+  WorkerGlobalScope* global_scope =
+      ToWorkerGlobalScope(worker_thread->GlobalScope());
+  MessagePortArray* ports =
+      MessagePort::EntanglePorts(*global_scope, std::move(channels));
+  global_scope->DispatchEvent(MessageEvent::Create(ports, std::move(message)));
+
+  GetParentFrameTaskRunners()
+      ->Get(TaskType::kUnspecedTimer)
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(
+              &InProcessWorkerMessagingProxy::ConfirmMessageFromWorkerObject,
+              messaging_proxy_weak_ptr_));
+
+  StartPendingActivityTimer();
 }
 
-void InProcessWorkerObjectProxy::confirmMessageFromWorkerObject(bool hasPendingActivity)
-{
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::confirmMessageFromWorkerObject, crossThreadUnretained(m_messagingProxy), hasPendingActivity));
+void InProcessWorkerObjectProxy::ProcessUnhandledException(
+    int exception_id,
+    WorkerThread* worker_thread) {
+  WorkerGlobalScope* global_scope =
+      ToWorkerGlobalScope(worker_thread->GlobalScope());
+  global_scope->ExceptionUnhandled(exception_id);
 }
 
-void InProcessWorkerObjectProxy::reportPendingActivity(bool hasPendingActivity)
-{
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::reportPendingActivity, crossThreadUnretained(m_messagingProxy), hasPendingActivity));
+void InProcessWorkerObjectProxy::ReportException(
+    const String& error_message,
+    std::unique_ptr<SourceLocation> location,
+    int exception_id) {
+  GetParentFrameTaskRunners()
+      ->Get(TaskType::kUnspecedTimer)
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(&InProcessWorkerMessagingProxy::DispatchErrorEvent,
+                          messaging_proxy_weak_ptr_, error_message,
+                          WTF::Passed(location->Clone()), exception_id));
 }
 
-void InProcessWorkerObjectProxy::reportException(const String& errorMessage, std::unique_ptr<SourceLocation> location)
-{
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::reportException, crossThreadUnretained(m_messagingProxy), errorMessage, passed(std::move(location))));
+void InProcessWorkerObjectProxy::DidCreateWorkerGlobalScope(
+    WorkerOrWorkletGlobalScope* global_scope) {
+  DCHECK(!worker_global_scope_);
+  worker_global_scope_ = ToWorkerGlobalScope(global_scope);
+  timer_ = WTF::MakeUnique<TaskRunnerTimer<InProcessWorkerObjectProxy>>(
+      Platform::Current()->CurrentThread()->GetWebTaskRunner(), this,
+      &InProcessWorkerObjectProxy::CheckPendingActivity);
 }
 
-void InProcessWorkerObjectProxy::reportConsoleMessage(ConsoleMessage* consoleMessage)
-{
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::reportConsoleMessage, crossThreadUnretained(m_messagingProxy), consoleMessage->source(), consoleMessage->level(), consoleMessage->message(), passed(consoleMessage->location()->clone())));
+void InProcessWorkerObjectProxy::DidEvaluateWorkerScript(bool) {
+  StartPendingActivityTimer();
 }
 
-void InProcessWorkerObjectProxy::postMessageToPageInspector(const String& message)
-{
-    ExecutionContext* context = getExecutionContext();
-    if (context->isDocument())
-        toDocument(context)->postInspectorTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::postMessageToPageInspector, crossThreadUnretained(m_messagingProxy), message));
+void InProcessWorkerObjectProxy::WillDestroyWorkerGlobalScope() {
+  timer_.reset();
+  worker_global_scope_ = nullptr;
 }
 
-void InProcessWorkerObjectProxy::workerGlobalScopeClosed()
-{
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::terminateWorkerGlobalScope, crossThreadUnretained(m_messagingProxy)));
+InProcessWorkerObjectProxy::InProcessWorkerObjectProxy(
+    const WeakPtr<InProcessWorkerMessagingProxy>& messaging_proxy_weak_ptr,
+    ParentFrameTaskRunners* parent_frame_task_runners)
+    : ThreadedObjectProxyBase(parent_frame_task_runners),
+      messaging_proxy_weak_ptr_(messaging_proxy_weak_ptr),
+      default_interval_in_sec_(kDefaultIntervalInSec),
+      next_interval_in_sec_(kDefaultIntervalInSec),
+      max_interval_in_sec_(kMaxIntervalInSec) {}
+
+void InProcessWorkerObjectProxy::StartPendingActivityTimer() {
+  if (timer_->IsActive()) {
+    // Reset the next interval duration to check new activity state timely.
+    // For example, a long-running activity can be cancelled by a message
+    // event.
+    next_interval_in_sec_ = kDefaultIntervalInSec;
+    return;
+  }
+  timer_->StartOneShot(next_interval_in_sec_, BLINK_FROM_HERE);
+  next_interval_in_sec_ =
+      std::min(next_interval_in_sec_ * 1.5, max_interval_in_sec_);
 }
 
-void InProcessWorkerObjectProxy::workerThreadTerminated()
-{
-    // This will terminate the MessagingProxy.
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::workerThreadTerminated, crossThreadUnretained(m_messagingProxy)));
+void InProcessWorkerObjectProxy::CheckPendingActivity(TimerBase*) {
+  bool has_pending_activity = V8GCController::HasPendingActivity(
+      worker_global_scope_->GetThread()->GetIsolate(), worker_global_scope_);
+  if (!has_pending_activity) {
+    // Report all activities are done.
+    GetParentFrameTaskRunners()
+        ->Get(TaskType::kUnspecedTimer)
+        ->PostTask(BLINK_FROM_HERE,
+                   CrossThreadBind(
+                       &InProcessWorkerMessagingProxy::PendingActivityFinished,
+                       messaging_proxy_weak_ptr_));
+
+    // Don't schedule a timer. It will be started again when a message event
+    // is dispatched.
+    next_interval_in_sec_ = default_interval_in_sec_;
+    return;
+  }
+
+  // There is still a pending activity. Check it later.
+  StartPendingActivityTimer();
 }
 
-InProcessWorkerObjectProxy::InProcessWorkerObjectProxy(InProcessWorkerMessagingProxy* messagingProxy)
-    : m_messagingProxy(messagingProxy)
-{
+WeakPtr<ThreadedMessagingProxyBase>
+InProcessWorkerObjectProxy::MessagingProxyWeakPtr() {
+  return messaging_proxy_weak_ptr_;
 }
 
-ExecutionContext* InProcessWorkerObjectProxy::getExecutionContext()
-{
-    DCHECK(m_messagingProxy);
-    return m_messagingProxy->getExecutionContext();
-}
-
-} // namespace blink
+}  // namespace blink

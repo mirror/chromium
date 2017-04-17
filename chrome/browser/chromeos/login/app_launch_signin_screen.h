@@ -63,6 +63,7 @@ class AppLaunchSigninScreen : public SigninScreenHandlerDelegate,
   void LoadWallpaper(const AccountId& account_id) override;
   void LoadSigninWallpaper() override;
   void OnSigninScreenReady() override;
+  void OnGaiaScreenReady() override;
   void RemoveUser(const AccountId& account_id) override;
   void ResyncUserData() override;
   void ShowEnterpriseEnrollmentScreen() override;
@@ -81,6 +82,8 @@ class AppLaunchSigninScreen : public SigninScreenHandlerDelegate,
   bool IsSigninInProgress() const override;
   bool IsUserSigninCompleted() const override;
   void SetDisplayEmail(const std::string& email) override;
+  void SetDisplayAndGivenName(const std::string& display_name,
+                              const std::string& given_name) override;
   void Signout() override;
   void HandleGetUsers() override;
   void CheckUserStatus(const AccountId& account_id) override;

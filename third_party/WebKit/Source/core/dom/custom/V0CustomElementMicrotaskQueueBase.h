@@ -7,32 +7,34 @@
 
 #include "core/dom/custom/V0CustomElementMicrotaskStep.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class V0CustomElementMicrotaskQueueBase : public GarbageCollectedFinalized<V0CustomElementMicrotaskQueueBase> {
-    WTF_MAKE_NONCOPYABLE(V0CustomElementMicrotaskQueueBase);
-public:
-    virtual ~V0CustomElementMicrotaskQueueBase() { }
+class V0CustomElementMicrotaskQueueBase
+    : public GarbageCollectedFinalized<V0CustomElementMicrotaskQueueBase> {
+  WTF_MAKE_NONCOPYABLE(V0CustomElementMicrotaskQueueBase);
 
-    bool isEmpty() const { return m_queue.isEmpty(); }
-    void dispatch();
+ public:
+  virtual ~V0CustomElementMicrotaskQueueBase() {}
 
-    DECLARE_TRACE();
+  bool IsEmpty() const { return queue_.IsEmpty(); }
+  void Dispatch();
+
+  DECLARE_TRACE();
 
 #if !defined(NDEBUG)
-    void show(unsigned indent);
+  void Show(unsigned indent);
 #endif
 
-protected:
-    V0CustomElementMicrotaskQueueBase() : m_inDispatch(false) { }
-    virtual void doDispatch() = 0;
+ protected:
+  V0CustomElementMicrotaskQueueBase() : in_dispatch_(false) {}
+  virtual void DoDispatch() = 0;
 
-    HeapVector<Member<V0CustomElementMicrotaskStep>> m_queue;
-    bool m_inDispatch;
+  HeapVector<Member<V0CustomElementMicrotaskStep>> queue_;
+  bool in_dispatch_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V0CustomElementMicrotaskQueueBase_h
+#endif  // V0CustomElementMicrotaskQueueBase_h

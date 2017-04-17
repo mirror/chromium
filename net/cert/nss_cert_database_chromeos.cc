@@ -14,8 +14,8 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/location.h"
+#include "base/stl_util.h"
 #include "base/task_runner.h"
-#include "net/base/crypto_module.h"
 #include "net/cert/x509_certificate.h"
 
 namespace net {
@@ -50,10 +50,8 @@ void NSSCertDatabaseChromeOS::ListCerts(
   // base::Pased will NULL out |certs|, so cache the underlying pointer here.
   CertificateList* raw_certs = certs.get();
   GetSlowTaskRunner()->PostTaskAndReply(
-      FROM_HERE,
-      base::Bind(&NSSCertDatabaseChromeOS::ListCertsImpl,
-                 profile_filter_,
-                 base::Unretained(raw_certs)),
+      FROM_HERE, base::Bind(&NSSCertDatabaseChromeOS::ListCertsImpl,
+                            profile_filter_, base::Unretained(raw_certs)),
       base::Bind(callback, base::Passed(&certs)));
 }
 
@@ -63,18 +61,15 @@ crypto::ScopedPK11Slot NSSCertDatabaseChromeOS::GetSystemSlot() const {
   return crypto::ScopedPK11Slot();
 }
 
-void NSSCertDatabaseChromeOS::ListModules(CryptoModuleList* modules,
-                                          bool need_rw) const {
+void NSSCertDatabaseChromeOS::ListModules(
+    std::vector<crypto::ScopedPK11Slot>* modules,
+    bool need_rw) const {
   NSSCertDatabase::ListModules(modules, need_rw);
 
   size_t pre_size = modules->size();
-  modules->erase(
-      std::remove_if(
-          modules->begin(),
-          modules->end(),
-          NSSProfileFilterChromeOS::ModuleNotAllowedForProfilePredicate(
-              profile_filter_)),
-      modules->end());
+  base::EraseIf(*modules,
+                NSSProfileFilterChromeOS::ModuleNotAllowedForProfilePredicate(
+                    profile_filter_));
   DVLOG(1) << "filtered " << pre_size - modules->size() << " of " << pre_size
            << " modules";
 }
@@ -85,12 +80,9 @@ void NSSCertDatabaseChromeOS::ListCertsImpl(
   NSSCertDatabase::ListCertsImpl(crypto::ScopedPK11Slot(), certs);
 
   size_t pre_size = certs->size();
-  certs->erase(std::remove_if(
-                   certs->begin(),
-                   certs->end(),
-                   NSSProfileFilterChromeOS::CertNotAllowedForProfilePredicate(
-                       profile_filter)),
-               certs->end());
+  base::EraseIf(*certs,
+                NSSProfileFilterChromeOS::CertNotAllowedForProfilePredicate(
+                    profile_filter));
   DVLOG(1) << "filtered " << pre_size - certs->size() << " of " << pre_size
            << " certs";
 }

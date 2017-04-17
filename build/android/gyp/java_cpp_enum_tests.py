@@ -26,7 +26,13 @@ class TestPreprocess(unittest.TestCase):
   def testOutput(self):
     definition = EnumDefinition(original_enum_name='ClassName',
                                 enum_package='some.package',
-                                entries=[('E1', 1), ('E2', '2 << 2')])
+                                entries=[('E1', 1), ('E2', '2 << 2')],
+                                comments=[('E2', 'This is a comment.'),
+                                          ('E1', 'This is a multiple line '
+                                                 'comment that is really long. '
+                                                 'This is a multiple line '
+                                                 'comment that is really '
+                                                 'really long.')])
     output = GenerateOutput('path/to/file', definition)
     expected = """
 // Copyright %d The Chromium Authors. All rights reserved.
@@ -40,12 +46,32 @@ class TestPreprocess(unittest.TestCase):
 
 package some.package;
 
-public class ClassName {
-  public static final int E1 = 1;
-  public static final int E2 = 2 << 2;
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@IntDef({
+    ClassName.E1, ClassName.E2
+})
+@Retention(RetentionPolicy.SOURCE)
+public @interface ClassName {
+  /**
+   * %s
+   * really really long.
+   */
+  int E1 = 1;
+  /**
+   * This is a comment.
+   */
+  int E2 = 2 << 2;
 }
 """
-    self.assertEqual(expected % (date.today().year, GetScriptName()), output)
+    long_comment = ('This is a multiple line comment that is really long. '
+                    'This is a multiple line comment that is')
+    self.assertEqual(
+            expected % (date.today().year, GetScriptName(), long_comment),
+            output)
 
   def testParseSimpleEnum(self):
     test_data = """
@@ -71,15 +97,97 @@ public class ClassName {
         VALUE_ZERO = 1 << 0,
         VALUE_ONE = 1 << 1,
       };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      enum EnumName {
+        ENUM_NAME_ZERO = 1 << 0,
+        ENUM_NAME_ONE = 1 << 1,
+        ENUM_NAME_TWO = ENUM_NAME_ZERO | ENUM_NAME_ONE,
+      };
     """.split('\n')
     definitions = HeaderParser(test_data).ParseDefinitions()
-    self.assertEqual(1, len(definitions))
+    self.assertEqual(2, len(definitions))
     definition = definitions[0]
     self.assertEqual('EnumName', definition.class_name)
     self.assertEqual('test.namespace', definition.enum_package)
     self.assertEqual(collections.OrderedDict([('VALUE_ZERO', '1 << 0'),
                                               ('VALUE_ONE', '1 << 1')]),
                      definition.entries)
+
+    definition = definitions[1]
+    expected_entries = collections.OrderedDict([
+        ('ZERO', '1 << 0'),
+        ('ONE', '1 << 1'),
+        ('TWO', 'ZERO | ONE')])
+    self.assertEqual(expected_entries, definition.entries)
+
+  def testParseMultilineEnumEntry(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: bar.namespace
+      enum Foo {
+        VALUE_ZERO = 1 << 0,
+        VALUE_ONE =
+            SymbolKey | FnKey | AltGrKey | MetaKey | AltKey | ControlKey,
+        VALUE_TWO = 1 << 18,
+      };
+    """.split('\n')
+    expected_entries = collections.OrderedDict([
+        ('VALUE_ZERO', '1 << 0'),
+        ('VALUE_ONE', 'SymbolKey | FnKey | AltGrKey | MetaKey | AltKey | '
+         'ControlKey'),
+        ('VALUE_TWO', '1 << 18')])
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    self.assertEqual(1, len(definitions))
+    definition = definitions[0]
+    self.assertEqual('Foo', definition.class_name)
+    self.assertEqual('bar.namespace', definition.enum_package)
+    self.assertEqual(expected_entries, definition.entries)
+
+  def testParseEnumEntryWithTrailingMultilineEntry(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: bar.namespace
+      enum Foo {
+        VALUE_ZERO = 1,
+        VALUE_ONE =
+            SymbolKey | FnKey | AltGrKey | MetaKey |
+            AltKey | ControlKey | ShiftKey,
+      };
+    """.split('\n')
+    expected_entries = collections.OrderedDict([
+        ('VALUE_ZERO', '1'),
+        ('VALUE_ONE', 'SymbolKey | FnKey | AltGrKey | MetaKey | AltKey | '
+         'ControlKey | ShiftKey')])
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    self.assertEqual(1, len(definitions))
+    definition = definitions[0]
+    self.assertEqual('Foo', definition.class_name)
+    self.assertEqual('bar.namespace', definition.enum_package)
+    self.assertEqual(expected_entries, definition.entries)
+
+  def testParseNoCommaAfterLastEntry(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: bar.namespace
+      enum Foo {
+        VALUE_ZERO = 1,
+
+        // This is a multiline
+        //
+        // comment with an empty line.
+        VALUE_ONE = 2
+      };
+    """.split('\n')
+    expected_entries = collections.OrderedDict([
+        ('VALUE_ZERO', '1'),
+        ('VALUE_ONE', '2')])
+    expected_comments = collections.OrderedDict([
+        ('VALUE_ONE', 'This is a multiline comment with an empty line.')])
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    self.assertEqual(1, len(definitions))
+    definition = definitions[0]
+    self.assertEqual('Foo', definition.class_name)
+    self.assertEqual('bar.namespace', definition.enum_package)
+    self.assertEqual(expected_entries, definition.entries)
+    self.assertEqual(expected_comments, definition.comments)
 
   def testParseClassNameOverride(self):
     test_data = """
@@ -107,7 +215,7 @@ public class ClassName {
                                               ('B', 1)]),
                      definition.entries)
 
-  def testParseTwoEnums(self):
+  def testParsePreservesCommentsWhenPrefixStripping(self):
     test_data = """
       // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
       enum EnumOne {
@@ -124,6 +232,8 @@ public class ClassName {
       // GENERATED_JAVA_PREFIX_TO_STRIP: P_
       enum EnumTwo {
         P_A,
+        // This comment spans
+        // two lines.
         P_B
       };
     """.split('\n')
@@ -135,13 +245,216 @@ public class ClassName {
     self.assertEqual(collections.OrderedDict([('A', '1'),
                                               ('B', 'A')]),
                      definition.entries)
-
+    self.assertEqual(collections.OrderedDict([('B', 'Comment there')]),
+                     definition.comments)
     definition = definitions[1]
+    self.assertEqual('EnumTwo', definition.class_name)
+    self.assertEqual('other.package', definition.enum_package)
+    self.assertEqual(collections.OrderedDict(
+        [('B', 'This comment spans two lines.')]), definition.comments)
+    self.assertEqual(collections.OrderedDict([('A', 0),
+                                              ('B', 1)]),
+                     definition.entries)
+
+  def testParseTwoEnums(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      enum AnEnum {
+        ENUM_ONE_A = 1,
+        ENUM_ONE_B = A,
+      };
+
+      enum EnumIgnore {
+        C, D, E
+      };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: other.package
+      enum EnumTwo {
+        P_A,
+        P_B
+      };
+    """.split('\n')
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    self.assertEqual(2, len(definitions))
+    definition = definitions[0]
+    self.assertEqual('AnEnum', definition.class_name)
+    self.assertEqual('test.namespace', definition.enum_package)
+    self.assertEqual(collections.OrderedDict([('ENUM_ONE_A', '1'),
+                                              ('ENUM_ONE_B', 'A')]),
+                     definition.entries)
+    definition = definitions[1]
+    self.assertEqual('EnumTwo', definition.class_name)
+    self.assertEqual('other.package', definition.enum_package)
+    self.assertEqual(collections.OrderedDict([('P_A', 0),
+                                              ('P_B', 1)]),
+                     definition.entries)
+
+  def testParseSingleLineEnum(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: other.package
+      // GENERATED_JAVA_PREFIX_TO_STRIP: P_
+      enum EnumTwo { P_A, P_B };
+    """.split('\n')
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    definition = definitions[0]
     self.assertEqual('EnumTwo', definition.class_name)
     self.assertEqual('other.package', definition.enum_package)
     self.assertEqual(collections.OrderedDict([('A', 0),
                                               ('B', 1)]),
                      definition.entries)
+
+  def testParseWithStrippingAndRelativeReferences(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: other.package
+      // GENERATED_JAVA_PREFIX_TO_STRIP: P_
+      enum EnumTwo {
+        P_A = 1,
+        // P_A is old-don't use P_A.
+        P_B = P_A,
+      };
+    """.split('\n')
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    definition = definitions[0]
+    self.assertEqual('EnumTwo', definition.class_name)
+    self.assertEqual('other.package', definition.enum_package)
+    self.assertEqual(collections.OrderedDict([('A', '1'),
+                                              ('B', 'A')]),
+                     definition.entries)
+    self.assertEqual(collections.OrderedDict([('B', 'A is old-don\'t use A.')]),
+                     definition.comments)
+
+  def testParseSingleLineAndRegularEnum(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      enum EnumOne {
+        ENUM_ONE_A = 1,
+        // Comment there
+        ENUM_ONE_B = A,
+      };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: other.package
+      enum EnumTwo { P_A, P_B };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      // GENERATED_JAVA_CLASS_NAME_OVERRIDE: OverrideName
+      enum EnumName {
+        ENUM_NAME_FOO
+      };
+    """.split('\n')
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    definition = definitions[0]
+    self.assertEqual(
+        collections.OrderedDict([('A', '1'), ('B', 'A')]), definition.entries)
+    self.assertEqual(collections.OrderedDict([('B', 'Comment there')]),
+                     definition.comments)
+
+    self.assertEqual(3, len(definitions))
+    definition = definitions[1]
+    self.assertEqual(
+        collections.OrderedDict([('P_A', 0), ('P_B', 1)]), definition.entries)
+
+    definition = definitions[2]
+    self.assertEqual(collections.OrderedDict([('FOO', 0)]), definition.entries)
+
+  def testParseWithCamelCaseNames(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      enum EnumTest {
+        EnumTestA = 1,
+        // comment for EnumTestB.
+        EnumTestB = 2,
+      };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      // GENERATED_JAVA_PREFIX_TO_STRIP: Test
+      enum AnEnum {
+        TestHTTPOption,
+        TestHTTPSOption,
+      };
+
+    """.split('\n')
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    definition = definitions[0]
+    self.assertEqual(
+        collections.OrderedDict([('ENUM_TEST_A', '1'), ('ENUM_TEST_B', '2')]),
+        definition.entries)
+    self.assertEqual(
+        collections.OrderedDict([('ENUM_TEST_B', 'comment for ENUM_TEST_B.')]),
+        definition.comments)
+
+    definition = definitions[1]
+    self.assertEqual(
+        collections.OrderedDict([('HTTP_OPTION', 0), ('HTTPS_OPTION', 1)]),
+        definition.entries)
+
+  def testParseWithKCamelCaseNames(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      enum EnumOne {
+        kEnumOne = 1,
+        // comment for kEnumTwo.
+        kEnumTwo = 2,
+      };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      // GENERATED_JAVA_CLASS_NAME_OVERRIDE: OverrideName
+      // GENERATED_JAVA_PREFIX_TO_STRIP: kEnumName
+      enum EnumName {
+        kEnumNameFoo,
+        kEnumNameBar
+      };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      enum EnumName {
+        kEnumNameFoo,
+        kEnumBar,
+      };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      enum Keys {
+        kSymbolKey = 1 << 0,
+        kAltKey = 1 << 1,
+        kUpKey = 1 << 2,
+        kKeyModifiers = kSymbolKey | kAltKey | kUpKey | kKeyModifiers,
+      };
+
+      // GENERATED_JAVA_ENUM_PACKAGE: test.namespace
+      enum Mixed {
+        kTestVal,
+        kCodecMPEG2
+      };
+    """.split('\n')
+    definitions = HeaderParser(test_data).ParseDefinitions()
+    definition = definitions[0]
+    self.assertEqual(
+        collections.OrderedDict([('ENUM_ONE', '1'), ('ENUM_TWO', '2')]),
+        definition.entries)
+    self.assertEqual(
+        collections.OrderedDict([('ENUM_TWO', 'comment for ENUM_TWO.')]),
+        definition.comments)
+
+    definition = definitions[1]
+    self.assertEqual(
+        collections.OrderedDict([('FOO', 0), ('BAR', 1)]),
+        definition.entries)
+
+    definition = definitions[2]
+    self.assertEqual(
+        collections.OrderedDict([('ENUM_NAME_FOO', 0), ('ENUM_BAR', 1)]),
+        definition.entries)
+
+    definition = definitions[3]
+    expected_entries = collections.OrderedDict([
+        ('SYMBOL_KEY', '1 << 0'),
+        ('ALT_KEY', '1 << 1'),
+        ('UP_KEY', '1 << 2'),
+        ('KEY_MODIFIERS', 'SYMBOL_KEY | ALT_KEY | UP_KEY | KEY_MODIFIERS')])
+    self.assertEqual(expected_entries, definition.entries)
+
+    definition = definitions[4]
+    self.assertEqual(
+        collections.OrderedDict([('TEST_VAL', 0), ('CODEC_MPEG2', 1)]),
+        definition.entries)
 
   def testParseThrowsOnUnknownDirective(self):
     test_data = """
@@ -302,6 +615,17 @@ public class ClassName {
   def testParseMalformedMultiLineDirectiveShort(self):
     test_data = """
       // GENERATED_JAVA_ENUM_PACKAGE: (
+      enum Foo {
+        FOO_A,
+      };
+    """.split('\n')
+    with self.assertRaises(Exception):
+      HeaderParser(test_data).ParseDefinitions()
+
+  def testParseMalformedMultiLineDirectiveMissingBrackets(self):
+    test_data = """
+      // GENERATED_JAVA_ENUM_PACKAGE:
+      // test.namespace
       enum Foo {
         FOO_A,
       };

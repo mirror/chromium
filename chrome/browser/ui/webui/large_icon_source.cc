@@ -40,8 +40,7 @@ std::string LargeIconSource::GetSource() const {
 
 void LargeIconSource::StartDataRequest(
     const std::string& path,
-    int render_process_id,
-    int render_frame_id,
+    const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
     const content::URLDataSource::GotDataCallback& callback) {
   if (!large_icon_service_) {
     SendNotFoundResponse(callback);
@@ -78,6 +77,10 @@ std::string LargeIconSource::GetMimeType(const std::string&) const {
   // We need to explicitly return a mime type, otherwise if the user tries to
   // drag the image they get no extension.
   return "image/png";
+}
+
+bool LargeIconSource::AllowCaching() const {
+  return false;
 }
 
 bool LargeIconSource::ShouldReplaceExistingSource() const {
