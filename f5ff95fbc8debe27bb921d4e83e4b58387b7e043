@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66edb3b3_b5534247",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-04-17T19:49:24Z",
+      "side": 1,
+      "message": "optional: Maybe NotifyChromeTerminating or NotifyBrowserTerminating? In theory we might have other \"apps\" someday.",
+      "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca25833_7ec7aab2",
+        "filename": "ash/session/session_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-04-17T19:49:24Z",
+      "side": 1,
+      "message": "nit: still needed?",
+      "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd6663f_da649a56",
+        "filename": "ash/shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-04-17T19:49:24Z",
+      "side": 1,
+      "message": "OnAppTerminating() is going to be removed from ShellObserver in a separate CL?",
+      "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70de747c_af9fdee1",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-04-17T19:49:24Z",
+      "side": 1,
+      "message": "Why does this have to move? If there\u0027s code in the constructor that calls back into a partially constructed SessionControllerClient then that\u0027s scary. Maybe there should be a separate Init() method?",
+      "revId": "f5ff95fbc8debe27bb921d4e83e4b58387b7e043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
