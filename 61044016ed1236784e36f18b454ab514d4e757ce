@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cebad81_b0b09170",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-04-17T22:08:32Z",
+      "side": 1,
+      "message": "base::TrimWhitespaceASCII?",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 18
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf38340c_958f667a",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-04-17T22:08:32Z",
+      "side": 1,
+      "message": "nit: kEventConfigDataNameKey?",
+      "range": {
+        "startLine": 131,
+        "startChar": 40,
+        "endLine": 131,
+        "endChar": 64
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd77ac0_fdb4c2a3",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-04-17T22:08:32Z",
+      "side": 1,
+      "message": "Move has_comparator \u003d true after the next if block?",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 140,
+        "endChar": 20
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23147826_be29d3c4",
+        "filename": "components/feature_engagement_tracker/internal/configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-04-17T22:08:32Z",
+      "side": 1,
+      "message": "Should it be :\nif (lhs.type !\u003d rhs.type) \n  return lhs.type \u003c rhs.type;\nif (lhs.value !\u003d rhs.value) \n  return lhs.value \u003c rhs.value;\nreturn false;",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3797b6_aa650af3",
+        "filename": "components/feature_engagement_tracker/internal/configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-04-17T22:08:32Z",
+      "side": 1,
+      "message": "Why do we need all three operators in this class and the other ones too?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 4
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220a23e0_9b4cc30b",
+        "filename": "components/feature_engagement_tracker/internal/configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-04-17T22:08:32Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 111,
+        "startChar": 35,
+        "endLine": 111,
+        "endChar": 50
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
